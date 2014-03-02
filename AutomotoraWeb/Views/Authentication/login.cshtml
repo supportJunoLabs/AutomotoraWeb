@@ -1,0 +1,51 @@
+﻿@model AutomotoraWeb.Models.LoginModel
+
+@{
+    ViewBag.Title = "Iniciar sesión";
+    Layout = "~/Views/Shared/_LayoutAuthorization.cshtml";
+}
+
+<section id="loginForm">
+    <p class="block-heading">Inicio de sesión</p>
+    <div class="block-body">
+        @using (Html.BeginForm(AutomotoraWeb.Controllers.AuthenticationController.LOGIN, AutomotoraWeb.Controllers.AuthenticationController.AUTHENTICATION, FormMethod.Post)) {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+    
+
+            @Html.LabelFor(m => m.UserName)
+            @Html.TextBoxFor(m => m.UserName, new { @class = "span12" })
+            @Html.ValidationMessageFor(m => m.UserName, null, new { @class = "text-error" })
+
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "span12" })
+            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-error" })
+
+            <input type="submit" value="Iniciar sesión" class="btn btn-primary pull-right" />
+            <div class="clearfix"></div>
+         
+            if ((Model != null) && (Model.ErrorCode != null)){
+                if (Model.ErrorCode.Equals("U001")) 
+                { 
+                    <div class="text-error">@Model.ErrorMessage</div>
+                } 
+                else if (Model.ErrorCode.Equals("U002")) 
+                {
+                    <div class="text-error">Error en el Servidor, contactese con soporte técnico</div>
+                }
+            }
+
+        }
+    </div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+
+
+
