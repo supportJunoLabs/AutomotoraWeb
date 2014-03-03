@@ -123,7 +123,70 @@
   <data name="LOGIN_LOGIN" xml:space="preserve">
     <value>Iniciar sesión</value>
   </data>
-  <data name="LOGIN_TITLE_BOX" xml:space="preserve">
+  <data name="LOGIN_TITLE_HEADING" xml:space="preserve">
     <value>Inicio de sesión</value>
+  </data>
+  <data name="SIDEBAR_BANK_BANK" xml:space="preserve">
+    <value>Banco</value>
+  </data>
+  <data name="SIDEBAR_FINANCING_FINANCING" xml:space="preserve">
+    <value>Financiaciones</value>
+  </data>
+  <data name="SIDEBAR_SALES_ACCOUNT_CANCELLATION_SALE" xml:space="preserve">
+    <value>Anulación a Cuenta Venta</value>
+  </data>
+  <data name="SIDEBAR_SALES_CUSTOMERS" xml:space="preserve">
+    <value>Clientes</value>
+  </data>
+  <data name="SIDEBAR_SALES_DELIVER_VEHICLE" xml:space="preserve">
+    <value>Entregar Vehiculo</value>
+  </data>
+  <data name="SIDEBAR_SALES_DOCUMENT_TYPE" xml:space="preserve">
+    <value>Tipos Documento</value>
+  </data>
+  <data name="SIDEBAR_SALES_LISTINGS" xml:space="preserve">
+    <value>Listados</value>
+  </data>
+  <data name="SIDEBAR_SALES_MAINTENANSE" xml:space="preserve">
+    <value>Mantenimientos</value>
+  </data>
+  <data name="SIDEBAR_SALES_ORDERS" xml:space="preserve">
+    <value>Pedidos</value>
+  </data>
+  <data name="SIDEBAR_SALES_ORDER_MANAGEMENT" xml:space="preserve">
+    <value>Gestión de Pedidos</value>
+  </data>
+  <data name="SIDEBAR_SALES_QUERIES" xml:space="preserve">
+    <value>Consultas</value>
+  </data>
+  <data name="SIDEBAR_SALES_RATES" xml:space="preserve">
+    <value>Cotizaciones</value>
+  </data>
+  <data name="SIDEBAR_SALES_RECEIVE_ORDERS" xml:space="preserve">
+    <value>Recibir Pedidos</value>
+  </data>
+  <data name="SIDEBAR_SALES_RETURN_SIGN" xml:space="preserve">
+    <value>Devolución de Seña</value>
+  </data>
+  <data name="SIDEBAR_SALES_SALES" xml:space="preserve">
+    <value>Ventas</value>
+  </data>
+  <data name="SIDEBAR_SALES_SALE_CANCELLATION" xml:space="preserve">
+    <value>Anulación de Venta</value>
+  </data>
+  <data name="SIDEBAR_SALES_SELLERS" xml:space="preserve">
+    <value>Vendedores</value>
+  </data>
+  <data name="SIDEBAR_SALES_TO_FUTURE_SALE_ACCOUNT" xml:space="preserve">
+    <value>A Cuenta Venta Futura</value>
+  </data>
+  <data name="SIDEBAR_SALES_VEHICLES" xml:space="preserve">
+    <value>Vehiculos</value>
+  </data>
+  <data name="SIDEBAR_SALES_VEHICLE_SALE" xml:space="preserve">
+    <value>Venta de Vehiculo</value>
+  </data>
+  <data name="SIDEBAR_SALES_VEHICLE_SIGN_ORDER" xml:space="preserve">
+    <value>Seña Vehiculo/Pedido</value>
   </data>
 </root>

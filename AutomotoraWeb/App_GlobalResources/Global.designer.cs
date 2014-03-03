@@ -81,9 +81,198 @@ namespace Resources {
         /// <summary>
         ///   Busca una cadena traducida similar a Inicio de sesión.
         /// </summary>
-        internal static string LOGIN_TITLE_BOX {
+        internal static string LOGIN_TITLE_HEADING {
             get {
-                return ResourceManager.GetString("LOGIN_TITLE_BOX", resourceCulture);
+                return ResourceManager.GetString("LOGIN_TITLE_HEADING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Banco.
+        /// </summary>
+        internal static string SIDEBAR_BANK_BANK {
+            get {
+                return ResourceManager.GetString("SIDEBAR_BANK_BANK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Financiaciones.
+        /// </summary>
+        internal static string SIDEBAR_FINANCING_FINANCING {
+            get {
+                return ResourceManager.GetString("SIDEBAR_FINANCING_FINANCING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Anulación a Cuenta Venta.
+        /// </summary>
+        internal static string SIDEBAR_SALES_ACCOUNT_CANCELLATION_SALE {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_ACCOUNT_CANCELLATION_SALE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Clientes.
+        /// </summary>
+        internal static string SIDEBAR_SALES_CUSTOMERS {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_CUSTOMERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Entregar Vehiculo.
+        /// </summary>
+        internal static string SIDEBAR_SALES_DELIVER_VEHICLE {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_DELIVER_VEHICLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tipos Documento.
+        /// </summary>
+        internal static string SIDEBAR_SALES_DOCUMENT_TYPE {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_DOCUMENT_TYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Listados.
+        /// </summary>
+        internal static string SIDEBAR_SALES_LISTINGS {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_LISTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Mantenimientos.
+        /// </summary>
+        internal static string SIDEBAR_SALES_MAINTENANSE {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_MAINTENANSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Pedidos.
+        /// </summary>
+        internal static string SIDEBAR_SALES_ORDERS {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_ORDERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Gestión de Pedidos.
+        /// </summary>
+        internal static string SIDEBAR_SALES_ORDER_MANAGEMENT {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_ORDER_MANAGEMENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Consultas.
+        /// </summary>
+        internal static string SIDEBAR_SALES_QUERIES {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_QUERIES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cotizaciones.
+        /// </summary>
+        internal static string SIDEBAR_SALES_RATES {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_RATES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Recibir Pedidos.
+        /// </summary>
+        internal static string SIDEBAR_SALES_RECEIVE_ORDERS {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_RECEIVE_ORDERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Devolución de Seña.
+        /// </summary>
+        internal static string SIDEBAR_SALES_RETURN_SIGN {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_RETURN_SIGN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ventas.
+        /// </summary>
+        internal static string SIDEBAR_SALES_SALES {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_SALES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Anulación de Venta.
+        /// </summary>
+        internal static string SIDEBAR_SALES_SALE_CANCELLATION {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_SALE_CANCELLATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Vendedores.
+        /// </summary>
+        internal static string SIDEBAR_SALES_SELLERS {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_SELLERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a A Cuenta Venta Futura.
+        /// </summary>
+        internal static string SIDEBAR_SALES_TO_FUTURE_SALE_ACCOUNT {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_TO_FUTURE_SALE_ACCOUNT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Vehiculos.
+        /// </summary>
+        internal static string SIDEBAR_SALES_VEHICLES {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_VEHICLES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Venta de Vehiculo.
+        /// </summary>
+        internal static string SIDEBAR_SALES_VEHICLE_SALE {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_VEHICLE_SALE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Seña Vehiculo/Pedido.
+        /// </summary>
+        internal static string SIDEBAR_SALES_VEHICLE_SIGN_ORDER {
+            get {
+                return ResourceManager.GetString("SIDEBAR_SALES_VEHICLE_SIGN_ORDER", resourceCulture);
             }
         }
     }

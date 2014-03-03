@@ -131,6 +131,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AutenticationController.cs" />
+    <Compile Include="Controllers\BankController.cs" />
     <Compile Include="Controllers\FinancingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
@@ -1389,6 +1390,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_LayoutAuthorization.cshtml" />
+    <Content Include="Views\Shared\_sidebarSales.cshtml" />
+    <Content Include="Views\Shared\_sidebarBank.cshtml" />
+    <Content Include="Views\Shared\_sidebarFinancing.cshtml" />
+    <Content Include="Views\Sales\Index.cshtml" />
+    <Content Include="Views\Bank\Index.cshtml" />
+    <Content Include="Views\Financing\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
