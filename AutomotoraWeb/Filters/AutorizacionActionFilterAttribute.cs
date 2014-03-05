@@ -7,6 +7,7 @@ using System.Web.Routing;
 using System.Diagnostics;
 using System.Web.Mvc.Html;
 using AutomotoraWeb.Controllers;
+using AutomotoraWeb.Controllers.General;
 
 namespace AutomotoraWeb {
 

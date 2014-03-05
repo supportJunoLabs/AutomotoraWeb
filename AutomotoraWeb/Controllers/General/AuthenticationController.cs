@@ -1,4 +1,5 @@
-﻿using AutomotoraWeb.Models;
+﻿using AutomotoraWeb.Controllers.Sales;
+using AutomotoraWeb.Models;
 using AutomotoraWeb.Services;
 using DLL_Backend;
 using System;
@@ -8,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace AutomotoraWeb.Controllers {
+namespace AutomotoraWeb.Controllers.General {
     public class AuthenticationController : Controller {
 
         public static string AUTHENTICATION = "authentication";
@@ -38,7 +39,7 @@ namespace AutomotoraWeb.Controllers {
                         if (!String.IsNullOrEmpty(returnUrl)) {
                             return Redirect(returnUrl);
                         } else {
-                            return RedirectToAction(HomeController.INDEX, HomeController.HOME);
+                            return RedirectToAction(SalesController.INDEX, SalesController.SALES);
                         }
                     }
                 } catch (UsuarioException exc) {
@@ -74,7 +75,7 @@ namespace AutomotoraWeb.Controllers {
                     if (!String.IsNullOrEmpty(returnUrl)) {
                         return Redirect(returnUrl);
                     } else {
-                        return RedirectToAction(HomeController.INDEX, HomeController.HOME);
+                        return RedirectToAction(SalesController.INDEX, SalesController.SALES);
                     }
                 } catch (UsuarioException exc) {
                     model.ErrorCode = "U001";
@@ -108,20 +109,6 @@ namespace AutomotoraWeb.Controllers {
         }
 
         //------------------------------------------------------------------------------------------------------------------------
-
-        //
-        // POST: /Authentication/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection) {
-            try {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            } catch {
-                return View();
-            }
-        }
 
     }
 }

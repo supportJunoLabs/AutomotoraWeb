@@ -1,18 +1,18 @@
 ﻿<div class="sidebar-nav">
     <a href="#sales-order-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-dashboard"></i>@Resources.Global.SIDEBAR_SALES_ORDERS</a>
     <ul id="sales-order-menu" class="nav nav-list collapse in">
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_ORDER_MANAGEMENT</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_RECEIVE_ORDERS</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_ORDER_MANAGEMENT</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_RECEIVE_ORDERS</a></li>
     </ul>
 
     <a href="#sales-sales-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-briefcase"></i>@Resources.Global.SIDEBAR_SALES_SALES</a>
     <ul id="sales-sales-menu" class="nav nav-list collapse">
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_VEHICLE_SIGN_ORDER</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_RETURN_SIGN</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_VEHICLE_SALE</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_ACCOUNT_CANCELLATION_SALE</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_TO_FUTURE_SALE_ACCOUNT</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_ACCOUNT_CANCELLATION_SALE</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_VEHICLE_SIGN_ORDER</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_RETURN_SIGN</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_VEHICLE_SALE</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_ACCOUNT_CANCELLATION_SALE</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_TO_FUTURE_SALE_ACCOUNT</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_ACCOUNT_CANCELLATION_SALE</a></li>
     </ul>
 
     <a href="#sales-queries-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>@Resources.Global.SIDEBAR_SALES_QUERIES</a>
@@ -31,10 +31,10 @@
 
     <a href="#sales-maintenance-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-briefcase"></i>@Resources.Global.SIDEBAR_SALES_MAINTENANSE</a>
     <ul id="sales-maintenance-menu" class="nav nav-list collapse">
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_SELLERS</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_CUSTOMERS</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_VEHICLES</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_RATES</a></li>
-        <li><a href=".">@Resources.Global.SIDEBAR_SALES_DOCUMENT_TYPE</a></li>
+        <li>@Html.ActionLink(@Resources.Global.SIDEBAR_SALES_SELLERS, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS)</li>
+        <li>@Html.ActionLink(@Resources.Global.SIDEBAR_SALES_CUSTOMERS, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS)</li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_VEHICLES</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_RATES</a></li>
+        <li><a href="#">@Resources.Global.SIDEBAR_SALES_DOCUMENT_TYPE</a></li>
     </ul>
 </div>

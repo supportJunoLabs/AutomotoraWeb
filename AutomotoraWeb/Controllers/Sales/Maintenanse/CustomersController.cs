@@ -1,87 +1,67 @@
-﻿using System;
+﻿using AutomotoraWeb.Controllers.General;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace AutomotoraWeb.Controllers {
-    public class BankController : Controller {
+namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
+    public class CustomersController : SalesController, IMaintenance {
 
-        public static string BANK = "bank";
-        public static string INDEX = "index";
+        public static string CUSTOMERS = "customers";
 
-        //
-        // GET: /Bank/
-
-        public ActionResult Index() {
+        public ActionResult Show() {
             return View();
         }
-
-        //
-        // GET: /Bank/Details/5
 
         public ActionResult Details(int id) {
             return View();
         }
 
-        //
-        // GET: /Bank/Create
-
         public ActionResult Create() {
             return View();
         }
 
-        //
-        // POST: /Bank/Create
+        public ActionResult Edit(int id) {
+            return View();
+        }
+
+        public ActionResult Delete(int id) {
+            return View();
+        }
+
 
         [HttpPost]
         public ActionResult Create(FormCollection collection) {
             try {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Show");
             } catch {
                 return View();
             }
         }
 
-        //
-        // GET: /Bank/Edit/5
 
-        public ActionResult Edit(int id) {
-            return View();
-        }
-
-        //
-        // POST: /Bank/Edit/5
 
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection) {
             try {
                 // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Show");
             } catch {
                 return View();
             }
         }
 
-        //
-        // GET: /Bank/Delete/5
-
-        public ActionResult Delete(int id) {
-            return View();
-        }
-
-        //
-        // POST: /Bank/Delete/5
 
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection) {
             try {
                 // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Show");
             } catch {
                 return View();
             }

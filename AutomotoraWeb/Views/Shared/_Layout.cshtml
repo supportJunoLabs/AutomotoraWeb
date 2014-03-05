@@ -63,11 +63,11 @@
     }
     
     @{
-        if (controller == AutomotoraWeb.Controllers.SalesController.SALES) { 
+        if (controller == AutomotoraWeb.Controllers.Sales.SalesController.SALES) { 
             @Html.Partial("_sidebarSales")
-        } else if (controller == AutomotoraWeb.Controllers.FinancingController.FINANCING) {
+        } else if (controller == AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING) {
             @Html.Partial("_sidebarFinancing")
-        } else if (controller == AutomotoraWeb.Controllers.BankController.BANK) {
+        } else if (controller == AutomotoraWeb.Controllers.Bank.BankController.BANK) {
             @Html.Partial("_sidebarBank")
         }
     }
@@ -80,25 +80,22 @@
 
 
             @{
-                if (controller == AutomotoraWeb.Controllers.SalesController.SALES) { 
+                if (controller == AutomotoraWeb.Controllers.Sales.SalesController.SALES) { 
                     <li class="active"><a href="#">Ventas</a></li>
-                    <li>@Html.ActionLink("Financiaciones", AutomotoraWeb.Controllers.FinancingController.INDEX, AutomotoraWeb.Controllers.FinancingController.FINANCING)</li>
-                    <li>@Html.ActionLink("Banco", AutomotoraWeb.Controllers.BankController.INDEX, AutomotoraWeb.Controllers.BankController.BANK)</li>
-                } 
-                else if (controller == AutomotoraWeb.Controllers.FinancingController.FINANCING) {
-                    <li>@Html.ActionLink("Ventas", AutomotoraWeb.Controllers.SalesController.INDEX, AutomotoraWeb.Controllers.SalesController.SALES)</li>
+                    <li>@Html.ActionLink("Financiaciones", AutomotoraWeb.Controllers.Financing.FinancingController.INDEX, AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING)</li>
+                    <li>@Html.ActionLink("Banco", AutomotoraWeb.Controllers.Bank.BankController.INDEX, AutomotoraWeb.Controllers.Bank.BankController.BANK)</li>
+                } else if (controller == AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING) {
+                    <li>@Html.ActionLink("Ventas", AutomotoraWeb.Controllers.Sales.SalesController.INDEX, AutomotoraWeb.Controllers.Sales.SalesController.SALES)</li>
                     <li class="active"><a href="#">Financiaciones</a></li>
-                    <li>@Html.ActionLink("Banco", AutomotoraWeb.Controllers.BankController.INDEX, AutomotoraWeb.Controllers.BankController.BANK)</li>
-                }
-                else if (controller == AutomotoraWeb.Controllers.BankController.BANK) {
-                    <li>@Html.ActionLink("Ventas", AutomotoraWeb.Controllers.SalesController.INDEX, AutomotoraWeb.Controllers.SalesController.SALES)</li>
-                    <li>@Html.ActionLink("Financiaciones", AutomotoraWeb.Controllers.FinancingController.INDEX, AutomotoraWeb.Controllers.FinancingController.FINANCING)</li>
+                    <li>@Html.ActionLink("Banco", AutomotoraWeb.Controllers.Bank.BankController.INDEX, AutomotoraWeb.Controllers.Bank.BankController.BANK)</li>
+                } else if (controller == AutomotoraWeb.Controllers.Bank.BankController.BANK) {
+                    <li>@Html.ActionLink("Ventas", AutomotoraWeb.Controllers.Sales.SalesController.INDEX, AutomotoraWeb.Controllers.Sales.SalesController.SALES)</li>
+                    <li>@Html.ActionLink("Financiaciones", AutomotoraWeb.Controllers.Financing.FinancingController.INDEX, AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING)</li>
                     <li class="active"><a href="#">Banco</a></li>
-                }
-                else{
-                    <li>@Html.ActionLink("Ventas", AutomotoraWeb.Controllers.SalesController.INDEX, AutomotoraWeb.Controllers.SalesController.SALES)</li>
-                    <li>@Html.ActionLink("Financiaciones", AutomotoraWeb.Controllers.FinancingController.INDEX, AutomotoraWeb.Controllers.FinancingController.FINANCING)</li>
-                    <li>@Html.ActionLink("Banco", AutomotoraWeb.Controllers.BankController.INDEX, AutomotoraWeb.Controllers.BankController.BANK)</li>
+                } else{
+                    <li>@Html.ActionLink("Ventas", AutomotoraWeb.Controllers.Sales.SalesController.INDEX, AutomotoraWeb.Controllers.Sales.SalesController.SALES)</li>
+                    <li>@Html.ActionLink("Financiaciones", AutomotoraWeb.Controllers.Financing.FinancingController.INDEX, AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING)</li>
+                    <li>@Html.ActionLink("Banco", AutomotoraWeb.Controllers.Bank.BankController.INDEX, AutomotoraWeb.Controllers.Bank.BankController.BANK)</li>
                 }
             }
         </ul>
