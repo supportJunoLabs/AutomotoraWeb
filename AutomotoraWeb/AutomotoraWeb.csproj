@@ -139,6 +139,7 @@
     <Compile Include="Controllers\Sales\Maintenanse\SellersController.cs" />
     <Compile Include="Controllers\Sales\SalesController.cs" />
     <Compile Include="Filters\AutorizacionActionFilterAttribute.cs" />
+    <Compile Include="Filters\GeneralModelActionFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
