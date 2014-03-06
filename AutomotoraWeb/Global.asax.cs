@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using TwitterBootstrapMVC;
 
 namespace AutomotoraWeb {
     // Nota: para obtener instrucciones sobre cómo habilitar el modo clásico de IIS6 o IIS7, 
@@ -25,6 +26,8 @@ namespace AutomotoraWeb {
 
             Application.Add(SessionUtils.APPLICATION_COMPANY_NAME, CompanyService.Instance.getCompanyName());
             Application.Add(SessionUtils.APPLICATION_SYSTEM_NAME, CompanyService.Instance.getSystemName());
+
+            Bootstrap.Configure();
         }
     }
 }

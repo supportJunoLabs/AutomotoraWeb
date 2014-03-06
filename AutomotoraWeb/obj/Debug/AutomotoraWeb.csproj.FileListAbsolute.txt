@@ -39,4 +39,8 @@ G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\System.Web.WebPage
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\System.Web.WebPages.Razor.resources.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.pdb
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\Portable.Licensing.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\T4MVCExtensions.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\TwitterBootstrapMVC.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\Portable.Licensing.xml
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.csprojResolveAssemblyReference.cache
