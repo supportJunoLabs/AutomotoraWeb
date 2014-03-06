@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Web.Mvc.Html;
 using AutomotoraWeb.Controllers;
 using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Utils;
 
 namespace AutomotoraWeb {
 
@@ -21,7 +22,7 @@ namespace AutomotoraWeb {
             string actionName = filterContext.ActionDescriptor.ActionName;
 
             if (!((controllerName.ToLower() == AuthenticationController.AUTHENTICATION) && (actionName.ToLower() == AuthenticationController.LOGIN))) {
-                if (filterContext.HttpContext.Session[AuthenticationController.SESSION_USER_NAME] == null) {
+                if (filterContext.HttpContext.Session[SessionUtils.SESSION_USER_NAME] == null) {
                     // Redireccionamos la peticion a la vista de login
 
                     if (filterContext.HttpContext.Request.IsAjaxRequest()) {

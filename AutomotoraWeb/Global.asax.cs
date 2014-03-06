@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutomotoraWeb.Services;
+using AutomotoraWeb.Utils;
+using DLL_Backend;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,6 +22,9 @@ namespace AutomotoraWeb {
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Application.Add(SessionUtils.APPLICATION_COMPANY_NAME, CompanyService.Instance.getCompanyName());
+            Application.Add(SessionUtils.APPLICATION_SYSTEM_NAME, CompanyService.Instance.getSystemName());
         }
     }
 }

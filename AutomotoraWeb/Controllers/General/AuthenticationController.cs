@@ -1,6 +1,7 @@
 ﻿using AutomotoraWeb.Controllers.Sales;
 using AutomotoraWeb.Models;
 using AutomotoraWeb.Services;
+using AutomotoraWeb.Utils;
 using DLL_Backend;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,6 @@ namespace AutomotoraWeb.Controllers.General {
         public static string LOGIN = "login";
         public static string CHANGE_PASSWORD = "changePassword";
 
-        public static string SESSION_USER_NAME = "userName";
-
         //------------------------------------------------------------------------------------------------------------------------
 
         [HttpGet]
@@ -31,10 +30,10 @@ namespace AutomotoraWeb.Controllers.General {
         public ActionResult Login(LoginModel model, string returnUrl) {
             if (ModelState.IsValid) {
                 try {
-                    if (SecurityManager.Instance.login(model.UserName, model.Password, Request.UserHostAddress)) {
+                    if (SecurityService.Instance.login(model.UserName, model.Password, Request.UserHostAddress)) {
 
                         FormsAuthentication.SetAuthCookie(model.UserName, false);
-                        Session[SESSION_USER_NAME] = model.UserName;
+                        Session[SessionUtils.SESSION_USER_NAME] = model.UserName;
 
                         if (!String.IsNullOrEmpty(returnUrl)) {
                             return Redirect(returnUrl);
@@ -69,8 +68,8 @@ namespace AutomotoraWeb.Controllers.General {
         public ActionResult ChangePassword(ChangePasswordModel model, string returnUrl) {
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)(Session[SESSION_USER_NAME]);
-                    SecurityManager.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword);
+                    string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
+                    SecurityService.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword);
 
                     if (!String.IsNullOrEmpty(returnUrl)) {
                         return Redirect(returnUrl);
@@ -104,7 +103,7 @@ namespace AutomotoraWeb.Controllers.General {
         [HttpGet]
         public ActionResult Logout() {
             FormsAuthentication.SignOut();
-            Session.Remove(SESSION_USER_NAME);
+            Session.Remove(SessionUtils.SESSION_USER_NAME);
             return View(LOGIN);
         }
 

@@ -5,19 +5,19 @@ using System.Linq;
 using System.Web;
 
 namespace AutomotoraWeb.Services {
-    public class SecurityManager {
+    public class SecurityService {
 
         #region Singleton definition
 
         // Variable estática para la instancia, se necesita utilizar una función lambda ya que el constructor es privado
-        private static readonly Lazy<SecurityManager> instance = new Lazy<SecurityManager>(() => new SecurityManager());
+        private static readonly Lazy<SecurityService> instance = new Lazy<SecurityService>(() => new SecurityService());
 
         // Constructor privado para evitar la instanciación directa
-        private SecurityManager() {
+        private SecurityService() {
         }
 
         // Propiedad para acceder a la instancia
-        public static SecurityManager Instance {
+        public static SecurityService Instance {
             get {
                 return instance.Value;
             }
