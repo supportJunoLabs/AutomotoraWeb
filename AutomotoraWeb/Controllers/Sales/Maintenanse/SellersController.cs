@@ -54,71 +54,77 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
         //-----------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult Create(Vendedor vendedor) {
+        public ActionResult Create(SellerModel seller) {
 
             if (ModelState.IsValid) {
                 try {
-                    vendedor.setearAuditoria(SessionUtils.SESSION_USER_NAME, Request.UserHostAddress);
-                    vendedor.Agregar();
+                    SalesService.Instance.createSeller(seller);
                     return RedirectToAction(BaseController.SHOW, SELLERS);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
-                    return View(vendedor);
+                    return View(seller);
                 } catch (Exception exc) {
                     ViewBag.ErrorCode = ERROR_CODE_SYSTEM_ERROR;
                     ViewBag.ErrorMessage = exc.Message;
-                    return View(vendedor);
+                    return View(seller);
                 }
             }
 
-            return View(vendedor);
+            return View(seller);
         }
 
         //-----------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult Edit(Vendedor vendedor) {
+        public ActionResult Edit(SellerModel seller) {
             if (ModelState.IsValid) {
                 try {
-                    vendedor.setearAuditoria(SessionUtils.SESSION_USER_NAME, Request.UserHostAddress);
-                    vendedor.ModificarDatos();
+                    SalesService.Instance.updateSeller(seller);
                     return RedirectToAction(BaseController.SHOW, SELLERS);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
-                    return View(vendedor);
+                    return View(seller);
                 } catch (Exception exc) {
                     ViewBag.ErrorCode = ERROR_CODE_SYSTEM_ERROR;
                     ViewBag.ErrorMessage = exc.Message;
-                    return View(vendedor);
+                    return View(seller);
                 }
             }
 
-            return View(vendedor);
+            return View(seller);
         }
 
         //-----------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult Delete(Vendedor vendedor) {
+        public ActionResult Delete(SellerModel seller) {
             if (ModelState.IsValid) {
                 try {
-                    vendedor.setearAuditoria(SessionUtils.SESSION_USER_NAME, Request.UserHostAddress);
-                    vendedor.Eliminar();
+                    SalesService.Instance.deleteSeller(seller);
                     return RedirectToAction(BaseController.SHOW, SELLERS);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
-                    return View(vendedor);
+                    return View(seller);
                 } catch (Exception exc) {
                     ViewBag.ErrorCode = ERROR_CODE_SYSTEM_ERROR;
                     ViewBag.ErrorMessage = exc.Message;
-                    return View(vendedor);
+                    return View(seller);
                 }
             }
 
-            return View(vendedor);
+            return View(seller);
+        }
+
+        //-----------------------------------------------------------------------------------------------------
+
+        [HttpPost]
+        public JsonResult nameAvailable(string name, int id) {
+            SellerModel seller = new SellerModel() {Name = name, Id = id};
+            bool result = SalesService.Instance.existSeller(seller);
+            return Json(result);
         }
 
     }

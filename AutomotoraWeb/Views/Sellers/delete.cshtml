@@ -7,6 +7,7 @@
 
 <h2>Detalles</h2>
 
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS, FormMethod.Post)) {
     @Html.ValidationSummary(true)
@@ -20,6 +21,7 @@
             </div>
             <div class="display-field">
                 @Html.DisplayFor(model => model.Name)
+                @Html.HiddenFor(model => model.Name)
             </div>
         </div>
         <div class="details-field">
@@ -28,6 +30,7 @@
             </div>
             <div class="display-field">
                 @Html.DisplayFor(model => model.Address)
+                @Html.HiddenFor(model => model.Address)
             </div>
         </div>
 
@@ -37,6 +40,7 @@
             </div>
             <div class="display-field">
                 @Html.DisplayFor(model => model.Telephone)
+                @Html.HiddenFor(model => model.Telephone)
             </div>
         </div>
 
@@ -46,6 +50,7 @@
             </div>
             <div class="display-field">
                 @Html.DisplayFor(model => model.IngressDate)
+                @Html.HiddenFor(model => model.IngressDate)
             </div>
         </div>
         <div class="details-field">
@@ -54,6 +59,7 @@
             </div>
             <div class="display-field">
                 @Html.DisplayFor(model => model.Observations)
+                @Html.HiddenFor(model => model.Observations)
             </div>
         </div>
         <div class="details-field">
@@ -62,6 +68,7 @@
             </div>
             <div class="display-field">
                 @Html.CheckBoxFor(model => model.Enabled, new {@disabled="disabled"})
+                @Html.HiddenFor(model => model.Enabled)
             </div>
         </div>
     </fieldset>
@@ -69,7 +76,7 @@
     <div class="espacio2"></div>
     
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Tooltip("Eliminar Vendedor"))
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Tooltip("Eliminar Vendedor").Data(new { id = Model.Id }))
         @(Html.Bootstrap().ActionLinkButton("Cancelar", AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS).Class("btn btn-default"))
     </div>
 

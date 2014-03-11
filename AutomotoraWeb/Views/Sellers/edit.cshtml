@@ -7,6 +7,7 @@
 
 <h2>Editar</h2>
 
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS, FormMethod.Post)) {
     @Html.ValidationSummary(true)
@@ -44,7 +45,7 @@
             @Html.LabelFor(model => model.IngressDate)
         </div>
         <div class="editor-field editor-field-small">
-            @Html.TextBoxFor(model => model.IngressDate, new { @class = "ayuda-calendario" })
+            @Html.EditorFor(model => model.IngressDate)
             @Html.ValidationMessageFor(model => model.IngressDate)
         </div>
 

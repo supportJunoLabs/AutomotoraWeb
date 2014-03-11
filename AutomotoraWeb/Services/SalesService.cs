@@ -74,6 +74,14 @@ namespace AutomotoraWeb.Services {
         }
 
         //------------------------------------------------------------
+
+        public bool existSeller(SellerModel seller){
+            Vendedor vendedor = this.mapSellerModel(seller);
+            vendedor.Consultar();
+            return false; // TODO
+        }
+
+        //------------------------------------------------------------
         //------------------------------------------------------------
 
         private SellerModel mapSellerModel(Vendedor vendedor) {
