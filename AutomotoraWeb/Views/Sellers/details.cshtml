@@ -1,6 +1,82 @@
-﻿@{
+﻿@model AutomotoraWeb.Models.SellerModel
+
+@{
     ViewBag.Title = "details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>details</h2>
+<h2>Detalles</h2>
+
+
+@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.DETAILS, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS, FormMethod.Post)) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Name): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Address): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Address)
+            </div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Telephone): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Telephone)
+            </div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.IngressDate):
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.IngressDate)
+            </div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Observations): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Observations)
+            </div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Enabled): 
+            </div>
+            <div class="display-field">
+                @Html.CheckBoxFor(model => model.Enabled, new {@disabled="disabled"})
+            </div>
+        </div>
+    </fieldset>
+    
+    <div class="espacio2"></div>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().ActionLinkButton("Modificar", AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS).Data(new { id = Model.Id }).Class("btn btn-primary").Title("Editar Vendedor"))
+        @(Html.Bootstrap().ActionLinkButton("Eliminar", AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS).Data(new { id = Model.Id }).Class("btn btn-primary").Title("Eliminar Vendedor"))
+        @(Html.Bootstrap().ActionLinkButton("Volver", AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS).Class("btn btn-default").Title("Volver a Lista Vendedores"))
+    </div>
+
+}
+
+
+@section Scripts {
+}
+

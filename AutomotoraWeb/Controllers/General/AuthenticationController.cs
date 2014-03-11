@@ -69,7 +69,7 @@ namespace AutomotoraWeb.Controllers.General {
             if (ModelState.IsValid) {
                 try {
                     string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
-                    SecurityService.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword);
+                    SecurityService.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword, Request.UserHostAddress);
 
                     if (!String.IsNullOrEmpty(returnUrl)) {
                         return Redirect(returnUrl);

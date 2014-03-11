@@ -7,6 +7,7 @@
 
     @*Los estilos van primero porque los precisa la pagina para renderizar*@
     @Styles.Render("~/Content/css")   @*Bootstrap  awesome y template propio*@
+    @Styles.Render("~/Content/themes/base/css")   @*Los estilos para los controles de jquery-ui*@
 
     @*El modernizer va siempre arriba, porque lo necesita el navegador para renderizar en navegadores antiguos*@
     @Scripts.Render("~/bundles/modernizr")
@@ -103,7 +104,7 @@
         </div>
 
         <div class="container-fluid">
-            <div class="row-fluid contPagina">
+            <div class="row-fluid pageContainer">
                 @RenderBody()
             </div>
         </div>
@@ -113,5 +114,18 @@
     @Scripts.Render("~/bundles/jqueryui")  @*Los scripts de jquery-uy*@
     @Scripts.Render("~/bundles/jqueryval") @*Los scripts de validacion del jquery*@
     @RenderSection("scripts", required: false)  @*Los scripts adicionales de cada seccion si los tiene *@
+
+    <script>
+        $(document).ready(function () {
+
+            $('.ayuda-calendario').datepicker({
+                changeMonth: true,
+                dateFormat: "dd/mm/yy",
+                changeYear: true,
+                showAnim: 'slideDown'
+            });
+        });
+    </script>
+
 </body>
 </html>

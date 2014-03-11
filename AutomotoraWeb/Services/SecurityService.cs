@@ -33,16 +33,18 @@ namespace AutomotoraWeb.Services {
             Usuario user = new Usuario();
             user.Username = userName;
             user.Clave = password;
+            user.setearAuditoria(userName, ip);
 
             return user.Login(ip);
         }
 
         //------------------------------------------------------------
 
-        public void changePassword(string userName, string actualPassword, string newPassword, string repeatNewPassword) {
+        public void changePassword(string userName, string actualPassword, string newPassword, string repeatNewPassword, string ip) {
             Usuario user = new Usuario();
             user.Username = userName;
             user.Clave = actualPassword;
+            user.setearAuditoria(userName, ip);
 
             user.CambiarClave(actualPassword, newPassword, repeatNewPassword);
         }

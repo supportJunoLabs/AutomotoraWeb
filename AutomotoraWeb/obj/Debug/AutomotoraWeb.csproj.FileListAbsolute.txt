@@ -5,6 +5,7 @@ G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\DLL_Backend.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\EntityFramework.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\Microsoft.Web.Infrastructure.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\Newtonsoft.Json.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\Portable.Licensing.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\System.Net.Http.Formatting.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\System.Web.Http.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\System.Web.Http.WebHost.dll
@@ -15,7 +16,10 @@ G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\System.Web.Razor.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\System.Web.WebPages.Deployment.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\System.Web.WebPages.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\System.Web.WebPages.Razor.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\T4MVCExtensions.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\TwitterBootstrapMVC.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\WebGrease.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\Portable.Licensing.xml
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\EntityFramework.xml
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\Newtonsoft.Json.xml
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\System.Net.Http.Formatting.xml
@@ -39,8 +43,8 @@ G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\System.Web.WebPage
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\System.Web.WebPages.Razor.resources.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.pdb
-G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\Portable.Licensing.dll
-G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\T4MVCExtensions.dll
-G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\TwitterBootstrapMVC.dll
-G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\Portable.Licensing.xml
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\EntityFramework.SqlServer.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\LinqKit.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\EntityFramework.SqlServer.xml
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\EntityFramework.SqlServer.resources.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.csprojResolveAssemblyReference.cache

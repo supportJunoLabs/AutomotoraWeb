@@ -1,4 +1,4 @@
-﻿@model AutomotoraWeb.Models.Seller
+﻿@model List<AutomotoraWeb.Models.SellerModel>
 
 @{
     ViewBag.Title = "Vendedores";
@@ -8,7 +8,7 @@
 <div class="row-fluid">
     <div class="btn-toolbar">
         <div class="btn-group">
-            @(Html.Bootstrap().ActionLinkButton("Agregar Vendedor", "Create").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(ButtonStyle.Primary).Title("Agregar Vendedor")
+            @(Html.Bootstrap().ActionLinkButton("Agregar Vendedor", "Create").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(ButtonStyle.Primary).Title("Agregar Vendedor"))
         )
         </div>
         @*<div class="btn-group">

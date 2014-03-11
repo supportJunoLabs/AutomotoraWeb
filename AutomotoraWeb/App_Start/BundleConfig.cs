@@ -43,6 +43,7 @@ namespace AutomotoraWeb {
                 "~/Content/themes/" + THEME + "/build/lib/bootstrap/js/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/themes/extraTemplate.css",
                 "~/Content/themes/" + THEME + "/build/lib/bootstrap/css/bootstrap.css",
                 "~/Content/themes/" + THEME + "/build/stylesheets/theme.css",
                 "~/Content/themes/" + THEME + "/build/lib/font-awesome/css/font-awesome.css"));

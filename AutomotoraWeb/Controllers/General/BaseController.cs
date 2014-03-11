@@ -25,6 +25,8 @@ namespace AutomotoraWeb.Controllers.General {
         public static string EDIT = "edit";
         public static string DELETE = "delete";
 
+        public static string ERROR_CODE_SYSTEM_ERROR = "SYSTEM_ERROR";
+
         public abstract string getParentControllerName();
 
     }
