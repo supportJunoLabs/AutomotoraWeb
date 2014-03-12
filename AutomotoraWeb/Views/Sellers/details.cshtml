@@ -1,11 +1,9 @@
 ﻿@model AutomotoraWeb.Models.SellerModel
 
 @{
-    ViewBag.Title = "details";
+    ViewBag.Title = "Detalles";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Detalles</h2>
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
@@ -70,8 +68,8 @@
     <div class="espacio2"></div>
     
     <div class="btn-toolbar">
-        @(Html.Bootstrap().ActionLinkButton("Modificar", AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS).Data(new { id = Model.Id }).Class("btn btn-primary").Title("Editar Vendedor"))
-        @(Html.Bootstrap().ActionLinkButton("Eliminar", AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS).Data(new { id = Model.Id }).Class("btn btn-primary").Title("Eliminar Vendedor"))
+        @(Html.Bootstrap().ActionLinkButton("Modificar", AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Editar Vendedor"))
+        @(Html.Bootstrap().ActionLinkButton("Eliminar", AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Eliminar Vendedor"))
         @(Html.Bootstrap().ActionLinkButton("Volver", AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.SellersController.SELLERS).Class("btn btn-default").Title("Volver a Lista Vendedores"))
     </div>
 

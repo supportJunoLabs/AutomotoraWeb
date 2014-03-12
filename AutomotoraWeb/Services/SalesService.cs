@@ -109,6 +109,7 @@ namespace AutomotoraWeb.Services {
             vendedor.Telefono = sellerModel.Telephone;
             vendedor.Habilitado = sellerModel.Enabled;
             vendedor.Foto = sellerModel.Photo;
+            vendedor.setearAuditoria(sellerModel.UserName, sellerModel.IP);
             return vendedor;
         }
 

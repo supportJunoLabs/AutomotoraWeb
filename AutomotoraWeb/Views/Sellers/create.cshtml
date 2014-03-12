@@ -1,11 +1,9 @@
 ﻿@model AutomotoraWeb.Models.SellerModel
 
 @{
-    ViewBag.Title = "create";
+    ViewBag.Title = "Crear";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Crear</h2>
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
@@ -47,7 +45,7 @@
             @Html.LabelFor(model => model.IngressDate)
         </div>
         <div class="editor-field editor-field-small">
-            @Html.TextBoxFor(model => model.IngressDate, new { @class = "ayuda-calendario" })
+            @Html.EditorFor(model => model.IngressDate)
             @Html.ValidationMessageFor(model => model.IngressDate)
         </div>
 
