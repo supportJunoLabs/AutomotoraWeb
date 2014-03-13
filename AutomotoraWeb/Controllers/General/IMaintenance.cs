@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace AutomotoraWeb.Controllers.General {
     public interface IMaintenance {
         
-        ActionResult Show();
+        //ActionResult Show();
 
         ActionResult Details(int id);
 

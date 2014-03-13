@@ -200,6 +200,21 @@
     <Compile Include="Utils\SessionUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\18\consultar.png" />
+    <Content Include="Content\Images\18\Delete.png" />
+    <Content Include="Content\Images\18\edit.png" />
+    <Content Include="Content\Images\24\consultar.png" />
+    <Content Include="Content\Images\24\Delete.png" />
+    <Content Include="Content\Images\24\edit.png" />
+    <Content Include="Content\Images\agregar.png" />
+    <Content Include="Content\Images\agregar2.png" />
+    <Content Include="Content\Images\consultar.png" />
+    <Content Include="Content\Images\Delete.png" />
+    <Content Include="Content\Images\edit.png" />
+    <Content Include="Content\Images\error.png" />
+    <Content Include="Content\Images\Excel.png" />
+    <Content Include="Content\Images\fondo.png" />
+    <Content Include="Content\Images\imprimir.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -1410,6 +1425,7 @@
     <Content Include="Content\themes\WintertideAdmin\build\lib\jqplot\examples\syntaxhighlighter\LGPL-LICENSE" />
     <Content Include="Content\themes\WintertideAdmin\build\lib\jqplot\examples\syntaxhighlighter\MIT-LICENSE" />
     <Content Include="Content\themes\WintertideAdmin\Readme" />
+    <Content Include="Content\Images\vssver2.scc" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />

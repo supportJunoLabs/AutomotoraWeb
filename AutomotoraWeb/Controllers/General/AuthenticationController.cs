@@ -15,6 +15,7 @@ namespace AutomotoraWeb.Controllers.General {
 
         public static string AUTHENTICATION = "authentication";
         public static string LOGIN = "login";
+        public static string LOGOUT = "logout";
         public static string CHANGE_PASSWORD = "changePassword";
 
         //------------------------------------------------------------------------------------------------------------------------

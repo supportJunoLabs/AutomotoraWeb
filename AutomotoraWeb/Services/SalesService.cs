@@ -62,7 +62,7 @@ namespace AutomotoraWeb.Services {
 
         //------------------------------------------------------------
 
-        public List<SellerModel> listSellers(SellerModel sellerModel) {
+        public List<SellerModel> listSellers() {
             List<Vendedor> vendedores = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
             List<SellerModel> sellers = new List<SellerModel>();
 
