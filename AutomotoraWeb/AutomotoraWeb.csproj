@@ -1426,6 +1426,7 @@
     <Content Include="Content\themes\WintertideAdmin\build\lib\jqplot\examples\syntaxhighlighter\MIT-LICENSE" />
     <Content Include="Content\themes\WintertideAdmin\Readme" />
     <Content Include="Content\Images\vssver2.scc" />
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
