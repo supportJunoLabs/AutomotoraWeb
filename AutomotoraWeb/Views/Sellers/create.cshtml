@@ -24,6 +24,7 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
+        <div class="clear-both"></div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Address)
@@ -32,6 +33,7 @@
             @Html.EditorFor(model => model.Address)
             @Html.ValidationMessageFor(model => model.Address)
         </div>
+        <div class="clear-both"></div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Telephone)
@@ -40,8 +42,9 @@
             @Html.EditorFor(model => model.Telephone)
             @Html.ValidationMessageFor(model => model.Telephone)
         </div>
+        <div class="clear-both"></div>
 
-        <div class="editor-label">
+        <div class="editor-label editor-date-field">
             @Html.LabelFor(model => model.IngressDate)
         </div>
         <div class="editor-field editor-field-small">
@@ -56,6 +59,7 @@
             ).GetHtml()
             @Html.ValidationMessageFor(model => model.IngressDate)
         </div>
+        <div class="clear-both"></div>
 
         <div class="editor-label ">
             @Html.LabelFor(model => model.Observations)
@@ -64,6 +68,7 @@
             @Html.EditorFor(model => model.Observations)
             @Html.ValidationMessageFor(model => model.Observations)
         </div>
+        <div class="clear-both"></div>
 
         <div class="editor-label ">
             @Html.LabelFor(model => model.Enabled)
@@ -72,6 +77,7 @@
             @Html.CheckBoxFor(model => model.Enabled)
             @Html.ValidationMessageFor(model => model.Enabled)
         </div>
+        <div class="clear-both"></div>
 
         <div class="espacio2"></div>
         <div class="btn-toolbar">
