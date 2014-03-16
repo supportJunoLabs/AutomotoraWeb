@@ -24,7 +24,6 @@ namespace AutomotoraWeb.Models {
 
         [Required(ErrorMessage = "La fecha de Ingreso del Vendedor es obligatoria")]
         [Display(Name = "Fecha de Ingreso")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime IngressDate { get; set; }
 
         [StringLength(80, ErrorMessage = "Largo máximo 80 caracteres")]

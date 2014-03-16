@@ -43,7 +43,16 @@
             @Html.LabelFor(model => model.IngressDate)
         </div>
         <div class="editor-field editor-field-small">
-            @Html.EditorFor(model => model.IngressDate)
+            @Html.DevExpress().DateEdit(
+                settings => {
+                    settings.Date = Model.IngressDate;
+                    settings.Name = "IngressDate";
+                    settings.Properties.UseMaskBehavior = true;
+                    settings.Properties.EditFormat = EditFormat.Custom;
+                    settings.Properties.EditFormatString = "dd/MM/yyyy";
+                    settings.Height = 28;
+                }
+            ).GetHtml()
             @Html.ValidationMessageFor(model => model.IngressDate)
         </div>
 
