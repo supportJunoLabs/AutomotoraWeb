@@ -16,10 +16,6 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
 
         public static string SELLERS = "sellers";
 
-        /*public ActionResult Show() {
-            return View();
-        }*/
-
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] SellerModel seller) {
             return View(SalesService.Instance.listSellers());
         }

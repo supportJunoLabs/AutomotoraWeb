@@ -29,8 +29,10 @@ namespace AutomotoraWeb.Filters {
 
             // Obtengo de la session y de application datos a mostrar en todas las pantallas y guardo para pasar a todas las vistas
             filterContext.Controller.ViewBag.userName = (string)filterContext.HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+            filterContext.Controller.ViewBag.menuOptions = (List<MenuOptionModel>)filterContext.HttpContext.Session.Contents[SessionUtils.SESSION_MENU_OPTIONS];
             filterContext.Controller.ViewBag.companyName = (string)filterContext.HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME];
             filterContext.Controller.ViewBag.systemName = (string)filterContext.HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME];
+
 
             // Para que al pasar desde el controller al servicio los objetos del modelo (como parámetro)
             // estos contengan IP y username para auditoria, evitando tener que pasarlos por parametros en cada uno de los servicios

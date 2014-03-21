@@ -31,10 +31,13 @@ namespace AutomotoraWeb.Controllers.General {
         public ActionResult Login(LoginModel model, string returnUrl) {
             if (ModelState.IsValid) {
                 try {
-                    if (SecurityService.Instance.login(model.UserName, model.Password, Request.UserHostAddress)) {
+                    String IP = Request.UserHostAddress;
+                    if (SecurityService.Instance.login(model.UserName, model.Password, IP)) {
 
                         FormsAuthentication.SetAuthCookie(model.UserName, false);
                         Session[SessionUtils.SESSION_USER_NAME] = model.UserName;
+
+                        Session[SessionUtils.SESSION_MENU_OPTIONS] = MenuService.Instance.getMenuOptions(model.UserName, IP);
 
                         if (!String.IsNullOrEmpty(returnUrl)) {
                             return Redirect(returnUrl);
