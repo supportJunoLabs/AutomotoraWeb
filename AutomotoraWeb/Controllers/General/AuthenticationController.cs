@@ -37,6 +37,7 @@ namespace AutomotoraWeb.Controllers.General {
                         FormsAuthentication.SetAuthCookie(model.UserName, false);
                         Session[SessionUtils.SESSION_USER_NAME] = model.UserName;
 
+                        // Se obtienen opciones del menu
                         Session[SessionUtils.SESSION_MENU_OPTIONS] = MenuService.Instance.getMenuOptions(model.UserName, IP);
 
                         if (!String.IsNullOrEmpty(returnUrl)) {

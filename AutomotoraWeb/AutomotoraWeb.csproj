@@ -1464,7 +1464,6 @@
     <Content Include="Views\Authentication\login.cshtml" />
     <Content Include="Views\Authentication\changePassword.cshtml" />
     <Content Include="Views\Authentication\forgetPassword.cshtml" />
-    <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_LayoutAuthorization.cshtml" />
     <Content Include="Views\Shared\_sidebarSales.cshtml" />
     <Content Include="Views\Shared\_sidebarBank.cshtml" />
