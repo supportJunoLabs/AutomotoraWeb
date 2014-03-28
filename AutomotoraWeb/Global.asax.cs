@@ -26,6 +26,7 @@ namespace AutomotoraWeb {
 
             Application.Add(SessionUtils.APPLICATION_COMPANY_NAME, CompanyService.Instance.getCompanyName());
             Application.Add(SessionUtils.APPLICATION_SYSTEM_NAME, CompanyService.Instance.getSystemName());
+            Application.Add(SessionUtils.APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS, SecurityService.Instance.getPermissiblesControllerAction());
 
             Bootstrap.Configure();
         }

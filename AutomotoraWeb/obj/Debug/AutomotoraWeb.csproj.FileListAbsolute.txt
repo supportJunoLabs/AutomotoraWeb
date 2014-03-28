@@ -47,4 +47,3 @@ G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\EntityFramework.SqlSe
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\LinqKit.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\EntityFramework.SqlServer.xml
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\EntityFramework.SqlServer.resources.dll
-G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.csprojResolveAssemblyReference.cache

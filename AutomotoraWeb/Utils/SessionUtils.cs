@@ -5,9 +5,10 @@ using System.Web;
 
 namespace AutomotoraWeb.Utils {
     public class SessionUtils {
-        public static string SESSION_USER_NAME = "userName";
-        public static string SESSION_MENU_OPTIONS = "menuOptions";
-        public static string APPLICATION_COMPANY_NAME = "companyName";
-        public static string APPLICATION_SYSTEM_NAME = "systemName";
+        public static string SESSION_USER_NAME = "sessionUserName";
+        public static string SESSION_MENU_OPTIONS = "sessionMenuOptions";
+        public static string APPLICATION_COMPANY_NAME = "applicationCompanyName";
+        public static string APPLICATION_SYSTEM_NAME = "applicationSystemName";
+        public static string APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS = "applicationPermisiblesActionController";
     }
 }
