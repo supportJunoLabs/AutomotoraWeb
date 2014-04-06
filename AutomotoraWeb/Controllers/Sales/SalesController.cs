@@ -18,5 +18,6 @@ namespace AutomotoraWeb.Controllers.Sales {
         public override string getParentControllerName() {
             return SALES;
         }
+
     }
 }

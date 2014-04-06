@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>SGA: Error 500</title>
+    @Styles.Render("~/Content/css") @*Bootstrap awesome y template propio*@
+</head>
+<body class="http-error">
+    <div class="row-fluid">
+        <div class="http-error">
+            <h1>
+                Oops!</h1>
+            <p class="info">
+                Problema en el servidor.</p>
+            <p>
+                <i class="icon-home"></i>
+            </p>
+            <p>
+            @(Html.Bootstrap().ActionLinkButton("Volver al inicio",AutomotoraWeb.Controllers.Sales.SalesController.INDEX,AutomotoraWeb.Controllers.Sales.SalesController.SALES).Class("btn btn-default"))
+        </div>
+    </div>
+</body>
+</html>

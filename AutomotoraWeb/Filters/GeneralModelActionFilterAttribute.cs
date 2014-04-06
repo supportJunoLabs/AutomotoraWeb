@@ -17,7 +17,7 @@ namespace AutomotoraWeb.Filters {
 
             base.OnActionExecuting(filterContext);
 
-            if (filterContext.Controller.GetType() != typeof(AuthenticationController)) {
+            if ((filterContext.Controller.GetType() != typeof(AuthenticationController)) && (filterContext.Controller.GetType() != typeof(ErrorController))) {
                 var baseController = filterContext.Controller as BaseController;
 
                 if (baseController == null) {

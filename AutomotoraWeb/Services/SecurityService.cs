@@ -48,7 +48,7 @@ namespace AutomotoraWeb.Services {
             user.Clave = actualPassword;
             user.setearAuditoria(userName, ip);
 
-            user.CambiarClave(actualPassword, newPassword, repeatNewPassword);
+            user.CambiarClave(actualPassword, newPassword, repeatNewPassword, ip);
         }
 
         //------------------------------------------------------------
@@ -57,12 +57,12 @@ namespace AutomotoraWeb.Services {
 
             controller = controller.ToLower();
             action = action.ToLower();
-            if (isHomePageSection(controller, action)) {
+            if (isHomePageSection(controller, action) || isErrorPage(controller, action)) {
                 // Caso homepage de Ventas, Financiaciones y Banco
                 return true;
             } else if (isControllerNameMaintenance(controller)
                       && isActionNameMaintenance(action)
-                      && ((dictionaryOptions[controller] != null) && (dictionaryOptions[controller][BaseController.SHOW]))) {
+                      && (dictionaryOptions.ContainsKey(controller) && (dictionaryOptions[controller][BaseController.SHOW]))) {
                 // Caso de opción que no es de menu pero depende de este (ej: create, edit, delete, details de los mantenimientos que dependen de que se tengan permisos sobre el show)
                 action = BaseController.SHOW;
             }
@@ -102,7 +102,8 @@ namespace AutomotoraWeb.Services {
             return (actionName == SellersController.CREATE) ||
                    (actionName == SellersController.DELETE) ||
                    (actionName == SellersController.DETAILS) ||
-                   (actionName == SellersController.EDIT);
+                   (actionName == SellersController.EDIT) ||
+                   (actionName.Substring(0, 4) == SellersController.LIST);
         }
 
         //----------------------------------------------------------
@@ -116,6 +117,15 @@ namespace AutomotoraWeb.Services {
 
         private bool isHomePageSection(string controllerName, string actionName) {
             return ((controllerName == SellersController.SALES) && (actionName == SellersController.INDEX)); // TODO: agregar Financiaciones y Bancos
+        }
+
+        //----------------------------------------------------------
+
+        private bool isErrorPage(string controllerName, string actionName) {
+            return ((controllerName == ErrorController.ERROR) && 
+                    ((actionName == ErrorController.ERROR_403) || 
+                     (actionName == ErrorController.ERROR_404) || 
+                     (actionName == ErrorController.ERROR_500))); // TODO: agregar nuevos Errores
         }
 
         //----------------------------------------------------------

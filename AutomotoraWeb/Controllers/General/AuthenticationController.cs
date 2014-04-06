@@ -50,11 +50,11 @@ namespace AutomotoraWeb.Controllers.General {
                     model.ErrorCode = "U001";
                     model.ErrorMessage = exc.Message;
                     return View(LOGIN, model);
-                } catch (Exception exc) {
+                } /*catch (Exception exc) {
                     model.ErrorCode = "U002";
-                    model.ErrorMessage = exc.Message;
+                    model.ErrorMessage = exc.Message + " |||||| " + exc.InnerException + " |||||| " + exc.StackTrace;
                     return View(LOGIN, model);
-                }
+                }*/
             }
 
             return View(model);
@@ -85,11 +85,11 @@ namespace AutomotoraWeb.Controllers.General {
                     model.ErrorCode = "U001";
                     model.ErrorMessage = exc.Message;
                     return View(CHANGE_PASSWORD, model);
-                } catch (Exception exc) {
+                } /*catch (Exception exc) {
                     model.ErrorCode = "U002";
                     model.ErrorMessage = exc.Message;
                     return View(CHANGE_PASSWORD, model);
-                }
+                }*/
             }
 
             return View(model);
@@ -113,6 +113,13 @@ namespace AutomotoraWeb.Controllers.General {
         }
 
         //------------------------------------------------------------------------------------------------------------------------
+
+        
+        [HttpGet]
+        public ActionResult Error403() {
+            HttpContext.AddError(new HttpException(403, "Access Denied"));
+            return View();
+        }
 
     }
 }
