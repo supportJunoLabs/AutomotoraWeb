@@ -1,4 +1,5 @@
 ﻿@model AutomotoraWeb.Models.SellerModel
+@using AutomotoraWeb.Helpers;
 
 @{
     ViewBag.Title = "Editar";
@@ -16,16 +17,16 @@
         <legend></legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelForRequired(model => model.Name)
         </div>
-        <div class="editor-field editor-field-large">
+        <div class="editor-field editor-field-xxlarge">
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
         <div class="clear-both"></div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Address)
+            @Html.LabelForRequired(model => model.Address)
         </div>
         <div class="editor-field editor-field-xxlarge">
             @Html.EditorFor(model => model.Address)
@@ -34,7 +35,7 @@
         <div class="clear-both"></div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Telephone)
+            @Html.LabelForRequired(model => model.Telephone)
         </div>
         <div class="editor-field editor-field-large">
             @Html.EditorFor(model => model.Telephone)
@@ -43,7 +44,7 @@
         <div class="clear-both"></div>
 
         <div class="editor-label editor-date-field">
-            @Html.LabelFor(model => model.IngressDate)
+            @Html.LabelForRequired(model => model.IngressDate)
         </div>
         <div class="editor-field editor-field-small">
             @Html.DevExpress().DateEdit(
@@ -61,16 +62,16 @@
         <div class="clear-both"></div>
 
         <div class="editor-label ">
-            @Html.LabelFor(model => model.Observations)
+            @Html.LabelForRequired(model => model.Observations)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.EditorFor(model => model.Observations)
+            @Html.TextAreaFor(model => model.Observations, new { style="width: 250px; height: 60px" })
             @Html.ValidationMessageFor(model => model.Observations)
         </div>
         <div class="clear-both"></div>
 
         <div class="editor-label ">
-            @Html.LabelFor(model => model.Enabled)
+            @Html.LabelForRequired(model => model.Enabled)
         </div>
         <div class="editor-field editor-field-xxlarge">
             @Html.CheckBoxFor(model => model.Enabled)

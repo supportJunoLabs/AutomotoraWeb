@@ -10,7 +10,7 @@ namespace AutomotoraWeb.Models {
     public class SellerModel : AbstractModel {
 
         [Required(ErrorMessage = "El nombre del vendedor es obligatorio")]
-        [StringLength(30, ErrorMessage = "Largo máximo 30 caracteres")]
+        [StringLength(50, ErrorMessage = "Largo máximo 50 caracteres")]
         [Display(Name = "Nombre")]
         public string Name { get; set; }
 
@@ -18,7 +18,7 @@ namespace AutomotoraWeb.Models {
         [Display(Name = "Dirección")]
         public string Address { get; set; }
 
-        [StringLength(30, ErrorMessage = "Largo máximo 30 caracteres")]
+        [StringLength(50, ErrorMessage = "Largo máximo 50 caracteres")]
         [Display(Name = "Teléfono")]
         public string Telephone { get; set; }
 

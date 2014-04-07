@@ -46,12 +46,12 @@
                 
         //Columnas Visibles (Propiedades)
         settings.Columns.Add("Id").Visible = false; ;
-        settings.Columns.Add("Name").Settings.HeaderFilterMode=HeaderFilterMode.CheckedList;
-        settings.Columns.Add("Address");
-        settings.Columns.Add("Telephone");
-        settings.Columns.Add("IngressDate").PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
-        settings.Columns.Add("Observations");
-        settings.Columns.Add("Enabled");
+        settings.Columns.Add("Name", "Nombre").Settings.HeaderFilterMode=HeaderFilterMode.CheckedList;
+        settings.Columns.Add("Address", "Dirección");
+        settings.Columns.Add("Telephone", "Telefono");
+        settings.Columns.Add("IngressDate","Fecha de Ingreso").PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+        settings.Columns.Add("Observations","Observaciones");
+        settings.Columns.Add("Enabled","Habilitado", MVCxGridViewColumnType.CheckBox);
         //Columnas Ocultas
         //settings.Columns.Add("UsuarioMod").Visible = false;
         //settings.Columns.Add("FechaMod").Visible = false;
