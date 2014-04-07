@@ -1541,6 +1541,7 @@
     <Content Include="Views\Error\error403.cshtml" />
     <Content Include="Views\Error\error404.cshtml" />
     <Content Include="Views\Error\error500.cshtml" />
+    <Content Include="Views\Shared\_menuUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

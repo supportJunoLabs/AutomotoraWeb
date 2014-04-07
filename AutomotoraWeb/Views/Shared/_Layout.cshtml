@@ -63,19 +63,9 @@
     <!-- HEADER, NAVBAR -->
     <div class="navbar" id="pagHeader">
         <div class="navbar-inner" id="menuHeader">
-            <ul class="nav pull-right">
-                <li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">Settings</a></li>
-                <li id="fat-menu" class="dropdown"><a href="#" role="button" class="dropdown-toggle"
-                    data-toggle="dropdown"><i class="icon-user"></i>@ViewBag.userName<i class="icon-caret-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Cambiar contraña", AutomotoraWeb.Controllers.General.AuthenticationController.CHANGE_PASSWORD, AutomotoraWeb.Controllers.General.AuthenticationController.AUTHENTICATION)</li>
-                        <li class="divider"></li>
-                        <li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
-                        <li class="divider visible-phone"></li>
-                        <li>@Html.ActionLink("Cerrar sesión", AutomotoraWeb.Controllers.General.AuthenticationController.LOGOUT, AutomotoraWeb.Controllers.General.AuthenticationController.AUTHENTICATION)</li>
-                    </ul>
-                </li>
-            </ul>
+
+            @Html.Partial("_menuUser")
+            
             <div id="nomsistema">
                 <a class="brand" href="#" style="color:white;">
                     <span>@ViewBag.systemName</span>

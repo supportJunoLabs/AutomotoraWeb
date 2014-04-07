@@ -1,0 +1,19 @@
+﻿
+
+
+
+    <ul class="nav pull-right">
+        <li id="fat-menu" class="dropdown">
+            <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-user"></i>@ViewBag.userName<i class="icon-caret-down"></i>
+            </a>
+
+            <ul class="dropdown-menu">
+            @foreach (var x in (Dictionary<int, AutomotoraWeb.Models.MenuOptionModel>)(ViewBag.menuOptions[AutomotoraWeb.Services.MenuService.MENU_USER])) {
+                <li>@Html.ActionLink(x.Value.OpcionName, x.Value.Action, x.Value.Controlller)</li>
+                <li class="divider"></li>
+            }
+            </ul>
+        </li>
+    </ul>
+    
