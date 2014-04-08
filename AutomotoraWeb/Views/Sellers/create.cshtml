@@ -56,6 +56,7 @@
                     settings.Properties.EditFormat = EditFormat.Custom;
                     settings.Properties.EditFormatString = "dd/MM/yyyy";
                     settings.Height = 28;
+                    settings.Date = DateTime.Today;
                 }
             ).GetHtml()
             @Html.ValidationMessageFor(model => model.IngressDate)

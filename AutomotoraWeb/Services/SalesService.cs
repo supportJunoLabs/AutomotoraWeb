@@ -57,7 +57,7 @@ namespace AutomotoraWeb.Services {
 
         public void deleteSeller(SellerModel sellerModel) {
             Vendedor vendedor = this.mapSellerModel(sellerModel);
-            //vendedor.Eliminar(sellerModel.UserName, sellerModel.IP);
+            vendedor.Eliminar(sellerModel.UserName, sellerModel.IP);
         }
 
         //------------------------------------------------------------

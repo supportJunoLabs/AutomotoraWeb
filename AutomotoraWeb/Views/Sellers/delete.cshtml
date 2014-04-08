@@ -50,7 +50,7 @@
                 @Html.DisplayNameFor(model => model.IngressDate):
             </div>
             <div class="display-field">
-                @Html.DisplayFor(model => model.IngressDate)
+                @Model.IngressDate.Date.ToShortDateString()
                 @Html.HiddenFor(model => model.IngressDate)
             </div>
             <div class="clear-both"></div>

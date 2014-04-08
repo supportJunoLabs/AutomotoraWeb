@@ -174,5 +174,6 @@ G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\System.Web.Razor.r
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\System.Web.WebPages.resources.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\System.Web.WebPages.Deployment.resources.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\bin\es\System.Web.WebPages.Razor.resources.dll
+G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.csprojResolveAssemblyReference.cache
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.dll
 G:\Development\Visual 2012\AutomotoraWeb\AutomotoraWeb\obj\Debug\AutomotoraWeb.pdb
