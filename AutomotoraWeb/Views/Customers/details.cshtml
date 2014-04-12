@@ -1,6 +1,207 @@
-﻿@{
-    ViewBag.Title = "details";
+﻿@model AutomotoraWeb.Models.CustomerModel
+
+@{
+    ViewBag.Title = "Eliminar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>details customer</h2>
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS, FormMethod.Post)) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Name): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Name)
+                @Html.HiddenFor(model => model.Name)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Address): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Address)
+                @Html.HiddenFor(model => model.Address)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Telephone): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Telephone)
+                @Html.HiddenFor(model => model.Telephone)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Birthday):
+            </div>
+            <div class="display-field">
+                @if (Model.Birthday != null){
+                    @Model.Birthday.Value.ToShortDateString()
+                }
+                @Html.HiddenFor(model => model.Birthday)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Observations): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Observations)
+                @Html.HiddenFor(model => model.Observations)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.City): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.City)
+                @Html.HiddenFor(model => model.City)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Country): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Country)
+                @Html.HiddenFor(model => model.Country)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.DocumentCI): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.DocumentCI)
+                @Html.HiddenFor(model => model.DocumentCI)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.DocumentCredential): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.DocumentCredential)
+                @Html.HiddenFor(model => model.DocumentCredential)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.DocumentTypeOther): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.DocumentTypeOther)
+                @Html.HiddenFor(model => model.DocumentTypeOther)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.DocumentOther): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.DocumentOther)
+                @Html.HiddenFor(model => model.DocumentOther)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Fax): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Fax)
+                @Html.HiddenFor(model => model.Fax)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Rut): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Rut)
+                @Html.HiddenFor(model => model.Rut)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.SocialReason): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.SocialReason)
+                @Html.HiddenFor(model => model.SocialReason)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.ZipCode): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.ZipCode)
+                @Html.HiddenFor(model => model.ZipCode)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Telephone): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Telephone)
+                @Html.HiddenFor(model => model.Telephone)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.TelephoneOther): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.TelephoneOther)
+                @Html.HiddenFor(model => model.TelephoneOther)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+    </fieldset>
+    
+    <div class="espacio2"></div>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().ActionLinkButton("Modificar", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Editar Cliente"))
+        @(Html.Bootstrap().ActionLinkButton("Eliminar", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Eliminar Cliente"))
+        @(Html.Bootstrap().ActionLinkButton("Volver", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).Class("btn btn-default").Title("Volver a Lista Clientes"))
+    </div>
+
+}
+
+
+@section Scripts {
+}
+

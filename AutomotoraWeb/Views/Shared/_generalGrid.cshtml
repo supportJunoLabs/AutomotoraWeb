@@ -1,0 +1,95 @@
+﻿@model Object
+@using System.Web.UI.WebControls
+@using AutomotoraWeb.Helpers;
+
+@{
+
+    List<String> hiddenColumns = (List<String>)(ViewBag.hiddenColumns);
+    
+    List<GridViewColumn> listGridViewsColumn = new List<GridViewColumn>();
+
+    Type type = (Type)(ViewBag.typeOfModel);
+    System.Reflection.PropertyInfo[] propertiesinfo = type.GetProperties();
+
+    foreach (System.Reflection.PropertyInfo propertyInfo in propertiesinfo) {
+        object[] arrayDisplayAttribute = propertyInfo.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.DisplayAttribute), true);
+        foreach (System.ComponentModel.DataAnnotations.DisplayAttribute displayAttribute in arrayDisplayAttribute) {
+            
+            if (!hiddenColumns.Contains(propertyInfo.Name)){
+                MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
+                gridViewColumn.FieldName = propertyInfo.Name;
+                gridViewColumn.Caption = displayAttribute.Name;
+                gridViewColumn.ColumnType = MVCxGridViewColumnType.Default;
+            
+                if (propertyInfo.PropertyType.Name.Equals("Boolean")){
+                    gridViewColumn.ColumnType = MVCxGridViewColumnType.CheckBox;
+                } else if (propertyInfo.PropertyType.Name.Equals("DateTime")) {
+                    gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+                }
+
+                listGridViewsColumn.Add(gridViewColumn);
+            }
+        }
+    }
+            
+}
+  
+@(Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = (String)(ViewBag.nameGrid);
+        settings.CallbackRouteValues = new { Controller = (String)(ViewBag.controller), Action = (String)(ViewBag.actionCallbackRoute) };
+        settings.Width = Unit.Percentage(98);
+
+        settings.SettingsBehavior.AllowSort = true;
+        settings.SettingsBehavior.AllowGroup = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.KeyFieldName = (String)(ViewBag.KeyFieldName);     
+                     
+        //Adds
+
+        settings.SettingsPager.AlwaysShowPager = true;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsPager.FirstPageButton.Visible = true;
+        settings.SettingsPager.LastPageButton.Visible = true;
+        settings.SettingsPager.PageSize = 15;
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "15", "20", "50" ,"75", "100"};    
+                   
+        //Adds       
+                          
+        //Filtros
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.Settings.ShowFilterRow = true;
+
+        settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+        settings.SettingsText.FilterBarClear = "QuitarFiltros";
+        settings.Settings.ShowFilterRowMenu = true;
+        settings.CommandColumn.ClearFilterButton.Visible = true;
+        settings.Settings.ShowHeaderFilterBlankItems = false;
+
+        settings.SettingsPopup.HeaderFilter.MinWidth = 300;
+        settings.SettingsPopup.HeaderFilter.MinHeight = 200;     
+                     
+                
+        //Columnas Visibles (Propiedades)
+        settings.Columns.AddRange(listGridViewsColumn.ToArray());
+
+                     
+        //Columnas Visibles (Editores)
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "Acciones";
+            column.Width = Unit.Pixel(90);
+            column.SetDataItemTemplateContent(c =>
+            {
+                var id = DataBinder.Eval(c.DataItem, (String)(ViewBag.KeyFieldName));
+                ViewContext.Writer.WriteLine(@Html.BotonImagen("details", (String)(ViewBag.controller), new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
+                ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", (String)(ViewBag.controller), new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
+                ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", (String)(ViewBag.controller), new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());    
+                            
+            });
+        });
+    }
+).Bind(Model).GetHtml())
+    

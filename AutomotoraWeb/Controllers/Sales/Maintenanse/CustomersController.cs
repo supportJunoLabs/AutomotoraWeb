@@ -1,4 +1,8 @@
 ﻿using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Models;
+using AutomotoraWeb.Services;
+using DevExpress.Web.Mvc;
+using DLL_Backend;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +14,32 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
 
         public static string CUSTOMERS = "customers";
 
-        public ActionResult Show() {
-            return View();
+        public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] CustomerModel customer) {
+            return View(SalesService.Instance.listCustomers());
+        }
+
+        public ActionResult listCustomers() {
+            return PartialView("_listCustomers", SalesService.Instance.listCustomers());
+        }
+
+        public ActionResult ExportarExcel() {
+            return GridViewExtension.ExportToXlsx(CreateExportGridViewSettings(), SalesService.Instance.listCustomers());
+        }
+
+        public ActionResult ExportarPDF() {
+            return GridViewExtension.ExportToPdf(CreateExportGridViewSettings(), SalesService.Instance.listCustomers());
+        }
+
+        static GridViewSettings CreateExportGridViewSettings() {
+            //Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME];
+            //Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME];
+
+            GridViewSettings settings = new GridViewSettings();
+            return settings;
         }
 
         public ActionResult Details(int id) {
-            return View();
+            return getCustomer(id);
         }
 
         public ActionResult Create() {
@@ -23,48 +47,88 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
         }
 
         public ActionResult Edit(int id) {
-            return View();
+            return getCustomer(id);
         }
 
         public ActionResult Delete(int id) {
-            return View();
+            return getCustomer(id);
         }
 
+        //-----------------------------------------------------------------------------------------------------
 
-        [HttpPost]
-        public ActionResult Create(FormCollection collection) {
+        private ActionResult getCustomer(int id) {
             try {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Show");
-            } catch {
+                CustomerModel CustomerModel = SalesService.Instance.getCustomer(id);
+                return View(CustomerModel);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
                 return View();
             }
         }
 
-
+        //-----------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection) {
-            try {
-                // TODO: Add update logic here
+        public ActionResult Create(CustomerModel customer) {
 
-                return RedirectToAction("Show");
-            } catch {
-                return View();
+            if (ModelState.IsValid) {
+                try {
+                    SalesService.Instance.createCustomer(customer);
+                    return RedirectToAction(BaseController.SHOW, CUSTOMERS);
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(customer);
+                }
             }
+
+            return View(customer);
         }
 
+        //-----------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection) {
-            try {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Show");
-            } catch {
-                return View();
+        public ActionResult Edit(CustomerModel customer) {
+            if (ModelState.IsValid) {
+                try {
+                    SalesService.Instance.updateCustomer(customer);
+                    return RedirectToAction(BaseController.SHOW, CUSTOMERS);
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(customer);
+                }
             }
+
+            return View(customer);
+        }
+
+        //-----------------------------------------------------------------------------------------------------
+
+        [HttpPost]
+        public ActionResult Delete(CustomerModel customer) {
+            if (ModelState.IsValid) {
+                try {
+                    SalesService.Instance.deleteCustomer(customer);
+                    return RedirectToAction(BaseController.SHOW, CUSTOMERS);
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(customer);
+                }
+            }
+
+            return View(customer);
+        }
+
+        //-----------------------------------------------------------------------------------------------------
+
+        [HttpPost]
+        public JsonResult nameAvailable(string name, int id) {
+            CustomerModel customer = new CustomerModel() { Name = name, Id = id };
+            bool result = SalesService.Instance.existCustomer(customer);
+            return Json(result);
         }
     }
 }

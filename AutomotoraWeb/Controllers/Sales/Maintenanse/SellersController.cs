@@ -81,11 +81,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
-            } /*catch (Exception exc) {
-                ViewBag.ErrorCode = ERROR_CODE_SYSTEM_ERROR;
-                ViewBag.ErrorMessage = exc.Message;
-                return View();
-            }*/
+            } 
         }
 
         //-----------------------------------------------------------------------------------------------------
@@ -101,11 +97,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     return View(seller);
-                } /*catch (Exception exc) {
-                    ViewBag.ErrorCode = ERROR_CODE_SYSTEM_ERROR;
-                    ViewBag.ErrorMessage = exc.Message;
-                    return View(seller);
-                }*/
+                } 
             }
 
             return View(seller);
@@ -123,11 +115,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     return View(seller);
-                } /*catch (Exception exc) {
-                    ViewBag.ErrorCode = ERROR_CODE_SYSTEM_ERROR;
-                    ViewBag.ErrorMessage = exc.Message;
-                    return View(seller);
-                }*/
+                } 
             }
 
             return View(seller);
@@ -145,11 +133,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     return View(seller);
-                } /*catch (Exception exc) {
-                    ViewBag.ErrorCode = ERROR_CODE_SYSTEM_ERROR;
-                    ViewBag.ErrorMessage = exc.Message;
-                    return View(seller);
-                }*/
+                }
             }
 
             return View(seller);
