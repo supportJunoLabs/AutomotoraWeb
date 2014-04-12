@@ -7,12 +7,20 @@ using System.Web;
 namespace AutomotoraWeb.Models {
     public class CustomerModel : AbstractModel {
 
-        public enum CustomerMaritalStatus {
+        /*public enum CustomerMaritalStatus {
             MARRIED = "Casado",
             SINGLE = "Soltero",
             DIVORCED = "Divorciado",
             WIDOWER = "Viudo",
             FREE_UNION = "Unión Libre"
+        }*/
+
+        public enum CustomerMaritalStatus {
+            MARRIED,
+            SINGLE,
+            DIVORCED,
+            WIDOWER,
+            FREE_UNION
         }
 
         [Required(ErrorMessage = "El Nombre del Cliente es obligatorio")]

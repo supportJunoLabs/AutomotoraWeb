@@ -151,7 +151,7 @@ namespace AutomotoraWeb.Services {
 
         //------------------------------------------------------------
 
-        public List<CustomerModel> listSellers() {
+        public List<CustomerModel> listCustomers() {
             List<Cliente> clientes = Cliente.Clientes();
             List<CustomerModel> customers = new List<CustomerModel>();
 
@@ -256,18 +256,16 @@ namespace AutomotoraWeb.Services {
 
             EstadoCivil estadoCivil = new EstadoCivil();
 
-            if (customerModel.MaritalStatus != null) {
-                if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.MARRIED)) {
-                    estadoCivil.Codigo = "C";
-                } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.SINGLE)) {
-                    estadoCivil.Codigo = "S";
-                } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.DIVORCED)) {
-                    estadoCivil.Codigo = "D";
-                } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.WIDOWER)) {
-                    estadoCivil.Codigo = "V";
-                } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.FREE_UNION)) {
-                    estadoCivil.Codigo = "U";
-                }
+            if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.MARRIED)) {
+                estadoCivil.Codigo = "C";
+            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.SINGLE)) {
+                estadoCivil.Codigo = "S";
+            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.DIVORCED)) {
+                estadoCivil.Codigo = "D";
+            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.WIDOWER)) {
+                estadoCivil.Codigo = "V";
+            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.FREE_UNION)) {
+                estadoCivil.Codigo = "U";
             }
 
             if (cliente.Conyuge != null) {

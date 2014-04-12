@@ -2,9 +2,39 @@
 @using System.Web.UI.WebControls
 @using AutomotoraWeb.Helpers;
 
+@{
+    List<string> hiddenColumns = new List<string>() { "Photo" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    
 
+    List<GridViewColumn> listGridViewsColumn = new List<GridViewColumn>();
+    
+    Type type = typeof(AutomotoraWeb.Models.SellerModel);
+    System.Reflection.PropertyInfo[] propertiesinfo = type.GetProperties();
+
+    foreach (System.Reflection.PropertyInfo propertyInfo in propertiesinfo) {
+        object[] arrayDisplayAttribute = propertyInfo.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.DisplayAttribute), true);
+        foreach (System.ComponentModel.DataAnnotations.DisplayAttribute displayAttribute in arrayDisplayAttribute) {
+            
+            if (!hiddenColumns.Contains(propertyInfo.Name)){
+                MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
+                gridViewColumn.FieldName = propertyInfo.Name;
+                gridViewColumn.Caption = displayAttribute.Name;
+                gridViewColumn.ColumnType = MVCxGridViewColumnType.Default;
+            
+                if (propertyInfo.PropertyType.Name.Equals("Boolean")){
+                    gridViewColumn.ColumnType = MVCxGridViewColumnType.CheckBox;
+                } else if (propertyInfo.PropertyType.Name.Equals("DateTime")) {
+                    gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+                }
+
+                listGridViewsColumn.Add(gridViewColumn);
+            }
+        }
+    }
+            
+}
   
- @(Html.DevExpress().GridView(
+@(Html.DevExpress().GridView(
     settings =>
     {
         settings.Name = "gridSellers";
@@ -24,9 +54,7 @@
         settings.SettingsPager.LastPageButton.Visible = true;
         settings.SettingsPager.PageSize = 15;
         settings.SettingsPager.PageSizeItemSettings.Visible = true;
-        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "15", "20", "50" ,"75", "100"};
-        //settings.Settings.VerticalScrollableHeight = 350;
-        //settings.Settings.VerticalScrollBarStyle = GridViewVerticalScrollBarStyle.Virtual;     
+        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "15", "20", "50" ,"75", "100"};    
                    
         //Adds       
                           
@@ -45,20 +73,8 @@
                      
                 
         //Columnas Visibles (Propiedades)
-        settings.Columns.Add("Id").Visible = false; ;
-        settings.Columns.Add("Name", "Nombre").Settings.HeaderFilterMode=HeaderFilterMode.CheckedList;
-        settings.Columns.Add("Address", "Dirección");
-        settings.Columns.Add("Telephone", "Telefono");
-        settings.Columns.Add("IngressDate","Fecha de Ingreso").PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
-        settings.Columns.Add("Observations","Observaciones");
-        settings.Columns.Add("Enabled","Habilitado", MVCxGridViewColumnType.CheckBox);
-        //Columnas Ocultas
-        //settings.Columns.Add("UsuarioMod").Visible = false;
-        //settings.Columns.Add("FechaMod").Visible = false;
-        //settings.Columns.Add("OrigenMod").Visible = false;
+        settings.Columns.AddRange(listGridViewsColumn.ToArray());
 
-        //foreach (GridViewDataColumn column in settings.Columns)
-        //    column.Settings.HeaderFilterMode = HeaderFilterMode.CheckedList;
                      
         //Columnas Visibles (Editores)
         settings.Columns.Add(column =>
@@ -67,12 +83,7 @@
             column.Width = Unit.Pixel(90);
             column.SetDataItemTemplateContent(c =>
             {
-                var id = DataBinder.Eval(c.DataItem, "Id");
-                        
-                //DevExpressHelper.WriteLineToResponse(@Html.ActionLink("Consultar", "Details", new { id = id }).ToHtmlString() + " ");
-                //DevExpressHelper.WriteLineToResponse(@Html.ActionLink("Editar", "Edit", new { id = id }).ToHtmlString());
-                //DevExpressHelper.WriteLineToResponse(@Html.ActionLink("Eliminar", "Delete", new { id = id }).ToHtmlString());
-
+                var id = DataBinder.Eval(c.DataItem, "Id");      
                 ViewContext.Writer.WriteLine(@Html.BotonImagen("details", "Sellers", new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
                 ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", "Sellers", new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
                 ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", "Sellers", new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());    
