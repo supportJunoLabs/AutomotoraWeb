@@ -1,9 +1,12 @@
-﻿using System;
+﻿using AutomotoraWeb.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Helpers;
@@ -103,6 +106,32 @@ namespace AutomotoraWeb.Helpers {
         }
 
         //--------------------------------------------------------------------------------
+
+        public static IEnumerable<SelectListItem> getListSelectListItemCustomerMaritalStatus(){
+            Type type = typeof(CustomerModel.CustomerMaritalStatus);
+            System.Reflection.PropertyInfo[] propertiesinfo = type.GetProperties();
+
+            List<SelectListItem> listSelectListItemCustomerMaritalStatus = new List<SelectListItem>();
+
+            foreach (string value in Enum.GetNames(type))
+            {
+                /// Get field info
+                FieldInfo fi = type.GetField(value);
+
+                /// Get description attribute
+                object[] descriptionAttrs = fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                //DescriptionAttribute description = (DescriptionAttribute)descriptionAttrs[0];
+
+                SelectListItem selectListItem = new SelectListItem();
+                selectListItem.Text = value;//description.Description;
+                selectListItem.Value = value;
+                listSelectListItemCustomerMaritalStatus.Add(selectListItem);
+            }
+
+            return listSelectListItemCustomerMaritalStatus;
+        }
+
+        
 
     }
 }

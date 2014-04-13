@@ -1,4 +1,5 @@
 ﻿using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Helpers;
 using AutomotoraWeb.Models;
 using AutomotoraWeb.Services;
 using DevExpress.Web.Mvc;
@@ -58,6 +59,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
 
         private ActionResult getCustomer(int id) {
             try {
+                ViewBag.listSelectListItemCustomerMaritalStatus = HtmlHelpers.getListSelectListItemCustomerMaritalStatus();
+
                 CustomerModel CustomerModel = SalesService.Instance.getCustomer(id);
                 return View(CustomerModel);
             } catch (UsuarioException exc) {

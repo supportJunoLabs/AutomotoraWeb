@@ -72,6 +72,19 @@
         </div>
         <div class="clear-both"></div>
 
+        
+
+        <div class="editor-label ">
+            @Html.LabelForRequired(model => model.MaritalStatus)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.DropDownListFor(model => model.MaritalStatus, new SelectList(Enum.GetValues(typeof(AutomotoraWeb.Models.CustomerModel.CustomerMaritalStatus))), new { id = "ddlMaritalStatus" })
+            @Html.ValidationMessageFor(model => model.MaritalStatus)
+        </div>
+        <div class="clear-both"></div>
+
+
+
         <div class="editor-label ">
             @Html.LabelForRequired(model => model.City)
         </div>
@@ -191,7 +204,25 @@
 }
 
 @section Scripts {
-    
+    <script type="text/javascript">
+
+        var actualMaritalStatus = $("#ddlMaritalStatus option:selected").val()
+        _showHideSpouseBlock(actualMaritalStatus);
+
+        $("#ddlMaritalStatus").change(function () {
+            var optionSelected = $(this).val();
+            _showHideSpouseBlock(optionSelected);
+        });
+
+        function _showHideSpouseBlock(optionSelected){
+            if (optionSelected == 'Soltero') {
+                $("#spouseBlock").hide();
+            }
+            else {
+                $("#spouseBlock").show();
+            }
+        }
+    </script>
 }
 
 

@@ -72,11 +72,24 @@
         </div>
         <div class="clear-both"></div>
 
+
+
+        <div class="editor-label ">
+            @Html.LabelForRequired(model => model.MaritalStatus)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.DropDownListFor(model => model.MaritalStatus, new SelectList(Enum.GetValues(typeof(AutomotoraWeb.Models.CustomerModel.CustomerMaritalStatus))), new { id = "ddlMaritalStatus" })
+            @Html.ValidationMessageFor(model => model.MaritalStatus)
+        </div>
+        <div class="clear-both"></div>
+
+
+
         <div class="editor-label ">
             @Html.LabelForRequired(model => model.City)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.City)
+            @Html.EditorFor(model => model.City)
             @Html.ValidationMessageFor(model => model.City)
         </div>
         <div class="clear-both"></div>
@@ -85,7 +98,7 @@
             @Html.LabelForRequired(model => model.Country)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.Country)
+            @Html.EditorFor(model => model.Country)
             @Html.ValidationMessageFor(model => model.Country)
         </div>
         <div class="clear-both"></div>
@@ -94,7 +107,7 @@
             @Html.LabelForRequired(model => model.DocumentCI)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.DocumentCI)
+            @Html.EditorFor(model => model.DocumentCI)
             @Html.ValidationMessageFor(model => model.DocumentCI)
         </div>
         <div class="clear-both"></div>
@@ -103,7 +116,7 @@
             @Html.LabelForRequired(model => model.DocumentCredential)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.DocumentCredential)
+            @Html.EditorFor(model => model.DocumentCredential)
             @Html.ValidationMessageFor(model => model.DocumentCredential)
         </div>
         <div class="clear-both"></div>
@@ -112,7 +125,7 @@
             @Html.LabelForRequired(model => model.DocumentTypeOther)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.DocumentTypeOther)
+            @Html.EditorFor(model => model.DocumentTypeOther)
             @Html.ValidationMessageFor(model => model.DocumentTypeOther)
         </div>
         <div class="clear-both"></div>
@@ -121,7 +134,7 @@
             @Html.LabelForRequired(model => model.DocumentOther)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.DocumentOther)
+            @Html.EditorFor(model => model.DocumentOther)
             @Html.ValidationMessageFor(model => model.DocumentOther)
         </div>
         <div class="clear-both"></div>
@@ -130,7 +143,7 @@
             @Html.LabelForRequired(model => model.Fax)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.Fax)
+            @Html.EditorFor(model => model.Fax)
             @Html.ValidationMessageFor(model => model.Fax)
         </div>
         <div class="clear-both"></div>
@@ -139,7 +152,7 @@
             @Html.LabelForRequired(model => model.Rut)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.Rut)
+            @Html.EditorFor(model => model.Rut)
             @Html.ValidationMessageFor(model => model.Rut)
         </div>
         <div class="clear-both"></div>
@@ -148,7 +161,7 @@
             @Html.LabelForRequired(model => model.SocialReason)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.SocialReason)
+            @Html.EditorFor(model => model.SocialReason)
             @Html.ValidationMessageFor(model => model.SocialReason)
         </div>
         <div class="clear-both"></div>
@@ -157,7 +170,7 @@
             @Html.LabelForRequired(model => model.ZipCode)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.ZipCode)
+            @Html.EditorFor(model => model.ZipCode)
             @Html.ValidationMessageFor(model => model.ZipCode)
         </div>
         <div class="clear-both"></div>
@@ -166,7 +179,7 @@
             @Html.LabelForRequired(model => model.Telephone)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.Telephone)
+            @Html.EditorFor(model => model.Telephone)
             @Html.ValidationMessageFor(model => model.Telephone)
         </div>
         <div class="clear-both"></div>
@@ -175,10 +188,80 @@
             @Html.LabelForRequired(model => model.TelephoneOther)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.TelephoneOther)
+            @Html.EditorFor(model => model.TelephoneOther)
             @Html.ValidationMessageFor(model => model.TelephoneOther)
         </div>
         <div class="clear-both"></div>
+
+        <div class="espacio2"></div>
+
+        <div id="spouseBlock" style="display: block;">
+            <h3>Conyugue</h3>
+
+            <div class="editor-label">
+                @Html.LabelForRequired(model => model.Spouse.Name)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Spouse.Name)
+                @Html.ValidationMessageFor(model => model.Spouse.Name)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="editor-label">
+                @Html.LabelForRequired(model => model.Spouse.DocumentCI)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Spouse.DocumentCI)
+                @Html.ValidationMessageFor(model => model.Spouse.DocumentCI)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="editor-label">
+                @Html.LabelForRequired(model => model.Spouse.DocumentCredential)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Spouse.DocumentCredential)
+                @Html.ValidationMessageFor(model => model.Spouse.DocumentCredential)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="editor-label">
+                @Html.LabelForRequired(model => model.Spouse.DocumentTypeOther)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Spouse.DocumentTypeOther)
+                @Html.ValidationMessageFor(model => model.Spouse.DocumentTypeOther)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="editor-label">
+                @Html.LabelForRequired(model => model.Spouse.DocumentOther)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Spouse.DocumentOther)
+                @Html.ValidationMessageFor(model => model.Spouse.DocumentOther)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="editor-label">
+                @Html.LabelForRequired(model => model.Spouse.Nuptials)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Spouse.Nuptials)
+                @Html.ValidationMessageFor(model => model.Spouse.Nuptials)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="editor-label ">
+                @Html.LabelForRequired(model => model.Spouse.SeparationOfProperty)
+            </div>
+            <div class="editor-field">
+                @Html.CheckBoxFor(model => model.Spouse.SeparationOfProperty)
+                @Html.ValidationMessageFor(model => model.Spouse.SeparationOfProperty)
+            </div>
+            <div class="clear-both"></div>
+
+        </div>
 
         <div class="espacio2"></div>
         <div class="btn-toolbar">
@@ -191,7 +274,27 @@
 }
 
 @section Scripts {
-    
+
+    <script type="text/javascript">
+
+        var actualMaritalStatus = $("#ddlMaritalStatus option:selected").val()
+        _showHideSpouseBlock(actualMaritalStatus);
+
+        $("#ddlMaritalStatus").change(function () {
+            var optionSelected = $(this).val();
+            _showHideSpouseBlock(optionSelected);
+        });
+
+        function _showHideSpouseBlock(optionSelected){
+            if (optionSelected == 'Soltero') {
+                $("#spouseBlock").hide();
+            }
+            else {
+                $("#spouseBlock").show();
+            }
+        }
+    </script>
+
 }
 
 

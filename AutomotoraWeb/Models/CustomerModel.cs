@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -7,20 +8,24 @@ using System.Web;
 namespace AutomotoraWeb.Models {
     public class CustomerModel : AbstractModel {
 
-        /*public enum CustomerMaritalStatus {
-            MARRIED = "Casado",
-            SINGLE = "Soltero",
-            DIVORCED = "Divorciado",
-            WIDOWER = "Viudo",
-            FREE_UNION = "Unión Libre"
-        }*/
-
         public enum CustomerMaritalStatus {
-            MARRIED,
-            SINGLE,
-            DIVORCED,
-            WIDOWER,
-            FREE_UNION
+
+            /*[Description("Casado")]
+            MARRIED = 1,
+            [Description("Soltero")]
+            SINGLE = 2,
+            [Description("Divorciado")]
+            DIVORCED = 3,
+            [Description("Viudo")]
+            WIDOWER = 4,
+            [Description("Unión Libre")]
+            FREE_UNION = 5*/
+
+            Casado,
+            Soltero,
+            Divorciado,
+            Viudo,
+            Unión_Libre
         }
 
         [Required(ErrorMessage = "El Nombre del Cliente es obligatorio")]

@@ -195,36 +195,41 @@ namespace AutomotoraWeb.Services {
             customerModel.ZipCode = cliente.CodigoPostal;
 
             if ((cliente.Ecivil != null) && (cliente.Ecivil.Codigo != "")) {
-                CustomerModel.CustomerMaritalStatus maritalStatus = CustomerModel.CustomerMaritalStatus.MARRIED;
+                CustomerModel.CustomerMaritalStatus maritalStatus = CustomerModel.CustomerMaritalStatus.Casado;
                 switch (cliente.Ecivil.Codigo) {
                     case "C":
-                        maritalStatus = CustomerModel.CustomerMaritalStatus.MARRIED;
+                        maritalStatus = CustomerModel.CustomerMaritalStatus.Casado;
                         break;
                     case "S":
-                        maritalStatus = CustomerModel.CustomerMaritalStatus.SINGLE;
+                        maritalStatus = CustomerModel.CustomerMaritalStatus.Soltero;
                         break;
                     case "D":
-                        maritalStatus = CustomerModel.CustomerMaritalStatus.DIVORCED;
+                        maritalStatus = CustomerModel.CustomerMaritalStatus.Divorciado;
                         break;
                     case "V":
-                        maritalStatus = CustomerModel.CustomerMaritalStatus.WIDOWER;
+                        maritalStatus = CustomerModel.CustomerMaritalStatus.Viudo;
                         break;
                     case "U":
-                        maritalStatus = CustomerModel.CustomerMaritalStatus.FREE_UNION;
+                        maritalStatus = CustomerModel.CustomerMaritalStatus.Unión_Libre;
                         break;
                 }
                 customerModel.MaritalStatus = maritalStatus;
             }
 
+            CustomerSpouseModel customerSpouseModel = new CustomerSpouseModel();
             if (cliente.Conyuge != null) {
-                CustomerSpouseModel customerSpouseModel = new CustomerSpouseModel();
                 customerSpouseModel.DocumentCI = cliente.Conyuge.Cedula;
                 customerSpouseModel.DocumentCredential = cliente.Conyuge.Credencial;
                 customerSpouseModel.DocumentOther = cliente.Conyuge.NumeroOtroDoc;
                 customerSpouseModel.DocumentTypeOther = cliente.Conyuge.TipoOtroDoc;
                 customerSpouseModel.Name = cliente.Conyuge.Nombre;
-                customerSpouseModel.Nuptials = cliente.Conyuge.Nupcias;
-                customerSpouseModel.SeparationOfProperty = cliente.Conyuge.SepBienes;
+
+                if (cliente.Conyuge.Nupcias != null) {
+                    customerSpouseModel.Nuptials = (int)(cliente.Conyuge.Nupcias);
+                }
+                if (cliente.Conyuge.SepBienes != null) {
+                    customerSpouseModel.SeparationOfProperty = (bool)(cliente.Conyuge.SepBienes);
+                }
                 customerModel.Spouse = customerSpouseModel;
             }
 
@@ -256,19 +261,21 @@ namespace AutomotoraWeb.Services {
 
             EstadoCivil estadoCivil = new EstadoCivil();
 
-            if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.MARRIED)) {
+            if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.Casado)) {
                 estadoCivil.Codigo = "C";
-            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.SINGLE)) {
+            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.Soltero)) {
                 estadoCivil.Codigo = "S";
-            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.DIVORCED)) {
+            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.Divorciado)) {
                 estadoCivil.Codigo = "D";
-            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.WIDOWER)) {
+            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.Viudo)) {
                 estadoCivil.Codigo = "V";
-            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.FREE_UNION)) {
+            } else if (customerModel.MaritalStatus.Equals(CustomerModel.CustomerMaritalStatus.Unión_Libre)) {
                 estadoCivil.Codigo = "U";
             }
 
-            if (cliente.Conyuge != null) {
+            cliente.Ecivil = estadoCivil;
+
+            if (customerModel.Spouse != null) {
                 ClienteConyuge clienteConyuge = new ClienteConyuge();
                 clienteConyuge.Cedula = customerModel.Spouse.DocumentCI;
                 clienteConyuge.Credencial = customerModel.Spouse.DocumentCredential;
@@ -279,6 +286,8 @@ namespace AutomotoraWeb.Services {
                 clienteConyuge.SepBienes = customerModel.Spouse.SeparationOfProperty;
                 cliente.Conyuge = clienteConyuge;
             }
+
+            cliente.setearAuditoria(customerModel.UserName, customerModel.IP);
 
             return cliente;
         }

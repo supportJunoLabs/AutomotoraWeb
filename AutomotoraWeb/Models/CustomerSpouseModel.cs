@@ -28,9 +28,9 @@ namespace AutomotoraWeb.Models {
         public string DocumentOther { get; set; }
 
         [Display(Name = "Nupcias")]
-        public int? Nuptials { get; set; }
+        public int Nuptials { get; set; }
 
         [Display(Name = "Separacion de bienes")]
-        public bool? SeparationOfProperty  { get; set; }
+        public bool SeparationOfProperty  { get; set; }
     }
 }
