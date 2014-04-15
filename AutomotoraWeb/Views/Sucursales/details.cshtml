@@ -1,0 +1,110 @@
+﻿@model DLL_Backend.Sucursal
+
+@{
+    ViewBag.Title = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.DETAILS, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES, FormMethod.Post)) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Nombre): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Nombre)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Direccion): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Direccion)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Ciudad): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Ciudad)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.CodigoPostal): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.CodigoPostal)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Email): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Email)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Telefono): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Telefono)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Fax): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Fax)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Observaciones): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Observaciones)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        
+    </fieldset>
+    
+    <div class="espacio2"></div>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().ActionLinkButton("Modificar", AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Editar Sucursal"))
+        @(Html.Bootstrap().ActionLinkButton("Eliminar", AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Eliminar Sucursal"))
+        @(Html.Bootstrap().ActionLinkButton("Volver", AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES).Class("btn btn-default").Title("Volver a Lista de Sucursales"))
+    </div>
+
+}
+
+
+@section Scripts {
+}
+

@@ -177,7 +177,9 @@ namespace AutomotoraWeb.Services {
             CustomerModel customerModel = new CustomerModel();
 
             customerModel.Address = cliente.Direccion;
-            customerModel.Birthday = cliente.FechaNac;
+            if (cliente.FechaNac != null) {
+                customerModel.Birthday = cliente.FechaNac.Value;
+            }
             customerModel.City = cliente.Ciudad;
             customerModel.Id = cliente.Codigo;
             customerModel.Country = cliente.Pais;
@@ -298,6 +300,49 @@ namespace AutomotoraWeb.Services {
         //--------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------
+
+        #region Services SUCURSALES definition
+
+        public Sucursal getSucursal(int code) {
+            Sucursal sucursal = new Sucursal();
+            sucursal.Codigo = code;
+            sucursal.Consultar();
+            return sucursal;
+        }
+
+        //------------------------------------------------------------
+
+        public void createSucursal(Sucursal sucursal) {
+            sucursal.Agregar();
+        }
+
+        //------------------------------------------------------------
+
+        public void updateSucursal(Sucursal sucursal) {
+            sucursal.ModificarDatos();
+        }
+
+        //------------------------------------------------------------
+
+        public void deleteSucursal(Sucursal sucursal, string userName, string ip) {
+            sucursal.Eliminar(userName, ip);
+        }
+
+        //------------------------------------------------------------
+
+        public List<Sucursal> listSucursales() {
+            return Sucursal.Sucursales();
+        }
+
+        //------------------------------------------------------------
+
+        public bool existSucursal(Sucursal sucursal) {
+            sucursal.Consultar();
+            return false; // TODO
+        }
+
+
+        #endregion
 
         
     }

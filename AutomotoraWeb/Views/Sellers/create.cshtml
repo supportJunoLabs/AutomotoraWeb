@@ -49,16 +49,7 @@
             @Html.LabelForRequired(model => model.IngressDate)
         </div>
         <div class="editor-field editor-field-small">
-            @Html.DevExpress().DateEdit(
-                settings => {
-                    settings.Name = "IngressDate";
-                    settings.Properties.UseMaskBehavior = true;
-                    settings.Properties.EditFormat = EditFormat.Custom;
-                    settings.Properties.EditFormatString = "dd/MM/yyyy";
-                    settings.Height = 28;
-                    settings.Date = DateTime.Today;
-                }
-            ).GetHtml()
+            @Html.TextBoxFor(model => model.IngressDate, new { @class = "calendarAW" })
             @Html.ValidationMessageFor(model => model.IngressDate)
         </div>
         <div class="clear-both"></div>
@@ -67,7 +58,7 @@
             @Html.LabelForRequired(model => model.Observations)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.Observations, new { style="width: 250px; height: 60px" })
+            @Html.TextAreaFor(model => model.Observations, new { style="width: 530px; height: 60px" })
             @Html.ValidationMessageFor(model => model.Observations)
         </div>
         <div class="clear-both"></div>

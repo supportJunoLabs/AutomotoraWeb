@@ -1,0 +1,17 @@
+﻿@model List<DLL_Backend.Sucursal>
+@using System.Web.UI.WebControls
+@using AutomotoraWeb.Helpers;
+
+@{
+    List<string> hiddenColumns = new List<string>() {  }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    ViewBag.hiddenColumns = hiddenColumns;
+
+    ViewBag.nameGrid = "gridSucursales";
+    ViewBag.controller = AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES;
+    ViewBag.actionCallbackRoute = "listSellers";
+    ViewBag.KeyFieldName = "Codigo";
+    ViewBag.typeOfModel = typeof(DLL_Backend.Sucursal.SucursalMD);
+}
+
+@Html.Partial("_generalGrid", Model)
+  

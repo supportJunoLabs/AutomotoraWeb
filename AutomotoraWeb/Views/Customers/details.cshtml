@@ -50,9 +50,7 @@
                 @Html.DisplayNameFor(model => model.Birthday):
             </div>
             <div class="display-field">
-                @if (Model.Birthday != null){
-                    @Model.Birthday.Value.ToShortDateString()
-                }
+                @Model.Birthday.Date.ToShortDateString()
                 @Html.HiddenFor(model => model.Birthday)
             </div>
             <div class="clear-both"></div>
@@ -189,6 +187,92 @@
             <div class="clear-both"></div>
         </div>
 
+        <div class="espacio2"></div>
+
+        <div id="spouseBlock">
+            <h3>Conyugue</h3>
+
+            <div class="details-field">
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Spouse.Name):
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Spouse.Name)
+                    @Html.ValidationMessageFor(model => model.Spouse.Name)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div class="details-field">
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Spouse.DocumentCI):
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Spouse.DocumentCI)
+                    @Html.ValidationMessageFor(model => model.Spouse.DocumentCI)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div class="details-field">
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Spouse.DocumentCredential):
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Spouse.DocumentCredential)
+                    @Html.ValidationMessageFor(model => model.Spouse.DocumentCredential)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div class="details-field">
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Spouse.DocumentTypeOther):
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Spouse.DocumentTypeOther)
+                    @Html.ValidationMessageFor(model => model.Spouse.DocumentTypeOther)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div class="details-field">
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Spouse.DocumentOther):
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Spouse.DocumentOther)
+                    @Html.ValidationMessageFor(model => model.Spouse.DocumentOther)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div class="details-field">
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Spouse.Nuptials):
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Spouse.Nuptials)
+                    @Html.ValidationMessageFor(model => model.Spouse.Nuptials)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div class="details-field">
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Spouse.SeparationOfProperty):
+                </div>
+                <div class="display-field">
+                    @Html.CheckBoxFor(model => model.Spouse.SeparationOfProperty, new {@disabled="disabled"})
+                    @Html.ValidationMessageFor(model => model.Spouse.SeparationOfProperty)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+        </div>
+
+
+
     </fieldset>
     
     <div class="espacio2"></div>
@@ -196,12 +280,28 @@
     <div class="btn-toolbar">
         @(Html.Bootstrap().ActionLinkButton("Modificar", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Editar Cliente"))
         @(Html.Bootstrap().ActionLinkButton("Eliminar", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Eliminar Cliente"))
-        @(Html.Bootstrap().ActionLinkButton("Volver", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).Class("btn btn-default").Title("Volver a Lista Clientes"))
+        @(Html.Bootstrap().ActionLinkButton("Volver", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).Class("btn btn-default").Title("Volver a Lista de Clientes"))
     </div>
 
 }
 
 
 @section Scripts {
+
+    <script type="text/javascript">
+
+        var actualMaritalStatus = $("#ddlMaritalStatus option:selected").val()
+        _showHideSpouseBlock(actualMaritalStatus);
+
+        function _showHideSpouseBlock(optionSelected){
+            if (optionSelected == 'Soltero') {
+                $("#spouseBlock").hide();
+            }
+            else {
+                $("#spouseBlock").show();
+            }
+        }
+    </script>
+
 }
 

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Web.Mvc.Html;
 using AutomotoraWeb.Utils;
 using AutomotoraWeb.Models;
+using DLL_Backend;
 
 namespace AutomotoraWeb.Filters {
     public class GeneralModelActionFilterAttribute : ActionFilterAttribute {
@@ -37,9 +38,15 @@ namespace AutomotoraWeb.Filters {
             // Para que al pasar desde el controller al servicio los objetos del modelo (como parámetro)
             // estos contengan IP y username para auditoria, evitando tener que pasarlos por parametros en cada uno de los servicios
             foreach (Object model in filterContext.ActionParameters.Values) {
+
+                string nomUsuario = (string)filterContext.HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                string origen = filterContext.HttpContext.Request.UserHostAddress;
+                
                 if (model is AbstractModel) {
-                    ((AbstractModel)model).IP = filterContext.HttpContext.Request.UserHostAddress;
-                    ((AbstractModel)model).UserName = (string)filterContext.HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                    ((AbstractModel)model).IP = origen;
+                    ((AbstractModel)model).UserName = nomUsuario;
+                } else if (model is Auditable) {
+                    ((Auditable)model).setearAuditoria(nomUsuario, origen);
                 }
             }
 

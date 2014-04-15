@@ -110,7 +110,8 @@ namespace AutomotoraWeb.Services {
 
         private bool isControllerNameMaintenance(string controllerName) {
             return (controllerName == SellersController.SELLERS) ||
-                   (controllerName == CustomersController.CUSTOMERS);
+                   (controllerName == CustomersController.CUSTOMERS) ||
+                   (controllerName == SucursalesController.SUCURSALES);
         }
 
         //----------------------------------------------------------

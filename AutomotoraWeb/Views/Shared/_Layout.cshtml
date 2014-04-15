@@ -132,15 +132,40 @@
     @RenderSection("scripts", required: false)  @*Los scripts adicionales de cada seccion si los tiene *@
 
     <script>
-        $(document).ready(function () {
 
-            /*$('input[type="datetime"]').datepicker({
+        jQuery.validator.addMethod(
+              'date',
+              function (value, element, params) {
+                  if (this.optional(element)) {
+                      return true;
+                  };
+                  var result = false;
+                  try {
+                      $.datepicker.parseDate('dd/mm/yy', value);
+                      result = true;
+                  } catch (err) {
+                      result = false;
+                  }
+                  return result;
+              },
+              ''
+          );
+
+        $(document).ready(function () {
+            $("input[data-val-length-max]").each(function () {
+                var $this = $(this);
+                var data = $this.data();
+                $this.attr("maxlength", data.valLengthMax);
+            });
+
+            $('.calendarAW').datepicker({
                 changeMonth: true,
                 dateFormat: "dd/mm/yy",
                 changeYear: true,
                 showAnim: 'slideDown'
-            });*/
+            });
         });
+
     </script>
 
 </body>

@@ -236,6 +236,7 @@
     <Compile Include="Controllers\Sales\Maintenanse\CustomersController.cs" />
     <Compile Include="Controllers\General\IMaintenance.cs" />
     <Compile Include="Controllers\Sales\Maintenanse\SellersController.cs" />
+    <Compile Include="Controllers\Sales\Maintenanse\SucursalesController.cs" />
     <Compile Include="Controllers\Sales\SalesController.cs" />
     <Compile Include="Filters\AutorizacionActionFilterAttribute.cs" />
     <Compile Include="Filters\GeneralModelActionFilterAttribute.cs" />
@@ -1546,6 +1547,12 @@
     <Content Include="Views\Shared\_menuUser.cshtml" />
     <Content Include="Views\Shared\_generalGrid.cshtml" />
     <Content Include="Views\Customers\_listCustomers.cshtml" />
+    <Content Include="Views\Sucursales\_listSucursales.cshtml" />
+    <Content Include="Views\Sucursales\create.cshtml" />
+    <Content Include="Views\Sucursales\delete.cshtml" />
+    <Content Include="Views\Sucursales\details.cshtml" />
+    <Content Include="Views\Sucursales\edit.cshtml" />
+    <Content Include="Views\Sucursales\show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

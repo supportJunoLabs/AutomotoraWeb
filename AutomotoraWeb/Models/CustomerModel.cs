@@ -75,7 +75,7 @@ namespace AutomotoraWeb.Models {
         public string DocumentOther { get; set; }
 
         [Display(Name = "Fecha de Nacimiento")]
-        public DateTime? Birthday { get; set; }
+        public DateTime Birthday { get; set; }
 
         [StringLength(30, ErrorMessage = "El País debe tener un largo máximo 30 caracteres")]
         [Display(Name = "País")]
