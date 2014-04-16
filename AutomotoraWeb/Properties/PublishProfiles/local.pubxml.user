@@ -19,10 +19,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>03/10/2014 19:49:15</publishTime>
     </File>
     <File Include="bin/AutomotoraWeb.dll">
-      <publishTime>04/07/2014 23:48:13</publishTime>
+      <publishTime>04/15/2014 01:12:59</publishTime>
     </File>
     <File Include="bin/AutomotoraWeb.pdb">
-      <publishTime>04/07/2014 23:48:13</publishTime>
+      <publishTime>04/15/2014 01:12:59</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Data.v13.2.resources.dll">
       <publishTime>02/12/2014 23:53:12</publishTime>
@@ -166,7 +166,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/12/2014 23:53:22</publishTime>
     </File>
     <File Include="bin/DLL_Backend.dll">
-      <publishTime>04/07/2014 03:40:03</publishTime>
+      <publishTime>04/13/2014 23:01:41</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/10/2014 19:49:15</publishTime>
@@ -4174,19 +4174,22 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>03/03/2014 17:43:35</publishTime>
     </File>
     <File Include="Views/Customers/create.cshtml">
-      <publishTime>03/04/2014 22:49:11</publishTime>
+      <publishTime>04/14/2014 00:14:18</publishTime>
     </File>
     <File Include="Views/Customers/delete.cshtml">
-      <publishTime>03/04/2014 22:49:15</publishTime>
+      <publishTime>04/13/2014 15:33:37</publishTime>
     </File>
     <File Include="Views/Customers/details.cshtml">
-      <publishTime>03/04/2014 22:49:19</publishTime>
+      <publishTime>04/15/2014 00:03:39</publishTime>
     </File>
     <File Include="Views/Customers/edit.cshtml">
-      <publishTime>03/04/2014 22:49:22</publishTime>
+      <publishTime>04/13/2014 23:50:48</publishTime>
     </File>
     <File Include="Views/Customers/show.cshtml">
-      <publishTime>03/04/2014 22:49:27</publishTime>
+      <publishTime>04/12/2014 11:58:53</publishTime>
+    </File>
+    <File Include="Views/Customers/_listCustomers.cshtml">
+      <publishTime>04/13/2014 00:16:31</publishTime>
     </File>
     <File Include="Views/Error/error403.cshtml">
       <publishTime>04/06/2014 18:55:36</publishTime>
@@ -4204,28 +4207,31 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>03/03/2014 17:42:41</publishTime>
     </File>
     <File Include="Views/Sellers/create.cshtml">
-      <publishTime>04/07/2014 23:27:52</publishTime>
+      <publishTime>04/14/2014 20:21:35</publishTime>
     </File>
     <File Include="Views/Sellers/delete.cshtml">
       <publishTime>04/08/2014 01:28:00</publishTime>
     </File>
     <File Include="Views/Sellers/details.cshtml">
-      <publishTime>04/08/2014 01:30:05</publishTime>
+      <publishTime>04/15/2014 00:03:27</publishTime>
     </File>
     <File Include="Views/Sellers/edit.cshtml">
-      <publishTime>04/07/2014 00:20:41</publishTime>
+      <publishTime>04/13/2014 23:23:47</publishTime>
     </File>
     <File Include="Views/Sellers/show.cshtml">
-      <publishTime>03/12/2014 22:39:40</publishTime>
+      <publishTime>04/12/2014 11:02:41</publishTime>
     </File>
     <File Include="Views/Sellers/_listSellers.cshtml">
-      <publishTime>04/07/2014 00:42:49</publishTime>
+      <publishTime>04/12/2014 13:53:31</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>04/06/2014 16:56:09</publishTime>
     </File>
+    <File Include="Views/Shared/_generalGrid.cshtml">
+      <publishTime>04/15/2014 00:38:30</publishTime>
+    </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/06/2014 21:18:25</publishTime>
+      <publishTime>04/14/2014 20:20:46</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAuthorization.cshtml">
       <publishTime>03/05/2014 23:14:06</publishTime>
@@ -4245,6 +4251,24 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Views/Shared/_sidebarSales.cshtml">
       <publishTime>03/23/2014 19:10:15</publishTime>
     </File>
+    <File Include="Views/Sucursales/create.cshtml">
+      <publishTime>04/15/2014 01:00:11</publishTime>
+    </File>
+    <File Include="Views/Sucursales/delete.cshtml">
+      <publishTime>04/15/2014 01:06:21</publishTime>
+    </File>
+    <File Include="Views/Sucursales/details.cshtml">
+      <publishTime>04/15/2014 01:00:46</publishTime>
+    </File>
+    <File Include="Views/Sucursales/edit.cshtml">
+      <publishTime>04/15/2014 01:00:59</publishTime>
+    </File>
+    <File Include="Views/Sucursales/show.cshtml">
+      <publishTime>04/14/2014 23:55:55</publishTime>
+    </File>
+    <File Include="Views/Sucursales/_listSucursales.cshtml">
+      <publishTime>04/15/2014 00:39:24</publishTime>
+    </File>
     <File Include="Views/Web.config">
       <publishTime>03/30/2014 17:22:46</publishTime>
     </File>
@@ -4252,7 +4276,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/18/2014 00:09:47</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/08/2014 01:31:42</publishTime>
+      <publishTime>04/15/2014 01:13:04</publishTime>
     </File>
   </ItemGroup>
 </Project>

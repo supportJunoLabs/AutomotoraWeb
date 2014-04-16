@@ -13,8 +13,8 @@
     @Html.ValidationSummary("Se han producido errores:")
 
     <fieldset>
-
         <legend></legend>
+        @Html.HiddenFor(model => model.Codigo)
 
         <div class="editor-label">
             @Html.LabelForRequired(model => model.Nombre)
