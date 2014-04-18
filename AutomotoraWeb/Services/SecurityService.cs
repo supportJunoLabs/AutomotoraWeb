@@ -99,19 +99,21 @@ namespace AutomotoraWeb.Services {
         //----------------------------------------------------------
 
         private bool isActionNameMaintenance(string actionName) {
-            return (actionName == VendedoresController.CREATE) ||
-                   (actionName == VendedoresController.DELETE) ||
-                   (actionName == VendedoresController.DETAILS) ||
-                   (actionName == VendedoresController.EDIT) ||
-                   (actionName.Substring(0, 4) == VendedoresController.LIST);
+            return (actionName.Equals(BaseController.CREATE.ToLower())) ||
+                   (actionName.Equals(BaseController.DELETE.ToLower())) ||
+                   (actionName.Equals(BaseController.DETAILS.ToLower())) ||
+                   (actionName.Equals(BaseController.EDIT.ToLower())) ||
+                   (actionName.Equals(BaseController.EXPORT_TO_PDF.ToLower())) ||
+                   (actionName.Equals(BaseController.EXPORT_TO_EXCEL.ToLower())) ||
+                   (actionName.Substring(0, 4).Equals(BaseController.LIST.ToLower()));
         }
-
+        
         //----------------------------------------------------------
 
         private bool isControllerNameMaintenance(string controllerName) {
-            return (controllerName == VendedoresController.CONTROLLER) ||
-                   (controllerName == CustomersController.CUSTOMERS) ||
-                   (controllerName == SucursalesController.SUCURSALES);
+            return (controllerName.Equals(VendedoresController.CONTROLLER.ToLower())) ||
+                   (controllerName.Equals(CustomersController.CUSTOMERS.ToLower())) ||
+                   (controllerName.Equals(SucursalesController.SUCURSALES.ToLower()));
         }
 
         //----------------------------------------------------------

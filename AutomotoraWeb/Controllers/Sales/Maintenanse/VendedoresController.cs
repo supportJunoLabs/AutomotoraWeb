@@ -3,6 +3,7 @@ using AutomotoraWeb.Models;
 using AutomotoraWeb.Services;
 using AutomotoraWeb.Utils;
 using DevExpress.Web.Mvc;
+using DevExpress.XtraPrinting;
 using DLL_Backend;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
         public ActionResult ExportarPDF() {
             string companyName = ViewBag.companyName;
             string systemName = ViewBag.systemName;
-            string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+            string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];        
             return GridViewExtension.ExportToPdf(CreateExportGridViewSettings(userName, companyName, systemName), SalesService.Instance.listVendedores());
         }
 

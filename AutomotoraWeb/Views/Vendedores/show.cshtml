@@ -8,7 +8,7 @@
 <div class="row-fluid">
     <div class="btn-toolbar">
         <div class="btn-group">
-            @(Html.Bootstrap().ActionLinkButton("Agregar Vendedor", "Create").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary).Title("Agregar Vendedor"))
+            @(Html.Bootstrap().ActionLinkButton("Agregar Vendedor", AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CREATE).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary).Title("Agregar Vendedor"))
         )
         </div>
         @*<div class="btn-group">
@@ -19,8 +19,8 @@
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Exportar <span class="caret">
                 </span></a>
                 <ul class="dropdown-menu">
-                    <li><a href='@Url.Action("ExportarExcel")'>Exportar a Excel</a></li>
-                    <li><a href='@Url.Action("ExportarPDF")'>Exportar a PDF</a></li>
+                    <li><a href='@Url.Action(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.EXPORT_TO_EXCEL)'>Exportar a Excel</a></li>
+                    <li><a href='@Url.Action(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.EXPORT_TO_PDF)'>Exportar a PDF</a></li>
                 </ul>
         </div>
     </div>
