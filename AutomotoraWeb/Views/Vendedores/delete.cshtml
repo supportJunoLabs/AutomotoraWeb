@@ -1,0 +1,94 @@
+﻿@model DLL_Backend.Vendedor
+
+@{
+    ViewBag.Title = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER, FormMethod.Post)) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        @Html.HiddenFor(model => model.Codigo)
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Nombre): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Nombre)
+                @Html.HiddenFor(model => model.Nombre)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Direccion): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Direccion)
+                @Html.HiddenFor(model => model.Direccion)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Telefono): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Telefono)
+                @Html.HiddenFor(model => model.Telefono)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.FechaIngreso):
+            </div>
+            <div class="display-field">
+                @Model.FechaIngreso.Date.ToShortDateString()
+                @Html.HiddenFor(model => model.FechaIngreso)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Observaciones): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Observaciones)
+                @Html.HiddenFor(model => model.Observaciones)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Habilitado): 
+            </div>
+            <div class="display-field">
+                @Html.CheckBoxFor(model => model.Habilitado, new {@disabled="disabled"})
+                @Html.HiddenFor(model => model.Habilitado)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+    </fieldset>
+    
+    <div class="espacio2"></div>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Tooltip("Eliminar Vendedor").Data(new { id = Model.Codigo }))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER).Class("btn btn-default"))
+    </div>
+
+}
+
+
+@section Scripts {
+}
+

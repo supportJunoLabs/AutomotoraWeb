@@ -1,0 +1,86 @@
+﻿@model DLL_Backend.Vendedor
+@using AutomotoraWeb.Helpers;
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER, FormMethod.Post)) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        @Html.HiddenFor(model => model.Codigo)
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.Nombre)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.EditorFor(model => model.Nombre)
+            @Html.ValidationMessageFor(model => model.Nombre)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.Direccion)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.EditorFor(model => model.Direccion)
+            @Html.ValidationMessageFor(model => model.Direccion)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.Telefono)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.Telefono)
+            @Html.ValidationMessageFor(model => model.Telefono)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label editor-date-field">
+            @Html.LabelForRequired(model => model.FechaIngreso)
+        </div>
+        <div class="editor-field editor-field-small">
+            @Html.TextBoxFor(model => model.FechaIngreso, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+            @Html.ValidationMessageFor(model => model.FechaIngreso)
+        </div>
+        <div class="clear-both"></div>
+
+
+        <div class="editor-label ">
+            @Html.LabelForRequired(model => model.Observaciones)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.TextAreaFor(model => model.Observaciones, new { style="width: 530px; height: 60px" })
+            @Html.ValidationMessageFor(model => model.Observaciones)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label ">
+            @Html.LabelForRequired(model => model.Habilitado)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.CheckBoxFor(model => model.Habilitado)
+            @Html.ValidationMessageFor(model => model.Habilitado)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="espacio2"></div>
+        <div class="btn-toolbar">
+            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
+            @(Html.Bootstrap().ActionLinkButton("Cancelar", AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER).Class("btn btn-default"))
+        </div>
+        <div class="clear-both"></div>
+
+    </fieldset>
+}
+
+
+@section Scripts {
+}

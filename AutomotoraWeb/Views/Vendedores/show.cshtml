@@ -1,4 +1,4 @@
-﻿@model List<AutomotoraWeb.Models.SellerModel>
+﻿@model List<DLL_Backend.Vendedor>
 
 @{
     ViewBag.Title = "Vendedores";
@@ -25,8 +25,8 @@
         </div>
     </div>
        
-    <div id="sellersGrid">
-        @Html.Partial("_listSellers", Model)
+    <div id="vendedoressGrid">
+        @Html.Partial("_listVendedores", Model)
     </div>
 </div>
 

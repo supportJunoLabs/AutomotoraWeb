@@ -30,88 +30,48 @@ namespace AutomotoraWeb.Services {
         //--------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------
 
-        #region Services SELLER definition
+        #region Services VENDEDORES definition
 
-        public SellerModel getSeller(int code) {
+        public Vendedor getVendedor(int code) {
             Vendedor vendedor = new Vendedor();
             vendedor.Codigo = code;
             vendedor.Consultar();
-            return this.mapSellerModel(vendedor);
+            return vendedor;
         }
 
         //------------------------------------------------------------
 
-        public void createSeller(SellerModel sellerModel) {
-            Vendedor vendedor = this.mapSellerModel(sellerModel);
+        public void createVendedor(Vendedor vendedor) {
             vendedor.Agregar();
         }
 
         //------------------------------------------------------------
 
-        public void updateSeller(SellerModel sellerModel) {
-            Vendedor vendedor = this.mapSellerModel(sellerModel);
+        public void updateVendedor(Vendedor vendedor) {
             vendedor.ModificarDatos();
         }
 
         //------------------------------------------------------------
 
-        public void deleteSeller(SellerModel sellerModel) {
-            Vendedor vendedor = this.mapSellerModel(sellerModel);
-            vendedor.Eliminar(sellerModel.UserName, sellerModel.IP);
+        public void deleteVendedor(Vendedor vendedor, string userName, string IP) {
+            vendedor.Eliminar(userName, IP);
         }
 
         //------------------------------------------------------------
 
-        public List<SellerModel> listSellers() {
+        public List<Vendedor> listVendedores() {
             List<Vendedor> vendedores = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-            List<SellerModel> sellers = new List<SellerModel>();
-
-            foreach (Vendedor vendedor in vendedores) {
-                sellers.Add(this.mapSellerModel(vendedor));
-            }
-
-            return sellers;
+            return vendedores;
         }
 
         //------------------------------------------------------------
 
-        public bool existSeller(SellerModel sellerModel){
-            Vendedor vendedor = this.mapSellerModel(sellerModel);
+        public bool existVendedor(Vendedor vendedor) {
             vendedor.Consultar();
             return false; // TODO
         }
 
         //------------------------------------------------------------
-        //------------------------------------------------------------
-
-        private SellerModel mapSellerModel(Vendedor vendedor) {
-            SellerModel sellerModel = new SellerModel();
-            sellerModel.Address = vendedor.Direccion;
-            sellerModel.Id = vendedor.Codigo;
-            sellerModel.IngressDate = vendedor.FechaIngreso;
-            sellerModel.Name = vendedor.Nombre;
-            sellerModel.Observations = vendedor.Observaciones;
-            sellerModel.Telephone = vendedor.Telefono;
-            sellerModel.Enabled = vendedor.Habilitado;
-            sellerModel.Photo = vendedor.Foto;
-            return sellerModel;
-        }
-
-        //------------------------------------------------------------
-
-        private Vendedor mapSellerModel(SellerModel sellerModel) {
-            Vendedor vendedor = new Vendedor();
-            vendedor.Direccion = sellerModel.Address;
-            vendedor.Codigo = sellerModel.Id;
-            vendedor.FechaIngreso = sellerModel.IngressDate;
-            vendedor.Nombre = sellerModel.Name;
-            vendedor.Observaciones = sellerModel.Observations;
-            vendedor.Telefono = sellerModel.Telephone;
-            vendedor.Habilitado = sellerModel.Enabled;
-            vendedor.Foto = sellerModel.Photo;
-            vendedor.setearAuditoria(sellerModel.UserName, sellerModel.IP);
-            return vendedor;
-        }
 
         #endregion
 

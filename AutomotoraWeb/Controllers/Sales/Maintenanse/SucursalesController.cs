@@ -40,7 +40,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse
 
             GridViewSettings settings = new GridViewSettings();
             settings.Name = "SGA-Vendedores";
-            settings.CallbackRouteValues = new { Controller = "sellers", Action = "listSellers" };
+            settings.CallbackRouteValues = new { Controller = "sucursales", Action = "listSucursales" };
             settings.Width = Unit.Percentage(100);
             settings.Columns.Add("Id").Visible = false; ;
             settings.Columns.Add("Name");
@@ -131,9 +131,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse
         public ActionResult Delete(Sucursal sucursal) {
             if (ModelState.IsValid) {
                 try {
-                    string nomUsuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string origen = HttpContext.Request.UserHostAddress;
-                    SalesService.Instance.deleteSucursal(sucursal, nomUsuario, origen);
+                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                    string IP = HttpContext.Request.UserHostAddress;
+                    SalesService.Instance.deleteSucursal(sucursal, userName, IP);
                     return RedirectToAction(BaseController.SHOW, SUCURSALES);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;

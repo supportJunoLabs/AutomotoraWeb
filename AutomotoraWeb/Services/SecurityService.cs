@@ -99,17 +99,17 @@ namespace AutomotoraWeb.Services {
         //----------------------------------------------------------
 
         private bool isActionNameMaintenance(string actionName) {
-            return (actionName == SellersController.CREATE) ||
-                   (actionName == SellersController.DELETE) ||
-                   (actionName == SellersController.DETAILS) ||
-                   (actionName == SellersController.EDIT) ||
-                   (actionName.Substring(0, 4) == SellersController.LIST);
+            return (actionName == VendedoresController.CREATE) ||
+                   (actionName == VendedoresController.DELETE) ||
+                   (actionName == VendedoresController.DETAILS) ||
+                   (actionName == VendedoresController.EDIT) ||
+                   (actionName.Substring(0, 4) == VendedoresController.LIST);
         }
 
         //----------------------------------------------------------
 
         private bool isControllerNameMaintenance(string controllerName) {
-            return (controllerName == SellersController.SELLERS) ||
+            return (controllerName == VendedoresController.CONTROLLER) ||
                    (controllerName == CustomersController.CUSTOMERS) ||
                    (controllerName == SucursalesController.SUCURSALES);
         }
@@ -117,7 +117,7 @@ namespace AutomotoraWeb.Services {
         //----------------------------------------------------------
 
         private bool isHomePageSection(string controllerName, string actionName) {
-            return ((controllerName == SellersController.SALES) && (actionName == SellersController.INDEX)); // TODO: agregar Financiaciones y Bancos
+            return ((controllerName == VendedoresController.SALES) && (actionName == VendedoresController.INDEX)); // TODO: agregar Financiaciones y Bancos
         }
 
         //----------------------------------------------------------

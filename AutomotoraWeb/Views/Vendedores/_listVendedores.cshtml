@@ -1,0 +1,18 @@
+﻿@model List<DLL_Backend.Vendedor>
+@using System.Web.UI.WebControls
+@using AutomotoraWeb.Helpers;
+
+@{
+    List<string> hiddenColumns = new List<string>() { "Codigo",  "Ciudad", "Cedula", "Direccion", "CodigoPostal", "Credencial", "TipoOtroDoc", "NumeroOtroDoc", "FechaNac", "Pais", "Ecivil", "Rut", "RazonSocial", "Conyuge" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    ViewBag.hiddenColumns = hiddenColumns;
+
+    ViewBag.nameGrid = "gridVendedores";
+    ViewBag.controller = AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER;
+    ViewBag.actionCallbackRoute = AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONCRETE_LIST;
+    ViewBag.KeyFieldName = AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.KEY_FIELD_NAME;
+    ViewBag.typeOfModel = typeof(DLL_Backend.Vendedor.VendedorMD);
+    
+}
+
+@Html.Partial("_generalGrid", Model)
+  
