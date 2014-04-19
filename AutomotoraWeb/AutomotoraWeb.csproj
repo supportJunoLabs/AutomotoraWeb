@@ -239,6 +239,11 @@
     <Compile Include="Controllers\Sales\Maintenanse\VendedoresController.cs" />
     <Compile Include="Controllers\Sales\Maintenanse\SucursalesController.cs" />
     <Compile Include="Controllers\Sales\SalesController.cs" />
+    <Compile Include="DataSetAutomotoraWeb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetAutomotoraWeb.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Filters\AutorizacionActionFilterAttribute.cs" />
     <Compile Include="Filters\GeneralModelActionFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -1491,6 +1496,17 @@
     <Content Include="Content\themes\WintertideAdmin\build\lib\jqplot\examples\syntaxhighlighter\MIT-LICENSE" />
     <Content Include="Content\themes\WintertideAdmin\Readme" />
     <Content Include="Content\Images\vssver2.scc" />
+    <Content Include="DataSetAutomotoraWeb.xsc">
+      <DependentUpon>DataSetAutomotoraWeb.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSetAutomotoraWeb.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetAutomotoraWeb.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="DataSetAutomotoraWeb.xss">
+      <DependentUpon>DataSetAutomotoraWeb.xsd</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
