@@ -27,6 +27,10 @@ namespace AutomotoraWeb.Controllers.General {
         public static string LIST = "list";
         public static string EXPORT_TO_PDF = "exportarPDF";
         public static string EXPORT_TO_EXCEL = "exportarExcel";
+        public static string REPORT = "report";
+        public static string REPORT_PARTIAL = "reportPartial";
+        public static string REPORT_EXPORT = "reportExport";
+        
 
         public static string ERROR_CODE_SYSTEM_ERROR = "SYSTEM_ERROR";
 

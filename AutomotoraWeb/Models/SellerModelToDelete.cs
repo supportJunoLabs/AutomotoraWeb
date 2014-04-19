@@ -9,6 +9,9 @@ using TwitterBootstrapMVC;
 namespace AutomotoraWeb.Models {
     public class SellerModelToDelete : AbstractModel {
 
+        public SellerModelToDelete() { 
+        }
+
         [Required(ErrorMessage = "El nombre del vendedor es obligatorio")]
         [StringLength(50, ErrorMessage = "El Nombre debe tener un largo máximo 50 caracteres")]
         [Display(Name = "Nombre")]

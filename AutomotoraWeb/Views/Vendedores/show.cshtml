@@ -11,17 +11,16 @@
             @(Html.Bootstrap().ActionLinkButton("Agregar Vendedor", AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CREATE).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary).Title("Agregar Vendedor"))
         )
         </div>
-        @*<div class="btn-group">
-            <a class="btn btn-primary2-mf" title="Imprimir listado" href='@Url.Action("Create", "Vendedores")'>
-                Imprimir</a>
-        </div>*@
-         <div class="btn-group btn-primary2-mf">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Exportar <span class="caret">
+        <div class="btn-group">
+            <a class="btn btn-primary2-mf" title="Imprimir listado" href='@Url.Action(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.REPORT)'>Imprimir Listado</a>
+        </div>
+        <div class="btn-group btn-primary2-mf">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Exportar <span class="caret">
                 </span></a>
-                <ul class="dropdown-menu">
-                    <li><a href='@Url.Action(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.EXPORT_TO_EXCEL)'>Exportar a Excel</a></li>
-                    <li><a href='@Url.Action(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.EXPORT_TO_PDF)'>Exportar a PDF</a></li>
-                </ul>
+            <ul class="dropdown-menu">
+                <li><a href='@Url.Action(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.EXPORT_TO_EXCEL)'>Exportar a Excel</a></li>
+                <li><a href='@Url.Action(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.EXPORT_TO_PDF)'>Exportar a PDF</a></li>
+            </ul>
         </div>
     </div>
        

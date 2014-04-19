@@ -62,6 +62,28 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
             return settings;
         }
 
+        //--------------------------------------------------------------------------------------------------
+        //--------------------------------------    REPORT    ----------------------------------------------
+        //--------------------------------------------------------------------------------------------------
+
+        public ActionResult Report() {
+            // Add a report to the view data. 
+            ViewData["Report"] = new DXReportVendedores(); //new DXWebApplication1.Reports.XtraReport1();
+
+            return View();
+        }
+
+        public ActionResult ReportPartial() {
+            ViewData["Report"] = new DXReportVendedores();
+            return PartialView("_reportList");
+        }
+
+        public ActionResult ReportExport() {
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(new DXReportVendedores());
+        }
+
+        //--------------------------------------------------------------------------------------------------
+
         public ActionResult Details(int id) {
             return getVendedor(id);
         }
