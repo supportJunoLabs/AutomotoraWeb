@@ -27,6 +27,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
             return PartialView("_listVendedores", SalesService.Instance.listVendedores());
         }
 
+        //-----------------------------------------------------------------------------------------------------
+
         public ActionResult ExportarExcel() {
             string companyName = ViewBag.companyName;
             string systemName = ViewBag.systemName;
@@ -44,7 +46,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
         static GridViewSettings CreateExportGridViewSettings(string userName, string companyName, string systemName) {
 
             GridViewSettings settings = new GridViewSettings();
-            settings.Name = "SGA-Vendedores";
+            settings.Name = "Vendedores";
             settings.CallbackRouteValues = new { Controller = CONTROLLER, Action = CONCRETE_LIST };
             settings.Width = Unit.Percentage(100);
             settings.Columns.Add("Codigo").Visible = false; ;
@@ -68,7 +70,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
 
         public ActionResult Report() {
             // Add a report to the view data. 
-            ViewData["Report"] = new DXReportVendedores(); //new DXWebApplication1.Reports.XtraReport1();
+            ViewData["Report"] = new DXReportVendedores();
 
             return View();
         }
