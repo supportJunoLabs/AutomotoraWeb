@@ -10,7 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
+using DevExpress.XtraReports.Parameters;
+using DevExpress.XtraReports.UI;
 
 namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
     public class VendedoresController : SalesController, IMaintenance {
@@ -27,61 +28,46 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
             return PartialView("_listVendedores", SalesService.Instance.listVendedores());
         }
 
-        //-----------------------------------------------------------------------------------------------------
-
-        public ActionResult ExportarExcel() {
-            string companyName = ViewBag.companyName;
-            string systemName = ViewBag.systemName;
-            string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-            return GridViewExtension.ExportToXlsx(CreateExportGridViewSettings(userName, companyName, systemName), SalesService.Instance.listVendedores());
-        }
-
-        public ActionResult ExportarPDF() {
-            string companyName = ViewBag.companyName;
-            string systemName = ViewBag.systemName;
-            string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];        
-            return GridViewExtension.ExportToPdf(CreateExportGridViewSettings(userName, companyName, systemName), SalesService.Instance.listVendedores());
-        }
-
-        static GridViewSettings CreateExportGridViewSettings(string userName, string companyName, string systemName) {
-
-            GridViewSettings settings = new GridViewSettings();
-            settings.Name = "Vendedores";
-            settings.CallbackRouteValues = new { Controller = CONTROLLER, Action = CONCRETE_LIST };
-            settings.Width = Unit.Percentage(100);
-            settings.Columns.Add("Codigo").Visible = false; ;
-            settings.Columns.Add("Nombre");
-            settings.Columns.Add("Direccion");
-            settings.Columns.Add("Telefono");
-            settings.Columns.Add("FechaIngreso");
-            settings.Columns.Add("Observaciones");
-            settings.Columns.Add("Habilitado");
-            settings.SettingsExport.PageHeader.Left = systemName + " - " + companyName;
-            settings.SettingsExport.PageHeader.Right = "Vendedores";
-            settings.SettingsExport.PageFooter.Left = DateTime.Now.ToString();
-            settings.SettingsExport.PageFooter.Right = "Usuario: " + userName;
-            settings.SettingsExport.RenderBrick = (sender, e) => { e.BrickStyle.BorderWidth = 0; };
-            return settings;
-        }
-
         //--------------------------------------------------------------------------------------------------
         //--------------------------------------    REPORT    ----------------------------------------------
         //--------------------------------------------------------------------------------------------------
 
         public ActionResult Report() {
             // Add a report to the view data. 
-            ViewData["Report"] = new DXReportVendedores();
-
+            DXReportVendedores rep = new DXReportVendedores();
+            setParamsToReport(rep);
+            ViewData["Report"] = rep;
             return View();
         }
 
         public ActionResult ReportPartial() {
-            ViewData["Report"] = new DXReportVendedores();
+            DXReportVendedores rep = new DXReportVendedores();
+            setParamsToReport(rep);
+            rep.DataSource = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
+            ViewData["Report"] = rep;
             return PartialView("_reportList");
         }
 
         public ActionResult ReportExport() {
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(new DXReportVendedores());
+        }
+
+        private void setParamsToReport(XtraReport report) {
+            Parameter paramSystemName = new Parameter();
+            paramSystemName.Name = "SystemName";
+            paramSystemName.Type = typeof(string);
+            paramSystemName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME]);
+            paramSystemName.Description = "Nombre de la empresa";
+            paramSystemName.Visible = false;
+            report.Parameters.Add(paramSystemName);
+
+            Parameter paramCompanyName = new Parameter();
+            paramCompanyName.Name = "CompanyName";
+            paramCompanyName.Type = typeof(string);
+            paramCompanyName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME]);
+            paramCompanyName.Description = "Nombre de la compania";
+            paramCompanyName.Visible = false;
+            report.Parameters.Add(paramCompanyName);
         }
 
         //--------------------------------------------------------------------------------------------------
