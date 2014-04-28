@@ -128,10 +128,9 @@ namespace AutomotoraWeb.Services {
         //----------------------------------------------------------
 
         private bool isErrorPage(string controllerName, string actionName) {
-            return ((controllerName == ErrorController.ERROR) && 
-                    ((actionName == ErrorController.ERROR_403) || 
-                     (actionName == ErrorController.ERROR_404) || 
-                     (actionName == ErrorController.ERROR_500))); // TODO: agregar nuevos Errores
+              if (controllerName .ToUpper()!="Error".ToUpper()) return false;
+              if (actionName.Length<"Error".Length) return false;
+              return (actionName.Substring(0, "Error".Length).ToUpper().Equals("Error".ToUpper()));
         }
 
         //----------------------------------------------------------

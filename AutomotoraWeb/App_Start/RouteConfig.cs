@@ -12,13 +12,23 @@ namespace AutomotoraWeb {
 
             routes.MapRoute(
            name: "Error404",
-           url: "Error404/{action}/{id}",
+           url: "Error/Error404/{action}/{id}",
            defaults: new {
                controller = "Error",
                action = "Error404",
                id = UrlParameter.Optional
            }
            );
+
+            routes.MapRoute(
+         name: "Error403",
+         url: "Error/Error403/{action}/{id}",
+         defaults: new {
+             controller = "Error",
+             action = "Error403",
+             id = UrlParameter.Optional
+         }
+         );
 
             routes.MapRoute(
                 name: "Default",

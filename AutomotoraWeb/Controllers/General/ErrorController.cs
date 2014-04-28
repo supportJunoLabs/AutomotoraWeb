@@ -14,5 +14,10 @@ namespace AutomotoraWeb.Controllers.General
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Error403() {
+            HttpContext.Response.StatusCode = 403;
+            return View();
+        }
     }
 }
