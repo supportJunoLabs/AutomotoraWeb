@@ -11,10 +11,22 @@ namespace AutomotoraWeb {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+           name: "Error404",
+           url: "Error404/{action}/{id}",
+           defaults: new {
+               controller = "Error",
+               action = "Error404",
+               id = UrlParameter.Optional
+           }
+           );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "sales", action = "index", id = UrlParameter.Optional }
             );
+
+            routes.IgnoreRoute("Logs/elmah.axd/{*pathInfo}");
         }
     }
 }
