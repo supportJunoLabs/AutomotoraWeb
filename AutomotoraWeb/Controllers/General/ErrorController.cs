@@ -9,6 +9,12 @@ namespace AutomotoraWeb.Controllers.General
     public class ErrorController : Controller
     {
         [HttpGet]
+        public ActionResult Error() {
+            HttpContext.Response.StatusCode = 500;
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Error404() {
             HttpContext.Response.StatusCode = 404;
             return View();
