@@ -1,0 +1,44 @@
+﻿el System.Web.Mvc.HandleErrorInfo
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>SGA: Error</title>
+    @Styles.Render("~/Content/css") @*Bootstrap awesome y template propio*@
+</head>
+<body class="http-error">
+    <div class="row-fluid">
+        <div class="http-error">
+            <h1>
+                Oops!</h1>
+            <p class="info">
+                Ha sucedido algo que no esperabamos.</p>
+            <p>
+                <i class="icon-home"></i>
+            </p>
+            <p>
+            @(Html.Bootstrap().ActionLinkButton("Volver al inicio",AutomotoraWeb.Controllers.Sales.SalesController.INDEX,AutomotoraWeb.Controllers.Sales.SalesController.SALES).Class("btn btn-default"))
+        </div>
+        <div class="espacio" />
+        <div class="espacio" />
+        <div>
+            @{ if (Request.IsLocal) { 
+                   if (@Model!=null && @Model.Exception !=null){
+                        <h3>La excepcion es: @Model.Exception.Message</h3>
+                        if (@Model.Exception.InnerException !=null){
+                             <h3> @Model.Exception.InnerException.Message</h3>
+                        }
+                        
+                        <h5>Stack trace: @Model.Exception.StackTrace</h5>
+                   } else {
+                        <h3>No hay info sobre la excepcion</h3>
+                   }
+            }}
+        </div>
+    </div>
+</body>
+</html>
