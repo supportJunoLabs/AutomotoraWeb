@@ -12,7 +12,7 @@ namespace AutomotoraWeb {
 
             routes.MapRoute(
            name: "Error404",
-           url: "Error/Error404/{action}/{id}",
+           url: "Error404/{action}/{id}",
            defaults: new {
                controller = "Error",
                action = "Error404",
@@ -22,7 +22,7 @@ namespace AutomotoraWeb {
 
             routes.MapRoute(
          name: "Error403",
-         url: "Error/Error403/{action}/{id}",
+         url: "Error403/{action}/{id}",
          defaults: new {
              controller = "Error",
              action = "Error403",
