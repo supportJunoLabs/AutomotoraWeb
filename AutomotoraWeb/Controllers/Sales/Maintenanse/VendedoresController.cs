@@ -12,6 +12,8 @@ using System.Web;
 using System.Web.Mvc;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
+using System.IO;
+using System.Text;
 
 namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
     public class VendedoresController : SalesController, IMaintenance {
@@ -160,5 +162,21 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
 
         //-----------------------------------------------------------------------------------------------------
 
+        public void SaveFileStream(Stream stream, string destPath) {
+            using (var fileStream = new FileStream(destPath, FileMode.Create, FileAccess.Write)) {
+                stream.CopyTo(fileStream);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult Upload() {
+
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            SaveFileStream(this.HttpContext.Request.InputStream, baseDirectory + "Content/Images/tmp/prueba.png");
+            return Json(new { nombreArchivo = "prueba.png" });
+        }
+
+        //-----------------------------------------------------------------------------------------------------
     }
 }

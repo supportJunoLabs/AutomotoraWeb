@@ -106,6 +106,7 @@ namespace AutomotoraWeb.Services {
                    (actionName.Equals(BaseController.EXPORT_TO_PDF.ToLower())) ||
                    (actionName.Equals(BaseController.EXPORT_TO_EXCEL.ToLower())) ||
                    (actionName.Equals(BaseController.REPORT.ToLower())) ||
+                   (actionName.Equals(BaseController.UPLOAD.ToLower())) ||
                    (actionName.Equals(BaseController.REPORT_PARTIAL.ToLower())) ||
                    (actionName.Equals(BaseController.REPORT_EXPORT.ToLower())) ||
                    (actionName.Substring(0, 4).Equals(BaseController.LIST.ToLower()));
