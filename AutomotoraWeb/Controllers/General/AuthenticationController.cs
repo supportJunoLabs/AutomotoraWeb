@@ -115,11 +115,11 @@ namespace AutomotoraWeb.Controllers.General {
         //------------------------------------------------------------------------------------------------------------------------
 
         
-        [HttpGet]
-        public ActionResult Error403() {
-            HttpContext.AddError(new HttpException(403, "Access Denied"));
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult Error403() {
+        //    HttpContext.AddError(new HttpException(403, "Access Denied"));
+        //    return View();
+        //}
 
     }
 }
