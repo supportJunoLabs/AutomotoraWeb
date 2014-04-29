@@ -228,7 +228,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="404.aspx" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
     <Compile Include="Controllers\Financing\FinancingController.cs" />
