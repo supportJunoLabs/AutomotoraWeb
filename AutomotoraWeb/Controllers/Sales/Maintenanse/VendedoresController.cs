@@ -168,15 +168,45 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
             }
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public JsonResult Upload() {
+
+            string file = new StreamReader(this.HttpContext.Request.InputStream, Encoding.UTF8).ReadToEnd();
 
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
             SaveFileStream(this.HttpContext.Request.InputStream, baseDirectory + "Content/Images/tmp/prueba.png");
             return Json(new { nombreArchivo = "prueba.png" });
-        }
+        }*/
 
         //-----------------------------------------------------------------------------------------------------
+
+
+        /*[HttpPost]
+        public JsonResult Upload(HttpPostedFileBase file) {
+
+            if (file.ContentLength > 0) {
+                var fileName = Path.GetFileName(file.FileName);
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                file.SaveAs(baseDirectory + "Content/Images/tmp/prueba.png");
+            }
+
+            return Json(new { nombreArchivo = "prueba.png" });
+        }*/
+
+        [HttpPost]
+        public JsonResult Upload() {
+            System.Threading.Thread.Sleep(3000);
+            HttpPostedFileBase file = null;
+
+            if (Request.Files.Count > 0) {
+                file = Request.Files[0];
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                file.SaveAs(Server.MapPath(baseDirectory + "Content/Images/tmp/") + file.FileName);
+            }
+            //Response.Write(file.FileName + " uploaded!");
+            //Response.End();
+            return Json(new { nombreArchivo = "file.FileName" });
+        }
     }
 }

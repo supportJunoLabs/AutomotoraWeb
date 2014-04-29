@@ -64,21 +64,12 @@
             </div>
             <div class="clear-both"></div>
 
-            <div class="editor-label">
+            <div class="editor-label ">
                 @Html.LabelForRequired(model => model.Habilitado)
             </div>
             <div class="editor-field editor-field-xxlarge">
                 @Html.CheckBoxFor(model => model.Habilitado)
                 @Html.ValidationMessageFor(model => model.Habilitado)
-            </div>
-            <div class="clear-both"></div>
-
-            <div class="editor-label">
-                Foto
-            </div>
-            <div class="editor-field-xxlarge">
-                <input type="file" id="filePhoto" class="btn" />
-                <input type="button" id="buttonFileUpload" value="Subir Foto" class="btn btn-primary" />
             </div>
             <div class="clear-both"></div>
 
@@ -93,26 +84,67 @@
     }
 </div>
 
+<div style="float: left;">
+    <div>
+        <form id="formUploadPhoto" action="@Url.Action("Upload")" method="post">
+            <input type="file" id="filePhoto" />
+            <input type="submit" value="Subir Foto" />
+        </form>
+    </div>
+</div>
+
 <div style="clear: both;"></div>
 
+<!--
+<form action="Upload" method="post" enctype="multipart/form-data">
+
+  <label for="file">Filename:</label>
+  <input type="file" name="file" id="file" />
+
+  <input type="submit" />
+</form>
+-->
+
+<div>
+    @using (Html.BeginForm("upload", AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER, FormMethod.Post, new { enctype = "multipart/form-data", id = "form1" }))
+    { 
+        <input type="file" size="60" name="myfile" />     
+        <input type="submit" value="Ajax File Upload" />
+    }
+    <div id="progress" style="display:none">        
+        <div id="bar">please waiting.....</div>  
+    </div>
+    <br/> 
+    <div id="message"></div>
+</div>
+
 @section Scripts {
+
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
     <script type="text/javascript">
-        $("#buttonFileUpload").click(function () {
-            var file = $("#filePhoto").get();
-            $.ajax({
-                type: 'POST',
-                url: "@Url.Action("Upload")",
-                data: file,
-                dataType: "json",
-                contentType: "application/octet-stream",
-                success: function (data) {
-                    alert(data.nombreArchivo);
+        $(document).ready(function () {
+            var options = {
+                beforeSend: function () {
+                    $("#progress").show();
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert("Error al subir el archivo: " + thrownError);
+                success: function () {
+                    $("#progress").hide();
+
+                },
+                complete: function (response) {
+                    $("#message").html("<font color='green'>" + response.responseText + "</font>");
+                },
+                error: function () {
+                    $("#message").html("<font color='red'> ERROR: unable to upload files</font>");
                 }
-            });
+            };
+            $("#form1").ajaxForm(options);
+            //$("#form1").ajaxForm();
         });
+
+
+        
     </script>
 }
 

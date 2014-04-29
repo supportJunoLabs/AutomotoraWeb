@@ -4,7 +4,16 @@
 
 @{
 
-    List<String> hiddenColumns = (List<String>)(ViewBag.hiddenColumns);
+    List<string> hiddenColumns = new List<string>();
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>();
+
+    if (ViewBag.hiddenColumns != null) {
+        hiddenColumns = (List<string>)(ViewBag.hiddenColumns);
+    }
+
+    if (ViewBag.trunkColumns != null) {
+        trunkColumns = (Dictionary<string, int>)(ViewBag.trunkColumns);
+    }
     
     List<GridViewColumn> listGridViewsColumn = new List<GridViewColumn>();
 
@@ -92,6 +101,16 @@
                             
             });
         });
+
+        //Se trunca contenido de columnas con mucho texto
+        settings.HtmlDataCellPrepared = (sender, e) => {
+            if (trunkColumns.Keys.Contains(e.DataColumn.FieldName)) {
+                if (e.CellValue != null && e.CellValue.ToString().Length > trunkColumns[e.DataColumn.FieldName]) {
+                    e.Cell.ToolTip = e.CellValue.ToString();
+                    e.Cell.Text = e.CellValue.ToString().Substring(0, trunkColumns[e.DataColumn.FieldName]) + "...";
+                }
+            }
+        }; 
     }
 ).Bind(Model).GetHtml())
     

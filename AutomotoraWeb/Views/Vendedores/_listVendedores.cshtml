@@ -3,9 +3,12 @@
 @using AutomotoraWeb.Helpers;
 
 @{
-    List<string> hiddenColumns = new List<string>() { "Codigo",  "Ciudad", "Cedula", "Direccion", "CodigoPostal", "Credencial", "TipoOtroDoc", "NumeroOtroDoc", "FechaNac", "Pais", "Ecivil", "Rut", "RazonSocial", "Conyuge" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    List<string> hiddenColumns = new List<string>() { "Foto" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
     ViewBag.hiddenColumns = hiddenColumns;
 
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { {"Telefono", 80}, {"Observaciones", 90} };
+    ViewBag.trunkColumns = trunkColumns;
+    
     ViewBag.nameGrid = "gridVendedores";
     ViewBag.controller = AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER;
     ViewBag.actionCallbackRoute = AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONCRETE_LIST;
