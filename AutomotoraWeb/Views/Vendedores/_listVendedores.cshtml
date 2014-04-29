@@ -3,10 +3,10 @@
 @using AutomotoraWeb.Helpers;
 
 @{
-    List<string> hiddenColumns = new List<string>() { "Foto" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    List<string> hiddenColumns = new List<string>() { "Foto", "Direccion" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
     ViewBag.hiddenColumns = hiddenColumns;
 
-    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { {"Telefono", 80}, {"Observaciones", 90} };
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { {"Telefono", 30}, {"Observaciones", 50} };
     ViewBag.trunkColumns = trunkColumns;
     
     ViewBag.nameGrid = "gridVendedores";
