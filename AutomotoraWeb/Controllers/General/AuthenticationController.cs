@@ -13,7 +13,7 @@ using System.Web.Security;
 namespace AutomotoraWeb.Controllers.General {
     public class AuthenticationController : Controller {
 
-        public static string AUTHENTICATION = "authentication";
+        public static string CONTROLLER = "authentication";
         public static string LOGIN = "login";
         public static string LOGOUT = "logout";
         public static string CHANGE_PASSWORD = "changePassword";

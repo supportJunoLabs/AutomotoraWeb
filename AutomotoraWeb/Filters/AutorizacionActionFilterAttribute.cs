@@ -23,13 +23,18 @@ namespace AutomotoraWeb {
             string controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
             string actionName = filterContext.ActionDescriptor.ActionName;
 
-            if (!((controllerName.ToLower() == AuthenticationController.AUTHENTICATION) && (actionName.ToLower() == AuthenticationController.LOGIN))) {
+            //Agrego esto temporalmente para poder ver las paginas de error que se generan durante el login
+            if (controllerName.Length >= "Error".Length && controllerName.Substring(0, "error".Length).ToLower() == "error") {
+                return;
+            }
+
+            if (!((controllerName.ToLower() == AuthenticationController.CONTROLLER) && (actionName.ToLower() == AuthenticationController.LOGIN))) {
                 if (filterContext.HttpContext.Session[SessionUtils.SESSION_USER_NAME] == null) {
                     // Redireccionamos la peticion a la vista de login
                     if (filterContext.HttpContext.Request.IsAjaxRequest()) {
                         filterContext.HttpContext.Response.StatusCode = 302;
                     } else {
-                        filterContext.Result = new RedirectResult("/" + AuthenticationController.AUTHENTICATION + "/" + AuthenticationController.LOGIN);
+                        filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                     }
                 } else {
                     Dictionary<string, Dictionary<string, bool>> dictionaryOptions = (Dictionary<string, Dictionary<string, bool>>)(filterContext.HttpContext.Application.Contents[SessionUtils.APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS]);

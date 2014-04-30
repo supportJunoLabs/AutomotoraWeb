@@ -1552,7 +1552,6 @@
     <Content Include="web.config" />
     <Content Include="Views\Sucursales\report.cshtml" />
     <Content Include="Views\Sucursales\_reportList.cshtml" />
-    <Content Include="Views\Bank\Empresa\edit.cshtml" />
     <Content Include="Views\Shared\error403.cshtml" />
     <Content Include="Views\Shared\error404.cshtml" />
     <Content Include="Views\Sistema\Index.cshtml" />

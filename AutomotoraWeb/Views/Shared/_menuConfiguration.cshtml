@@ -9,9 +9,11 @@
             </a>
 
             <ul class="dropdown-menu">
-            @foreach (var x in (Dictionary<int, AutomotoraWeb.Models.MenuOptionModel>)(ViewBag.menuOptions[AutomotoraWeb.Services.MenuService.MENU_CONFIGURATION])) {
-                <li>@Html.ActionLink(x.Value.OpcionName, x.Value.Action, x.Value.Controlller)</li>
-                <li class="divider"></li>
+               @if (ViewBag.menuOptions!=null){
+                foreach (var x in (Dictionary<int, AutomotoraWeb.Models.MenuOptionModel>)(ViewBag.menuOptions[AutomotoraWeb.Services.MenuService.MENU_CONFIGURATION])) {
+                    <li>@Html.ActionLink(x.Value.OpcionName, x.Value.Action, x.Value.Controlller)</li>
+                    <li class="divider"></li>
+               }
             }
             </ul>
         </li>
