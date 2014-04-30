@@ -247,7 +247,6 @@
     <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
-    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\CustomerSpouseModel.cs" />
