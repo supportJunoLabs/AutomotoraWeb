@@ -13,7 +13,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 
-namespace AutomotoraWeb.Controllers.General
+namespace AutomotoraWeb.Controllers.Configuracion
 {
     public class SucursalesController : Controller, IMaintenance {
 
@@ -30,43 +30,43 @@ namespace AutomotoraWeb.Controllers.General
 
 
         //--------------------------------------    REPORT    ----------------------------------------------
-        public ActionResult Report() {
-            // Add a report to the view data. 
-            DXReportSucursales rep = new DXReportSucursales();
-            setParamsToReport(rep);
-            ViewData["Report"] = rep;
-            return View();
-        }
+        //public ActionResult Report() {
+        //    // Add a report to the view data. 
+        //    DXReportSucursales rep = new DXReportSucursales();
+        //    setParamsToReport(rep);
+        //    ViewData["Report"] = rep;
+        //    return View();
+        //}
 
-        public ActionResult ReportPartial() {
-            DXReportSucursales rep = new DXReportSucursales();
-            setParamsToReport(rep);
-            rep.DataSource = _listaSucursales();
-            ViewData["Report"] = rep;
-            return PartialView("_reportList");
-        }
+        //public ActionResult ReportPartial() {
+        //    DXReportSucursales rep = new DXReportSucursales();
+        //    setParamsToReport(rep);
+        //    rep.DataSource = _listaSucursales();
+        //    ViewData["Report"] = rep;
+        //    return PartialView("_reportList");
+        //}
 
-        public ActionResult ReportExport() {
-            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(new DXReportSucursales());
-        }
+        //public ActionResult ReportExport() {
+        //    return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(new DXReportSucursales());
+        //}
 
-        private void setParamsToReport(XtraReport report) {
-            Parameter paramSystemName = new Parameter();
-            paramSystemName.Name = "SystemName";
-            paramSystemName.Type = typeof(string);
-            paramSystemName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME]);
-            paramSystemName.Description = "Nombre de la empresa";
-            paramSystemName.Visible = false;
-            report.Parameters.Add(paramSystemName);
+        //private void setParamsToReport(XtraReport report) {
+        //    Parameter paramSystemName = new Parameter();
+        //    paramSystemName.Name = "SystemName";
+        //    paramSystemName.Type = typeof(string);
+        //    paramSystemName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME]);
+        //    paramSystemName.Description = "Nombre de la empresa";
+        //    paramSystemName.Visible = false;
+        //    report.Parameters.Add(paramSystemName);
 
-            Parameter paramCompanyName = new Parameter();
-            paramCompanyName.Name = "CompanyName";
-            paramCompanyName.Type = typeof(string);
-            paramCompanyName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME]);
-            paramCompanyName.Description = "Nombre de la compania";
-            paramCompanyName.Visible = false;
-            report.Parameters.Add(paramCompanyName);
-        }
+        //    Parameter paramCompanyName = new Parameter();
+        //    paramCompanyName.Name = "CompanyName";
+        //    paramCompanyName.Type = typeof(string);
+        //    paramCompanyName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME]);
+        //    paramCompanyName.Description = "Nombre de la compania";
+        //    paramCompanyName.Visible = false;
+        //    report.Parameters.Add(paramCompanyName);
+        //}
 
         //--------------------------------------------------------------------------------------------------
 

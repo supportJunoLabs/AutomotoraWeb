@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using DLL_Backend;
 using AutomotoraWeb.Services;
 
-namespace AutomotoraWeb.Controllers.General
+namespace AutomotoraWeb.Controllers.Configuracion
 {
     public class EmpresaController : Controller
     {

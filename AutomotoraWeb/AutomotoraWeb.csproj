@@ -232,18 +232,12 @@
     <Compile Include="Controllers\Bank\BankController.cs" />
     <Compile Include="Controllers\Financing\FinancingController.cs" />
     <Compile Include="Controllers\General\BaseController.cs" />
-    <Compile Include="Controllers\General\EmpresaController.cs" />
-    <Compile Include="Controllers\General\Upload\DemoController.cs" />
+    <Compile Include="Controllers\Configuracion\EmpresaController.cs" />
     <Compile Include="Controllers\General\ErrorController.cs" />
-    <Compile Include="Controllers\General\Upload\PhotoUtils.cs" />
-    <Compile Include="Controllers\General\Upload\UploadControlController.Callbacks.cs" />
-    <Compile Include="Controllers\General\Upload\UploadControlController.cs" />
-    <Compile Include="Controllers\General\Upload\UploadingUtils.cs" />
-    <Compile Include="Controllers\General\Upload\Utils.cs" />
-    <Compile Include="Controllers\Sales\Maintenanse\CustomersController.cs" />
+    <Compile Include="Controllers\Sales\Maintenance\CustomersController.cs" />
     <Compile Include="Controllers\General\IMaintenance.cs" />
-    <Compile Include="Controllers\Sales\Maintenanse\VendedoresController.cs" />
-    <Compile Include="Controllers\Sales\Maintenanse\SucursalesController.cs" />
+    <Compile Include="Controllers\Sales\Maintenance\VendedoresController.cs" />
+    <Compile Include="Controllers\Configuracion\SucursalesController.cs" />
     <Compile Include="Controllers\Sales\SalesController.cs" />
     <Compile Include="Filters\AutorizacionActionFilterAttribute.cs" />
     <Compile Include="Filters\GeneralModelActionFilterAttribute.cs" />
@@ -1570,7 +1564,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
     <Folder Include="Content\Images\vendedores\" />
-    <Folder Include="Controllers\General\Upload\lib\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

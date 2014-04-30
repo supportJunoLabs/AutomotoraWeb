@@ -8,24 +8,42 @@ using System.Configuration;
 namespace AutomotoraWeb.Services {
     public class CompanyService {
 
-        private static Empresa emp;
+        private Empresa emp;
 
         #region Singleton definition
 
-        // Variable estática para la instancia, se necesita utilizar una función lambda ya que el constructor es privado
-        private static readonly Lazy<CompanyService> instance = new Lazy<CompanyService>(() => new CompanyService());
+
+        //MF: Asi como esta, se instancia la variable instance cada vez que se invoca
+        //y entonces cada vez va a buscar otra vez los datos de la empresa a la base, demorando innecesariamente
+        //Se cambia por otra forma similar de variable estatica, que se instancia al comienzo para ser compartida por todos los usuarios
+        //NO es necesario hacerla lazy ya que se va a instanciar una unica vez y es estatica.
+        //Para el caso de SecurityService no importa que se instancie cada vez, porque no tiene ningun objeto que lee la base como en este caso Empresa, por eso solo cambio esta clase.
+
+        //LC: Variable estática para la instancia, se necesita utilizar una función lambda ya que el constructor es privado
+        //private static readonly Lazy<CompanyService> instance = new Lazy<CompanyService>(() => new CompanyService());
+
+        private static CompanyService instance;
 
         // Constructor privado para evitar la instanciación directa
         private CompanyService() {
-            emp = new Empresa();
-            emp.Codigo = Int32.Parse(ConfigurationManager.AppSettings["COD_SISTEMA"]);
-            emp.Consultar();
         }
 
         // Propiedad para acceder a la instancia
-        public static CompanyService Instance {
+        private static CompanyService Instance {
             get {
-                return instance.Value;
+                if (instance == null) {
+                    instance = new CompanyService();
+                    instance.emp = new Empresa();
+                    instance.emp.Codigo = Int32.Parse(ConfigurationManager.AppSettings["COD_SISTEMA"]);
+                    instance.emp.Consultar();
+                }
+                return instance;
+            }
+        }
+
+        public static void actualizarDatos(Empresa empre){
+            if (instance!=null){
+                instance.emp=empre;
             }
         }
 
@@ -35,20 +53,18 @@ namespace AutomotoraWeb.Services {
 
         #region Services definition
 
-        public string getCompanyName() {
-            return emp.NombreEmpresa;
+        public static string getCompanyName() {
+            return Instance.emp.NombreEmpresa;
         }
 
         //------------------------------------------------------------
 
-        public string getSystemName() {
-            return emp.NombreSistema;
+        public static string getSystemName() {
+            return Instance.emp.NombreSistema;
         }
 
-        public void actualizarDatos(Empresa empre) {
-            if (instance != null) {
-                emp = empre;
-            }
+        public static Empresa Empresa() {
+            return Instance.emp;
         }
 
         //------------------------------------------------------------
