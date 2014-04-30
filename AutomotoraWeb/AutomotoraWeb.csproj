@@ -228,6 +228,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Configuracion\ConfiguracionController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
     <Compile Include="Controllers\Financing\FinancingController.cs" />
@@ -1518,7 +1519,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Authentication\login.cshtml" />
     <Content Include="Views\Authentication\changePassword.cshtml" />
-    <Content Include="Views\Authentication\forgetPassword.cshtml" />
     <Content Include="Views\Shared\_LayoutAuthorization.cshtml" />
     <Content Include="Views\Shared\_sidebarSales.cshtml" />
     <Content Include="Views\Shared\_sidebarBank.cshtml" />
@@ -1552,9 +1552,11 @@
     <Content Include="web.config" />
     <Content Include="Views\Sucursales\report.cshtml" />
     <Content Include="Views\Sucursales\_reportList.cshtml" />
-    <Content Include="Views\Empresa\edit.cshtml" />
+    <Content Include="Views\Bank\Empresa\edit.cshtml" />
     <Content Include="Views\Shared\error403.cshtml" />
     <Content Include="Views\Shared\error404.cshtml" />
+    <Content Include="Views\Configuracion\Index.cshtml" />
+    <Content Include="Views\Empresa\edit.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
