@@ -8,10 +8,10 @@ using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Configuracion
 {
-    public class EmpresaController : Controller
+    public class EmpresaController : ConfiguracionController
     {
 
-        public static string CONTROLLER = "vendedores";
+        public static string CONTROLLER = "empresa";
 
         public ActionResult Edit() {
             return getEmpresa();
@@ -34,7 +34,9 @@ namespace AutomotoraWeb.Controllers.Configuracion
                 try {
                     empresa.ModificarDatos();
                     CompanyService.actualizarDatos(empresa);
-                    return RedirectToAction(AutomotoraWeb.Controllers.Sales.SalesController.INDEX, AutomotoraWeb.Controllers.Sales.SalesController.SALES);
+
+                    //TODO:  aca cambiar por la redireccion al index del ultimo modulo utilizado antes de acceder a esta opcion.
+                    return RedirectToAction(ConfiguracionController.INDEX, ConfiguracionController.CONFIG);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
