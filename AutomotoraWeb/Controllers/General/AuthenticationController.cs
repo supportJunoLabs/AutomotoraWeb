@@ -1,4 +1,4 @@
-﻿using AutomotoraWeb.Controllers.Sales;
+﻿using AutomotoraWeb.Controllers.Configuracion;
 using AutomotoraWeb.Models;
 using AutomotoraWeb.Services;
 using AutomotoraWeb.Utils;
@@ -43,7 +43,7 @@ namespace AutomotoraWeb.Controllers.General {
                         if (!String.IsNullOrEmpty(returnUrl)) {
                             return Redirect(returnUrl);
                         } else {
-                            return RedirectToAction(SalesController.INDEX, SalesController.SALES);
+                            return RedirectToAction(ConfiguracionController.INDEX, ConfiguracionController.CONFIG);
                         }
                     }
                 } catch (UsuarioException exc) {
@@ -66,17 +66,13 @@ namespace AutomotoraWeb.Controllers.General {
         //------------------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordModel model, string returnUrl) {
+        public ActionResult ChangePassword(ChangePasswordModel model) {
             if (ModelState.IsValid) {
                 try {
                     string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
                     SecurityService.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword, Request.UserHostAddress);
-
-                    if (!String.IsNullOrEmpty(returnUrl)) {
-                        return Redirect(returnUrl);
-                    } else {
-                        return RedirectToAction(SalesController.INDEX, SalesController.SALES);
-                    }
+                    return RedirectToAction(ConfiguracionController.INDEX, ConfiguracionController.CONFIG);
+                    //TODO:  falta cambiar para volver al ultimo modulo accedido
                 } catch (UsuarioException exc) {
                     model.ErrorCode = exc.Codigo;
                     model.ErrorMessage = exc.Message;
