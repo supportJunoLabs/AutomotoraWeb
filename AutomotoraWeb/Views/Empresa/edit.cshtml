@@ -1,0 +1,132 @@
+﻿@model DLL_Backend.Empresa
+@using AutomotoraWeb.Helpers;
+
+@{
+    ViewBag.Title = " Datos Empresa: Modificar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        @Html.HiddenFor(model => model.Codigo)
+        @Html.HiddenFor(model => model.NombreEmpresa)
+        @Html.HiddenFor(model => model.NombreSistema)
+
+            <div class="editor-label">
+                @Html.DisplayNameFor(model => model.NombreEmpresa): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.NombreEmpresa)
+            </div>
+            <div class="clear-both"></div>
+        <div class="espacio2"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.Direccion)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.EditorFor(model => model.Direccion)
+            @Html.ValidationMessageFor(model => model.Direccion)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.Ciudad)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.Ciudad)
+            @Html.ValidationMessageFor(model => model.Ciudad)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.CodigoPostal)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.CodigoPostal)
+            @Html.ValidationMessageFor(model => model.CodigoPostal)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.Telefono)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.Telefono)
+            @Html.ValidationMessageFor(model => model.Telefono)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.Fax)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.Fax)
+            @Html.ValidationMessageFor(model => model.Fax)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.Mail)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.Mail)
+            @Html.ValidationMessageFor(model => model.Mail)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.Rut)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.Rut)
+            @Html.ValidationMessageFor(model => model.Rut)
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label">
+            @Html.LabelForRequired(model => model.BSE)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.BSE)
+            @Html.ValidationMessageFor(model => model.BSE)
+        </div>
+        <div class="clear-both"></div>
+
+          <div class="editor-label">
+            @Html.LabelForRequired(model => model.BPS)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.BPS)
+            @Html.ValidationMessageFor(model => model.BPS)
+        </div>
+        <div class="clear-both"></div>
+
+          <div class="editor-label">
+            @Html.LabelForRequired(model => model.MTSS)
+        </div>
+        <div class="editor-field editor-field-large">
+            @Html.EditorFor(model => model.MTSS)
+            @Html.ValidationMessageFor(model => model.MTSS)
+        </div>
+        <div class="clear-both"></div>
+
+
+        <div class="espacio2"></div>
+        <div class="btn-toolbar">
+            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
+        </div>
+        <div class="clear-both"></div>
+
+    </fieldset>
+}
+
+
+@section Scripts {
+}
