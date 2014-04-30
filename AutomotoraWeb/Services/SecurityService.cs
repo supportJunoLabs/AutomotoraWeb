@@ -1,5 +1,5 @@
 ﻿using AutomotoraWeb.Controllers.General;
-using AutomotoraWeb.Controllers.Sales.Maintenanse;
+using AutomotoraWeb.Controllers.Sales.Maintenance;
 using DLL_Backend;
 using System;
 using System.Collections.Generic;
@@ -103,21 +103,20 @@ namespace AutomotoraWeb.Services {
                    (actionName.Equals(BaseController.DELETE.ToLower())) ||
                    (actionName.Equals(BaseController.DETAILS.ToLower())) ||
                    (actionName.Equals(BaseController.EDIT.ToLower())) ||
-                   (actionName.Equals(BaseController.EXPORT_TO_PDF.ToLower())) ||
-                   (actionName.Equals(BaseController.EXPORT_TO_EXCEL.ToLower())) ||
                    (actionName.Equals(BaseController.REPORT.ToLower())) ||
-                   (actionName.Equals(BaseController.UPLOAD.ToLower())) ||
                    (actionName.Equals(BaseController.REPORT_PARTIAL.ToLower())) ||
-                   (actionName.Equals(BaseController.REPORT_EXPORT.ToLower())) ||
-                   (actionName.Substring(0, 4).Equals(BaseController.LIST.ToLower()));
+                   (actionName.Equals(BaseController.REPORT_EXPORT.ToLower()))||
+                   (actionName.Substring(0, 4).Equals(BaseController.LIST.ToLower())
+                   );
         }
         
         //----------------------------------------------------------
 
         private bool isControllerNameMaintenance(string controllerName) {
+
             return (controllerName.Equals(VendedoresController.CONTROLLER.ToLower())) ||
                    (controllerName.Equals(CustomersController.CUSTOMERS.ToLower())) ||
-                   (controllerName.Equals(SucursalesController.SUCURSALES.ToLower()));
+                   (controllerName.Equals(SucursalesController.CONTROLLER.ToLower()));
         }
 
         //----------------------------------------------------------

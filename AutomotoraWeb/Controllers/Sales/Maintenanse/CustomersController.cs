@@ -10,7 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
+namespace AutomotoraWeb.Controllers.Sales.Maintenance {
     public class CustomersController : SalesController, IMaintenance {
 
         public static string CUSTOMERS = "customers";

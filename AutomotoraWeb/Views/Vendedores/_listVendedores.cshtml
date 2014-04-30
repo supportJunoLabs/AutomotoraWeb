@@ -1,18 +1,19 @@
 ﻿@model List<DLL_Backend.Vendedor>
 @using System.Web.UI.WebControls
 @using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Sales.Maintenance;
 
 @{
-    List<string> hiddenColumns = new List<string>() { "Foto", "Direccion" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    List<string> hiddenColumns = new List<string>() { "Foto" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
     ViewBag.hiddenColumns = hiddenColumns;
 
-    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { {"Telefono", 30}, {"Observaciones", 50} };
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { {"Telefono", 80}, {"Observaciones", 90} };
     ViewBag.trunkColumns = trunkColumns;
-    
+
     ViewBag.nameGrid = "gridVendedores";
-    ViewBag.controller = AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER;
-    ViewBag.actionCallbackRoute = AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONCRETE_LIST;
-    ViewBag.KeyFieldName = AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.KEY_FIELD_NAME;
+    ViewBag.controller = VendedoresController.CONTROLLER;
+    ViewBag.actionCallbackRoute = "listVendedores";
+    ViewBag.KeyFieldName = "Codigo";
     ViewBag.typeOfModel = typeof(DLL_Backend.Vendedor.VendedorMD);
     
 }

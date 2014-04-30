@@ -1,13 +1,14 @@
 ﻿@model DLL_Backend.Vendedor
+@using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = " Vendedores: Eliminar";
+    ViewBag.Title = "Vendedores: Eliminar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER, FormMethod.Post)) {
+@using (Html.BeginForm(t)) {
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
 
@@ -83,7 +84,7 @@
     
     <div class="btn-toolbar">
         @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Tooltip("Eliminar Vendedor").Data(new { id = Model.Codigo }))
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.VendedoresController.CONTROLLER).Class("btn btn-default"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
     </div>
 
 }

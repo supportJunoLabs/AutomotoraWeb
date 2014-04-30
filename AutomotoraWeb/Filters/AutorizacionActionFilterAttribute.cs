@@ -10,7 +10,7 @@ using AutomotoraWeb.Controllers;
 using AutomotoraWeb.Controllers.General;
 using AutomotoraWeb.Utils;
 using AutomotoraWeb.Services;
-using AutomotoraWeb.Controllers.Sales.Maintenanse;
+using AutomotoraWeb.Controllers.Sales.Maintenance;
 
 namespace AutomotoraWeb {
 
@@ -35,7 +35,7 @@ namespace AutomotoraWeb {
                     Dictionary<string, Dictionary<string, bool>> dictionaryOptions = (Dictionary<string, Dictionary<string, bool>>)(filterContext.HttpContext.Application.Contents[SessionUtils.APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS]);
                     string userName = (string)(filterContext.HttpContext.Session[SessionUtils.SESSION_USER_NAME]);
                     if (!SecurityService.Instance.hasAccess(actionName, controllerName, userName, dictionaryOptions)) {
-                        filterContext.Result = new RedirectResult("/Error/Error403");
+                        filterContext.Result = new RedirectResult("/Error403");
                     }
                 }
             }

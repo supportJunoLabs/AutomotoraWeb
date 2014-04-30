@@ -7,7 +7,7 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS, FormMethod.Post)) {
+@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.CUSTOMERS, FormMethod.Post)) {
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
 
@@ -278,9 +278,9 @@
     <div class="espacio2"></div>
     
     <div class="btn-toolbar">
-        @(Html.Bootstrap().ActionLinkButton("Modificar", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Editar Cliente"))
-        @(Html.Bootstrap().ActionLinkButton("Eliminar", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Eliminar Cliente"))
-        @(Html.Bootstrap().ActionLinkButton("Volver", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).Class("btn btn-default").Title("Volver a Lista de Clientes"))
+        @(Html.Bootstrap().ActionLinkButton("Modificar", AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.CUSTOMERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Editar Cliente"))
+        @(Html.Bootstrap().ActionLinkButton("Eliminar", AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.CUSTOMERS).RouteValues(new { id = Model.Id }).Class("btn btn-primary").Title("Eliminar Cliente"))
+        @(Html.Bootstrap().ActionLinkButton("Volver", AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.CUSTOMERS).Class("btn btn-default").Title("Volver a Lista de Clientes"))
     </div>
 
 }

@@ -1,14 +1,15 @@
 ﻿@model DLL_Backend.Sucursal
 @using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = "Editar";
+    ViewBag.Title = "Sucursales: Modificar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES, FormMethod.Post)) {
+@using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
 
@@ -94,7 +95,7 @@
     
     <div class="btn-toolbar">
         @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES).Class("btn btn-default"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
     </div>
     <div class="clear-both"></div>
 }

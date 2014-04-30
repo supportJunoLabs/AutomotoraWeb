@@ -9,8 +9,6 @@ using DLL_Backend;
 /// Summary description for DXReportVendedores
 /// </summary>
 public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
-    private PageHeaderBand PageHeader;
-    private PageFooterBand PageFooter;
     private BottomMarginBand BottomMargin;
     private TopMarginBand TopMargin;
     private DetailBand Detail;
@@ -35,6 +33,7 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
     private XRLabel xrLabelSystemName;
     private XRLabel xrLabelCompanyName;
     private XRLine xrLine1;
+    private ReportHeaderBand ReportHeader;
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -66,9 +65,8 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
     /// </summary>
     private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            this.PageHeader = new DevExpress.XtraReports.UI.PageHeaderBand();
+            this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
             this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
-            this.PageFooter = new DevExpress.XtraReports.UI.PageFooterBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.xrLabelActualDate = new DevExpress.XtraReports.UI.XRLabel();
@@ -91,24 +89,22 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             this.xrTableCell7 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
+            this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
-            // PageHeader
+            // xrLine1
             // 
-            this.PageHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-            this.xrLine1,
-            this.xrLabel1});
-            this.PageHeader.HeightF = 63.54167F;
-            this.PageHeader.Name = "PageHeader";
+            this.xrLine1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 85.91668F);
+            this.xrLine1.Name = "xrLine1";
+            this.xrLine1.SizeF = new System.Drawing.SizeF(690F, 4.083315F);
             // 
             // xrLabel1
             // 
             this.xrLabel1.Font = new System.Drawing.Font("Arial", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 20.74998F);
+            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.xrLabel1.Name = "xrLabel1";
             this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel1.SizeF = new System.Drawing.SizeF(650.0001F, 42.79167F);
@@ -117,13 +113,9 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel1.Text = "LISTADO DE VENDEDORES";
             this.xrLabel1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
             // 
-            // PageFooter
-            // 
-            this.PageFooter.HeightF = 57.29167F;
-            this.PageFooter.Name = "PageFooter";
-            // 
             // BottomMargin
             // 
+            this.BottomMargin.HeightF = 28.125F;
             this.BottomMargin.Name = "BottomMargin";
             this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.BottomMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
@@ -133,14 +125,16 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             this.TopMargin.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrLabelActualDate,
             this.xrLabelSystemName,
-            this.xrLabelCompanyName});
+            this.xrLabelCompanyName,
+            this.xrLine1});
+            this.TopMargin.HeightF = 91.66666F;
             this.TopMargin.Name = "TopMargin";
             this.TopMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.TopMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // xrLabelActualDate
             // 
-            this.xrLabelActualDate.LocationFloat = new DevExpress.Utils.PointFloat(493.7501F, 66.99999F);
+            this.xrLabelActualDate.LocationFloat = new DevExpress.Utils.PointFloat(493.7501F, 58.66666F);
             this.xrLabelActualDate.Name = "xrLabelActualDate";
             this.xrLabelActualDate.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabelActualDate.SizeF = new System.Drawing.SizeF(156.25F, 23F);
@@ -349,11 +343,12 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             this.bindingSource1.AllowNew = false;
             this.bindingSource1.DataSource = typeof(DLL_Backend.Vendedor);
             // 
-            // xrLine1
+            // ReportHeader
             // 
-            this.xrLine1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
-            this.xrLine1.Name = "xrLine1";
-            this.xrLine1.SizeF = new System.Drawing.SizeF(690F, 4.083315F);
+            this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel1});
+            this.ReportHeader.HeightF = 46.875F;
+            this.ReportHeader.Name = "ReportHeader";
             // 
             // DXReportVendedores
             // 
@@ -361,13 +356,13 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             this.Detail,
             this.TopMargin,
             this.BottomMargin,
-            this.PageFooter,
-            this.PageHeader,
-            this.GroupHeader1});
+            this.GroupHeader1,
+            this.ReportHeader});
             this.DataSource = this.bindingSource1;
             this.FormattingRuleSheet.AddRange(new DevExpress.XtraReports.UI.FormattingRule[] {
             this.formattingRulePar,
             this.formattingRuleImpar});
+            this.Margins = new System.Drawing.Printing.Margins(100, 100, 92, 28);
             this.Version = "13.2";
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();

@@ -3,37 +3,31 @@ using AutomotoraWeb.Models;
 using AutomotoraWeb.Services;
 using AutomotoraWeb.Utils;
 using DevExpress.Web.Mvc;
-using DevExpress.XtraPrinting;
-using DLL_Backend;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DLL_Backend;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
-using System.IO;
-using System.Text;
+using DevExpress.XtraPrinting;
 
-namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
+namespace AutomotoraWeb.Controllers.Sales.Maintenance {
     public class VendedoresController : SalesController, IMaintenance {
 
         public static string CONTROLLER = "vendedores";
-        public static string CONCRETE_LIST = "listVendedores";
-        public static string KEY_FIELD_NAME = "codigo";
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vendedor vendedor) {
-            return View(SalesService.Instance.listVendedores());
+            return View(_listaVendedores());
         }
 
         public ActionResult listVendedores() {
-            return PartialView("_listVendedores", SalesService.Instance.listVendedores());
+            return PartialView("_listVendedores", _listaVendedores());
         }
 
-        //--------------------------------------------------------------------------------------------------
+    
         //--------------------------------------    REPORT    ----------------------------------------------
-        //--------------------------------------------------------------------------------------------------
-
         public ActionResult Report() {
             // Add a report to the view data. 
             DXReportVendedores rep = new DXReportVendedores();
@@ -45,16 +39,13 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
         public ActionResult ReportPartial() {
             DXReportVendedores rep = new DXReportVendedores();
             setParamsToReport(rep);
-            rep.DataSource = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
+            rep.DataSource = _listaVendedores();
             ViewData["Report"] = rep;
             return PartialView("_reportList");
         }
 
         public ActionResult ReportExport() {
-            DXReportVendedores rep = new DXReportVendedores();
-            setParamsToReport(rep);
-            rep.DataSource = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(new DXReportVendedores());
         }
 
         private void setParamsToReport(XtraReport report) {
@@ -95,15 +86,27 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
 
         //-----------------------------------------------------------------------------------------------------
 
+
         private ActionResult getVendedor(int id) {
             try {
-                Vendedor vendedor = SalesService.Instance.getVendedor(id);
+                Vendedor vendedor = _getVendedor(id);
                 return View(vendedor);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
             } 
+        }
+
+        private Vendedor _getVendedor(int id) {
+            Vendedor vendedor = new Vendedor();
+            vendedor.Codigo = id;
+            vendedor.Consultar();
+            return vendedor;
+        }
+
+        private List<Vendedor> _listaVendedores() {
+            return Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
         }
 
         //-----------------------------------------------------------------------------------------------------
@@ -113,8 +116,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
 
             if (ModelState.IsValid) {
                 try {
-                    SalesService.Instance.createVendedor(vendedor);
-                    return RedirectToAction(BaseController.SHOW, CONTROLLER);
+                    vendedor.Agregar();
+                    return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
@@ -131,8 +134,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
         public ActionResult Edit(Vendedor vendedor) {
             if (ModelState.IsValid) {
                 try {
-                    SalesService.Instance.updateVendedor(vendedor);
-                    return RedirectToAction(BaseController.SHOW, CONTROLLER);
+                    vendedor.ModificarDatos();
+                    return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
@@ -151,8 +154,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
                     string IP = HttpContext.Request.UserHostAddress;
-                    SalesService.Instance.deleteVendedor(vendedor, userName, IP);
-                    return RedirectToAction(BaseController.SHOW, CONTROLLER);
+                    vendedor.Eliminar(userName, IP);
+                    return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
@@ -165,51 +168,5 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenanse {
 
         //-----------------------------------------------------------------------------------------------------
 
-        public void SaveFileStream(Stream stream, string destPath) {
-            using (var fileStream = new FileStream(destPath, FileMode.Create, FileAccess.Write)) {
-                stream.CopyTo(fileStream);
-            }
-        }
-
-        /*[HttpPost]
-        public JsonResult Upload() {
-
-            string file = new StreamReader(this.HttpContext.Request.InputStream, Encoding.UTF8).ReadToEnd();
-
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-            SaveFileStream(this.HttpContext.Request.InputStream, baseDirectory + "Content/Images/tmp/prueba.png");
-            return Json(new { nombreArchivo = "prueba.png" });
-        }*/
-
-        //-----------------------------------------------------------------------------------------------------
-
-
-        /*[HttpPost]
-        public JsonResult Upload(HttpPostedFileBase file) {
-
-            if (file.ContentLength > 0) {
-                var fileName = Path.GetFileName(file.FileName);
-                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                file.SaveAs(baseDirectory + "Content/Images/tmp/prueba.png");
-            }
-
-            return Json(new { nombreArchivo = "prueba.png" });
-        }*/
-
-        [HttpPost]
-        public JsonResult Upload() {
-            System.Threading.Thread.Sleep(3000);
-            HttpPostedFileBase file = null;
-
-            if (Request.Files.Count > 0) {
-                file = Request.Files[0];
-                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                file.SaveAs(Server.MapPath(baseDirectory + "Content/Images/tmp/") + file.FileName);
-            }
-            //Response.Write(file.FileName + " uploaded!");
-            //Response.End();
-            return Json(new { nombreArchivo = "file.FileName" });
-        }
     }
 }

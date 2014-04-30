@@ -45,6 +45,12 @@ namespace AutomotoraWeb.Services {
             return emp.NombreSistema;
         }
 
+        public void actualizarDatos(Empresa empre) {
+            if (instance != null) {
+                emp = empre;
+            }
+        }
+
         //------------------------------------------------------------
 
         #endregion

@@ -1,13 +1,14 @@
 ﻿@model DLL_Backend.Sucursal
+@using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = "Detalles";
+    ViewBag.Title = "Vendedores: Consulta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.DETAILS, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES, FormMethod.Post)) {
+@using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
 
@@ -97,9 +98,9 @@
     <div class="espacio2"></div>
     
     <div class="btn-toolbar">
-        @(Html.Bootstrap().ActionLinkButton("Modificar", AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.EDIT, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Editar Sucursal"))
-        @(Html.Bootstrap().ActionLinkButton("Eliminar", AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Eliminar Sucursal"))
-        @(Html.Bootstrap().ActionLinkButton("Volver", AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.SucursalesController.SUCURSALES).Class("btn btn-default").Title("Volver a Lista de Sucursales"))
+        @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Editar Sucursal"))
+        @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Eliminar Sucursal"))
+        @(Html.Bootstrap().ActionLinkButton("Volver",BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista de Sucursales"))
     </div>
 
 }

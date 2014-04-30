@@ -7,7 +7,7 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS, FormMethod.Post)) {
+@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.DELETE, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS, FormMethod.Post)) {
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
 
@@ -278,7 +278,7 @@
     
     <div class="btn-toolbar">
         @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Tooltip("Eliminar Cliente").Data(new { id = Model.Id }))
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenanse.CustomersController.CUSTOMERS).Class("btn btn-default"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.SHOW, AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.CUSTOMERS).Class("btn btn-default"))
     </div>
 
 }

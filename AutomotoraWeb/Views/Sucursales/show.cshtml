@@ -1,4 +1,5 @@
 ﻿@model List<DLL_Backend.Sucursal>
+@using AutomotoraWeb.Controllers.General;
 
 @{
     ViewBag.Title = "Sucursales";
@@ -8,16 +9,15 @@
 <div class="row-fluid">
     <div class="btn-toolbar">
         <div class="btn-group">
-            @(Html.Bootstrap().ActionLinkButton("Agregar Sucursal", "Create").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary).Title("Agregar Sucursal"))
+            @(Html.Bootstrap().ActionLinkButton("Agregar Sucursal", BaseController.CREATE ).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary).Title("Agregar Sucursales"))
         )
         </div>
-        @*<div class="btn-group">
-            <a class="btn btn-primary2-mf" title="Imprimir listado" href='@Url.Action("Create", "Vendedores")'>
-                Imprimir</a>
-        </div>*@
+        <div class="btn-group">
+            <a class="btn btn-primary2-mf" title="Imprimir listado" href='@Url.Action(BaseController.REPORT)'>Imprimir Listado</a>
+        </div>
     </div>
        
-    <div id="sucursalessGrid">
+    <div id="sucursalesGrid">
         @Html.Partial("_listSucursales", Model)
     </div>
 </div>

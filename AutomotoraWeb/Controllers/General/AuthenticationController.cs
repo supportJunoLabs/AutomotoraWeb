@@ -47,14 +47,10 @@ namespace AutomotoraWeb.Controllers.General {
                         }
                     }
                 } catch (UsuarioException exc) {
-                    model.ErrorCode = "U001";
+                    model.ErrorCode = exc.Codigo;
                     model.ErrorMessage = exc.Message;
                     return View(LOGIN, model);
-                } /*catch (Exception exc) {
-                    model.ErrorCode = "U002";
-                    model.ErrorMessage = exc.Message + " |||||| " + exc.InnerException + " |||||| " + exc.StackTrace;
-                    return View(LOGIN, model);
-                }*/
+                } 
             }
 
             return View(model);
@@ -82,26 +78,15 @@ namespace AutomotoraWeb.Controllers.General {
                         return RedirectToAction(SalesController.INDEX, SalesController.SALES);
                     }
                 } catch (UsuarioException exc) {
-                    model.ErrorCode = "U001";
+                    model.ErrorCode = exc.Codigo;
                     model.ErrorMessage = exc.Message;
                     return View(CHANGE_PASSWORD, model);
-                } /*catch (Exception exc) {
-                    model.ErrorCode = "U002";
-                    model.ErrorMessage = exc.Message;
-                    return View(CHANGE_PASSWORD, model);
-                }*/
+                }
             }
 
             return View(model);
         }
 
-
-        //------------------------------------------------------------------------------------------------------------------------
-
-        [HttpGet]
-        public ActionResult ForgetPassword() {
-            return View();
-        }
 
         //------------------------------------------------------------------------------------------------------------------------
 
@@ -113,13 +98,6 @@ namespace AutomotoraWeb.Controllers.General {
         }
 
         //------------------------------------------------------------------------------------------------------------------------
-
-        
-        //[HttpGet]
-        //public ActionResult Error403() {
-        //    HttpContext.AddError(new HttpException(403, "Access Denied"));
-        //    return View();
-        //}
 
     }
 }

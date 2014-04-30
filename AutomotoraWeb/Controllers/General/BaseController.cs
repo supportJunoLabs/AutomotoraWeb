@@ -25,10 +25,9 @@ namespace AutomotoraWeb.Controllers.General {
         public static string EDIT = "edit";
         public static string DELETE = "delete";
         public static string LIST = "list";
-        public static string EXPORT_TO_PDF = "exportarPDF";
-        public static string EXPORT_TO_EXCEL = "exportarExcel";
+        //public static string EXPORT_TO_PDF = "exportarPDF";
+        //public static string EXPORT_TO_EXCEL = "exportarExcel";
         public static string REPORT = "report";
-        public static string UPLOAD = "upload";
         public static string REPORT_PARTIAL = "reportPartial";
         public static string REPORT_EXPORT = "reportExport";
         

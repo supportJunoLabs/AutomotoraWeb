@@ -26,54 +26,7 @@ namespace AutomotoraWeb.Services {
 
         #endregion
 
-        //--------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------
-
-        #region Services VENDEDORES definition
-
-        public Vendedor getVendedor(int code) {
-            Vendedor vendedor = new Vendedor();
-            vendedor.Codigo = code;
-            vendedor.Consultar();
-            return vendedor;
-        }
-
-        //------------------------------------------------------------
-
-        public void createVendedor(Vendedor vendedor) {
-            vendedor.Agregar();
-        }
-
-        //------------------------------------------------------------
-
-        public void updateVendedor(Vendedor vendedor) {
-            vendedor.ModificarDatos();
-        }
-
-        //------------------------------------------------------------
-
-        public void deleteVendedor(Vendedor vendedor, string userName, string IP) {
-            vendedor.Eliminar(userName, IP);
-        }
-
-        //------------------------------------------------------------
-
-        public List<Vendedor> listVendedores() {
-            List<Vendedor> vendedores = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-            return vendedores;
-        }
-
-        //------------------------------------------------------------
-
-        public bool existVendedor(Vendedor vendedor) {
-            vendedor.Consultar();
-            return false; // TODO
-        }
-
-        //------------------------------------------------------------
-
-        #endregion
+       
 
         //--------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------
