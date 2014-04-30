@@ -7,18 +7,6 @@ using System.Web.Mvc;
 namespace AutomotoraWeb.Controllers.General {
     public abstract class BaseController : Controller {
 
-        /*
-         * public ActionResult Show() {
-            //TODO: Cargo en el viewBug cosas datos a mostrar en el layout (nombre empresa, nombre usuario, etc)
-
-            return getShowViewAndModel();
-        }
-
-        protected abstract ActionResult getShowViewAndModel();
-
-        public abstract string getParentControllerName();
-         * */
-
         public static string SHOW = "show";
         public static string DETAILS = "details";
         public static string CREATE = "create";

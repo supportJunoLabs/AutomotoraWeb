@@ -1,4 +1,9 @@
 ﻿@using System.Web.UI.WebControls
+@using AutomotoraWeb.Controllers.Sistema;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Bank;
+
 
 <!DOCTYPE html>
 <html>
@@ -82,11 +87,11 @@
 
     
     @{
-        if (ViewBag.parentControllerName == AutomotoraWeb.Controllers.Sales.SalesController.SALES) { 
+        if (ViewBag.parentControllerName == SalesController.BCONTROLLER) { 
             @Html.Partial("_sidebarSales")
-        } else if (ViewBag.parentControllerName == AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING) {
+        } else if (ViewBag.parentControllerName == FinancingController.BCONTROLLER) {
             @Html.Partial("_sidebarFinancing")
-        } else if (ViewBag.parentControllerName == AutomotoraWeb.Controllers.Bank.BankController.BANK) {
+        } else if (ViewBag.parentControllerName == BankController.BCONTROLLER) {
             @Html.Partial("_sidebarBank")
         }
     }
@@ -97,22 +102,22 @@
     <div class="content">
         <ul class="nav nav-pills breadcrumb">
             @{
-                if (ViewBag.parentControllerName == AutomotoraWeb.Controllers.Sales.SalesController.SALES) { 
+                if (ViewBag.parentControllerName == SalesController.BCONTROLLER) { 
                     <li class="active"><a href="#">Ventas</a></li>
-                    <li>@Html.ActionLink("Financiaciones", AutomotoraWeb.Controllers.Financing.FinancingController.INDEX, AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING)</li>
-                    <li>@Html.ActionLink("Banco", AutomotoraWeb.Controllers.Bank.BankController.INDEX, AutomotoraWeb.Controllers.Bank.BankController.BANK)</li>
-                } else if (ViewBag.parentControllerName == AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING) {
-                    <li>@Html.ActionLink("Ventas", AutomotoraWeb.Controllers.Sales.SalesController.INDEX, AutomotoraWeb.Controllers.Sales.SalesController.SALES)</li>
+                    <li>@Html.ActionLink("Financiaciones", FinancingController.INDEX, FinancingController.BCONTROLLER)</li>
+                    <li>@Html.ActionLink("Banco", BankController.INDEX, BankController.BCONTROLLER)</li>
+                } else if (ViewBag.parentControllerName == FinancingController.BCONTROLLER) {
+                    <li>@Html.ActionLink("Ventas", SalesController.INDEX, SalesController.BCONTROLLER)</li>
                     <li class="active"><a href="#">Financiaciones</a></li>
-                    <li>@Html.ActionLink("Banco", AutomotoraWeb.Controllers.Bank.BankController.INDEX, AutomotoraWeb.Controllers.Bank.BankController.BANK)</li>
-                } else if (ViewBag.parentControllerName == AutomotoraWeb.Controllers.Bank.BankController.BANK) {
-                    <li>@Html.ActionLink("Ventas", AutomotoraWeb.Controllers.Sales.SalesController.INDEX, AutomotoraWeb.Controllers.Sales.SalesController.SALES)</li>
-                    <li>@Html.ActionLink("Financiaciones", AutomotoraWeb.Controllers.Financing.FinancingController.INDEX, AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING)</li>
+                    <li>@Html.ActionLink("Banco", BankController.INDEX, BankController.BCONTROLLER)</li>
+                } else if (ViewBag.parentControllerName == BankController.BCONTROLLER) {
+                    <li>@Html.ActionLink("Ventas", SalesController.INDEX, SalesController.BCONTROLLER)</li>
+                    <li>@Html.ActionLink("Financiaciones", FinancingController.INDEX, FinancingController.BCONTROLLER)</li>
                     <li class="active"><a href="#">Banco</a></li>
                 } else{
-                    <li>@Html.ActionLink("Ventas", AutomotoraWeb.Controllers.Sales.SalesController.INDEX, AutomotoraWeb.Controllers.Sales.SalesController.SALES)</li>
-                    <li>@Html.ActionLink("Financiaciones", AutomotoraWeb.Controllers.Financing.FinancingController.INDEX, AutomotoraWeb.Controllers.Financing.FinancingController.FINANCING)</li>
-                    <li>@Html.ActionLink("Banco", AutomotoraWeb.Controllers.Bank.BankController.INDEX, AutomotoraWeb.Controllers.Bank.BankController.BANK)</li>
+                    <li>@Html.ActionLink("Ventas", SalesController.INDEX, SalesController.BCONTROLLER)</li>
+                    <li>@Html.ActionLink("Financiaciones", FinancingController.INDEX, FinancingController.BCONTROLLER)</li>
+                    <li>@Html.ActionLink("Banco", BankController.INDEX, BankController.BCONTROLLER)</li>
                 }
             }
         </ul>

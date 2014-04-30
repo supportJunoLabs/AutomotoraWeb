@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace AutomotoraWeb.Controllers.Financing {
     public class FinancingController : BaseController {
 
-        public static string FINANCING = "financing";
+        public static string BCONTROLLER = "financing";
         public static string INDEX = "index";
 
         public ActionResult Index() {
@@ -16,7 +16,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         public override string getParentControllerName() {
-            return FINANCING;
+            return BCONTROLLER;
         }
     }
 }

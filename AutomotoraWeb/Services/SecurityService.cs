@@ -1,6 +1,8 @@
-﻿using AutomotoraWeb.Controllers.Configuracion;
+﻿using AutomotoraWeb.Controllers.Sistema;
 using AutomotoraWeb.Controllers.General;
 using AutomotoraWeb.Controllers.Sales;
+using AutomotoraWeb.Controllers.Bank;
+using AutomotoraWeb.Controllers.Financing;
 using DLL_Backend;
 using System;
 using System.Collections.Generic;
@@ -125,9 +127,10 @@ namespace AutomotoraWeb.Services {
         //----------------------------------------------------------
 
         private bool isHomePageSection(string controllerName, string actionName) {
-            if (controllerName == SalesController.SALES && actionName == SalesController.INDEX) return true;
-            if (controllerName == ConfiguracionController.CONFIG && actionName == ConfiguracionController.INDEX) return true; 
-            // TODO: agregar Financiaciones y Bancos y Configuracion
+            if (controllerName == SalesController.BCONTROLLER && actionName == SalesController.INDEX) return true;
+            if (controllerName == FinancingController.BCONTROLLER && actionName == FinancingController.INDEX) return true;
+            if (controllerName == BankController.BCONTROLLER && actionName == BankController.INDEX) return true;
+            if (controllerName == SistemaController.BCONTROLLER && actionName == SistemaController.INDEX) return true; 
 
             return false;
         }

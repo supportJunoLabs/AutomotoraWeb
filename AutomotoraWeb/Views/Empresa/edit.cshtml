@@ -1,6 +1,6 @@
 ﻿@model DLL_Backend.Empresa
 @using AutomotoraWeb.Helpers;
-@using AutomotoraWeb.Controllers.Configuracion;
+@using AutomotoraWeb.Controllers.Sistema;
 
 @{
     ViewBag.Title = " Datos Empresa: Modificar";
@@ -122,7 +122,7 @@
         <div class="espacio2"></div>
         <div class="btn-toolbar">
             @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
-             @(Html.Bootstrap().ActionLinkButton("Cancelar", ConfiguracionController.INDEX, ConfiguracionController.CONFIG).Class("btn btn-default"))
+             @(Html.Bootstrap().ActionLinkButton("Cancelar", SistemaController.INDEX, SistemaController.BCONTROLLER).Class("btn btn-default"))
 
             @*TODO: falta ajustar para que vuelva al menu del ultimo modulo accedido.*@
         </div>

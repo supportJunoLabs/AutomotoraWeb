@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace AutomotoraWeb.Controllers.Bank {
     public class BankController : BaseController {
 
-        public static string BANK = "bank";
+        public static string BCONTROLLER = "bank";
         public static string INDEX = "index";
 
         public ActionResult Index() {
@@ -16,7 +16,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         public override string getParentControllerName() {
-            return BANK;
+            return BCONTROLLER;
         }
     }
 }

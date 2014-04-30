@@ -8,7 +8,7 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-@using (Html.BeginForm(AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.CREATE, AutomotoraWeb.Controllers.Sales.Maintenance.CustomersController.CUSTOMERS, FormMethod.Post)) {
+@using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
    

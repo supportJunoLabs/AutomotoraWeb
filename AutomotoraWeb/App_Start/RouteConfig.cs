@@ -33,7 +33,7 @@ namespace AutomotoraWeb {
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "sales", action = "index", id = UrlParameter.Optional }
+                defaults: new { controller = "sistema", action = "index", id = UrlParameter.Optional }
             );
 
             routes.IgnoreRoute("Logs/elmah.axd/{*pathInfo}");

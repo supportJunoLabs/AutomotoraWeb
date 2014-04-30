@@ -1,4 +1,6 @@
-﻿@{
+﻿@using AutomotoraWeb.Controllers.Sistema;
+
+@{
     Layout = null;  
 }
 <!DOCTYPE html>
@@ -20,7 +22,7 @@
                 <i class="icon-home"></i>
             </p>
             <p>
-            @(Html.Bootstrap().ActionLinkButton("Volver al inicio",AutomotoraWeb.Controllers.Sales.SalesController.INDEX,AutomotoraWeb.Controllers.Sales.SalesController.SALES).Class("btn btn-default"))
+            @(Html.Bootstrap().ActionLinkButton("Volver al inicio",SistemaController.INDEX, SistemaController.BCONTROLLER).Class("btn btn-default"))
         </div>
         <div class="espacio" />
         <div class="espacio" />

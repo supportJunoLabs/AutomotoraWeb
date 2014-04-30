@@ -228,17 +228,17 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\Configuracion\ConfiguracionController.cs" />
+    <Compile Include="Controllers\Sistema\SistemaController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
     <Compile Include="Controllers\Financing\FinancingController.cs" />
     <Compile Include="Controllers\General\BaseController.cs" />
-    <Compile Include="Controllers\Configuracion\EmpresaController.cs" />
+    <Compile Include="Controllers\Sistema\EmpresaController.cs" />
     <Compile Include="Controllers\General\ErrorController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\CustomersController.cs" />
     <Compile Include="Controllers\General\IMaintenance.cs" />
     <Compile Include="Controllers\Sales\Maintenance\VendedoresController.cs" />
-    <Compile Include="Controllers\Configuracion\SucursalesController.cs" />
+    <Compile Include="Controllers\Sistema\SucursalesController.cs" />
     <Compile Include="Controllers\Sales\SalesController.cs" />
     <Compile Include="Filters\AutorizacionActionFilterAttribute.cs" />
     <Compile Include="Filters\GeneralModelActionFilterAttribute.cs" />
@@ -1555,7 +1555,7 @@
     <Content Include="Views\Bank\Empresa\edit.cshtml" />
     <Content Include="Views\Shared\error403.cshtml" />
     <Content Include="Views\Shared\error404.cshtml" />
-    <Content Include="Views\Configuracion\Index.cshtml" />
+    <Content Include="Views\Sistema\Index.cshtml" />
     <Content Include="Views\Empresa\edit.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
