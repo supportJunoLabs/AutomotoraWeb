@@ -15,7 +15,7 @@ using DevExpress.XtraPrinting;
 
 namespace AutomotoraWeb.Controllers.Configuracion
 {
-    public class SucursalesController : Controller, IMaintenance {
+    public class SucursalesController : ConfiguracionController, IMaintenance {
 
         public static string CONTROLLER = "sucursales";
 
