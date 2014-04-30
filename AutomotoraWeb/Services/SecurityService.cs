@@ -61,12 +61,14 @@ namespace AutomotoraWeb.Services {
             if (isHomePageSection(controller, action) || isErrorPage(controller, action)) {
                 // Caso homepage de Ventas, Financiaciones y Banco
                 return true;
-            } else if (isControllerNameMaintenance(controller)
-                      && isActionNameMaintenance(action)
-                      && (dictionaryOptions.ContainsKey(controller) && (dictionaryOptions[controller][BaseController.SHOW]))) {
-                // Caso de opción que no es de menu pero depende de este (ej: create, edit, delete, details de los mantenimientos que dependen de que se tengan permisos sobre el show)
-                action = BaseController.SHOW;
-            }
+            } 
+            //MF: Ya no se mira mas localmente el tema de las subacciones en mantenimiento, queda resuelto en el metodo tieneAcceso del Backend.
+            //else if (isControllerNameMaintenance(controller)
+            //          && isActionNameMaintenance(action)
+            //          && (dictionaryOptions.ContainsKey(controller) && (dictionaryOptions[controller][BaseController.SHOW]))) {
+            //    // Caso de opción que no es de menu pero depende de este (ej: create, edit, delete, details de los mantenimientos que dependen de que se tengan permisos sobre el show)
+            //    action = BaseController.SHOW;
+            //}
 
             Usuario u = new Usuario();
             u.Username = userName;
@@ -99,37 +101,37 @@ namespace AutomotoraWeb.Services {
 
         //----------------------------------------------------------
 
-        private bool isActionNameMaintenance(string actionName) {
-            return (actionName.Equals(BaseController.CREATE.ToLower())) ||
-                   (actionName.Equals(BaseController.DELETE.ToLower())) ||
-                   (actionName.Equals(BaseController.DETAILS.ToLower())) ||
-                   (actionName.Equals(BaseController.EDIT.ToLower())) ||
-                   (actionName.Equals(BaseController.REPORT.ToLower())) ||
-                   (actionName.Equals(BaseController.REPORT_PARTIAL.ToLower())) ||
-                   (actionName.Equals(BaseController.REPORT_EXPORT.ToLower()))||
-                   (actionName.Substring(0, 4).Equals(BaseController.LIST.ToLower())
-                   );
-        }
+        //private bool isActionNameMaintenance(string actionName) {
+        //    return (actionName.Equals(BaseController.CREATE.ToLower())) ||
+        //           (actionName.Equals(BaseController.DELETE.ToLower())) ||
+        //           (actionName.Equals(BaseController.DETAILS.ToLower())) ||
+        //           (actionName.Equals(BaseController.EDIT.ToLower())) ||
+        //           (actionName.Equals(BaseController.REPORT.ToLower())) ||
+        //           (actionName.Equals(BaseController.REPORT_PARTIAL.ToLower())) ||
+        //           (actionName.Equals(BaseController.REPORT_EXPORT.ToLower()))||
+        //           (actionName.Substring(0, 4).Equals(BaseController.LIST.ToLower())
+        //           );
+        //}
         
         //----------------------------------------------------------
 
-        private bool isControllerNameMaintenance(string controllerName) {
+        //private bool isControllerNameMaintenance(string controllerName) {
 
-            return (controllerName.Equals(VendedoresController.CONTROLLER.ToLower())) ||
-                   (controllerName.Equals(CustomersController.CUSTOMERS.ToLower())) ||
-                   (controllerName.Equals(SucursalesController.CONTROLLER.ToLower()));
-        }
+        //    return (controllerName.Equals(VendedoresController.CONTROLLER.ToLower())) ||
+        //           (controllerName.Equals(CustomersController.CUSTOMERS.ToLower())) ||
+        //           (controllerName.Equals(SucursalesController.CONTROLLER.ToLower()));
+        //}
 
         //----------------------------------------------------------
 
         private bool isHomePageSection(string controllerName, string actionName) {
-            return ((controllerName == VendedoresController.SALES) && (actionName == VendedoresController.INDEX)); // TODO: agregar Financiaciones y Bancos
+            return ((controllerName == VendedoresController.SALES) && (actionName == VendedoresController.INDEX)); // TODO: agregar Financiaciones y Bancos y Configuracion
         }
 
         //----------------------------------------------------------
 
         private bool isErrorPage(string controllerName, string actionName) {
-              if (controllerName .ToUpper()!="Error".ToUpper()) return false;
+              if (controllerName.ToUpper()!="Error".ToUpper()) return false;
               if (actionName.Length<"Error".Length) return false;
               return (actionName.Substring(0, "Error".Length).ToUpper().Equals("Error".ToUpper()));
         }
