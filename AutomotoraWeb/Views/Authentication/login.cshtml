@@ -9,7 +9,7 @@
 <section id="loginForm">
     <p class="block-heading">@Resources.Global.LOGIN_TITLE_HEADING</p>
     <div class="block-body">
-        @using (Html.BeginForm()) {
+        @using (Html.BeginForm(AuthenticationController.LOGIN, AuthenticationController.CONTROLLER )) {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
     
