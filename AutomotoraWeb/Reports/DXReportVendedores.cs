@@ -149,7 +149,7 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             // xrLabelSystemName
             // 
             this.xrLabelSystemName.Font = new System.Drawing.Font("Times New Roman", 14F);
-            this.xrLabelSystemName.LocationFloat = new DevExpress.Utils.PointFloat(371.8751F, 20.41667F);
+            this.xrLabelSystemName.LocationFloat = new DevExpress.Utils.PointFloat(371.8751F, 10.00001F);
             this.xrLabelSystemName.Name = "xrLabelSystemName";
             this.xrLabelSystemName.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabelSystemName.SizeF = new System.Drawing.SizeF(278.125F, 23F);
@@ -161,7 +161,7 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             // xrLabelCompanyName
             // 
             this.xrLabelCompanyName.Font = new System.Drawing.Font("Times New Roman", 14F);
-            this.xrLabelCompanyName.LocationFloat = new DevExpress.Utils.PointFloat(0F, 20.41667F);
+            this.xrLabelCompanyName.LocationFloat = new DevExpress.Utils.PointFloat(0F, 10.00001F);
             this.xrLabelCompanyName.Name = "xrLabelCompanyName";
             this.xrLabelCompanyName.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabelCompanyName.SizeF = new System.Drawing.SizeF(289.5833F, 23F);
@@ -363,7 +363,7 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrPageInfo1.LocationFloat = new DevExpress.Utils.PointFloat(540F, 10.00001F);
             this.xrPageInfo1.Name = "xrPageInfo1";
-            this.xrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrPageInfo1.SizeF = new System.Drawing.SizeF(100F, 23F);
             this.xrPageInfo1.StylePriority.UseTextAlignment = false;
             this.xrPageInfo1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
