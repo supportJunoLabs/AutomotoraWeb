@@ -40,7 +40,7 @@
 
             if ((visibleColumns != null && visibleColumns.Contains(propertyInfo.Name)) ||
                   (visibleColumns == null)  //si vinieron especificadas las columnas, solo se incluyen si estan en la lista  no son hidden
-               ) {                          //si no vienieron, las pongo todas salo las que estan como hidden
+               ) {                          //si no vienieron, las pongo todas salvo las que estan como hidden
 
                 if (!hiddenColumns.Contains(propertyInfo.Name)) {
                     MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
