@@ -1,0 +1,6 @@
+﻿@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.Financing;
+
+<div class="sidebar-nav">
+    <a href="@Url.Action(SalesController.INDEX, SalesController.BCONTROLLER)" class="nav-header" ><i class=""></i>Modulo Ventas</a>    <a href="@Url.Action(FinancingController.INDEX, FinancingController.BCONTROLLER)" class="nav-header" ><i class=""></i>Modulo Financiaciones</a>    <a href="@Url.Action(BankController.INDEX, BankController.BCONTROLLER)" class="nav-header" ><i class=""></i>Modulo Banco</a></div>

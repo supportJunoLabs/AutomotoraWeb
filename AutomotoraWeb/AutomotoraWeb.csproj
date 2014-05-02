@@ -1532,6 +1532,7 @@
     <Content Include="Views\Vendedores\edit.cshtml" />
     <Content Include="Views\Vendedores\create.cshtml" />
     <Content Include="Views\Vendedores\delete.cshtml" />
+    <Content Include="Views\Clientes\show.cshtml" />
     <Content Include="Views\Customers\create.cshtml" />
     <Content Include="Views\Customers\delete.cshtml" />
     <Content Include="Views\Customers\details.cshtml" />
@@ -1557,6 +1558,10 @@
     <Content Include="Views\Shared\error404.cshtml" />
     <Content Include="Views\Sistema\Index.cshtml" />
     <Content Include="Views\Empresa\edit.cshtml" />
+    <Content Include="Views\Shared\_sidebarSistema.cshtml" />
+    <Content Include="Views\Clientes\create.cshtml" />
+    <Content Include="Views\Clientes\_datosCliente.cshtml" />
+    <Content Include="Views\Clientes\_listClientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

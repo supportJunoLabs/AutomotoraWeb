@@ -93,6 +93,8 @@
             @Html.Partial("_sidebarFinancing")
         } else if (ViewBag.parentControllerName == BankController.BCONTROLLER) {
             @Html.Partial("_sidebarBank")
+        } else {
+            @Html.Partial("_sidebarSistema")
         }
     }
 
@@ -115,9 +117,11 @@
                     <li>@Html.ActionLink("Financiaciones", FinancingController.INDEX, FinancingController.BCONTROLLER)</li>
                     <li class="active"><a href="#">Banco</a></li>
                 } else{
+                    @*
+                    No muestro nada porque estoy en sistema y por lo tanto se ve en el menu izquierdo para no repetir.
                     <li>@Html.ActionLink("Ventas", SalesController.INDEX, SalesController.BCONTROLLER)</li>
                     <li>@Html.ActionLink("Financiaciones", FinancingController.INDEX, FinancingController.BCONTROLLER)</li>
-                    <li>@Html.ActionLink("Banco", BankController.INDEX, BankController.BCONTROLLER)</li>
+                    <li>@Html.ActionLink("Banco", BankController.INDEX, BankController.BCONTROLLER)</li>*@
                 }
             }
         </ul>
