@@ -8,6 +8,9 @@
 
     List<string> visibleColumns = new List<string>() { "Nombre", "Telefono", "OtroTelefono", "Fax", "Observaciones" }; //agregar lo que hay que mostrar, si queda vacio se muestra todo
     ViewBag.visibleColumns = visibleColumns;
+
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { { "Telefono", 30 }, { "OtroTelefono", 30 }, {"Fax", 30}, {"Observaciones", 30} };
+    ViewBag.trunkColumns = trunkColumns;
     
     ViewBag.nameGrid = "gridClientes";
     ViewBag.controller = "clientes";
