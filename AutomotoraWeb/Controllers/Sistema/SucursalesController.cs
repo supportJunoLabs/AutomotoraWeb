@@ -47,7 +47,10 @@ namespace AutomotoraWeb.Controllers.Sistema
         //}
 
         //public ActionResult ReportExport() {
-        //    return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(new DXReportSucursales());
+        //DXReportSucursales rep = new DXReportSucursales();
+        //setParamsToReport(rep);
+        //rep.DataSource = _listaSucursales();
+        //    return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         //}
 
         //private void setParamsToReport(XtraReport report) {

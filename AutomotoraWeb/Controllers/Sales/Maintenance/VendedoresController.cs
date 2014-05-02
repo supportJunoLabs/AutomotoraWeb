@@ -45,7 +45,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult ReportExport() {
-            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(new DXReportVendedores());
+            DXReportVendedores rep = new DXReportVendedores();
+            setParamsToReport(rep);
+            rep.DataSource = _listaVendedores();
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
         private void setParamsToReport(XtraReport report) {
