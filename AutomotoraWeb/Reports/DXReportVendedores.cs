@@ -34,6 +34,8 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
     private XRLabel xrLabelCompanyName;
     private XRLine xrLine1;
     private ReportHeaderBand ReportHeader;
+    private PageFooterBand PageFooter;
+    private XRPageInfo xrPageInfo1;
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -90,6 +92,8 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             this.xrTableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
+            this.PageFooter = new DevExpress.XtraReports.UI.PageFooterBand();
+            this.xrPageInfo1 = new DevExpress.XtraReports.UI.XRPageInfo();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
@@ -170,9 +174,7 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             this.Detail.BorderWidth = 1F;
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrTable1});
-            this.Detail.FormattingRules.Add(this.formattingRulePar);
-            this.Detail.FormattingRules.Add(this.formattingRuleImpar);
-            this.Detail.HeightF = 25F;
+            this.Detail.HeightF = 34.375F;
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.Detail.StylePriority.UseBorderWidth = false;
@@ -350,6 +352,22 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             this.ReportHeader.HeightF = 46.875F;
             this.ReportHeader.Name = "ReportHeader";
             // 
+            // PageFooter
+            // 
+            this.PageFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrPageInfo1});
+            this.PageFooter.HeightF = 50F;
+            this.PageFooter.Name = "PageFooter";
+            // 
+            // xrPageInfo1
+            // 
+            this.xrPageInfo1.LocationFloat = new DevExpress.Utils.PointFloat(540F, 10.00001F);
+            this.xrPageInfo1.Name = "xrPageInfo1";
+            this.xrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrPageInfo1.SizeF = new System.Drawing.SizeF(100F, 23F);
+            this.xrPageInfo1.StylePriority.UseTextAlignment = false;
+            this.xrPageInfo1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
+            // 
             // DXReportVendedores
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -357,7 +375,8 @@ public class DXReportVendedores : DevExpress.XtraReports.UI.XtraReport {
             this.TopMargin,
             this.BottomMargin,
             this.GroupHeader1,
-            this.ReportHeader});
+            this.ReportHeader,
+            this.PageFooter});
             this.DataSource = this.bindingSource1;
             this.FormattingRuleSheet.AddRange(new DevExpress.XtraReports.UI.FormattingRule[] {
             this.formattingRulePar,

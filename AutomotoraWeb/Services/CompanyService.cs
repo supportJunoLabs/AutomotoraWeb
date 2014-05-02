@@ -28,6 +28,10 @@ namespace AutomotoraWeb.Services {
         private CompanyService() {
         }
 
+        public static int CodigoEmpresaActiva() {
+            return Int32.Parse(ConfigurationManager.AppSettings["COD_SISTEMA"]);
+        }
+
         // Propiedad para acceder a la instancia
         private static CompanyService Instance {
             get {

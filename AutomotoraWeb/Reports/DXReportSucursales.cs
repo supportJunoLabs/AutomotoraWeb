@@ -30,6 +30,8 @@ public class DXReportSucursales : DevExpress.XtraReports.UI.XtraReport {
     private XRTableCell xrTableCell6;
     private XRTableCell xrTableCell7;
     private XRTableCell xrTableCell8;
+    private PageFooterBand PageFooter;
+    private XRPageInfo xrPageInfo1;
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -82,6 +84,8 @@ public class DXReportSucursales : DevExpress.XtraReports.UI.XtraReport {
             this.xrTableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
+            this.PageFooter = new DevExpress.XtraReports.UI.PageFooterBand();
+            this.xrPageInfo1 = new DevExpress.XtraReports.UI.XRPageInfo();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
@@ -181,6 +185,7 @@ public class DXReportSucursales : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabelCompanyName.SizeF = new System.Drawing.SizeF(289.5833F, 23F);
             this.xrLabelCompanyName.StylePriority.UseFont = false;
             this.xrLabelCompanyName.Text = "xrLabelCompanyName";
+            this.xrLabelCompanyName.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xrLabelCompanyName_BeforePrint);
             // 
             // xrLine1
             // 
@@ -291,6 +296,22 @@ public class DXReportSucursales : DevExpress.XtraReports.UI.XtraReport {
             this.ReportHeader.HeightF = 52.79168F;
             this.ReportHeader.Name = "ReportHeader";
             // 
+            // PageFooter
+            // 
+            this.PageFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrPageInfo1});
+            this.PageFooter.HeightF = 41.66667F;
+            this.PageFooter.Name = "PageFooter";
+            // 
+            // xrPageInfo1
+            // 
+            this.xrPageInfo1.LocationFloat = new DevExpress.Utils.PointFloat(527.5F, 10.00001F);
+            this.xrPageInfo1.Name = "xrPageInfo1";
+            this.xrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrPageInfo1.SizeF = new System.Drawing.SizeF(100F, 23F);
+            this.xrPageInfo1.StylePriority.UseTextAlignment = false;
+            this.xrPageInfo1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
+            // 
             // DXReportSucursales
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -298,7 +319,8 @@ public class DXReportSucursales : DevExpress.XtraReports.UI.XtraReport {
             this.TopMargin,
             this.BottomMargin,
             this.PageHeader,
-            this.ReportHeader});
+            this.ReportHeader,
+            this.PageFooter});
             this.DataSource = this.bindingSource1;
             this.Margins = new System.Drawing.Printing.Margins(100, 100, 84, 23);
             this.Version = "13.2";
@@ -309,4 +331,11 @@ public class DXReportSucursales : DevExpress.XtraReports.UI.XtraReport {
     }
 
     #endregion
+
+    private void xrLabelCompanyName_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+        DateTime actualDate = DateTime.Now;
+        xrLabelActualDate.Text = actualDate.ToString("dd/MM/yyyy HH:mm");
+        xrLabelCompanyName.Text = (string)(this.Parameters["CompanyName"].Value);
+        xrLabelSystemName.Text = (string)(this.Parameters["SystemName"].Value);
+    }
 }

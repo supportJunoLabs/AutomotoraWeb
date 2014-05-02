@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DLL_Backend;
 using AutomotoraWeb.Services;
+using System.Configuration;
 
 namespace AutomotoraWeb.Controllers.Sistema
 {
@@ -19,7 +20,12 @@ namespace AutomotoraWeb.Controllers.Sistema
 
         private ActionResult getEmpresa() {
             try {
-                Empresa emp = CompanyService.Empresa();
+                //por las dudas que haya habido cambios en la base, lo tomamos de la base para este mantenimiento
+                //Empresa emp = CompanyService.Empresa();
+
+                Empresa emp = new Empresa();
+                emp.Codigo = CompanyService.CodigoEmpresaActiva();
+                emp.Consultar();
                 return View(emp);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -33,7 +39,7 @@ namespace AutomotoraWeb.Controllers.Sistema
             if (ModelState.IsValid) {
                 try {
                     empresa.ModificarDatos();
-                    CompanyService.actualizarDatos(empresa);
+                    CompanyService.actualizarDatos(empresa); //para actualizar los datos del singleton.
 
                     //TODO:  aca cambiar por la redireccion al index del ultimo modulo utilizado antes de acceder a esta opcion.
                     return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
