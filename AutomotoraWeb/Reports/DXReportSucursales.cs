@@ -189,7 +189,7 @@ public class DXReportSucursales : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLine1
             // 
-            this.xrLine1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 70.29169F);
+            this.xrLine1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 72.29166F);
             this.xrLine1.Name = "xrLine1";
             this.xrLine1.SizeF = new System.Drawing.SizeF(690F, 4.083315F);
             // 
@@ -307,7 +307,7 @@ public class DXReportSucursales : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrPageInfo1.LocationFloat = new DevExpress.Utils.PointFloat(527.5F, 10.00001F);
             this.xrPageInfo1.Name = "xrPageInfo1";
-            this.xrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrPageInfo1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrPageInfo1.SizeF = new System.Drawing.SizeF(100F, 23F);
             this.xrPageInfo1.StylePriority.UseTextAlignment = false;
             this.xrPageInfo1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
