@@ -19,5 +19,8 @@ namespace AutomotoraWeb.Controllers.Sistema {
             return BCONTROLLER;
         }
 
+        protected override void setearUltimoModulo() {
+            //para este controller que no es ningun modulo, dejo el original.
+        }
     }
 }

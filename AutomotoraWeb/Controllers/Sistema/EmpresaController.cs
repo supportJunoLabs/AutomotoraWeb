@@ -6,11 +6,13 @@ using System.Web.Mvc;
 using DLL_Backend;
 using AutomotoraWeb.Services;
 using System.Configuration;
+using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Utils;
 
-namespace AutomotoraWeb.Controllers.Sistema
-{
-    public class EmpresaController : SistemaController
-    {
+
+
+namespace AutomotoraWeb.Controllers.Sistema {
+    public class EmpresaController : SistemaController {
 
         public static string CONTROLLER = "empresa";
 
@@ -41,8 +43,9 @@ namespace AutomotoraWeb.Controllers.Sistema
                     empresa.ModificarDatos();
                     CompanyService.actualizarDatos(empresa); //para actualizar los datos del singleton.
 
-                    //TODO:  aca cambiar por la redireccion al index del ultimo modulo utilizado antes de acceder a esta opcion.
-                    return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
+                    //aca se cambia por la redireccion al index del ultimo modulo utilizado antes de acceder a esta opcion.
+                    //return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
+                    return IndexUltimoModulo();
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
@@ -53,5 +56,11 @@ namespace AutomotoraWeb.Controllers.Sistema
             return View(empresa);
         }
 
-     }
+        [HttpGet]
+        public ActionResult Cancelar() {
+            Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
+            return RedirectToAction(dest.Accion, dest.Controlador);
+        }
+
+    }
 }

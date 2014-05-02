@@ -71,8 +71,9 @@ namespace AutomotoraWeb.Controllers.General {
                 try {
                     string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
                     SecurityService.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword, Request.UserHostAddress);
-                    return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
-                    //TODO:  falta cambiar para volver al ultimo modulo accedido
+                    //return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
+                    Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
+                    return RedirectToAction(dest.Accion, dest.Controlador);
                 } catch (UsuarioException exc) {
                     model.ErrorCode = exc.Codigo;
                     model.ErrorMessage = exc.Message;
@@ -95,5 +96,10 @@ namespace AutomotoraWeb.Controllers.General {
 
         //------------------------------------------------------------------------------------------------------------------------
 
+        [HttpGet]
+        public ActionResult CancelarCambioPwd() {
+            Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
+            return RedirectToAction(dest.Accion, dest.Controlador);
+        }
     }
 }

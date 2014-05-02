@@ -12,4 +12,14 @@ namespace AutomotoraWeb.Utils {
         public static string APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS = "applicationPermisiblesActionController";
         public static string ULTIMO_MODULO = "ultimoModulo";
     }
+
+    public class Destino {
+        public string Controlador { get; set; }
+        public string Accion { get; set; }
+
+        public Destino(string accion, string controlador) {
+            Controlador = controlador;
+            Accion = accion;
+        }
+    }
 }

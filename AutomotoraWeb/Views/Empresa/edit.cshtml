@@ -122,9 +122,9 @@
         <div class="espacio2"></div>
         <div class="btn-toolbar">
             @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
-             @(Html.Bootstrap().ActionLinkButton("Cancelar", SistemaController.INDEX, SistemaController.BCONTROLLER).Class("btn btn-default"))
+            @* @(Html.Bootstrap().ActionLinkButton("Cancelar", SistemaController.INDEX, SistemaController.BCONTROLLER).Class("btn btn-default"))*@
+            @(Html.Bootstrap().ActionLinkButton("Cancelar", "Cancelar").Class("btn btn-default")) 
 
-            @*TODO: falta ajustar para que vuelva al menu del ultimo modulo accedido.*@
         </div>
         <div class="clear-both"></div>
 
