@@ -42,6 +42,7 @@
     <Reference Include="DevExpress.Charts.v13.2.Core, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.CodeParser.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -253,6 +254,7 @@
     <Compile Include="Models\CustomerSpouseModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />
+    <Compile Include="Models\UploadFilesResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\DXReportSucursales.cs">
       <SubType>Component</SubType>

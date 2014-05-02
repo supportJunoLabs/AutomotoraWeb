@@ -12,6 +12,7 @@ using DLL_Backend;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
+using System.IO;
 
 namespace AutomotoraWeb.Controllers.Sales.Maintenance {
     public class VendedoresController : SalesController, IMaintenance {
@@ -170,6 +171,38 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         //-----------------------------------------------------------------------------------------------------
+
+        [HttpPost]
+        public JsonResult Upload() {
+            for (int i = 0; i < Request.Files.Count; i++) {
+                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                //Use the following properties to get file's name, size and MIMEType
+                int fileSize = file.ContentLength;
+                string fileName = file.FileName;
+                string mimeType = file.ContentType;
+                System.IO.Stream fileContent = file.InputStream;
+                //To save file, use SaveAs method
+                file.SaveAs(Server.MapPath("~/") + fileName); //File will be saved in application root
+            }
+            return Json(new {fileName = "Nombre Archivo"});
+        }
+
+        //-----------------------------------------------------------------------------------------------------
+
+        [HttpPost]
+        public JsonResult UploadOLD() {
+            System.Threading.Thread.Sleep(3000);
+            HttpPostedFileBase file = null;
+
+            if (Request.Files.Count > 0) {
+                file = Request.Files[0];
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                file.SaveAs(Server.MapPath(baseDirectory + "Content/Images/tmp/") + file.FileName);
+            }
+            //Response.Write(file.FileName + " uploaded!");
+            //Response.End();
+            return Json(new { nombreArchivo = "file.FileName" });
+        }
 
     }
 }
