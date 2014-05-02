@@ -229,6 +229,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
@@ -1558,6 +1559,9 @@
     <Content Include="Views\Shared\error404.cshtml" />
     <Content Include="Views\Sistema\Index.cshtml" />
     <Content Include="Views\Empresa\edit.cshtml" />
+    <Content Include="Views\Clientes\create.cshtml" />
+    <Content Include="Views\Clientes\show.cshtml" />
+    <Content Include="Views\Clientes\_listClientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
