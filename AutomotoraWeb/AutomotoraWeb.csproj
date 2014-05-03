@@ -42,7 +42,6 @@
     <Reference Include="DevExpress.Charts.v13.2.Core, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.CodeParser.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
@@ -281,6 +280,7 @@
     <Content Include="Content\Images\Delete.png" />
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\error.png" />
+ co    <Content Include="Content\Images\ExampleImage.png" />
     <Content Include="Content\Images\Excel.png" />
     <Content Include="Content\Images\fondo.png" />
     <Content Include="Content\Images\imprimir.png" />
