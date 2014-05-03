@@ -178,10 +178,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View(cliente);
-                //  }
             }
-
-            return View(cliente);
         }
 
         //-----------------------------------------------------------------------------------------------------

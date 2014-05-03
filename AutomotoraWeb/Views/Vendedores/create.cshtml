@@ -89,11 +89,9 @@
         </div>
         <div class="editor-field editor-field-xxlarge">
             <img id="imgPhoto" src="~/Content/Images/ExampleImage.png" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
-            <input id="internalNamePhoto" type="hidden" />
         </div>
         <div class="clear-both"></div>
         
-
         <!-- ========================== -->
 
         <div class="espacio2"></div>
@@ -127,7 +125,6 @@
                     processData: false,
                     success: function (data) {
                         $("#imgPhoto").attr("src", "../Content/Images/tmp/" + data.fileName);
-                        $("#internalNamePhoto").val(data.internalName);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         alert("Erro al subir archivo");

@@ -134,11 +134,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                         vendedor.Foto = filePhotoName;
                     }
 
-                    vendedor.Agregar();
+                    vendedor.Agregar(); // Si hay foto le cambia el nombre
 
                     if (Session[FILE_RANDOM_NAME] != null) {
+                        // Movemos del directorio temporario al de vendedores y se actualiza el nombre
                         string filePhotoName = (string)(Session[FILE_RANDOM_NAME]);
-                        this.movePhotoFile(filePhotoName);
+                        this.moveAndRenamePhotoFile(filePhotoName, vendedor.Foto);
                         Session[FILE_RANDOM_NAME] = null;
                     }
 
@@ -159,11 +160,27 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult Edit(Vendedor vendedor) {
             if (ModelState.IsValid) {
                 try {
+                    if (Session[FILE_RANDOM_NAME] != null) {
+                        string filePhotoName = (string)(Session[FILE_RANDOM_NAME]);
+                        vendedor.Foto = filePhotoName;
+                    }
+
                     vendedor.ModificarDatos();
+
+                    if (Session[FILE_RANDOM_NAME] != null) {
+                        // Renombramos el Actual (para poder eliminarlo)
+                        string actualFilePhotoName = (string)(Session[ACTUAL_PHOTO_FILE_NAME]);
+                        this.renamePhotoFileName(actualFilePhotoName, actualFilePhotoName + "_TO_DELETE");
+
+                        // Movemos del directorio temporario al de vendedores y se actualiza el nombre
+                        string filePhotoName = (string)(Session[FILE_RANDOM_NAME]);
+                        this.moveAndRenamePhotoFile(filePhotoName, vendedor.Foto);
+                        Session[FILE_RANDOM_NAME] = null;
+                    }
 
                     if (Session[ACTUAL_PHOTO_FILE_NAME] != null) {
                         string filePhotoName = (string)(Session[ACTUAL_PHOTO_FILE_NAME]);
-                        this.deletePhotoFile(filePhotoName);
+                        this.deletePhotoFile(filePhotoName + "_TO_DELETE");
                         Session[ACTUAL_PHOTO_FILE_NAME] = null;
                     }
 
@@ -237,15 +254,21 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return extension;
         }
 
-        private void movePhotoFile(string filePhotoName) {
+        private void moveAndRenamePhotoFile(string filePhotoName, string newPhotoFileName) {
             string sourceFile = Server.MapPath(PHOTO_FOLDER_TMP) + filePhotoName;
-            string destinationFile = Server.MapPath(PHOTO_FOLDER) + filePhotoName;
+            string destinationFile = Server.MapPath(PHOTO_FOLDER) + newPhotoFileName;
             System.IO.File.Move(sourceFile, destinationFile);
         }
 
-        private void deletePhotoFile(string filePhotoName) {
-            if (System.IO.File.Exists(Server.MapPath(PHOTO_FOLDER) + filePhotoName)) {
-                System.IO.File.Delete(Server.MapPath(PHOTO_FOLDER) + filePhotoName);
+        private void renamePhotoFileName(string filePhotoName, string newPhotoFileName) {
+            string sourceFile = Server.MapPath(PHOTO_FOLDER) + filePhotoName;
+            string destinationFile = Server.MapPath(PHOTO_FOLDER) + newPhotoFileName;
+            System.IO.File.Move(sourceFile, destinationFile);
+        }
+
+        private void deletePhotoFile(string photoFileName) {
+            if (System.IO.File.Exists(Server.MapPath(PHOTO_FOLDER) + photoFileName)) {
+                System.IO.File.Delete(Server.MapPath(PHOTO_FOLDER) + photoFileName);
             }
         }
 
