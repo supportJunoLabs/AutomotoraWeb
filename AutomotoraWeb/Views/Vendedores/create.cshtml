@@ -80,7 +80,7 @@
         </div>
         <div class="editor-field editor-field-xxlarge">
             <input id="fileInputFoto" type="file">
-            <input id="uploadFileBtn" type="button" value="Subir Imagen" class="btn-default btn btn-primary" />
+            <button id="uploadFileBtn" class="btn-default btn btn-primary" type="button">Subir Imagen</button>
         </div>
         <div class="clear-both"></div>
 
@@ -89,6 +89,7 @@
         </div>
         <div class="editor-field editor-field-xxlarge">
             <img id="imgPhoto" src="~/Content/Images/ExampleImage.png" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
+            <input id="internalNamePhoto" type="hidden" />
         </div>
         <div class="clear-both"></div>
         
@@ -125,7 +126,8 @@
                     data: formdata,
                     processData: false,
                     success: function (data) {
-                        $("#imgPhoto").attr("src", "../Content/Images/vendedores/" + data.fileName);
+                        $("#imgPhoto").attr("src", "../Content/Images/tmp/" + data.fileName);
+                        $("#internalNamePhoto").val(data.internalName);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         alert("Erro al subir archivo");

@@ -12,11 +12,20 @@ using DLL_Backend;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
+using System.Security.Cryptography;
+using System.Text;
+using System.IO;
 
 namespace AutomotoraWeb.Controllers.Sales.Maintenance {
     public class VendedoresController : SalesController, IMaintenance {
 
         public static string CONTROLLER = "vendedores";
+
+        public static string FILE_RANDOM_NAME = "fileRandomName";
+        public static string ACTUAL_PHOTO_FILE_NAME = "actualPhotoFileName";
+        public static string PHOTO_FOLDER_TMP = "~/Content/Images/tmp/";
+        public static string PHOTO_FOLDER = "~/Content/Images/vendedores/";
+        
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vendedor vendedor) {
             return View(_listaVendedores());
@@ -93,6 +102,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         private ActionResult getVendedor(int id) {
             try {
                 Vendedor vendedor = _getVendedor(id);
+                Session[ACTUAL_PHOTO_FILE_NAME] = vendedor.Foto; 
                 return View(vendedor);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -119,7 +129,19 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
             if (ModelState.IsValid) {
                 try {
+                    if (Session[FILE_RANDOM_NAME] != null){
+                        string filePhotoName = (string)(Session[FILE_RANDOM_NAME]);
+                        vendedor.Foto = filePhotoName;
+                    }
+
                     vendedor.Agregar();
+
+                    if (Session[FILE_RANDOM_NAME] != null) {
+                        string filePhotoName = (string)(Session[FILE_RANDOM_NAME]);
+                        this.movePhotoFile(filePhotoName);
+                        Session[FILE_RANDOM_NAME] = null;
+                    }
+
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
@@ -138,6 +160,13 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             if (ModelState.IsValid) {
                 try {
                     vendedor.ModificarDatos();
+
+                    if (Session[ACTUAL_PHOTO_FILE_NAME] != null) {
+                        string filePhotoName = (string)(Session[ACTUAL_PHOTO_FILE_NAME]);
+                        this.deletePhotoFile(filePhotoName);
+                        Session[ACTUAL_PHOTO_FILE_NAME] = null;
+                    }
+
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
@@ -157,7 +186,13 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
                     string IP = HttpContext.Request.UserHostAddress;
+                    string photoFileName = vendedor.Foto;
                     vendedor.Eliminar(userName, IP);
+
+                    if (!String.IsNullOrEmpty(photoFileName)){
+                        deletePhotoFile(photoFileName);
+                    }
+
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
@@ -174,17 +209,44 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         [HttpPost]
         public JsonResult Upload() {
             string fileName = "";
+            string fileRandomName = "";
             for (int i = 0; i < Request.Files.Count; i++) {
                 HttpPostedFileBase file = Request.Files[i]; //Uploaded file
                 //Use the following properties to get file's name, size and MIMEType
                 int fileSize = file.ContentLength;
                 fileName = file.FileName;
                 string mimeType = file.ContentType;
-                System.IO.Stream fileContent = file.InputStream;
+                Stream fileContent = file.InputStream;
                 //To save file, use SaveAs method
-                file.SaveAs(Server.MapPath("~/Content/Images/vendedores/") + fileName); //File will be saved in application root
+                string extension = getExtensionFile(file.FileName);
+                fileRandomName = System.IO.Path.GetRandomFileName().Split('.')[0] + extension;
+                file.SaveAs(Server.MapPath(PHOTO_FOLDER_TMP) + fileRandomName);
+                Session[FILE_RANDOM_NAME] = fileRandomName; 
             }
-            return Json(new { fileName = fileName });
+            return Json(new { fileName = fileRandomName });
+        }
+
+
+        //-----------------------------------------------------------------------------------------------------
+
+        private string getExtensionFile(string fileName) {
+            string extension = "";
+            if (fileName.Contains('.')) {
+                extension = "." + fileName.Split('.')[1];
+            }
+            return extension;
+        }
+
+        private void movePhotoFile(string filePhotoName) {
+            string sourceFile = Server.MapPath(PHOTO_FOLDER_TMP) + filePhotoName;
+            string destinationFile = Server.MapPath(PHOTO_FOLDER) + filePhotoName;
+            System.IO.File.Move(sourceFile, destinationFile);
+        }
+
+        private void deletePhotoFile(string filePhotoName) {
+            if (System.IO.File.Exists(Server.MapPath(PHOTO_FOLDER) + filePhotoName)) {
+                System.IO.File.Delete(Server.MapPath(PHOTO_FOLDER) + filePhotoName);
+            }
         }
 
         //-----------------------------------------------------------------------------------------------------
