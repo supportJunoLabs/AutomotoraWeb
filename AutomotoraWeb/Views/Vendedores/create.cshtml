@@ -73,6 +73,28 @@
         </div>
         <div class="clear-both"></div>
 
+        <!-- ========================== -->
+
+        <div class="editor-label ">
+            Foto
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            <input id="fileInputFoto" type="file">
+            <input id="uploadFileBtn" type="button" value="Subir Imagen" class="btn-default btn btn-primary" />
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label ">
+            &nbsp;
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            <img id="imgPhoto" src="~/Content/Images/ExampleImage.png" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
+        </div>
+        <div class="clear-both"></div>
+        
+
+        <!-- ========================== -->
+
         <div class="espacio2"></div>
         <div class="btn-toolbar">
             @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Guardar"))
@@ -84,7 +106,43 @@
 }
 
 @section Scripts {
-    
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#uploadFileBtn').click(function () {
+
+                var formdata = new FormData(); //FormData object
+                var fileInputFoto = $("#fileInputFoto");
+                //Iterating through each files selected in fileInputFoto
+                for (i = 0; i < fileInputFoto.prop('files').length; i++) {
+                    //Appending each file to FormData object
+                    formdata.append(fileInputFoto.prop('files')[i].name, fileInputFoto.prop('files')[i]);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '/Vendedores/Upload',
+                    data: formdata,
+                    processData: false,
+                    success: function (data) {
+                        $("#imgPhoto").attr("src", "../Content/Images/vendedores/" + data.fileName);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Erro al subir archivo");
+                    },
+                    dataType: 'json',
+                    contentType: false,
+                    mimeType: 'multipart/form-data',
+                    beforeSend: function (x) {
+                        if (x && x.overrideMimeType) {
+                            x.overrideMimeType("multipart/form-data");
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
 }
 
 
