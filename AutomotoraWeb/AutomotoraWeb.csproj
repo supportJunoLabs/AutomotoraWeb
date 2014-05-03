@@ -229,7 +229,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
+    <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs"  />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
