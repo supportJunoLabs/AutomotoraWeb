@@ -1513,6 +1513,7 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\TwitterBootstrapMvcJs.js" />
     <Content Include="Scripts\_references.js" />
+	<Content Include="Scripts\AutomotoraWeb\ClienteMantenimiento.js" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1564,6 +1565,8 @@
     <Content Include="Views\Clientes\_datosCliente.cshtml" />
     <Content Include="Views\Clientes\_listClientes.cshtml" />
     <Content Include="Views\Clientes\edit.cshtml" />
+    <Content Include="Views\Clientes\details.cshtml" />
+    <Content Include="Views\Clientes\delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
