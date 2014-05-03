@@ -15,7 +15,10 @@
     <fieldset>
         <legend></legend>
 
+        @Html.HiddenFor(model => model.Codigo)
+
         @Html.Partial("_datosCliente", Model)
+
         @Html.HiddenFor(model => model.Ecivil.Codigo, new { id = "codigoECivilConsulta" })
 
         <div class="btn-toolbar">

@@ -37,7 +37,11 @@ namespace AutomotoraWeb.Helpers {
             if (!(soloLectura ?? false)) {
                 return htmlHelper.EditorFor(expression, htmlAttributes);
             } else {
-                return htmlHelper.DisplayFor(expression, htmlAttributes);
+
+                return MvcHtmlString.Create(
+                    htmlHelper.DisplayFor(expression, htmlAttributes).ToString() + 
+                    htmlHelper.HiddenFor(expression).ToString()
+                );
             }
         }
 
@@ -48,7 +52,10 @@ namespace AutomotoraWeb.Helpers {
             if (!(soloLectura ?? false)) {
                 return htmlHelper.DropDownListFor(expression_ddl, selectList, optionLabel, htmlAttributes);
             } else {
-                return htmlHelper.DisplayFor(expression_label, htmlAttributes);
+                return MvcHtmlString.Create(
+                     htmlHelper.DisplayFor(expression_label, htmlAttributes) .ToString() +
+                      htmlHelper.HiddenFor(expression_label).ToString()
+                );
             }
         }
 
@@ -59,31 +66,13 @@ namespace AutomotoraWeb.Helpers {
             if (!(soloLectura ?? false)) {
                 return htmlHelper.DropDownListFor(expression_ddl, selectList, htmlAttributes);
             } else {
-                return htmlHelper.DisplayFor(expression_label, htmlAttributes);
+                return MvcHtmlString.Create(
+                      htmlHelper.DisplayFor(expression_label, htmlAttributes).ToString() +
+                       htmlHelper.HiddenFor(expression_label).ToString()
+                 );
             }
         }
 
-        public static MvcHtmlString TextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
-                Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
-                object htmlAttributes = null) {
-            if (!(soloLectura ?? false)) {
-                return htmlHelper.TextBoxFor(expression, htmlAttributes);
-            } else {
-                //por ahora, si es solo lectura pierde los atributos, o hay que usar el metodo con diccionario para poder agregar el readonly
-                return htmlHelper.TextBoxFor(expression, new { @readonly = "true" });
-            }
-        }
-
-
-        public static MvcHtmlString TextBoxOrdisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
-            string format, object htmlAttributes) {
-            if (!(soloLectura ?? false)) {
-                return htmlHelper.TextBoxFor(expression, format, htmlAttributes);
-            } else {
-                return htmlHelper.DisplayFor(expression, format, htmlAttributes);
-            }
-        }
 
 
         public static MvcHtmlString TextAreaOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
@@ -92,7 +81,10 @@ namespace AutomotoraWeb.Helpers {
             if (!(soloLectura ?? false)) {
                 return htmlHelper.TextAreaFor(expression, htmlAttributes);
             } else {
-                return htmlHelper.DisplayFor(expression, htmlAttributes);
+                return MvcHtmlString.Create(
+                     htmlHelper.DisplayFor(expression, htmlAttributes).ToString() +
+                      htmlHelper.HiddenFor(expression).ToString()
+                );
             }
         }
 
@@ -111,12 +103,39 @@ namespace AutomotoraWeb.Helpers {
                     } catch (NullReferenceException) { }
                 }
                 if (valor) {
-                    return MvcHtmlString.Create("SI");
+                    return MvcHtmlString.Create("SI" + htmlHelper.HiddenFor(expression).ToString());
                 } else {
-                    return MvcHtmlString.Create("NO");
+                    return MvcHtmlString.Create("NO" + htmlHelper.HiddenFor(expression).ToString());
                 }
             }
         }
+
+        public static MvcHtmlString TextBoxOrdisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
+            string format, object htmlAttributes) {
+            if (!(soloLectura ?? false)) {
+                return htmlHelper.TextBoxFor(expression, format, htmlAttributes);
+            } else {
+                return MvcHtmlString.Create(
+                    htmlHelper.DisplayFor(expression, format, htmlAttributes).ToString() +
+                    htmlHelper.HiddenFor(expression).ToString()
+                );
+            }
+        }
+
+        public static MvcHtmlString TextBoxOrdisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
+            object htmlAttributes) {
+            if (!(soloLectura ?? false)) {
+                return htmlHelper.TextBoxFor(expression,  htmlAttributes);
+            } else {
+                return MvcHtmlString.Create(
+                   htmlHelper.DisplayFor(expression, htmlAttributes).ToString() +
+                   htmlHelper.HiddenFor(expression).ToString()
+               );
+            }
+        }
+
 
         //--------------------------------------------------------------------------------
 

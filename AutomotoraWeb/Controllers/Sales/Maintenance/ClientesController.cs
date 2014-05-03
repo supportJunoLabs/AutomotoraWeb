@@ -32,7 +32,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return PartialView("_listClientes", _listaClientes());
         }
 
-    
+
         //--------------------------------------    REPORT    ----------------------------------------------
         //public ActionResult Report() {
         //    // Add a report to the view data. 
@@ -80,7 +80,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Create() {
-           
+
             return View();
         }
 
@@ -104,7 +104,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
-            } 
+            }
         }
 
         private Cliente _getCliente(int id) {
@@ -134,7 +134,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     return View(cliente);
-                } 
+                }
             }
 
             return View(cliente);
@@ -144,37 +144,41 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         [HttpPost]
         public ActionResult Edit(Cliente cliente) {
-            ViewBag.SoloLectura = true;
             if (ModelState.IsValid) {
                 try {
+                    if (!cliente.Ecivil.RequiereDatosConyuge()) {
+                        cliente.Conyuge = null;
+                    }
                     cliente.ModificarDatos();
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     return View(cliente);
-                } 
+                }
             }
 
             return View(cliente);
         }
 
-        
+
 
         [HttpPost]
         public ActionResult Delete(Cliente cliente) {
             ViewBag.SoloLectura = true;
-            if (ModelState.IsValid) {
-                try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
-                    cliente.Eliminar(userName, IP);
-                    return RedirectToAction(BaseController.SHOW);
-                } catch (UsuarioException exc) {
-                    ViewBag.ErrorCode = exc.Codigo;
-                    ViewBag.ErrorMessage = exc.Message;
-                    return View(cliente);
-                }
+
+            //if (ModelState.IsValid) { //no se validan los campos porque no estan fisicamente los textboxes para cargar el cliente.
+            
+            try {
+                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                string IP = HttpContext.Request.UserHostAddress;
+                cliente.Eliminar(userName, IP);
+                return RedirectToAction(BaseController.SHOW);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(cliente);
+                //  }
             }
 
             return View(cliente);

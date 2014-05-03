@@ -16,6 +16,8 @@
     <fieldset>
         <legend></legend>
 
+         @Html.HiddenFor(model => model.Codigo)
+
          @Html.Partial("_datosCliente", Model)
         
     </fieldset>
