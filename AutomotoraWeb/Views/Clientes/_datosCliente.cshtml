@@ -5,10 +5,11 @@
             @Html.LabelForRequired(model => model.Nombre)
         </div>
         <div class="editor-field editor-field-xxlarge">
-            @Html.EditorFor(model => model.Nombre)
+            
+            @Html.EditorOrDisplayFor(model => model.Nombre)
             @Html.ValidationMessageFor(model => model.Nombre)
         </div>
-        <div class="clear-both"></div>
+        <div class="clear-both"></div>  
 
         <div class="editor-label">
             @Html.LabelForRequired(model => model.Direccion)

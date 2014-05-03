@@ -280,7 +280,7 @@
     <Content Include="Content\Images\Delete.png" />
     <Content Include="Content\Images\edit.png" />
     <Content Include="Content\Images\error.png" />
- co    <Content Include="Content\Images\ExampleImage.png" />
+    <Content Include="Content\Images\ExampleImage.png" />
     <Content Include="Content\Images\Excel.png" />
     <Content Include="Content\Images\fondo.png" />
     <Content Include="Content\Images\imprimir.png" />

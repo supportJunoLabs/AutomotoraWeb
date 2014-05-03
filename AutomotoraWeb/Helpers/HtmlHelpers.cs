@@ -11,19 +11,29 @@ using System.Text;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 
 namespace AutomotoraWeb.Helpers {
     public static class HtmlHelpers {
 
         //--------------------------------------------------------------------------------
 
+       
+
         public static MvcHtmlString Truncate(this HtmlHelper helper, string input, int length) {
+            
             if (input.Length <= length) {
                 return new MvcHtmlString(input);
             } else {
                 return new MvcHtmlString(input.Substring(0, length) + "...");
             }
          }
+
+        public static MvcHtmlString EditorOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+                                                                   Expression<Func<TModel, TProperty>> expression,
+                                                                   object htmlAttributes = null) { 
+            return htmlHelper.EditorFor(expression);
+        }
 
         //--------------------------------------------------------------------------------
 
@@ -58,6 +68,7 @@ namespace AutomotoraWeb.Helpers {
                 ModelMetadata.FromLambdaExpression(expression, html.ViewData),
                 ExpressionHelper.GetExpressionText(expression), labelText);
         }
+
 
         private static MvcHtmlString LabelHelper(HtmlHelper html,
             ModelMetadata metadata, string htmlFieldName, string labelText) {

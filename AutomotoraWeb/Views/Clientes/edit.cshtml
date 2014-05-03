@@ -1,0 +1,32 @@
+﻿@model DLL_Backend.Cliente
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    ViewBag.Title = "Clientes: Modificar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        @Html.HiddenFor(model => model.Codigo)
+
+         @Html.Partial("_datosCliente", Model)
+        
+    </fieldset>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+    </div>
+    <div class="clear-both"></div>
+}
+
+
+<script type="text/javascript" src="/scripts/AutomotoraWeb/ClienteMantenimiento.js"></script>
