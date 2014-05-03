@@ -1,4 +1,5 @@
 ﻿@model List<DLL_Backend.Cliente>
+@using AutomotoraWeb.Controllers.General;
 
 @{
     ViewBag.Title = "Clientes";
@@ -10,6 +11,9 @@
         <div class="btn-group">
             @(Html.Bootstrap().ActionLinkButton("Agregar Cliente", "Create").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary).Title("Agregar Cliente"))
         )
+        </div>
+         <div class="btn-group">
+            <a class="btn btn-primary2-mf" title="Imprimir listado" href='@Url.Action(BaseController.REPORT)'>Imprimir Listado</a>
         </div>
     </div>
        

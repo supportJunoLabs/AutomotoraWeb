@@ -1,0 +1,36 @@
+﻿@model DLL_Backend.Cliente
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    ViewBag.Title = "Clientes: Consulta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        @Html.Partial("_datosCliente", Model)
+
+        @Html.HiddenFor(model => model.Ecivil.Codigo, new {id="codigoECivilConsulta"})
+
+
+        <div class="btn-toolbar">
+            @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Editar Cliente"))
+             @(Html.Bootstrap().ActionLinkButton("Imprimir", BaseController.REPORT2).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Imprimir Ficha"))
+            @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Eliminar Cliente"))
+            @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista de Clientes"))
+        </div>
+
+    </fieldset>
+
+}
+
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/ClienteMantenimiento.js"></script>
+}

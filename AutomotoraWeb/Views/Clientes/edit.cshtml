@@ -15,7 +15,6 @@
 
     <fieldset>
         <legend></legend>
-        @Html.HiddenFor(model => model.Codigo)
 
          @Html.Partial("_datosCliente", Model)
         
@@ -28,5 +27,6 @@
     <div class="clear-both"></div>
 }
 
-
-<script type="text/javascript" src="/scripts/AutomotoraWeb/ClienteMantenimiento.js"></script>
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/ClienteMantenimiento.js"></script>
+}

@@ -75,6 +75,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         //--------------------------------------------------------------------------------------------------
 
         public ActionResult Details(int id) {
+            ViewBag.SoloLectura = true;
             return getCliente(id);
         }
 
@@ -88,6 +89,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Delete(int id) {
+            ViewBag.SoloLectura = true;
             return getCliente(id);
         }
 
@@ -142,6 +144,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         [HttpPost]
         public ActionResult Edit(Cliente cliente) {
+            ViewBag.SoloLectura = true;
             if (ModelState.IsValid) {
                 try {
                     cliente.ModificarDatos();
@@ -160,6 +163,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         [HttpPost]
         public ActionResult Delete(Cliente cliente) {
+            ViewBag.SoloLectura = true;
             if (ModelState.IsValid) {
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];

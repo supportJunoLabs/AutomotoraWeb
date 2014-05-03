@@ -23,6 +23,7 @@ namespace AutomotoraWeb.Controllers.General {
         //public static string EXPORT_TO_PDF = "exportarPDF";
         //public static string EXPORT_TO_EXCEL = "exportarExcel";
         public static string REPORT = "report";
+        public static string REPORT2 = "report2";
         public static string REPORT_PARTIAL = "reportPartial";
         public static string REPORT_EXPORT = "reportExport";
 

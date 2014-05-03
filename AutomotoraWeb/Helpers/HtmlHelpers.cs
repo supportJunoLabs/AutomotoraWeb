@@ -18,31 +18,114 @@ namespace AutomotoraWeb.Helpers {
 
         //--------------------------------------------------------------------------------
 
-       
+
 
         public static MvcHtmlString Truncate(this HtmlHelper helper, string input, int length) {
-            
+
             if (input.Length <= length) {
                 return new MvcHtmlString(input);
             } else {
                 return new MvcHtmlString(input.Substring(0, length) + "...");
             }
-         }
+        }
+
+        //---------- Para decidir entre comandos escribibles o de consulta en los mantenimientos que usan la misma partial
 
         public static MvcHtmlString EditorOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
-                                                                   Expression<Func<TModel, TProperty>> expression,
-                                                                   object htmlAttributes = null) { 
-            return htmlHelper.EditorFor(expression);
+            Expression<Func<TModel, TProperty>> expression, bool? soloLectura, object htmlAttributes = null) {
+
+            if (!(soloLectura ?? false)) {
+                return htmlHelper.EditorFor(expression, htmlAttributes);
+            } else {
+                return htmlHelper.DisplayFor(expression, htmlAttributes);
+            }
+        }
+
+        public static MvcHtmlString DdlOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+           Expression<Func<TModel, TProperty>> expression_ddl, bool? soloLectura,
+           Expression<Func<TModel, TProperty>> expression_label,
+           IEnumerable<SelectListItem> selectList, string optionLabel = null, object htmlAttributes = null) {
+            if (!(soloLectura ?? false)) {
+                return htmlHelper.DropDownListFor(expression_ddl, selectList, optionLabel, htmlAttributes);
+            } else {
+                return htmlHelper.DisplayFor(expression_label, htmlAttributes);
+            }
+        }
+
+        public static MvcHtmlString DdlOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TProperty>> expression_ddl, bool? soloLectura,
+            Expression<Func<TModel, TProperty>> expression_label,
+            IEnumerable<SelectListItem> selectList, object htmlAttributes) {
+            if (!(soloLectura ?? false)) {
+                return htmlHelper.DropDownListFor(expression_ddl, selectList, htmlAttributes);
+            } else {
+                return htmlHelper.DisplayFor(expression_label, htmlAttributes);
+            }
+        }
+
+        public static MvcHtmlString TextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+                Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
+                object htmlAttributes = null) {
+            if (!(soloLectura ?? false)) {
+                return htmlHelper.TextBoxFor(expression, htmlAttributes);
+            } else {
+                //por ahora, si es solo lectura pierde los atributos, o hay que usar el metodo con diccionario para poder agregar el readonly
+                return htmlHelper.TextBoxFor(expression, new { @readonly = "true" });
+            }
+        }
+
+
+        public static MvcHtmlString TextBoxOrdisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
+            string format, object htmlAttributes) {
+            if (!(soloLectura ?? false)) {
+                return htmlHelper.TextBoxFor(expression, format, htmlAttributes);
+            } else {
+                return htmlHelper.DisplayFor(expression, format, htmlAttributes);
+            }
+        }
+
+
+        public static MvcHtmlString TextAreaOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
+            object htmlAttributes) {
+            if (!(soloLectura ?? false)) {
+                return htmlHelper.TextAreaFor(expression, htmlAttributes);
+            } else {
+                return htmlHelper.DisplayFor(expression, htmlAttributes);
+            }
+        }
+
+
+        public static MvcHtmlString CheckBoxOrDisplayFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, bool>> expression, bool? soloLectura) {
+            if (!(soloLectura ?? false)) {
+                return htmlHelper.CheckBoxFor(expression);
+            } else {
+                bool valor = false;
+                if (expression != null) {
+                    try {
+                        Func<TModel, bool> deleg = expression.Compile();
+                        var result = deleg(htmlHelper.ViewData.Model);
+                        valor = (bool)result;
+                    } catch (NullReferenceException) { }
+                }
+                if (valor) {
+                    return MvcHtmlString.Create("SI");
+                } else {
+                    return MvcHtmlString.Create("NO");
+                }
+            }
         }
 
         //--------------------------------------------------------------------------------
 
-        public static MvcHtmlString BotonImagen(this HtmlHelper helper,  string accion, string controlador, object parametros, string clase, string tooltip) {
+        public static MvcHtmlString BotonImagen(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
 
 
             UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            String url = urlHelper.Action(accion, controlador, parametros);    
+            String url = urlHelper.Action(accion, controlador, parametros);
 
             //crear la div que va dentro del link anchor
             TagBuilder tagBuilder = new TagBuilder("div");
@@ -50,7 +133,7 @@ namespace AutomotoraWeb.Helpers {
             tagBuilder.MergeAttribute("title", tooltip);
             string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
 
-            StringBuilder html=new StringBuilder();
+            StringBuilder html = new StringBuilder();
             html.Append("<a href=\"");
             html.Append(url);
             html.Append("\">");
@@ -118,14 +201,13 @@ namespace AutomotoraWeb.Helpers {
 
         //--------------------------------------------------------------------------------
 
-        public static IEnumerable<SelectListItem> getListSelectListItemCustomerMaritalStatus(){
+        public static IEnumerable<SelectListItem> getListSelectListItemCustomerMaritalStatus() {
             Type type = typeof(CustomerModel.CustomerMaritalStatus);
             System.Reflection.PropertyInfo[] propertiesinfo = type.GetProperties();
 
             List<SelectListItem> listSelectListItemCustomerMaritalStatus = new List<SelectListItem>();
 
-            foreach (string value in Enum.GetNames(type))
-            {
+            foreach (string value in Enum.GetNames(type)) {
                 /// Get field info
                 FieldInfo fi = type.GetField(value);
 
@@ -142,7 +224,7 @@ namespace AutomotoraWeb.Helpers {
             return listSelectListItemCustomerMaritalStatus;
         }
 
-        
+
 
     }
 }

@@ -1,5 +1,8 @@
 ﻿ var actualMaritalStatus = $("#ddlMaritalStatus option:selected").val()
-_showHideSpouseBlock(actualMaritalStatus);
+ _showHideSpouseBlock(actualMaritalStatus);
+
+ var ecivilConulta = $("#codigoECivilConsulta").val()
+ _showHideSpouseBlock(ecivilConulta);
 
 $("#ddlMaritalStatus").change(function () {
     var optionSelected = $(this).val();
