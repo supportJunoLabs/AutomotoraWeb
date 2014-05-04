@@ -1549,7 +1549,9 @@
     <Content Include="Views\Shared\_menuConfiguration.cshtml" />
     <Content Include="Views\Vendedores\report.cshtml" />
     <Content Include="Views\Vendedores\_reportList.cshtml" />
-    <Content Include="web.config" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Sucursales\report.cshtml" />
     <Content Include="Views\Sucursales\_reportList.cshtml" />
     <Content Include="Views\Shared\error403.cshtml" />

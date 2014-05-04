@@ -216,7 +216,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 }
             }
 
-            return View(cliente);
+            }
         }
 
         //-----------------------------------------------------------------------------------------------------
