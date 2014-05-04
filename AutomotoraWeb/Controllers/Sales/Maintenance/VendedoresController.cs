@@ -40,14 +40,14 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult Report() {
             // Add a report to the view data. 
             DXReportVendedores rep = new DXReportVendedores();
-            setParamsToReport(rep);
+            //setParamsToReport(rep);
             ViewData["Report"] = rep;
             return View();
         }
 
         public ActionResult ReportPartial() {
             DXReportVendedores rep = new DXReportVendedores();
-            setParamsToReport(rep);
+            //setParamsToReport(rep);
             rep.DataSource = _listaVendedores();
             ViewData["Report"] = rep;
             return PartialView("_reportList");
@@ -55,28 +55,28 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public ActionResult ReportExport() {
             DXReportVendedores rep = new DXReportVendedores();
-            setParamsToReport(rep);
+            //setParamsToReport(rep);
             rep.DataSource = _listaVendedores();
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
-        private void setParamsToReport(XtraReport report) {
-            Parameter paramSystemName = new Parameter();
-            paramSystemName.Name = "SystemName";
-            paramSystemName.Type = typeof(string);
-            paramSystemName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME]);
-            paramSystemName.Description = "Nombre de la empresa";
-            paramSystemName.Visible = false;
-            report.Parameters.Add(paramSystemName);
+        //private void setParamsToReport(XtraReport report) {
+        //    Parameter paramSystemName = new Parameter();
+        //    paramSystemName.Name = "SystemName";
+        //    paramSystemName.Type = typeof(string);
+        //    paramSystemName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME]);
+        //    paramSystemName.Description = "Nombre de la empresa";
+        //    paramSystemName.Visible = false;
+        //    report.Parameters.Add(paramSystemName);
 
-            Parameter paramCompanyName = new Parameter();
-            paramCompanyName.Name = "CompanyName";
-            paramCompanyName.Type = typeof(string);
-            paramCompanyName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME]);
-            paramCompanyName.Description = "Nombre de la compania";
-            paramCompanyName.Visible = false;
-            report.Parameters.Add(paramCompanyName);
-        }
+        //    Parameter paramCompanyName = new Parameter();
+        //    paramCompanyName.Name = "CompanyName";
+        //    paramCompanyName.Type = typeof(string);
+        //    paramCompanyName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME]);
+        //    paramCompanyName.Description = "Nombre de la compania";
+        //    paramCompanyName.Visible = false;
+        //    report.Parameters.Add(paramCompanyName);
+        //}
 
         //--------------------------------------------------------------------------------------------------
 
