@@ -229,6 +229,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
+    <Compile Include="Controllers\Sales\Maintenance\TiposDocumentoController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
@@ -262,6 +263,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\DXReportVendedores.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\CompanyService.cs" />
@@ -1570,6 +1574,15 @@
     <Content Include="Views\Clientes\_reportList.cshtml" />
     <Content Include="Views\Clientes\report.cshtml" />
     <Content Include="Views\Sucursales\_datosSucursal.cshtml" />
+    <Content Include="Views\TiposDocumento\_datosTipoDocumento.cshtml" />
+    <Content Include="Views\TiposDocumento\_listTiposDocumento.cshtml" />
+    <Content Include="Views\TiposDocumento\_reportList.cshtml" />
+    <Content Include="Views\TiposDocumento\create.cshtml" />
+    <Content Include="Views\TiposDocumento\delete.cshtml" />
+    <Content Include="Views\TiposDocumento\details.cshtml" />
+    <Content Include="Views\TiposDocumento\edit.cshtml" />
+    <Content Include="Views\TiposDocumento\report.cshtml" />
+    <Content Include="Views\TiposDocumento\show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1599,6 +1612,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\DXReportSucursales.resx">
       <DependentUpon>DXReportSucursales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\DXReportTiposDocumento.resx">
+      <DependentUpon>DXReportTiposDocumento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>

@@ -1,0 +1,30 @@
+﻿@model List<DLL_Backend.TipoDocumento>
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    ViewBag.Title = "Tipos Documento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="espacio"></div>
+<div class="row-fluid contPagina">
+    Tipos de documentacion de vehiculo a gestionar durante la compraventa.
+</div>
+    <div class="espacio"></div>
+
+<div class="row-fluid">
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            @(Html.Bootstrap().ActionLinkButton("Agregar Tipo Documento", BaseController.CREATE ).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary).Title("Agregar Tipo Documento"))
+        )
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-primary2-mf" title="Imprimir listado" href='@Url.Action(BaseController.REPORT)'>Imprimir Listado</a>
+        </div>
+    </div>
+       
+    <div id="sucursalesGrid">
+        @Html.Partial("_listTiposDocumento", Model)
+    </div>
+</div>
+

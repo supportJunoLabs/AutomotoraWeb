@@ -1,0 +1,22 @@
+﻿@model DLL_Backend.TipoDocumento
+@using AutomotoraWeb.Helpers;
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Nombre)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Nombre, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Nombre)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Observaciones)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Observaciones)
+</div>
+<div class="clear-both"></div>
+
+<div class="espacio2"></div>
