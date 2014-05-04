@@ -1569,6 +1569,7 @@
     <Content Include="Views\Clientes\report2.cshtml" />
     <Content Include="Views\Clientes\_reportList.cshtml" />
     <Content Include="Views\Clientes\report.cshtml" />
+    <Content Include="Views\Sucursales\_datosSucursal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

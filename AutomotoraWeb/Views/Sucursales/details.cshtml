@@ -2,7 +2,7 @@
 @using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = "Vendedores: Consulta";
+    ViewBag.Title = "Sucursales: Consulta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,85 +14,10 @@
 
     <fieldset>
         <legend></legend>
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Nombre): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Nombre)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Direccion): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Direccion)
-            </div>
-            <div class="clear-both"></div>
-        </div>
+        @Html.HiddenFor(model => model.Codigo)
 
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Ciudad): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Ciudad)
-            </div>
-            <div class="clear-both"></div>
-        </div>
+        @Html.Partial("_datosSucursal", Model)
 
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.CodigoPostal): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.CodigoPostal)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Email): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Email)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Telefono): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Telefono)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Fax): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Fax)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Observaciones): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Observaciones)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-        
     </fieldset>
     
     <div class="espacio2"></div>
@@ -100,7 +25,7 @@
     <div class="btn-toolbar">
         @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Editar Sucursal"))
         @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Eliminar Sucursal"))
-        @(Html.Bootstrap().ActionLinkButton("Volver",BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista de Sucursales"))
+        @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista de Sucursales"))
     </div>
 
 }

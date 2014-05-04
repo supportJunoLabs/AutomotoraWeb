@@ -33,14 +33,14 @@ namespace AutomotoraWeb.Controllers.Sistema
         public ActionResult Report() {
             // Add a report to the view data. 
             DXReportSucursales rep = new DXReportSucursales();
-            setParamsToReport(rep);
+            //setParamsToReport(rep);
             ViewData["Report"] = rep;
             return View();
         }
 
         public ActionResult ReportPartial() {
             DXReportSucursales rep = new DXReportSucursales();
-            setParamsToReport(rep);
+            //setParamsToReport(rep);
             rep.DataSource = _listaSucursales();
             ViewData["Report"] = rep;
             return PartialView("_reportList");
@@ -48,32 +48,33 @@ namespace AutomotoraWeb.Controllers.Sistema
 
         public ActionResult ReportExport() {
             DXReportSucursales rep = new DXReportSucursales();
-            setParamsToReport(rep);
+            //setParamsToReport(rep);
             rep.DataSource = _listaSucursales();
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
-        private void setParamsToReport(XtraReport report) {
-            Parameter paramSystemName = new Parameter();
-            paramSystemName.Name = "SystemName";
-            paramSystemName.Type = typeof(string);
-            paramSystemName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME]);
-            paramSystemName.Description = "Nombre de la empresa";
-            paramSystemName.Visible = false;
-            report.Parameters.Add(paramSystemName);
+        //private void setParamsToReport(XtraReport report) {
+        //    Parameter paramSystemName = new Parameter();
+        //    paramSystemName.Name = "SystemName";
+        //    paramSystemName.Type = typeof(string);
+        //    paramSystemName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME]);
+        //    paramSystemName.Description = "Nombre de la empresa";
+        //    paramSystemName.Visible = false;
+        //    report.Parameters.Add(paramSystemName);
 
-            Parameter paramCompanyName = new Parameter();
-            paramCompanyName.Name = "CompanyName";
-            paramCompanyName.Type = typeof(string);
-            paramCompanyName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME]);
-            paramCompanyName.Description = "Nombre de la compania";
-            paramCompanyName.Visible = false;
-            report.Parameters.Add(paramCompanyName);
-        }
+        //    Parameter paramCompanyName = new Parameter();
+        //    paramCompanyName.Name = "CompanyName";
+        //    paramCompanyName.Type = typeof(string);
+        //    paramCompanyName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME]);
+        //    paramCompanyName.Description = "Nombre de la compania";
+        //    paramCompanyName.Visible = false;
+        //    report.Parameters.Add(paramCompanyName);
+        //}
 
         //--------------------------------------------------------------------------------------------------
 
         public ActionResult Details(int id) {
+            ViewBag.SoloLectura = true;
             return getSucursal(id);
         }
 
@@ -86,6 +87,7 @@ namespace AutomotoraWeb.Controllers.Sistema
         }
 
         public ActionResult Delete(int id) {
+            ViewBag.SoloLectura = true;
             return getSucursal(id);
         }
 
@@ -155,6 +157,7 @@ namespace AutomotoraWeb.Controllers.Sistema
 
         [HttpPost]
         public ActionResult Delete(Sucursal sucursal) {
+            ViewBag.SoloLectura = true;
             if (ModelState.IsValid) {
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
