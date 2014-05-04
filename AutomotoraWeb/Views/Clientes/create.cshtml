@@ -3,7 +3,7 @@
 @using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = "Clientes: Agregar";
+    ViewBag.Title = @Html.Action("NombreEntidad").ToString() + ": Agregar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,7 +17,7 @@
     <fieldset>
         <legend></legend>
 
-        @Html.Partial("_datosCliente", Model)
+        @Html.Partial("_datosDetalle", Model)
 
         <div class="btn-toolbar">
             @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Guardar"))

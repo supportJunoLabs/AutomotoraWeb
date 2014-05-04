@@ -16,11 +16,19 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
         public static string CONTROLLER = "empresa";
 
-        public ActionResult Edit() {
-            return getEmpresa();
+        public ContentResult NombreEntidad() {
+            return new ContentResult { Content = "Datos Empresa" };
         }
 
-        private ActionResult getEmpresa() {
+        public ContentResult NombreEntidades() {
+            return new ContentResult { Content = "Empresas" };
+        }
+
+        public ActionResult Edit() {
+            return VistaElemento();
+        }
+
+        private ActionResult VistaElemento() {
             try {
                 //por las dudas que haya habido cambios en la base, lo tomamos de la base para este mantenimiento
                 //Empresa emp = CompanyService.Empresa();

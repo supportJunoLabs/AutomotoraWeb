@@ -1,6 +1,7 @@
 ﻿@model DLL_Backend.Cliente
 
-@{ ViewBag.Title = " Clientes: Ficha";
+@{ 
+    ViewBag.Title = @Html.Action("NombreEntidad").ToString() + ": Ficha";
 }
 
-@Html.Partial("_reportCliente", Model)
+@Html.Partial("_reportDetalle", Model)

@@ -2,14 +2,14 @@
 @using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = "Clientes";
+    ViewBag.Title = @Html.Action("NombreEntidades").ToString();
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row-fluid">
     <div class="btn-toolbar">
         <div class="btn-group">
-            @(Html.Bootstrap().ActionLinkButton("Agregar Cliente", "Create").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary).Title("Agregar Cliente"))
+            @(Html.Bootstrap().ActionLinkButton("Agregar ", "Create").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
         )
         </div>
          <div class="btn-group">
@@ -17,8 +17,8 @@
         </div>
     </div>
        
-    <div id="clientesGrid">
-        @Html.Partial("_listClientes", Model)
+    <div id="divGrilla">
+        @Html.Partial("_listGrilla", Model)
     </div>
 </div>
 

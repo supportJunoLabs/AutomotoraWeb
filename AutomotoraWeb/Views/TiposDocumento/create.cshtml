@@ -4,7 +4,7 @@
 
 
 @{
-    ViewBag.Title = " Tipos Documento: Agregar";
+    ViewBag.Title = @Html.Action("NombreEntidad").ToString() + ": Agregar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,7 +20,7 @@
     <fieldset>
         <legend></legend>
 
-        @Html.Partial("_datosTipoDocumento", Model)
+        @Html.Partial("_datosDetalle", Model)
 
     </fieldset>
     

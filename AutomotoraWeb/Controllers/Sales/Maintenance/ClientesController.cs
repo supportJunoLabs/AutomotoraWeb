@@ -18,26 +18,35 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public static string CONTROLLER = "clientes";
 
+        public ContentResult NombreEntidad() {
+            return new ContentResult { Content = "Cliente" };
+        }
+
+        public ContentResult NombreEntidades() {
+            return new ContentResult { Content = "Clientes" };
+        }
+        
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             ViewBag.EstadosCiviles = EstadoCivil.EstadosCiviles();
             ViewBag.TiposOtroDoc = Cliente.TiposOtrosDocumentos();
+            ViewBag.NombreEntidad = "Clientes";
             base.OnActionExecuting(filterContext);
         }
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Cliente cliente) {
-            return View(_listaClientes());
+            return View(_listaElementos());
         }
 
-        public ActionResult listClientes() {
-            return PartialView("_listClientes", _listaClientes());
+        public ActionResult ListaGrilla() {
+            return PartialView("_listGrilla", _listaElementos());
         }
 
         //----------reporte ficha cliente -----------------------------
         public ActionResult Report2(int id) {
             // Add a report to the view data. 
-            Cliente cli = _getCliente(id);
-            DXReportFichaCliente rep = new DXReportFichaCliente();
+            Cliente cli = _obtenerElemento(id);
             //setParamsToReport(rep);
+            DXReportFichaCliente rep = new DXReportFichaCliente();
             ViewData["Report"] = rep;
             return View(cli);
         }
@@ -45,18 +54,18 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult ReportPartial2(int id) {
             DXReportFichaCliente rep = new DXReportFichaCliente();
             //setParamsToReport(rep);
-            Cliente cli = _getCliente(id);
+            Cliente cli = _obtenerElemento(id);
             List<Cliente> lista = new List<Cliente>();
             lista.Add(cli);
             rep.DataSource = lista;
             ViewData["Report"] = rep;
-            return PartialView("_reportCliente", cli);
+            return PartialView("_reportDetalle", cli);
         }
 
         public ActionResult ReportExport2(int id) {
             DXReportFichaCliente rep = new DXReportFichaCliente();
             //setParamsToReport(rep);
-            Cliente cli = _getCliente(id);
+            Cliente cli = _obtenerElemento(id);
             List<Cliente> lista = new List<Cliente>();
             lista.Add(cli);
             rep.DataSource = lista;
@@ -76,42 +85,23 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult ReportPartial() {
             DXReportClientes rep = new DXReportClientes();
             //setParamsToReport(rep);
-            rep.DataSource = Cliente.Clientes();
+            rep.DataSource = _listaElementos();
             ViewData["Report"] = rep;
             return PartialView("_reportList");
         }
 
-        public ActionResult ReportExport2() {
+        public ActionResult ReportExport() {
             DXReportClientes rep = new DXReportClientes();
             //setParamsToReport(rep);
             rep.DataSource = Cliente.Clientes();
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
-
-        //private void setParamsToReport(XtraReport report) {
-        //    Parameter paramSystemName = new Parameter();
-        //    paramSystemName.Name = "SystemName";
-        //    paramSystemName.Type = typeof(string);
-        //    paramSystemName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME]);
-        //    paramSystemName.Description = "Nombre de la empresa";
-        //    paramSystemName.Visible = false;
-        //    report.Parameters.Add(paramSystemName);
-
-        //    Parameter paramCompanyName = new Parameter();
-        //    paramCompanyName.Name = "CompanyName";
-        //    paramCompanyName.Type = typeof(string);
-        //    paramCompanyName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME]);
-        //    paramCompanyName.Description = "Nombre de la compania";
-        //    paramCompanyName.Visible = false;
-        //    report.Parameters.Add(paramCompanyName);
-        //}
-
         //--------------------------------------------------------------------------------------------------
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
-            return getCliente(id);
+            return VistaElemento(id);
         }
 
         public ActionResult Create() {
@@ -120,20 +110,20 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Edit(int id) {
-            return getCliente(id);
+            return VistaElemento(id);
         }
 
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
-            return getCliente(id);
+            return VistaElemento(id);
         }
 
         //-----------------------------------------------------------------------------------------------------
 
 
-        private ActionResult getCliente(int id) {
+        private ActionResult VistaElemento(int id) {
             try {
-                Cliente cliente = _getCliente(id);
+                Cliente cliente = _obtenerElemento(id);
                 return View(cliente);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -142,14 +132,14 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             }
         }
 
-        private Cliente _getCliente(int id) {
+        private Cliente _obtenerElemento(int id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
             Cliente cliente = new Cliente();
             cliente.Codigo = id;
             cliente.Consultar();
             return cliente;
         }
 
-        private List<Cliente> _listaClientes() {
+        private List<Cliente> _listaElementos() {
             return Cliente.Clientes();
         }
 

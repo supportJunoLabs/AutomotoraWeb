@@ -2,7 +2,7 @@
 @using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = "Tipos Documento: Consulta";
+    ViewBag.Title = @Html.Action("NombreEntidad").ToString() + ": Consulta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,16 +16,16 @@
         <legend></legend>
         @Html.HiddenFor(model => model.Codigo)
 
-        @Html.Partial("_datosTipoDocumento", Model)
+        @Html.Partial("_datosDetalle", Model)
 
     </fieldset>
     
     <div class="espacio2"></div>
     
     <div class="btn-toolbar">
-        @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Editar Tipo Documento"))
-        @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Eliminar Tipo Documento"))
-        @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista de Tipos de Documento"))
+        @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
     </div>
 
 }

@@ -19,13 +19,20 @@ namespace AutomotoraWeb.Controllers.Sistema
 
         public static string CONTROLLER = "sucursales";
 
-
-        public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Sucursal Sucursal) {
-            return View(_listaSucursales());
+        public ContentResult NombreEntidad() {
+            return new ContentResult { Content = "Sucursal" };
         }
 
-        public ActionResult listSucursales() {
-            return PartialView("_listSucursales", _listaSucursales());
+        public ContentResult NombreEntidades() {
+            return new ContentResult { Content = "Sucursales" };
+        }
+
+        public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Sucursal Sucursal) {
+            return View(_listaElementos());
+        }
+
+        public ActionResult ListaGrilla() {
+            return PartialView("_listGrilla", _listaElementos());
         }
 
 
@@ -41,7 +48,7 @@ namespace AutomotoraWeb.Controllers.Sistema
         public ActionResult ReportPartial() {
             DXReportSucursales rep = new DXReportSucursales();
             //setParamsToReport(rep);
-            rep.DataSource = _listaSucursales();
+            rep.DataSource = _listaElementos();
             ViewData["Report"] = rep;
             return PartialView("_reportList");
         }
@@ -49,33 +56,15 @@ namespace AutomotoraWeb.Controllers.Sistema
         public ActionResult ReportExport() {
             DXReportSucursales rep = new DXReportSucursales();
             //setParamsToReport(rep);
-            rep.DataSource = _listaSucursales();
+            rep.DataSource = _listaElementos();
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
-
-        //private void setParamsToReport(XtraReport report) {
-        //    Parameter paramSystemName = new Parameter();
-        //    paramSystemName.Name = "SystemName";
-        //    paramSystemName.Type = typeof(string);
-        //    paramSystemName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_SYSTEM_NAME]);
-        //    paramSystemName.Description = "Nombre de la empresa";
-        //    paramSystemName.Visible = false;
-        //    report.Parameters.Add(paramSystemName);
-
-        //    Parameter paramCompanyName = new Parameter();
-        //    paramCompanyName.Name = "CompanyName";
-        //    paramCompanyName.Type = typeof(string);
-        //    paramCompanyName.Value = (string)(HttpContext.Application.Contents[SessionUtils.APPLICATION_COMPANY_NAME]);
-        //    paramCompanyName.Description = "Nombre de la compania";
-        //    paramCompanyName.Visible = false;
-        //    report.Parameters.Add(paramCompanyName);
-        //}
 
         //--------------------------------------------------------------------------------------------------
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
-            return getSucursal(id);
+            return VistaElemento(id);
         }
 
         public ActionResult Create() {
@@ -83,20 +72,20 @@ namespace AutomotoraWeb.Controllers.Sistema
         }
 
         public ActionResult Edit(int id) {
-            return getSucursal(id);
+            return VistaElemento(id);
         }
 
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
-            return getSucursal(id);
+            return VistaElemento(id);
         }
 
         //-----------------------------------------------------------------------------------------------------
 
 
-        private ActionResult getSucursal(int id) {
+        private ActionResult VistaElemento(int id) {
             try {
-                Sucursal sucursal = _getSucursal(id);
+                Sucursal sucursal = _obtenerElemento(id);
                 return View(sucursal);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -105,14 +94,14 @@ namespace AutomotoraWeb.Controllers.Sistema
             }
         }
 
-        private Sucursal _getSucursal(int id) {
+        private Sucursal _obtenerElemento(int id) {
             Sucursal sucursal = new Sucursal();
             sucursal.Codigo = id;
             sucursal.Consultar();
             return sucursal;
         }
 
-        private List<Sucursal> _listaSucursales() {
+        private List<Sucursal> _listaElementos() {
             return Sucursal.Sucursales();
         }
 

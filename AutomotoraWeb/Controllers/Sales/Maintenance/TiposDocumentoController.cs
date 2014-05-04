@@ -19,13 +19,20 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance
 
         public static string CONTROLLER = "TiposDocumento";
 
-
-        public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] TipoDocumento td) {
-            return View(_listaTiposDocumento());
+        public ContentResult NombreEntidades() {
+            return new ContentResult { Content = "Tipos Documento" };
         }
 
-        public ActionResult listTiposDocumento() {
-            return PartialView("_listTiposDocumento", _listaTiposDocumento());
+        public ContentResult NombreEntidad() {
+            return new ContentResult { Content = "Tipo Documento" };
+        }
+
+        public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] TipoDocumento td) {
+            return View(_listaElementos());
+        }
+
+        public ActionResult ListaGrilla() {
+            return PartialView("_listGrilla", _listaElementos());
         }
 
 
@@ -39,7 +46,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance
 
         public ActionResult ReportPartial() {
             DXReportTiposDocumento rep = new DXReportTiposDocumento();
-            rep.DataSource = _listaTiposDocumento();
+            rep.DataSource = _listaElementos();
             ViewData["Report"] = rep;
             return PartialView("_reportList");
         }
@@ -47,7 +54,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance
         public ActionResult ReportExport() {
             DXReportTiposDocumento rep = new DXReportTiposDocumento();
             //setParamsToReport(rep);
-            rep.DataSource = _listaTiposDocumento();
+            rep.DataSource = _listaElementos();
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
@@ -55,7 +62,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
-            return getTipoDocumento(id);
+            return VistaElemento(id);
         }
 
         public ActionResult Create() {
@@ -63,20 +70,20 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance
         }
 
         public ActionResult Edit(int id) {
-            return getTipoDocumento(id);
+            return VistaElemento(id);
         }
 
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
-            return getTipoDocumento(id);
+            return VistaElemento(id);
         }
 
         //-----------------------------------------------------------------------------------------------------
 
 
-        private ActionResult getTipoDocumento(int id) {
+        private ActionResult VistaElemento(int id) {
             try {
-                TipoDocumento td = _getTipoDocumento(id);
+                TipoDocumento td = _obtenerElemento(id);
                 return View(td);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -85,14 +92,14 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance
             }
         }
 
-        private TipoDocumento _getTipoDocumento(int id) {
+        private TipoDocumento _obtenerElemento(int id) {
             TipoDocumento td = new TipoDocumento();
             td.Codigo = id;
             td.Consultar();
             return td;
         }
 
-        private List<TipoDocumento> _listaTiposDocumento() {
+        private List<TipoDocumento> _listaElementos() {
             return TipoDocumento.TiposDocumento();
         }
 

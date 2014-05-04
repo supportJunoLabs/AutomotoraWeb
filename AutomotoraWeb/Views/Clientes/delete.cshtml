@@ -2,7 +2,7 @@
 @using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = "Clientes: Eliminar";
+    ViewBag.Title = @Html.Action("NombreEntidad").ToString() + ": Eliminar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,12 +17,12 @@
 
         @Html.HiddenFor(model => model.Codigo)
 
-        @Html.Partial("_datosCliente", Model)
+        @Html.Partial("_datosDetalle", Model)
 
         @Html.HiddenFor(model => model.Ecivil.Codigo, new { id = "codigoECivilConsulta" })
 
         <div class="btn-toolbar">
-            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Tooltip("Eliminar Cliente").Data(new { id = Model.Codigo }))
+            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Data(new { id = Model.Codigo }))
             @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
         </div>
 
