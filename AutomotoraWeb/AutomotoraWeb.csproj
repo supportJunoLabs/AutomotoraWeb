@@ -236,7 +236,6 @@
     <Compile Include="Controllers\General\BaseController.cs" />
     <Compile Include="Controllers\Sistema\EmpresaController.cs" />
     <Compile Include="Controllers\General\ErrorController.cs" />
-    <Compile Include="Controllers\Sales\Maintenance\CustomersController.cs" />
     <Compile Include="Controllers\General\IMaintenance.cs" />
     <Compile Include="Controllers\Sales\Maintenance\VendedoresController.cs" />
     <Compile Include="Controllers\Sistema\SucursalesController.cs" />
@@ -1535,15 +1534,9 @@
     <Content Include="Views\Vendedores\create.cshtml" />
     <Content Include="Views\Vendedores\delete.cshtml" />
     <Content Include="Views\Clientes\show.cshtml" />
-    <Content Include="Views\Customers\create.cshtml" />
-    <Content Include="Views\Customers\delete.cshtml" />
-    <Content Include="Views\Customers\details.cshtml" />
-    <Content Include="Views\Customers\edit.cshtml" />
-    <Content Include="Views\Customers\show.cshtml" />
     <Content Include="Views\Vendedores\_listVendedores.cshtml" />
     <Content Include="Views\Shared\_menuUser.cshtml" />
     <Content Include="Views\Shared\_generalGrid.cshtml" />
-    <Content Include="Views\Customers\_listCustomers.cshtml" />
     <Content Include="Views\Sucursales\_listSucursales.cshtml" />
     <Content Include="Views\Sucursales\create.cshtml" />
     <Content Include="Views\Sucursales\delete.cshtml" />
