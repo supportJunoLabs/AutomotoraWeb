@@ -87,7 +87,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             rep.DataSource = Cliente.Clientes();
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
-    
+
 
         //private void setParamsToReport(XtraReport report) {
         //    Parameter paramSystemName = new Parameter();
@@ -202,7 +202,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult Delete(Cliente cliente) {
             ViewBag.SoloLectura = true;
 
-            if (ModelState.IsValid) { //no se validan los campos porque no estan fisicamente los textboxes para cargar el cliente.
+            if (ModelState.IsValid) {
 
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
@@ -215,8 +215,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                     return View(cliente);
                 }
             }
+            return View(cliente);
 
-            }
         }
 
         //-----------------------------------------------------------------------------------------------------
