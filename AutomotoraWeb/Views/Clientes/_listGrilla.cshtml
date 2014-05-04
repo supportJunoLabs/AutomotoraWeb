@@ -1,0 +1,24 @@
+﻿@model List<DLL_Backend.Cliente>
+@using System.Web.UI.WebControls
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Sales.Maintenance;
+
+@{
+    List<string> hiddenColumns = new List<string>() { }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    ViewBag.hiddenColumns = hiddenColumns;
+
+    List<string> visibleColumns = new List<string>() { "Nombre", "Telefono", "OtroTelefono", "Fax", "Mail", "Observaciones" }; //agregar lo que hay que mostrar, si queda vacio se muestra todo
+    ViewBag.visibleColumns = visibleColumns;
+
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { { "Telefono", 30 }, { "OtroTelefono", 30 }, {"Fax", 30}, {"Mail", 30}, {"Observaciones", 30} };
+    ViewBag.trunkColumns = trunkColumns;
+
+    ViewBag.nameGrid = "grilla";
+    ViewBag.controller = ClientesController.CONTROLLER;
+    ViewBag.actionCallbackRoute = "listaGrilla";
+    ViewBag.KeyFieldName = "Codigo";
+    ViewBag.typeOfModel = typeof(DLL_Backend.Cliente.ClienteMD);
+}
+
+@Html.Partial("_generalGrid", Model)
+

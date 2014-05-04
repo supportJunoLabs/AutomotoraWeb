@@ -1,0 +1,14 @@
+﻿@using AutomotoraWeb.Controllers.Sales.Maintenance;
+@using AutomotoraWeb.Controllers.General;
+@model DLL_Backend.Cliente
+
+
+@Html.DevExpress().DocumentViewer(settings =>{
+    // The following settings are required for a Report Viewer. 
+    settings.Name = "documentViewer";
+    settings.Report = (DXReportFichaCliente)ViewData["Report"];
+    // Callback and export route values specify corresponding controllers and their actions. 
+    // These settings are required as well. 
+    settings.CallbackRouteValues = new { Controller = ClientesController.CONTROLLER, Action=BaseController.REPORT_PARTIAL2, id=Model.Codigo };
+    settings.ExportRouteValues = new { Controller = ClientesController.CONTROLLER, Action = BaseController.REPORT_EXPORT2, id=Model.Codigo };
+}).GetHtml()
