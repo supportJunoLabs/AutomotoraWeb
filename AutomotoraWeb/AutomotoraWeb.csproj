@@ -236,7 +236,6 @@
     <Compile Include="Controllers\General\BaseController.cs" />
     <Compile Include="Controllers\Sistema\EmpresaController.cs" />
     <Compile Include="Controllers\General\ErrorController.cs" />
-    <Compile Include="Controllers\Sales\Maintenance\CustomersController.cs" />
     <Compile Include="Controllers\General\IMaintenance.cs" />
     <Compile Include="Controllers\Sales\Maintenance\VendedoresController.cs" />
     <Compile Include="Controllers\Sistema\SucursalesController.cs" />
@@ -250,11 +249,15 @@
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
-    <Compile Include="Models\CustomerModel.cs" />
-    <Compile Include="Models\CustomerSpouseModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\DXReportClientes.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\DXReportFichaCliente.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\DXReportSucursales.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -263,7 +266,6 @@
     </Compile>
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\MenuService.cs" />
-    <Compile Include="Services\SalesService.cs" />
     <Compile Include="Services\SecurityService.cs" />
     <Compile Include="Utils\SessionUtils.cs" />
   </ItemGroup>
@@ -1513,7 +1515,7 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\TwitterBootstrapMvcJs.js" />
     <Content Include="Scripts\_references.js" />
-	<Content Include="Scripts\AutomotoraWeb\ClienteMantenimiento.js" />
+    <Content Include="Scripts\AutomotoraWeb\ClienteMantenimiento.js" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1535,15 +1537,9 @@
     <Content Include="Views\Vendedores\create.cshtml" />
     <Content Include="Views\Vendedores\delete.cshtml" />
     <Content Include="Views\Clientes\show.cshtml" />
-    <Content Include="Views\Customers\create.cshtml" />
-    <Content Include="Views\Customers\delete.cshtml" />
-    <Content Include="Views\Customers\details.cshtml" />
-    <Content Include="Views\Customers\edit.cshtml" />
-    <Content Include="Views\Customers\show.cshtml" />
     <Content Include="Views\Vendedores\_listVendedores.cshtml" />
     <Content Include="Views\Shared\_menuUser.cshtml" />
     <Content Include="Views\Shared\_generalGrid.cshtml" />
-    <Content Include="Views\Customers\_listCustomers.cshtml" />
     <Content Include="Views\Sucursales\_listSucursales.cshtml" />
     <Content Include="Views\Sucursales\create.cshtml" />
     <Content Include="Views\Sucursales\delete.cshtml" />
@@ -1567,6 +1563,10 @@
     <Content Include="Views\Clientes\edit.cshtml" />
     <Content Include="Views\Clientes\details.cshtml" />
     <Content Include="Views\Clientes\delete.cshtml" />
+    <Content Include="Views\Clientes\_reportCliente.cshtml" />
+    <Content Include="Views\Clientes\report2.cshtml" />
+    <Content Include="Views\Clientes\_reportList.cshtml" />
+    <Content Include="Views\Clientes\report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1588,6 +1588,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\DXReportClientes.resx">
+      <DependentUpon>DXReportClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\DXReportFichaCliente.resx">
+      <DependentUpon>DXReportFichaCliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\DXReportSucursales.resx">
       <DependentUpon>DXReportSucursales.cs</DependentUpon>
     </EmbeddedResource>

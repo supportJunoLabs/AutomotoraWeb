@@ -29,7 +29,7 @@ namespace AutomotoraWeb.Helpers {
             }
         }
 
-        //---------- Para decidir entre comandos escribibles o de consulta en los mantenimientos que usan la misma partial
+        //---------- Para decidir entre comandos escribibles o de consulta en los mantenimientos que usan la misma partial view
 
         public static MvcHtmlString EditorOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, bool? soloLectura, object htmlAttributes = null) {
@@ -141,6 +141,7 @@ namespace AutomotoraWeb.Helpers {
 
         public static MvcHtmlString BotonImagen(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
+            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro.
 
 
             UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
@@ -218,31 +219,7 @@ namespace AutomotoraWeb.Helpers {
             return MvcHtmlString.Create(output);
         }
 
-        //--------------------------------------------------------------------------------
-
-        public static IEnumerable<SelectListItem> getListSelectListItemCustomerMaritalStatus() {
-            Type type = typeof(CustomerModel.CustomerMaritalStatus);
-            System.Reflection.PropertyInfo[] propertiesinfo = type.GetProperties();
-
-            List<SelectListItem> listSelectListItemCustomerMaritalStatus = new List<SelectListItem>();
-
-            foreach (string value in Enum.GetNames(type)) {
-                /// Get field info
-                FieldInfo fi = type.GetField(value);
-
-                /// Get description attribute
-                object[] descriptionAttrs = fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                //DescriptionAttribute description = (DescriptionAttribute)descriptionAttrs[0];
-
-                SelectListItem selectListItem = new SelectListItem();
-                selectListItem.Text = value;//description.Description;
-                selectListItem.Value = value;
-                listSelectListItemCustomerMaritalStatus.Add(selectListItem);
-            }
-
-            return listSelectListItemCustomerMaritalStatus;
-        }
-
+     
 
 
     }

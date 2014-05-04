@@ -21,7 +21,7 @@
         <legend></legend>
 
         <div class="editor-label">
-            @Html.LabelForRequired(model => model.Nombre)
+            @Html.DisplayNameFor(model => model.Nombre)
         </div>
         <div class="editor-field editor-field-xxlarge">
             @Html.EditorFor(model => model.Nombre)
@@ -30,7 +30,7 @@
         <div class="clear-both"></div>
 
         <div class="editor-label">
-            @Html.LabelForRequired(model => model.Direccion)
+            @Html.DisplayNameFor(model => model.Direccion)
         </div>
         <div class="editor-field editor-field-xxlarge">
             @Html.EditorFor(model => model.Direccion)
@@ -39,7 +39,7 @@
         <div class="clear-both"></div>
 
         <div class="editor-label">
-            @Html.LabelForRequired(model => model.Ciudad)
+            @Html.DisplayNameFor(model => model.Ciudad)
         </div>
         <div class="editor-field editor-field-xxlarge">
             @Html.EditorFor(model => model.Ciudad)
@@ -48,7 +48,7 @@
         <div class="clear-both"></div>
 
         <div class="editor-label">
-            @Html.LabelForRequired(model => model.CodigoPostal)
+            @Html.DisplayNameFor(model => model.CodigoPostal)
         </div>
         <div class="editor-field editor-field-large">
             @Html.EditorFor(model => model.CodigoPostal)
@@ -57,7 +57,7 @@
         <div class="clear-both"></div>
 
         <div class="editor-label">
-            @Html.LabelForRequired(model => model.Email)
+            @Html.DisplayNameFor(model => model.Email)
         </div>
         <div class="editor-field editor-field-large">
             @Html.EditorFor(model => model.Email)
@@ -66,7 +66,7 @@
         <div class="clear-both"></div>
 
         <div class="editor-label">
-            @Html.LabelForRequired(model => model.Telefono)
+            @Html.DisplayNameFor(model => model.Telefono)
         </div>
         <div class="editor-field editor-field-large">
             @Html.EditorFor(model => model.Telefono)
@@ -75,7 +75,7 @@
         <div class="clear-both"></div>
 
         <div class="editor-label">
-            @Html.LabelForRequired(model => model.Fax)
+            @Html.DisplayNameFor(model => model.Fax)
         </div>
         <div class="editor-field editor-field-large">
             @Html.EditorFor(model => model.Fax)
@@ -84,7 +84,7 @@
         <div class="clear-both"></div>
 
         <div class="editor-label ">
-            @Html.LabelForRequired(model => model.Observaciones)
+            @Html.DisplayNameFor(model => model.Observaciones)
         </div>
         <div class="editor-field editor-field-xxlarge">
             @Html.TextAreaFor(model => model.Observaciones, new { style="width: 530px; height: 60px" })

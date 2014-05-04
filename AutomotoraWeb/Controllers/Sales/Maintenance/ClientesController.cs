@@ -32,27 +32,62 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return PartialView("_listClientes", _listaClientes());
         }
 
+        //----------reporte ficha cliente -----------------------------
+        public ActionResult Report2(int id) {
+            // Add a report to the view data. 
+            Cliente cli = _getCliente(id);
+            DXReportFichaCliente rep = new DXReportFichaCliente();
+            //setParamsToReport(rep);
+            ViewData["Report"] = rep;
+            return View(cli);
+        }
 
-        //--------------------------------------    REPORT    ----------------------------------------------
-        //public ActionResult Report() {
-        //    // Add a report to the view data. 
-        //    DXReportClientes rep = new DXReportClientes();
-        //    setParamsToReport(rep);
-        //    ViewData["Report"] = rep;
-        //    return View();
-        //}
+        public ActionResult ReportPartial2(int id) {
+            DXReportFichaCliente rep = new DXReportFichaCliente();
+            //setParamsToReport(rep);
+            Cliente cli = _getCliente(id);
+            List<Cliente> lista = new List<Cliente>();
+            lista.Add(cli);
+            rep.DataSource = lista;
+            ViewData["Report"] = rep;
+            return PartialView("_reportCliente", cli);
+        }
 
-        //public ActionResult ReportPartial() {
-        //    DXReportClientes rep = new DXReportClientes();
-        //    setParamsToReport(rep);
-        //    rep.DataSource = _listaClientes();
-        //    ViewData["Report"] = rep;
-        //    return PartialView("_reportList");
-        //}
+        public ActionResult ReportExport2(int id) {
+            DXReportFichaCliente rep = new DXReportFichaCliente();
+            //setParamsToReport(rep);
+            Cliente cli = _getCliente(id);
+            List<Cliente> lista = new List<Cliente>();
+            lista.Add(cli);
+            rep.DataSource = lista;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
 
-        //public ActionResult ReportExport() {
-        //    return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(new DXReportClientes());
-        //}
+        //----------reporte listado de clientes  -----------------------------
+
+        public ActionResult Report() {
+            // Add a report to the view data. 
+            DXReportClientes rep = new DXReportClientes();
+            //setParamsToReport(rep);
+            ViewData["Report"] = rep;
+            return View();
+        }
+
+        public ActionResult ReportPartial() {
+            DXReportClientes rep = new DXReportClientes();
+            //setParamsToReport(rep);
+            rep.DataSource = Cliente.Clientes();
+            ViewData["Report"] = rep;
+            return PartialView("_reportList");
+        }
+
+        public ActionResult ReportExport2() {
+            DXReportClientes rep = new DXReportClientes();
+            //setParamsToReport(rep);
+            rep.DataSource = Cliente.Clientes();
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+    
 
         //private void setParamsToReport(XtraReport report) {
         //    Parameter paramSystemName = new Parameter();
@@ -167,18 +202,18 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult Delete(Cliente cliente) {
             ViewBag.SoloLectura = true;
 
-            //if (ModelState.IsValid) { //no se validan los campos porque no estan fisicamente los textboxes para cargar el cliente.
-            
-            try {
-                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                string IP = HttpContext.Request.UserHostAddress;
-                cliente.Eliminar(userName, IP);
-                return RedirectToAction(BaseController.SHOW);
-            } catch (UsuarioException exc) {
-                ViewBag.ErrorCode = exc.Codigo;
-                ViewBag.ErrorMessage = exc.Message;
-                return View(cliente);
-                //  }
+            if (ModelState.IsValid) { //no se validan los campos porque no estan fisicamente los textboxes para cargar el cliente.
+
+                try {
+                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                    string IP = HttpContext.Request.UserHostAddress;
+                    cliente.Eliminar(userName, IP);
+                    return RedirectToAction(BaseController.SHOW);
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(cliente);
+                }
             }
 
             return View(cliente);
