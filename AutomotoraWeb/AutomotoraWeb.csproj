@@ -262,6 +262,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\DXReportFichaVehiculo.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\DXReportFinancistas.cs">
       <SubType>Component</SubType>
     </Compile>
