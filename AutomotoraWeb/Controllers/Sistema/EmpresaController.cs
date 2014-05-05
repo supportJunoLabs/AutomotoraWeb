@@ -31,11 +31,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
         private ActionResult VistaElemento() {
             try {
                 //por las dudas que haya habido cambios en la base, lo tomamos de la base para este mantenimiento
-                //Empresa emp = CompanyService.Empresa();
-
-                Empresa emp = new Empresa();
-                emp.Codigo = CompanyService.CodigoEmpresaActiva();
-                emp.Consultar();
+                Empresa emp = Automotora.GetEmpresaActiva(true);
                 return View(emp);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -49,7 +45,9 @@ namespace AutomotoraWeb.Controllers.Sistema {
             if (ModelState.IsValid) {
                 try {
                     empresa.ModificarDatos();
-                    CompanyService.actualizarDatos(empresa); //para actualizar los datos del singleton.
+
+                    //NO se hace mas desde aca, ahora lo hace el backend en su propio singleton
+                    //CompanyService.actualizarDatos(empresa); //para actualizar los datos del singleton.
 
                     //aca se cambia por la redireccion al index del ultimo modulo utilizado antes de acceder a esta opcion.
                     //return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
