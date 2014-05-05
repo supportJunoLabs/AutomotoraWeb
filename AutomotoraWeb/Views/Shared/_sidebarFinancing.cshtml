@@ -3,7 +3,7 @@
         <a href="#sales-@x.Value.Id-menu" class="nav-header collapsed" data-toggle="collapse"><i class=""></i>@x.Value.OpcionName</a>
         <ul id="sales-@x.Value.Id-menu" class="nav nav-list collapse">
             @foreach (var y in (Dictionary<int, AutomotoraWeb.Models.MenuOptionModel>)(x.Value.SubMenu)) {
-                <li><a href="#">@y.Value.OpcionName</a></li>
+                 <li>@Html.ActionLink(y.Value.OpcionName, y.Value.Action, y.Value.Controlller)</li>
             }
         </ul>
     }
