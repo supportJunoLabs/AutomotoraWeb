@@ -230,6 +230,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\TiposDocumentoController.cs" />
+    <Compile Include="Controllers\Sales\Maintenance\VehiculosController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
@@ -259,7 +260,13 @@
     <Compile Include="Reports\DXReportFichaCliente.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\DXReportFichaVehiculo.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\DXReportSucursales.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\DXReportVehiculos.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\DXReportVendedores.cs">
@@ -1583,6 +1590,15 @@
     <Content Include="Views\TiposDocumento\edit.cshtml" />
     <Content Include="Views\TiposDocumento\report.cshtml" />
     <Content Include="Views\TiposDocumento\show.cshtml" />
+    <Content Include="Views\Vehiculos\_datosDetalle.cshtml" />
+    <Content Include="Views\Vehiculos\_listGrilla.cshtml" />
+    <Content Include="Views\Vehiculos\_reportList.cshtml" />
+    <Content Include="Views\Vehiculos\create.cshtml" />
+    <Content Include="Views\Vehiculos\delete.cshtml" />
+    <Content Include="Views\Vehiculos\details.cshtml" />
+    <Content Include="Views\Vehiculos\edit.cshtml" />
+    <Content Include="Views\Vehiculos\report.cshtml" />
+    <Content Include="Views\Vehiculos\show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

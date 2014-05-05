@@ -1,0 +1,33 @@
+﻿@model DLL_Backend.Sucursal
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    ViewBag.Title = @Html.Action("NombreEntidad").ToString() + ": Modificar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        @Html.HiddenFor(model => model.Codigo)
+
+        @Html.Partial("_datosDetalle", Model)
+
+    </fieldset>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+    </div>
+    <div class="clear-both"></div>
+}
+
+
+@section Scripts {
+}
