@@ -228,6 +228,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Financing\Maintenance\FinancistasController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\TiposDocumentoController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
@@ -257,6 +258,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\DXReportFichaCliente.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\DXReportFinancistas.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\DXReportSucursales.cs">
@@ -1583,6 +1587,15 @@
     <Content Include="Views\TiposDocumento\edit.cshtml" />
     <Content Include="Views\TiposDocumento\report.cshtml" />
     <Content Include="Views\TiposDocumento\show.cshtml" />
+    <Content Include="Views\Financistas\_datosDetalle.cshtml" />
+    <Content Include="Views\Financistas\_listGrilla.cshtml" />
+    <Content Include="Views\Financistas\_reportList.cshtml" />
+    <Content Include="Views\Financistas\create.cshtml" />
+    <Content Include="Views\Financistas\delete.cshtml" />
+    <Content Include="Views\Financistas\details.cshtml" />
+    <Content Include="Views\Financistas\edit.cshtml" />
+    <Content Include="Views\Financistas\report.cshtml" />
+    <Content Include="Views\Financistas\show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1609,6 +1622,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\DXReportFichaCliente.resx">
       <DependentUpon>DXReportFichaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\DXReportFinancistas.resx">
+      <DependentUpon>DXReportFinancistas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\DXReportSucursales.resx">
       <DependentUpon>DXReportSucursales.cs</DependentUpon>
