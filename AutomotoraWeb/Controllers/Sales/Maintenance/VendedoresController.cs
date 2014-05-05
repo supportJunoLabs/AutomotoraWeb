@@ -167,10 +167,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
                     vendedor.ModificarDatos();
 
+                    string actualFilePhotoName = (string)(Session[ACTUAL_PHOTO_FILE_NAME]);
                     if (Session[FILE_RANDOM_NAME] != null) {
                         // Renombramos el Actual (para poder eliminarlo)
-                        string actualFilePhotoName = (string)(Session[ACTUAL_PHOTO_FILE_NAME]);
-                        this.renamePhotoFileName(actualFilePhotoName, actualFilePhotoName + "_TO_DELETE");
+                        if (!String.IsNullOrEmpty(actualFilePhotoName)) {
+                            this.renamePhotoFileName(actualFilePhotoName, actualFilePhotoName + "_TO_DELETE");
+                        }
 
                         // Movemos del directorio temporario al de vendedores y se actualiza el nombre
                         string filePhotoName = (string)(Session[FILE_RANDOM_NAME]);
@@ -178,9 +180,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                         Session[FILE_RANDOM_NAME] = null;
                     }
 
-                    if (Session[ACTUAL_PHOTO_FILE_NAME] != null) {
-                        string filePhotoName = (string)(Session[ACTUAL_PHOTO_FILE_NAME]);
-                        this.deletePhotoFile(filePhotoName + "_TO_DELETE");
+                    if (!String.IsNullOrEmpty(actualFilePhotoName)) {
+                        this.deletePhotoFile(actualFilePhotoName + "_TO_DELETE");
                         Session[ACTUAL_PHOTO_FILE_NAME] = null;
                     }
 

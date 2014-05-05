@@ -40,7 +40,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         //----------reporte ficha vehiculo -----------------------------
-        public ActionResult Report2(string id) {
+        public ActionResult Report2(int id) {
             // Add a report to the view data. 
             Vehiculo cli = _obtenerElemento(id);
             //setParamsToReport(rep);
@@ -49,7 +49,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return View(cli);
         }
 
-        public ActionResult ReportPartial2(string id) {
+        public ActionResult ReportPartial2(int id) {
             DXReportFichaVehiculo rep = new DXReportFichaVehiculo();
             //setParamsToReport(rep);
             Vehiculo cli = _obtenerElemento(id);
@@ -60,7 +60,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return PartialView("_reportDetalle", cli);
         }
 
-        public ActionResult ReportExport2(string id) {
+        public ActionResult ReportExport2(int id) {
             DXReportFichaVehiculo rep = new DXReportFichaVehiculo();
             //setParamsToReport(rep);
             Vehiculo cli = _obtenerElemento(id);
@@ -97,7 +97,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         //--------------------------------------------------------------------------------------------------
 
-        public ActionResult Details(string id) {
+        public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
         }
@@ -107,11 +107,11 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return View();
         }
 
-        public ActionResult Edit(string id) {
+        public ActionResult Edit(int id) {
             return VistaElemento(id);
         }
 
-        public ActionResult Delete(string id) {
+        public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
         }
@@ -119,7 +119,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         //-----------------------------------------------------------------------------------------------------
 
 
-        private ActionResult VistaElemento(string id) {
+        private ActionResult VistaElemento(int id) {
             try {
                 Vehiculo vehiculo = _obtenerElemento(id);
                 return View(vehiculo);
@@ -130,9 +130,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             }
         }
 
-        private Vehiculo _obtenerElemento(string id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
+        private Vehiculo _obtenerElemento(int id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
             Vehiculo vehiculo = new Vehiculo();
-            vehiculo.Ficha = id;
+            vehiculo.Codigo = id;
             vehiculo.Consultar();
             return vehiculo;
         }
@@ -210,16 +210,5 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return this.Json(new { mostrar = resp }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Details(int id) {
-            throw new NotImplementedException();
-        }
-
-        public ActionResult Edit(int id) {
-            throw new NotImplementedException();
-        }
-
-        public ActionResult Delete(int id) {
-            throw new NotImplementedException();
-        }
     }
 }
