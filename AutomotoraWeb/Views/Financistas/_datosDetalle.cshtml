@@ -1,0 +1,102 @@
+﻿@model DLL_Backend.Financista
+@using AutomotoraWeb.Helpers;
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Nombre)
+</div>
+<div class="editor-field editor-field-xxlarge">
+
+    @Html.EditorOrDisplayFor(model => model.Nombre, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Nombre)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.DisplayNameFor(model => model.Habilitado)
+</div>
+<div class="editor-field">
+    @Html.CheckBoxOrDisplayFor(model => model.Habilitado, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Habilitado)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.DisplayNameFor(model => model.Interno)
+</div>
+<div class="editor-field">
+   @Html.CheckBoxOrDisplayFor(model => model.Interno, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Interno)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Direccion)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Direccion, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Direccion)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.DisplayNameFor(model => model.Ciudad)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Ciudad, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Ciudad)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.DisplayNameFor(model => model.CodigoPostal)
+</div>
+<div class="editor-field editor-field-medium">
+    @Html.EditorOrDisplayFor(model => model.CodigoPostal, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.CodigoPostal)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Telefono)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Telefono, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Telefono)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.DisplayNameFor(model => model.OtrosTelefonos)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.OtrosTelefonos, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.OtrosTelefonos)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.DisplayNameFor(model => model.Fax)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Fax, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Fax)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.DisplayNameFor(model => model.Mail)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Mail, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Mail)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.DisplayNameFor(model => model.Observaciones)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+    @Html.ValidationMessageFor(model => model.Observaciones)
+</div>
+<div class="clear-both"></div>
