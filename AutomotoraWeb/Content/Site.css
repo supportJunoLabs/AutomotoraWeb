@@ -9,6 +9,13 @@ header, footer, nav, section {
     display: block;
 }
 
+div_izquierdo {
+    float:left;
+}
+
+div_derecho {
+    float:right;
+}
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
