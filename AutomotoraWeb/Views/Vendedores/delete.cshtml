@@ -49,6 +49,17 @@
             <div class="clear-both"></div>
         </div>
 
+         <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Mail): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Mail)
+                @Html.HiddenFor(model => model.Mail)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
         <div class="details-field">
             <div class="display-label">
                 @Html.DisplayNameFor(model => model.FechaIngreso):

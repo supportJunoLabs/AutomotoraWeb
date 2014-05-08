@@ -46,6 +46,15 @@
             </div>
             <div class="clear-both"></div>
 
+            <div class="display-label">
+                @Html.LabelForRequired(model => model.Mail)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Mail)
+                @Html.ValidationMessageFor(model => model.Mail)
+            </div>
+            <div class="clear-both"></div>
+
             <div class="display-label editor-date-field">
                 @Html.LabelForRequired(model => model.FechaIngreso)
             </div>
