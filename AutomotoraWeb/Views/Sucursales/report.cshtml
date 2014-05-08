@@ -1,6 +1,13 @@
-﻿
+﻿@using AutomotoraWeb.Controllers.General;
+
 @{ 
     ViewBag.Title = @Html.Action("NombreEntidades").ToString() + ": Listado";
 }
+
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
 
 @Html.Partial("_reportList")

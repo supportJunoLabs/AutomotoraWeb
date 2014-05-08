@@ -27,7 +27,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public const string PHOTO_FOLDER_TMP = "~/Content/Images/tmp/";
         public const string PHOTO_FOLDER = "~/Content/Images/vendedores/";
         private const int MAX_ANCHO_FOTO = 250;
-        public const string IMAGEN_SIN_FOTO = "_sinFoto.jpg";
+        public const string IMAGEN_SIN_FOTO = "_sinFoto.png";
 
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vendedor vendedor) {
@@ -37,7 +37,13 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult listVendedores() {
             return PartialView("_listVendedores", _listaVendedores());
         }
+        public ContentResult NombreEntidad() {
+            return new ContentResult { Content = "Vendedor" };
+        }
 
+        public ContentResult NombreEntidades() {
+            return new ContentResult { Content = "Vendedores" };
+        }
 
         //--------------------------------------    REPORT    ----------------------------------------------
         public ActionResult Report() {
