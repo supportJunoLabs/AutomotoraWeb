@@ -46,6 +46,9 @@ namespace AutomotoraWeb.Controllers.Sistema {
                 try {
                     empresa.ModificarDatos();
 
+                    //refrescar el nombre de la empresa a nivel de aplicacion por si hubo cambios desde el mto o por bd
+                    HttpContext.Application["AppVar"]=empresa.NomEmpresa;
+
                     //NO se hace mas desde aca, ahora lo hace el backend en su propio singleton
                     //CompanyService.actualizarDatos(empresa); //para actualizar los datos del singleton.
 
