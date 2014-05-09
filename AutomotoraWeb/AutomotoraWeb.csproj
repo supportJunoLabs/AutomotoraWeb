@@ -1634,6 +1634,7 @@
     <Content Include="Views\CuentasBancarias\edit.cshtml" />
     <Content Include="Views\CuentasBancarias\report.cshtml" />
     <Content Include="Views\CuentasBancarias\show.cshtml" />
+    <Content Include="Views\Vehiculos\filtroListados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
