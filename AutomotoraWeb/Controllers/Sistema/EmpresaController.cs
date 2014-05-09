@@ -16,12 +16,10 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
         public static string CONTROLLER = "empresa";
 
-        public ContentResult NombreEntidad() {
-            return new ContentResult { Content = "Datos Empresa" };
-        }
-
-        public ContentResult NombreEntidades() {
-            return new ContentResult { Content = "Empresas" };
+        protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            ViewBag.NombreEntidad = "Datos Empresa";
+            ViewBag.NombreEntidades = "Empresas";
+            base.OnActionExecuting(filterContext);
         }
 
         public ActionResult Edit() {

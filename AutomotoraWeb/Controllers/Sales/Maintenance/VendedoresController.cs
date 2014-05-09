@@ -30,6 +30,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public const string IMAGEN_SIN_FOTO = "_sinFoto.png";
 
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            ViewBag.NombreEntidad = "Vendedor";
+            ViewBag.NombreEntidades = "Vendedores";
+            base.OnActionExecuting(filterContext);
+        }
+
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vendedor vendedor) {
             return View(_listaVendedores());
         }
