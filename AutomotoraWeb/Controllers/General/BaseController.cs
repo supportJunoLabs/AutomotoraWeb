@@ -77,5 +77,11 @@ namespace AutomotoraWeb.Controllers.General {
             return new Destino(SistemaController.INDEX, SistemaController.BCONTROLLER);
         }
 
+        protected void eliminarValidacionesIgnorables(string propiedad, List<string> ignorables) {
+            foreach (string prop in ignorables) {
+                this.ModelState.Remove(propiedad+"." + prop);
+            }
+        }
+
     }
 }
