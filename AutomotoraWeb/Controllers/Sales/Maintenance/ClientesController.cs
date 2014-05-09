@@ -18,18 +18,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public static string CONTROLLER = "clientes";
 
-        public ContentResult NombreEntidad() {
-            return new ContentResult { Content = "Cliente" };
-        }
-
-        public ContentResult NombreEntidades() {
-            return new ContentResult { Content = "Clientes" };
-        }
-        
+      
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             ViewBag.EstadosCiviles = EstadoCivil.EstadosCiviles();
             ViewBag.TiposOtroDoc = Cliente.TiposOtrosDocumentos();
-            ViewBag.NombreEntidad = "Clientes";
+            ViewBag.NombreEntidad = "Cliente";
+            ViewBag.NombreEntidades = "Clientes";
             base.OnActionExecuting(filterContext);
         }
 
