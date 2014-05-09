@@ -45,34 +45,21 @@ namespace AutomotoraWeb.Helpers {
             }
         }
 
-        public static MvcHtmlString DdlOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
+        public static MvcHtmlString DdlOrDisplayFor<TModel, TProperty, TProperty1>(this HtmlHelper<TModel> htmlHelper,
            Expression<Func<TModel, TProperty>> expression_ddl, bool? soloLectura,
-           Expression<Func<TModel, TProperty>> expression_label,
-           IEnumerable<SelectListItem> selectList, string optionLabel = null, object htmlAttributes = null) {
+           Expression<Func<TModel, TProperty1>> expression_label,
+           IEnumerable<SelectListItem> selectList, 
+            string optionLabel = null, 
+            object htmlAttributes = null) {
             if (!(soloLectura ?? false)) {
                 return htmlHelper.DropDownListFor(expression_ddl, selectList, optionLabel, htmlAttributes);
             } else {
                 return MvcHtmlString.Create(
                      htmlHelper.DisplayFor(expression_label, htmlAttributes) .ToString() +
-                      htmlHelper.HiddenFor(expression_label).ToString()
+                      htmlHelper.HiddenFor(expression_ddl).ToString()
                 );
             }
         }
-
-        public static MvcHtmlString DdlOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, TProperty>> expression_ddl, bool? soloLectura,
-            Expression<Func<TModel, TProperty>> expression_label,
-            IEnumerable<SelectListItem> selectList, object htmlAttributes) {
-            if (!(soloLectura ?? false)) {
-                return htmlHelper.DropDownListFor(expression_ddl, selectList, htmlAttributes);
-            } else {
-                return MvcHtmlString.Create(
-                      htmlHelper.DisplayFor(expression_label, htmlAttributes).ToString() +
-                       htmlHelper.HiddenFor(expression_label).ToString()
-                 );
-            }
-        }
-
 
 
         public static MvcHtmlString TextAreaOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
