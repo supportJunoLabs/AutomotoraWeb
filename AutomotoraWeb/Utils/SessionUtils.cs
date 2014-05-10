@@ -5,6 +5,8 @@ using System.Web;
 
 namespace AutomotoraWeb.Utils {
     public class SessionUtils {
+
+        public static string SESSION_USER = "sessionUser";
         public static string SESSION_USER_NAME = "sessionUserName";
         public static string SESSION_MENU_OPTIONS = "sessionMenuOptions";
         public static string APPLICATION_COMPANY_NAME = "applicationCompanyName";

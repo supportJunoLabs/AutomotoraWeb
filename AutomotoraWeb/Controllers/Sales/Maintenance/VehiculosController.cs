@@ -28,8 +28,23 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             ViewBag.NombreEntidad = "Vehiculos";
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (usuario.MultiSucursal){
+                ViewBag.Sucursales = Sucursal.Sucursales();
+            }
+            else{
+                List<Sucursal> listSucursal = new List<Sucursal>();
+                listSucursal.Add(usuario.Sucursal);
+                ViewBag.Sucursales =  listSucursal;
+            }
+
+            ViewBag.Departamentos = Departamento.Departamentos();
+            ViewBag.TiposCombustible = DLL_Backend.TipoCombustible.TiposCombustible();
+            ViewBag.Monedas = Moneda.Monedas;
+
             base.OnActionExecuting(filterContext);
         }
+
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vehiculo vehiculo) {
             return View(_listaElementos());

@@ -34,8 +34,13 @@ namespace AutomotoraWeb.Controllers.General {
                     String IP = Request.UserHostAddress;
                     if (SecurityService.Instance.login(model.UserName, model.Password, IP)) {
 
+                        Usuario usuario = new Usuario();
+                        usuario.Username = model.UserName;
+                        usuario.Consultar(Usuario.MODO_CONSULTA.AVANZADO);
+
                         FormsAuthentication.SetAuthCookie(model.UserName, false);
                         Session[SessionUtils.SESSION_USER_NAME] = model.UserName;
+                        Session[SessionUtils.SESSION_USER] = usuario;
 
                         // Se obtienen opciones del menu
                         Session[SessionUtils.SESSION_MENU_OPTIONS] = MenuService.Instance.getMenuOptions(model.UserName, IP);
