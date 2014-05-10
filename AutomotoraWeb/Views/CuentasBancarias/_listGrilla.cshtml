@@ -1,0 +1,21 @@
+﻿@model List<DLL_Backend.CuentaBancaria>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Bank.Maintenance;
+
+@{
+    List<string> visibleColumns = new List<string>() { "Banco", "Numero", "Tipo", "Moneda"}; 
+    ViewBag.visibleColumns = visibleColumns;
+
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { { "Banco", 30 }, { "Numero", 30 }, { "Tipo", 30 }, { "Moneda", 30 } };
+    ViewBag.trunkColumns = trunkColumns;
+
+    ViewBag.nameGrid = "grilla";
+    ViewBag.controller = CuentasBancariasController.CONTROLLER;
+    ViewBag.actionCallbackRoute = "listaGrilla";
+    ViewBag.KeyFieldName = "Codigo";
+    ViewBag.typeOfModel = typeof(DLL_Backend.CuentaBancaria.CuentaBancariaMD);
+}
+
+@Html.Partial("_generalGrid", Model)
+  

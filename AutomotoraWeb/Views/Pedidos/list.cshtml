@@ -1,0 +1,50 @@
+﻿@model AutomotoraWeb.Models.ListadoPedidosModel
+@using AutomotoraWeb.Controllers.Sales;
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidades + ": Listado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm()) {
+     <fieldset>
+        <legend></legend>
+
+         <div class="editor-label ">
+            @Html.LabelFor(model => model.Filtro.Pendientes)
+        </div>  
+        <div class="editor-field editor-field-xxlarge">
+            @Html.CheckBoxFor(model => model.Filtro.Pendientes)
+        </div>
+         <div class="clear-both"></div>
+
+          <div class="editor-label ">
+            @Html.LabelFor(model => model.Filtro.Recibidos)
+        </div>  
+        <div class="editor-field editor-field-xxlarge">
+            @Html.CheckBoxFor(model => model.Filtro.Recibidos)
+        </div>
+         <div class="clear-both"></div>
+
+          <div class="editor-label ">
+            @Html.LabelFor(model => model.Filtro.Anulados)
+        </div>  
+        <div class="editor-field editor-field-xxlarge">
+            @Html.CheckBoxFor(model => model.Filtro.Anulados)
+        </div>
+         <div class="clear-both"></div>
+
+         
+    </fieldset>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Listar"))
+    </div>
+    <div class="clear-both"></div>
+    
+}
+
+ <div id="divGrilla">
+        @Html.Partial("_reportGrilla", Model)
+    </div>    
+    

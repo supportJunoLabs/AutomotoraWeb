@@ -255,30 +255,14 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\DXReportClientes.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\DXReportFichaCliente.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\DXReportFichaVehiculo.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\DXReportFinancistas.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\DXReportSucursales.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\DXReportVehiculos.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\DXReportVendedores.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\DXReportTiposDocumento.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Reports\DXReportClientes.cs" />
+    <Compile Include="Reports\DXReportFichaCliente.cs" />
+    <Compile Include="Reports\DXReportFichaVehiculo.cs" />
+    <Compile Include="Reports\DXReportFinancistas.cs" />
+    <Compile Include="Reports\DXReportSucursales.cs" />
+    <Compile Include="Reports\DXReportVehiculos.cs" />
+    <Compile Include="Reports\DXReportVendedores.cs" />
+    <Compile Include="Reports\DXReportTiposDocumento.cs" />
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\MenuService.cs" />
     <Compile Include="Services\SecurityService.cs" />

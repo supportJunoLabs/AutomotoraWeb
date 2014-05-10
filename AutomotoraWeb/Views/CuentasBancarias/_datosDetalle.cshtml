@@ -1,0 +1,61 @@
+﻿@model DLL_Backend.CuentaBancaria
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Banco)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Banco, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Banco)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Numero)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Numero, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Numero)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Titular)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Titular, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Titular)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.DisplayNameFor(model => model.Moneda)
+</div>
+<div class="editor-field editor-field-large">
+        @Html.DdlOrDisplayFor(model => model.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
+                model => model.Moneda.Nombre,
+                new SelectList(ViewBag.Monedas, "Codigo", "Nombre") )
+            @Html.ValidationMessageFor(model => model.Moneda)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Tipo)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Tipo, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Tipo)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Observaciones)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Observaciones)
+</div>
+<div class="clear-both"></div>
+
+<div class="espacio2"></div>

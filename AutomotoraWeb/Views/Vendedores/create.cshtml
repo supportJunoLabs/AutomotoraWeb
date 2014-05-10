@@ -3,7 +3,7 @@
 @using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = " Vendedores: Agregar";
+    ViewBag.Title = ViewBag.NombreEntidad+": Agregar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,134 +14,104 @@
     @Html.ValidationSummary("Se han producido errores:")
    
     
-    <div class="espacio"/>
+    <div class="espacio" />
     
     <fieldset>
         <legend></legend>
 
-        <div class="editor-label">
-            @Html.LabelForRequired(model => model.Nombre)
-        </div>
-        <div class="editor-field editor-field-xxlarge">
-            @Html.EditorFor(model => model.Nombre)
-            @Html.ValidationMessageFor(model => model.Nombre)
-        </div>
-        <div class="clear-both"></div>
+            <div class="display-label">
+                @Html.LabelForRequired(model => model.Nombre)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Nombre)
+                @Html.ValidationMessageFor(model => model.Nombre)
+            </div>
+            <div class="clear-both"></div>
 
-        <div class="editor-label">
-            @Html.LabelForRequired(model => model.Direccion)
-        </div>
-        <div class="editor-field editor-field-xxlarge">
-            @Html.EditorFor(model => model.Direccion)
-            @Html.ValidationMessageFor(model => model.Direccion)
-        </div>
-        <div class="clear-both"></div>
+            <div class="display-label">
+                @Html.LabelForRequired(model => model.Direccion)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Direccion)
+                @Html.ValidationMessageFor(model => model.Direccion)
+            </div>
+            <div class="clear-both"></div>
 
-        <div class="editor-label">
-            @Html.LabelForRequired(model => model.Telefono)
-        </div>
-        <div class="editor-field editor-field-xxlarge">
-            @Html.EditorFor(model => model.Telefono)
-            @Html.ValidationMessageFor(model => model.Telefono)
-        </div>
-        <div class="clear-both"></div>
+            <div class="display-label">
+                @Html.LabelForRequired(model => model.Telefono)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Telefono)
+                @Html.ValidationMessageFor(model => model.Telefono)
+            </div>
+            <div class="clear-both"></div>
 
-        <div class="editor-label editor-date-field">
-            @Html.LabelForRequired(model => model.FechaIngreso)
-        </div>
-        <div class="editor-field editor-field-small">
-            @Html.TextBoxFor(model => model.FechaIngreso, new { @class = "calendarAW" })
-            @Html.ValidationMessageFor(model => model.FechaIngreso)
-        </div>
-        <div class="clear-both"></div>
+            <div class="display-label">
+                @Html.LabelForRequired(model => model.Mail)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.EditorFor(model => model.Mail)
+                @Html.ValidationMessageFor(model => model.Mail)
+            </div>
+            <div class="clear-both"></div>
 
-        <div class="editor-label ">
-            @Html.LabelForRequired(model => model.Observaciones)
-        </div>
-        <div class="editor-field editor-field-xxlarge">
-            @Html.TextAreaFor(model => model.Observaciones, new { style="width: 530px; height: 60px" })
-            @Html.ValidationMessageFor(model => model.Observaciones)
-        </div>
-        <div class="clear-both"></div>
+            <div class="display-label editor-date-field">
+                @Html.LabelForRequired(model => model.FechaIngreso)
+            </div>
+            <div class="editor-field editor-field-small">
+                @Html.TextBoxFor(model => model.FechaIngreso, new { @class = "calendarAW" })
+                @Html.ValidationMessageFor(model => model.FechaIngreso)
+            </div>
+            <div class="clear-both"></div>
 
-        <div class="editor-label ">
-            @Html.LabelForRequired(model => model.Habilitado)
-        </div>
-        <div class="editor-field editor-field-xxlarge">
-            @Html.CheckBoxFor(model => model.Habilitado)
-            @Html.ValidationMessageFor(model => model.Habilitado)
-        </div>
+            <div class="display-label ">
+                @Html.LabelForRequired(model => model.Observaciones)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.TextAreaFor(model => model.Observaciones, new { style = "width: 530px; height: 60px" })
+                @Html.ValidationMessageFor(model => model.Observaciones)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label ">
+                @Html.LabelForRequired(model => model.Habilitado)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.CheckBoxFor(model => model.Habilitado)
+                @Html.ValidationMessageFor(model => model.Habilitado)
+            </div>
+            <div class="clear-both"></div>
+        <!-- ========================== -->
+
+            <div class="editor-label ">
+                @Html.DisplayNameFor(model => model.Foto):
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                <input id="fileInputFoto" type="file">
+                <button id="uploadFileBtn" class="btn-default btn btn-primary" type="button">Subir Imagen</button>
+                 <button id="deleteFotoBtn" class="btn-default btn " type="button">Eliminar Imagen</button>
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="editor-label ">
+                &nbsp;
+            </div>
+            <div class="editor-field ">
+                <img id="imgPhoto" src="~/Content/Images/ExampleImage.png" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding: 2px;" />
+            </div>
         <div class="clear-both"></div>
 
         <!-- ========================== -->
+            <div class="espacio2"></div>
+            <div class="btn-toolbar">
+                @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Guardar"))
+                @(Html.Bootstrap().ActionLinkButton("Cancelar", "Cancelar").Class("btn btn-default"))
+            </div>
 
-        <div class="editor-label ">
-            Foto
-        </div>
-        <div class="editor-field editor-field-xxlarge">
-            <input id="fileInputFoto" type="file">
-            <button id="uploadFileBtn" class="btn-default btn btn-primary" type="button">Subir Imagen</button>
-        </div>
-        <div class="clear-both"></div>
-
-        <div class="editor-label ">
-            &nbsp;
-        </div>
-        <div class="editor-field editor-field-xxlarge">
-            <img id="imgPhoto" src="~/Content/Images/ExampleImage.png" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
-        </div>
-        <div class="clear-both"></div>
-        
-        <!-- ========================== -->
-
-        <div class="espacio2"></div>
-        <div class="btn-toolbar">
-            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Guardar"))
-            @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
-        </div>
-        
-       
     </fieldset>
 }
 
 @section Scripts {
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            $('#uploadFileBtn').click(function () {
-
-                var formdata = new FormData(); //FormData object
-                var fileInputFoto = $("#fileInputFoto");
-                //Iterating through each files selected in fileInputFoto
-                for (i = 0; i < fileInputFoto.prop('files').length; i++) {
-                    //Appending each file to FormData object
-                    formdata.append(fileInputFoto.prop('files')[i].name, fileInputFoto.prop('files')[i]);
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: '/Vendedores/Upload',
-                    data: formdata,
-                    processData: false,
-                    success: function (data) {
-                        $("#imgPhoto").attr("src", "../Content/Images/tmp/" + data.fileName);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        alert("Erro al subir archivo");
-                    },
-                    dataType: 'json',
-                    contentType: false,
-                    mimeType: 'multipart/form-data',
-                    beforeSend: function (x) {
-                        if (x && x.overrideMimeType) {
-                            x.overrideMimeType("multipart/form-data");
-                        }
-                    }
-                });
-            });
-
-        });
-    </script>
+       <script type="text/javascript" src="/scripts/AutomotoraWeb/VendedorMantenimiento.js"></script>
 }
-
 

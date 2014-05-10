@@ -147,6 +147,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -234,10 +235,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Bank\Maintenance\CuentasBancariasController.cs" />
     <Compile Include="Controllers\Financing\Maintenance\FinancistasController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\TiposDocumentoController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\VehiculosController.cs" />
+    <Compile Include="Controllers\Sales\PedidosController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
@@ -257,37 +260,52 @@
     <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
+    <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ListadoPedidosModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\DXReportClientes.cs">
+    <Compile Include="Reports\Listados\DXListadoPedidos.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\DXReportFichaCliente.cs">
+    <Compile Include="Reports\Listados\DXListadoVehiculosCompleto.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\DXReportFichaVehiculo.cs">
+    <Compile Include="Reports\Listados\DXListadoVehiculosAbreviado.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\DXReportFinancistas.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportClientes.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\DXReportSucursales.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportCuentasBancarias.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\DXReportVehiculos.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportFichaCliente.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\DXReportVendedores.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportFichaVehiculo.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\DXReportTiposDocumento.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportFinancistas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Mantenimientos\DXReportSucursales.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Mantenimientos\DXReportVehiculos.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Mantenimientos\DXReportVendedores.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\MenuService.cs" />
     <Compile Include="Services\SecurityService.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\SessionUtils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1520,6 +1538,7 @@
     <Content Include="Content\Images\vssver2.scc" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\AutomotoraWeb\VendedorMantenimiento.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -1618,11 +1637,24 @@
     <Content Include="Views\Financistas\edit.cshtml" />
     <Content Include="Views\Financistas\report.cshtml" />
     <Content Include="Views\Financistas\show.cshtml" />
+    <Content Include="Views\CuentasBancarias\_datosDetalle.cshtml" />
+    <Content Include="Views\CuentasBancarias\_listGrilla.cshtml" />
+    <Content Include="Views\CuentasBancarias\_reportList.cshtml" />
+    <Content Include="Views\CuentasBancarias\create.cshtml" />
+    <Content Include="Views\CuentasBancarias\delete.cshtml" />
+    <Content Include="Views\CuentasBancarias\details.cshtml" />
+    <Content Include="Views\CuentasBancarias\edit.cshtml" />
+    <Content Include="Views\CuentasBancarias\report.cshtml" />
+    <Content Include="Views\CuentasBancarias\show.cshtml" />
+    <Content Include="Views\Vehiculos\filtroListados.cshtml" />
+    <Content Include="Views\Pedidos\list.cshtml" />
+    <Content Include="Views\Pedidos\_reportGrilla.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
     <Folder Include="Content\Images\vendedores\" />
+    <Folder Include="Reports\Transacciones\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1639,22 +1671,34 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="Reports\DXReportClientes.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoPedidos.resx">
+      <DependentUpon>DXListadoPedidos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoVehiculosCompleto.resx">
+      <DependentUpon>DXListadoVehiculosCompleto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoVehiculosAbreviado.resx">
+      <DependentUpon>DXListadoVehiculosAbreviado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportClientes.resx">
       <DependentUpon>DXReportClientes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\DXReportFichaCliente.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportCuentasBancarias.resx">
+      <DependentUpon>DXReportCuentasBancarias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportFichaCliente.resx">
       <DependentUpon>DXReportFichaCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\DXReportFinancistas.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportFinancistas.resx">
       <DependentUpon>DXReportFinancistas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\DXReportSucursales.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportSucursales.resx">
       <DependentUpon>DXReportSucursales.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\DXReportTiposDocumento.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportTiposDocumento.resx">
       <DependentUpon>DXReportTiposDocumento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\DXReportVendedores.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

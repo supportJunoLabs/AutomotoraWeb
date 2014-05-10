@@ -1,7 +1,14 @@
 ﻿@model DLL_Backend.Cliente
+@using AutomotoraWeb.Controllers.General;
 
 @{ 
-    ViewBag.Title = @Html.Action("NombreEntidad").ToString() + ": Ficha";
+    //ViewBag.Title = @Html.Action("NombreEntidad").ToString() + ": Ficha";
+    ViewBag.Title = ViewBag.NombreEntidad + ": Ficha";
 }
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.DETAILS).RouteValues(new { id = Model.Codigo }).Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
 
 @Html.Partial("_reportDetalle", Model)

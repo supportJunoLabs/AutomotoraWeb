@@ -19,13 +19,19 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance
 
         public static string CONTROLLER = "TiposDocumento";
 
-        public ContentResult NombreEntidades() {
-            return new ContentResult { Content = "Tipos Documento" };
+        protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            ViewBag.NombreEntidad = "Tipo Documento";
+            ViewBag.NombreEntidades = "TiposDocumento";
+            base.OnActionExecuting(filterContext);
         }
 
-        public ContentResult NombreEntidad() {
-            return new ContentResult { Content = "Tipo Documento" };
-        }
+        //public ContentResult NombreEntidades() {
+        //    return new ContentResult { Content = "Tipos Documento" };
+        //}
+
+        //public ContentResult NombreEntidad() {
+        //    return new ContentResult { Content = "Tipo Documento" };
+        //}
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] TipoDocumento td) {
             return View(_listaElementos());

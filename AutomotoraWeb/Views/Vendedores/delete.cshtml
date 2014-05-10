@@ -2,7 +2,7 @@
 @using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = "Vendedores: Eliminar";
+    ViewBag.Title = ViewBag.NombreEntidad+": Eliminar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -49,6 +49,17 @@
             <div class="clear-both"></div>
         </div>
 
+         <div class="details-field">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Mail): 
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Mail)
+                @Html.HiddenFor(model => model.Mail)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+
         <div class="details-field">
             <div class="display-label">
                 @Html.DisplayNameFor(model => model.FechaIngreso):
@@ -82,8 +93,8 @@
 
         <!-- ========================== -->
 
-        <div class="editor-label ">
-            Foto
+        <div class="display-label ">
+             @Html.DisplayNameFor(model => model.Foto):
         </div>
         <div class="editor-field editor-field-xxlarge">
             <img id="imgPhoto" src="~/Content/Images/vendedores/@Model.Foto" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />

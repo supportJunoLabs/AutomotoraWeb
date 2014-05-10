@@ -16,12 +16,10 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
         public static string CONTROLLER = "empresa";
 
-        public ContentResult NombreEntidad() {
-            return new ContentResult { Content = "Datos Empresa" };
-        }
-
-        public ContentResult NombreEntidades() {
-            return new ContentResult { Content = "Empresas" };
+        protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            ViewBag.NombreEntidad = "Datos Empresa";
+            ViewBag.NombreEntidades = "Empresas";
+            base.OnActionExecuting(filterContext);
         }
 
         public ActionResult Edit() {
@@ -45,6 +43,9 @@ namespace AutomotoraWeb.Controllers.Sistema {
             if (ModelState.IsValid) {
                 try {
                     empresa.ModificarDatos();
+
+                    //refrescar el nombre de la empresa a nivel de aplicacion por si hubo cambios desde el mto o por bd
+                    HttpContext.Application["AppVar"]=empresa.NomEmpresa;
 
                     //NO se hace mas desde aca, ahora lo hace el backend en su propio singleton
                     //CompanyService.actualizarDatos(empresa); //para actualizar los datos del singleton.
