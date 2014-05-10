@@ -240,6 +240,7 @@
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\TiposDocumentoController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\VehiculosController.cs" />
+    <Compile Include="Controllers\Sales\PedidosController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
@@ -259,7 +260,9 @@
     <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
+    <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ListadoPedidosModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1644,6 +1647,8 @@
     <Content Include="Views\CuentasBancarias\report.cshtml" />
     <Content Include="Views\CuentasBancarias\show.cshtml" />
     <Content Include="Views\Vehiculos\filtroListados.cshtml" />
+    <Content Include="Views\Pedidos\list.cshtml" />
+    <Content Include="Views\Pedidos\_reportGrilla.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
