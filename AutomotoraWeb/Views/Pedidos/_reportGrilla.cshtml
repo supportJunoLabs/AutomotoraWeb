@@ -1,0 +1,26 @@
+﻿@model AutomotoraWeb.Models.ListadoPedidosModel
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+@{
+    List<string> hiddenColumns = new List<string>() {  "Codigo"   }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    ViewBag.hiddenColumns = hiddenColumns;
+
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { };
+    ViewBag.trunkColumns = trunkColumns;
+
+    ViewBag.nameGrid = "grilla";
+    ViewBag.controller = PedidosController.CONTROLLER;
+    ViewBag.actionCallbackRoute = "reportGrilla";
+    ViewBag.KeyFieldName = "Codigo";
+    ViewBag.typeOfModel = typeof(DLL_Backend.Pedido.PedidoMD);
+    
+    List<BotonGrilla> listaBotones = new List<BotonGrilla>();
+    listaBotones.Add(new BotonGrilla("details", PedidosController.CONTROLLER,  "boton-consultar-mf", "Ver Pedido"));
+    ViewBag.Botones = listaBotones;
+}
+
+@Html.Partial("_generalGrid", Model.Resultado)
+  
