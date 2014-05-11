@@ -1,20 +1,20 @@
-﻿@model List<DLL_Backend.Sucursal>
+﻿@model List<DLL_Backend.Vehiculo>
 @using System.Web.UI.WebControls;
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Sistema;
 
 @{
-    List<string> hiddenColumns = new List<string>() { "Direccion", "Ciudad", "CodigoPostal",     }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    List<string> hiddenColumns = new List<string>() { "Codigo", "Padron", "Chasis", "Costo", "FechaAdquirido", "PrecioVenta", "Departamento" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
     ViewBag.hiddenColumns = hiddenColumns;
 
-    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { { "Nombre", 30 }, { "Telefono", 30 } , {"Fax", 30}, {"Email", 30}, {"Observaciones", 40}};
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { };
     ViewBag.trunkColumns = trunkColumns;
     
     ViewBag.nameGrid = "grilla";
-    ViewBag.controller = SucursalesController.CONTROLLER;
+    ViewBag.controller = AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER;
     ViewBag.actionCallbackRoute = "listaGrilla";
     ViewBag.KeyFieldName = "Codigo";
-    ViewBag.typeOfModel = typeof(DLL_Backend.Sucursal.SucursalMD);
+    ViewBag.typeOfModel = typeof(DLL_Backend.Vehiculo.VehiculoMD);
 }
 
 @Html.Partial("_generalGrid", Model)

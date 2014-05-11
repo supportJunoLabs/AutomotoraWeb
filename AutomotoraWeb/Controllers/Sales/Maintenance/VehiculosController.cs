@@ -161,6 +161,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         [HttpPost]
         public ActionResult Create(Vehiculo vehiculo) {
 
+            this.eliminarValidacionesIgnorables("Sucursal", vehiculo.Sucursal.IgnorablesDDL());
+            this.eliminarValidacionesIgnorables("Departamento", vehiculo.Departamento.IgnorablesDDL());
+            this.eliminarValidacionesIgnorables("TipoCombustible", vehiculo.TipoCombustible.IgnorablesDDL());
+            this.eliminarValidacionesIgnorables("Costo", vehiculo.TipoCombustible.IgnorablesDDL());
+            this.eliminarValidacionesIgnorables("PrecioVenta", vehiculo.TipoCombustible.IgnorablesDDL());
+
             if (ModelState.IsValid) {
                 try {
                     vehiculo.Agregar();
@@ -179,6 +185,11 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         [HttpPost]
         public ActionResult Edit(Vehiculo vehiculo) {
+
+            this.eliminarValidacionesIgnorables("Sucursal", vehiculo.Sucursal.IgnorablesDDL());
+            this.eliminarValidacionesIgnorables("Departamento", vehiculo.Departamento.IgnorablesDDL());
+            this.eliminarValidacionesIgnorables("TipoCombustible", vehiculo.TipoCombustible.IgnorablesDDL());
+
             if (ModelState.IsValid) {
                 try {
                     vehiculo.ModificarDatos();
@@ -217,13 +228,6 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         //-----------------------------------------------------------------------------------------------------
-
-        public JsonResult mostrarDatosConyuge(string codEcivil) {
-            EstadoCivil ec = new EstadoCivil();
-            ec.Codigo = codEcivil;
-            bool resp = ec.RequiereDatosConyuge();
-            return this.Json(new { mostrar = resp }, JsonRequestBehavior.AllowGet);
-        }
 
     }
 }

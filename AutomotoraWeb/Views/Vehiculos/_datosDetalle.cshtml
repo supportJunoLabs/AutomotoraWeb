@@ -11,16 +11,14 @@
     <div class="clear-both"></div>
 }
 else{
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Ficha)
-    </div>
-    <div class="editor-field editor-field-large">
-        @Html.EditorOrDisplayFor(model => model.Ficha, (bool?)ViewBag.SoloLectura)
-        @Html.ValidationMessageFor(model => model.Ficha)
-    </div>
-    <div class="clear-both"></div>
-}
-
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Ficha)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Ficha, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Ficha)
+</div>
+<div class="clear-both"></div>
 
 <div class="display-label ">
     @Html.DisplayNameFor(model => model.Sucursal)
@@ -73,7 +71,7 @@ else{
     @Html.DisplayNameFor(model => model.Departamento)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.DdlOrDisplayFor(model => model.Departamento, (bool?)ViewBag.SoloLectura,
+    @Html.DdlOrDisplayFor(model => model.Departamento.Codigo, (bool?)ViewBag.SoloLectura,
                 model => model.Departamento,
                 new SelectList(ViewBag.Departamentos, "Codigo", "Nombre"), null, new { id = "ddlDepartamento" })
     @Html.ValidationMessageFor(model => model.Departamento)
@@ -141,7 +139,7 @@ else{
     @Html.DisplayNameFor(model => model.FechaAdquirido)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.FechaAdquirido, (bool?)ViewBag.SoloLectura)
+    @Html.TextBoxOrdisplayFor(model => model.FechaAdquirido, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
     @Html.ValidationMessageFor(model => model.FechaAdquirido)
 </div>
 <div class="clear-both"></div>
@@ -171,7 +169,7 @@ else{
     @Html.DisplayNameFor(model => model.TotalGastos)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.TotalGastos, true)
+    @Html.EditorOrDisplayFor(model => model.TotalGastos.Monto, (bool?)ViewBag.SoloLectura)
     @Html.ValidationMessageFor(model => model.TotalGastos)
 </div>
 <div class="clear-both"></div>
