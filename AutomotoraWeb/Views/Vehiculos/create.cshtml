@@ -2,7 +2,6 @@
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.General;
 
-
 @{
     ViewBag.Title = @Html.Action("NombreEntidad").ToString() + ": Agregar";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,7 +13,6 @@
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
    
-    
     <div class="espacio" />
     
     <fieldset>
@@ -32,6 +30,12 @@
 }
 
 @section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#TotalGastos_Monto").attr("disabled", "disabled");
+            $("#Ficha").attr("disabled", "disabled");
+        });
+    </script>
 
 }
 

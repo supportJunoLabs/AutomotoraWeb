@@ -1,32 +1,21 @@
 ﻿@model DLL_Backend.Vehiculo
 @using AutomotoraWeb.Helpers;
 
-@if ((Model != null) && (Model.Ficha == null)) {
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Ficha)
-    </div>
-    <div class="editor-field editor-field-large">
-        <span style="color: red">NUEVO</span>
-    </div>
-    <div class="clear-both"></div>
-}
-else{
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Ficha)
-    </div>
-    <div class="editor-field editor-field-large">
-        @Html.EditorOrDisplayFor(model => model.Ficha, (bool?)ViewBag.SoloLectura)
-        @Html.ValidationMessageFor(model => model.Ficha)
-    </div>
-    <div class="clear-both"></div>
-}
 
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Ficha)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Ficha, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Ficha)
+</div>
+<div class="clear-both"></div>
 
 <div class="display-label ">
     @Html.DisplayNameFor(model => model.Sucursal)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.DdlOrDisplayFor(model => model.Sucursal, (bool?)ViewBag.SoloLectura,
+    @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, (bool?)ViewBag.SoloLectura,
                 model => model.Sucursal,
                 new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
     @Html.ValidationMessageFor(model => model.Sucursal)
@@ -73,7 +62,7 @@ else{
     @Html.DisplayNameFor(model => model.Departamento)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.DdlOrDisplayFor(model => model.Departamento, (bool?)ViewBag.SoloLectura,
+    @Html.DdlOrDisplayFor(model => model.Departamento.Codigo, (bool?)ViewBag.SoloLectura,
                 model => model.Departamento,
                 new SelectList(ViewBag.Departamentos, "Codigo", "Nombre"), null, new { id = "ddlDepartamento" })
     @Html.ValidationMessageFor(model => model.Departamento)
@@ -130,7 +119,7 @@ else{
     @Html.DisplayNameFor(model => model.TipoCombustible)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.DdlOrDisplayFor(model => model.TipoCombustible, (bool?)ViewBag.SoloLectura,
+    @Html.DdlOrDisplayFor(model => model.TipoCombustible.Codigo, (bool?)ViewBag.SoloLectura,
                 model => model.TipoCombustible,
                 new SelectList(ViewBag.TiposCombustible, "Codigo", "Descripcion"), null, new { id = "ddlTipoCombustible" })
     @Html.ValidationMessageFor(model => model.TipoCombustible)
@@ -141,7 +130,7 @@ else{
     @Html.DisplayNameFor(model => model.FechaAdquirido)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.FechaAdquirido, (bool?)ViewBag.SoloLectura)
+    @Html.TextBoxOrdisplayFor(model => model.FechaAdquirido, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
     @Html.ValidationMessageFor(model => model.FechaAdquirido)
 </div>
 <div class="clear-both"></div>
@@ -150,7 +139,7 @@ else{
     @Html.DisplayNameFor(model => model.Costo)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.DdlOrDisplayFor(model => model.Costo.Moneda, (bool?)ViewBag.SoloLectura,
+    @Html.DdlOrDisplayFor(model => model.Costo.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
                 model => model.Costo.Moneda,
                 new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), null, new { id = "ddlMonedaCosto", styl="width: 10px;" })
     @Html.EditorOrDisplayFor(model => model.Costo.Monto, (bool?)ViewBag.SoloLectura)
@@ -171,7 +160,7 @@ else{
     @Html.DisplayNameFor(model => model.TotalGastos)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.TotalGastos, true)
+    @Html.EditorOrDisplayFor(model => model.TotalGastos.Monto, (bool?)ViewBag.SoloLectura)
     @Html.ValidationMessageFor(model => model.TotalGastos)
 </div>
 <div class="clear-both"></div>
@@ -180,7 +169,7 @@ else{
     @Html.DisplayNameFor(model => model.PrecioVenta)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.DdlOrDisplayFor(model => model.PrecioVenta.Moneda, (bool?)ViewBag.SoloLectura,
+    @Html.DdlOrDisplayFor(model => model.PrecioVenta.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
                 model => model.Costo.Moneda,
                 new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), null, new { id = "ddlMonedaPrecioVenta" })
     @Html.EditorOrDisplayFor(model => model.PrecioVenta.Monto, (bool?)ViewBag.SoloLectura)

@@ -1,4 +1,4 @@
-﻿@model DLL_Backend.Sucursal
+﻿@model DLL_Backend.Vehiculo
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.General;
 
@@ -13,6 +13,8 @@
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
 
+    <div class="espacio" />
+    
     <fieldset>
         <legend></legend>
         @Html.HiddenFor(model => model.Codigo)
