@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using DLL_Backend;
 
 namespace AutomotoraWeb.Helpers {
     public static class HtmlHelpers {
@@ -170,13 +171,15 @@ namespace AutomotoraWeb.Helpers {
                 return MvcHtmlString.Empty;
             }
 
-            bool isRequired = false;
 
-            if (metadata.ContainerType != null) {
-                isRequired = metadata.ContainerType.GetProperty(metadata.PropertyName)
-                                .GetCustomAttributes(typeof(RequiredAttribute), false)
-                                .Length == 1;
-            }
+            bool isRequired = false;
+            isRequired= metadata.IsRequired;
+                
+            //if (metadata.ContainerType != null) {
+            //    isRequired = metadata.ContainerType.GetProperty(metadata.PropertyName)
+            //                    .GetCustomAttributes(typeof(RequiredAttribute), false)
+            //                    .Length == 1;
+            //}
 
             TagBuilder tag = new TagBuilder("label");
             tag.Attributes.Add(
@@ -199,8 +202,8 @@ namespace AutomotoraWeb.Helpers {
             if (isRequired) {
                 var asteriskTag = new TagBuilder("span");
                 asteriskTag.Attributes.Add("class", "required");
-                asteriskTag.Attributes.Add("style", "color: red");
-                asteriskTag.SetInnerText("*");
+                //asteriskTag.Attributes.Add("style", "color: red");
+                asteriskTag.SetInnerText(" *");
                 output += asteriskTag.ToString(TagRenderMode.Normal);
             }
             return MvcHtmlString.Create(output);
