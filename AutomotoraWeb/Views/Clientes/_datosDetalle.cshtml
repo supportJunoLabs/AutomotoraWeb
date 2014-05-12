@@ -5,7 +5,7 @@
 
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Nombre)
+    @Html.LabelForRequired(model => model.Nombre)
 </div>
 <div class="editor-field editor-field-xxlarge">
 
@@ -15,7 +15,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Direccion)
+    @Html.LabelForRequired(model => model.Direccion)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.Direccion, (bool?)ViewBag.SoloLectura)
@@ -24,7 +24,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Ciudad)
+    @Html.LabelForRequired(model => model.Ciudad)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Ciudad, (bool?)ViewBag.SoloLectura)
@@ -33,7 +33,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.CodigoPostal)
+    @Html.LabelForRequired(model => model.CodigoPostal)
 </div>
 <div class="editor-field editor-field-medium">
     @Html.EditorOrDisplayFor(model => model.CodigoPostal, (bool?)ViewBag.SoloLectura)
@@ -42,7 +42,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Telefono)
+    @Html.LabelForRequired(model => model.Telefono)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Telefono, (bool?)ViewBag.SoloLectura)
@@ -51,7 +51,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.OtroTelefono)
+    @Html.LabelForRequired(model => model.OtroTelefono)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.OtroTelefono, (bool?)ViewBag.SoloLectura)
@@ -60,7 +60,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Fax)
+    @Html.LabelForRequired(model => model.Fax)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Fax, (bool?)ViewBag.SoloLectura)
@@ -69,7 +69,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Mail)
+    @Html.LabelForRequired(model => model.Mail)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Mail, (bool?)ViewBag.SoloLectura)
@@ -78,7 +78,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.FechaNac)
+    @Html.LabelForRequired(model => model.FechaNac)
 </div>
 <div class="editor-field editor-field-small">
     @Html.TextBoxOrdisplayFor(model => model.FechaNac, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
@@ -87,7 +87,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Pais)
+    @Html.LabelForRequired(model => model.Pais)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Pais, (bool?)ViewBag.SoloLectura)
@@ -96,7 +96,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Cedula)
+    @Html.LabelForRequired(model => model.Cedula)
 </div>
 <div class="editor-field editor-field-medium">
     @Html.EditorOrDisplayFor(model => model.Cedula, (bool?)ViewBag.SoloLectura)
@@ -105,7 +105,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Credencial)
+    @Html.LabelForRequired(model => model.Credencial)
 </div>
 <div class="editor-field editor-field-medium">
     @Html.EditorOrDisplayFor(model => model.Credencial, (bool?)ViewBag.SoloLectura)
@@ -114,7 +114,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.TipoOtroDoc)
+    @Html.LabelForRequired(model => model.TipoOtroDoc)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.DdlOrDisplayFor(model => model.TipoOtroDoc, (bool?)ViewBag.SoloLectura,
@@ -128,7 +128,7 @@
 
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.NumeroOtroDoc)
+    @Html.LabelForRequired(model => model.NumeroOtroDoc)
 </div>
 <div class="editor-field editor-field-medium">
     @Html.EditorOrDisplayFor(model => model.NumeroOtroDoc, (bool?)ViewBag.SoloLectura)
@@ -137,7 +137,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Rut)
+    @Html.LabelForRequired(model => model.Rut)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Rut, (bool?)ViewBag.SoloLectura)
@@ -146,7 +146,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.RazonSocial)
+    @Html.LabelForRequired(model => model.RazonSocial)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.RazonSocial, (bool?)ViewBag.SoloLectura)
@@ -155,7 +155,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Observaciones)
+    @Html.LabelForRequired(model => model.Observaciones)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
@@ -164,7 +164,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Ecivil)
+    @Html.LabelForRequired(model => model.Ecivil)
 </div>
 <div class="editor-field editor-field-large">
     @Html.DdlOrDisplayFor(model => model.Ecivil.Codigo, (bool?)ViewBag.SoloLectura,
@@ -179,7 +179,7 @@
     <h3>Conyuge</h3>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Conyuge.Nombre)
+        @Html.LabelForRequired(model => model.Conyuge.Nombre)
     </div>
     <div class="editor-field editor-field-xxlarge">
         @Html.EditorOrDisplayFor(model => model.Conyuge.Nombre, (bool?)ViewBag.SoloLectura)
@@ -188,7 +188,7 @@
     <div class="clear-both"></div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Conyuge.Cedula)
+        @Html.LabelForRequired(model => model.Conyuge.Cedula)
     </div>
     <div class="editor-field editor-field-xxlarge">
         @Html.EditorOrDisplayFor(model => model.Conyuge.Cedula, (bool?)ViewBag.SoloLectura)
@@ -197,7 +197,7 @@
     <div class="clear-both"></div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Conyuge.Credencial)
+        @Html.LabelForRequired(model => model.Conyuge.Credencial)
     </div>
     <div class="editor-field editor-field-xxlarge">
         @Html.EditorOrDisplayFor(model => model.Conyuge.Credencial, (bool?)ViewBag.SoloLectura)
@@ -206,7 +206,7 @@
     <div class="clear-both"></div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Conyuge.TipoOtroDoc)
+        @Html.LabelForRequired(model => model.Conyuge.TipoOtroDoc)
     </div>
     <div class="editor-field editor-field-xxlarge">
         @Html.EditorOrDisplayFor(model => model.Conyuge.TipoOtroDoc, (bool?)ViewBag.SoloLectura)
@@ -215,7 +215,7 @@
     <div class="clear-both"></div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Conyuge.NumeroOtroDoc)
+        @Html.LabelForRequired(model => model.Conyuge.NumeroOtroDoc)
     </div>
     <div class="editor-field editor-field-xxlarge">
         @Html.EditorOrDisplayFor(model => model.Conyuge.NumeroOtroDoc, (bool?)ViewBag.SoloLectura)
@@ -224,7 +224,7 @@
     <div class="clear-both"></div>
 
     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Conyuge.Nupcias)
+        @Html.LabelForRequired(model => model.Conyuge.Nupcias)
     </div>
     <div class="editor-field editor-field-mini">
         @Html.EditorOrDisplayFor(model => model.Conyuge.Nupcias, (bool?)ViewBag.SoloLectura)
@@ -233,7 +233,7 @@
     <div class="clear-both"></div>
 
     <div class="display-label ">
-        @Html.DisplayNameFor(model => model.Conyuge.SepBienes)
+        @Html.LabelForRequired(model => model.Conyuge.SepBienes)
     </div>
     <div class="editor-field">
         @Html.CheckBoxOrDisplayFor(model => model.Conyuge.SepBienes, (bool?)ViewBag.SoloLectura)

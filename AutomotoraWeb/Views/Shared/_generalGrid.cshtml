@@ -5,45 +5,59 @@
 
 @{
 
-    List<string> hiddenColumns = new List<string>();
-    Dictionary<string, int> trunkColumns = new Dictionary<string, int>();
+    InfoGrilla ig = new InfoGrilla();
+    
+     //List<string> hiddenColumns=null;
+    //Dictionary<string, int> trunkColumns=null;
+    //List<string> visibleColumns=null;
+    //Type type;
+    //string nombre;
+    //string campoClave;
+    //List<BotonGrilla> botones=null;
+    //string 
 
-    List<string> visibleColumns = new List<string>();
+    if (ViewBag.InfoGrilla != null) {
+        ig = ViewBag.InfoGrilla;
+    } else {
 
-    if (ViewBag.hiddenColumns != null) {
-        hiddenColumns = (List<string>)(ViewBag.hiddenColumns);
-    }
-
-    if (ViewBag.visibleColumns != null) {
-        visibleColumns = (List<string>)(ViewBag.visibleColumns);
-        if (visibleColumns.Count == 0) {
-            visibleColumns = null;
+        if (ViewBag.hiddenColumns != null) {
+            ig.HiddenColumns = (List<string>)(ViewBag.hiddenColumns);
         }
-    }else{
-        visibleColumns = null;
-    }
 
-    if (ViewBag.trunkColumns != null) {
-        trunkColumns = (Dictionary<string, int>)(ViewBag.trunkColumns);
+        if (ViewBag.visibleColumns != null) {
+            ig.VisibleColumns = (List<string>)(ViewBag.visibleColumns);
+            if (ig.VisibleColumns.Count == 0) {
+                ig.VisibleColumns = null;
+            }
+        } else {
+            ig.VisibleColumns = null;
+        }
+
+        if (ViewBag.trunkColumns != null) {
+            ig.TrunkColumns = (Dictionary<string, int>)(ViewBag.trunkColumns);
+        }
+
+         ig.TypeOfModel = (Type)(ViewBag.typeOfModel);
+         ig.Controller = ViewBag.controller;
+         ig.NameGrid = ViewBag.nameGrid;
+         ig.ActionCallbackRoute = ViewBag.actionCallbackRoute;
+         ig.KeyFieldName = ViewBag.KeyFieldName;
+
     }
 
     List<GridViewColumn> listGridViewsColumn = new List<GridViewColumn>();
-
-    Type type = (Type)(ViewBag.typeOfModel);
-    System.Reflection.PropertyInfo[] propertiesinfo = type.GetProperties();
-
-
+    System.Reflection.PropertyInfo[] propertiesinfo = ig.TypeOfModel.GetProperties();
     List<MVCxGridViewColumn> lista = new List<MVCxGridViewColumn>();
-    
+
     foreach (System.Reflection.PropertyInfo propertyInfo in propertiesinfo) {
         object[] arrayDisplayAttribute = propertyInfo.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.DisplayAttribute), true);
         foreach (System.ComponentModel.DataAnnotations.DisplayAttribute displayAttribute in arrayDisplayAttribute) {
 
-            if ((visibleColumns != null && visibleColumns.Contains(propertyInfo.Name)) ||
-                  (visibleColumns == null)  //si vinieron especificadas las columnas, solo se incluyen si estan en la lista  no son hidden
+            if ((ig.VisibleColumns != null && ig.VisibleColumns.Contains(propertyInfo.Name)) ||
+                  (ig.VisibleColumns == null)  //si vinieron especificadas las columnas, solo se incluyen si estan en la lista  no son hidden
                ) {                          //si no vienieron, las pongo todas salvo las que estan como hidden
 
-                if (!hiddenColumns.Contains(propertyInfo.Name)) {
+                if (ig.HiddenColumns==null|| !ig.HiddenColumns.Contains(propertyInfo.Name)) {
                     MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
                     gridViewColumn.FieldName = propertyInfo.Name;
                     gridViewColumn.Caption = displayAttribute.Name;
@@ -63,39 +77,40 @@
             }
         }
     }
-    
+
     //Si vinieron especificadas las columnas, las ordeno segun el orden recibido.
-    if (visibleColumns!=null){
+    if (ig.VisibleColumns != null) {
         List<MVCxGridViewColumn> lista_ordenada = new List<MVCxGridViewColumn>();
-        foreach(string s in visibleColumns){
-            foreach(var x in lista){
-                if (x.FieldName==s){
+        foreach (string s in ig.VisibleColumns) {
+            foreach (var x in lista) {
+                if (x.FieldName == s) {
                     lista_ordenada.Add(x);
                     break;
                 }
             }
         }
-        foreach (var x in lista_ordenada){
+        foreach (var x in lista_ordenada) {
             listGridViewsColumn.Add(x);
         }
-    }else{
-        foreach (var x in lista){
+    } else {
+        foreach (var x in lista) {
             listGridViewsColumn.Add(x);
         }
     }
             
 }
 
+
 @(Html.DevExpress().GridView(
     settings => {
-        settings.Name = (String)(ViewBag.nameGrid);
-        settings.CallbackRouteValues = new { Controller = (String)(ViewBag.controller), Action = (String)(ViewBag.actionCallbackRoute) };
+        settings.Name = ig.NameGrid;
+        settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute};
         settings.Width = Unit.Percentage(98);
 
         settings.SettingsBehavior.AllowSort = true;
         settings.SettingsBehavior.AllowGroup = true;
         settings.Settings.ShowGroupPanel = true;
-        settings.KeyFieldName = (String)(ViewBag.KeyFieldName);
+        settings.KeyFieldName = ig.KeyFieldName;
 
         //Adds
 
@@ -128,19 +143,19 @@
 
 
         //Columnas Visibles (Editores)
-        if (ViewBag.Botones == null || ViewBag.Botones.Count > 0) {
+        if (ig.Botones == null || ig.Botones.Count > 0) {
             settings.Columns.Add(column => {
                 column.Caption = "Acciones";
                 column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
                 column.Width = Unit.Pixel(90);
                 column.SetDataItemTemplateContent(c => {
-                    var id = DataBinder.Eval(c.DataItem, (String)(ViewBag.KeyFieldName));
-                    if (ViewBag.Botones == null) {
-                        ViewContext.Writer.WriteLine(@Html.BotonImagen("details", (String)(ViewBag.controller), new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
-                        ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", (String)(ViewBag.controller), new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
-                        ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", (String)(ViewBag.controller), new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());
+                    var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
+                    if (ig.Botones == null) {
+                        ViewContext.Writer.WriteLine(@Html.BotonImagen("details", ig.Controller, new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
+                        ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", ig.Controller, new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
+                        ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", ig.Controller, new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());
                     } else {
-                        foreach (BotonGrilla b in ViewBag.Botones) {
+                        foreach (BotonGrilla b in ig.Botones) {
                             ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());
                         }
                     }
@@ -151,10 +166,10 @@
 
         //Se trunca contenido de columnas con mucho texto
         settings.HtmlDataCellPrepared = (sender, e) => {
-            if (trunkColumns.Keys.Contains(e.DataColumn.FieldName)) {
-                if (e.CellValue != null && e.CellValue.ToString().Length > trunkColumns[e.DataColumn.FieldName]) {
+            if (ig.TrunkColumns != null && ig.TrunkColumns.Keys.Contains(e.DataColumn.FieldName)) {
+                if (e.CellValue != null && e.CellValue.ToString().Length > ig.TrunkColumns[e.DataColumn.FieldName]) {
                     e.Cell.ToolTip = e.CellValue.ToString();
-                    e.Cell.Text = e.CellValue.ToString().Substring(0, trunkColumns[e.DataColumn.FieldName]) + "...";
+                    e.Cell.Text = e.CellValue.ToString().Substring(0, ig.TrunkColumns[e.DataColumn.FieldName]) + "...";
                 }
             }
         };

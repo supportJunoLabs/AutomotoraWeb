@@ -2,7 +2,7 @@
 @using AutomotoraWeb.Helpers;
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Nombre)
+    @Html.LabelForRequired(model => model.Nombre)
 </div>
 <div class="editor-field editor-field-xxlarge">
 
@@ -12,7 +12,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Habilitado)
+    @Html.LabelForRequired(model => model.Habilitado)
 </div>
 <div class="editor-field">
     @Html.CheckBoxOrDisplayFor(model => model.Habilitado, (bool?)ViewBag.SoloLectura)
@@ -21,7 +21,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Interno)
+    @Html.LabelForRequired(model => model.Interno)
 </div>
 <div class="editor-field">
    @Html.CheckBoxOrDisplayFor(model => model.Interno, (bool?)ViewBag.SoloLectura)
@@ -30,7 +30,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Direccion)
+    @Html.LabelForRequired(model => model.Direccion)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.Direccion, (bool?)ViewBag.SoloLectura)
@@ -39,7 +39,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Ciudad)
+    @Html.LabelForRequired(model => model.Ciudad)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Ciudad, (bool?)ViewBag.SoloLectura)
@@ -48,7 +48,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.CodigoPostal)
+    @Html.LabelForRequired(model => model.CodigoPostal)
 </div>
 <div class="editor-field editor-field-medium">
     @Html.EditorOrDisplayFor(model => model.CodigoPostal, (bool?)ViewBag.SoloLectura)
@@ -57,7 +57,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Telefono)
+    @Html.LabelForRequired(model => model.Telefono)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Telefono, (bool?)ViewBag.SoloLectura)
@@ -66,7 +66,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.OtrosTelefonos)
+    @Html.LabelForRequired(model => model.OtrosTelefonos)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.OtrosTelefonos, (bool?)ViewBag.SoloLectura)
@@ -75,7 +75,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Fax)
+    @Html.LabelForRequired(model => model.Fax)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Fax, (bool?)ViewBag.SoloLectura)
@@ -84,7 +84,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Mail)
+    @Html.LabelForRequired(model => model.Mail)
 </div>
 <div class="editor-field editor-field-large">
     @Html.EditorOrDisplayFor(model => model.Mail, (bool?)ViewBag.SoloLectura)
@@ -93,7 +93,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Observaciones)
+    @Html.LabelForRequired(model => model.Observaciones)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })

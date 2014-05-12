@@ -3,7 +3,7 @@
 @using DLL_Backend;
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Banco)
+    @Html.LabelForRequired(model => model.Banco)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.Banco, (bool?)ViewBag.SoloLectura)
@@ -12,7 +12,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Numero)
+    @Html.LabelForRequired(model => model.Numero)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.Numero, (bool?)ViewBag.SoloLectura)
@@ -21,7 +21,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Titular)
+    @Html.LabelForRequired(model => model.Titular)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.Titular, (bool?)ViewBag.SoloLectura)
@@ -30,7 +30,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Moneda)
+    @Html.LabelForRequired(model => model.Moneda)
 </div>
 <div class="editor-field editor-field-large">
         @Html.DdlOrDisplayFor(model => model.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
@@ -41,7 +41,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Tipo)
+    @Html.LabelForRequired(model => model.Tipo)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.Tipo, (bool?)ViewBag.SoloLectura)
@@ -50,7 +50,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Observaciones)
+    @Html.LabelForRequired(model => model.Observaciones)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura)

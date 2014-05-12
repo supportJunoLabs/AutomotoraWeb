@@ -43,14 +43,6 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult listVendedores() {
             return PartialView("_listVendedores", _listaVendedores());
         }
-        public ContentResult NombreEntidad() {
-            return new ContentResult { Content = "Vendedor" };
-        }
-
-        public ContentResult NombreEntidades() {
-            return new ContentResult { Content = "Vendedores" };
-        }
-
         //--------------------------------------    REPORT    ----------------------------------------------
         public ActionResult Report() {
             // Add a report to the view data. 
@@ -96,6 +88,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         //--------------------------------------------------------------------------------------------------
 
         public ActionResult Details(int id) {
+            ViewBag.SoloLectura = true;
             return getVendedor(id, true);
         }
 
@@ -110,6 +103,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Delete(int id) {
+            ViewBag.SoloLectura = true;
             return getVendedor(id, true);
         }
 
@@ -198,6 +192,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         [HttpPost]
         public ActionResult Edit(Vendedor vendedor) {
+           
             if (ModelState.IsValid) {
                 try {
                     if (Session[FILE_RANDOM_NAME] != null) { //hice algun cambio
@@ -273,6 +268,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         [HttpPost]
         public ActionResult Delete(Vendedor vendedor) {
+            ViewBag.SoloLectura = true;
             if (ModelState.IsValid) {
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
