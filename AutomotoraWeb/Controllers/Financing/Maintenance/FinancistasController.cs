@@ -19,12 +19,10 @@ namespace AutomotoraWeb.Controllers.Financing.Maintenance
 
         public static string CONTROLLER = "Financistas";
 
-        public ContentResult NombreEntidades() {
-            return new ContentResult { Content = "Financistas" };
-        }
-
-        public ContentResult NombreEntidad() {
-            return new ContentResult { Content = "Financista" };
+        protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            base.OnActionExecuting(filterContext);
+            ViewBag.NombreEntidad = "Financista";
+            ViewBag.NombreEntidades = "Financistas";
         }
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Financista fin) {

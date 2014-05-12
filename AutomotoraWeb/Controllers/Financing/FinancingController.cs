@@ -11,12 +11,6 @@ namespace AutomotoraWeb.Controllers.Financing {
         public static string BCONTROLLER = "financing";
         public static string INDEX = "index";
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext) {
-            ViewBag.NombreEntidad = "Financista";
-            ViewBag.NombreEntidades = "Financistas";
-            base.OnActionExecuting(filterContext);
-        }
-
         public ActionResult Index() {
             return View();
         }

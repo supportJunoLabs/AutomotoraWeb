@@ -17,9 +17,10 @@ namespace AutomotoraWeb.Controllers.Sistema {
         public static string CONTROLLER = "empresa";
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            base.OnActionExecuting(filterContext);
             ViewBag.NombreEntidad = "Datos Empresa";
             ViewBag.NombreEntidades = "Empresas";
-            base.OnActionExecuting(filterContext);
+            
         }
 
         public ActionResult Edit() {

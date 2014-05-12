@@ -20,11 +20,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
       
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            base.OnActionExecuting(filterContext);
             ViewBag.EstadosCiviles = EstadoCivil.EstadosCiviles();
             ViewBag.TiposOtroDoc = Cliente.TiposOtrosDocumentos();
             ViewBag.NombreEntidad = "Cliente";
             ViewBag.NombreEntidades = "Clientes";
-            base.OnActionExecuting(filterContext);
+            
         }
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Cliente cliente) {

@@ -31,9 +31,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            base.OnActionExecuting(filterContext);
             ViewBag.NombreEntidad = "Vendedor";
             ViewBag.NombreEntidades = "Vendedores";
-            base.OnActionExecuting(filterContext);
+            
         }
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vendedor vendedor) {

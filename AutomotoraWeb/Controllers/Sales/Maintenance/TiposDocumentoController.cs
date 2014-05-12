@@ -20,9 +20,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance
         public static string CONTROLLER = "TiposDocumento";
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            base.OnActionExecuting(filterContext);
             ViewBag.NombreEntidad = "Tipo Documento";
             ViewBag.NombreEntidades = "TiposDocumento";
-            base.OnActionExecuting(filterContext);
+           
         }
 
         //public ContentResult NombreEntidades() {

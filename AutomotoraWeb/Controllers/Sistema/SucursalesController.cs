@@ -20,9 +20,10 @@ namespace AutomotoraWeb.Controllers.Sistema
         public static string CONTROLLER = "sucursales";
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            base.OnActionExecuting(filterContext);
             ViewBag.NombreEntidad = "Sucursal";
             ViewBag.NombreEntidades = "Sucursales";
-            base.OnActionExecuting(filterContext);
+            
         }
 
         public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Sucursal Sucursal) {

@@ -14,9 +14,10 @@ namespace AutomotoraWeb.Controllers.Sales
         public static string CONTROLLER = "Pedidos";
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+            base.OnActionExecuting(filterContext);
             ViewBag.NombreEntidad = "Pedido";
             ViewBag.NombreEntidades = "Pedidos";
-            base.OnActionExecuting(filterContext);
+            
         }
 
         public ActionResult Index(){
