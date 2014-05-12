@@ -161,11 +161,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         [HttpPost]
         public ActionResult Create(Vehiculo vehiculo) {
 
-            this.eliminarValidacionesIgnorables("Sucursal", vehiculo.Sucursal.IgnorablesDDL());
-            this.eliminarValidacionesIgnorables("Departamento", vehiculo.Departamento.IgnorablesDDL());
-            this.eliminarValidacionesIgnorables("TipoCombustible", vehiculo.TipoCombustible.IgnorablesDDL());
-            this.eliminarValidacionesIgnorables("Costo", vehiculo.TipoCombustible.IgnorablesDDL());
-            this.eliminarValidacionesIgnorables("PrecioVenta", vehiculo.TipoCombustible.IgnorablesDDL());
+            this.eliminarValidacionesIgnorables(vehiculo);
 
             if (ModelState.IsValid) {
                 try {
@@ -181,14 +177,20 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return View(vehiculo);
         }
 
+        private void eliminarValidacionesIgnorables(Vehiculo vehiculo) {
+            this.eliminarValidacionesIgnorables("Departamento", MetadataManager.IgnorablesDDL(vehiculo.Departamento));
+            this.eliminarValidacionesIgnorables("TipoCombustible", MetadataManager.IgnorablesDDL(vehiculo.TipoCombustible));
+            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(vehiculo.Costo.Moneda));
+            this.eliminarValidacionesIgnorables("PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(vehiculo.PrecioVenta.Moneda));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(vehiculo.Sucursal));
+        }
+
         //-----------------------------------------------------------------------------------------------------
 
         [HttpPost]
         public ActionResult Edit(Vehiculo vehiculo) {
 
-            this.eliminarValidacionesIgnorables("Sucursal", vehiculo.Sucursal.IgnorablesDDL());
-            this.eliminarValidacionesIgnorables("Departamento", vehiculo.Departamento.IgnorablesDDL());
-            this.eliminarValidacionesIgnorables("TipoCombustible", vehiculo.TipoCombustible.IgnorablesDDL());
+            this.eliminarValidacionesIgnorables(vehiculo);
 
             if (ModelState.IsValid) {
                 try {
