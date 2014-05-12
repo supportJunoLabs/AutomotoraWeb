@@ -2,7 +2,7 @@
 @using AutomotoraWeb.Helpers;
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Nombre)
+    @Html.LabelForRequired(model => model.Nombre)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.Nombre, (bool?)ViewBag.SoloLectura)
@@ -11,7 +11,7 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Observaciones)
+    @Html.LabelForRequired(model => model.Observaciones)
 </div>
 <div class="editor-field editor-field-xxlarge">
     @Html.EditorOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura)
