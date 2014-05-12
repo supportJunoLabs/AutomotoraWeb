@@ -189,23 +189,28 @@ namespace AutomotoraWeb.Helpers {
                 )
             );
 
+            tag.Attributes.Add("class", "display-label");
             if (isRequired) {
-                tag.Attributes.Add("class", "label-required");
+                  //label_required que estaba antes no existe
                 tag.Attributes.Add("style", "display: inline !important");
             }
 
-            tag.SetInnerText(labelText);
+            if (isRequired) {
+                tag.SetInnerText(labelText + " *");
+            } else {
+                tag.SetInnerText(labelText);
+            }
 
             var output = tag.ToString(TagRenderMode.Normal);
 
 
-            if (isRequired) {
-                var asteriskTag = new TagBuilder("span");
-                asteriskTag.Attributes.Add("class", "required");
-                //asteriskTag.Attributes.Add("style", "color: red");
-                asteriskTag.SetInnerText(" *");
-                output += asteriskTag.ToString(TagRenderMode.Normal);
-            }
+            //if (isRequired) {
+            //    var asteriskTag = new TagBuilder("span");
+            //    asteriskTag.Attributes.Add("class", "display-label");
+            //    //asteriskTag.Attributes.Add("style", "color: red");
+            //    asteriskTag.SetInnerText(" *");
+            //    output += asteriskTag.ToString(TagRenderMode.Normal);
+            //}
             return MvcHtmlString.Create(output);
         }
 
