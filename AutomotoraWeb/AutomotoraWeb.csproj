@@ -1648,7 +1648,6 @@
     <Content Include="Views\CuentasBancarias\edit.cshtml" />
     <Content Include="Views\CuentasBancarias\report.cshtml" />
     <Content Include="Views\CuentasBancarias\show.cshtml" />
-    <Content Include="Views\Vehiculos\filtroListados.cshtml" />
     <Content Include="Views\Pedidos\list.cshtml" />
     <Content Include="Views\Pedidos\_reportGrilla.cshtml" />
     <Content Include="Views\Vendedores\_datosDetalle.cshtml" />

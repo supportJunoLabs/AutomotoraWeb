@@ -27,7 +27,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
-            ViewBag.NombreEntidad = "Vehiculos";
+            base.OnActionExecuting(filterContext); //esto tiene que ser lo primero, si no, falla si se llama directamente la consulta del usuario si nadie esta logueado
+            ViewBag.NombreEntidades = "Vehiculos";
+            ViewBag.NombreEntidad = "Vehiculo";
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
             if (usuario.MultiSucursal){
                 ViewBag.Sucursales = Sucursal.Sucursales();
@@ -37,12 +39,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 listSucursal.Add(usuario.Sucursal);
                 ViewBag.Sucursales =  listSucursal;
             }
-
             ViewBag.Departamentos = Departamento.Departamentos();
             ViewBag.TiposCombustible = DLL_Backend.TipoCombustible.TiposCombustible();
             ViewBag.Monedas = Moneda.Monedas;
-
-            base.OnActionExecuting(filterContext);
         }
 
 
@@ -212,6 +211,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult Delete(Vehiculo vehiculo) {
             ViewBag.SoloLectura = true;
 
+            this.eliminarValidacionesIgnorables(vehiculo); //aca tambien se necesita porque  se llama al model.isvalid
+
             if (ModelState.IsValid) {
 
                 try {
@@ -229,7 +230,37 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         }
 
-        //-----------------------------------------------------------------------------------------------------
+        //--------------------------METODOS PARA LISTADO DE VEHICULO -----------------------------
+
+        #region Listados
+        public ActionResult List() {
+            ListadoVehiculosModel model = new ListadoVehiculosModel();
+            model.Formato = ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO;
+            model.Filtro.Tipo = Vehiculo.VHC_TIPO_LISTADO.LIBRES;
+            model.Filtro.Categoria = VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS;
+            ViewBag.SucursalesListado = Sucursal.Sucursales();
+            ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult List(ListadoVehiculosModel lf) {
+            ViewBag.SucursalesListado = Sucursal.Sucursales();
+            ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
+            lf.Resultado = _listaElementos(lf.Filtro);
+            return View(lf);
+        }
+
+        public ActionResult ReportGrilla(ListadoVehiculosModel model) {
+            model.Resultado = _listaElementos(model.Filtro);
+            return PartialView("_reportGrilla", model);
+        }
+
+        private List<Vehiculo> _listaElementos(VehiculoFiltro pf) {
+            return Vehiculo.Vehiculos(pf);
+        }
+
+        #endregion
 
     }
 }
