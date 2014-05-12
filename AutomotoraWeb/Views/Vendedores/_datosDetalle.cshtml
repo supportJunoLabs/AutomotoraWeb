@@ -59,7 +59,7 @@
 <div class="display-label ">
     @Html.LabelForRequired(model => model.Habilitado)
 </div>
-<div class="editor-field editor-field-xxlarge">
+<div >
     @Html.CheckBoxOrDisplayFor(model => model.Habilitado, (bool?)ViewBag.SoloLectura)
     @Html.ValidationMessageFor(model => model.Habilitado)
 </div>

@@ -2,8 +2,6 @@
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 
-
-
 <div class="display-label">
     @Html.LabelForRequired(model => model.Nombre)
 </div>
@@ -235,7 +233,7 @@
     <div class="display-label ">
         @Html.LabelForRequired(model => model.Conyuge.SepBienes)
     </div>
-    <div class="editor-field">
+    <div>
         @Html.CheckBoxOrDisplayFor(model => model.Conyuge.SepBienes, (bool?)ViewBag.SoloLectura)
         @Html.ValidationMessageFor(model => model.Conyuge.SepBienes)
     </div>

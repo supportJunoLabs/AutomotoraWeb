@@ -14,7 +14,7 @@
 <div class="display-label ">
     @Html.LabelForRequired(model => model.Habilitado)
 </div>
-<div class="editor-field">
+<div >
     @Html.CheckBoxOrDisplayFor(model => model.Habilitado, (bool?)ViewBag.SoloLectura)
     @Html.ValidationMessageFor(model => model.Habilitado)
 </div>
@@ -23,7 +23,7 @@
 <div class="display-label ">
     @Html.LabelForRequired(model => model.Interno)
 </div>
-<div class="editor-field">
+<div >
    @Html.CheckBoxOrDisplayFor(model => model.Interno, (bool?)ViewBag.SoloLectura)
     @Html.ValidationMessageFor(model => model.Interno)
 </div>
