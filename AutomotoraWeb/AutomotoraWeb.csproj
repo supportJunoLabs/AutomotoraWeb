@@ -262,6 +262,7 @@
     <Compile Include="Models\AbstractModel.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ListadoVehiculosModel.cs" />
     <Compile Include="Models\InfoGrilla.cs" />
     <Compile Include="Models\ListadoPedidosModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -1651,6 +1652,7 @@
     <Content Include="Views\Pedidos\list.cshtml" />
     <Content Include="Views\Pedidos\_reportGrilla.cshtml" />
     <Content Include="Views\Vendedores\_datosDetalle.cshtml" />
+    <Content Include="Views\Vehiculos\list.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
