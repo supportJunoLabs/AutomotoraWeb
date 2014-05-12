@@ -1650,6 +1650,7 @@
     <Content Include="Views\Vehiculos\filtroListados.cshtml" />
     <Content Include="Views\Pedidos\list.cshtml" />
     <Content Include="Views\Pedidos\_reportGrilla.cshtml" />
+    <Content Include="Views\Vendedores\_datosDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
