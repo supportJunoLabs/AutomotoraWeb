@@ -14,88 +14,9 @@
 
     <fieldset>
         <legend></legend>
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Nombre): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Nombre)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Direccion): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Direccion)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Telefono): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Telefono)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-
-         <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Mail): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Mail)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.FechaIngreso):
-            </div>
-            <div class="display-field">
-                @Model.FechaIngreso.Date.ToShortDateString()
-            </div>
-            <div class="clear-both"></div>
-        </div>
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Observaciones): 
-            </div>
-            <div class="display-field">
-                @Html.DisplayFor(model => model.Observaciones)
-            </div>
-            <div class="clear-both"></div>
-        </div>
-        <div class="details-field">
-            <div class="display-label">
-                @Html.DisplayNameFor(model => model.Habilitado): 
-            </div>
-            <div class="display-field">
-                @Html.CheckBoxFor(model => model.Habilitado, new {@disabled="disabled"})
-            </div>
-            <div class="clear-both"></div>
-        </div>
-
-        <!-- ========================== -->
-
-        <div class="display-label ">
-             @Html.DisplayNameFor(model => model.Foto):
-        </div>
-        <div class="editor-field editor-field-xxlarge">
-            <img id="imgPhoto" src="~/Content/Images/vendedores/@Model.Foto" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
-        </div>
-        <div class="clear-both"></div>
-
-        <!-- ========================== -->
+        @Html.Partial("_datosDetalle", Model)
 
     </fieldset>
-    
-    <div class="espacio2"></div>
     
     <div class="btn-toolbar">
         @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Editar Vendedor"))
