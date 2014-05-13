@@ -84,33 +84,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
-        //----------reporte listado de vehiculos  -----------------------------
-
-        public ActionResult Report() {
-            // Add a report to the view data. 
-            DXReportVehiculos rep = new DXReportVehiculos();
-            //setParamsToReport(rep);
-            ViewData["Report"] = rep;
-            return View();
-        }
-
-        public ActionResult ReportPartial() {
-            DXReportVehiculos rep = new DXReportVehiculos();
-            //setParamsToReport(rep);
-            rep.DataSource = _listaElementos();
-            ViewData["Report"] = rep;
-            return PartialView("_reportList");
-        }
-
-        public ActionResult ReportExport() {
-            DXReportVehiculos rep = new DXReportVehiculos();
-            //setParamsToReport(rep);
-            rep.DataSource = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.TODOS);
-            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
-        }
-
-        //--------------------------------------------------------------------------------------------------
-
+     
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
@@ -230,37 +204,92 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         }
 
-        //--------------------------METODOS PARA LISTADO DE VEHICULO -----------------------------
+        //--------------------------METODOS PARA LISTADOS DE VEHICULO -----------------------------
 
         #region Listados
         public ActionResult List() {
             ListadoVehiculosModel model = new ListadoVehiculosModel();
+            string s = "ListadoVehiculos|" +
+                 ((Usuario)(Session[SessionUtils.SESSION_USER])).Codigo.ToString() + "|" +
+                 DateTime.Now.ToString("yyyyMMddHHmmssffff");
+            Session[s] = model;
+            model.id = s;
+
             model.Formato = ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO;
             model.Filtro.Tipo = Vehiculo.VHC_TIPO_LISTADO.LIBRES;
             model.Filtro.Categoria = VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS;
             ViewBag.SucursalesListado = Sucursal.Sucursales();
             ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
+            model.Resultado = _listaElementos(model);
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult List(ListadoVehiculosModel lf) {
+        public ActionResult List(ListadoVehiculosModel model, string btnSubmit) {
+
+            Session[model.id] = model; //filtros actualizados
+            ViewData["id"]=model.id;
+
+            if (btnSubmit == "Imprimir") {
+                return this.Report(model);
+            }
+
             ViewBag.SucursalesListado = Sucursal.Sucursales();
             ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
-            lf.Resultado = _listaElementos(lf.Filtro);
-            return View(lf);
+            model.Resultado = _listaElementos(model);
+            return View(model);
         }
 
-        public ActionResult ReportGrilla(ListadoVehiculosModel model) {
-            model.Resultado = _listaElementos(model.Filtro);
+        public ActionResult ReportGrilla(string id) {
+            ListadoVehiculosModel model = (ListadoVehiculosModel)Session[id];
+            model.Resultado = _listaElementos(model);
+            ViewData["id"] = model.id;
             return PartialView("_reportGrilla", model);
         }
 
-        private List<Vehiculo> _listaElementos(VehiculoFiltro pf) {
-            return Vehiculo.Vehiculos(pf);
+        private List<Vehiculo> _listaElementos(ListadoVehiculosModel model) {
+            model.AcomodarFiltro();
+            return Vehiculo.Vehiculos(model.Filtro);
         }
 
         #endregion
+
+
+        //---------- METODOS PARA REPORTES DE LISTADOS DE VEHICULOS  -----------------------------
+
+        #region Reportes
+        public ActionResult Report(ListadoVehiculosModel model) {
+            // Add a report to the view data. 
+            DXListadoVehiculosAbreviado rep = new DXListadoVehiculosAbreviado();
+            ViewData["Report"] = rep;
+            return View("report", model);
+        }
+
+        public ActionResult ReportPartial(string id) {
+            XtraReport rep = new DXListadoVehiculosAbreviado();
+            ListadoVehiculosModel model = (ListadoVehiculosModel)Session[id];
+            if (model.Formato == ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO) { 
+                rep= new DXListadoVehiculosCompleto();
+            }
+            rep.DataSource = _listaElementos(model);
+            ViewData["Report"] = rep;
+            return PartialView("_reportList", model);
+        }
+
+        public ActionResult ReportExport(string id) {
+            XtraReport rep = new DXListadoVehiculosAbreviado();
+            ListadoVehiculosModel model = (ListadoVehiculosModel)Session[id];
+            if (model.Formato == ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO) {
+                rep = new DXListadoVehiculosCompleto();
+            }
+            rep.DataSource = _listaElementos(model);
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+        #endregion
+
+        //--------------------------------------------------------------------------------------------------
+
+
 
     }
 }

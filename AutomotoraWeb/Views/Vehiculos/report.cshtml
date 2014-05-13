@@ -1,11 +1,12 @@
-﻿@using AutomotoraWeb.Controllers.General;
+﻿@model AutomotoraWeb.Models.ListadoVehiculosModel
+@using AutomotoraWeb.Controllers.General;
 
 @{ 
     ViewBag.Title = @Html.Action("NombreEntidades").ToString() + ": Listado";
 }
 
 <div class="btn-toolbar">
-    @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default"))
+    @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.LIST).Class("btn btn-default"))
 </div>
 <div class="clear-both"></div>
 

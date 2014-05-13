@@ -64,6 +64,7 @@ public class DXListadoVehiculosCompleto : DevExpress.XtraReports.UI.XtraReport {
     private XRLabel xrLabel16;
     private XRLabel xrLabel15;
     private XRLabel xrLabel14;
+    private XRLabel xrLabel21;
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -97,6 +98,31 @@ public class DXListadoVehiculosCompleto : DevExpress.XtraReports.UI.XtraReport {
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraReports.UI.XRSummary xrSummary1 = new DevExpress.XtraReports.UI.XRSummary();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
+            this.xrLabel20 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel19 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel18 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel17 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel16 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel15 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel14 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel40 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel39 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel38 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel37 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel36 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel35 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel34 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel33 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel32 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel31 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel13 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel11 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel9 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel30 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel29 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel28 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel27 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel26 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel25 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel24 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel23 = new DevExpress.XtraReports.UI.XRLabel();
@@ -127,37 +153,14 @@ public class DXListadoVehiculosCompleto : DevExpress.XtraReports.UI.XtraReport {
             this.CostoText = new DevExpress.XtraReports.UI.CalculatedField();
             this.TotalGastosText = new DevExpress.XtraReports.UI.CalculatedField();
             this.PrecioText = new DevExpress.XtraReports.UI.CalculatedField();
-            this.xrLabel26 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel27 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel28 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel29 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel30 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel9 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel11 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel13 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel31 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel32 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel33 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel34 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel35 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel36 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel37 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel38 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel39 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel40 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel14 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel15 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel16 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel17 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel18 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel19 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel20 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel21 = new DevExpress.XtraReports.UI.XRLabel();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
             // 
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel21,
             this.xrLabel20,
             this.xrLabel19,
             this.xrLabel18,
@@ -198,6 +201,272 @@ public class DXListadoVehiculosCompleto : DevExpress.XtraReports.UI.XtraReport {
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
+            // 
+            // xrLabel20
+            // 
+            this.xrLabel20.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "TipoCombustible.Descripcion")});
+            this.xrLabel20.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel20.LocationFloat = new DevExpress.Utils.PointFloat(567.0832F, 91.99995F);
+            this.xrLabel20.Name = "xrLabel20";
+            this.xrLabel20.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel20.SizeF = new System.Drawing.SizeF(62.91663F, 23.00001F);
+            this.xrLabel20.StylePriority.UseFont = false;
+            this.xrLabel20.Text = "xrLabel20";
+            // 
+            // xrLabel19
+            // 
+            this.xrLabel19.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel19.LocationFloat = new DevExpress.Utils.PointFloat(499.7931F, 91.99995F);
+            this.xrLabel19.Name = "xrLabel19";
+            this.xrLabel19.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel19.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
+            this.xrLabel19.StylePriority.UseFont = false;
+            this.xrLabel19.Text = "Combustible";
+            // 
+            // xrLabel18
+            // 
+            this.xrLabel18.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel18.LocationFloat = new DevExpress.Utils.PointFloat(501.4575F, 68.99995F);
+            this.xrLabel18.Name = "xrLabel18";
+            this.xrLabel18.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel18.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
+            this.xrLabel18.StylePriority.UseFont = false;
+            this.xrLabel18.Text = "Km";
+            // 
+            // xrLabel17
+            // 
+            this.xrLabel17.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel17.LocationFloat = new DevExpress.Utils.PointFloat(499.7931F, 45.99997F);
+            this.xrLabel17.Name = "xrLabel17";
+            this.xrLabel17.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel17.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
+            this.xrLabel17.StylePriority.UseFont = false;
+            this.xrLabel17.Text = "Propietario";
+            // 
+            // xrLabel16
+            // 
+            this.xrLabel16.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel16.LocationFloat = new DevExpress.Utils.PointFloat(501.4575F, 0F);
+            this.xrLabel16.Name = "xrLabel16";
+            this.xrLabel16.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel16.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
+            this.xrLabel16.StylePriority.UseFont = false;
+            this.xrLabel16.Text = "Color";
+            // 
+            // xrLabel15
+            // 
+            this.xrLabel15.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel15.LocationFloat = new DevExpress.Utils.PointFloat(499.7931F, 22.99999F);
+            this.xrLabel15.Name = "xrLabel15";
+            this.xrLabel15.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel15.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
+            this.xrLabel15.StylePriority.UseFont = false;
+            this.xrLabel15.Text = "Sucursal";
+            // 
+            // xrLabel14
+            // 
+            this.xrLabel14.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel14.LocationFloat = new DevExpress.Utils.PointFloat(359.584F, 68.99995F);
+            this.xrLabel14.Name = "xrLabel14";
+            this.xrLabel14.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel14.SizeF = new System.Drawing.SizeF(53.12567F, 22.99999F);
+            this.xrLabel14.StylePriority.UseFont = false;
+            this.xrLabel14.Text = "Precio";
+            // 
+            // xrLabel40
+            // 
+            this.xrLabel40.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel40.LocationFloat = new DevExpress.Utils.PointFloat(359.584F, 45.99997F);
+            this.xrLabel40.Name = "xrLabel40";
+            this.xrLabel40.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel40.SizeF = new System.Drawing.SizeF(53.12567F, 23F);
+            this.xrLabel40.StylePriority.UseFont = false;
+            this.xrLabel40.Text = "Gastos";
+            // 
+            // xrLabel39
+            // 
+            this.xrLabel39.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel39.LocationFloat = new DevExpress.Utils.PointFloat(359.584F, 22.99999F);
+            this.xrLabel39.Name = "xrLabel39";
+            this.xrLabel39.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel39.SizeF = new System.Drawing.SizeF(53.12567F, 22.99999F);
+            this.xrLabel39.StylePriority.UseFont = false;
+            this.xrLabel39.Text = "Costo";
+            // 
+            // xrLabel38
+            // 
+            this.xrLabel38.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel38.LocationFloat = new DevExpress.Utils.PointFloat(70.41607F, 22.99999F);
+            this.xrLabel38.Name = "xrLabel38";
+            this.xrLabel38.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel38.SizeF = new System.Drawing.SizeF(47.91728F, 22.99999F);
+            this.xrLabel38.StylePriority.UseFont = false;
+            this.xrLabel38.Text = "Modelo";
+            // 
+            // xrLabel37
+            // 
+            this.xrLabel37.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel37.LocationFloat = new DevExpress.Utils.PointFloat(70.41607F, 45.99997F);
+            this.xrLabel37.Name = "xrLabel37";
+            this.xrLabel37.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel37.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
+            this.xrLabel37.StylePriority.UseFont = false;
+            this.xrLabel37.Text = "Año";
+            // 
+            // xrLabel36
+            // 
+            this.xrLabel36.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel36.LocationFloat = new DevExpress.Utils.PointFloat(70.41607F, 68.99995F);
+            this.xrLabel36.Name = "xrLabel36";
+            this.xrLabel36.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel36.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
+            this.xrLabel36.StylePriority.UseFont = false;
+            this.xrLabel36.Text = "Depto";
+            // 
+            // xrLabel35
+            // 
+            this.xrLabel35.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel35.LocationFloat = new DevExpress.Utils.PointFloat(215.6237F, 0F);
+            this.xrLabel35.Name = "xrLabel35";
+            this.xrLabel35.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel35.SizeF = new System.Drawing.SizeF(52.08401F, 23F);
+            this.xrLabel35.StylePriority.UseFont = false;
+            this.xrLabel35.Text = "Matricula";
+            // 
+            // xrLabel34
+            // 
+            this.xrLabel34.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel34.LocationFloat = new DevExpress.Utils.PointFloat(215.6237F, 22.99999F);
+            this.xrLabel34.Name = "xrLabel34";
+            this.xrLabel34.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel34.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
+            this.xrLabel34.StylePriority.UseFont = false;
+            this.xrLabel34.Text = "Padron";
+            // 
+            // xrLabel33
+            // 
+            this.xrLabel33.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel33.LocationFloat = new DevExpress.Utils.PointFloat(215.6237F, 45.99997F);
+            this.xrLabel33.Name = "xrLabel33";
+            this.xrLabel33.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel33.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
+            this.xrLabel33.StylePriority.UseFont = false;
+            this.xrLabel33.Text = "Motor";
+            // 
+            // xrLabel32
+            // 
+            this.xrLabel32.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel32.LocationFloat = new DevExpress.Utils.PointFloat(215.6237F, 68.99995F);
+            this.xrLabel32.Name = "xrLabel32";
+            this.xrLabel32.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel32.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
+            this.xrLabel32.StylePriority.UseFont = false;
+            this.xrLabel32.Text = "Chasis";
+            // 
+            // xrLabel31
+            // 
+            this.xrLabel31.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel31.LocationFloat = new DevExpress.Utils.PointFloat(359.584F, 0F);
+            this.xrLabel31.Name = "xrLabel31";
+            this.xrLabel31.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel31.SizeF = new System.Drawing.SizeF(53.12567F, 22.99999F);
+            this.xrLabel31.StylePriority.UseFont = false;
+            this.xrLabel31.Text = "Adquirido";
+            // 
+            // xrLabel13
+            // 
+            this.xrLabel13.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel13.LocationFloat = new DevExpress.Utils.PointFloat(70.41607F, 0F);
+            this.xrLabel13.Name = "xrLabel13";
+            this.xrLabel13.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel13.SizeF = new System.Drawing.SizeF(37.50071F, 23F);
+            this.xrLabel13.StylePriority.UseFont = false;
+            this.xrLabel13.Text = "Marca";
+            // 
+            // xrLabel11
+            // 
+            this.xrLabel11.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Kilometros")});
+            this.xrLabel11.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel11.LocationFloat = new DevExpress.Utils.PointFloat(567.0831F, 68.99995F);
+            this.xrLabel11.Name = "xrLabel11";
+            this.xrLabel11.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel11.SizeF = new System.Drawing.SizeF(76.66663F, 23F);
+            this.xrLabel11.StylePriority.UseFont = false;
+            this.xrLabel11.Text = "xrLabel11";
+            // 
+            // xrLabel9
+            // 
+            this.xrLabel9.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Propietario")});
+            this.xrLabel9.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel9.LocationFloat = new DevExpress.Utils.PointFloat(567.0831F, 45.99997F);
+            this.xrLabel9.Name = "xrLabel9";
+            this.xrLabel9.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel9.SizeF = new System.Drawing.SizeF(76.66644F, 23F);
+            this.xrLabel9.StylePriority.UseFont = false;
+            this.xrLabel9.Text = "xrLabel9";
+            // 
+            // xrLabel30
+            // 
+            this.xrLabel30.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Sucursal.Nombre")});
+            this.xrLabel30.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel30.LocationFloat = new DevExpress.Utils.PointFloat(567.0831F, 22.99999F);
+            this.xrLabel30.Name = "xrLabel30";
+            this.xrLabel30.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel30.SizeF = new System.Drawing.SizeF(72.91663F, 23F);
+            this.xrLabel30.StylePriority.UseFont = false;
+            this.xrLabel30.Text = "xrLabel30";
+            // 
+            // xrLabel29
+            // 
+            this.xrLabel29.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "PrecioText")});
+            this.xrLabel29.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel29.LocationFloat = new DevExpress.Utils.PointFloat(412.7097F, 68.99995F);
+            this.xrLabel29.Name = "xrLabel29";
+            this.xrLabel29.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel29.SizeF = new System.Drawing.SizeF(76.24969F, 23F);
+            this.xrLabel29.StylePriority.UseFont = false;
+            this.xrLabel29.Text = "xrLabel29";
+            // 
+            // xrLabel28
+            // 
+            this.xrLabel28.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "TotalGastosText")});
+            this.xrLabel28.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel28.LocationFloat = new DevExpress.Utils.PointFloat(412.7097F, 45.99997F);
+            this.xrLabel28.Name = "xrLabel28";
+            this.xrLabel28.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel28.SizeF = new System.Drawing.SizeF(64.58331F, 23F);
+            this.xrLabel28.StylePriority.UseFont = false;
+            this.xrLabel28.Text = "xrLabel28";
+            // 
+            // xrLabel27
+            // 
+            this.xrLabel27.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "FechaAdquirido", "{0:dd/MM/yyyy}")});
+            this.xrLabel27.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel27.LocationFloat = new DevExpress.Utils.PointFloat(412.7097F, 0F);
+            this.xrLabel27.Name = "xrLabel27";
+            this.xrLabel27.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel27.SizeF = new System.Drawing.SizeF(64.58331F, 23F);
+            this.xrLabel27.StylePriority.UseFont = false;
+            this.xrLabel27.Text = "xrLabel27";
+            // 
+            // xrLabel26
+            // 
+            this.xrLabel26.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "CostoText")});
+            this.xrLabel26.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel26.LocationFloat = new DevExpress.Utils.PointFloat(412.7097F, 22.99999F);
+            this.xrLabel26.Name = "xrLabel26";
+            this.xrLabel26.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel26.SizeF = new System.Drawing.SizeF(64.58337F, 23F);
+            this.xrLabel26.StylePriority.UseFont = false;
+            this.xrLabel26.Text = "xrLabel26";
             // 
             // xrLabel25
             // 
@@ -503,271 +772,15 @@ public class DXListadoVehiculosCompleto : DevExpress.XtraReports.UI.XtraReport {
             this.PrecioText.Expression = "[PrecioVenta.Moneda.Simbolo]+\' \'+[PrecioVenta.Monto]";
             this.PrecioText.Name = "PrecioText";
             // 
-            // xrLabel26
+            // xrLabel21
             // 
-            this.xrLabel26.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "CostoText")});
-            this.xrLabel26.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel26.LocationFloat = new DevExpress.Utils.PointFloat(412.7097F, 22.99999F);
-            this.xrLabel26.Name = "xrLabel26";
-            this.xrLabel26.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel26.SizeF = new System.Drawing.SizeF(64.58337F, 23F);
-            this.xrLabel26.StylePriority.UseFont = false;
-            this.xrLabel26.Text = "xrLabel26";
-            // 
-            // xrLabel27
-            // 
-            this.xrLabel27.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "FechaAdquirido", "{0:dd/MM/yyyy}")});
-            this.xrLabel27.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel27.LocationFloat = new DevExpress.Utils.PointFloat(412.7097F, 0F);
-            this.xrLabel27.Name = "xrLabel27";
-            this.xrLabel27.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel27.SizeF = new System.Drawing.SizeF(64.58331F, 23F);
-            this.xrLabel27.StylePriority.UseFont = false;
-            this.xrLabel27.Text = "xrLabel27";
-            // 
-            // xrLabel28
-            // 
-            this.xrLabel28.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "TotalGastosText")});
-            this.xrLabel28.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel28.LocationFloat = new DevExpress.Utils.PointFloat(412.7097F, 45.99997F);
-            this.xrLabel28.Name = "xrLabel28";
-            this.xrLabel28.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel28.SizeF = new System.Drawing.SizeF(64.58331F, 23F);
-            this.xrLabel28.StylePriority.UseFont = false;
-            this.xrLabel28.Text = "xrLabel28";
-            // 
-            // xrLabel29
-            // 
-            this.xrLabel29.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "PrecioText")});
-            this.xrLabel29.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel29.LocationFloat = new DevExpress.Utils.PointFloat(412.7097F, 68.99995F);
-            this.xrLabel29.Name = "xrLabel29";
-            this.xrLabel29.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel29.SizeF = new System.Drawing.SizeF(76.24969F, 23F);
-            this.xrLabel29.StylePriority.UseFont = false;
-            this.xrLabel29.Text = "xrLabel29";
-            // 
-            // xrLabel30
-            // 
-            this.xrLabel30.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Sucursal.Nombre")});
-            this.xrLabel30.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel30.LocationFloat = new DevExpress.Utils.PointFloat(567.0831F, 22.99999F);
-            this.xrLabel30.Name = "xrLabel30";
-            this.xrLabel30.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel30.SizeF = new System.Drawing.SizeF(72.91663F, 23F);
-            this.xrLabel30.StylePriority.UseFont = false;
-            this.xrLabel30.Text = "xrLabel30";
-            // 
-            // xrLabel9
-            // 
-            this.xrLabel9.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Propietario")});
-            this.xrLabel9.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel9.LocationFloat = new DevExpress.Utils.PointFloat(567.0831F, 45.99997F);
-            this.xrLabel9.Name = "xrLabel9";
-            this.xrLabel9.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel9.SizeF = new System.Drawing.SizeF(76.66644F, 23F);
-            this.xrLabel9.StylePriority.UseFont = false;
-            this.xrLabel9.Text = "xrLabel9";
-            // 
-            // xrLabel11
-            // 
-            this.xrLabel11.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Kilometros")});
-            this.xrLabel11.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel11.LocationFloat = new DevExpress.Utils.PointFloat(567.0831F, 68.99995F);
-            this.xrLabel11.Name = "xrLabel11";
-            this.xrLabel11.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel11.SizeF = new System.Drawing.SizeF(76.66663F, 23F);
-            this.xrLabel11.StylePriority.UseFont = false;
-            this.xrLabel11.Text = "xrLabel11";
-            // 
-            // xrLabel13
-            // 
-            this.xrLabel13.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel13.LocationFloat = new DevExpress.Utils.PointFloat(70.41607F, 0F);
-            this.xrLabel13.Name = "xrLabel13";
-            this.xrLabel13.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel13.SizeF = new System.Drawing.SizeF(37.50071F, 23F);
-            this.xrLabel13.StylePriority.UseFont = false;
-            this.xrLabel13.Text = "Marca";
-            // 
-            // xrLabel31
-            // 
-            this.xrLabel31.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel31.LocationFloat = new DevExpress.Utils.PointFloat(359.584F, 0F);
-            this.xrLabel31.Name = "xrLabel31";
-            this.xrLabel31.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel31.SizeF = new System.Drawing.SizeF(53.12567F, 22.99999F);
-            this.xrLabel31.StylePriority.UseFont = false;
-            this.xrLabel31.Text = "Adquirido";
-            // 
-            // xrLabel32
-            // 
-            this.xrLabel32.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel32.LocationFloat = new DevExpress.Utils.PointFloat(215.6237F, 68.99995F);
-            this.xrLabel32.Name = "xrLabel32";
-            this.xrLabel32.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel32.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
-            this.xrLabel32.StylePriority.UseFont = false;
-            this.xrLabel32.Text = "Chasis";
-            // 
-            // xrLabel33
-            // 
-            this.xrLabel33.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel33.LocationFloat = new DevExpress.Utils.PointFloat(215.6237F, 45.99997F);
-            this.xrLabel33.Name = "xrLabel33";
-            this.xrLabel33.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel33.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
-            this.xrLabel33.StylePriority.UseFont = false;
-            this.xrLabel33.Text = "Motor";
-            // 
-            // xrLabel34
-            // 
-            this.xrLabel34.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel34.LocationFloat = new DevExpress.Utils.PointFloat(215.6237F, 22.99999F);
-            this.xrLabel34.Name = "xrLabel34";
-            this.xrLabel34.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel34.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
-            this.xrLabel34.StylePriority.UseFont = false;
-            this.xrLabel34.Text = "Padron";
-            // 
-            // xrLabel35
-            // 
-            this.xrLabel35.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel35.LocationFloat = new DevExpress.Utils.PointFloat(215.6237F, 0F);
-            this.xrLabel35.Name = "xrLabel35";
-            this.xrLabel35.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel35.SizeF = new System.Drawing.SizeF(52.08401F, 23F);
-            this.xrLabel35.StylePriority.UseFont = false;
-            this.xrLabel35.Text = "Matricula";
-            // 
-            // xrLabel36
-            // 
-            this.xrLabel36.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel36.LocationFloat = new DevExpress.Utils.PointFloat(70.41607F, 68.99995F);
-            this.xrLabel36.Name = "xrLabel36";
-            this.xrLabel36.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel36.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
-            this.xrLabel36.StylePriority.UseFont = false;
-            this.xrLabel36.Text = "Depto";
-            // 
-            // xrLabel37
-            // 
-            this.xrLabel37.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel37.LocationFloat = new DevExpress.Utils.PointFloat(70.41607F, 45.99997F);
-            this.xrLabel37.Name = "xrLabel37";
-            this.xrLabel37.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel37.SizeF = new System.Drawing.SizeF(52.08404F, 23F);
-            this.xrLabel37.StylePriority.UseFont = false;
-            this.xrLabel37.Text = "Año";
-            // 
-            // xrLabel38
-            // 
-            this.xrLabel38.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel38.LocationFloat = new DevExpress.Utils.PointFloat(70.41607F, 22.99999F);
-            this.xrLabel38.Name = "xrLabel38";
-            this.xrLabel38.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel38.SizeF = new System.Drawing.SizeF(47.91728F, 22.99999F);
-            this.xrLabel38.StylePriority.UseFont = false;
-            this.xrLabel38.Text = "Modelo";
-            // 
-            // xrLabel39
-            // 
-            this.xrLabel39.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel39.LocationFloat = new DevExpress.Utils.PointFloat(359.584F, 22.99999F);
-            this.xrLabel39.Name = "xrLabel39";
-            this.xrLabel39.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel39.SizeF = new System.Drawing.SizeF(53.12567F, 22.99999F);
-            this.xrLabel39.StylePriority.UseFont = false;
-            this.xrLabel39.Text = "Costo";
-            // 
-            // xrLabel40
-            // 
-            this.xrLabel40.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel40.LocationFloat = new DevExpress.Utils.PointFloat(359.584F, 45.99997F);
-            this.xrLabel40.Name = "xrLabel40";
-            this.xrLabel40.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel40.SizeF = new System.Drawing.SizeF(53.12567F, 23F);
-            this.xrLabel40.StylePriority.UseFont = false;
-            this.xrLabel40.Text = "Gastos";
-            // 
-            // xrLabel14
-            // 
-            this.xrLabel14.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel14.LocationFloat = new DevExpress.Utils.PointFloat(359.584F, 68.99995F);
-            this.xrLabel14.Name = "xrLabel14";
-            this.xrLabel14.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel14.SizeF = new System.Drawing.SizeF(53.12567F, 22.99999F);
-            this.xrLabel14.StylePriority.UseFont = false;
-            this.xrLabel14.Text = "Precio";
-            // 
-            // xrLabel15
-            // 
-            this.xrLabel15.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel15.LocationFloat = new DevExpress.Utils.PointFloat(499.7931F, 22.99999F);
-            this.xrLabel15.Name = "xrLabel15";
-            this.xrLabel15.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel15.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
-            this.xrLabel15.StylePriority.UseFont = false;
-            this.xrLabel15.Text = "Sucursal";
-            // 
-            // xrLabel16
-            // 
-            this.xrLabel16.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel16.LocationFloat = new DevExpress.Utils.PointFloat(501.4575F, 0F);
-            this.xrLabel16.Name = "xrLabel16";
-            this.xrLabel16.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel16.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
-            this.xrLabel16.StylePriority.UseFont = false;
-            this.xrLabel16.Text = "Color";
-            // 
-            // xrLabel17
-            // 
-            this.xrLabel17.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel17.LocationFloat = new DevExpress.Utils.PointFloat(499.7931F, 45.99997F);
-            this.xrLabel17.Name = "xrLabel17";
-            this.xrLabel17.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel17.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
-            this.xrLabel17.StylePriority.UseFont = false;
-            this.xrLabel17.Text = "Propietario";
-            // 
-            // xrLabel18
-            // 
-            this.xrLabel18.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel18.LocationFloat = new DevExpress.Utils.PointFloat(501.4575F, 68.99995F);
-            this.xrLabel18.Name = "xrLabel18";
-            this.xrLabel18.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel18.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
-            this.xrLabel18.StylePriority.UseFont = false;
-            this.xrLabel18.Text = "Km";
-            // 
-            // xrLabel19
-            // 
-            this.xrLabel19.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel19.LocationFloat = new DevExpress.Utils.PointFloat(499.7931F, 91.99995F);
-            this.xrLabel19.Name = "xrLabel19";
-            this.xrLabel19.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel19.SizeF = new System.Drawing.SizeF(65.62567F, 22.99999F);
-            this.xrLabel19.StylePriority.UseFont = false;
-            this.xrLabel19.Text = "Tipo";
-            // 
-            // xrLabel20
-            // 
-            this.xrLabel20.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "TipoCombustible.Descripcion")});
-            this.xrLabel20.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel20.LocationFloat = new DevExpress.Utils.PointFloat(567.0832F, 91.99995F);
-            this.xrLabel20.Name = "xrLabel20";
-            this.xrLabel20.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel20.SizeF = new System.Drawing.SizeF(62.91663F, 23.00001F);
-            this.xrLabel20.StylePriority.UseFont = false;
-            this.xrLabel20.Text = "xrLabel20";
+            this.xrLabel21.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "DescripcionEstado")});
+            this.xrLabel21.LocationFloat = new DevExpress.Utils.PointFloat(7.916769F, 22.99999F);
+            this.xrLabel21.Name = "xrLabel21";
+            this.xrLabel21.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrLabel21.SizeF = new System.Drawing.SizeF(54.16659F, 23F);
+            this.xrLabel21.Text = "xrLabel21";
             // 
             // DXListadoVehiculosCompleto
             // 

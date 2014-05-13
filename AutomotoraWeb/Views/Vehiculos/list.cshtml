@@ -10,6 +10,7 @@
 
 @using (Html.BeginForm()) {
   
+   @Html.HiddenFor(model => model.id)
     
 <div>
  <div id="filtro_tipo" class="floatLeft">
@@ -37,8 +38,8 @@
 		<fieldset id="fieldsetFormato">
 			<legend>Formato</legend>
 			<div>
-                @Html.RadioButtonFor(model => model.Filtro.Categoria,  ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO )  Abreviado
-                @Html.RadioButtonFor(model => model.Filtro.Categoria,  ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO )  Completo
+                @Html.RadioButtonFor(model => model.Formato,  ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO )  Abreviado
+                @Html.RadioButtonFor(model => model.Formato,  ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO )  Completo
 			</div>
 		</fieldset>
 	</div>
@@ -53,7 +54,7 @@
 					<label>Desde</label>
 				</div>
 				<div class="floatRight editor-field editor-field-small ">
-                    @Html.EditorFor( model => model.Filtro.Desde, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
+                    @Html.TextBoxFor( model => model.Desde, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
 				</div>
 				<div class="clearBoth"></div>
 			</div>
@@ -62,7 +63,7 @@
 					<label>Hasta</label>
 				</div>
 				<div class="floatRight editor-field editor-field-small">
-                    @Html.TextBoxFor( model => model.Filtro.Hasta, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
+                    @Html.TextBoxFor( model => model.Hasta, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
 				</div>
 				<div class="clearBoth"></div>
 			</div>
@@ -108,7 +109,7 @@
 				 @Html.CheckBoxFor(model =>model.FiltrarSucursal) Filtrar Sucursal
 			</div>
 			<div>
-                @Html.DropDownListFor(model => model.Filtro.Sucursal ,new SelectList(ViewBag.SucursalesListado, "Codigo", "Nombre"));
+                @Html.DropDownListFor(model => model.Filtro.Sucursal ,new SelectList(ViewBag.SucursalesListado, "Codigo", "Nombre"))
 			</div>
 		</fieldset>
 	</div>
@@ -119,7 +120,7 @@
 				@Html.CheckBoxFor(model => model.FiltrarCombustible) Filtrar Tipo Combustible
 			</div>
 			<div class="editor-field editor-field-small">
-                @Html.DropDownListFor(model => model.Filtro.TipoCombustible ,new SelectList(ViewBag.TiposComubstiblesListado, "Codigo", "Descripcion"));			
+                @Html.DropDownListFor(model => model.Filtro.TipoCombustible ,new SelectList(ViewBag.TiposComubstiblesListado, "Codigo", "Descripcion"))
 			</div>
 		</fieldset>
 	</div>
@@ -129,13 +130,22 @@
 </div>
     
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Listar"))
+        <div class="btn-group">
+            <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit", value="Actualizar" />
+            
+
+            @* @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("   Listar    "))*@
+        </div>
+        <div class="btn-group">
+            <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit", value="Imprimir" />
+             @*@(Html.Bootstrap().ActionLinkButton("Imprimir", VendedoresController.REPORT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary2-mf"))*@
+        </div>
     </div>
     <div class="clear-both"></div>
     
 }
 
-@*<div id="divGrilla">
+<div id="divGrilla">
     @Html.Partial("_reportGrilla", Model)
-</div>*@
+</div>
 

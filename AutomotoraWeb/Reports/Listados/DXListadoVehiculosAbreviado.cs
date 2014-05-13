@@ -45,6 +45,7 @@ public class DXListadoVehiculosAbreviado : DevExpress.XtraReports.UI.XtraReport 
     private XRLabel xrLabel9;
     private CalculatedField CostoText;
     private CalculatedField PrecioText;
+    private XRLabel xrLabel22;
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -78,6 +79,7 @@ public class DXListadoVehiculosAbreviado : DevExpress.XtraReports.UI.XtraReport 
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraReports.UI.XRSummary xrSummary1 = new DevExpress.XtraReports.UI.XRSummary();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
+            this.xrLabel9 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel13 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel12 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel11 = new DevExpress.XtraReports.UI.XRLabel();
@@ -113,13 +115,14 @@ public class DXListadoVehiculosAbreviado : DevExpress.XtraReports.UI.XtraReport 
             this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
             this.CostoText = new DevExpress.XtraReports.UI.CalculatedField();
             this.PrecioText = new DevExpress.XtraReports.UI.CalculatedField();
-            this.xrLabel9 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel22 = new DevExpress.XtraReports.UI.XRLabel();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
             // 
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel22,
             this.xrLabel9,
             this.xrLabel13,
             this.xrLabel12,
@@ -134,6 +137,18 @@ public class DXListadoVehiculosAbreviado : DevExpress.XtraReports.UI.XtraReport 
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
+            // 
+            // xrLabel9
+            // 
+            this.xrLabel9.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "PrecioText")});
+            this.xrLabel9.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.xrLabel9.LocationFloat = new DevExpress.Utils.PointFloat(472.5F, 0F);
+            this.xrLabel9.Name = "xrLabel9";
+            this.xrLabel9.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel9.SizeF = new System.Drawing.SizeF(81.24991F, 23F);
+            this.xrLabel9.StylePriority.UseFont = false;
+            this.xrLabel9.Text = "xrLabel9";
             // 
             // xrLabel13
             // 
@@ -235,13 +250,15 @@ public class DXListadoVehiculosAbreviado : DevExpress.XtraReports.UI.XtraReport 
             // 
             this.xrLabel3.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Ficha")});
-            this.xrLabel3.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.xrLabel3.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold);
             this.xrLabel3.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 0F);
             this.xrLabel3.Name = "xrLabel3";
             this.xrLabel3.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel3.SizeF = new System.Drawing.SizeF(73.95834F, 23F);
             this.xrLabel3.StylePriority.UseFont = false;
+            this.xrLabel3.StylePriority.UseTextAlignment = false;
             this.xrLabel3.Text = "xrLabel3";
+            this.xrLabel3.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // TopMargin
             // 
@@ -506,17 +523,17 @@ public class DXListadoVehiculosAbreviado : DevExpress.XtraReports.UI.XtraReport 
             this.PrecioText.Expression = "[PrecioVenta.Moneda.Simbolo]+\' \'+[PrecioVenta.Monto]";
             this.PrecioText.Name = "PrecioText";
             // 
-            // xrLabel9
+            // xrLabel22
             // 
-            this.xrLabel9.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "PrecioText")});
-            this.xrLabel9.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.xrLabel9.LocationFloat = new DevExpress.Utils.PointFloat(472.5F, 0F);
-            this.xrLabel9.Name = "xrLabel9";
-            this.xrLabel9.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel9.SizeF = new System.Drawing.SizeF(81.24991F, 23F);
-            this.xrLabel9.StylePriority.UseFont = false;
-            this.xrLabel9.Text = "xrLabel9";
+            this.xrLabel22.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "DescripcionEstado")});
+            this.xrLabel22.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.xrLabel22.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 22.99999F);
+            this.xrLabel22.Name = "xrLabel22";
+            this.xrLabel22.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrLabel22.SizeF = new System.Drawing.SizeF(73.95834F, 23F);
+            this.xrLabel22.StylePriority.UseFont = false;
+            this.xrLabel22.Text = "xrLabel22";
             // 
             // DXListadoVehiculosAbreviado
             // 

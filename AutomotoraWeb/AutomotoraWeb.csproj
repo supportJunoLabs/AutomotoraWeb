@@ -295,9 +295,6 @@
     <Compile Include="Reports\Mantenimientos\DXReportSucursales.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\Mantenimientos\DXReportVehiculos.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportVendedores.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1652,6 +1649,7 @@
     <Content Include="Views\Pedidos\_reportGrilla.cshtml" />
     <Content Include="Views\Vendedores\_datosDetalle.cshtml" />
     <Content Include="Views\Vehiculos\list.cshtml" />
+    <Content Include="Views\Vehiculos\_reportGrilla.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

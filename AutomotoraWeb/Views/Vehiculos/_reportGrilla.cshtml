@@ -1,0 +1,28 @@
+﻿@model AutomotoraWeb.Models.ListadoVehiculosModel
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Sales.Maintenance;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoGrilla ig= new InfoGrilla();
+    
+    ig.HiddenColumns= new List<string>() {  }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    
+    ig.VisibleColumns = new List<string>() { "Ficha", "Marca", "Modelo", "Matricula", "Anio", "Observaciones", "FechaAdquirido", "Sucursal", "TipoCombustible", "Kilometros" , "DescripcionEstado"};
+
+    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { { "Observaciones", 40 } };
+    ig.TrunkColumns = trunkColumns;
+
+    ig.NameGrid = "grilla";
+    ig.Controller = VehiculosController.CONTROLLER;
+    ig.ActionCallbackRoute = "reportGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Vehiculo.VehiculoMD);
+    
+    ig.AddButton(new BotonGrilla("details", VehiculosController.CONTROLLER, "boton-consultar-mf", "Consulta Vehículo"));
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model.Resultado)
+  
