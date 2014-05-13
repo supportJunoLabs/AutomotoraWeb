@@ -36,6 +36,11 @@
         if (ViewBag.trunkColumns != null) {
             ig.TrunkColumns = (Dictionary<string, int>)(ViewBag.trunkColumns);
         }
+        if (ViewBag.Botones!=null){
+            ig.Botones = ViewBag.Botones;
+        }else{
+            ig.Botones = null;
+        }
 
          ig.TypeOfModel = (Type)(ViewBag.typeOfModel);
          ig.Controller = ViewBag.controller;
@@ -104,7 +109,7 @@
 @(Html.DevExpress().GridView(
     settings => {
         settings.Name = ig.NameGrid;
-        settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute};
+        settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, id = ViewData["id"]};
         settings.Width = Unit.Percentage(98);
 
         settings.SettingsBehavior.AllowSort = true;
