@@ -256,8 +256,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return PartialView("_reportGrilla", model);
         }
 
-        private List<Vehiculo> _listaElementos(VehiculoFiltro pf) {
-            return Vehiculo.Vehiculos(pf);
+        private List<Vehiculo> _listaElementos(VehiculoFiltro vf) {
+            return Vehiculo.Vehiculos(vf);
         }
 
         #endregion
