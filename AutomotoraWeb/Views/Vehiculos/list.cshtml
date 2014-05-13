@@ -10,6 +10,14 @@
 
 <style type="text/css">
 
+    input[type="radio"]{
+        vertical-align:top;
+    }
+
+    input[type="checkbox"]{
+        vertical-align:top;
+    }
+
     .floatLeft{
 	    float: left;
     }
@@ -52,16 +60,16 @@
         <div id="filtro_tipo" class="floatLeft">
 		    <fieldset id="fieldsetEstado">
 			    <legend>Estado</legend>
-                <div>
+                <div >
                     @Html.RadioButtonFor(model => model.Filtro.Tipo,  Vehiculo.VHC_TIPO_LISTADO.LIBRES )  En Venta
                 </div>
-                <div>
+                <div style="vertical-align:middle">
                     @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.SENIADOS )  Señados
                 </div>
                 <div>
                     @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.PARA_ENTREGAR )  Vendidos sin entregar
                 </div>
-                <div>        
+                <div >    
                     @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.EN_STOCK )  En Stock
                 </div>
 		    </fieldset>
@@ -86,12 +94,13 @@
 			    <div>
                     @Html.CheckBoxFor(model => model.FiltrarFechas) Filtrar Periodo
 			    </div>
-			    <div id="containerDesde">
+                <div  id="periodo" style="margin-top:10px;">
+			    <div id="containerDesde" >
 				    <div class="floatLeft labelWidth" style="text-align: right; padding-right: 5px;">
 					    <label>Desde</label>
 				    </div>
 				    <div class="floatRight editor-field editor-field-small ">
-                        @Html.TextBoxFor( model => model.Filtro.Desde, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
+                        @Html.TextBoxFor( model => model.Desde, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
 				    </div>
 				    <div class="clearBoth"></div>
 			    </div>
@@ -100,10 +109,11 @@
 					    <label>Hasta</label>
 				    </div>
 				    <div class="floatRight editor-field editor-field-small">
-                        @Html.TextBoxFor( model => model.Filtro.Hasta, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
+                        @Html.TextBoxFor( model => model.Hasta, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
 				    </div>
 				    <div class="clearBoth"></div>
 			    </div>
+                </div>
 		    </fieldset>
 	    </div>
         <div id="filtro_combustible" class="floatLeft">
@@ -112,7 +122,7 @@
 			    <div>
 				    @Html.CheckBoxFor(model => model.FiltrarCombustible) Filtrar Tipo Combustible
 			    </div>
-			    <div class="editor-field editor-field-small">
+			    <div class="editor-field editor-field-small" style="margin-top:10px;">
                     @Html.DropDownListFor(model => model.Filtro.TipoCombustible ,new SelectList(ViewBag.TiposComubstiblesListado, "Codigo", "Descripcion"))			
 			    </div>
 		    </fieldset>
@@ -162,7 +172,7 @@
 			    <div>
 				     @Html.CheckBoxFor(model =>model.FiltrarSucursal) Filtrar Sucursal
 			    </div>
-			    <div>
+			    <div style="margin-top:10px;">
                     @Html.DropDownListFor(model => model.Filtro.Sucursal ,new SelectList(ViewBag.SucursalesListado, "Codigo", "Nombre"))
 			    </div>
 		    </fieldset>
