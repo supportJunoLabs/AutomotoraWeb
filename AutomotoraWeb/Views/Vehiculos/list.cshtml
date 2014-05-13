@@ -123,7 +123,7 @@
 				    @Html.CheckBoxFor(model => model.FiltrarCombustible) Filtrar Tipo Combustible
 			    </div>
 			    <div class="editor-field editor-field-small" style="margin-top:10px;">
-                    @Html.DropDownListFor(model => model.Filtro.TipoCombustible ,new SelectList(ViewBag.TiposComubstiblesListado, "Codigo", "Descripcion"))			
+                    @Html.DropDownListFor(model => model.Filtro.TipoCombustible.Codigo, new SelectList(ViewBag.TiposComubstiblesListado, "Codigo", "Descripcion"))			
 			    </div>
 		    </fieldset>
 	    </div>
@@ -173,7 +173,7 @@
 				     @Html.CheckBoxFor(model =>model.FiltrarSucursal) Filtrar Sucursal
 			    </div>
 			    <div style="margin-top:10px;">
-                    @Html.DropDownListFor(model => model.Filtro.Sucursal ,new SelectList(ViewBag.SucursalesListado, "Codigo", "Nombre"))
+                    @Html.DropDownListFor(model => model.Filtro.Sucursal.Codigo ,new SelectList(ViewBag.SucursalesListado, "Codigo", "Nombre"))
 			    </div>
 		    </fieldset>
 	    </div>
