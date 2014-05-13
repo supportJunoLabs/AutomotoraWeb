@@ -45,7 +45,8 @@
 
 @using (Html.BeginForm()) {
   
-    
+ @Html.HiddenFor(model => model.id)
+        
 <div>
     <div id="containerSup">
         <div id="filtro_tipo" class="floatLeft">
@@ -90,7 +91,7 @@
 					    <label>Desde</label>
 				    </div>
 				    <div class="floatRight editor-field editor-field-small ">
-                        @Html.EditorFor( model => model.Filtro.Desde, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
+                        @Html.TextBoxFor( model => model.Filtro.Desde, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
 				    </div>
 				    <div class="clearBoth"></div>
 			    </div>
@@ -120,7 +121,7 @@
     </div>
     <div id="containerInf">
  	    <div id="filtros_otros" class="floatLeft">
-            <fieldset id="fieldsetFormato">
+            <fieldset id="fieldsetotros">
                 <legend>Otros Filtros</legend>
 		        <div id="containerOtros">
 			        <div id="containerMarca">
@@ -170,10 +171,10 @@
 		    <fieldset id="fieldsetFormato">
 			    <legend>Formato</legend>
 			    <div>
-                    @Html.RadioButtonFor(model => model.Filtro.Categoria,  ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO, new { @checked = "checked" })  Abreviado
+                    @Html.RadioButtonFor(model => model.Formato,  ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO, new { @checked = "checked" })  Abreviado
                 </div>
                 <div>
-                    @Html.RadioButtonFor(model => model.Filtro.Categoria,  ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO )  Completo
+                    @Html.RadioButtonFor(model => model.Formato,  ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO )  Completo
 			    </div>
 		    </fieldset>
 	    </div>
@@ -185,13 +186,18 @@
 </div>
     
 <div class="btn-toolbar">
-    @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Listar"))
+        <div class="btn-group">
+            <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit", value="Actualizar" />
+        </div>
+        <div class="btn-group">
+            <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit", value="Imprimir" />
+        </div>
 </div>
 <div class="clear-both"></div>
     
 }
 
-@*<div id="divGrilla">
+<div id="divGrilla">
     @Html.Partial("_reportGrilla", Model)
-</div>*@
+</div>
 
