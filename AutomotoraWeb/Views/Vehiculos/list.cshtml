@@ -9,68 +9,86 @@
 }
 
 <style type="text/css">
-
-    input[type="radio"]{
-        vertical-align:top;
+    select {
+        width: 130px;
     }
 
-    input[type="checkbox"]{
-        vertical-align:top;
+    input[type="radio"] {
+        vertical-align: top;
     }
 
-    .floatLeft{
-	    float: left;
-    }
-    .floatRight{
-	    float: right;
-    }
-    .clearBoth{
-	    clear: both;
-    }
-    .labelWidth{
-	    width: 80px !important;
-    }
-    .inputTextWidth{
-	    width: 120px;
-    }
-    .selectWidth{
-	    width: 100px !important;
-    }
-    #containerLeft{
-	    margin-right: 20px;
-    }
-    #containerOtros{
-	    width: 220px;
-	    margin-top: 10px;
-	    margin-bottom: 10px;
-	    margin-left: 33px;
-    }
-    fieldset{ 
-	    margin: 15px;
+    input[type="checkbox"] {
+        vertical-align: top;
     }
 
+    .floatLeft {
+        float: left;
+    }
+
+    .floatRight {
+        float: right;
+    }
+
+    .clearBoth {
+        clear: both;
+    }
+
+    .labelWidth {
+        width: 80px !important;
+    }
+
+    .inputTextWidth {
+        width: 120px;
+    }
+
+    .selectWidth {
+        width: 100px !important;
+    }
+
+    #containerLeft {
+        margin-right: 20px;
+    }
+
+    #containerOtros {
+        width: 220px;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        margin-left: 33px;
+    }
+
+    fieldset {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
 </style>
 
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 @using (Html.BeginForm()) {
+   @Html.HiddenFor(model => model.id)
   
- @Html.HiddenFor(model => model.id)
-        
+    
+     @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")      
+    
 <div>
-    <div id="containerSup">
+    <div id="containerSup" >
         <div id="filtro_tipo" class="floatLeft">
 		    <fieldset id="fieldsetEstado">
 			    <legend>Estado</legend>
                 <div >
-                    @Html.RadioButtonFor(model => model.Filtro.Tipo,  Vehiculo.VHC_TIPO_LISTADO.LIBRES )  En Venta
+                    @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.LIBRES)  En Venta
                 </div>
                 <div style="vertical-align:middle">
-                    @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.SENIADOS )  Señados
+                    @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.SENIADOS)  Señados
                 </div>
                 <div>
-                    @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.PARA_ENTREGAR )  Vendidos sin entregar
+                    @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.PARA_ENTREGAR)  Vendidos sin entregar
                 </div>
                 <div >    
-                    @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.EN_STOCK )  En Stock
+                    @Html.RadioButtonFor(model => model.Filtro.Tipo, Vehiculo.VHC_TIPO_LISTADO.EN_STOCK)  En Stock
                 </div>
 		    </fieldset>
 	    </div>
@@ -78,13 +96,13 @@
 		    <fieldset id="fieldsetCategoria">
 			    <legend>Categoria</legend>
                 <div>
-                    @Html.RadioButtonFor(model => model.Filtro.Categoria,  VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS)  Todos
+                    @Html.RadioButtonFor(model => model.Filtro.Categoria, VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS)  Todos
                 </div>
                 <div>
-                    @Html.RadioButtonFor(model => model.Filtro.Categoria, VehiculoFiltro.VHC_CATEGORIA_LISTADO.NUEVOS )  Nuevos
+                    @Html.RadioButtonFor(model => model.Filtro.Categoria, VehiculoFiltro.VHC_CATEGORIA_LISTADO.NUEVOS)  Nuevos
                 </div>
                 <div>
-                    @Html.RadioButtonFor(model => model.Filtro.Categoria, VehiculoFiltro.VHC_CATEGORIA_LISTADO.USADOS )  Usados
+                    @Html.RadioButtonFor(model => model.Filtro.Categoria, VehiculoFiltro.VHC_CATEGORIA_LISTADO.USADOS)  Usados
                 </div>  
 		    </fieldset>
 	    </div>
@@ -100,7 +118,7 @@
 					    <label>Desde</label>
 				    </div>
 				    <div class="floatRight editor-field editor-field-small ">
-                        @Html.TextBoxFor( model => model.Desde, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
+                        @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
 				    </div>
 				    <div class="clearBoth"></div>
 			    </div>
@@ -109,28 +127,14 @@
 					    <label>Hasta</label>
 				    </div>
 				    <div class="floatRight editor-field editor-field-small">
-                        @Html.TextBoxFor( model => model.Hasta, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
+                        @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
 				    </div>
 				    <div class="clearBoth"></div>
 			    </div>
                 </div>
 		    </fieldset>
 	    </div>
-        <div id="filtro_combustible" class="floatLeft">
-		    <fieldset id="fieldsetCombustible">
-			    <legend>Combustible</legend>
-			    <div>
-				    @Html.CheckBoxFor(model => model.FiltrarCombustible) Filtrar Tipo Combustible
-			    </div>
-			    <div class="editor-field editor-field-small" style="margin-top:10px;">
-                    @Html.DropDownListFor(model => model.Filtro.TipoCombustible.Codigo, new SelectList(ViewBag.TiposComubstiblesListado, "Codigo", "Descripcion"))			
-			    </div>
-		    </fieldset>
-	    </div>
-        <div class="clearBoth"></div>
-    </div>
-    <div id="containerInf">
- 	    <div id="filtros_otros" class="floatLeft">
+         <div id="filtros_otros" class="floatLeft" >
             <fieldset id="fieldsetotros">
                 <legend>Otros Filtros</legend>
 		        <div id="containerOtros">
@@ -149,7 +153,7 @@
 					        <label>Modelo</label>
 				        </div>
 				        <div class="floatLeft editor-field">
-                            @Html.TextBoxFor( model => model.Filtro.Modelo, new { @class = "floatRight inputTextWidth" })
+                            @Html.TextBoxFor(model => model.Filtro.Modelo, new { @class = "floatRight inputTextWidth" })
 				        </div>
 				        <div class="clearBoth"></div>
 			        </div>
@@ -159,21 +163,37 @@
 					        <label>Año</label>
 				        </div>
 				        <div class="floatLeft editor-field">
-                            @Html.TextBoxFor( model => model.Filtro.Anio, new { @class = "floatRight inputTextWidth" })
+                            @Html.TextBoxFor(model => model.Filtro.Anio, new { @class = "floatRight inputTextWidth" })
 				        </div>
 				        <div class="clearBoth"></div>
 			        </div>
 		        </div>
             </fieldset>
 	    </div>
-	    <div id="filtro_sucursal" class="floatLeft">
+        <div id="filtro_combustible" class="floatLeft">
+		    <fieldset id="fieldsetCombustible">
+			    <legend>Combustible</legend>
+			    <div>
+				    @Html.CheckBoxFor(model => model.FiltrarCombustible) Filtrar Tipo Combustible
+			    </div>
+			    <div class="editor-field" style="margin-top:10px;">
+                    @Html.DropDownListFor(model => model.Filtro.TipoCombustible.Codigo, new SelectList(ViewBag.TiposComubstiblesListado, "Codigo", "Descripcion"))			
+			    </div>
+		    </fieldset>
+	    </div>
+    
+
+        <div class="clearBoth"></div>
+    </div>
+    <div id="containerInf" style="height:135px" >
+        <div id="filtro_sucursal" class="floatLeft">
 		    <fieldset id="fieldsetSucursal">
 			    <legend>Sucursal</legend>
 			    <div>
-				     @Html.CheckBoxFor(model =>model.FiltrarSucursal) Filtrar Sucursal
+				     @Html.CheckBoxFor(model => model.FiltrarSucursal) Filtrar Sucursal
 			    </div>
 			    <div style="margin-top:10px;">
-                    @Html.DropDownListFor(model => model.Filtro.Sucursal.Codigo ,new SelectList(ViewBag.SucursalesListado, "Codigo", "Nombre"))
+                    @Html.DropDownListFor(model => model.Filtro.Sucursal.Codigo, new SelectList(ViewBag.SucursalesListado, "Codigo", "Nombre"))
 			    </div>
 		    </fieldset>
 	    </div>
@@ -181,33 +201,36 @@
 		    <fieldset id="fieldsetFormato">
 			    <legend>Formato</legend>
 			    <div>
-                    @Html.RadioButtonFor(model => model.Formato,  ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO, new { @checked = "checked" })  Abreviado
+                    @Html.RadioButtonFor(model => model.Formato, ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO, new { @checked = "checked" })  Abreviado
                 </div>
                 <div>
-                    @Html.RadioButtonFor(model => model.Formato,  ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO )  Completo
+                    @Html.RadioButtonFor(model => model.Formato, ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO)  Completo
 			    </div>
 		    </fieldset>
 	    </div>
 
+        <div class="btn-toolbar" >
+            <div style="height:80px; width:100%"></div>
+            <div class="btn-group" style="margin-left:30px" >
+                <input type="submit" id="Submit1"    title ="Listar" class="btn btn-primary" name="btnSubmit", value="Actualizar" />
+            </div>
+            <div class="btn-group" style="margin-left:10px">
+                <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit", value="Imprimir" />
+            </div>
+        </div>
 	    <div class="clearBoth"></div>
     </div>
 
  	
 </div>
     
-<div class="btn-toolbar">
-        <div class="btn-group">
-            <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit", value="Actualizar" />
-        </div>
-        <div class="btn-group">
-            <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit", value="Imprimir" />
-        </div>
-</div>
+
 <div class="clear-both"></div>
     
 }
 
-<div id="divGrilla">
+@*<div id="divGrilla" style="width:95%; overflow-x:scroll; border:1px solid #414959">*@
+<div>
     @Html.Partial("_reportGrilla", Model)
 </div>
 

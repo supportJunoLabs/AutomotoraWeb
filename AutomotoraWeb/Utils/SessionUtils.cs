@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
 namespace AutomotoraWeb.Utils {
     public class SessionUtils {
 
@@ -13,6 +14,13 @@ namespace AutomotoraWeb.Utils {
         public static string APPLICATION_SYSTEM_NAME = "applicationSystemName";
         public static string APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS = "applicationPermisiblesActionController";
         public static string ULTIMO_MODULO = "ultimoModulo";
+
+        public static string generarIdVarSesion(string nomFuncion, string nomUsuario) {
+            string s = nomFuncion+"|" +
+                 nomUsuario + "|" +
+                 DateTime.Now.ToString("yyyyMMddHHmmssffff");
+            return s;
+        }
     }
 
     public class Destino {

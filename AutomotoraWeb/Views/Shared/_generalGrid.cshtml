@@ -6,15 +6,7 @@
 @{
 
     InfoGrilla ig = new InfoGrilla();
-    
-     //List<string> hiddenColumns=null;
-    //Dictionary<string, int> trunkColumns=null;
-    //List<string> visibleColumns=null;
-    //Type type;
-    //string nombre;
-    //string campoClave;
-    //List<BotonGrilla> botones=null;
-    //string 
+    int sumaAnchos = 0;
 
     if (ViewBag.InfoGrilla != null) {
         ig = ViewBag.InfoGrilla;
@@ -23,25 +15,10 @@
         if (ViewBag.hiddenColumns != null) {
             ig.HiddenColumns = (List<string>)(ViewBag.hiddenColumns);
         }
-
-        if (ViewBag.visibleColumns != null) {
-            ig.VisibleColumns = (List<string>)(ViewBag.visibleColumns);
-            if (ig.VisibleColumns.Count == 0) {
-                ig.VisibleColumns = null;
-            }
-        } else {
-            ig.VisibleColumns = null;
-        }
-
+        
         if (ViewBag.trunkColumns != null) {
             ig.TrunkColumns = (Dictionary<string, int>)(ViewBag.trunkColumns);
         }
-        if (ViewBag.Botones!=null){
-            ig.Botones = ViewBag.Botones;
-        }else{
-            ig.Botones = null;
-        }
-
          ig.TypeOfModel = (Type)(ViewBag.typeOfModel);
          ig.Controller = ViewBag.controller;
          ig.NameGrid = ViewBag.nameGrid;
@@ -68,14 +45,27 @@
                     gridViewColumn.Caption = displayAttribute.Name;
                     gridViewColumn.ColumnType = MVCxGridViewColumnType.Default;
 
+                    if (ig.AnchosColumns != null) {
+                        if(ig.AnchosColumns.Keys.Contains(propertyInfo.Name)){
+                            gridViewColumn.Width = Unit.Pixel(ig.AnchosColumns[propertyInfo.Name]);
+                            sumaAnchos += ig.AnchosColumns[propertyInfo.Name];
+                        }else{
+                            gridViewColumn.Width = Unit.Pixel(100);
+                            sumaAnchos += 100;
+                        }
+                    }else{
+                        if (propertyInfo.PropertyType.Name.Equals("Boolean")) {
+                            gridViewColumn.Width = Unit.Pixel(75);
+                        } else if (propertyInfo.PropertyType.Name.Equals("DateTime")) {
+                            gridViewColumn.Width = Unit.Pixel(100);
+                        }
+                    }
                     if (propertyInfo.PropertyType.Name.Equals("Boolean")) {
                         gridViewColumn.ColumnType = MVCxGridViewColumnType.CheckBox;
-                        gridViewColumn.Width = Unit.Pixel(75);
-                    } else if (propertyInfo.PropertyType.Name.Equals("DateTime")) {
-                        gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
-                        gridViewColumn.Width = Unit.Pixel(100);
                     }
-
+                    if (propertyInfo.PropertyType.Name.Equals("DateTime")) {
+                        gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+                    }
                     //listGridViewsColumn.Add(gridViewColumn);
                     lista.Add(gridViewColumn);  //lo guardo en una lista temporal para ordenarlo antes de agregarlo
                 }
@@ -102,7 +92,7 @@
             listGridViewsColumn.Add(x);
         }
     }
-            
+              
 }
 
 
@@ -110,8 +100,11 @@
     settings => {
         settings.Name = ig.NameGrid;
         settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, id = ViewData["id"]};
-        settings.Width = Unit.Percentage(98);
-
+        if (ig.AnchosColumns == null) {
+            settings.Width = Unit.Percentage(98);
+        } else {
+            settings.Width = Unit.Pixel(sumaAnchos+90);
+        }
         settings.SettingsBehavior.AllowSort = true;
         settings.SettingsBehavior.AllowGroup = true;
         settings.Settings.ShowGroupPanel = true;
@@ -123,9 +116,13 @@
         settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
         settings.SettingsPager.FirstPageButton.Visible = true;
         settings.SettingsPager.LastPageButton.Visible = true;
-        settings.SettingsPager.PageSize = 30;
+        if (ig.registrosPorPagina <= 0) {
+            settings.SettingsPager.PageSize = 30;
+        } else {
+            settings.SettingsPager.PageSize = ig.registrosPorPagina;
+        }
         settings.SettingsPager.PageSizeItemSettings.Visible = true;
-        settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "30", "50", "100" };
+        //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "30", "50", "100" };
 
         //Adds       
 
@@ -143,16 +140,24 @@
         settings.SettingsPopup.HeaderFilter.MinHeight = 200;
 
 
-        //Columnas Visibles (Propiedades)
-        settings.Columns.AddRange(listGridViewsColumn.ToArray());
 
+        if (!ig.AccionesAlComienzo) {
+            //Columnas Visibles (Propiedades)
+            settings.Columns.AddRange(listGridViewsColumn.ToArray());
+        }
 
         //Columnas Visibles (Editores)
         if (ig.Botones == null || ig.Botones.Count > 0) {
             settings.Columns.Add(column => {
                 column.Caption = "Acciones";
                 column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
-                column.Width = Unit.Pixel(90);
+
+                if (ig.Botones == null) {
+                    column.Width = Unit.Pixel(90);
+                } else {
+                    column.Width = Unit.Pixel(30 + ig.Botones.Count);
+                }
+                
                 column.SetDataItemTemplateContent(c => {
                     var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
                     if (ig.Botones == null) {
@@ -169,6 +174,10 @@
             });
         }
 
+        if (ig.AccionesAlComienzo) {
+            //Columnas Visibles (Propiedades)
+            settings.Columns.AddRange(listGridViewsColumn.ToArray());
+        }
         //Se trunca contenido de columnas con mucho texto
         settings.HtmlDataCellPrepared = (sender, e) => {
             if (ig.TrunkColumns != null && ig.TrunkColumns.Keys.Contains(e.DataColumn.FieldName)) {

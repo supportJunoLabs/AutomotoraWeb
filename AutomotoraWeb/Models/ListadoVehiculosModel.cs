@@ -40,10 +40,63 @@ namespace AutomotoraWeb.Models {
             }
             if (!FiltrarSucursal) {
                 Filtro.Sucursal = null;
+            } else {
+                this.Filtro.Sucursal.Consultar(); //para completar el nombre de la sucursal
             }
             if (!FiltrarCombustible) {
                 Filtro.TipoCombustible = null;
             }
+        }
+
+        public string detallesFiltro() {
+            string s="";
+            switch (this.Filtro.Tipo){
+                case Vehiculo.VHC_TIPO_LISTADO.LIBRES:
+                    s+="Estado: En Venta    ";
+                    break;
+                case Vehiculo.VHC_TIPO_LISTADO.SENIADOS:
+                    s+="Estado: Señados    ";
+                    break;
+                case Vehiculo.VHC_TIPO_LISTADO.PARA_ENTREGAR:
+                    s+="Estado: Vendidos sin entregar    ";
+                    break;
+                case Vehiculo.VHC_TIPO_LISTADO.EN_STOCK:
+                    s+="Estado: En Stock    ";
+                    break;
+            }
+
+            switch (this.Filtro.Categoria){
+
+                case VehiculoFiltro.VHC_CATEGORIA_LISTADO.NUEVOS:
+                    s+="Vehiculos Nuevos    ";
+                    break;
+                case VehiculoFiltro.VHC_CATEGORIA_LISTADO.USADOS :
+                    s+="Vehiculos Usados    ";
+                    break;
+            }
+            
+            if (this.FiltrarFechas){
+                s+="Fecha Adquisicion: "+((this.Filtro.Desde)??DateTime.Now).ToString("dd/MM/yyyy")+" - "+((this.Filtro.Hasta)??DateTime.Now).ToString("dd/MM/yyyy")+"    ";
+            }
+
+            if (this.FiltrarCombustible){
+                s+="Combustible: "+this.Filtro.TipoCombustible.Descripcion+"    ";
+            }
+            if (this.Filtro.Marca!=null && this.Filtro.Marca.Trim()!=""){
+                s+="Marca: "+this.Filtro.Marca.Trim()+"    ";
+            }
+
+            if (this.Filtro.Modelo!=null && this.Filtro.Modelo.Trim()!=""){
+                s+="Modelo: "+this.Filtro.Modelo.Trim()+"    ";
+            }
+            if (this.Filtro.Anio>0){
+                s+="Año: "+this.Filtro.Anio.ToString()+"    ";
+            }
+
+            if (this.FiltrarSucursal){
+                s+="Sucursal: "+this.Filtro.Sucursal.Nombre+"    ";
+            }
+            return s;
         }
     }
 }

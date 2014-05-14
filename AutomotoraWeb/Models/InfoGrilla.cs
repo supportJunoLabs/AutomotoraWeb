@@ -10,9 +10,16 @@ namespace AutomotoraWeb.Models {
         public string ActionCallbackRoute{get; set;}
         public string KeyFieldName {get; set;}
         public Type TypeOfModel {get; set;}
+        private bool accionesAlComienzo =false;
+        public bool AccionesAlComienzo{
+            get { return accionesAlComienzo; }
+            set { accionesAlComienzo = value; }
+        }
+        public int registrosPorPagina { get; set; }
 
         public List<string> HiddenColumns {get; set;}
         public Dictionary<string, int> TrunkColumns {get; set;}
+        public Dictionary<string, int> AnchosColumns { get; set; }
         public List<string> VisibleColumns {get; set;} //Si es nulo, o esta vacia, muestra todas las columnas de tipo simple del objeto
                                                 //Si ha columnas, muestra esta en el orden en que estan aqui.
 
@@ -39,11 +46,18 @@ namespace AutomotoraWeb.Models {
             VisibleColumns.Add(name);
         }
 
-        public void AddTrunkColumns(string name, int length) {
+        public void AddTrunkColumn(string name, int length) {
             if (TrunkColumns == null) {
                 TrunkColumns = new Dictionary<string, int>();
             }
             TrunkColumns.Add(name, length);
+        }
+
+        public void AddAnchoColumn(string name, int width) {
+            if (AnchosColumns == null) {
+                AnchosColumns = new Dictionary<string, int>();
+            }
+            AnchosColumns.Add(name, width);
         }
     }
 }

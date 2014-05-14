@@ -10,6 +10,20 @@
     
     ig.VisibleColumns = new List<string>() { "Ficha", "Marca", "Modelo", "Matricula", "Anio", "Observaciones", "FechaAdquirido", "Sucursal", "TipoCombustible", "Kilometros" , "DescripcionEstado"};
 
+    ig.AccionesAlComienzo = true;
+    
+    ig.AnchosColumns = new Dictionary<string, int>() {
+                {"Ficha", 85}, 
+                {"Marca", 150},
+                {"Modelo", 150}, 
+                {"Anio", 50},
+                { "Observaciones", 250 },
+                {"FechaAdquirido", 80},
+                {"Sucursal", 170},
+                {"TipoCombustible", 100 }, 
+                {"Kilometros", 100}, 
+                {"DescripcionEstado",100}};
+
     Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { { "Observaciones", 40 } };
     ig.TrunkColumns = trunkColumns;
 

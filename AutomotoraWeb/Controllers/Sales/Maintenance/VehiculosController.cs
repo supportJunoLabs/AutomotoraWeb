@@ -31,13 +31,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             ViewBag.NombreEntidades = "Vehiculos";
             ViewBag.NombreEntidad = "Vehiculo";
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (usuario.MultiSucursal){
+            if (usuario.MultiSucursal) {
                 ViewBag.Sucursales = Sucursal.Sucursales();
-            }
-            else{
+            } else {
                 List<Sucursal> listSucursal = new List<Sucursal>();
                 listSucursal.Add(usuario.Sucursal);
-                ViewBag.Sucursales =  listSucursal;
+                ViewBag.Sucursales = listSucursal;
             }
             ViewBag.Departamentos = Departamento.Departamentos();
             ViewBag.TiposCombustible = DLL_Backend.TipoCombustible.TiposCombustible();
@@ -84,7 +83,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
-     
+
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
@@ -208,43 +207,64 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #region Listados
         public ActionResult List() {
-            ListadoVehiculosModel model = new ListadoVehiculosModel();
-            string s = "ListadoVehiculos|" +
-                 ((Usuario)(Session[SessionUtils.SESSION_USER])).Codigo.ToString() + "|" +
-                 DateTime.Now.ToString("yyyyMMddHHmmssffff");
-            Session[s] = model;
-            model.id = s;
 
-            model.Formato = ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO;
-            model.Filtro.Tipo = Vehiculo.VHC_TIPO_LISTADO.LIBRES;
-            model.Filtro.Categoria = VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS;
-            ViewBag.SucursalesListado = Sucursal.Sucursales();
-            ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
-            model.Resultado = _listaElementos(model);
+            ListadoVehiculosModel model = new ListadoVehiculosModel();
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoVehiculos", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.id = s;
+                model.Formato = ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO;
+                model.Filtro.Tipo = Vehiculo.VHC_TIPO_LISTADO.LIBRES;
+                model.Filtro.Categoria = VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS;
+                ViewBag.SucursalesListado = Sucursal.Sucursales();
+                ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
+                ViewData["id"] = model.id;
+                model.Resultado = _listaElementos(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
             return View(model);
         }
 
         [HttpPost]
         public ActionResult List(ListadoVehiculosModel model, string btnSubmit) {
 
-            Session[model.id] = model; //filtros actualizados
-            ViewData["id"]=model.id;
+           
 
-            if (btnSubmit == "Imprimir") {
-                return this.Report(model);
+            try {
+                Session[model.id] = model; //filtros actualizados
+                ViewData["id"] = model.id;
+                ViewBag.SucursalesListado = Sucursal.Sucursales();
+                ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
+                if (ModelState.IsValid) {
+                    if (btnSubmit == "Imprimir") {
+                        return this.Report(model);
+                    }
+                    model.Resultado = _listaElementos(model);
+                }
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-
-            ViewBag.SucursalesListado = Sucursal.Sucursales();
-            ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
-            model.Resultado = _listaElementos(model);
             return View(model);
         }
 
         public ActionResult ReportGrilla(string id) {
-            ListadoVehiculosModel model = (ListadoVehiculosModel)Session[id];
-            model.Resultado = _listaElementos(model);
-            ViewData["id"] = model.id;
-            return PartialView("_reportGrilla", model);
+            ListadoVehiculosModel model = null;
+            try {
+                model = (ListadoVehiculosModel)Session[id];
+                model.Resultado = _listaElementos(model);
+                ViewData["id"] = model.id;
+                return PartialView("_reportGrilla", model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("list", model);
+            }
         }
 
         private List<Vehiculo> _listaElementos(ListadoVehiculosModel model) {
@@ -259,31 +279,56 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #region Reportes
         public ActionResult Report(ListadoVehiculosModel model) {
-            // Add a report to the view data. 
-            DXListadoVehiculosAbreviado rep = new DXListadoVehiculosAbreviado();
-            ViewData["Report"] = rep;
             return View("report", model);
         }
 
         public ActionResult ReportPartial(string id) {
-            XtraReport rep = new DXListadoVehiculosAbreviado();
-            ListadoVehiculosModel model = (ListadoVehiculosModel)Session[id];
-            if (model.Formato == ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO) { 
-                rep= new DXListadoVehiculosCompleto();
+            ListadoVehiculosModel model = null;
+            try {
+                XtraReport rep = new DXListadoVehiculosAbreviado();
+                model = (ListadoVehiculosModel)Session[id];
+                if (model.Formato == ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO) {
+                    rep = new DXListadoVehiculosCompleto();
+                }
+                rep.DataSource = _listaElementos(model);
+                setParamsToReport(rep, model); // lo hago despues porque listaElementos acomoda los filtros en model
+
+                ViewData["Report"] = rep;
+                return PartialView("_reportList", model);
+
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("list", model);
             }
-            rep.DataSource = _listaElementos(model);
-            ViewData["Report"] = rep;
-            return PartialView("_reportList", model);
+        }
+
+        private void setParamsToReport(XtraReport report, ListadoVehiculosModel model) {
+            Parameter paramSystemName = new Parameter();
+            paramSystemName.Name = "detalleFiltros";
+            paramSystemName.Type = typeof(string);
+            paramSystemName.Value = model.detallesFiltro();
+            paramSystemName.Description = "Detalle Filtros";
+            paramSystemName.Visible = false;
+            report.Parameters.Add(paramSystemName);
         }
 
         public ActionResult ReportExport(string id) {
-            XtraReport rep = new DXListadoVehiculosAbreviado();
-            ListadoVehiculosModel model = (ListadoVehiculosModel)Session[id];
-            if (model.Formato == ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO) {
-                rep = new DXListadoVehiculosCompleto();
+            ListadoVehiculosModel model = null;
+            try {
+                XtraReport rep = new DXListadoVehiculosAbreviado();
+                model = (ListadoVehiculosModel)Session[id];
+                if (model.Formato == ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO) {
+                    rep = new DXListadoVehiculosCompleto();
+                }
+                setParamsToReport(rep, model);
+                rep.DataSource = _listaElementos(model);
+                return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("list", model);
             }
-            rep.DataSource = _listaElementos(model);
-            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
         #endregion
 
