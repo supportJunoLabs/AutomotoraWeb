@@ -22,6 +22,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public static string CONTROLLER = "vendedores";
 
+
         public const string FILE_RANDOM_NAME = "fileRandomName";
         public const string ACTUAL_PHOTO_FILE_NAME = "actualPhotoFileName";
         public const string PHOTO_FOLDER_TMP = "~/Content/Images/tmp/";
