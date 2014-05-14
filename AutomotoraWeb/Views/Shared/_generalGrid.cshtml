@@ -99,7 +99,7 @@
 @(Html.DevExpress().GridView(
     settings => {
         settings.Name = ig.NameGrid;
-        settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, id = ViewData["id"]};
+        settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"]};
         if (ig.AnchosColumns == null) {
             settings.Width = Unit.Percentage(98);
         } else {

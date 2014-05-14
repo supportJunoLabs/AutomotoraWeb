@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DLL_Backend;
+using System.ComponentModel.DataAnnotations;
 
 namespace AutomotoraWeb.Models {
     public class ListadoVehiculosModel {
@@ -14,9 +15,14 @@ namespace AutomotoraWeb.Models {
         public bool FiltrarFechas { get; set; }
         public bool FiltrarSucursal { get; set; }
         public bool FiltrarCombustible { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Desde { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Hasta { get; set; }
-        public string id { get; set; }
+
+        public string idParametros { get; set; }
 
         //Constructor
         public ListadoVehiculosModel() {

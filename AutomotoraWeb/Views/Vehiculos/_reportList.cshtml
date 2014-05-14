@@ -9,6 +9,6 @@
     settings.Report = (DevExpress.XtraReports.UI.XtraReport)ViewData["Report"];
     // Callback and export route values specify corresponding controllers and their actions. 
     // These settings are required as well. 
-    settings.CallbackRouteValues = new { Controller = VehiculosController.CONTROLLER, Action = BaseController.REPORT_PARTIAL, id=Model.id };
-    settings.ExportRouteValues = new { Controller = VehiculosController.CONTROLLER, Action = BaseController.REPORT_EXPORT, id=Model.id  };
+    settings.CallbackRouteValues = new { Controller = VehiculosController.CONTROLLER, Action = BaseController.REPORT_PARTIAL, idParametros = Model.idParametros };
+    settings.ExportRouteValues = new { Controller = VehiculosController.CONTROLLER, Action = BaseController.REPORT_EXPORT, idParametros = Model.idParametros };
 }).GetHtml()

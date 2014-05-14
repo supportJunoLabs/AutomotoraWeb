@@ -212,13 +212,13 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             try {
                 string s = SessionUtils.generarIdVarSesion("ListadoVehiculos", Session[SessionUtils.SESSION_USER].ToString());
                 Session[s] = model;
-                model.id = s;
+                model.idParametros = s;
                 model.Formato = ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO;
                 model.Filtro.Tipo = Vehiculo.VHC_TIPO_LISTADO.LIBRES;
                 model.Filtro.Categoria = VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS;
                 ViewBag.SucursalesListado = Sucursal.Sucursales();
                 ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
-                ViewData["id"] = model.id;
+                ViewData["idParametros"] = model.idParametros;
                 model.Resultado = _listaElementos(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -234,8 +234,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
            
 
             try {
-                Session[model.id] = model; //filtros actualizados
-                ViewData["id"] = model.id;
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
                 ViewBag.SucursalesListado = Sucursal.Sucursales();
                 ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
                 this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
@@ -253,12 +253,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return View(model);
         }
 
-        public ActionResult ReportGrilla(string id) {
+        public ActionResult ReportGrilla(string idParametros) {
             ListadoVehiculosModel model = null;
             try {
-                model = (ListadoVehiculosModel)Session[id];
+                model = (ListadoVehiculosModel)Session[idParametros];
                 model.Resultado = _listaElementos(model);
-                ViewData["id"] = model.id;
+                ViewData["idParametros"] = model.idParametros;
                 return PartialView("_reportGrilla", model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -282,11 +282,11 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return View("report", model);
         }
 
-        public ActionResult ReportPartial(string id) {
+        public ActionResult ReportPartial(string idParametros) {
             ListadoVehiculosModel model = null;
             try {
                 XtraReport rep = new DXListadoVehiculosAbreviado();
-                model = (ListadoVehiculosModel)Session[id];
+                model = (ListadoVehiculosModel)Session[idParametros];
                 if (model.Formato == ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO) {
                     rep = new DXListadoVehiculosCompleto();
                 }
@@ -313,11 +313,11 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             report.Parameters.Add(paramSystemName);
         }
 
-        public ActionResult ReportExport(string id) {
+        public ActionResult ReportExport(string idParametros) {
             ListadoVehiculosModel model = null;
             try {
                 XtraReport rep = new DXListadoVehiculosAbreviado();
-                model = (ListadoVehiculosModel)Session[id];
+                model = (ListadoVehiculosModel)Session[idParametros];
                 if (model.Formato == ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO) {
                     rep = new DXListadoVehiculosCompleto();
                 }
