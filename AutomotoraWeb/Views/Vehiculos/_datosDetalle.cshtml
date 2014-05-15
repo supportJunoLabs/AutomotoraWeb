@@ -16,7 +16,7 @@
 </div>
 <div class="editor-field editor-field-large">
     @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, (bool?)ViewBag.SoloLectura,
-                model => model.Sucursal,
+                model => model.Sucursal.Nombre,
                 new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
     @Html.ValidationMessageFor(model => model.Sucursal)
 </div>
@@ -63,7 +63,7 @@
 </div>
 <div class="editor-field editor-field-large">
     @Html.DdlOrDisplayFor(model => model.Departamento.Codigo, (bool?)ViewBag.SoloLectura,
-                model => model.Departamento,
+                model => model.Departamento.Nombre,
                 new SelectList(ViewBag.Departamentos, "Codigo", "Nombre"), null, new { id = "ddlDepartamento" })
     @Html.ValidationMessageFor(model => model.Departamento)
 </div>
@@ -120,7 +120,7 @@
 </div>
 <div class="editor-field editor-field-large">
     @Html.DdlOrDisplayFor(model => model.TipoCombustible.Codigo, (bool?)ViewBag.SoloLectura,
-                model => model.TipoCombustible,
+                model => model.TipoCombustible.Descripcion,
                 new SelectList(ViewBag.TiposCombustible, "Codigo", "Descripcion"), null, new { id = "ddlTipoCombustible" })
     @Html.ValidationMessageFor(model => model.TipoCombustible)
 </div>
@@ -140,7 +140,7 @@
 </div>
 <div class="editor-field editor-field-small">
     @Html.DdlOrDisplayFor(model => model.Costo.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
-                model => model.Costo.Moneda,
+                model => model.Costo.Moneda.Nombre,
                 new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), null, new { id = "ddlMonedaCosto", styl="width: 10px;" })
     @Html.EditorOrDisplayFor(model => model.Costo.Monto, (bool?)ViewBag.SoloLectura)
     @Html.ValidationMessageFor(model => model.Costo.Monto)
@@ -170,7 +170,7 @@
 </div>
 <div class="editor-field editor-field-small">
     @Html.DdlOrDisplayFor(model => model.PrecioVenta.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
-                model => model.Costo.Moneda,
+                model => model.Costo.Moneda.Nombre,
                 new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), null, new { id = "ddlMonedaPrecioVenta" })
     @Html.EditorOrDisplayFor(model => model.PrecioVenta.Monto, (bool?)ViewBag.SoloLectura)
     @Html.ValidationMessageFor(model => model.PrecioVenta.Monto)

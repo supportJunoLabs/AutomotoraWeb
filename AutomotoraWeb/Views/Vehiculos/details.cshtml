@@ -24,6 +24,7 @@
     
     <div class="btn-toolbar">
         @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        @(Html.Bootstrap().ActionLinkButton("Imprimir", BaseController.REPORT2).RouteValues(new { idVehiculo = Model.Codigo }).Class("btn btn-primary").Title("Imprimir Ficha"))
         @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
         @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
     </div>
