@@ -3,11 +3,10 @@ $(document).ready(function () {
 
     $('#deleteFotoBtn').click(function () {
         //alert("borrar foto");
-        var formdata = new FormData();
         $.ajax({
             type: "POST",
             url: '/Vendedores/DeleteFoto',
-            data: formdata,
+            data: $("#camposesion").val(),
             processData: false,
             success: function (data) {
                     $("#imgPhoto").attr("src", "../../Content/Images/ExampleImage.png");
@@ -31,6 +30,11 @@ $(document).ready(function () {
             //Appending each file to FormData object
             formdata.append(fileInputFoto.prop('files')[i].name, fileInputFoto.prop('files')[i]);
         }
+
+        formdata.append("idsesion", $("#camposesion").val());
+
+        alert($("#camposesion").val());
+        alert("hola");
 
         $.ajax({
             type: "POST",
