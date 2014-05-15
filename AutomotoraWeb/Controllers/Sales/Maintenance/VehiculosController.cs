@@ -55,11 +55,11 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         //----------reporte ficha vehiculo -----------------------------
         public ActionResult Report2(int id) {
             // Add a report to the view data. 
-            Vehiculo cli = _obtenerElemento(id);
+            Vehiculo vhc = _obtenerElemento(id);
             //setParamsToReport(rep);
-            DXReportFichaVehiculo rep = new DXReportFichaVehiculo();
-            ViewData["Report"] = rep;
-            return View(cli);
+            //DXReportFichaVehiculo rep = new DXReportFichaVehiculo();
+            //ViewData["Report"] = rep;
+            return View(vhc);
         }
 
         public ActionResult ReportPartial2(int id) {
@@ -230,9 +230,6 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         [HttpPost]
         public ActionResult List(ListadoVehiculosModel model, string btnSubmit) {
-
-           
-
             try {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
@@ -292,9 +289,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 }
                 rep.DataSource = _listaElementos(model);
                 setParamsToReport(rep, model); // lo hago despues porque listaElementos acomoda los filtros en model
-
+                Session[idParametros] = model;
+                ViewData["idParametros"] = idParametros;
                 ViewData["Report"] = rep;
-                return PartialView("_reportList", model);
+                return PartialView("_reportList");
 
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;

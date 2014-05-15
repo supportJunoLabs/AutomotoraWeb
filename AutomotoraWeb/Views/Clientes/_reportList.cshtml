@@ -1,13 +1,25 @@
 ﻿@using AutomotoraWeb.Controllers.Sales.Maintenance;
 @using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Models;
 
+@{
+    InfoReporte ir = new InfoReporte();
+    ir.AccionReporte = BaseController.REPORT_PARTIAL;
+    ir.Controlador = ClientesController.CONTROLLER;
+    ir.AccionExportacion = BaseController.REPORT_EXPORT;
+    ir.TieneIdParametros= false;
 
-@Html.DevExpress().DocumentViewer(settings =>{
+    ViewBag.InfoReporte = ir;
+    }
+
+@Html.Partial("_generalReport")
+
+@*@Html.DevExpress().DocumentViewer(settings =>{
     // The following settings are required for a Report Viewer. 
     settings.Name = "documentViewer";
-    settings.Report = (DXReportClientes)ViewData["Report"];
+    settings.Report = (DevExpress.XtraReports.UI.XtraReport)ViewData["Report"];
     // Callback and export route values specify corresponding controllers and their actions. 
     // These settings are required as well. 
     settings.CallbackRouteValues = new { Controller = ClientesController.CONTROLLER, Action = BaseController.REPORT_PARTIAL };
     settings.ExportRouteValues = new { Controller = ClientesController.CONTROLLER, Action = BaseController.REPORT_EXPORT };
-}).GetHtml()
+}).GetHtml()*@

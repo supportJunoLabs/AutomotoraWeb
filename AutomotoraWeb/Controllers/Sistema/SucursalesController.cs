@@ -38,9 +38,9 @@ namespace AutomotoraWeb.Controllers.Sistema
         //--------------------------------------    REPORT    ----------------------------------------------
         public ActionResult Report() {
             // Add a report to the view data. 
-            DXReportSucursales rep = new DXReportSucursales();
-            //setParamsToReport(rep);
-            ViewData["Report"] = rep;
+            //DXReportSucursales rep = new DXReportSucursales();
+            ////setParamsToReport(rep);
+            //ViewData["Report"] = rep;
             return View();
         }
 
