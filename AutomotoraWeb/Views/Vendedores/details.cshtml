@@ -1,4 +1,4 @@
-﻿@model DLL_Backend.Vendedor
+﻿@model AutomotoraWeb.Models.VendedorModel
 @using AutomotoraWeb.Controllers.General;
 
 @{
@@ -19,8 +19,8 @@
     </fieldset>
     
     <div class="btn-toolbar">
-        @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Editar Vendedor"))
-        @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary").Title("Eliminar Vendedor"))
+        @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Vendedor.Codigo }).Class("btn btn-primary").Title("Editar Vendedor"))
+        @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Vendedor.Codigo }).Class("btn btn-primary").Title("Eliminar Vendedor"))
         @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista de Vendedores"))
     </div>
 

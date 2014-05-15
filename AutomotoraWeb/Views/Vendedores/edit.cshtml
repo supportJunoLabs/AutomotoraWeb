@@ -1,4 +1,4 @@
-﻿@model DLL_Backend.Vendedor
+﻿@model AutomotoraWeb.Models.VendedorModel
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.General;
 
@@ -15,7 +15,7 @@
 
     <fieldset>
         <legend></legend>
-        @Html.HiddenFor(model => model.Codigo)
+        @Html.HiddenFor(model => model.Vendedor.Codigo)
 
         @Html.Partial("_datosDetalle", Model)
 
