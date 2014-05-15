@@ -64,13 +64,10 @@
     }
 </style>
 
-<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
-
 @using (Html.BeginForm()) {
-   @Html.HiddenFor(model => model.idParametros)
-  
+    @Html.HiddenFor(model => model.idParametros)
     
-     @Html.ValidationSummary(true)
+    @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")      
     
 <div>

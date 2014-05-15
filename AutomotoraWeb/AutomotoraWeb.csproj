@@ -1653,6 +1653,8 @@
     <Content Include="Views\Vehiculos\list.cshtml" />
     <Content Include="Views\Vehiculos\_reportGrilla.cshtml" />
     <Content Include="Views\Shared\_generalReport.cshtml" />
+    <Content Include="Views\Vehiculos\report2.cshtml" />
+    <Content Include="Views\Vehiculos\_reportDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1692,6 +1694,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportFichaCliente.resx">
       <DependentUpon>DXReportFichaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportFichaVehiculo.resx">
+      <DependentUpon>DXReportFichaVehiculo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportFinancistas.resx">
       <DependentUpon>DXReportFinancistas.cs</DependentUpon>

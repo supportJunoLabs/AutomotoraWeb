@@ -1,0 +1,16 @@
+﻿@using AutomotoraWeb.Controllers.Sales.Maintenance;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoReporte ir = new InfoReporte();
+    ir.AccionReporte = BaseController.REPORT_PARTIAL2;
+    ir.Controlador = VehiculosController.CONTROLLER;
+    ir.AccionExportacion = BaseController.REPORT_EXPORT2;
+    ir.TieneIdParametros= true;
+
+    ViewBag.InfoReporte = ir;
+    }
+
+@Html.Partial("_generalReport")
+
