@@ -37,8 +37,8 @@ namespace AutomotoraWeb.Controllers.Financing.Maintenance
         //--------------------------------------    REPORT    ----------------------------------------------
         public ActionResult Report() {
             // Add a report to the view data. 
-            DXReportFinancistas rep = new DXReportFinancistas();
-            ViewData["Report"] = rep;
+            //DXReportFinancistas rep = new DXReportFinancistas();
+            //ViewData["Report"] = rep;
             return View();
         }
 

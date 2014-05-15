@@ -46,8 +46,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance
         //--------------------------------------    REPORT    ----------------------------------------------
         public ActionResult Report() {
             // Add a report to the view data. 
-            DXReportTiposDocumento rep = new DXReportTiposDocumento();
-            ViewData["Report"] = rep;
+            //DXReportTiposDocumento rep = new DXReportTiposDocumento();
+            //ViewData["Report"] = rep;
             return View();
         }
 

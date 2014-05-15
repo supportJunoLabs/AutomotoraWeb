@@ -37,30 +37,34 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         //----------reporte ficha cliente -----------------------------
-        public ActionResult Report2(int id) {
+        public ActionResult Report2(int idCliente) {
+            Cliente cli = new Cliente();
+            cli.Codigo = idCliente;
             // Add a report to the view data. 
-            Cliente cli = _obtenerElemento(id);
+            //Cliente cli = _obtenerElemento(id);
             //setParamsToReport(rep);
-            DXReportFichaCliente rep = new DXReportFichaCliente();
-            ViewData["Report"] = rep;
+            //DXReportFichaCliente rep = new DXReportFichaCliente();
+            //ViewData["Report"] = rep;
+            ViewData["idParametros"] = idCliente;
             return View(cli);
         }
 
-        public ActionResult ReportPartial2(int id) {
+        public ActionResult ReportPartial2(int idParametros) {
             DXReportFichaCliente rep = new DXReportFichaCliente();
             //setParamsToReport(rep);
-            Cliente cli = _obtenerElemento(id);
+            Cliente cli = _obtenerElemento(idParametros);
             List<Cliente> lista = new List<Cliente>();
             lista.Add(cli);
             rep.DataSource = lista;
             ViewData["Report"] = rep;
-            return PartialView("_reportDetalle", cli);
+            ViewData["idParametros"] = cli.Codigo;
+            return PartialView("_reportDetalle");
         }
 
-        public ActionResult ReportExport2(int id) {
+        public ActionResult ReportExport2(int idParametros) {
             DXReportFichaCliente rep = new DXReportFichaCliente();
             //setParamsToReport(rep);
-            Cliente cli = _obtenerElemento(id);
+            Cliente cli = _obtenerElemento(idParametros);
             List<Cliente> lista = new List<Cliente>();
             lista.Add(cli);
             rep.DataSource = lista;
@@ -71,9 +75,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public ActionResult Report() {
             // Add a report to the view data. 
-            DXReportClientes rep = new DXReportClientes();
-            //setParamsToReport(rep);
-            ViewData["Report"] = rep;
+            //DXReportClientes rep = new DXReportClientes();
+            ////setParamsToReport(rep);
+            //ViewData["Report"] = rep;
             return View();
         }
 
