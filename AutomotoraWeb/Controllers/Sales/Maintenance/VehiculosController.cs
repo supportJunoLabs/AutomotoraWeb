@@ -34,7 +34,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             // Verificamos que seguimos en una session (sino se redirige al login)
             if (usuario != null) {
                 if (usuario.MultiSucursal) {
-                    ViewBag.Sucursales = Sucursal.Sucursales();
+                    ViewBag.Sucursales = Sucursal.Sucursales;
                 } else {
                     List<Sucursal> listSucursal = new List<Sucursal>();
                     listSucursal.Add(usuario.Sucursal);
@@ -187,7 +187,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             model.Formato = ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO;
             model.Filtro.Tipo = Vehiculo.VHC_TIPO_LISTADO.LIBRES;
             model.Filtro.Categoria = VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS;
-            ViewBag.SucursalesListado = Sucursal.Sucursales();
+            ViewBag.SucursalesListado = Sucursal.Sucursales;
             ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
             ViewData["idParametros"] = model.idParametros;
             model.Resultado = _listaElementos(model);
@@ -198,7 +198,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult List(ListadoVehiculosModel model, string btnSubmit) {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            ViewBag.SucursalesListado = Sucursal.Sucursales();
+            ViewBag.SucursalesListado = Sucursal.Sucursales;
             ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
             this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
             if (ModelState.IsValid) {

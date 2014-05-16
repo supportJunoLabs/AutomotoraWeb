@@ -101,7 +101,7 @@ namespace AutomotoraWeb.Controllers.Sistema
         }
 
         private List<Sucursal> _listaElementos() {
-            return Sucursal.Sucursales();
+            return Sucursal.Sucursales;
         }
 
         //-----------------------------------------------------------------------------------------------------
