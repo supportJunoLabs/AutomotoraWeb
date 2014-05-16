@@ -39,17 +39,6 @@ namespace AutomotoraWeb.Controllers.General {
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
-
-            // Verificamos que seguimos en una session (sino se redirige al login)
-            string controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-            string actionName = filterContext.ActionDescriptor.ActionName;
-            if (!((controllerName.ToLower() == AuthenticationController.CONTROLLER) && (actionName.ToLower() == AuthenticationController.LOGIN))) {
-                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-                if (usuario == null) {
-                    filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
-                }
-            }
-
             setearUltimoModulo();
         }
 
