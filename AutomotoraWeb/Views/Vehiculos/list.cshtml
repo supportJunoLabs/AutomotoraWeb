@@ -12,6 +12,12 @@
     select {
         width: 130px;
     }
+    .labelAjustable {
+        margin-right:5px;
+    }
+    .separacion {
+        margin-right:25px;
+    }
 
     .labelWidth {
         width: 80px !important;
@@ -43,7 +49,7 @@
         margin-bottom: 0px;
     }
     legend {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 </style>
 
@@ -98,7 +104,7 @@
 					    <label>Desde</label>
 				    </div>
 				    <div class="floatRight editor-field editor-field-small ">
-                        @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new {id="fdesde", @class = "calendarAW floatRight inputTextWidth" })
+                        @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new {id="fdesde", @class = "calendarAW floatRight" })
 				    </div>
 				    <div class="clear-both"></div>
 			    </div>
@@ -107,49 +113,14 @@
 					    <label>Hasta</label>
 				    </div>
 				    <div class="floatRight editor-field editor-field-small">
-                         @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new {id="fhasta", @class = "calendarAW floatRight inputTextWidth" })
+                         @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new {id="fhasta", @class = "calendarAW floatRight" })
 				    </div>
 				    <div class="clear-both"></div>
 			    </div>
                 </div>
 		    </fieldset>
 	    </div>
-         <div id="filtros_otros" class="floatLeft" >
-            <fieldset id="fieldsetotros">
-                <legend>Otros Filtros</legend>
-		        <div id="containerOtros">
-			        <div id="containerMarca">
-				        <div class="floatLeft labelWidth">
-					        <label>Marca</label>
-				        </div>
-				        <div class="floatLeft editor-field">
-                            @Html.TextBoxFor(model => model.Filtro.Marca, new { @class = "floatRight inputTextWidth" })
-				        </div>
-				        <div class="clear-both"></div>
-			        </div>
-
-			        <div id="containerModelo">
-				        <div class="floatLeft labelWidth">
-					        <label>Modelo</label>
-				        </div>
-				        <div class="floatLeft editor-field">
-                            @Html.TextBoxFor(model => model.Filtro.Modelo, new { @class = "floatRight inputTextWidth" })
-				        </div>
-				        <div class="clear-both"></div>
-			        </div>
-
-			        <div id="containerAnio">
-				        <div class="floatLeft labelWidth">
-					        <label>Año</label>
-				        </div>
-				        <div class="floatLeft editor-field">
-                            @Html.TextBoxFor(model => model.Filtro.Anio, new { @class = "floatRight inputTextWidth" })
-				        </div>
-				        <div class="clear-both"></div>
-			        </div>
-		        </div>
-            </fieldset>
-	    </div>
+         
         <div id="filtro_combustible" class="floatLeft">
 		    <fieldset id="fieldsetCombustible">
 			    <legend>Combustible</legend>
@@ -161,12 +132,7 @@
 			    </div>
 		    </fieldset>
 	    </div>
-    
-
-        <div class="clear-both"></div>
-    </div>
-    <div id="containerInf" style="height:100px;" >
-        <div id="filtro_sucursal" class="floatLeft">
+    <div id="filtro_sucursal" class="floatLeft">
 		    <fieldset id="fieldsetSucursal">
 			    <legend>Sucursal</legend>
 			    <div>
@@ -187,6 +153,41 @@
                     @Html.RadioButtonFor(model => model.Formato, ListadoVehiculosModel.FORMATO_LISTADO.COMPLETO)  Completo
 			    </div>
 		    </fieldset>
+	    </div>
+
+        <div class="clear-both"></div>
+    </div>
+    <div id="containerInf" style="height:100px;"  >
+        <div id="filtros_otros" class="floatLeft" >
+            <fieldset id="fieldsetotros">
+                <legend>Otros Filtros</legend>
+			        <div id="containerMarca" class=" floatLeft separacion" >
+				        <div class="floatLeft labelAjustable">
+					        <label>Marca</label>
+				        </div>
+				        <div class="editor-field floatRight">
+                            @Html.TextBoxFor(model => model.Filtro.Marca, new { @class = "inputTextWidth" })
+				        </div>
+			        </div>
+
+			        <div id="containerModelo"  class="floatLeft separacion" >
+				        <div class="floatLeft labelAjustable">
+					        <label>Modelo</label>
+				        </div>
+				        <div class="editor-field floatRight">
+                            @Html.TextBoxFor(model => model.Filtro.Modelo, new { @class = "inputTextWidth" })
+				        </div>
+			        </div>
+
+			        <div id="containerAnio" class="floatLeft separacion" >
+				        <div class="floatLeft labelAjustable">
+					        <label>Año</label>
+				        </div>
+				        <div class="editor-field  floatRight ">
+                            @Html.TextBoxFor(model => model.Filtro.Anio, new { @class = " input-mini alinearDerecha" })
+				        </div>
+			        </div>
+            </fieldset>
 	    </div>
 
         <div class="btn-toolbar" >
