@@ -1,15 +1,15 @@
-﻿    input[type="radio"] {
-        vertical-align: top;
-    }
+﻿.floatLeft {
+    float: left;
+}
 
-    input[type="checkbox"] {
-        vertical-align: top;
-    }
+.floatRight {
+    float: right;
+}
 
-    .floatLeft {
-        float: left;
-    }
+input[type="radio"] {
+    vertical-align: top;
+}
 
-    .floatRight {
-        float: right;
-    }
+input[type="checkbox"] {
+    vertical-align: top;
+}

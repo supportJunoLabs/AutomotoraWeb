@@ -42,6 +42,7 @@ namespace AutomotoraWeb {
                 "~/Content/themes/" + THEME + "/build/lib/bootstrap/js/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/SiteExtras.css",
                 "~/Content/themes/extraTemplate.css",
                 "~/Content/themes/" + THEME + "/build/lib/bootstrap/css/bootstrap.css",
                 "~/Content/themes/" + THEME + "/build/stylesheets/theme.css",
@@ -50,7 +51,6 @@ namespace AutomotoraWeb {
             bundles.Add(new ScriptBundle("~/bundles/ManejoFechas").Include(
                          "~/Scripts/AutomotoraWeb/ManejoFechas.js"));
 
-            bundles.Add(new StyleBundle("~/Content/SiteExtras").Include("~/Content/SiteExtras.css"));
         }
     }
 }
