@@ -5,6 +5,16 @@
     ViewBag.Title = ViewBag.NombreEntidad + ": Ficha";
 }
 
+<script type="text/javascript">
+    function documentViewer_Init(s, e) {
+        s.CallbackError.AddHandler(function (sender, args) {
+            args.handled = true;
+            alert("se ha producido un error");
+            window.location = "@Url.Action("Error", "Error")";            
+        });
+    }
+</script>
+
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.DETAILS).RouteValues(new { id = Model.Codigo }).Class("btn btn-default"))
 </div>

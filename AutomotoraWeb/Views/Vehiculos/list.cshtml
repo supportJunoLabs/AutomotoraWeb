@@ -107,7 +107,7 @@
 		    <fieldset id="fieldsetFechaAdquisicion">
 			    <legend>Fecha Adquisicion</legend>
 			    <div>
-                    @Html.CheckBoxFor(model => model.FiltrarFechas) Filtrar Periodo
+                    @Html.CheckBoxFor(model => model.FiltrarFechas, new { id = "cb_filtrarPeriodo" }) Filtrar Periodo
 			    </div>
                 <div  id="periodo" style="margin-top:10px;">
 			    <div id="containerDesde" >
@@ -115,7 +115,7 @@
 					    <label>Desde</label>
 				    </div>
 				    <div class="floatRight editor-field editor-field-small ">
-                        @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
+                        @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new {id="fdesde", @class = "calendarAW floatRight inputTextWidth" })
 				    </div>
 				    <div class="clearBoth"></div>
 			    </div>
@@ -124,7 +124,7 @@
 					    <label>Hasta</label>
 				    </div>
 				    <div class="floatRight editor-field editor-field-small">
-                        @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new { @class = "calendarAW floatRight inputTextWidth" })
+                         @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new {id="fhasta", @class = "calendarAW floatRight inputTextWidth" })
 				    </div>
 				    <div class="clearBoth"></div>
 			    </div>
@@ -171,9 +171,9 @@
 		    <fieldset id="fieldsetCombustible">
 			    <legend>Combustible</legend>
 			    <div>
-				    @Html.CheckBoxFor(model => model.FiltrarCombustible) Filtrar Tipo Combustible
+				     @Html.CheckBoxFor(model => model.FiltrarCombustible,  new { id = "cb_filtrarCombustible" }) Filtrar Tipo Combustible
 			    </div>
-			    <div class="editor-field" style="margin-top:10px;">
+			     <div class="editor-field" style="margin-top:10px;" id="combustibles">
                     @Html.DropDownListFor(model => model.Filtro.TipoCombustible.Codigo, new SelectList(ViewBag.TiposComubstiblesListado, "Codigo", "Descripcion"))			
 			    </div>
 		    </fieldset>
@@ -187,9 +187,9 @@
 		    <fieldset id="fieldsetSucursal">
 			    <legend>Sucursal</legend>
 			    <div>
-				     @Html.CheckBoxFor(model => model.FiltrarSucursal) Filtrar Sucursal
+				     @Html.CheckBoxFor(model => model.FiltrarSucursal, new { id = "cb_filtrarSucursal" }) Filtrar Sucursal
 			    </div>
-			    <div style="margin-top:10px;">
+			    <div style="margin-top:10px;" id="sucursales">
                     @Html.DropDownListFor(model => model.Filtro.Sucursal.Codigo, new SelectList(ViewBag.SucursalesListado, "Codigo", "Nombre"))
 			    </div>
 		    </fieldset>
@@ -223,11 +223,16 @@
     
 
 <div class="clear-both"></div>
-    
+  
 }
+
 
 @*<div id="divGrilla" style="width:95%; overflow-x:scroll; border:1px solid #414959">*@
 <div>
     @Html.Partial("_reportGrilla", Model)
 </div>
 
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/VehiculosListado.js"></script>
+}

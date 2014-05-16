@@ -268,7 +268,7 @@
     <Compile Include="Models\ListadoPedidosModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />
-	<Compile Include="Models\VendedorModel.cs" />
+    <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\Listados\DXListadoPedidos.cs">
       <SubType>Component</SubType>
@@ -1184,7 +1184,7 @@
     <Content Include="Content\themes\WintertideAdmin\build\user.html" />
     <Content Include="Content\themes\WintertideAdmin\build\users.html" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\SiteExtras.css" />
     <Content Include="Content\themes\BlueNileAdmin\build\lib\.DS_Store" />
     <Content Include="Content\themes\BlueNileAdmin\build\lib\font-awesome\docs\assets\font\fontawesome-webfont.eot" />
     <Content Include="Content\themes\BlueNileAdmin\build\lib\font-awesome\docs\assets\font\fontawesome-webfont.ttf" />
@@ -1539,6 +1539,8 @@
     <Content Include="Content\Images\vssver2.scc" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\AutomotoraWeb\ManejoFechas.js" />
+    <Content Include="Scripts\AutomotoraWeb\VehiculosListado.js" />
     <Content Include="Scripts\AutomotoraWeb\VendedorMantenimiento.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />

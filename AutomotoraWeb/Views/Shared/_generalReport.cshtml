@@ -18,4 +18,5 @@
         settings.CallbackRouteValues = new { Controller = ir.Controlador, Action = ir.AccionReporte };
         settings.ExportRouteValues = new { Controller = ir.Controlador, Action = ir.AccionExportacion};
     }
+    settings.ClientSideEvents.Init = "documentViewer_Init";
 }).GetHtml()

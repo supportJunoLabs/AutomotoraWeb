@@ -23,7 +23,6 @@ namespace AutomotoraWeb {
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
@@ -48,7 +47,10 @@ namespace AutomotoraWeb {
                 "~/Content/themes/" + THEME + "/build/stylesheets/theme.css",
                 "~/Content/themes/" + THEME + "/build/lib/font-awesome/css/font-awesome.css"));
 
-            //                "~/Content/template.css",
+            bundles.Add(new ScriptBundle("~/bundles/ManejoFechas").Include(
+                         "~/Scripts/AutomotoraWeb/ManejoFechas.js"));
+
+            bundles.Add(new StyleBundle("~/Content/SiteExtras").Include("~/Content/SiteExtras.css"));
         }
     }
 }
