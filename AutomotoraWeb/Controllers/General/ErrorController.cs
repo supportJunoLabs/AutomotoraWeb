@@ -14,6 +14,11 @@ namespace AutomotoraWeb.Controllers.General
             return View();
         }
 
+        public ActionResult ErrorDX() {
+            HttpContext.Response.StatusCode = 500;
+            return View();
+        }
+
         [HttpGet]
         public ActionResult Error404() {
             HttpContext.Response.StatusCode = 404;

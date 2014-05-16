@@ -1657,6 +1657,7 @@
     <Content Include="Views\Shared\_generalReport.cshtml" />
     <Content Include="Views\Vehiculos\report2.cshtml" />
     <Content Include="Views\Vehiculos\_reportDetalle.cshtml" />
+    <Content Include="Views\Shared\ErrorDX.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
