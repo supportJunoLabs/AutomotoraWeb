@@ -31,16 +31,21 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             ViewBag.NombreEntidades = "Vehiculos";
             ViewBag.NombreEntidad = "Vehiculo";
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (usuario.MultiSucursal) {
-                ViewBag.Sucursales = Sucursal.Sucursales();
-            } else {
-                List<Sucursal> listSucursal = new List<Sucursal>();
-                listSucursal.Add(usuario.Sucursal);
-                ViewBag.Sucursales = listSucursal;
+            // Verificamos que seguimos en una session (sino se redirige al login)
+            if (usuario != null) {
+                if (usuario.MultiSucursal) {
+                    ViewBag.Sucursales = Sucursal.Sucursales();
+                } else {
+                    List<Sucursal> listSucursal = new List<Sucursal>();
+                    listSucursal.Add(usuario.Sucursal);
+                    ViewBag.Sucursales = listSucursal;
+                }
+                ViewBag.Departamentos = Departamento.Departamentos();
+                ViewBag.TiposCombustible = DLL_Backend.TipoCombustible.TiposCombustible();
+                ViewBag.Monedas = Moneda.Monedas;
+            } else { 
+                filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
             }
-            ViewBag.Departamentos = Departamento.Departamentos();
-            ViewBag.TiposCombustible = DLL_Backend.TipoCombustible.TiposCombustible();
-            ViewBag.Monedas = Moneda.Monedas;
         }
 
 
