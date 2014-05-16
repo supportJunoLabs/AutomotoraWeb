@@ -23,7 +23,7 @@
            
             <div class="btn-toolbar">
                 @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Guardar"))
-                @(Html.Bootstrap().ActionLinkButton("Cancelar", "Cancelar").Class("btn btn-default"))
+                @(Html.Bootstrap().ActionLinkButton("Cancelar", "Cancelar").RouteValues(new{s=Model.idsesion}).Class("btn btn-default"))
             </div>
 
     </fieldset>

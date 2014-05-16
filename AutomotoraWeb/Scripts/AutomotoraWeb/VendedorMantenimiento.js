@@ -33,8 +33,7 @@ $(document).ready(function () {
 
         formdata.append("idsesion", $("#camposesion").val());
 
-        alert($("#camposesion").val());
-        alert("hola");
+        //alert($("#camposesion").val());
 
         $.ajax({
             type: "POST",

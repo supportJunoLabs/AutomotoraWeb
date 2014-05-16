@@ -105,15 +105,14 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             }
         }
 
-        public ActionResult Cancelar() {
+        public ActionResult Cancelar(string s) {
 
-            //FALTA VER ESTO
-            if (Session[FILE_RANDOM_NAME] != null && (string)Session[FILE_RANDOM_NAME] != IMAGEN_SIN_FOTO) {
-                if (System.IO.File.Exists(Server.MapPath(PHOTO_FOLDER_TMP) + Session[FILE_RANDOM_NAME])) {
-                    System.IO.File.Delete(Server.MapPath(PHOTO_FOLDER_TMP) + Session[FILE_RANDOM_NAME]);
+            if (Session[s+FILE_RANDOM_NAME] != null && (string)Session[s+FILE_RANDOM_NAME] != IMAGEN_SIN_FOTO) {
+                if (System.IO.File.Exists(Server.MapPath(PHOTO_FOLDER_TMP) + Session[s+FILE_RANDOM_NAME])) {
+                    System.IO.File.Delete(Server.MapPath(PHOTO_FOLDER_TMP) + Session[s+FILE_RANDOM_NAME]);
                 }
             }
-            Session[FILE_RANDOM_NAME] = null;
+            Session[s+FILE_RANDOM_NAME] = null;
             return RedirectToAction(BaseController.SHOW);
         }
 
@@ -384,7 +383,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 Stream fileContent = file.InputStream;
                 //To save file, use SaveAs method
                 string extension = getExtensionFile(file.FileName);
-                fileRandomName = System.IO.Path.GetRandomFileName().Split('.')[0] + extension;
+                fileRandomName = System.IO.Path.GetRandomFileName() + extension;
                 file.SaveAs(Server.MapPath(PHOTO_FOLDER_TMP) + fileRandomName);
                 Session[s + FILE_RANDOM_NAME] = fileRandomName;
 
@@ -404,12 +403,16 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         //-----------------------------------------------------------------------------------------------------
 
         private string getExtensionFile(string fileName) {
+            //se corrige porque no andaba bien cuando hay un punto como parte del nombre del archivo, ademas del que separa la extension. 
+            //se debe tomar el ultimo punto
             string extension = "";
             if (fileName.Contains('.')) {
-                extension = "." + fileName.Split('.')[1];
+                int pos = fileName.LastIndexOf('.');
+                extension = "." + fileName.Substring(pos);
             }
             return extension;
         }
+
 
         #endregion
 
