@@ -15,6 +15,7 @@
     ig.TypeOfModel = typeof(DLL_Backend.TipoDocumento.TipoDocumentoMD);
 
     ViewBag.InfoGrilla = ig;
+    ig.DobleClick = true;
 }
 
 @Html.Partial("_generalGrid", Model)

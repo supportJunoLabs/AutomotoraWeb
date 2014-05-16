@@ -2,20 +2,23 @@
 @using System.Web.UI.WebControls
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Sales.Maintenance;
+@using AutomotoraWeb.Models;
 
 @{
-    List<string> hiddenColumns = new List<string>() { "Codigo", "Foto" , "Direccion", "FechaIngreso",}; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
-    ViewBag.hiddenColumns = hiddenColumns;
-
-    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { {"Telefono", 30}, {"Observaciones", 30} };
-    ViewBag.trunkColumns = trunkColumns;
-
-    ViewBag.nameGrid = "gridVendedores";
-    ViewBag.controller = VendedoresController.CONTROLLER;
-    ViewBag.actionCallbackRoute = "listVendedores";
-    ViewBag.KeyFieldName = "Codigo";
-    ViewBag.typeOfModel = typeof(DLL_Backend.Vendedor.VendedorMD);
     
+    InfoGrilla ig = new InfoGrilla();
+    ig.HiddenColumns = new List<string>() { "Codigo", "Foto" , "Direccion", "FechaIngreso",}; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+
+    ig.TrunkColumns = new Dictionary<string, int>() { {"Telefono", 30}, {"Observaciones", 30} };
+
+    ig.NameGrid = "gridVendedores";
+    ig.Controller = VendedoresController.CONTROLLER;
+    ig.ActionCallbackRoute = "listVendedores";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Vendedor.VendedorMD);
+    ig.DobleClick = true;
+
+    ViewBag.InfoGrilla = ig;
 }
 
 @Html.Partial("_generalGrid", Model)

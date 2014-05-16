@@ -10,6 +10,7 @@ namespace AutomotoraWeb.Models {
         public string ActionCallbackRoute{get; set;}
         public string KeyFieldName {get; set;}
         public Type TypeOfModel {get; set;}
+
         private bool accionesAlComienzo =false;
         public bool AccionesAlComienzo{
             get { return accionesAlComienzo; }
@@ -17,11 +18,19 @@ namespace AutomotoraWeb.Models {
         }
         public int registrosPorPagina { get; set; }
 
+        private bool dobleClick = false;
+        public bool DobleClick {
+            get { return dobleClick; }
+            set { dobleClick = value; }
+        }
+        public string ControladorDobleClick{get; set;}
+        public string AccionDobleClick {get; set;}
+
         public List<string> HiddenColumns {get; set;}
         public Dictionary<string, int> TrunkColumns {get; set;}
         public Dictionary<string, int> AnchosColumns { get; set; }
         public List<string> VisibleColumns {get; set;} //Si es nulo, o esta vacia, muestra todas las columnas de tipo simple del objeto
-                                                //Si ha columnas, muestra esta en el orden en que estan aqui.
+                                                //Si hay columnas, muestra esta en el orden en que estan aqui.
 
         public List<BotonGrilla> Botones {get; set;} //Si viene en null o vacio,van los cuatro botones estandar
 

@@ -2,6 +2,7 @@
 @using System.Web.UI.WebControls
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.General;
 
 @{
 
@@ -11,20 +12,16 @@
     if (ViewBag.InfoGrilla != null) {
         ig = ViewBag.InfoGrilla;
     } else {
+        throw new Exception("No se ha especificado el objeto InfoGrilla para la grilla solicitada");
+    }
 
-        if (ViewBag.hiddenColumns != null) {
-            ig.HiddenColumns = (List<string>)(ViewBag.hiddenColumns);
+    if (ig.DobleClick) {
+        if (string.IsNullOrWhiteSpace(ig.ControladorDobleClick)) {
+            ig.ControladorDobleClick = ig.Controller;
         }
-        
-        if (ViewBag.trunkColumns != null) {
-            ig.TrunkColumns = (Dictionary<string, int>)(ViewBag.trunkColumns);
+        if (string.IsNullOrWhiteSpace(ig.AccionDobleClick)) {
+            ig.AccionDobleClick = BaseController.DETAILS;
         }
-         ig.TypeOfModel = (Type)(ViewBag.typeOfModel);
-         ig.Controller = ViewBag.controller;
-         ig.NameGrid = ViewBag.nameGrid;
-         ig.ActionCallbackRoute = ViewBag.actionCallbackRoute;
-         ig.KeyFieldName = ViewBag.KeyFieldName;
-
     }
 
     List<GridViewColumn> listGridViewsColumn = new List<GridViewColumn>();
@@ -39,21 +36,21 @@
                   (ig.VisibleColumns == null)  //si vinieron especificadas las columnas, solo se incluyen si estan en la lista  no son hidden
                ) {                          //si no vienieron, las pongo todas salvo las que estan como hidden
 
-                if (ig.HiddenColumns==null|| !ig.HiddenColumns.Contains(propertyInfo.Name)) {
+                if (ig.HiddenColumns == null || !ig.HiddenColumns.Contains(propertyInfo.Name)) {
                     MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
                     gridViewColumn.FieldName = propertyInfo.Name;
                     gridViewColumn.Caption = displayAttribute.Name;
                     gridViewColumn.ColumnType = MVCxGridViewColumnType.Default;
 
                     if (ig.AnchosColumns != null) {
-                        if(ig.AnchosColumns.Keys.Contains(propertyInfo.Name)){
+                        if (ig.AnchosColumns.Keys.Contains(propertyInfo.Name)) {
                             gridViewColumn.Width = Unit.Pixel(ig.AnchosColumns[propertyInfo.Name]);
                             sumaAnchos += ig.AnchosColumns[propertyInfo.Name];
-                        }else{
+                        } else {
                             gridViewColumn.Width = Unit.Pixel(100);
                             sumaAnchos += 100;
                         }
-                    }else{
+                    } else {
                         if (propertyInfo.PropertyType.Name.Equals("Boolean")) {
                             gridViewColumn.Width = Unit.Pixel(75);
                         } else if (propertyInfo.PropertyType.Name.Equals("DateTime")) {
@@ -99,11 +96,11 @@
 @(Html.DevExpress().GridView(
     settings => {
         settings.Name = ig.NameGrid;
-        settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"]};
+        settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"] };
         if (ig.AnchosColumns == null) {
             settings.Width = Unit.Percentage(98);
         } else {
-            settings.Width = Unit.Pixel(sumaAnchos+90);
+            settings.Width = Unit.Pixel(sumaAnchos + 90);
         }
         settings.SettingsBehavior.AllowSort = true;
         settings.SettingsBehavior.AllowGroup = true;
@@ -139,7 +136,9 @@
         settings.SettingsPopup.HeaderFilter.MinWidth = 300;
         settings.SettingsPopup.HeaderFilter.MinHeight = 200;
 
-
+        if (ig.DobleClick) {
+            settings.ClientSideEvents.RowDblClick = "function(s, e){ window.open('" + @Url.Action(ig.AccionDobleClick, ig.ControladorDobleClick) + "/' + s.GetRowKey(e.visibleIndex), '_self'); }";
+        }
 
         if (!ig.AccionesAlComienzo) {
             //Columnas Visibles (Propiedades)
@@ -157,7 +156,7 @@
                 } else {
                     column.Width = Unit.Pixel(30 + ig.Botones.Count);
                 }
-                
+
                 column.SetDataItemTemplateContent(c => {
                     var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
                     if (ig.Botones == null) {

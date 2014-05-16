@@ -2,6 +2,7 @@
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Sales.Maintenance;
 @using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.General;
 
 @{
     InfoGrilla ig= new InfoGrilla();
@@ -32,6 +33,9 @@
     ig.ActionCallbackRoute = "reportGrilla";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Vehiculo.VehiculoMD);
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = VehiculosController.CONTROLLER;
+    ig.AccionDobleClick = BaseController.DETAILS;
     
     ig.AddButton(new BotonGrilla("details", VehiculosController.CONTROLLER, "boton-consultar-mf", "Consulta Vehículo"));
 

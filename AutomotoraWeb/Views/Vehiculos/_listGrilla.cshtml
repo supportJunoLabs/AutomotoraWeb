@@ -2,6 +2,7 @@
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Sales.Maintenance;
 @using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.General;
 
 @{
     InfoGrilla ig= new InfoGrilla();
@@ -32,6 +33,8 @@
     ig.ActionCallbackRoute = "ListaGrilla";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Vehiculo.VehiculoMD);
+    ig.DobleClick = true;
+  
     
     ViewBag.InfoGrilla = ig;
 }
