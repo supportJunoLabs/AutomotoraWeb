@@ -17,6 +17,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
     public class VehiculosController : SalesController, IMaintenance {
 
         public static string CONTROLLER = "vehiculos";
+        public const string PHOTO_FOLDER = "~/Content/Images/vehiculos/";
 
         public ContentResult NombreEntidad() {
             return new ContentResult { Content = "Vehiculo" };
