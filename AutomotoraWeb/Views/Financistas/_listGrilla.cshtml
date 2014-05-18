@@ -7,9 +7,15 @@
 @{
 
     InfoGrilla ig = new InfoGrilla();
-    ig.HiddenColumns = new List<string>() {     }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
-    ig.VisibleColumns= new List<string>() { "Nombre", "Telefono", "OtroTelefono", "Fax", "Mail", "Habilitado" }; //agregar lo que hay que mostrar, si queda vacio se muestra todo
-    ig.TrunkColumns = new Dictionary<string, int>() { { "Telefono", 30 }, { "OtroTelefono", 30 }, { "Fax", 30 }, { "Mail", 30 } };
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Nombre"},
+            new ColumnaGrilla {Campo="Telefono", LargoMax=30},
+            new ColumnaGrilla {Campo="OtroTelefono", LargoMax=30},
+            new ColumnaGrilla {Campo="Fax", LargoMax=30},
+            new ColumnaGrilla {Campo="Mail", LargoMax=30},
+            new ColumnaGrilla {Campo="Habilitado"}
+     };
+
     ig.NameGrid = "grilla";
     ig.Controller = FinancistasController.CONTROLLER;
     ig.ActionCallbackRoute = "listaGrilla";
@@ -21,4 +27,4 @@
 }
 
 @Html.Partial("_generalGrid", Model)
-  
+

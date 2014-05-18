@@ -81,32 +81,32 @@ namespace AutomotoraWeb.Models {
 
         public void AcomodarFiltro() {
             if (!FiltrarFechasPedido) {
-                Filtro.Desde = new DateTime(1980, 01, 01);
-                Filtro.Hasta = new DateTime(2100, 12, 31);
+                Filtro.Desde = null;
+                Filtro.Hasta = null;
             } else {
                 Filtro.Desde = DesdePedido;
                 Filtro.Hasta = HastaPedido;
             }
 
             if (!FiltrarFechasEsperado) {
-                Filtro.EsperadoDesde = new DateTime(1980, 01, 01);
-                Filtro.EsperadoHasta = new DateTime(2100, 12, 31);
+                Filtro.EsperadoDesde = null;
+                Filtro.EsperadoHasta = null;
             } else {
                 Filtro.EsperadoDesde = DesdeEsperado;
                 Filtro.EsperadoHasta = HastaEsperado;
             }
 
             if (!FiltrarFechasRecibido) {
-                Filtro.RecibidoDesde = new DateTime(1980, 01, 01);
-                Filtro.RecibidoHasta = new DateTime(2100, 12, 31);
+                Filtro.RecibidoDesde = null;
+                Filtro.RecibidoHasta = null;
             } else {
                 Filtro.RecibidoDesde = DesdeRecibido;
                 Filtro.RecibidoHasta = HastaRecibido;
             }
 
             if (!FiltrarFechasReservado) {
-                Filtro.ReservaDesde = new DateTime(1980, 01, 01);
-                Filtro.ReservaHasta = new DateTime(2100, 12, 31);
+                Filtro.ReservaDesde = null;
+                Filtro.ReservaHasta = null;
             } else {
                 Filtro.ReservaDesde = DesdeReservado;
                 Filtro.ReservaHasta = HastaReservado;

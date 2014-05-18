@@ -38,8 +38,8 @@ namespace AutomotoraWeb.Models {
 
         public void AcomodarFiltro() {
             if (!FiltrarFechas) {
-                Filtro.Desde = new DateTime(1980, 01, 01);
-                Filtro.Hasta = new DateTime(2100, 12, 31);
+                Filtro.Desde = null;
+                Filtro.Hasta = null;
             } else {
                 Filtro.Desde = Desde;
                 Filtro.Hasta = Hasta;

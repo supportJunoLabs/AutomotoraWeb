@@ -6,10 +6,21 @@
 
 @{
     InfoGrilla ig = new InfoGrilla();
-    ig .HiddenColumns= new List<string>() {  "Codigo"   }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
-
-    ig.TrunkColumns = new Dictionary<string, int>() { };
-
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Marca", Ancho=150},
+            new ColumnaGrilla {Campo="Modelo", Ancho=150},
+            new ColumnaGrilla {Campo="Color", Ancho=100},
+            new ColumnaGrilla {Campo="FechaPedido", Ancho=80, Titulo = "F.Pedido"},
+            new ColumnaGrilla {Campo="FechaEsperado", Ancho=80, Titulo = "F.Esperado"},
+            new ColumnaGrilla {Campo="Costo", Ancho=150},
+            new ColumnaGrilla {Campo="Sucursal", Ancho=170},
+            new ColumnaGrilla {Campo="FechaReserva", Ancho=80, Titulo="F.Reserva"},
+            new ColumnaGrilla {Campo="Seniado", Ancho=74},
+            new ColumnaGrilla {Campo="Vendedor", Ancho=100},
+            new ColumnaGrilla {Campo="Cliente", Ancho=150},
+            new ColumnaGrilla {Campo="Observaciones", Ancho=250, LargoMax=70}};
+            
+        
     ig.NameGrid = "grilla";
     ig.Controller = PedidosController.CONTROLLER;
     ig.ActionCallbackRoute = "reportGrilla";

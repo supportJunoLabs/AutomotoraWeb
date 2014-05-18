@@ -306,6 +306,7 @@
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\MenuService.cs" />
     <Compile Include="Services\SecurityService.cs" />
+    <Compile Include="Utils\GeneralUtils.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Utils\SessionUtils.cs" />
   </ItemGroup>
