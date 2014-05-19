@@ -7,7 +7,7 @@
 @{
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-            new ColumnaGrilla {Campo="Ficha", Ancho=85},
+            new ColumnaGrilla {Campo="Ficha", Ancho=85, Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
             new ColumnaGrilla {Campo="Marca", Ancho=150},
             new ColumnaGrilla {Campo="Modelo", Ancho=150},
             new ColumnaGrilla {Campo="Matricula", Ancho=100},
@@ -31,7 +31,8 @@
     ig.AccionDobleClick = BaseController.DETAILS;
     
     ig.AddButton(new BotonGrilla("details", VehiculosController.CONTROLLER, "boton-consultar-mf", "Consulta Vehículo"));
-
+    
+    
     ViewBag.InfoGrilla = ig;
 }
 
