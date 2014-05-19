@@ -38,7 +38,14 @@ namespace AutomotoraWeb.Models {
         
         //public List<string> VisibleColumns {get; set;} 
 
-        public List<BotonGrilla> Botones {get; set;} //Si viene en null o vacio,van los cuatro botones estandar
+        public List<BotonGrilla> Botones {get; set;} 
+            //Si viene en null van los botones por defecto
+            //Si viene vacio pero no nulo, NO van botones (recorre la coleccion vacia y no agrega nada)
+            //Si viene con botones, van los botones que vienen.
+
+        public void SinBotones() {
+            this.Botones = new List<BotonGrilla>(); //pone a proposito lista vacia.
+        }
 
         public void AddButton (BotonGrilla b){
             if (Botones==null){
