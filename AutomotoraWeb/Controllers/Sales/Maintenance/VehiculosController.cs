@@ -61,6 +61,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Details(int id) {
+            Session[SessionUtils.CODIGO_VEHICULO] = id;
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
         }

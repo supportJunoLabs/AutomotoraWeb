@@ -1,0 +1,21 @@
+﻿@model DLL_Backend.Vehiculo
+@using AutomotoraWeb.Helpers;
+
+<div class="well" style="margin-left: 40px;width: 600px; height: 410px;">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#gastos_tab" data-toggle="tab">Gastos</a></li>
+        <li><a href="#documentacion_tab" data-toggle="tab">Documentaci&oacute;n</a></li>
+        <li><a href="#fotos_tab" data-toggle="tab">Fotos</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane active in" id="gastos_tab">
+            @Html.Partial("_datosGastos", Model)
+        </div>
+        <div class="tab-pane fade" id="documentacion_tab">
+            @Html.Partial("_datosDocumentacion", Model)
+        </div>
+        <div class="tab-pane fade" id="fotos_tab">
+            @Html.Partial("_datosFotos", Model)
+        </div>
+    </div>
+</div>

@@ -240,6 +240,7 @@
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\TiposDocumentoController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\VehiculosController.cs" />
+    <Compile Include="Controllers\Sales\Maintenance\Vehiculos\GastosController.cs" />
     <Compile Include="Controllers\Sales\PedidosController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
@@ -1664,6 +1665,10 @@
     <Content Include="Views\Shared\ErrorDX.cshtml" />
     <Content Include="Views\Pedidos\report.cshtml" />
     <Content Include="Views\Pedidos\_reportList.cshtml" />
+    <Content Include="Views\Vehiculos\_datosAsociados.cshtml" />
+    <Content Include="Views\Vehiculos\_datosFotos.cshtml" />
+    <Content Include="Views\Vehiculos\_datosGastos.cshtml" />
+    <Content Include="Views\Vehiculos\_datosDocumentacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
