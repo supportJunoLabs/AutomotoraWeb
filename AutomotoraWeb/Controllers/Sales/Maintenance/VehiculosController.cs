@@ -19,13 +19,15 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public static string CONTROLLER = "vehiculos";
         public const string PHOTO_FOLDER = "~/Content/Images/vehiculos/";
 
-        public ContentResult NombreEntidad() {
-            return new ContentResult { Content = "Vehiculo" };
-        }
+        //No usarlo mas porque da lios de permisos al invocar esta accion si no tiene permisos full en vehiculos (ej: usuario de solo consulta a traves de listados)
+        //ademas, ya no es mas el estandar.
+        //public ContentResult NombreEntidad() {
+        //    return new ContentResult { Content = "Vehiculo" };
+        //}
 
-        public ContentResult NombreEntidades() {
-            return new ContentResult { Content = "Vehiculos" };
-        }
+        //public ContentResult NombreEntidades() {
+        //    return new ContentResult { Content = "Vehiculos" };
+        //}
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext); //esto tiene que ser lo primero, si no, falla si se llama directamente la consulta del usuario si nadie esta logueado

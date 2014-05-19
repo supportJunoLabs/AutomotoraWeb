@@ -5,12 +5,15 @@
 @using AutomotoraWeb.Models;
 
 @{
-    List<string> visibleColumns = new List<string>() { "Banco", "Numero", "Tipo", "Moneda"};
-    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { { "Banco", 30 }, { "Numero", 30 }, { "Tipo", 30 }, { "Moneda", 30 } };
-    
     InfoGrilla ig = new InfoGrilla();
-    ig.VisibleColumns=visibleColumns;
-    ig.TrunkColumns = trunkColumns;
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Banco", LargoMax=30},
+            new ColumnaGrilla {Campo="Numero", LargoMax=30},
+            new ColumnaGrilla {Campo="Tipo", LargoMax=30},
+            new ColumnaGrilla {Campo="Moneda"}
+     };
+    
     ig.NameGrid = "grilla";
     ig.Controller = CuentasBancariasController.CONTROLLER;
     ig.ActionCallbackRoute = "listaGrilla";

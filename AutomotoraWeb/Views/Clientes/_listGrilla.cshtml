@@ -6,15 +6,17 @@
 
 @{
    
-    List<string> hiddenColumns = new List<string>() { }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
-    List<string> visibleColumns = new List<string>() { "Nombre", "Telefono", "OtroTelefono", "Fax", "Mail", "Observaciones" }; //agregar lo que hay que mostrar, si queda vacio se muestra todo
-    Dictionary<string, int> trunkColumns = new Dictionary<string, int>() { { "Telefono", 30 }, { "OtroTelefono", 30 }, { "Fax", 30 }, { "Mail", 30 }, { "Observaciones", 40 } };
-
     InfoGrilla ig = new InfoGrilla();
-
-    ig.HiddenColumns = hiddenColumns;
-    ig.VisibleColumns = visibleColumns;
-    ig.TrunkColumns = trunkColumns;
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Nombre"},
+            new ColumnaGrilla {Campo="Telefono", LargoMax=30},
+            new ColumnaGrilla {Campo="OtroTelefono", LargoMax=30},
+            new ColumnaGrilla {Campo="Fax", LargoMax=30},
+            new ColumnaGrilla {Campo="Mail", LargoMax=30},
+            new ColumnaGrilla {Campo="Observaciones", LargoMax=40}
+     };
+    
+   
     ig.NameGrid = "grilla";
     ig.Controller = ClientesController.CONTROLLER;
     ig.ActionCallbackRoute = "listaGrilla";
