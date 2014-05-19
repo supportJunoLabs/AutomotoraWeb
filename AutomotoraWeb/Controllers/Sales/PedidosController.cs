@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using AutomotoraWeb.Models;
 using DLL_Backend;
 using AutomotoraWeb.Utils;
+using DevExpress.XtraReports.Parameters;
+using DevExpress.XtraReports.UI;
+using DevExpress.XtraPrinting;
 
 namespace AutomotoraWeb.Controllers.Sales
 {
@@ -24,6 +27,11 @@ namespace AutomotoraWeb.Controllers.Sales
         public ActionResult Index(){
             return View();
         }
+
+
+        //--------------------------METODOS PARA LISTADOS DE pedidos  -----------------------------
+
+        #region Listados
 
         public ActionResult List() {
 
@@ -51,7 +59,7 @@ namespace AutomotoraWeb.Controllers.Sales
             this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(model.Filtro.Vendedor));
             if (ModelState.IsValid) {
                 if (btnSubmit == "Imprimir") {
-                    //return this.Report(model);
+                    return this.Report(model);
                 }
                 model.Resultado = _listaElementos(model);
             }
@@ -69,5 +77,50 @@ namespace AutomotoraWeb.Controllers.Sales
             model.AcomodarFiltro();
             return Pedido.Pedidos(model.Filtro);
         }
+
+        #endregion
+
+        //---------- METODOS PARA REPORTES DE LISTADOS DE Pedidos  -----------------------------
+
+        #region Reportes
+        public ActionResult Report(ListadoPedidosModel model) {
+            return View("report", model);
+        }
+
+        public ActionResult ReportPartial(string idParametros) {
+            ListadoPedidosModel model = null;
+            XtraReport rep = new DXListadoPedidos();
+            model = (ListadoPedidosModel)Session[idParametros];
+            rep.DataSource = _listaElementos(model);
+            setParamsToReport(rep, model); // lo hago despues porque listaElementos acomoda los filtros en model
+            Session[idParametros] = model;
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportList");
+        }
+
+        private void setParamsToReport(XtraReport report, ListadoPedidosModel model) {
+            Parameter paramSystemName = new Parameter();
+            paramSystemName.Name = "detalleFiltros";
+            paramSystemName.Type = typeof(string);
+            paramSystemName.Value = model.detallesFiltro();
+            paramSystemName.Description = "Detalle Filtros";
+            paramSystemName.Visible = false;
+            report.Parameters.Add(paramSystemName);
+        }
+
+        public ActionResult ReportExport(string idParametros) {
+            ListadoPedidosModel model = null;
+            XtraReport rep = new DXListadoPedidos();
+            model = (ListadoPedidosModel)Session[idParametros];
+            setParamsToReport(rep, model);
+            rep.DataSource = _listaElementos(model);
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+
+        }
+        #endregion
+
+
+
     }
 }

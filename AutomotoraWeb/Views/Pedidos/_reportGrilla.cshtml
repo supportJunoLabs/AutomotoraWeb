@@ -18,6 +18,8 @@
             new ColumnaGrilla {Campo="Seniado", Ancho=74},
             new ColumnaGrilla {Campo="Vendedor", Ancho=100},
             new ColumnaGrilla {Campo="Cliente", Ancho=150},
+            new ColumnaGrilla {Campo="FechaRecibido", Ancho=80, Titulo = "F.Recibido"},
+            new ColumnaGrilla {Campo="Vehiculo", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA },
             new ColumnaGrilla {Campo="Observaciones", Ancho=250, LargoMax=70}};
             
         
@@ -27,9 +29,9 @@
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Pedido.PedidoMD);
     
-    List<BotonGrilla> listaBotones = new List<BotonGrilla>();
-    listaBotones.Add(new BotonGrilla("details", PedidosController.CONTROLLER,  "boton-consultar-mf", "Ver Pedido"));
-    ig.Botones = listaBotones;
+    //ig.AddButton(new BotonGrilla("details", PedidosController.CONTROLLER,  "boton-consultar-mf", "Ver Pedido"));
+
+    ig.SinBotones();
     ig.DobleClick = true;
 
     ViewBag.InfoGrilla = ig;

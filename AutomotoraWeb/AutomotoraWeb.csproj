@@ -1542,6 +1542,7 @@
     <Content Include="Content\Images\vssver2.scc" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\AutomotoraWeb\PedidosListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ManejoFechas.js" />
     <Content Include="Scripts\AutomotoraWeb\VehiculosListado.js" />
     <Content Include="Scripts\AutomotoraWeb\VendedorMantenimiento.js" />
@@ -1661,6 +1662,8 @@
     <Content Include="Views\Vehiculos\report2.cshtml" />
     <Content Include="Views\Vehiculos\_reportDetalle.cshtml" />
     <Content Include="Views\Shared\ErrorDX.cshtml" />
+    <Content Include="Views\Pedidos\report.cshtml" />
+    <Content Include="Views\Pedidos\_reportList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

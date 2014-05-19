@@ -51,7 +51,7 @@
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")      
     
-    <div id="filtros" style="border: 1px solid #A3C0E8; margin-right:5px">
+    <div id="filtros" style="border: 1px solid #A3C0E8; margin-right: 5px">
         <div id="containerLinea1">
             <div id="filtro_estado" class="floatLeft">
                 <fieldset id="field_estado">
@@ -148,7 +148,7 @@
                                 <label>Desde</label>
                             </div>
                             <div class="floatRight editor-field editor-field-small ">
-                                @Html.TextBoxFor(model => model.DesdeRecibido, "{0:dd/MM/yyyy}", new { id = "fdesdeEsperado", @class = "calendarAW floatRight" })
+                                @Html.TextBoxFor(model => model.DesdeRecibido, "{0:dd/MM/yyyy}", new { id = "fdesdeRecibido", @class = "calendarAW floatRight" })
                             </div>
                             <div class="clear-both"></div>
                         </div>
@@ -157,7 +157,7 @@
                                 <label>Hasta</label>
                             </div>
                             <div class="floatRight editor-field editor-field-small">
-                                @Html.TextBoxFor(model => model.HastaRecibido, "{0:dd/MM/yyyy}", new { id = "fhastaEsperado", @class = "calendarAW floatRight" })
+                                @Html.TextBoxFor(model => model.HastaRecibido, "{0:dd/MM/yyyy}", new { id = "fhastaRecibido", @class = "calendarAW floatRight" })
                             </div>
                             <div class="clear-both"></div>
                         </div>
@@ -228,16 +228,18 @@
                 <fieldset id="fieldsetReservacion">
                     <legend>Reserva</legend>
                     <div>
-                        @Html.RadioButtonFor(model => model.Filtro.Reservado, PedidoFiltro.PED_RESERVA_LISTADO.TODOS)  Todos
+                        @Html.RadioButtonFor(model => model.Filtro.Reservado, PedidoFiltro.PED_RESERVA_LISTADO.TODOS, new { id = "rb_reserva_todos" })  Todos
                     </div>
                     <div style="vertical-align: middle">
-                        @Html.RadioButtonFor(model => model.Filtro.Reservado, PedidoFiltro.PED_RESERVA_LISTADO.SIN_RESERVA)  Sin Reserva
+                        @Html.RadioButtonFor(model => model.Filtro.Reservado, PedidoFiltro.PED_RESERVA_LISTADO.SIN_RESERVA, new { id = "rb_reserva_sin" })  Sin Reserva
                     </div>
                     <div>
-                        @Html.RadioButtonFor(model => model.Filtro.Reservado, PedidoFiltro.PED_RESERVA_LISTADO.SIN_RESERVA)  Con Reserva
+                        @Html.RadioButtonFor(model => model.Filtro.Reservado, PedidoFiltro.PED_RESERVA_LISTADO.CON_RESERVA, new { id = "rb_reserva_con" })  Con Reserva
                     </div>
                 </fieldset>
             </div>
+
+            <div id="filtros_reservacion" class="floatLet">
 
             <div id="filtro_cliente" class="floatLeft">
                 <fieldset id="fieldsetcliente">
@@ -267,7 +269,7 @@
                 <fieldset id="fieldsetFechaReserva">
                     <legend>Fecha Reserva</legend>
                     <div>
-                        @Html.CheckBoxFor(model => model.FiltrarFechasReservado, new { id = "cb_filtrarPeriodoResrva" }) Filtrar Periodo
+                        @Html.CheckBoxFor(model => model.FiltrarFechasReservado, new { id = "cb_filtrarPeriodoReserva" }) Filtrar Periodo
                     </div>
                     <div id="periodoReserva" style="margin-top: 10px;">
                         <div id="containerDesdeReserva">
@@ -307,9 +309,11 @@
                 </fieldset>
             </div>
 
-                        <div class="btn-toolbar floatLeft" style="margin-left:70px">
+            </div>
+
+            <div class="btn-toolbar floatLeft" style="margin-left: 70px">
                 <div style="height: 0px; width: 100%"></div>
-                <div class="btn-group" >
+                <div class="btn-group">
                     <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
                 </div>
                 <div class="btn-group" style="margin-left: 10px">
@@ -317,12 +321,12 @@
                 </div>
             </div>
 
-            
+
             <div class="clear-both"></div>
 
         </div>
 
-        
+
 
     </div>
 }
@@ -330,5 +334,9 @@
 <div id="divGrilla">
     @Html.Partial("_reportGrilla", Model)
 </div>
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/PedidosListado.js"></script>
+}
 
 
