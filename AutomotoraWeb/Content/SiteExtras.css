@@ -6,6 +6,10 @@
     float: right;
 }
 
+.clearBoth {
+    clear: both;
+}
+
 input[type="radio"] {
     vertical-align: top;
 }

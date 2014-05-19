@@ -14,6 +14,7 @@ namespace AutomotoraWeb.Utils {
         public static string APPLICATION_SYSTEM_NAME = "applicationSystemName";
         public static string APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS = "applicationPermisiblesActionController";
         public static string ULTIMO_MODULO = "ultimoModulo";
+        public static string CODIGO_VEHICULO= "codigoVehiculo";
 
         public static string generarIdVarSesion(string nomFuncion, string nomUsuario) {
             string s = nomFuncion+"|" +

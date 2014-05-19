@@ -28,6 +28,10 @@ namespace AutomotoraWeb {
                 return;
             }
 
+            if (controllerName.ToLower().Equals("gastos")) {
+                controllerName = "vehiculos";
+            }
+
             if (!((controllerName.ToLower() == AuthenticationController.CONTROLLER) && (actionName.ToLower() == AuthenticationController.LOGIN))) {
                 if (filterContext.HttpContext.Session[SessionUtils.SESSION_USER_NAME] == null) {
                     // Redireccionamos la peticion a la vista de login
