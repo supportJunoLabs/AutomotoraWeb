@@ -2,114 +2,120 @@
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Sales.Maintenance;
 
-@Html.HiddenFor(model => model.idsesion, new { id="camposesion"});
+@Html.HiddenFor(model => model.idsesion, new { id = "camposesion" })
 
-<div class="display-label">
-    @Html.LabelForRequired(model => model.Vendedor.Nombre)
-</div>
-<div class="editor-field editor-field-xxlarge">
-    @Html.EditorOrDisplayFor(model => model.Vendedor.Nombre, (bool?)ViewBag.SoloLectura)
-    @Html.ValidationMessageFor(model => model.Vendedor.Nombre)
-</div>
-<div class="clear-both"></div>
+<div id="datos" class="floatLeft">
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Vendedor.Nombre)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.EditorOrDisplayFor(model => model.Vendedor.Nombre, (bool?)ViewBag.SoloLectura)
+        @Html.ValidationMessageFor(model => model.Vendedor.Nombre)
+    </div>
+    <div class="clear-both"></div>
 
-<div class="display-label">
-    @Html.LabelForRequired(model => model.Vendedor.Direccion)
-</div>
-<div class="editor-field editor-field-xxlarge">
-    @Html.EditorOrDisplayFor(model => model.Vendedor.Direccion, (bool?)ViewBag.SoloLectura)
-    @Html.ValidationMessageFor(model => model.Vendedor.Direccion)
-</div>
-<div class="clear-both"></div>
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Vendedor.Direccion)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.EditorOrDisplayFor(model => model.Vendedor.Direccion, (bool?)ViewBag.SoloLectura)
+        @Html.ValidationMessageFor(model => model.Vendedor.Direccion)
+    </div>
+    <div class="clear-both"></div>
 
-<div class="display-label">
-    @Html.LabelForRequired(model => model.Vendedor.Telefono)
-</div>
-<div class="editor-field editor-field-xxlarge">
-    @Html.EditorOrDisplayFor(model => model.Vendedor.Telefono, (bool?)ViewBag.SoloLectura)
-    @Html.ValidationMessageFor(model => model.Vendedor.Telefono)
-</div>
-<div class="clear-both"></div>
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Vendedor.Telefono)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.EditorOrDisplayFor(model => model.Vendedor.Telefono, (bool?)ViewBag.SoloLectura)
+        @Html.ValidationMessageFor(model => model.Vendedor.Telefono)
+    </div>
+    <div class="clear-both"></div>
 
-<div class="display-label">
-    @Html.LabelForRequired(model => model.Vendedor.Mail)
-</div>
-<div class="editor-field editor-field-xxlarge">
-    @Html.EditorOrDisplayFor(model => model.Vendedor.Mail, (bool?)ViewBag.SoloLectura)
-    @Html.ValidationMessageFor(model => model.Vendedor.Mail)
-</div>
-<div class="clear-both"></div>
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Vendedor.Mail)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.EditorOrDisplayFor(model => model.Vendedor.Mail, (bool?)ViewBag.SoloLectura)
+        @Html.ValidationMessageFor(model => model.Vendedor.Mail)
+    </div>
+    <div class="clear-both"></div>
 
-<div class="display-label editor-date-field">
-    @Html.LabelForRequired(model => model.Vendedor.FechaIngreso)
-</div>
-<div class="editor-field editor-field-small">
-    @Html.TextBoxOrdisplayFor(model => model.Vendedor.FechaIngreso, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
-    @Html.ValidationMessageFor(model => model.Vendedor.FechaIngreso)
-</div>
-<div class="clear-both"></div>
+    <div class="display-label editor-date-field">
+        @Html.LabelForRequired(model => model.Vendedor.FechaIngreso)
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.TextBoxOrdisplayFor(model => model.Vendedor.FechaIngreso, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+        @Html.ValidationMessageFor(model => model.Vendedor.FechaIngreso)
+    </div>
+    <div class="clear-both"></div>
 
-<div class="display-label ">
-    @Html.LabelForRequired(model => model.Vendedor.Observaciones)
-</div>
-<div class="editor-field editor-field-xxlarge">
-    @Html.TextAreaOrDisplayFor(model => model.Vendedor.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
-    @Html.ValidationMessageFor(model => model.Vendedor.Observaciones)
-</div>
-<div class="clear-both"></div>
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.Vendedor.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.TextAreaOrDisplayFor(model => model.Vendedor.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+        @Html.ValidationMessageFor(model => model.Vendedor.Observaciones)
+    </div>
+    <div class="clear-both"></div>
 
-<div class="display-label ">
-    @Html.LabelForRequired(model => model.Vendedor.Habilitado)
-</div>
-<div >
-    @Html.CheckBoxOrDisplayFor(model => model.Vendedor.Habilitado, (bool?)ViewBag.SoloLectura)
-    @Html.ValidationMessageFor(model => model.Vendedor.Habilitado)
-</div>
-<div class="clear-both"></div>
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.Vendedor.Habilitado)
+    </div>
+    <div>
+        @Html.CheckBoxOrDisplayFor(model => model.Vendedor.Habilitado, (bool?)ViewBag.SoloLectura)
+        @Html.ValidationMessageFor(model => model.Vendedor.Habilitado)
+    </div>
+    <div class="clear-both"></div>
 
-<div class="espacio2"></div>
+    <div class="espacio2"></div>
 
+</div>
 
 <!-- ===========  FOTO  =============== -->
 
 @{ 
     if (ViewBag.SoloLectura == null || (bool?)ViewBag.SoloLectura == false) {
-    
-            <div class="editor-label ">
-                @Html.LabelForRequired(model => model.Vendedor.Foto):
-            </div>
-            <div class="editor-field editor-field-xxlarge">
-                <input id="fileInputFoto" type="file">
-                <button id="uploadFileBtn" class="btn-default btn btn-primary" type="button">Subir Imagen</button>
-                <button id="deleteFotoBtn" class="btn-default btn " type="button">Eliminar Imagen</button>
-            </div>
-            <div class="clear-both"></div>
+    <div class="clear-both"></div>
+    <div id="fotoModif">
+        <div class="editor-label ">
+            @Html.LabelForRequired(model => model.Vendedor.Foto)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            <input id="fileInputFoto" type="file">
+            <button id="uploadFileBtn" class="btn-default btn btn-primary" type="button">Subir Imagen</button>
+            <button id="deleteFotoBtn" class="btn-default btn " type="button">Eliminar Imagen</button>
+        </div>
+        <div class="clear-both"></div>
 
-            <div class="editor-label ">
-                &nbsp;
-            </div>
-            <div class="editor-field ">
-                  @if (Model == null ||Model.Vendedor==null|| Model.Vendedor.Foto == null || Model.Vendedor.Foto.Trim() == "") {
-                    <img id="imgPhoto" src="~/Content/Images/ExampleImage.png" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
+        <div class="editor-label ">
+            &nbsp;
+        </div>
+        <div class="editor-field ">
+            @if (Model == null || Model.Vendedor == null || Model.Vendedor.Foto == null || Model.Vendedor.Foto.Trim() == "") {
+                <img id="imgPhoto" src="~/Content/Images/ExampleImage.png" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding: 2px;" />
+            } else {
+                if (Session[VendedoresController.FILE_RANDOM_NAME] != null) {
+                <img id="imgPhoto" src="~/Content/Images/tmp/@Model.Vendedor.Foto" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
                 } else {
-                      if (Session[ VendedoresController.FILE_RANDOM_NAME] != null){
-                            <img id="imgPhoto" src="~/Content/Images/tmp/@Model.Vendedor.Foto" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
-                      }else{
-                            <img id="imgPhoto" src="~/Content/Images/vendedores/@Model.Vendedor.Foto" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
-                      }
-                }
-            </div>
-            <div class="clear-both"></div>
-            <div class="espacio2"></div>
-    } else {
-            <div class="display-label ">
-                @Html.DisplayNameFor(model => model.Vendedor.Foto):
-            </div>
-            <div class="editor-field editor-field-xxlarge">
                 <img id="imgPhoto" src="~/Content/Images/vendedores/@Model.Vendedor.Foto" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
-            </div>
-            <div class="clear-both"></div>
-    
-            <div class="espacio2"></div>
+                }
+            }
+        </div>
+        <div class="clear-both"></div>
+        <div class="espacio2"></div>
+    </div>
+    } else {
+    <div id="fotoDisplay" class="floatLeft" style="margin-left:30px">
+       @* <div class="display-label ">
+            @Html.DisplayNameFor(model => model.Vendedor.Foto):
+        </div>*@
+        <div class="editor-field editor-field-xxlarge">
+            <img id="imgPhoto" src="~/Content/Images/vendedores/@Model.Vendedor.Foto" style="border: solid 1px #cccccc; max-height: 155px; max-width: 155px; padding:2px;" />
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="espacio2"></div>
+    </div>
     }
 }
