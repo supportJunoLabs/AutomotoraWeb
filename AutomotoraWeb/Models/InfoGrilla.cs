@@ -30,8 +30,6 @@ namespace AutomotoraWeb.Models {
         
         public Dictionary<string, int> TrunkColumns {get; set;} //columnas que hay que truncar (o viene en visibleColumns)
 
-        //public Dictionary<string, int> AnchosColumns { get; set; }
-
         public List<ColumnaGrilla> VisibleColumns { get; set; }
             //Si es nulo, o esta vacia, muestra todas las columnas de tipo simple del objeto
             //Si hay columnas, muestra esta en el orden en que estan aqui.
@@ -88,6 +86,18 @@ namespace AutomotoraWeb.Models {
             VisibleColumns.Add(cg);
 
         }
+
+        public ColumnaGrilla obtenerColumna(string nombreCampo) {
+            if (VisibleColumns == null) {
+                return null;
+            }
+            ColumnaGrilla aux = new ColumnaGrilla { Campo = nombreCampo };
+            int i = VisibleColumns.IndexOf(aux);
+            if (i >= 0) {
+                return VisibleColumns[i];
+            }
+            return null;
+        }
     }
 
     public class ColumnaGrilla {
@@ -99,11 +109,17 @@ namespace AutomotoraWeb.Models {
         public int Ancho {get; set;}
         public int LargoMax { get; set; }
         public ALINEACIONES Alineacion { get; set;}
+        
+        public bool Hipervinculo { get; set; }
+        public string Haccion { get; set; }
+        public string Hcontrolador { get; set; }
+        public string HCampoParametro { get; set; }
 
         public ColumnaGrilla(){
             Alineacion=ALINEACIONES.DEFAULT;
             Ancho=0;
             LargoMax =0;
+            Hipervinculo = false;
         }
 
         public override bool Equals(object obj) {
