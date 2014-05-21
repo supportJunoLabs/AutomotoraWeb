@@ -52,7 +52,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
 
-        public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vehiculo vehiculo) {
+        //public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vehiculo vehiculo) {
+        public ActionResult Show() {
             return View(_listaElementos());
         }
 
@@ -62,6 +63,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public ActionResult Details(int id) {
             Session[SessionUtils.CODIGO_VEHICULO] = id;
+            ViewData["idParametros"] = id.ToString();
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
         }
@@ -309,5 +311,29 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #endregion
 
+
+        //---------------------------------------------------------------------
+
+        #region Gastos
+
+        /*public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Gasto gasto) {
+            return View(_listaElementos());
+        }*/
+
+        public ActionResult listGastos(int idParametros) {
+            ViewData["idParametros"] = idParametros;
+            return PartialView("_listGastos", _listaGastos(idParametros));
+        }
+
+        private List<Gasto> _listaGastos(int id) {
+                Vehiculo vehiculo = new Vehiculo();
+                vehiculo.Codigo = id;
+                vehiculo.Consultar();
+                return vehiculo.DetalleGastos;
+        }
+
+        #endregion
+
+        //---------------------------------------------------------------------
     }
 }
