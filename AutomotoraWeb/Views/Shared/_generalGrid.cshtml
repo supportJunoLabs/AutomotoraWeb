@@ -4,6 +4,8 @@
 @using AutomotoraWeb.Models;
 @using AutomotoraWeb.Controllers.General;
 @using AutomotoraWeb.Utils;
+@using System.ComponentModel.DataAnnotations;
+@using System.Reflection;
 
 @{
 
@@ -15,8 +17,8 @@
     } else {
         throw new Exception("No se ha especificado el objeto InfoGrilla para la grilla solicitada");
     }
-    
-    if (ig.TrunkColumns==null){
+
+    if (ig.TrunkColumns == null) {
         ig.TrunkColumns = new Dictionary<string, int>();
     }
 
@@ -28,131 +30,229 @@
             ig.AccionDobleClick = BaseController.DETAILS;
         }
     }
-    bool defineAnchos = ig.anchosDefinidos();
+    bool defineAnchos = false;
 
-    List<GridViewColumn> listGridViewsColumn = new List<GridViewColumn>();
-    System.Reflection.PropertyInfo[] propertiesinfo = ig.TypeOfModel.GetProperties();
-    List<MVCxGridViewColumn> lista = new List<MVCxGridViewColumn>();
+    List<MVCxGridViewColumn> listGridViewsColumn = new List<MVCxGridViewColumn>();
+    MVCxGridViewColumn listGridViewsBotones = null;
 
-    foreach (System.Reflection.PropertyInfo propertyInfo in propertiesinfo) {
-        object[] arrayDisplayAttribute = propertyInfo.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.DisplayAttribute), true);
-        foreach (System.ComponentModel.DataAnnotations.DisplayAttribute displayAttribute in arrayDisplayAttribute) {
+    //------------- COLUMNAS POR REFLECTION ------------------------------------
 
-            ColumnaGrilla cg = null;
-            ColumnaGrilla aux = new ColumnaGrilla { Campo = propertyInfo.Name };
-            if (ig.VisibleColumns != null) {
-                int i = ig.VisibleColumns.IndexOf(aux);
-                if (i >= 0) {
-                    cg = ig.VisibleColumns[i];
+    //Si no vienen definidas las columnas, las busco por reflection
+    if (ig.VisibleColumns == null) {
+        ig.VisibleColumns = new List<ColumnaGrilla>();
+
+        //obtengo los campos por refletion
+        PropertyInfo[] propertiesinfo = ig.TypeOfModel.GetProperties();
+        foreach (PropertyInfo propertyInfo in propertiesinfo) {
+            if (ig.HiddenColumns == null || !ig.HiddenColumns.Contains(propertyInfo.Name)) {
+
+                ColumnaGrilla cg = new ColumnaGrilla();
+                cg.Campo = propertyInfo.Name;
+                if (ig.TrunkColumns != null && ig.TrunkColumns.Keys.Contains(cg.Campo)) {
+                    cg.LargoMax = ig.TrunkColumns[cg.Campo];
+                }
+                ig.VisibleColumns.Add(cg);
+            }
+        }
+    }
+
+    //------------- COLUMNAS ESPECIFICADAS  ------------------------------------
+
+    if (ig.VisibleColumns != null) { //Opcion en la que vienen definidas manualmente las columnas:
+        defineAnchos = ig.anchosDefinidos();
+        System.Reflection.PropertyInfo[] propertiesinfo = ig.TypeOfModel.GetProperties();
+        foreach (ColumnaGrilla cg in ig.VisibleColumns) {
+
+            //Ver que no haya venido como oculta
+            if (ig.HiddenColumns != null && ig.HiddenColumns.Contains(cg.Campo)) {
+                continue; //seguir con la proxima porque esta no va
+            }
+
+            //Buscar la propiedad asociada para obtener sus datos:
+            PropertyInfo propertyInfo = null;
+            foreach (var x in propertiesinfo) {
+                if (x.Name == cg.Campo) {
+                    propertyInfo = x;
+                    break; //salir del foreach
+                }
+            }
+            if (propertyInfo == null) {
+                continue; //seguir con el proximo porque no existe esta columna
+            }
+
+            //Acceder al data annotation de la columna
+            object[] arrayDisplayAttribute = propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), true);
+            DisplayAttribute displayAttribute = null;
+            if (arrayDisplayAttribute != null && arrayDisplayAttribute.Length > 0) {
+                displayAttribute = (DisplayAttribute)arrayDisplayAttribute[0];
+            }
+
+            MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
+            gridViewColumn.FieldName = propertyInfo.Name;
+
+            //Titulo de la columna
+            if (!string.IsNullOrWhiteSpace(cg.Titulo)) {
+                gridViewColumn.Caption = cg.Titulo;
+            } else {
+                if (displayAttribute != null && !string.IsNullOrWhiteSpace(displayAttribute.Name)) {
+                    gridViewColumn.Caption = displayAttribute.Name;
+                } else {
+                    gridViewColumn.Caption = cg.Campo;
                 }
             }
 
-            if (cg != null || ig.VisibleColumns == null) {
-                //si vinieron especificadas las columnas, solo se incluyen si estan en la lista  no son hidden
-                //si no vienieron, las pongo todas salvo las que estan como hidden
-
-                if (ig.HiddenColumns == null || !ig.HiddenColumns.Contains(propertyInfo.Name)) {
-                    
-                    
-                    MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
-                    gridViewColumn.FieldName = propertyInfo.Name;
-
-                    if (cg != null && !string.IsNullOrWhiteSpace(cg.Titulo)) {
-                        gridViewColumn.Caption = cg.Titulo;
-                    } else {
-                        gridViewColumn.Caption = displayAttribute.Name;
-                    }
-
-                    gridViewColumn.ColumnType = MVCxGridViewColumnType.Default;
-
-                    if (defineAnchos && cg != null) {
-                        if (cg.Ancho > 0) {
-                            gridViewColumn.Width = Unit.Pixel(cg.Ancho);
-                            sumaAnchos += cg.Ancho;
-                        } else {
-                            gridViewColumn.Width = Unit.Pixel(100);
-                            sumaAnchos += 100;
-                        }
-                    } else {
-                        if (GeneralUtils.isBoolean(propertyInfo)) {
-                            gridViewColumn.Width = Unit.Pixel(75);
-                        } else if (GeneralUtils.isDateTime(propertyInfo)) {
-                            gridViewColumn.Width = Unit.Pixel(100);
-                        }
-                    }
-
-                    if (GeneralUtils.isBoolean(propertyInfo)) {
-                        gridViewColumn.ColumnType = MVCxGridViewColumnType.CheckBox;
-                    }
-
-                    if (cg != null && cg.Alineacion != ColumnaGrilla.ALINEACIONES.DEFAULT) {
-                        switch (cg.Alineacion) {
-                            case ColumnaGrilla.ALINEACIONES.IZQUIERDA:
-                                gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Left;
-                                break;
-                            case ColumnaGrilla.ALINEACIONES.DERECHA:
-                                gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Right;
-                                break;
-                            case ColumnaGrilla.ALINEACIONES.CENTRO:
-                                gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Center;
-                                break;
-                            case ColumnaGrilla.ALINEACIONES.JUSTIFICADO:
-                                gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Justify;
-                                break;
-                        }
-                    } else {
-                        if (GeneralUtils.isDateTime(propertyInfo)) {
-                            gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Center;
-                        }
-                        if (GeneralUtils.isImporte(propertyInfo) || GeneralUtils.isInteger(propertyInfo)) {
-                            gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Right;
-                        }
-                    }
 
 
-                    if (GeneralUtils.isDateTime(propertyInfo)) {
-                        gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
-                    }
 
-                    //ver como sera truncada si es necesario
-                    if (cg != null && cg.LargoMax > 0) {
-                        if (!ig.TrunkColumns.Keys.Contains(cg.Campo)){
-                            ig.TrunkColumns.Add(cg.Campo, cg.LargoMax);
-                        }else{
-                            if (ig.TrunkColumns[cg.Campo]>cg.LargoMax){
-                                ig.TrunkColumns[cg.Campo]=cg.LargoMax;
+            //Ancho
+            if (defineAnchos) {
+                if (cg.Ancho > 0) {
+                    gridViewColumn.Width = Unit.Pixel(cg.Ancho);
+                    sumaAnchos += cg.Ancho;
+                } else {
+                    gridViewColumn.Width = Unit.Pixel(100);
+                    sumaAnchos += 100;
+                }
+            } else {
+                if (GeneralUtils.isBoolean(propertyInfo)) {
+                    gridViewColumn.Width = Unit.Pixel(75);
+                } else if (GeneralUtils.isDateTime(propertyInfo)) {
+                    gridViewColumn.Width = Unit.Pixel(100);
+                }
+            }
+
+            //Alineacion
+            if (cg.Alineacion != ColumnaGrilla.ALINEACIONES.DEFAULT) {
+                switch (cg.Alineacion) {
+                    case ColumnaGrilla.ALINEACIONES.IZQUIERDA:
+                        gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Left;
+                        break;
+                    case ColumnaGrilla.ALINEACIONES.DERECHA:
+                        gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+                        break;
+                    case ColumnaGrilla.ALINEACIONES.CENTRO:
+                        gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+                        break;
+                    case ColumnaGrilla.ALINEACIONES.JUSTIFICADO:
+                        gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Justify;
+                        break;
+                }
+            } else { //Si no se especifica, usar la alineacion por defecto.
+                if (GeneralUtils.isDateTime(propertyInfo)) {
+                    gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+                }
+                if (GeneralUtils.isImporte(propertyInfo) || GeneralUtils.isInteger(propertyInfo)) {
+                    gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+                }
+            }
+
+            //booleano              1
+            if (GeneralUtils.isBoolean(propertyInfo)) {
+                gridViewColumn.ColumnType = MVCxGridViewColumnType.CheckBox;
+
+            } else {
+                gridViewColumn.ColumnType = MVCxGridViewColumnType.Default;
+            }
+
+            // si es fecha
+            if (GeneralUtils.isDateTime(propertyInfo)) {
+                gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+            }
+
+            if (!GeneralUtils.isBoolean(propertyInfo)) {
+                if (cg.Hipervinculo) {
+                    gridViewColumn.SetDataItemTemplateContent(container => {
+                        Html.DevExpress().HyperLink(hyperlink => {
+                            //var visibleIndex = container.VisibleIndex;
+                            //var keyValue = container.KeyValue;
+                            var texto = DataBinder.Eval(container.DataItem, cg.Campo);
+                            string tooltip = null;
+                            if (GeneralUtils.isDateTime(propertyInfo)) {
+                                if (texto != null) {
+                                    texto = ((DateTime)DataBinder.Eval(container.DataItem, cg.Campo)).ToString("dd/MM/yyyy");
+                                }
+                            } else {
+                                if (texto != null && cg.LargoMax > 0 && texto.ToString().Length > cg.LargoMax) {
+                                    tooltip = texto.ToString();
+                                    texto = texto.ToString().Substring(0, cg.LargoMax) + "...";
+                                }
                             }
-                        }
-                    }
+                            var pardestino = DataBinder.Eval(container.DataItem, cg.HCampoParametro);
 
-                    lista.Add(gridViewColumn);  //lo guardo en una lista temporal para ordenarlo antes de agregarlo
+                            //hyperlink.Name = "hl" + keyValue.ToString();
+                            if (texto != null) {
+                                hyperlink.Properties.Text = texto.ToString();
+                            }
+                            hyperlink.NavigateUrl = Url.Action(cg.Haccion, cg.Hcontrolador, new { id = pardestino });
+                            if (!string.IsNullOrWhiteSpace(tooltip)) {
+                                hyperlink.ToolTip = tooltip;
+                            }
+                        }).Render();
+                    });
+                } else if (cg.LargoMax > 0) {
+                    gridViewColumn.SetDataItemTemplateContent(container => {
+                        Html.DevExpress().Label(label => {
+
+                            string tooltip = null;
+                            var texto = DataBinder.Eval(container.DataItem, cg.Campo);
+                            if (GeneralUtils.isDateTime(propertyInfo)) {
+                                if (texto != null) {
+                                    texto = ((DateTime)DataBinder.Eval(container.DataItem, cg.Campo)).ToString("dd/MM/yyyy");
+                                }
+                            } else {
+
+                                if (texto != null && cg.LargoMax > 0 && texto.ToString().Length > cg.LargoMax) {
+                                    tooltip = texto.ToString();
+                                    texto = texto.ToString().Substring(0, cg.LargoMax) + "...";
+                                }
+                            }
+                            if (texto != null) {
+                                label.Text = texto.ToString();
+                            }
+                            if (!string.IsNullOrWhiteSpace(tooltip)) {
+                                label.ToolTip = tooltip;
+                            }
+                        }).Render();
+                    });
+                }
+            } //if not boolean
+            listGridViewsColumn.Add(gridViewColumn);
+        } //foreach
+    }//if columnasvisibles
+
+    //---------------------- COLUMNA BOTONES ------------------------------------------------
+
+    if (ig.Botones == null || ig.Botones.Count > 0) { //Si viene nulo van los por defecto, si viene con algo lo especificado (que puede ser nada)
+        listGridViewsBotones = new MVCxGridViewColumn();
+
+        listGridViewsBotones.Caption = "Acciones";
+        listGridViewsBotones.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+
+        if (ig.Botones == null) {//van los 3 por defecto
+            listGridViewsBotones.Width = Unit.Pixel(90);
+        } else {
+            listGridViewsBotones.Width = Unit.Pixel(30 * ig.Botones.Count);
+        }
+
+        listGridViewsBotones.SetDataItemTemplateContent(c => {
+            var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
+            if (ig.Botones == null) {
+                ViewContext.Writer.WriteLine(@Html.BotonImagen("details", ig.Controller, new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
+                ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", ig.Controller, new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
+                ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", ig.Controller, new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());
+            } else {
+                foreach (BotonGrilla b in ig.Botones) {
+                    ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());
                 }
             }
-        }
+        });
     }
-
-    //Si vinieron especificadas las columnas, las ordeno segun el orden recibido.
-    if (ig.VisibleColumns != null) {
-        List<MVCxGridViewColumn> lista_ordenada = new List<MVCxGridViewColumn>();
-        foreach (ColumnaGrilla s in ig.VisibleColumns) {
-            foreach (var x in lista) {
-                if (x.FieldName == s.Campo) {
-                    lista_ordenada.Add(x);
-                    break;
-                }
-            }
-        }
-        foreach (var x in lista_ordenada) {
-            listGridViewsColumn.Add(x);
-        }
-    } else {
-        foreach (var x in lista) {
-            listGridViewsColumn.Add(x);
-        }
-    }
-              
+        
 }
 
+@{
+    //--------------------------------------GENERAR LA GRILLA ---------------------------------------------    
+}
 
 @(Html.DevExpress().GridView(
     settings => {
@@ -191,7 +291,7 @@
         settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
         settings.SettingsText.FilterBarClear = "QuitarFiltros";
         settings.Settings.ShowFilterRowMenu = true;
-        settings.CommandColumn.ClearFilterButton.Visible = true;
+        settings.CommandColumn.ShowClearFilterButton = true;
         settings.Settings.ShowHeaderFilterBlankItems = false;
 
         settings.SettingsPopup.HeaderFilter.MinWidth = 300;
@@ -201,52 +301,30 @@
             settings.ClientSideEvents.RowDblClick = "function(s, e){ window.open('" + @Url.Action(ig.AccionDobleClick, ig.ControladorDobleClick) + "/' + s.GetRowKey(e.visibleIndex), '_self'); }";
         }
 
-        if (!ig.AccionesAlComienzo) {
-            //Columnas Visibles (Propiedades)
-            settings.Columns.AddRange(listGridViewsColumn.ToArray());
+        if (ig.AccionesAlComienzo && listGridViewsBotones != null) {
+            settings.Columns.Add(listGridViewsBotones);
         }
 
-        //Columnas Visibles (Editores)
-        if (ig.Botones == null || ig.Botones.Count > 0) {
-            settings.Columns.Add(column => {
-                column.Caption = "Acciones";
-                column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
-
-                if (ig.Botones == null) {
-                    column.Width = Unit.Pixel(90);
-                } else {
-                    column.Width = Unit.Pixel(30 + ig.Botones.Count);
-                }
-
-                column.SetDataItemTemplateContent(c => {
-                    var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
-                    if (ig.Botones == null) {
-                        ViewContext.Writer.WriteLine(@Html.BotonImagen("details", ig.Controller, new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
-                        ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", ig.Controller, new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
-                        ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", ig.Controller, new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());
-                    } else {
-                        foreach (BotonGrilla b in ig.Botones) {
-                            ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());
-                        }
-                    }
-
-                });
-            });
+        foreach (var c in listGridViewsColumn) {
+            settings.Columns.Add(c);
+        }
+        if (!ig.AccionesAlComienzo && listGridViewsBotones != null) {
+            settings.Columns.Add(listGridViewsBotones);
         }
 
-        if (ig.AccionesAlComienzo) {
-            //Columnas Visibles (Propiedades)
-            settings.Columns.AddRange(listGridViewsColumn.ToArray());
-        }
-       //Se trunca contenido de columnas con mucho texto
-        settings.HtmlDataCellPrepared = (sender, e) => {
-            if (ig.TrunkColumns != null && ig.TrunkColumns.Keys.Contains(e.DataColumn.FieldName)) {
-                if (e.CellValue != null && e.CellValue.ToString().Length > ig.TrunkColumns[e.DataColumn.FieldName]) {
-                    e.Cell.ToolTip = e.CellValue.ToString();
-                    e.Cell.Text = e.CellValue.ToString().Substring(0, ig.TrunkColumns[e.DataColumn.FieldName]) + "...";
-                }
-            }
-        };
     }
 ).Bind(Model).GetHtml())
 
+
+
+@*
+    //Queda como muestra de vento cellprepared:
+    //    settings.HtmlDataCellPrepared = (sender, e) => {
+    //        if (ig.TrunkColumns != null && ig.TrunkColumns.Keys.Contains(e.DataColumn.FieldName)) {
+    //            if (e.CellValue != null && e.CellValue.ToString().Length > ig.TrunkColumns[e.DataColumn.FieldName]) {
+    //                e.Cell.ToolTip = e.CellValue.ToString();
+    //                e.Cell.Text = e.CellValue.ToString().Substring(0, ig.TrunkColumns[e.DataColumn.FieldName]) + "...";
+    //            }
+    //        }
+    //    };
+*@
