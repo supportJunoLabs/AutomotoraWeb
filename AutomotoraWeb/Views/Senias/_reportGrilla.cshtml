@@ -1,0 +1,46 @@
+﻿@model AutomotoraWeb.Models.ListadoSeniasModel
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla{Campo="Codigo", Ancho=70},
+            new ColumnaGrilla {Campo="Fecha", Ancho=80},
+            new ColumnaGrilla {Campo="Vehiculo", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="Vehiculo.Codigo"},
+            new ColumnaGrilla {Campo="Marca", Ancho=150},
+            new ColumnaGrilla {Campo="Modelo", Ancho=150},
+            new ColumnaGrilla {Campo="Color", Ancho=100},
+            new ColumnaGrilla {Campo="Anio", Ancho=50, Alineacion=ColumnaGrilla.ALINEACIONES.CENTRO},
+            new ColumnaGrilla {Campo="Vehiculo.Matricula", Ancho=100},
+            new ColumnaGrilla {Campo="Importe", Ancho=150},
+            new ColumnaGrilla {Campo="Sucursal", Ancho=170,
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"},
+            new ColumnaGrilla {Campo="Vendedor", Ancho=100,
+                   Hipervinculo=true, Haccion="details", Hcontrolador="Vendedores", HCampoParametro="Vendedor.Codigo"},
+            new ColumnaGrilla {Campo="Cliente", Ancho=150,
+                Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Cliente.Codigo"},
+            new ColumnaGrilla {Campo="DescripcionEstado", Ancho=100, Titulo="Estado"},
+            new ColumnaGrilla {Campo="Observaciones", Ancho=250, LargoMax=70}};
+            
+            
+        
+    ig.NameGrid = "grilla";
+    ig.Controller = SeniasController.CONTROLLER;
+    ig.ActionCallbackRoute = "reportGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Senia.SeniaMD);
+    
+    //ig.AddButton(new BotonGrilla("details", PedidosController.CONTROLLER,  "boton-consultar-mf", "Ver Pedido"));
+
+    ig.SinBotones();
+    ig.DobleClick = true;
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model.Resultado)
+  
