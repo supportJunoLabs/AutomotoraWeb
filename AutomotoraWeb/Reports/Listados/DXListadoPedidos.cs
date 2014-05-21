@@ -51,6 +51,7 @@ public class DXListadoPedidos : DevExpress.XtraReports.UI.XtraReport {
     private XRLabel xrLabel25;
     private XRLabel xrLabel24;
     private XRLabel xrLabel23;
+    private XRLabel xrLabel2;
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -126,12 +127,14 @@ public class DXListadoPedidos : DevExpress.XtraReports.UI.XtraReport {
             this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
             this.CostoText = new DevExpress.XtraReports.UI.CalculatedField();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.xrLabel2 = new DevExpress.XtraReports.UI.XRLabel();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
             // 
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel2,
             this.xrLabel22,
             this.xrLabel21,
             this.xrLabel20,
@@ -604,6 +607,18 @@ public class DXListadoPedidos : DevExpress.XtraReports.UI.XtraReport {
             // bindingSource1
             // 
             this.bindingSource1.DataSource = typeof(DLL_Backend.Pedido);
+            // 
+            // xrLabel2
+            // 
+            this.xrLabel2.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "DescripcionEstado")});
+            this.xrLabel2.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(9.999371F, 32.99999F);
+            this.xrLabel2.Name = "xrLabel2";
+            this.xrLabel2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrLabel2.SizeF = new System.Drawing.SizeF(62.50064F, 23F);
+            this.xrLabel2.StylePriority.UseFont = false;
+            this.xrLabel2.Text = "xrLabel2";
             // 
             // DXListadoPedidos
             // 
