@@ -5,11 +5,11 @@ using System.Web;
 
 namespace AutomotoraWeb.Models {
     public class InfoGrilla {
-        public string NameGrid{get; set;}
-        public string Controller {get; set;}
-        public string ActionCallbackRoute{get; set;}
-        public string KeyFieldName {get; set;}
-        public Type TypeOfModel {get; set;}
+        public string NameGrid { get; set; }
+        public string Controller { get; set; }
+        public string ActionCallbackRoute { get; set; }
+        public string KeyFieldName { get; set; }
+        public Type TypeOfModel { get; set; }
 
         private bool accionesAlComienzo =false;
         public bool AccionesAlComienzo{
@@ -23,12 +23,12 @@ namespace AutomotoraWeb.Models {
             get { return dobleClick; }
             set { dobleClick = value; }
         }
-        public string ControladorDobleClick{get; set;}
-        public string AccionDobleClick {get; set;}
+        public string ControladorDobleClick { get; set; }
+        public string AccionDobleClick { get; set; }
 
-        public List<string> HiddenColumns {get; set;} //columnas que no hay que mostrar
+        public List<string> HiddenColumns { get; set; } //columnas que no hay que mostrar
         
-        public Dictionary<string, int> TrunkColumns {get; set;} //columnas que hay que truncar (o viene en visibleColumns)
+        public Dictionary<string, int> TrunkColumns { get; set; } //columnas que hay que truncar (o viene en visibleColumns)
 
         public List<ColumnaGrilla> VisibleColumns { get; set; }
             //Si es nulo, o esta vacia, muestra todas las columnas de tipo simple del objeto
@@ -36,10 +36,12 @@ namespace AutomotoraWeb.Models {
         
         //public List<string> VisibleColumns {get; set;} 
 
-        public List<BotonGrilla> Botones {get; set;} 
+        public List<BotonGrilla> Botones { get; set; } 
             //Si viene en null van los botones por defecto
             //Si viene vacio pero no nulo, NO van botones (recorre la coleccion vacia y no agrega nada)
             //Si viene con botones, van los botones que vienen.
+
+        public bool BotonesAjax { get; set; }
 
         public void SinBotones() {
             this.Botones = new List<BotonGrilla>(); //pone a proposito lista vacia.

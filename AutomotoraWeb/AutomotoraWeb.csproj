@@ -1675,11 +1675,16 @@
     <Content Include="Views\Vehiculos\_datosFotos.cshtml" />
     <Content Include="Views\Vehiculos\_datosGastos.cshtml" />
     <Content Include="Views\Vehiculos\_datosDocumentacion.cshtml" />
-	<Content Include="Views\Vehiculos\_listGastos.cshtml" />
+    <Content Include="Views\Vehiculos\_listGastos.cshtml" />
     <Content Include="Views\Senias\list.cshtml" />
     <Content Include="Views\Senias\_reportGrilla.cshtml" />
     <Content Include="Views\Senias\report.cshtml" />
     <Content Include="Views\Senias\_reportList.cshtml" />
+    <Content Include="Views\Vehiculos\gastosDetails.cshtml" />
+    <Content Include="Views\Vehiculos\gastosDelete.cshtml" />
+    <Content Include="Views\Vehiculos\gastosCreate.cshtml" />
+    <Content Include="Views\Vehiculos\gastosEdit.cshtml" />
+    <Content Include="Views\Vehiculos\gastos_DatosDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

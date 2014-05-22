@@ -1,8 +1,39 @@
 ﻿@model DLL_Backend.Vehiculo
 
-<div>
-    @Html.Partial("_listGastos", Model.DetalleGastos)
+<div class="row-fluid">
+    <div class="btn-toolbar">
+        <div class="btn-group">
+           @(Html.Bootstrap().ActionLinkButton("Agregar ", "create" ).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
+        )
+        </div>
+    </div>
+       
+    <div id="divGrillaGastos">
+        @Html.Partial("_listGastos", Model.DetalleGastos)
+    </div>
 </div>
-<div>
 
-</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".boton-consultar-mf").click(function () {
+            var id = _getId($(this));
+
+        });
+
+        $(".boton-editar-mf").click(function () {
+            var id = _getId($(this));
+
+        });
+
+        $(".boton-eliminar-mf").click(function () {
+            var id = _getId($(this));
+
+        });
+    });
+
+    function _getId(elem) {
+        var str = elem.attr("id");
+        return str.split("_")[1];
+    }
+
+</script>
