@@ -1,0 +1,50 @@
+﻿@model AutomotoraWeb.Models.ListadoVentasModel
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Fecha", Ancho=80},
+            new ColumnaGrilla{Campo="Codigo", Ancho=70,
+                 Hipervinculo=true, Haccion="details", Hcontrolador="Ventas", HCampoParametro="Codigo"},
+            new ColumnaGrilla {Campo="Vehiculo.Ficha", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="Vehiculo.Codigo"},
+            new ColumnaGrilla {Campo="Vehiculo.Marca", Ancho=150, Titulo="Marca"},
+            new ColumnaGrilla {Campo="Vehiculo.Modelo", Ancho=150, Titulo="Modelo"},
+            new ColumnaGrilla {Campo="Vehiculo.Color", Ancho=100, Titulo="Color"},
+            new ColumnaGrilla {Campo="Vehiculo.Anio", Ancho=50, Titulo="Año", Alineacion=ColumnaGrilla.ALINEACIONES.CENTRO, EsEntero=true},
+            new ColumnaGrilla {Campo="Vehiculo.Matricula", Ancho=100, Titulo="Matricula"},
+            new ColumnaGrilla {Campo="Importe", Ancho=150},
+            new ColumnaGrilla {Campo="Sucursal", Ancho=170, 
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"},
+            new ColumnaGrilla {Campo="Vendedor", Ancho=100,
+                   Hipervinculo=true, Haccion="details", Hcontrolador="Vendedores", HCampoParametro="Vendedor.Codigo"},
+            new ColumnaGrilla {Campo="Cliente", Ancho=150,
+                Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Cliente.Codigo"},
+            new ColumnaGrilla {Campo="DescripcionEstado", Ancho=100, Titulo="Estado"},
+            new ColumnaGrilla {Campo="Observaciones", Ancho=250, LargoMax=70}};
+            
+            
+        
+    ig.NameGrid = "grilla";
+    ig.Controller = VentasController.CONTROLLER;
+    ig.ActionCallbackRoute = "reportGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Venta.VentaMD);
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("details", VentasController.CONTROLLER,  "boton-consultar-mf", "Consulta Venta"));
+
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = VentasController.CONTROLLER;
+    ig.AccionDobleClick = BaseController.DETAILS;
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model.Resultado)
+  
