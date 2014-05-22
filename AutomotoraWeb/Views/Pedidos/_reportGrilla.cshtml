@@ -1,6 +1,7 @@
 ﻿@model AutomotoraWeb.Models.ListadoPedidosModel
 @using System.Web.UI.WebControls;
 @using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
 @using AutomotoraWeb.Controllers.Sales;
 @using AutomotoraWeb.Models;
 
@@ -34,10 +35,14 @@
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Pedido.PedidoMD);
     
-    //ig.AddButton(new BotonGrilla("details", PedidosController.CONTROLLER,  "boton-consultar-mf", "Ver Pedido"));
-
-    ig.SinBotones();
+    ig.AddButton(new BotonGrilla("details", PedidosController.CONTROLLER,  "boton-consultar-mf", "Consulta Pedido"));
+    
     ig.DobleClick = true;
+    ig.ControladorDobleClick = PedidosController.CONTROLLER;
+    ig.AccionDobleClick = BaseController.DETAILS;
+
+    //ig.SinBotones(); //para que no tenga botones
+    
 
     ViewBag.InfoGrilla = ig;
 }
