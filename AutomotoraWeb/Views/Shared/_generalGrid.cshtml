@@ -69,6 +69,8 @@
             }
 
             //Buscar la propiedad asociada para obtener sus datos:
+            DisplayAttribute displayAttribute = null;
+            
             PropertyInfo propertyInfo = null;
             foreach (var x in propertiesinfo) {
                 if (x.Name == cg.Campo) {
@@ -76,19 +78,18 @@
                     break; //salir del foreach
                 }
             }
-            if (propertyInfo == null) {
-                continue; //seguir con el proximo porque no existe esta columna
-            }
-
-            //Acceder al data annotation de la columna
-            object[] arrayDisplayAttribute = propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), true);
-            DisplayAttribute displayAttribute = null;
-            if (arrayDisplayAttribute != null && arrayDisplayAttribute.Length > 0) {
-                displayAttribute = (DisplayAttribute)arrayDisplayAttribute[0];
+            
+            if (propertyInfo != null) {
+                //Acceder al data annotation de la columna
+                object[] arrayDisplayAttribute = propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), true);
+            
+                if (arrayDisplayAttribute != null && arrayDisplayAttribute.Length > 0) {
+                    displayAttribute = (DisplayAttribute)arrayDisplayAttribute[0];
+                }
             }
 
             MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
-            gridViewColumn.FieldName = propertyInfo.Name;
+            gridViewColumn.FieldName = cg.Campo;
 
             //Titulo de la columna
             if (!string.IsNullOrWhiteSpace(cg.Titulo)) {
@@ -101,9 +102,6 @@
                 }
             }
 
-
-
-
             //Ancho
             if (defineAnchos) {
                 if (cg.Ancho > 0) {
@@ -114,9 +112,9 @@
                     sumaAnchos += 100;
                 }
             } else {
-                if (GeneralUtils.isBoolean(propertyInfo)) {
+                if (GeneralUtils.isBoolean(propertyInfo, cg)) {
                     gridViewColumn.Width = Unit.Pixel(75);
-                } else if (GeneralUtils.isDateTime(propertyInfo)) {
+                } else if (GeneralUtils.isDateTime(propertyInfo, cg)) {
                     gridViewColumn.Width = Unit.Pixel(100);
                 }
             }
@@ -138,16 +136,16 @@
                         break;
                 }
             } else { //Si no se especifica, usar la alineacion por defecto.
-                if (GeneralUtils.isDateTime(propertyInfo)) {
+                if (GeneralUtils.isDateTime(propertyInfo,cg)) {
                     gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Center;
                 }
-                if (GeneralUtils.isImporte(propertyInfo) || GeneralUtils.isInteger(propertyInfo)) {
+                if (GeneralUtils.isImporte(propertyInfo, cg) || GeneralUtils.isInteger(propertyInfo,cg)) {
                     gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Right;
                 }
             }
 
             //booleano              1
-            if (GeneralUtils.isBoolean(propertyInfo)) {
+            if (GeneralUtils.isBoolean(propertyInfo, cg)) {
                 gridViewColumn.ColumnType = MVCxGridViewColumnType.CheckBox;
 
             } else {
@@ -155,11 +153,11 @@
             }
 
             // si es fecha
-            if (GeneralUtils.isDateTime(propertyInfo)) {
+            if (GeneralUtils.isDateTime(propertyInfo, cg)) {
                 gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
             }
 
-            if (!GeneralUtils.isBoolean(propertyInfo)) {
+            if (!GeneralUtils.isBoolean(propertyInfo, cg)) {
                 if (cg.Hipervinculo) {
                     gridViewColumn.SetDataItemTemplateContent(container => {
                         Html.DevExpress().HyperLink(hyperlink => {
@@ -167,7 +165,7 @@
                             //var keyValue = container.KeyValue;
                             var texto = DataBinder.Eval(container.DataItem, cg.Campo);
                             string tooltip = null;
-                            if (GeneralUtils.isDateTime(propertyInfo)) {
+                            if (GeneralUtils.isDateTime(propertyInfo, cg)) {
                                 if (texto != null) {
                                     texto = ((DateTime)DataBinder.Eval(container.DataItem, cg.Campo)).ToString("dd/MM/yyyy");
                                 }
@@ -195,7 +193,7 @@
 
                             string tooltip = null;
                             var texto = DataBinder.Eval(container.DataItem, cg.Campo);
-                            if (GeneralUtils.isDateTime(propertyInfo)) {
+                            if (GeneralUtils.isDateTime(propertyInfo, cg)) {
                                 if (texto != null) {
                                     texto = ((DateTime)DataBinder.Eval(container.DataItem, cg.Campo)).ToString("dd/MM/yyyy");
                                 }
