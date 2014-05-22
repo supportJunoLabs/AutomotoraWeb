@@ -40,8 +40,8 @@ namespace AutomotoraWeb.Controllers.Sales
             Session[s] = model;
             model.idParametros = s;
             ViewBag.SucursalesListado = Sucursal.Sucursales;
-            ViewBag.Clientes = Cliente.Clientes();
-            ViewBag.Vendedores = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
+            ViewBag.ClientesListado = Cliente.Clientes();
+            ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
             ViewData["idParametros"] = model.idParametros;
             model.Resultado = _listaElementos(model);
             return View(model);
@@ -52,8 +52,8 @@ namespace AutomotoraWeb.Controllers.Sales
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
             ViewBag.SucursalesListado = Sucursal.Sucursales;
-            ViewBag.Clientes = Cliente.Clientes();
-            ViewBag.Vendedores = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
+            ViewBag.ClientesListado = Cliente.Clientes();
+            ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
             this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
             this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
             this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(model.Filtro.Vendedor));

@@ -141,7 +141,7 @@
                         @Html.CheckBoxFor(model => model.FiltrarCliente, new { id = "cb_filtrarCliente" }) Filtrar Cliente
                     </div>
                     <div style="margin-top: 10px;" id="clientes">
-                        @Html.DropDownListFor(model => model.Filtro.Cliente.Codigo, new SelectList(ViewBag.Clientes, "Codigo", "Nombre"))
+                        @Html.DropDownListFor(model => model.Filtro.Cliente.Codigo, new SelectList(ViewBag.ClientesListado, "Codigo", "Nombre"))
                     </div>
                 </fieldset>
             </div>
@@ -153,7 +153,7 @@
                         @Html.CheckBoxFor(model => model.FiltrarVendedor, new { id = "cb_filtrarVendedores" }) Filtrar Vendedor
                     </div>
                     <div style="margin-top: 10px;" id="vendedores">
-                        @Html.DropDownListFor(model => model.Filtro.Vendedor.Codigo, new SelectList(ViewBag.Vendedores, "Codigo", "Nombre"))
+                        @Html.DropDownListFor(model => model.Filtro.Vendedor.Codigo, new SelectList(ViewBag.VendedoresListado, "Codigo", "Nombre"))
                     </div>
                 </fieldset>
             </div>
