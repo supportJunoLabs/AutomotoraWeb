@@ -15,18 +15,14 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance.Vehiculos
 
         public static string CONTROLLER = "gastos";
 
-        public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Gasto gasto) {
-            return View(listGastos(gasto));
+        public ActionResult listGastos(int id) {
+            ViewData["idParametros"] = id;
+            return PartialView("_listGastos", _listaGastos(id));
         }
 
-        public ActionResult listGastos(Gasto gasto) {
-            return PartialView("_listGastos", _listaGastos());
-        }
-
-        private List<Gasto> _listaGastos() {
-            int code = (int)Session[SessionUtils.CODIGO_VEHICULO];
+        private List<Gasto> _listaGastos(int id) {
             Vehiculo vehiculo = new Vehiculo();
-            vehiculo.Codigo = code;
+            vehiculo.Codigo = id;
             vehiculo.Consultar();
             return vehiculo.DetalleGastos;
         }

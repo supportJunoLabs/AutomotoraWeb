@@ -235,9 +235,15 @@
         listGridViewsBotones.SetDataItemTemplateContent(c => {
             var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
             if (ig.Botones == null) {
-                ViewContext.Writer.WriteLine(@Html.BotonImagen("details", ig.Controller, new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
-                ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", ig.Controller, new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
-                ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", ig.Controller, new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());
+                if (ig.BotonesAjax) {
+                    ViewContext.Writer.WriteLine(@Html.BotonAjax("details", "", id, "boton-consultar-mf", "Consultar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonAjax("edit", "", id, "boton-editar-mf", "Editar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonAjax("delete", "", id, "boton-eliminar-mf", "Eliminar").ToHtmlString());
+                } else {
+                    ViewContext.Writer.WriteLine(@Html.BotonImagen("details", ig.Controller, new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", ig.Controller, new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", ig.Controller, new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());
+                }
             } else {
                 foreach (BotonGrilla b in ig.Botones) {
                     ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());

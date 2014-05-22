@@ -13,12 +13,13 @@
     ig.TrunkColumns = new Dictionary<string, int>() { };
 
     ig.NameGrid = "gridGastos";
-    ig.Controller = GastosController.CONTROLLER;
+    ig.Controller = VehiculosController.CONTROLLER;
     ig.ActionCallbackRoute = "listGastos";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Gasto.GastoMD);
     ig.DobleClick = true;
-
+    ig.BotonesAjax = true;
+    
     ViewBag.InfoGrilla = ig;
 }
 

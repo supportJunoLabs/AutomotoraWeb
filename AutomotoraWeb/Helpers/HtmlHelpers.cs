@@ -153,6 +153,30 @@ namespace AutomotoraWeb.Helpers {
 
         //--------------------------------------------------------------------------------
 
+        public static MvcHtmlString BotonAjax(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
+            //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
+            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro.
+
+
+            UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            String url = urlHelper.Action(accion, controlador, parametros);
+
+            //crear la div que va dentro del link anchor
+            TagBuilder tagBuilder = new TagBuilder("div");
+            tagBuilder.MergeAttribute("class", clase);
+            tagBuilder.MergeAttribute("title", tooltip);
+            tagBuilder.MergeAttribute("style", "cursor:pointer");
+            tagBuilder.MergeAttribute("id", "btn_" + parametros + "_" + accion);
+            string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
+
+            StringBuilder html = new StringBuilder();
+            html.Append(sdiv);
+
+            return MvcHtmlString.Create(html.ToString());
+        }
+
+        //--------------------------------------------------------------------------------
+
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is an appropriate nesting of generic types")]
         public static MvcHtmlString LabelForRequired<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string labelText = "") {
             return LabelHelper(html,
