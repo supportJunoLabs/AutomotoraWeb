@@ -243,6 +243,7 @@
     <Compile Include="Controllers\Sales\Maintenance\VehiculosController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\Vehiculos\GastosController.cs" />
     <Compile Include="Controllers\Sales\PedidosController.cs" />
+    <Compile Include="Controllers\Sales\VentasController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
     <Compile Include="Controllers\General\AuthenticationController.cs" />
     <Compile Include="Controllers\Bank\BankController.cs" />
@@ -1685,15 +1686,15 @@
     <Content Include="Views\Senias\_reportGrilla.cshtml" />
     <Content Include="Views\Senias\report.cshtml" />
     <Content Include="Views\Senias\_reportList.cshtml" />
-    <Content Include="Views\Ventas\_reportGrilla.cshtml" />
-    <Content Include="Views\Ventas\_reportList.cshtml" />
-    <Content Include="Views\Ventas\list.cshtml" />
-    <Content Include="Views\Ventas\report.cshtml" />
     <Content Include="Views\Vehiculos\gastosDetails.cshtml" />
     <Content Include="Views\Vehiculos\gastosDelete.cshtml" />
     <Content Include="Views\Vehiculos\gastosCreate.cshtml" />
     <Content Include="Views\Vehiculos\gastosEdit.cshtml" />
     <Content Include="Views\Vehiculos\gastos_DatosDetalle.cshtml" />
+    <Content Include="Views\Ventas\list.cshtml" />
+    <Content Include="Views\Ventas\report.cshtml" />
+    <Content Include="Views\Ventas\_reportGrilla.cshtml" />
+    <Content Include="Views\Ventas\_reportList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
