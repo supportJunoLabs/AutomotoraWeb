@@ -29,10 +29,6 @@ namespace AutomotoraWeb.Models {
             Filtro = new VentaFiltro();
             Resultado = new List<Venta>();
 
-            //Filtro.Vehiculos = true;
-            //Filtro.PedidosPendientes = false;
-            //Filtro.PedidosRecibidos = false;
-
             Filtro.VendidoEntregado = true;
             Filtro.VendidoPendienteEntrega = true;
             Filtro.Anulada = false;
@@ -83,43 +79,56 @@ namespace AutomotoraWeb.Models {
 
 
         public string detallesFiltro() {
-            string s = "Estados: ";
-            //if (this.Filtro.Vehiculos) {
-            //    s += "Seña de vehículos";
-            //} else {
-            //    s += "Seña de pedidos: ";
-            //    if (this.Filtro.PedidosPendientes) {
-            //        s += "Pendientes ";
-            //    }
-            //    if (this.Filtro.PedidosRecibidos) {
-            //        s += "Recibidos ";
-            //    }
-            //}
-            //s += "  ";
+            string s ="";
+            if (this.FiltrarFechas) {
+                s += "Fecha: " + ((this.Filtro.Desde) ?? DateTime.Now).ToString("dd/MM/yyyy") + " - " + ((this.Filtro.Hasta) ?? DateTime.Now).ToString("dd/MM/yyyy") + "    ";
+                s += "  ";
+            }
+            s+= "Estados: ";
+            if (this.Filtro.VendidoEntregado) {
+                s += "Finalizadas  ";
+            } 
+            if (this.Filtro.VendidoPendienteEntrega) {
+                s += "Pendiente Entrega  ";
+            }
+            if (this.Filtro.Anulada) {
+                s += "Anuladas  ";
+            }
+            s += "  ";
 
-            //s += "Estados: ";
-            //if (this.Filtro.Vigentes) {
-            //    s += "Vigentes ";
-            //}
-            //if (this.Filtro.Vendidas) {
-            //    s += "Venta Realizada ";
-            //}
-            //if (this.Filtro.Anuladas) {
-            //    s += "Anulada";
-            //}
-            //s += "  ";
             if (this.FiltrarSucursal) {
                 s += "Sucursal: " + this.Filtro.Sucursal.Nombre + "    ";
             }
-            s += "  ";
-            if (this.FiltrarFechas) {
-                s += "Fecha: " + ((this.Filtro.Desde) ?? DateTime.Now).ToString("dd/MM/yyyy") + " - " + ((this.Filtro.Hasta) ?? DateTime.Now).ToString("dd/MM/yyyy") + "    ";
-            }
+            
             if (this.FiltrarCliente) {
                 s += "Cliente: " + this.Filtro.Cliente.Nombre + "    ";
             }
             if (this.FiltrarVendedor) {
                 s += "Vendedor: " + this.Filtro.Vendedor.Nombre + "    ";
+            }
+            if (this.Filtro.VehiculoFiltro.Categoria != VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS) {
+                switch (this.Filtro.VehiculoFiltro.Categoria) {
+
+                    case VehiculoFiltro.VHC_CATEGORIA_LISTADO.NUEVOS:
+                        s += "Vehiculos Nuevos    ";
+                        break;
+                    case VehiculoFiltro.VHC_CATEGORIA_LISTADO.USADOS:
+                        s += "Vehiculos Usados    ";
+                        break;
+                }
+            }
+            if (this.FiltrarCombustible) {
+                s += "Combustible: " + this.Filtro.VehiculoFiltro.TipoCombustible.Descripcion + "    ";
+            }
+            if (!string.IsNullOrWhiteSpace(this.Filtro.VehiculoFiltro.Marca )) {
+                s += "Marca: " + this.Filtro.VehiculoFiltro.Marca.Trim() + "    ";
+            }
+
+            if (!string.IsNullOrWhiteSpace(this.Filtro.VehiculoFiltro.Modelo )) {
+                s += "Modelo: " + this.Filtro.VehiculoFiltro.Modelo.Trim() + "    ";
+            }
+            if (this.Filtro.VehiculoFiltro.Anio > 0) {
+                s += "Año: " + this.Filtro.VehiculoFiltro.Anio.ToString() + "    ";
             }
 
 
