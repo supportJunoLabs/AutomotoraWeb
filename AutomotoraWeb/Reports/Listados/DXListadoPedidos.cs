@@ -84,6 +84,7 @@ public class DXListadoPedidos : DevExpress.XtraReports.UI.XtraReport {
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraReports.UI.XRSummary xrSummary1 = new DevExpress.XtraReports.UI.XRSummary();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
+            this.xrLabel29 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel2 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel22 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel21 = new DevExpress.XtraReports.UI.XRLabel();
@@ -125,7 +126,6 @@ public class DXListadoPedidos : DevExpress.XtraReports.UI.XtraReport {
             this.xrPageInfo1 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.xrLabel29 = new DevExpress.XtraReports.UI.XRLabel();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
@@ -156,6 +156,20 @@ public class DXListadoPedidos : DevExpress.XtraReports.UI.XtraReport {
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
+            // 
+            // xrLabel29
+            // 
+            this.xrLabel29.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Costo.ImporteTexto")});
+            this.xrLabel29.Font = new System.Drawing.Font("Times New Roman", 8F);
+            this.xrLabel29.LocationFloat = new DevExpress.Utils.PointFloat(340.2083F, 10.00001F);
+            this.xrLabel29.Name = "xrLabel29";
+            this.xrLabel29.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel29.SizeF = new System.Drawing.SizeF(91.66666F, 23F);
+            this.xrLabel29.StylePriority.UseFont = false;
+            this.xrLabel29.StylePriority.UseTextAlignment = false;
+            this.xrLabel29.Text = "xrLabel29";
+            this.xrLabel29.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
             // 
             // xrLabel2
             // 
@@ -426,8 +440,10 @@ public class DXListadoPedidos : DevExpress.XtraReports.UI.XtraReport {
             this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrDetalleFiltros,
             this.xrLabel1});
+            this.ReportHeader.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ReportHeader.HeightF = 82.29166F;
             this.ReportHeader.Name = "ReportHeader";
+            this.ReportHeader.StylePriority.UseFont = false;
             // 
             // xrDetalleFiltros
             // 
@@ -603,20 +619,6 @@ public class DXListadoPedidos : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.bindingSource1.DataSource = typeof(DLL_Backend.Pedido);
             // 
-            // xrLabel29
-            // 
-            this.xrLabel29.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Costo.ImporteTexto")});
-            this.xrLabel29.Font = new System.Drawing.Font("Times New Roman", 8F);
-            this.xrLabel29.LocationFloat = new DevExpress.Utils.PointFloat(340.2083F, 10.00001F);
-            this.xrLabel29.Name = "xrLabel29";
-            this.xrLabel29.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel29.SizeF = new System.Drawing.SizeF(91.66666F, 23F);
-            this.xrLabel29.StylePriority.UseFont = false;
-            this.xrLabel29.StylePriority.UseTextAlignment = false;
-            this.xrLabel29.Text = "xrLabel29";
-            this.xrLabel29.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
-            // 
             // DXListadoPedidos
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -628,6 +630,7 @@ public class DXListadoPedidos : DevExpress.XtraReports.UI.XtraReport {
             this.ReportFooter,
             this.PageFooter});
             this.DataSource = this.bindingSource1;
+            this.Font = new System.Drawing.Font("Times New Roman", 9F);
             this.Margins = new System.Drawing.Printing.Margins(100, 100, 61, 14);
             this.Version = "13.2";
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();

@@ -1,0 +1,120 @@
+﻿@model AutomotoraWeb.Models.ListadoDocumentacionModel
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidades + ": Listado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    select {
+        width: 130px;
+    }
+
+    .labelAjustable {
+        margin-right: 5px;
+    }
+
+    .separacion {
+        margin-right: 25px;
+    }
+
+    .labelWidth {
+        width: 80px !important;
+    }
+
+    .inputTextWidth {
+        width: 120px;
+    }
+
+    .selectWidth {
+        width: 100px !important;
+    }
+
+    fieldset {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    legend {
+        margin-bottom: 10px;
+    }
+
+    input[readonly] {
+        cursor: default; /*porque si no bootstrap le agrega un prohibido al checkbox list de devexpress*/
+    }
+</style>
+
+
+@using (Html.BeginForm()) {
+    @Html.HiddenFor(model => model.idParametros)
+    
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")      
+    
+    <div id="filtros" style="border: 1px solid #A3C0E8; margin-right: 5px">
+        <div id="containerLinea1">
+
+            <div id="filtro_estad0s" class="floatLeft">
+                <fieldset id="fieldsetEstados">
+                    <legend>Estados</legend>
+                    <div>
+                        @Html.DevExpress().CheckBoxListFor(model => model.EstadosConsultar,
+                        settings =>
+                        {
+                            settings.Name = "cbl_estados";
+                            settings.Properties.ValueField = "Codigo";
+                            settings.Properties.TextField = "Descripcion";
+                            settings.Properties.ValueType = typeof(int);
+                            settings.Properties.RepeatLayout = System.Web.UI.WebControls.RepeatLayout.Table;
+                            settings.Properties.RepeatDirection = System.Web.UI.WebControls.RepeatDirection.Horizontal;
+
+                            settings.PreRender += (s, e) => {
+                                MVCxCheckBoxList list = (MVCxCheckBoxList)s;
+                                if (Model.EstadosConsultar != null) {
+                                    for (int i = 0; i < Model.EstadosConsultar.Length; i++) {
+                                        for (int j = 0; j < list.Items.Count; j++) {
+                                            if ((int)list.Items[j].Value == Model.EstadosConsultar[i]) {
+                                                list.Items[j].Selected = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            };
+                           
+                            //settings.Properties.RepeatColumns = 5;
+                        }).BindList(Model.EstadosPosibles).GetHtml()   
+                    </div>
+                </fieldset>
+            </div>
+
+
+        <div class="btn-toolbar floatLeft" style="margin-left: 70px">
+                <div style="height: 0px; width: 100%"></div>
+                <div class="btn-group">
+                    <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
+                </div>
+                <div class="btn-group" style="margin-left: 10px">
+                    <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" value="Imprimir" />
+                </div>
+            </div>
+
+           
+            <div class="clear-both"></div>
+
+        </div>
+    </div>
+}
+
+<div id="divGrilla">
+    @Html.Partial("_reportGrilla", Model)
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/VentasListado.js"></script>
+}
+
+

@@ -237,6 +237,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Bank\Maintenance\CuentasBancariasController.cs" />
     <Compile Include="Controllers\Financing\Maintenance\FinancistasController.cs" />
+    <Compile Include="Controllers\Sales\DocumentacionController.cs" />
     <Compile Include="Controllers\Sales\SeniasController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\TiposDocumentoController.cs" />
@@ -265,6 +266,7 @@
     <Compile Include="Models\AbstractModel.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ListadoDocumentacionModel.cs" />
     <Compile Include="Models\ListadoVentasModel.cs" />
     <Compile Include="Models\ListadoSeniasModel.cs" />
     <Compile Include="Models\InfoReporte.cs" />
@@ -288,6 +290,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Listados\DXListadoVehiculosAbreviado.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoDocumentacion.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportClientes.cs">
@@ -1695,6 +1700,10 @@
     <Content Include="Views\Ventas\report.cshtml" />
     <Content Include="Views\Ventas\_reportGrilla.cshtml" />
     <Content Include="Views\Ventas\_reportList.cshtml" />
+    <Content Include="Views\Documentacion\_reportGrilla.cshtml" />
+    <Content Include="Views\Documentacion\_reportList.cshtml" />
+    <Content Include="Views\Documentacion\list.cshtml" />
+    <Content Include="Views\Documentacion\report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1730,6 +1739,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoVehiculosAbreviado.resx">
       <DependentUpon>DXListadoVehiculosAbreviado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoDocumentacion.resx">
+      <DependentUpon>DXListadoDocumentacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportClientes.resx">
       <DependentUpon>DXReportClientes.cs</DependentUpon>
