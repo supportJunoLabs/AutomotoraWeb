@@ -1,9 +1,13 @@
 ﻿@model DLL_Backend.Vehiculo
+@using AutomotoraWeb.Controllers.Sales.Maintenance;
 
 <div class="row-fluid">
+
+    @Html.HiddenFor(model => model.Codigo, new { id = "idVehiculo"})
+
     <div class="btn-toolbar">
         <div class="btn-group">
-           @(Html.Bootstrap().ActionLinkButton("Agregar ", "create" ).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
+            @(Html.Bootstrap().Button().Text("Agregar").Id("createDetailsGasto").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
         )
         </div>
     </div>
@@ -11,29 +15,197 @@
     <div id="divGrillaGastos">
         @Html.Partial("_listGastos", Model.DetalleGastos)
     </div>
+
+    <div id="containerCreateGastosPopup" title="Crear Gasto" style="display: none;">
+        <div id="containerCreateGastosPopupForm">
+
+        </div>
+        <div>
+            @(Html.Bootstrap().Button().Text("Guardar").Id("saveCreateGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
+            @(Html.Bootstrap().Button().Text("Cancelar").Id("cancelCreateGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
+        </div>
+    </div>
+    
+    <div id="containerDetailsGastosPopup" title="Detalles de Gasto" style="display: none;">
+        <div id="containerDetailsGastosPopupForm">
+
+        </div>
+        <div>
+            @(Html.Bootstrap().Button().Text("Cerrar").Id("closeDetailsGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
+        </div>
+    </div>
+
+    <div id="containerEditGastosPopup" title="Editar Gasto" style="display: none;">
+        <div id="containerEditGastosPopupForm">
+
+        </div>
+        <div>
+            @(Html.Bootstrap().Button().Text("Guardar").Id("saveEditGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
+            @(Html.Bootstrap().Button().Text("Cancelar").Id("cancelEditGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
+        </div>
+    </div>
+
+    <div id="containerDeleteGastosPopup" title="Eliminar Gasto" style="display: none;">
+        <div id="containerDeleteGastosPopupForm">
+
+        </div>
+        <div>
+            @(Html.Bootstrap().Button().Text("Eliminar").Id("deleteGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
+            @(Html.Bootstrap().Button().Text("Cancelar").Id("cancelDeleteGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        /* ========================================= */
+
+        $("#createDetailsGasto").click(function () {
+            var id = _getId($(this));
+
+            $.ajax({
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                type: 'GET',
+                async: true,
+                data: 'idVehiculo=' + $("#idVehiculo").val(),
+                success: showCreateGastosPopup,
+                error: general_showErrorPopup
+            });
+
+        });
+
         $(".boton-consultar-mf").click(function () {
             var id = _getId($(this));
 
+            $.ajax({
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DETAIL_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                type: 'GET',
+                async: true,
+                data: 'id=' + id,
+                success: showDetailsGastosPopup,
+                error: general_showErrorPopup
+            });
         });
 
         $(".boton-editar-mf").click(function () {
             var id = _getId($(this));
+
+            $.ajax({
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                type: 'GET',
+                async: true,
+                data: 'id=' + id,
+                success: showEditGastosPopup,
+                error: general_showErrorPopup
+            });
 
         });
 
         $(".boton-eliminar-mf").click(function () {
             var id = _getId($(this));
 
+            $.ajax({
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                type: 'GET',
+                async: true,
+                data: 'id=' + id,
+                success: showDeleteGastosPopup,
+                error: general_showErrorPopup
+            });
+
         });
+
+        /* ================================================== */
+        /* ======== Eventos de botones en Popups ============ */
+        /* ================================================== */
+
+        $("#saveCreateGasto").live("click", function () {
+            alert("qqqq");
+            $.ajax({
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                type: 'POST',
+                async: true,
+                dataType: 'json',
+                data: getJsonGasto(),
+                success: function(data){
+                    gridGastos.Refresh(); // Se actualiza la grilla
+                },
+                error: general_showErrorAction
+            });
+        });
+        
+        $("#cancelCreateGasto").live("click", function () {
+            general_closePopup("containerCreateGastosPopup");
+        });
+
+        $("#closeDetailsGasto").click(function (){
+            general_closePopup("containerDetailsGastosPopup");
+        });
+
+        $("#saveEditGasto").click(function (){
+        
+        });
+
+        $("#cancelEditGasto").click(function (){
+            general_closePopup("containerEditGastosPopup");
+        });
+        
+        $("#deleteGasto").click(function (){
+        
+        });
+
+        $("#cancelDeleteGasto").click(function (){
+            general_closePopup("containerDeleteGastosPopup");
+        });
+
+        /* ================================================== */
+
+        function getJsonGasto(){
+            var gasto = {
+                Fecha: $("#txtFechaGasto").val(),
+                ImporteGasto: {
+                    Moneda: {
+                        Codigo: $("#ddlMonedaImporteGasto").select()
+                    },
+                    Monto: $("#txtMontoImporteGasto").val()
+                },
+                Descripcion: $("#txtDescripcionGasto").val(),
+                Observaciones: $("#txtObservacionesGasto").val()
+            };
+
+            //alert(JSON.stringify(gasto));
+
+            return gasto;
+        }
+
+        /* ================================================== */
+        
     });
 
     function _getId(elem) {
         var str = elem.attr("id");
         return str.split("_")[1];
     }
+
+    /* ================================================== */
+
+    function showCreateGastosPopup(data){
+        general_showPopup(data, "containerCreateGastosPopup", 330, 740); 
+    }
+
+    function showDetailsGastosPopup(data){
+        general_showPopup(data, "containerDetailsGastosPopup", 330, 740);
+    }
+
+    function showEditGastosPopup(data){
+        general_showPopup(data, "containerEditGastosPopup", 330, 740);
+    }
+
+    function showDeleteGastosPopup(data){
+        general_showPopup(data, "containerDeleteGastosPopup", 330, 740);
+    }
+
+    /* ================================================== */
 
 </script>

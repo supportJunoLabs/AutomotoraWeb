@@ -18,6 +18,15 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public static string CONTROLLER = "vehiculos";
         public const string PHOTO_FOLDER = "~/Content/Images/vehiculos/";
+        public const string DETAIL_GASTO = "detailGasto";
+        public const string CREATE_GASTO = "createGasto";
+        public const string EDIT_GASTO = "editGasto";
+        public const string DELETE_GASTO = "deleteGasto";
+
+        public const string OK = "OK";
+        public const string ERROR = "ERROR";
+        public const string VALIDATION_ERROR = "VALIDATION_ERROR";
+        
 
         //No usarlo mas porque da lios de permisos al invocar esta accion si no tiene permisos full en vehiculos (ej: usuario de solo consulta a traves de listados)
         //ademas, ya no es mas el estandar.
@@ -316,14 +325,99 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #region Gastos
 
-        /*public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Gasto gasto) {
-            return View(_listaElementos());
-        }*/
-
         public ActionResult listGastos(int idParametros) {
             ViewData["idParametros"] = idParametros;
             return PartialView("_listGastos", _listaGastos(idParametros));
         }
+
+        public ActionResult detailGasto(int id) {
+            Gasto gasto = this._obtenerGasto(id);
+            ViewBag.SoloLectura = true;
+            return PartialView("_popupGastos", gasto);
+        }
+
+        public ActionResult createGasto(int idVehiculo) {
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = idVehiculo;
+            vehiculo.Consultar();
+            Gasto gasto = new Gasto();
+            gasto.Fecha = DateTime.Now;
+            gasto.Vehiculo = vehiculo;
+            return PartialView("_popupGastos", gasto);
+        }
+
+        public ActionResult editGasto(int id) {
+            Gasto gasto = this._obtenerGasto(id);
+            return PartialView("_popupGastos", gasto);
+        }
+
+        public ActionResult deleteGasto(int id) {
+            Gasto gasto = this._obtenerGasto(id);
+            ViewBag.SoloLectura = true;
+            return PartialView("_popupGastos", gasto);
+        }
+
+        //-------------------------------
+
+
+        [HttpPost]
+        public JsonResult createGasto(Gasto gasto) {
+            this.eliminarValidacionesIgnorablesGasto(gasto);
+
+            if (ModelState.IsValid) {
+                try {
+                    gasto.Agregar();
+                    return Json(new { Result = "OK" });
+                } catch (UsuarioException exc) {
+                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+                }
+            }
+
+            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = "Uno de los campos ingresados no es válido" });
+        }
+
+        [HttpPost]
+        public ActionResult editGasto(Gasto gasto) {
+            this.eliminarValidacionesIgnorablesGasto(gasto);
+
+            if (ModelState.IsValid) {
+                try {
+                    gasto.ModificarDatos();
+                    return Json(new { Result = "OK" });
+                } catch (UsuarioException exc) {
+                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+                }
+            }
+
+            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = "Uno de los campos ingresados no es válido" });
+        }
+
+        [HttpPost]
+        public ActionResult deleteGasto(Gasto gasto) {
+            try {
+                gasto.Agregar();
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+            }
+        }
+
+        //-------------------------------
+
+        private Gasto _obtenerGasto(int id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
+            Gasto gasto = new Gasto();
+            gasto.Codigo = id;
+            //gasto.Consultar();
+            return gasto;
+        }
+
+        //-------------------------------
+
+        private void eliminarValidacionesIgnorablesGasto(Gasto gasto) {
+            this.eliminarValidacionesIgnorables("ImporteGasto.Moneda", MetadataManager.IgnorablesDDL(gasto.ImporteGasto.Moneda));
+        }
+
+        //-------------------------------
 
         private List<Gasto> _listaGastos(int id) {
                 Vehiculo vehiculo = new Vehiculo();

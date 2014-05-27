@@ -51,6 +51,10 @@ namespace AutomotoraWeb {
             bundles.Add(new ScriptBundle("~/bundles/ManejoFechas").Include(
                          "~/Scripts/AutomotoraWeb/ManejoFechas.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js").Include(
+                         "~/Content/SiteExtras.js"));
+            
+
         }
     }
 }
