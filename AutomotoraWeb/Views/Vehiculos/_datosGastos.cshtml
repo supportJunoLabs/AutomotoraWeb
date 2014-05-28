@@ -121,12 +121,12 @@
         /* ================================================== */
 
         $("#saveCreateGasto").live("click", function () {
-            alert("qqqq");
             $.ajax({
                 url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
                 type: 'POST',
                 async: true,
                 dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
                 data: getJsonGasto(),
                 success: function(data){
                     gridGastos.Refresh(); // Se actualiza la grilla
@@ -161,22 +161,25 @@
 
         /* ================================================== */
 
-        function getJsonGasto(){
+        function getJsonGasto() {
             var gasto = {
                 Fecha: $("#txtFechaGasto").val(),
                 ImporteGasto: {
                     Moneda: {
-                        Codigo: $("#ddlMonedaImporteGasto").select()
+                        Codigo: $("#ddlMonedaImporteGasto").val()
                     },
-                    Monto: $("#txtMontoImporteGasto").val()
+                    Monto: $("#ImporteGasto_Monto").val()
                 },
                 Descripcion: $("#txtDescripcionGasto").val(),
-                Observaciones: $("#txtObservacionesGasto").val()
+                Observaciones: $("#txtObservacionesGasto").val(),
+                Vehiculo: {
+                    Codigo: $("#idVehiculo").val()
+                }
             };
 
-            //alert(JSON.stringify(gasto));
+            alert(JSON.stringify(gasto));
 
-            return gasto;
+            return JSON.stringify(gasto);
         }
 
         /* ================================================== */

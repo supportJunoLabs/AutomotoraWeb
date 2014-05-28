@@ -364,8 +364,13 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public JsonResult createGasto(Gasto gasto) {
             this.eliminarValidacionesIgnorablesGasto(gasto);
 
+            Vehiculo vehiculo = gasto.Vehiculo;
+            vehiculo.Consultar();
+            gasto.Vehiculo = vehiculo;
+
             if (ModelState.IsValid) {
                 try {
+
                     gasto.Agregar();
                     return Json(new { Result = "OK" });
                 } catch (UsuarioException exc) {

@@ -10,7 +10,7 @@
         @Html.DdlOrDisplayFor(model => model.ImporteGasto.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
                     model => model.ImporteGasto.Moneda.Nombre,
                     new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), null, new { id = "ddlMonedaImporteGasto", styl="width: 10px;" })
-        @Html.EditorOrDisplayFor(model => model.ImporteGasto.Monto, (bool?)ViewBag.SoloLectura, new { id = "txtMontoImporteGasto" })
+        @Html.EditorOrDisplayFor(model => model.ImporteGasto.Monto, (bool?)ViewBag.SoloLectura)
         @Html.ValidationMessageFor(model => model.ImporteGasto.Monto)
     </div>
     <div class="clear-both"></div>
