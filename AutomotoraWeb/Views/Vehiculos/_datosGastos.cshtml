@@ -130,6 +130,7 @@
                 data: getJsonGasto(),
                 success: function(data){
                     gridGastos.Refresh(); // Se actualiza la grilla
+                    $("#containerCreateGastosPopup").dialog("close");
                 },
                 error: general_showErrorAction
             });

@@ -368,6 +368,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             Vehiculo vehiculo = gasto.Vehiculo;
             vehiculo.Consultar();
             gasto.Vehiculo = vehiculo;
+            gasto.ImporteGasto.Moneda.Consultar();
+            gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
 
             string errors = this.validateAtributesGastos(gasto);
 
