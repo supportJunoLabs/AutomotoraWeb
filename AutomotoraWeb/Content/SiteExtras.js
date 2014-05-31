@@ -22,11 +22,11 @@ function general_closePopup(idContainer) {
 }
 
 function general_showErrorPopup(jqXHR, textStatus, errorThrown) {
-    $("#" + idContainer).html("Error al obtener datos para generar popup: " + textStatus + " | " + errorThrown);
+    alert("Error al obtener datos para generar popup: " + textStatus + " | " + errorThrown);
 }
 
-function general_showErrorAction(jqXHR, textStatus, errorThrown) {
-    $("#" + idContainer).html("Error al intentar realizar la acción: " + textStatus + " | " + errorThrown);
+function general_showErrorAction(idErrorContainerm, textStatus, errorThrown) {
+    $("#" + idErrorContainerm).html("Error al intentar realizar la acción: " + textStatus + " | " + errorThrown);
 }
 
 /* ================================================== */

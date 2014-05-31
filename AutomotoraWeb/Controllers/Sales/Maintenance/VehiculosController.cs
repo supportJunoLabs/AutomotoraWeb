@@ -362,8 +362,6 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         [HttpPost]
         public JsonResult createGasto(Gasto gasto) {
-            //this.eliminarValidacionesIgnorablesGasto(gasto);
-            //this.eliminarValidacionesIgnorablesVehiculoGasto(gasto.Vehiculo);
 
             Vehiculo vehiculo = gasto.Vehiculo;
             vehiculo.Consultar();
@@ -371,9 +369,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             gasto.ImporteGasto.Moneda.Consultar();
             gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
 
-            string errors = this.validateAtributesGastos(gasto);
+            List<String> errors = this.validateAtributesGastos(gasto);
 
-            if (errors == null) {
+            if (errors.Count == 0) {
                 try {
                     gasto.Agregar();
                     return Json(new { Result = "OK" });
@@ -382,12 +380,11 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 }
             }
 
-            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors });
+            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
         }
 
         [HttpPost]
         public ActionResult editGasto(Gasto gasto) {
-            this.eliminarValidacionesIgnorablesGasto(gasto);
 
             if (ModelState.IsValid) {
                 try {
@@ -422,46 +419,31 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         //-------------------------------
 
-        private void eliminarValidacionesIgnorablesGasto(Gasto gasto) {
-            this.eliminarValidacionesIgnorables("ImporteGasto.Moneda", MetadataManager.IgnorablesDDL(gasto.ImporteGasto.Moneda));
-        }
+        private List<String> validateAtributesGastos(Gasto gasto) {
 
-        private void eliminarValidacionesIgnorablesVehiculoGasto(Vehiculo vehiculo) {
-            this.eliminarValidacionesIgnorables("TipoCombustible", MetadataManager.IgnorablesDDL(vehiculo.TipoCombustible));
-            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(vehiculo.Costo.Moneda));
-            this.eliminarValidacionesIgnorables("PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(vehiculo.PrecioVenta.Moneda));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(vehiculo.Sucursal));
-            
-            this.eliminarValidacionesIgnorables("Anio", MetadataManager.IgnorablesDDL(vehiculo.Anio));
-            this.eliminarValidacionesIgnorables("Chasis", MetadataManager.IgnorablesDDL(vehiculo.Chasis));
-            this.eliminarValidacionesIgnorables("Chasis", MetadataManager.IgnorablesDDL(vehiculo.Chasis));
-            this.eliminarValidacionesIgnorables("Color", MetadataManager.IgnorablesDDL(vehiculo.Color));
-            this.eliminarValidacionesIgnorables("Departamento", MetadataManager.IgnorablesDDL(vehiculo.Departamento));
-            this.eliminarValidacionesIgnorables("Ficha", MetadataManager.IgnorablesDDL(vehiculo.Ficha));
-            this.eliminarValidacionesIgnorables("Marca", MetadataManager.IgnorablesDDL(vehiculo.Marca));
-            this.eliminarValidacionesIgnorables("Ficha", MetadataManager.IgnorablesDDL(vehiculo.Ficha));
-            this.eliminarValidacionesIgnorables("Matricula", MetadataManager.IgnorablesDDL(vehiculo.Matricula));
-            this.eliminarValidacionesIgnorables("Modelo", MetadataManager.IgnorablesDDL(vehiculo.Modelo));
-            this.eliminarValidacionesIgnorables("Motor", MetadataManager.IgnorablesDDL(vehiculo.Motor));
-            this.eliminarValidacionesIgnorables("Observaciones", MetadataManager.IgnorablesDDL(vehiculo.Observaciones));
-            this.eliminarValidacionesIgnorables("Padron", MetadataManager.IgnorablesDDL(vehiculo.Padron));
-            this.eliminarValidacionesIgnorables("Propietario", MetadataManager.IgnorablesDDL(vehiculo.Propietario));
-        }
+            List<String> errors = new List<String>();
 
-        private string validateAtributesGastos(Gasto gasto) {
-            if (gasto.Fecha == null) {
-                return "El campo Fecha es obligatorio";
-            } else if ((gasto.Descripcion == null) || (gasto.Descripcion == "")) {
-                return "El campo Descripcion es obligatorio";
-            } else if ((gasto.Descripcion != null) && (gasto.Descripcion.Length > 80)) {
-                return "El campo Descripcion debe tener como maximo 80 caracteres";
-            } else if ((gasto.Observaciones != null) && (gasto.Observaciones.Length > 80)) {
-                return "El campo Observaciones debe tener como maximo 80 caracteres";
-            } else if ((gasto.ImporteGasto == null) || (gasto.ImporteGasto.Monto <= 0)) {
-                return "El campo Importe es obligatorio, y debe ser mayor a 0";
-            } else {
-                return null;
+            if ((gasto.Fecha == null) || (gasto.Fecha.Ticks == 0)) {
+                errors.Add("El campo Fecha es obligatorio");
             }
+            
+            if ((gasto.ImporteGasto == null) || (gasto.ImporteGasto.Monto <= 0)) {
+                errors.Add("El campo Importe es obligatorio, y debe ser mayor a 0"); 
+            }
+            
+            if ((gasto.Descripcion == null) || (gasto.Descripcion == "")) {
+                errors.Add("El campo Descripcion es obligatorio");
+            }
+            
+            if ((gasto.Descripcion != null) && (gasto.Descripcion.Length > 80)) {
+                errors.Add("El campo Descripcion debe tener como maximo 80 caracteres");
+            }
+            
+            if ((gasto.Observaciones != null) && (gasto.Observaciones.Length > 80)) {
+                errors.Add("El campo Observaciones debe tener como maximo 80 caracteres");
+            } 
+
+            return errors;
         }
 
         //-------------------------------
