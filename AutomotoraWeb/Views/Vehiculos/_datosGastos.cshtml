@@ -85,7 +85,7 @@
 
         /* ========================================= */
 
-        $("#createDetailsGasto").click(function () {
+        $("#createDetailsGasto").live("click", function () {
 
             $("#messageErrorCreateGasto").html("");
 
@@ -102,7 +102,7 @@
 
         });
 
-        $(".boton-consultar-mf").click(function () {
+        $(".boton-consultar-mf").live("click", function () {
 
             $("#messageErrorDetailGasto").html("");
 
@@ -118,7 +118,7 @@
             });
         });
 
-        $(".boton-editar-mf").click(function () {
+        $(".boton-editar-mf").live("click", function () {
 
             $("#messageErrorEditGasto").html("");
 
@@ -135,7 +135,7 @@
 
         });
 
-        $(".boton-eliminar-mf").click(function () {
+        $(".boton-eliminar-mf").live("click", function () {
 
             $("#messageErrorDeleteGasto").html("");
 
@@ -193,7 +193,7 @@
         });
 
         $("#closeDetailsGasto").click(function (){
-            general_closePopup("containerDetailGastosPopup");
+            general_closePopup("containerDetailsGastosPopup");
         });
 
         $("#saveEditGasto").click(function (){
@@ -206,7 +206,7 @@
         });
         
         $("#deleteGasto").click(function (){
-            var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
             _eventClickAction(urlAction, "containerDeleteGastosPopup", "messageDeleteEditGasto");
         });
 
@@ -218,6 +218,7 @@
 
         function getJsonGasto() {
             var gasto = {
+                Codigo: $("#hiddenCodioGasto").val(),
                 Fecha: $("#txtFechaGasto").val(),
                 ImporteGasto: {
                     Moneda: {

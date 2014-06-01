@@ -386,7 +386,15 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         [HttpPost]
         public ActionResult editGasto(Gasto gasto) {
 
-            if (ModelState.IsValid) {
+            Vehiculo vehiculo = gasto.Vehiculo;
+            vehiculo.Consultar();
+            gasto.Vehiculo = vehiculo;
+            gasto.ImporteGasto.Moneda.Consultar();
+            gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
+
+            List<String> errors = this.validateAtributesGastos(gasto);
+
+            if (errors.Count == 0) {
                 try {
                     gasto.ModificarDatos();
                     return Json(new { Result = "OK" });
@@ -395,13 +403,16 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 }
             }
 
-            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = "Uno de los campos ingresados no es válido" });
+            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+
         }
 
         [HttpPost]
         public ActionResult deleteGasto(Gasto gasto) {
             try {
-                gasto.Agregar();
+                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                string IP = HttpContext.Request.UserHostAddress;
+                gasto.Eliminar(userName, IP);
                 return Json(new { Result = "OK" });
             } catch (UsuarioException exc) {
                 return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
@@ -413,7 +424,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         private Gasto _obtenerGasto(int id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
             Gasto gasto = new Gasto();
             gasto.Codigo = id;
-            //gasto.Consultar();
+            gasto.Consultar();
             return gasto;
         }
 

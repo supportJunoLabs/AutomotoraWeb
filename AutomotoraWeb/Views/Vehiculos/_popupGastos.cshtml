@@ -2,6 +2,7 @@
 @using AutomotoraWeb.Helpers;
 
 <div>
+    @Html.HiddenFor(model => model.Codigo, new { id = "hiddenCodioGasto"})
 
     <div class="display-label">
         @Html.DisplayNameFor(model => model.ImporteGasto)
