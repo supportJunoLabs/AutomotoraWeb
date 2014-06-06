@@ -1202,6 +1202,7 @@
     <Content Include="Content\themes\WintertideAdmin\build\terms-and-conditions.html" />
     <Content Include="Content\themes\WintertideAdmin\build\user.html" />
     <Content Include="Content\themes\WintertideAdmin\build\users.html" />
+    <Content Include="Content\SiteExtras.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\SiteExtras.css" />
     <Content Include="Content\themes\BlueNileAdmin\build\lib\.DS_Store" />
@@ -1704,6 +1705,7 @@
     <Content Include="Views\Documentacion\_reportList.cshtml" />
     <Content Include="Views\Documentacion\list.cshtml" />
     <Content Include="Views\Documentacion\report.cshtml" />
+    <Content Include="Views\Vehiculos\_popupGastos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

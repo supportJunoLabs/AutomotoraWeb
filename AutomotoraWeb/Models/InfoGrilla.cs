@@ -11,13 +11,18 @@ namespace AutomotoraWeb.Models {
         public string KeyFieldName { get; set; }
         public Type TypeOfModel { get; set; }
 
-        private bool accionesAlComienzo =false;
+        private bool accionesAlComienzo = false;
         public bool AccionesAlComienzo{
             get { return accionesAlComienzo; }
             set { accionesAlComienzo = value; }
         }
         public int registrosPorPagina { get; set; }
-
+        private bool registrosPorPaginaVisible = true;
+        public bool RegistrosPorPaginaVisible {
+            get { return registrosPorPaginaVisible; }
+            set { registrosPorPaginaVisible = value; }
+        }
+        
         private bool dobleClick = false;
         public bool DobleClick {
             get { return dobleClick; }

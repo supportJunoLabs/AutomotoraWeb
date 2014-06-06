@@ -18,6 +18,15 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public static string CONTROLLER = "vehiculos";
         public const string PHOTO_FOLDER = "~/Content/Images/vehiculos/";
+        public const string DETAIL_GASTO = "detailGasto";
+        public const string CREATE_GASTO = "createGasto";
+        public const string EDIT_GASTO = "editGasto";
+        public const string DELETE_GASTO = "deleteGasto";
+
+        public const string OK = "OK";
+        public const string ERROR = "ERROR";
+        public const string VALIDATION_ERROR = "VALIDATION_ERROR";
+        
 
         //No usarlo mas porque da lios de permisos al invocar esta accion si no tiene permisos full en vehiculos (ej: usuario de solo consulta a traves de listados)
         //ademas, ya no es mas el estandar.
@@ -316,14 +325,139 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #region Gastos
 
-        /*public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Gasto gasto) {
-            return View(_listaElementos());
-        }*/
-
         public ActionResult listGastos(int idParametros) {
             ViewData["idParametros"] = idParametros;
             return PartialView("_listGastos", _listaGastos(idParametros));
         }
+
+        public ActionResult detailGasto(int id) {
+            Gasto gasto = this._obtenerGasto(id);
+            ViewBag.SoloLectura = true;
+            return PartialView("_popupGastos", gasto);
+        }
+
+        public ActionResult createGasto(int idVehiculo) {
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = idVehiculo;
+            vehiculo.Consultar();
+            Gasto gasto = new Gasto();
+            gasto.Fecha = DateTime.Now;
+            gasto.Vehiculo = vehiculo;
+            return PartialView("_popupGastos", gasto);
+        }
+
+        public ActionResult editGasto(int id) {
+            Gasto gasto = this._obtenerGasto(id);
+            return PartialView("_popupGastos", gasto);
+        }
+
+        public ActionResult deleteGasto(int id) {
+            Gasto gasto = this._obtenerGasto(id);
+            ViewBag.SoloLectura = true;
+            return PartialView("_popupGastos", gasto);
+        }
+
+        //-------------------------------
+
+
+        [HttpPost]
+        public JsonResult createGasto(Gasto gasto) {
+
+            Vehiculo vehiculo = gasto.Vehiculo;
+            vehiculo.Consultar();
+            gasto.Vehiculo = vehiculo;
+            gasto.ImporteGasto.Moneda.Consultar();
+            gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
+
+            List<String> errors = this.validateAtributesGastos(gasto);
+
+            if (errors.Count == 0) {
+                try {
+                    gasto.Agregar();
+                    return Json(new { Result = "OK" });
+                } catch (UsuarioException exc) {
+                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+                }
+            }
+
+            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+        }
+
+        [HttpPost]
+        public ActionResult editGasto(Gasto gasto) {
+
+            Vehiculo vehiculo = gasto.Vehiculo;
+            vehiculo.Consultar();
+            gasto.Vehiculo = vehiculo;
+            gasto.ImporteGasto.Moneda.Consultar();
+            gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
+
+            List<String> errors = this.validateAtributesGastos(gasto);
+
+            if (errors.Count == 0) {
+                try {
+                    gasto.ModificarDatos();
+                    return Json(new { Result = "OK" });
+                } catch (UsuarioException exc) {
+                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+                }
+            }
+
+            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+
+        }
+
+        [HttpPost]
+        public ActionResult deleteGasto(Gasto gasto) {
+            try {
+                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                string IP = HttpContext.Request.UserHostAddress;
+                gasto.Eliminar(userName, IP);
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+            }
+        }
+
+        //-------------------------------
+
+        private Gasto _obtenerGasto(int id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
+            Gasto gasto = new Gasto();
+            gasto.Codigo = id;
+            gasto.Consultar();
+            return gasto;
+        }
+
+        //-------------------------------
+
+        private List<String> validateAtributesGastos(Gasto gasto) {
+
+            List<String> errors = new List<String>();
+
+            if ((gasto.Fecha == null) || (gasto.Fecha.Ticks == 0)) {
+                errors.Add("El campo Fecha es obligatorio");
+            }
+            
+            if ((gasto.ImporteGasto == null) || (gasto.ImporteGasto.Monto <= 0)) {
+                errors.Add("El campo Importe es obligatorio, y debe ser mayor a 0"); 
+            }
+            
+            if ((gasto.Descripcion == null) || (gasto.Descripcion == "")) {
+                errors.Add("El campo Descripcion es obligatorio");
+            }
+            
+            if ((gasto.Descripcion != null) && (gasto.Descripcion.Length > 80)) {
+                errors.Add("El campo Descripcion debe tener como maximo 80 caracteres");
+            }
+            
+            if ((gasto.Observaciones != null) && (gasto.Observaciones.Length > 80)) {
+                errors.Add("El campo Observaciones debe tener como maximo 80 caracteres");
+            } 
+
+            return errors;
+        }
+
+        //-------------------------------
 
         private List<Gasto> _listaGastos(int id) {
                 Vehiculo vehiculo = new Vehiculo();
