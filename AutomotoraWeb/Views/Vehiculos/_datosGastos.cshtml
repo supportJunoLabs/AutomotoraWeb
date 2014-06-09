@@ -1,5 +1,6 @@
 ﻿@model DLL_Backend.Vehiculo
 @using AutomotoraWeb.Controllers.Sales.Maintenance;
+@using DLL_Backend;
 
 <div class="row-fluid">
 
@@ -7,13 +8,21 @@
 
     <div class="btn-toolbar">
         <div class="btn-group">
-            @(Html.Bootstrap().Button().Text("Agregar").Id("createDetailsGasto").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
+            @if ((ViewBag.SoloLectura != null) && (!(bool)ViewBag.SoloLectura)){
+                @(Html.Bootstrap().Button().Text("Agregar").Id("createDetailsGasto").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
+            }
         )
         </div>
     </div>
        
     <div id="divGrillaGastos">
-        @Html.Partial("_listGastos", Model.DetalleGastos)
+        @if (Model != null){
+            @Html.Partial("_listGastos", Model.DetalleGastos)
+        }
+        else{
+            @Html.Partial("_listGastos", new List<Gasto>())
+        }
+         
     </div>
 
     <div id="containerCreateGastosPopup" title="Crear Gasto" style="display: none;">
@@ -166,8 +175,8 @@
                 data: getJsonGasto(),
                 success: function (data) {
                     if (data.Result == "OK") {
-                        gridGastos.Refresh(); // Se actualiza la grilla
                         general_closePopup(containerPopup);
+                        gridGastos.Refresh(); // Se actualiza la grilla
                     }
                     else {
                         var htmlError = "";
@@ -192,25 +201,25 @@
             general_closePopup("containerCreateGastosPopup");
         });
 
-        $("#closeDetailsGasto").click(function (){
+        $("#closeDetailsGasto").live("click", function () {
             general_closePopup("containerDetailsGastosPopup");
         });
 
-        $("#saveEditGasto").click(function (){
+        $("#saveEditGasto").live("click", function () {
             var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
             _eventClickAction(urlAction, "containerEditGastosPopup", "messageErrorEditGasto");
         });
 
-        $("#cancelEditGasto").click(function (){
+        $("#cancelEditGasto").live("click", function () {
             general_closePopup("containerEditGastosPopup");
         });
         
-        $("#deleteGasto").click(function (){
+        $("#deleteGasto").live("click", function () {
             var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
             _eventClickAction(urlAction, "containerDeleteGastosPopup", "messageDeleteEditGasto");
         });
 
-        $("#cancelDeleteGasto").click(function (){
+        $("#cancelDeleteGasto").live("click", function () {
             general_closePopup("containerDeleteGastosPopup");
         });
 

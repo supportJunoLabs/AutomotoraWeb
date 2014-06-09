@@ -23,6 +23,10 @@
     ig.RegistrosPorPaginaVisible = false;
     
     ViewBag.InfoGrilla = ig;
+    
+    if ((ViewBag.SoloLectura != null) && ((bool)ViewBag.SoloLectura)){
+        ig.Botones = new List<BotonGrilla>(); // Para no mostrar botones de detalles, edicion y eliminacion
+    }
 }
 
 @Html.Partial("_generalGrid", Model)

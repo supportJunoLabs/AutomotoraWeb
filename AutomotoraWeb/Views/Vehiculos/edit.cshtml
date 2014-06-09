@@ -1,5 +1,4 @@
 ﻿@model DLL_Backend.Vehiculo
-@using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.General;
 
 @{
@@ -19,15 +18,22 @@
         <legend></legend>
         @Html.HiddenFor(model => model.Codigo)
 
-        @Html.Partial("_datosDetalle", Model)
+        <div>
+            @Html.Partial("_datosDetalle", Model)
+
+            <div class="espacio2"></div>
+    
+            <div class="btn-toolbar">
+                @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
+                @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+            </div>
+        </div>
+        <div>
+            @Html.Partial("_datosAsociados", Model)
+        </div>
 
     </fieldset>
     
-    <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
-    </div>
-    <div class="clear-both"></div>
 }
 
 

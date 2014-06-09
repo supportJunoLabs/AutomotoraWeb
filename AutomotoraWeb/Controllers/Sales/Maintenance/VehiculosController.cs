@@ -71,22 +71,23 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Details(int id) {
-            Session[SessionUtils.CODIGO_VEHICULO] = id;
             ViewData["idParametros"] = id.ToString();
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
         }
 
         public ActionResult Create() {
-
             return View();
         }
 
         public ActionResult Edit(int id) {
+            ViewData["idParametros"] = id.ToString();
+            ViewBag.SoloLectura = false;
             return VistaElemento(id);
         }
 
         public ActionResult Delete(int id) {
+            ViewData["idParametros"] = id.ToString();
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
         }
@@ -149,6 +150,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         [HttpPost]
         public ActionResult Edit(Vehiculo vehiculo) {
+            ViewBag.SoloLectura = false;
 
             this.eliminarValidacionesIgnorables(vehiculo);
 
@@ -325,10 +327,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #region Gastos
 
+
         public ActionResult listGastos(int idParametros) {
             ViewData["idParametros"] = idParametros;
             return PartialView("_listGastos", _listaGastos(idParametros));
         }
+
 
         public ActionResult detailGasto(int id) {
             Gasto gasto = this._obtenerGasto(id);

@@ -16,7 +16,7 @@
         <legend></legend>
         @Html.HiddenFor(model => model.Codigo)
 
-        <div class="floatLeft">
+        <div>
             @Html.Partial("_datosDetalle", Model)
 
             <div class="espacio2"></div>
@@ -28,10 +28,9 @@
                 @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
             </div>
         </div>
-        <div class="floatLeft">
+        <div>
             @Html.Partial("_datosAsociados", Model)
         </div>
-        <div class="clearBoth" />
 
     </fieldset>
 

@@ -1,6 +1,7 @@
 ﻿@model DLL_Backend.Vehiculo
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
 
 @{
     ViewBag.Title = ViewBag.NombreEntidad + ": Agregar";
@@ -18,15 +19,23 @@
     <fieldset>
         <legend></legend>
 
-        @Html.Partial("_datosDetalle", Model)
+        <div>
+            @Html.Partial("_datosDetalle", Model)
+
+            <div class="espacio2"></div>
+    
+            <div class="btn-toolbar">
+                @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Guardar"))
+                @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+            </div>
+        </div>
+        <div>
+        @*Html.Partial("_datosAsociados", new Vehiculo())*@
+        </div>
 
     </fieldset>
     
     <div class="espacio2"></div>
-    <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Guardar"))
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
-    </div>
 }
 
 @section Scripts {
