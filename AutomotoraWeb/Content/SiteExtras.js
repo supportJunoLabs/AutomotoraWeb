@@ -19,6 +19,7 @@ function general_showPopup(data, idContainer, valueHeight, valueWidth) {
 
 function general_closePopup(idContainer) {
     $("#" + idContainer).dialog("close");
+    $("#" + idContainer + "Form").html("");
 }
 
 function general_showErrorPopup(jqXHR, textStatus, errorThrown) {

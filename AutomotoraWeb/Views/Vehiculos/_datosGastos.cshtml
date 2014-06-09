@@ -46,7 +46,7 @@
 
         </div>
         <div>
-            <div class="floatLeft">
+            <div class="floatLeft" style="margin-top: 15px;">
                 @(Html.Bootstrap().Button().Text("Cerrar").Id("closeDetailsGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
             </div>
             <div class="floatLeft">
@@ -77,7 +77,7 @@
 
         </div>
         <div>
-            <div class="floatLeft">
+            <div class="floatLeft" style="margin-top: 15px;">
                 @(Html.Bootstrap().Button().Text("Eliminar").Id("deleteGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
                 @(Html.Bootstrap().Button().Text("Cancelar").Id("cancelDeleteGasto").Style(TwitterBootstrap2.ButtonStyle.Primary))
             </div>
@@ -261,7 +261,7 @@
     }
 
     function showDetailsGastosPopup(data){
-        general_showPopup(data, "containerDetailsGastosPopup", 350, 760);
+        general_showPopup(data, "containerDetailsGastosPopup", 220, 500);
     }
 
     function showEditGastosPopup(data){
@@ -269,7 +269,7 @@
     }
 
     function showDeleteGastosPopup(data){
-        general_showPopup(data, "containerDeleteGastosPopup", 350, 760);
+        general_showPopup(data, "containerDeleteGastosPopup", 220, 500);
     }
 
     /* ================================================== */

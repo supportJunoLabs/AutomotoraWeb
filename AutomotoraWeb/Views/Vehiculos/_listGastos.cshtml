@@ -8,9 +8,9 @@
 @{
     
     InfoGrilla ig = new InfoGrilla();
-    ig.HiddenColumns = new List<string>() { }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+    ig.HiddenColumns = new List<string>() { "Codigo" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
 
-    ig.TrunkColumns = new Dictionary<string, int>() { };
+    ig.TrunkColumns = new Dictionary<string, int>() { {"Descripcion", 15}, { "Observaciones", 15 }  };
 
     ig.NameGrid = "gridGastos";
     ig.Controller = VehiculosController.CONTROLLER;
