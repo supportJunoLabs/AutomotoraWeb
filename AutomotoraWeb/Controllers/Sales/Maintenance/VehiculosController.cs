@@ -98,6 +98,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         private ActionResult VistaElemento(int id) {
             try {
                 Vehiculo vehiculo = _obtenerElemento(id);
+                _addResumeGastosToViewBag(vehiculo);
                 return View(vehiculo);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -111,6 +112,14 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             vehiculo.Codigo = id;
             vehiculo.Consultar();
             return vehiculo;
+        }
+
+        private void _addResumeGastosToViewBag(Vehiculo vehiculo) {
+            ViewBag.initialCost = vehiculo.Costo.ImporteEnMonedaDefault();
+            ViewBag.totalGastos = vehiculo.TotalGastos;
+            Importe actualCost = vehiculo.Costo.ImporteEnMonedaDefault();
+            actualCost.Monto = actualCost.Monto + vehiculo.TotalGastos.Monto;
+            ViewBag.actualCost = actualCost;
         }
 
         private List<Vehiculo> _listaElementos() {
@@ -161,6 +170,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
+                    _addResumeGastosToViewBag(vehiculo);
                     return View(vehiculo);
                 }
             }
@@ -186,6 +196,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
+                    _addResumeGastosToViewBag(vehiculo);
                     return View(vehiculo);
                 }
             }
