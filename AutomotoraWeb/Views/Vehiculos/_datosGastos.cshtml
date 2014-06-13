@@ -27,25 +27,25 @@
 
     <div id="resumeGastos" style="margin-left: 10px; margin-top: 10px;">
         <div style="width: 185px;">
-            <div class="floatLeft" style="width: 95px;">Costo Inicial:</div>
+            <div class="floatLeft" style="width: 95px; font-size: 12px; font-weight: bold;">Costo Inicial:</div>
             <div class="floatLeft" style="width: 40px;">@ViewBag.initialCost.Moneda.Simbolo</div>
-            <div class="floatLeft" style="width: 50px;">@ViewBag.initialCost.Monto.ToString("N", CultureInfo.InvariantCulture)</div>
+            <div class="floatLeft" style="width: 50px;" id="initialCostMonto">@ViewBag.initialCost.Monto.ToString("N", CultureInfo.InvariantCulture)</div>
             <div class="clearBoth"></div>
         </div>
         <div style="width: 185px;">
-            <div class="floatLeft" style="width: 95px;">Total Gastos:</div>
+            <div class="floatLeft" style="width: 95px; font-size: 12px; font-weight: bold;">Total Gastos:</div>
             <div class="floatLeft" style="width: 40px;">@ViewBag.totalGastos.Moneda.Simbolo</div>
-            <div class="floatLeft" style="width: 50px;">@ViewBag.totalGastos.Monto.ToString("N", CultureInfo.InvariantCulture)</div>
+            <div class="floatLeft" style="width: 50px;" id="totalGastosMonto">@ViewBag.totalGastos.Monto.ToString("N", CultureInfo.InvariantCulture)</div>
             <div class="clearBoth"></div>
         </div>
         <div style="width: 185px;">
-            <div class="floatLeft" style="width: 95px;">Costo Actual:</div>
+            <div class="floatLeft" style="width: 95px; font-size: 12px; font-weight: bold;">Costo Actual:</div>
             <div class="floatLeft" style="width: 40px;">@ViewBag.actualCost.Moneda.Simbolo</div>
-            <div class="floatLeft" style="width: 50px;">@ViewBag.actualCost.Monto.ToString("N", CultureInfo.InvariantCulture)</div>
+            <div class="floatLeft" style="width: 50px;" id="actualCostMonto">@ViewBag.actualCost.Monto.ToString("N", CultureInfo.InvariantCulture)</div>
             <div class="clearBoth"></div>
         </div>
     </div>
-
+    
     <div id="containerCreateGastosPopup" title="Crear Gasto" style="display: none;">
         <div id="containerCreateGastosPopupForm">
 
@@ -198,6 +198,7 @@
                     if (data.Result == "OK") {
                         general_closePopup(containerPopup);
                         gridGastos.Refresh(); // Se actualiza la grilla
+                        _updateResumegastos(data);
                     }
                     else {
                         var htmlError = "";
@@ -211,6 +212,12 @@
                     general_showErrorAction(containerErrorMessage, textStatus, errorThrown);
                 }
             });
+        }
+
+        function _updateResumegastos(data) {
+            $("#initialCostMonto").html(data.InitialCostMonto);
+            $("#totalGastosMonto").html(data.TotalGastosMonto);
+            $("#actualCostMonto").html(data.ActualCostMonto);
         }
 
         $("#saveCreateGasto").live("click", function () {

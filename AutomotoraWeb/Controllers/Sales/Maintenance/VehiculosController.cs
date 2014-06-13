@@ -12,6 +12,7 @@ using DLL_Backend;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
+using System.Globalization;
 
 namespace AutomotoraWeb.Controllers.Sales.Maintenance {
     public class VehiculosController : SalesController, IMaintenance {
@@ -389,7 +390,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             if (errors.Count == 0) {
                 try {
                     gasto.Agregar();
-                    return Json(new { Result = "OK" });
+
+                    vehiculo.Consultar();
+
+                    return createJsonResultGastosOK(vehiculo);
                 } catch (UsuarioException exc) {
                     return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
                 }
@@ -412,7 +416,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             if (errors.Count == 0) {
                 try {
                     gasto.ModificarDatos();
-                    return Json(new { Result = "OK" });
+
+                    vehiculo.Consultar();
+
+                    return createJsonResultGastosOK(vehiculo);
                 } catch (UsuarioException exc) {
                     return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
                 }
@@ -428,11 +435,32 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
                 string IP = HttpContext.Request.UserHostAddress;
                 gasto.Eliminar(userName, IP);
-                return Json(new { Result = "OK" });
+
+                Vehiculo vehiculo = gasto.Vehiculo;
+                vehiculo.Consultar();
+
+                return createJsonResultGastosOK(vehiculo);
             } catch (UsuarioException exc) {
                 return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
             }
         }
+
+        private JsonResult createJsonResultGastosOK(Vehiculo vehiculo) {
+            Importe initialCost = vehiculo.Costo.ImporteEnMonedaDefault();
+            Importe totalGastos = vehiculo.TotalGastos;
+            Importe actualCost = vehiculo.Costo.ImporteEnMonedaDefault();
+            actualCost.Monto = actualCost.Monto + vehiculo.TotalGastos.Monto;
+
+            return Json(new {
+                Result = "OK",
+                InitialCostMoneda = initialCost.Moneda.Simbolo,
+                InitialCostMonto = initialCost.Monto.ToString("N", CultureInfo.InvariantCulture),
+                TotalGastosMoneda = totalGastos.Moneda.Simbolo,
+                TotalGastosMonto = totalGastos.Monto.ToString("N", CultureInfo.InvariantCulture),
+                ActualCostMoneda = actualCost.Moneda.Simbolo,
+                ActualCostMonto = actualCost.Monto.ToString("N", CultureInfo.InvariantCulture)
+            });
+        } 
 
         //-------------------------------
 
