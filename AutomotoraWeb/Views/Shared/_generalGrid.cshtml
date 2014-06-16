@@ -246,7 +246,12 @@
                 }
             } else {
                 foreach (BotonGrilla b in ig.Botones) {
-                    ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());
+                    if (b is BotonAjaxGrilla) {
+                        ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen(b.Accion, b.Controlador, (int)id, b.Clase, b.Tooltip).ToHtmlString());
+                    } else {
+                        ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, id, b.Clase, b.Tooltip).ToHtmlString());
+                    }
+                    
                 }
             }
         });

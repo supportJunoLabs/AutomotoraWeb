@@ -1,0 +1,34 @@
+﻿@model List<DLL_Backend.DocAuto>
+@using System.Web.UI.WebControls
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Sales.Maintenance;
+@using AutomotoraWeb.Controllers.Sales.Maintenance.Vehiculos;
+@using AutomotoraWeb.Models;
+
+@{
+    
+    InfoGrilla ig = new InfoGrilla();
+    ig.HiddenColumns = new List<string>() { "Codigo", "Fecha", "Observaciones", "Documento", "Poseedor" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
+
+    ig.NameGrid = "gridDocumentos";
+    ig.Controller = VehiculosController.CONTROLLER;
+    ig.ActionCallbackRoute = "listDocumentos";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.DocAuto.DocAutoMD);
+    ig.DobleClick = true;
+    ig.BotonesAjax = true;
+    ig.registrosPorPagina = 7;
+    ig.RegistrosPorPaginaVisible = false;
+    
+    ViewBag.InfoGrilla = ig;
+    
+    if ((ViewBag.SoloLectura != null) && ((bool)ViewBag.SoloLectura)){
+        ig.Botones = new List<BotonGrilla>(); // Para no mostrar botones de detalles, edicion y eliminacion
+    }
+    else{
+        ig.AddButton(new BotonAjaxGrilla(VehiculosController.DETAILS_DOC, VehiculosController.CONTROLLER, "boton-consultar-mf boton-consultar-doc", "Consulta Documentación"));
+        ig.AddButton(new BotonAjaxGrilla(VehiculosController.EDIT_DOC, VehiculosController.CONTROLLER, "boton-editar-mf boton-editar-doc", "Edición de Documentación"));
+    }
+}
+
+@Html.Partial("_generalGrid", Model)

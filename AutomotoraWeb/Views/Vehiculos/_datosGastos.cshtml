@@ -132,14 +132,14 @@
 
         });
 
-        $(".boton-consultar-mf").live("click", function () {
+        $(".boton-consultar-gasto").live("click", function () {
 
             $("#messageErrorDetailGasto").html("");
 
             var id = _getId($(this));
 
             $.ajax({
-                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DETAIL_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DETAILS_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
                 type: 'GET',
                 async: true,
                 data: 'id=' + id,
@@ -148,7 +148,7 @@
             });
         });
 
-        $(".boton-editar-mf").live("click", function () {
+        $(".boton-editar-gasto").live("click", function () {
 
             $("#messageErrorEditGasto").html("");
 
@@ -165,7 +165,7 @@
 
         });
 
-        $(".boton-eliminar-mf").live("click", function () {
+        $(".boton-eliminar-gasto").live("click", function () {
 
             $("#messageErrorDeleteGasto").html("");
 
@@ -186,7 +186,7 @@
         /* ======== Eventos de botones en Popups ============ */
         /* ================================================== */
 
-        function _eventClickAction(urlAction, containerPopup, containerErrorMessage) {
+        function _eventClickActionGasto(urlAction, containerPopup, containerErrorMessage) {
             $.ajax({
                 url: urlAction,
                 type: 'POST',
@@ -222,7 +222,7 @@
 
         $("#saveCreateGasto").live("click", function () {
             var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
-            _eventClickAction(urlAction, "containerCreateGastosPopup", "messageErrorCreateGasto");
+            _eventClickActionGasto(urlAction, "containerCreateGastosPopup", "messageErrorCreateGasto");
         });
         
         $("#cancelCreateGasto").live("click", function () {
@@ -235,7 +235,7 @@
 
         $("#saveEditGasto").live("click", function () {
             var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
-            _eventClickAction(urlAction, "containerEditGastosPopup", "messageErrorEditGasto");
+            _eventClickActionGasto(urlAction, "containerEditGastosPopup", "messageErrorEditGasto");
         });
 
         $("#cancelEditGasto").live("click", function () {
@@ -244,7 +244,7 @@
         
         $("#deleteGasto").live("click", function () {
             var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
-            _eventClickAction(urlAction, "containerDeleteGastosPopup", "messageDeleteEditGasto");
+            _eventClickActionGasto(urlAction, "containerDeleteGastosPopup", "messageDeleteEditGasto");
         });
 
         $("#cancelDeleteGasto").live("click", function () {

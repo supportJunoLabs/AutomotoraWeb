@@ -264,6 +264,7 @@
     <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
+    <Compile Include="Models\BotonAjaxGrilla.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\ListadoDocumentacionModel.cs" />
@@ -1706,6 +1707,8 @@
     <Content Include="Views\Documentacion\list.cshtml" />
     <Content Include="Views\Documentacion\report.cshtml" />
     <Content Include="Views\Vehiculos\_popupGastos.cshtml" />
+    <Content Include="Views\Vehiculos\_listDocumentos.cshtml" />
+    <Content Include="Views\Vehiculos\_popupDocumentacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

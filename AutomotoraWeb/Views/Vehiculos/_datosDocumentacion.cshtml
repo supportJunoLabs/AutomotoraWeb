@@ -1,5 +1,178 @@
-﻿@{
-    ViewBag.Title = "_datosDocumentacion";
-}
+﻿@model DLL_Backend.Vehiculo
+@using AutomotoraWeb.Controllers.Sales.Maintenance;
+@using DLL_Backend;
+@using System.Globalization;
 
-BBB
+<div class="row-fluid">
+    @Html.HiddenFor(model => model.Codigo, new { id = "idVehiculoDocumentacion"})
+
+    <div id="divGrillaDocumentos">
+        @if (Model != null){
+            @Html.Partial("_listDocumentos", Model.Documentacion)
+        }
+        else{
+            @Html.Partial("_listDocumentos", new List<DocAuto>())
+        }
+    </div>
+
+    <div id="containerDetailsDocumentacionPopup" title="Detalles de Documentación" style="display: none;">
+        <div id="containerDetailsDocumentacionPopupForm">
+
+        </div>
+        <div>
+            <div class="floatLeft" style="margin-top: 15px;">
+                @(Html.Bootstrap().Button().Text("Cerrar").Id("closeDetailsDocumentacion").Style(TwitterBootstrap2.ButtonStyle.Primary))
+            </div>
+            <div class="floatLeft">
+                <div id="messageErrorDetailDocumentacion" style="margin-left: 15px; color: red;"></div>
+            </div>
+            <div class="clearBoth"></div>
+        </div>
+    </div>
+
+    <div id="containerEditDocumentacionPopup" title="Editar Documentación" style="display: none;">
+        <div id="containerEditDocumentacionPopupForm">
+
+        </div>
+        <div>
+            <div class="floatLeft">
+                @(Html.Bootstrap().Button().Text("Guardar").Id("saveEditDocumentacion").Style(TwitterBootstrap2.ButtonStyle.Primary))
+                @(Html.Bootstrap().Button().Text("Cancelar").Id("cancelEditDocumentacion").Style(TwitterBootstrap2.ButtonStyle.Primary))
+            </div>
+            <div class="floatLeft">
+                <div id="messageErrorEditDocumentacion" style="margin-left: 15px; color: red;"></div>
+            </div>
+            <div class="clearBoth"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        /* ========================================= */
+
+        $(".boton-consultar-doc").live("click", function () {
+
+            $("#messageErrorDetailDocumentacion").html("");
+
+            var id = _getId($(this));
+
+            $.ajax({
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DETAILS_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                type: 'GET',
+                async: true,
+                data: 'id=' + id,
+                success: showDetailsDocumentacionPopup,
+                error: general_showErrorPopup
+            });
+        });
+
+        $(".boton-editar-doc").live("click", function () {
+
+            $("#messageErrorEditDocumentacion").html("");
+
+            var id = _getId($(this));
+
+            $.ajax({
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                type: 'GET',
+                async: true,
+                data: 'id=' + id,
+                success: showEditDocumentacionPopup,
+                error: general_showErrorPopup
+            });
+
+        });
+
+        /* ================================================== */
+        /* ======== Eventos de botones en Popups ============ */
+        /* ================================================== */
+
+        function _eventClickActionDocumentacion(urlAction, containerPopup, containerErrorMessage) {
+            $.ajax({
+                url: urlAction,
+                type: 'POST',
+                async: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: getJsonDocumentacion(),
+                success: function (data) {
+                    if (data.Result == "OK") {
+                        general_closePopup(containerPopup);
+                        gridDocumentos.Refresh(); // Se actualiza la grilla
+                    }
+                    else {
+                        var htmlError = "";
+                        for (var i = 0; i < data.ErrorMessage.length; i++) {
+                            htmlError = htmlError + "<div>" + data.ErrorMessage[i] + "</div>";
+                        }
+                        $("#" + containerErrorMessage).html(htmlError);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    general_showErrorAction(containerErrorMessage, textStatus, errorThrown);
+                }
+            });
+        }
+
+
+        $("#closeDetailsDocumentacion").live("click", function () {
+            general_closePopup("containerDetailsDocumentacionPopup");
+        });
+
+        $("#saveEditDocumentacion").live("click", function () {
+            var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            _eventClickActionDocumentacion(urlAction, "containerEditDocumentacionPopup", "messageErrorEditDocumentacion");
+        });
+
+        $("#cancelEditDocumentacion").live("click", function () {
+            general_closePopup("containerEditDocumentacionPopup");
+        });
+
+        /* ================================================== */
+
+        function getJsonDocumentacion() {
+            var documentacion = {
+                Codigo: $("#hiddenCodioDocumentacion").val(),
+                Estado: $("#ddlEstadoDocumentacion").val(),
+                Fecha: $("#txtFechaDocumentacion").val(),
+                Observaciones: $("#txtObservacionesDocumentacion").val(),
+                Poseedor: $("#txtPoseedorDocumentacion").val(),
+                TipoDocumento: {
+                    Codigo : $("#hiddenTipoDocumentoCodigoDocumentacion").val()
+                },
+                Vehiculo: {
+                    Codigo: $("#idVehiculoDocumentacion").val()
+                }
+            };
+
+            return JSON.stringify(documentacion);
+
+        }
+
+        /* ================================================== */
+        
+    });
+
+    function _getId(elem) {
+        var str = elem.attr("id");
+        return str.split("_")[1];
+    }
+
+    /* ================================================== */
+
+
+    function showDetailsDocumentacionPopup(data) {
+        general_showPopup(data, "containerDetailsDocumentacionPopup", 220, 500);
+    }
+
+    function showEditDocumentacionPopup(data) {
+        general_showPopup(data, "containerEditDocumentacionPopup", 350, 760);
+    }
+
+    /* ================================================== */
+
+</script>

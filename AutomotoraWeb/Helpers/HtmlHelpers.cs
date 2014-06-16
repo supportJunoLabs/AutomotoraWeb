@@ -151,11 +151,34 @@ namespace AutomotoraWeb.Helpers {
             return MvcHtmlString.Create(html.ToString());
         }
 
+
+        public static MvcHtmlString BotonAjaxImagen(this HtmlHelper helper, string accion, string controlador, int id, string clase, string tooltip) {
+            //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
+            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
+
+
+            UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            String url = urlHelper.Action(accion, controlador, id);
+
+            //crear la div que va dentro del link anchor
+            TagBuilder tagBuilder = new TagBuilder("div");
+            tagBuilder.MergeAttribute("class", clase);
+            tagBuilder.MergeAttribute("title", tooltip);
+            tagBuilder.MergeAttribute("style", "cursor:pointer");
+            tagBuilder.MergeAttribute("id", "btn_" + id + "_" + accion);
+            string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
+
+            StringBuilder html = new StringBuilder();
+            html.Append(sdiv);
+
+            return MvcHtmlString.Create(html.ToString());
+        }
+
         //--------------------------------------------------------------------------------
 
         public static MvcHtmlString BotonAjax(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
-            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro.
+            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
 
 
             UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);

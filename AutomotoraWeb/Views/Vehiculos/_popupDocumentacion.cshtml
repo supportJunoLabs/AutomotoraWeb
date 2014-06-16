@@ -1,0 +1,46 @@
+﻿@model DLL_Backend.DocAuto
+@using AutomotoraWeb.Helpers;
+
+<div>
+    @Html.HiddenFor(model => model.Codigo, new { id = "hiddenCodioGasto"})
+    @Html.HiddenFor(model => model.TipoDocumento.Codigo, new { id = "hiddenTipoDocumentoCodigoDocumentacion"})
+
+    <div class="display-label ">
+        @Html.DisplayNameFor(model => model.Poseedor)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.TextBoxOrdisplayFor(model => model.Poseedor, (bool?)ViewBag.SoloLectura, new { id = "txtPoseedorDocumentacion"  })
+        @Html.ValidationMessageFor(model => model.Poseedor)
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Fecha)
+    </div>
+    <div class="editor-field editor-field-large">
+        @Html.TextBoxOrdisplayFor(model => model.Fecha, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { id = "txtFechaDocumentacion", @class = "calendarAW" })
+        @Html.ValidationMessageFor(model => model.Fecha)
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="display-label ">
+        @Html.DisplayNameFor(model => model.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { id = "txtObservacionesDocumentacion", style = "width: 530px; height: 60px" })
+        @Html.ValidationMessageFor(model => model.Observaciones)
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Estado)
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayFor(model => model.Estado.Codigo, (bool?)ViewBag.SoloLectura,
+                    model => model.Estado.Descripcion,
+                    new SelectList(ViewBag.Estados, "Codigo", "Descripcion"), null, new { id = "ddlEstadoDocumentacion", styl="width: 10px;" })
+        @Html.ValidationMessageFor(model => model.Estado)
+    </div>
+    <div class="clear-both"></div>
+
+</div>

@@ -19,10 +19,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public static string CONTROLLER = "vehiculos";
         public const string PHOTO_FOLDER = "~/Content/Images/vehiculos/";
-        public const string DETAIL_GASTO = "detailGasto";
+        public const string DETAILS_GASTO = "detailGasto";
         public const string CREATE_GASTO = "createGasto";
         public const string EDIT_GASTO = "editGasto";
         public const string DELETE_GASTO = "deleteGasto";
+        public const string DETAILS_DOC = "detailDoc";
+        public const string EDIT_DOC = "editDoc";
 
         public const string OK = "OK";
         public const string ERROR = "ERROR";
@@ -511,6 +513,93 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #endregion
 
+        //---------------------------------------------------
+        //---------------------------------------------------
+
+        #region Documentos
+
+        public ActionResult detailDoc(int id) {
+            DocAuto docAuto = this._obtenerDocumentacion(id);
+            ViewBag.SoloLectura = true;
+            ViewBag.Estados = EstadoDocumento.EstadosDocumentoListables();
+            return PartialView("_popupDocumentacion", docAuto);
+        }
+
+        public ActionResult editDoc(int id) {
+            DocAuto docAuto = this._obtenerDocumentacion(id);
+            ViewBag.Estados = EstadoDocumento.EstadosDocumentoListables();
+            return PartialView("_popupDocumentacion", docAuto);
+        }
+
+        public ActionResult listDocumentos(int idParametros) {
+            ViewData["idParametros"] = idParametros;
+            return PartialView("_listDocumentos", _listaDocumentos(idParametros));
+        }
+
+        [HttpPost]
+        public ActionResult editDoc(DocAuto docAuto) {
+
+            Vehiculo vehiculo = docAuto.Vehiculo;
+            vehiculo.Consultar();
+            docAuto.Vehiculo = vehiculo;
+
+            List<String> errors = this.validateAtributesDocumentacion(docAuto);
+
+            if (errors.Count == 0) {
+                try {
+                    //docAuto.ModificarDatos();
+                    return Json(new { Result = "OK" });
+                } catch (UsuarioException exc) {
+                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+                }
+            }
+
+            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+
+        }
+
+        private DocAuto _obtenerDocumentacion(int id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
+            DocAuto docAuto = new DocAuto();
+            docAuto.Codigo = id;
+            //docAuto.Consultar();
+            return docAuto;
+        }
+
+        private List<DocAuto> _listaDocumentos(int id) {
+                Vehiculo vehiculo = new Vehiculo();
+                vehiculo.Codigo = id;
+                vehiculo.Consultar();
+                return vehiculo.Documentacion;
+        }
+
+        private List<String> validateAtributesDocumentacion(DocAuto docAuto) {
+
+            List<String> errors = new List<String>();
+
+            if ((docAuto.Fecha == null) || (docAuto.Fecha.Ticks == 0)) {
+                errors.Add("El campo Fecha es obligatorio");
+            }
+
+            if (docAuto.Estado == null) {
+                errors.Add("El Estado es requerido");
+            }
+
+            if (docAuto.Fecha == null) {
+                errors.Add("La fecha es requerida");
+            }
+
+            if ((docAuto.Poseedor != null) && (docAuto.Poseedor.Length > 80)) {
+                errors.Add("Nombre: Largo maximo 40 caracteres");
+            }
+
+            if ((docAuto.Observaciones != null) && (docAuto.Observaciones.Length > 80)) {
+                errors.Add("El campo Observaciones debe tener como maximo 80 caracteres");
+            }
+
+            return errors;
+        }
+
+        #endregion
         //---------------------------------------------------------------------
     }
 }
