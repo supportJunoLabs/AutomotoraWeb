@@ -1,5 +1,51 @@
-﻿@{
-    ViewBag.Title = "_datosFotos";
-}
+﻿
+ <style>
+    #sortable { list-style-type: none; margin: 0; padding: 0; width: 650px; }
+    .vehiculoImageContainer{
+      border: 1px solid gray;
+      width: 160px; 
+      height: 100px;
+      float: left;
+    }
+    .vehiculoImageContainer img{
+      height:100px;
+      width:160px;
+    }
+</style>
 
-CCC
+<script>
+    $(document).ready(function () {
+        $( "#sortable" ).sortable();
+        $("#sortable").disableSelection();
+        $(".vehiculoImg").live("click", function () {
+            var id = $(this).attr("id");
+            $("#popup_content_" + id).dialog({
+                modal: true,
+                width: 'auto',
+                height: 'auto',
+                buttons: [ { text: "Cerrar", click: function() { $( this ).dialog( "close" ); } } ]
+            });
+        });
+    }); 
+</script>
+ 
+<ul id="sortable">
+  <li class="vehiculoImageContainer"><img id="img_1" class="vehiculoImg" src="http://www2.diariomotor.com/imagenes/2011/01/125-aniversario-automovil-2.jpg" /></li>
+  <li class="vehiculoImageContainer"><img id="img_2" class="vehiculoImg" src="http://www.sanmarino.es/wp-content/uploads/2012/12/Autom%C3%B3vil.jpg" /></li>
+  <li class="vehiculoImageContainer"><img id="img_3" class="vehiculoImg" src="http://1.bp.blogspot.com/_-zgdvPx9awA/TAZQ5R3_BSI/AAAAAAAAAAM/Po-VSYx_5y0/s1600/cadillac-previa-salon-automovil-ginebra-2007[1].jpg" /></li>
+  <li class="vehiculoImageContainer"><img id="img_4" class="vehiculoImg" src="http://2.bp.blogspot.com/-t5rus91J3IA/Tc1_VPmKo9I/AAAAAAAAAAU/XLkgX0HyCz4/s320/lindo-automovil.jpg" /></li>
+  <li class="vehiculoImageContainer">5</li>
+  <li class="vehiculoImageContainer">6</li>
+  <li class="vehiculoImageContainer">7</li>
+  <li class="vehiculoImageContainer">8</li>
+  <li class="vehiculoImageContainer">9</li>
+  <li class="vehiculoImageContainer">10</li>
+  <li class="vehiculoImageContainer">11</li>
+  <li class="vehiculoImageContainer">12</li>
+</ul>
+
+<div id="popup_content_img_1" style="display: none;"><img src="http://www2.diariomotor.com/imagenes/2011/01/125-aniversario-automovil-2.jpg" /></div>
+<div id="popup_content_img_2" style="display: none;"><img src="http://www.sanmarino.es/wp-content/uploads/2012/12/Autom%C3%B3vil.jpg" /></div>
+<div id="popup_content_img_3" style="display: none;"><img src="http://1.bp.blogspot.com/_-zgdvPx9awA/TAZQ5R3_BSI/AAAAAAAAAAM/Po-VSYx_5y0/s1600/cadillac-previa-salon-automovil-ginebra-2007[1].jpg" /></div>
+<div id="popup_content_img_4" style="display: none;"><img src="http://2.bp.blogspot.com/-t5rus91J3IA/Tc1_VPmKo9I/AAAAAAAAAAU/XLkgX0HyCz4/s320/lindo-automovil.jpg" /></div>
+
