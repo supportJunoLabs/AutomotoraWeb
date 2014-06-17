@@ -1228,14 +1228,14 @@ public class DXReportFichaVehiculo : DevExpress.XtraReports.UI.XtraReport {
     }
 
     private void ReportHeader2_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-        List<DocAuto> docs = ((Vehiculo)GetCurrentRow()).DocumentacionActiva;
+        List<DocAuto> docs = ((Vehiculo)GetCurrentRow()).Documentacion;
         if (docs == null || docs.Count <= 0) {
             e.Cancel = true;
         }
     }
 
     private void GroupHeader2_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-        List<DocAuto> docs = ((Vehiculo)GetCurrentRow()).DocumentacionActiva;
+        List<DocAuto> docs = ((Vehiculo)GetCurrentRow()).Documentacion;
         if (docs == null || docs.Count <= 0) {
             e.Cancel = true;
         }
