@@ -21,3 +21,13 @@ input[type="checkbox"] {
 .alinearDerecha {
     text-align: right;
 }
+
+.editor-field-checkbox {
+    height:40px; 
+    vertical-align:middle;
+}
+
+.editor-field-label {
+    height:40px; 
+    vertical-align:middle;
+}
