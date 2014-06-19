@@ -71,6 +71,7 @@
                             settings.Properties.ValueType = typeof(int);
                             settings.Properties.RepeatLayout = System.Web.UI.WebControls.RepeatLayout.Table;
                             settings.Properties.RepeatDirection = System.Web.UI.WebControls.RepeatDirection.Horizontal;
+                            settings.ControlStyle.Border.BorderStyle = System.Web.UI.WebControls.BorderStyle.None;
 
                             settings.PreRender += (s, e) => {
                                 MVCxCheckBoxList list = (MVCxCheckBoxList)s;
