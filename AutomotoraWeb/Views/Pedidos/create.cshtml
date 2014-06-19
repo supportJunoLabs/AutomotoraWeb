@@ -1,0 +1,38 @@
+﻿@model DLL_Backend.Pedido
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidad + ": Agregar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+   
+    
+    <div class="espacio" />
+    
+    <fieldset>
+        <legend></legend>
+
+        @Html.Partial("_datosDetalle", Model)
+
+    </fieldset>
+    
+    <div class="espacio2"></div>
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Guardar"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+    </div>
+}
+
+@section Scripts {
+
+}
+
+

@@ -9,6 +9,7 @@ using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
+using AutomotoraWeb.Controllers.General;
 
 namespace AutomotoraWeb.Controllers.Sales
 {
@@ -21,12 +22,170 @@ namespace AutomotoraWeb.Controllers.Sales
             base.OnActionExecuting(filterContext);
             ViewBag.NombreEntidad = "Pedido";
             ViewBag.NombreEntidades = "Pedidos";
-            
+            ViewBag.Monedas = Moneda.Monedas;
+            ViewBag.Clientes = Cliente.Clientes();
+            ViewBag.Vendedores = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (usuario== null){
+                filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
+                return;
+            }
+            if (usuario.MultiSucursal) {
+                ViewBag.Sucursales = Sucursal.Sucursales;
+            } else {
+                List<Sucursal> listSucursal = new List<Sucursal>();
+                listSucursal.Add(usuario.Sucursal);
+                ViewBag.Sucursales = listSucursal;
+            }
         }
 
-        public ActionResult Index(){
-            return View();
+
+        //--------------------------METODOS PARA GESTION DE pedidos  -----------------------------
+        #region Gestion
+
+        public ActionResult Show() {
+            return View(_listaElementos());
         }
+
+        public ActionResult ListaGrilla() {
+            return PartialView("_listGrilla", _listaElementos());
+        }
+
+        public ActionResult Details(int id) {
+            ViewBag.SoloLectura = true;
+            return VistaElemento(id);
+        }
+
+        public ActionResult Create() {
+            Pedido ped = new Pedido();
+            //ped.Cliente = new Cliente();
+            //ped.Vendedor = new Vendedor();
+            ped.FechaPedido = DateTime.Now.Date;
+            return View(ped);
+        }
+
+        public ActionResult Edit(int id) {
+            return VistaElemento(id);
+        }
+
+        public ActionResult Delete(int id) {
+            ViewBag.SoloLectura = true;
+            return VistaElemento(id);
+        }
+
+        //-----------------------------------------------------------------------------------------------------
+
+
+        private ActionResult VistaElemento(int id) {
+            try {
+                Pedido td = _obtenerElemento(id);
+                //if (td.Cliente == null) td.Cliente = new Cliente();
+                //if (td.Vendedor == null) td.Vendedor = new Vendedor();
+                return View(td);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private Pedido _obtenerElemento(int id) {
+            Pedido td = new Pedido();
+            td.Codigo = id;
+            td.Consultar();
+            return td;
+        }
+
+        private List<Pedido> _listaElementos() {
+            return Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES);
+        }
+
+        //-----------------------------------------------------------------------------------------------------
+
+        [HttpPost]
+        public ActionResult Create(Pedido td) {
+
+            this.eliminarValidacionesIgnorables(td);
+            
+            if (ModelState.IsValid) {
+                try {
+                    td.Agregar();
+                    return RedirectToAction(BaseController.SHOW);
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(td);
+                }
+            }
+
+            return View(td);
+        }
+
+        //-----------------------------------------------------------------------------------------------------
+
+        [HttpPost]
+        public ActionResult Edit(Pedido td) {
+
+            this.eliminarValidacionesIgnorables(td);
+
+            if (ModelState.IsValid) {
+                try {
+                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                    string IP = HttpContext.Request.UserHostAddress;
+                    Usuario u = new Usuario();
+                    u.Username = userName;
+                    td.ModificarDatos(u, IP);
+                    return RedirectToAction(BaseController.SHOW);
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(td);
+                }
+            }
+
+            return View(td);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult Delete(Pedido td) {
+
+            this.eliminarValidacionesIgnorables(td);
+            ViewBag.SoloLectura = true;
+            if (ModelState.IsValid) {
+                try {
+                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                    string IP = HttpContext.Request.UserHostAddress;
+                    td.Eliminar(userName, IP);
+                    return RedirectToAction(BaseController.SHOW);
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(td);
+                }
+            }
+
+            return View(td);
+        }
+
+        private void eliminarValidacionesIgnorables(Pedido ped) {
+            //if (ped.Cliente.Codigo == 0) {
+            //    ped.Cliente = null;
+            //}
+            //if (ped.Vendedor.Codigo == 0) {
+            //    ped.Vendedor = null;
+            //}
+            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Costo.Moneda));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(ped.Sucursal));
+            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(ped.Cliente));
+            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(ped.Vendedor));
+        }
+
+        
+        #endregion
+
+
 
 
         //--------------------------METODOS PARA LISTADOS DE pedidos  -----------------------------

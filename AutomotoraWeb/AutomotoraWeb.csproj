@@ -1709,6 +1709,13 @@
     <Content Include="Views\Vehiculos\_popupGastos.cshtml" />
     <Content Include="Views\Vehiculos\_listDocumentos.cshtml" />
     <Content Include="Views\Vehiculos\_popupDocumentacion.cshtml" />
+    <Content Include="Views\Pedidos\show.cshtml" />
+    <Content Include="Views\Pedidos\_listGrilla.cshtml" />
+    <Content Include="Views\Pedidos\_datosDetalle.cshtml" />
+    <Content Include="Views\Pedidos\create.cshtml" />
+    <Content Include="Views\Pedidos\delete.cshtml" />
+    <Content Include="Views\Pedidos\details.cshtml" />
+    <Content Include="Views\Pedidos\edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
