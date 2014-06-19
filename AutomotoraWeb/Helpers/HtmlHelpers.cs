@@ -46,6 +46,7 @@ namespace AutomotoraWeb.Helpers {
             }
         }
 
+
         public static MvcHtmlString DdlOrDisplayFor<TModel, TProperty, TProperty1>(this HtmlHelper<TModel> htmlHelper,
            Expression<Func<TModel, TProperty>> expression_ddl, bool? soloLectura,
            Expression<Func<TModel, TProperty1>> expression_label,
@@ -62,7 +63,7 @@ namespace AutomotoraWeb.Helpers {
             }
         }
 
-
+ 
         public static MvcHtmlString TextAreaOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
             object htmlAttributes) {
@@ -261,8 +262,74 @@ namespace AutomotoraWeb.Helpers {
             return MvcHtmlString.Create(output);
         }
 
-     
+        public static MvcHtmlString DdlOrDisplayImporteFor<TModel>(this HtmlHelper<TModel> htmlHelper, 
+            Expression<Func<TModel, Importe>> expression, bool? soloLectura) {
+
+            Importe imp = null;
+            if (expression != null) {
+                try {
+                    Func<TModel, Importe> deleg = expression.Compile();
+                    var result = deleg(htmlHelper.ViewData.Model);
+                    imp = (Importe)result;
+                } catch (NullReferenceException) { }
+            }
+            if (imp == null) {
+                imp = new Importe(Moneda.MonedaDefault, 0);
+            }
+            var data = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+            string propertyName = data.PropertyName;
+            string controlName = propertyName.Replace(".", "");
+
+            bool escritura = ! (soloLectura ?? false);
+
+            if (escritura) {
+                var builder = new TagBuilder("select");
+                builder.Attributes["data-val"] = "true";
+                builder.Attributes["data-val-number"] = "El campo Codigo debe ser un número";
+                builder.Attributes["data-val-required"] = "El campo Codigo es obligatorio";
+                builder.Attributes["id"] = "ddl"+controlName+"Moneda";
+                builder.Attributes["name"] = propertyName+".Moneda.Codigo";
+                builder.Attributes["style"] = "width: 150px";
+                builder.Attributes["class"] = "valid";
+
+                StringBuilder opciones = new StringBuilder();
+                foreach (Moneda m in Moneda.Monedas) {
+                    TagBuilder optionBuilder = new TagBuilder("option");
+                    optionBuilder.MergeAttribute("value", m.Codigo.ToString());
+                    optionBuilder.InnerHtml = m.Nombre;
+                    if (m.Codigo == imp.Moneda.Codigo) {
+                        optionBuilder.MergeAttribute("selected", "selected");
+                    }
+                    opciones.Append(optionBuilder.ToString());
+                    builder.InnerHtml = opciones.ToString();
+                }
+                var output = builder.ToString(TagRenderMode.Normal);
+
+                var builder2 = new TagBuilder("input");
+                builder2.Attributes["data-val"] = "true";
+                builder2.Attributes["data-val-number"] = "El campo Monto debe ser un número";
+                builder2.Attributes["data-val-required"] = "El importe es requerido";
+                builder2.Attributes["id"] = "tx"+controlName+"Monto";
+                builder2.Attributes["name"] = propertyName+".Monto";
+                builder2.Attributes["type"] = "text";
+                builder2.Attributes["value"] = imp.Monto.ToString();
+                var output2 = builder2.ToString(TagRenderMode.Normal);
+
+                return MvcHtmlString.Create(output + "  " + output2);
+            } else {
+
+                var builder3= new TagBuilder("input");
+                builder3.Attributes["data-val"] = "true";
+                builder3.Attributes["id"] = "hdCosto";
+                builder3.Attributes["type"] = "hidden";
+                builder3.Attributes["value"] = imp.ToString();
+                var output3 = builder3.ToString(TagRenderMode.Normal);
+
+                return MvcHtmlString.Create( imp.ToString()+" "+output3);
+            }
+        }
 
 
+   
     }
 }
