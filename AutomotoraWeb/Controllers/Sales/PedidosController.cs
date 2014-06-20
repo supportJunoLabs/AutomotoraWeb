@@ -17,6 +17,7 @@ namespace AutomotoraWeb.Controllers.Sales
     {
 
         public static string CONTROLLER = "Pedidos";
+        public const string RECIBIR = "Recibir";
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
@@ -69,6 +70,27 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         public ActionResult Delete(int id) {
+            ViewBag.SoloLectura = true;
+            return VistaElemento(id);
+        }
+
+        public ActionResult VerSenia(int id) {
+            ViewBag.SoloLectura = true;
+            Pedido ped = new Pedido();
+            ped.Codigo = id;
+            ped.Consultar();
+            if (ped.Seniado) {
+                Senia s = ped.ObtenerSenia();
+                if (s != null) {
+                    return RedirectToAction(BaseController.DETAILS, SeniasController.CONTROLLER, new { id = s.Codigo });
+                }
+                return RedirectToAction(BaseController.DETAILS, new { id = id });
+            }
+
+            return RedirectToAction(BaseController.DETAILS, new { id = id });
+        }
+
+        public ActionResult Recibir(int id) {
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
         }
@@ -170,16 +192,17 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         private void eliminarValidacionesIgnorables(Pedido ped) {
-            //if (ped.Cliente.Codigo == 0) {
-            //    ped.Cliente = null;
-            //}
-            //if (ped.Vendedor.Codigo == 0) {
-            //    ped.Vendedor = null;
-            //}
             this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Costo.Moneda));
             this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(ped.Sucursal));
             this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(ped.Cliente));
             this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(ped.Vendedor));
+
+            if (!ped.Reservado) {
+                //Lo tengo que sacar porque las ddls siempre el ponen un valor aunque no corresponda
+                ped.Cliente = null;
+                ped.Vendedor = null;
+                ped.FechaReserva = null;
+            }
         }
 
         

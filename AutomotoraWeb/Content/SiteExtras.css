@@ -22,12 +22,35 @@ input[type="checkbox"] {
     text-align: right;
 }
 
-.editor-field-checkbox {
+.renglon-alto {
     height:40px; 
     vertical-align:middle;
 }
 
-.editor-field-label {
-    height:40px; 
-    vertical-align:middle;
+select.mini {
+  width: 60px;
+}
+select.small {
+  width: 90px;
+}
+select.medium {
+  width: 150px;
+}
+select.large {
+  width: 210px;
+}
+select.xlarge {
+  width: 270px;
+}
+select.xxlarge {
+  width: 530px;
+}
+
+a.visited.hipervinculo {
+    color: #A1A1A1;
+    text-decoration: underline;
+}
+
+a.hipervinculo {
+    text-decoration: underline;
 }

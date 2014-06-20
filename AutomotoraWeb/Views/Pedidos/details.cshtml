@@ -1,5 +1,6 @@
 ﻿@model DLL_Backend.Pedido
 @using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Sales;
 
 @{
     ViewBag.Title = ViewBag.NombreEntidad + ": Consulta";
@@ -23,6 +24,10 @@
     <div class="espacio2"></div>
     
     <div class="btn-toolbar">
+        @if (Model.EstadoRecibible) { 
+        @(Html.Bootstrap().ActionLinkButton("Recibir", PedidosController.RECIBIR).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        
+        }
         @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
         @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
         @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
@@ -32,5 +37,6 @@
 
 
 @section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/PedidosGestion.js"></script>
 }
 

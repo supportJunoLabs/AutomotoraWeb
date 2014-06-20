@@ -1,10 +1,9 @@
 ﻿@model DLL_Backend.Pedido
-@using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.General;
 @using AutomotoraWeb.Controllers.Sales;
 
 @{
-    ViewBag.Title = ViewBag.NombreEntidad + ": Modificar";
+    ViewBag.Title = ViewBag.NombreEntidad + ": Recibir";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -18,21 +17,21 @@
         <legend></legend>
         @Html.HiddenFor(model => model.Codigo)
 
-        @Html.Partial("_datosDetalle", Model)
+        RECEPCION DE PEDIDOS SIN IMPLEMENTAR
 
     </fieldset>
     
+    <div class="espacio2"></div>
+    
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
-        @if (Model.EstadoRecibible) { 
-            @(Html.Bootstrap().ActionLinkButton("Recibir", PedidosController.RECIBIR).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
-        }
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+        @(Html.Bootstrap().ActionLinkButton("Recibir", PedidosController.RECIBIR).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
     </div>
-    <div class="clear-both"></div>
+
 }
 
 
 @section Scripts {
     <script type="text/javascript" src="/scripts/AutomotoraWeb/PedidosGestion.js"></script>
 }
+

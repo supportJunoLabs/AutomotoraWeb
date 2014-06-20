@@ -1560,6 +1560,7 @@
     <Content Include="Content\Images\vssver2.scc" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\AutomotoraWeb\PedidosGestion.js" />
     <Content Include="Scripts\AutomotoraWeb\VentasListado.js" />
     <Content Include="Scripts\AutomotoraWeb\SeniasListado.js" />
     <Content Include="Scripts\AutomotoraWeb\PedidosListado.js" />
@@ -1716,6 +1717,9 @@
     <Content Include="Views\Pedidos\delete.cshtml" />
     <Content Include="Views\Pedidos\details.cshtml" />
     <Content Include="Views\Pedidos\edit.cshtml" />
+    <Content Include="Views\Senias\details.cshtml" />
+    <Content Include="Views\Ventas\details.cshtml" />
+    <Content Include="Views\Pedidos\recibir.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
