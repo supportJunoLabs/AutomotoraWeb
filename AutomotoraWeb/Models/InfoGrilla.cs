@@ -31,6 +31,32 @@ namespace AutomotoraWeb.Models {
         public string ControladorDobleClick { get; set; }
         public string AccionDobleClick { get; set; }
 
+        private bool usarBotones = true;
+        public bool UsarBotones {
+            get { return usarBotones; }
+            set { usarBotones = value; }
+        }
+
+        private bool botonesAjax = false;
+        public bool BotonesAjax {  //indica si usar lso botones ajax o los normales en el grupo principal
+            get { return botonesAjax; }
+            set { botonesAjax = value; }
+        }
+
+        //-------------------- Conjunto de acciones secundarias---------------------------
+
+        public string TextoAcciones2 { get; set; }
+        private bool botonesAjax2 = false;  //por ahora queda hecho solo para botones comunes
+        //public bool BotonesAjax2 {  //indica si usar lso botones ajax o los normales en el grupo secundario
+        //    get { return botonesAjax2; }
+        //    set { botonesAjax2 = value; }
+        //}
+        public List<BotonGrilla> Botones2 { get; set; } //lista de botones del grupo secundario,
+
+        //---------------------------------------------------------------------------------
+
+
+
         public List<string> HiddenColumns { get; set; } //columnas que no hay que mostrar
         
         public Dictionary<string, int> TrunkColumns { get; set; } //columnas que hay que truncar (o viene en visibleColumns)
@@ -42,21 +68,27 @@ namespace AutomotoraWeb.Models {
         //public List<string> VisibleColumns {get; set;} 
 
         public List<BotonGrilla> Botones { get; set; } 
-            //Si viene en null van los botones por defecto
-            //Si viene vacio pero no nulo, NO van botones (recorre la coleccion vacia y no agrega nada)
+            //Refiere a los botones con imagen del grupo 1
+            //Si viene en null o vacia van los botones por defecto o nada segun el valor de ConBotones.
             //Si viene con botones, van los botones que vienen.
 
-        public bool BotonesAjax { get; set; }
 
-        public void SinBotones() {
-            this.Botones = new List<BotonGrilla>(); //pone a proposito lista vacia.
+        public void SinBotones() {  //para el grupo principal
+            UsarBotones = false;
         }
 
-        public void AddButton (BotonGrilla b){
+        public void AddButton (BotonGrilla b){  //agrega botones al grupo principal
             if (Botones==null){
                 Botones = new List<BotonGrilla>();
             }
             Botones.Add(b);
+        }
+
+        public void AddButton2(BotonGrilla b) { //agrega botones al grupo secundario
+            if (Botones2 == null) {
+                Botones2 = new List<BotonGrilla>();
+            }
+            Botones2.Add(b);
         }
 
         public void  AddHiddenColumn(string name){

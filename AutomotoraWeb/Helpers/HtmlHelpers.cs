@@ -40,8 +40,8 @@ namespace AutomotoraWeb.Helpers {
             } else {
 
                 return MvcHtmlString.Create(
-                    htmlHelper.DisplayFor(expression, htmlAttributes).ToString() + 
-                    htmlHelper.HiddenFor(expression).ToString()
+                    htmlHelper.DisplayFor(expression, htmlAttributes).ToString() +
+                    htmlHelper.HiddenFor(expression, htmlAttributes).ToString()
                 );
             }
         }
@@ -58,7 +58,7 @@ namespace AutomotoraWeb.Helpers {
             } else {
                 return MvcHtmlString.Create(
                      htmlHelper.DisplayFor(expression_label, htmlAttributes) .ToString() +
-                      htmlHelper.HiddenFor(expression_ddl).ToString()
+                      htmlHelper.HiddenFor(expression_ddl, htmlAttributes).ToString()
                 );
             }
         }
@@ -72,30 +72,35 @@ namespace AutomotoraWeb.Helpers {
             } else {
                 return MvcHtmlString.Create(
                      htmlHelper.DisplayFor(expression, htmlAttributes).ToString() +
-                      htmlHelper.HiddenFor(expression).ToString()
+                      htmlHelper.HiddenFor(expression, htmlAttributes).ToString()
                 );
             }
         }
 
 
         public static MvcHtmlString CheckBoxOrDisplayFor<TModel>(this HtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, bool>> expression, bool? soloLectura) {
+            Expression<Func<TModel, bool>> expression, bool? soloLectura, object htmlAttributes = null) {
             if (!(soloLectura ?? false)) {
-                return htmlHelper.CheckBoxFor(expression);
+                return htmlHelper.CheckBoxFor(expression, htmlAttributes);
             } else {
-                bool valor = false;
-                if (expression != null) {
-                    try {
-                        Func<TModel, bool> deleg = expression.Compile();
-                        var result = deleg(htmlHelper.ViewData.Model);
-                        valor = (bool)result;
-                    } catch (NullReferenceException) { }
-                }
-                if (valor) {
-                    return MvcHtmlString.Create("SI" + htmlHelper.HiddenFor(expression).ToString());
-                } else {
-                    return MvcHtmlString.Create("NO" + htmlHelper.HiddenFor(expression).ToString());
-                }
+                return MvcHtmlString.Create(
+                     htmlHelper.DisplayFor(expression, htmlAttributes).ToString() +
+                     htmlHelper.HiddenFor(expression, htmlAttributes).ToString()
+                 );
+
+                //bool valor = false;
+                //if (expression != null) {
+                //    try {
+                //        Func<TModel, bool> deleg = expression.Compile();
+                //        var result = deleg(htmlHelper.ViewData.Model);
+                //        valor = (bool)result;
+                //    } catch (NullReferenceException) { }
+                //}
+                //if (valor) {
+                //    return MvcHtmlString.Create("SI" + htmlHelper.HiddenFor(expression, htmlAttributes).ToString());
+                //} else {
+                //    return MvcHtmlString.Create("NO" + htmlHelper.HiddenFor(expression, htmlAttributes).ToString());
+                //}
             }
         }
 
@@ -107,7 +112,7 @@ namespace AutomotoraWeb.Helpers {
             } else {
                 return MvcHtmlString.Create(
                     htmlHelper.DisplayFor(expression, format, htmlAttributes).ToString() +
-                    htmlHelper.HiddenFor(expression).ToString()
+                    htmlHelper.HiddenFor(expression, htmlAttributes).ToString()
                 );
             }
         }
@@ -120,13 +125,37 @@ namespace AutomotoraWeb.Helpers {
             } else {
                 return MvcHtmlString.Create(
                    htmlHelper.DisplayFor(expression, htmlAttributes).ToString() +
-                   htmlHelper.HiddenFor(expression).ToString()
+                   htmlHelper.HiddenFor(expression, htmlAttributes).ToString()
                );
             }
         }
 
 
         //--------------------------------------------------------------------------------
+
+
+        public static MvcHtmlString BotonTexto(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip, string texto) {
+            //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
+            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro.
+
+
+            UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            String url = urlHelper.Action(accion, controlador, parametros);
+
+            //crear la div que va dentro del link anchor
+            TagBuilder tagBuilder = new TagBuilder("a");
+            if (!string.IsNullOrWhiteSpace(clase)){
+                tagBuilder.MergeAttribute("class", clase);
+            }
+            if (!string.IsNullOrWhiteSpace(tooltip)) {
+                tagBuilder.MergeAttribute("title", tooltip);
+            }
+            tagBuilder.InnerHtml=texto;
+            tagBuilder.MergeAttribute("href", url);
+            string sa = tagBuilder.ToString(TagRenderMode.Normal);
+            return MvcHtmlString.Create(sa);
+        }
+
 
         public static MvcHtmlString BotonImagen(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
@@ -180,7 +209,6 @@ namespace AutomotoraWeb.Helpers {
         public static MvcHtmlString BotonAjax(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
             //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
-
 
             UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
             String url = urlHelper.Action(accion, controlador, parametros);
@@ -320,12 +348,21 @@ namespace AutomotoraWeb.Helpers {
 
                 var builder3= new TagBuilder("input");
                 builder3.Attributes["data-val"] = "true";
-                builder3.Attributes["id"] = "hdCosto";
+                builder3.Attributes["id"] = "hd"+controlName+"Moneda";
+                builder3.Attributes["name"] = propertyName + ".Moneda.Codigo";
                 builder3.Attributes["type"] = "hidden";
-                builder3.Attributes["value"] = imp.ToString();
+                builder3.Attributes["value"] = imp.Moneda.Codigo.ToString();
                 var output3 = builder3.ToString(TagRenderMode.Normal);
 
-                return MvcHtmlString.Create( imp.ToString()+" "+output3);
+                var builder4 = new TagBuilder("input");
+                builder4.Attributes["data-val"] = "true";
+                builder4.Attributes["id"] = "hd" + controlName + "Monto";
+                builder4.Attributes["name"] = propertyName + ".Monto";
+                builder4.Attributes["type"] = "hidden";
+                builder4.Attributes["value"] = imp.Monto.ToString();
+                var output4 = builder4.ToString(TagRenderMode.Normal);
+
+                return MvcHtmlString.Create( imp.ToString()+" "+output3+ " "+output4);
             }
         }
 
