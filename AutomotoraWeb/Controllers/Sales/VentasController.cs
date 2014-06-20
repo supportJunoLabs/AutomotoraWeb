@@ -29,6 +29,29 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
 
+        public ActionResult Details(int id) {
+            ViewBag.SoloLectura = true;
+            return VistaElemento(id);
+        }
+
+        private ActionResult VistaElemento(int id) {
+            try {
+                Venta td = _obtenerElemento(id);
+                return View(td);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private Venta _obtenerElemento(int id) {
+            Venta td = new Venta();
+            td.Codigo = id;
+            td.Consultar();
+            return td;
+        }
+
         //--------------------------METODOS PARA LISTADOS DE Ventas  -----------------------------
 
         #region Listados

@@ -28,6 +28,28 @@ namespace AutomotoraWeb.Controllers.Sales
             return View();
         }
 
+        public ActionResult Details(int id) {
+            ViewBag.SoloLectura = true;
+            return VistaElemento(id);
+        }
+
+        private ActionResult VistaElemento(int id) {
+            try {
+                Senia td = _obtenerElemento(id);
+                return View(td);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private Senia _obtenerElemento(int id) {
+            Senia td = new Senia();
+            td.Codigo = id;
+            td.Consultar();
+            return td;
+        }
 
         //--------------------------METODOS PARA LISTADOS DE senias  -----------------------------
 
