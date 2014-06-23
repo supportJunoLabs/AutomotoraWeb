@@ -3,6 +3,8 @@
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Sales.Maintenance;
 @using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
 
 @{
     InfoGrilla ig = new InfoGrilla();
@@ -22,6 +24,8 @@
 
     ViewBag.InfoGrilla = ig;
     ig.DobleClick = true;
+    ig.ControladorDobleClick = TipoDocumento.CONTROLLER;
+    ig.AccionDobleClick = BaseController.DETAILS;
 }
 
 @Html.Partial("_generalGrid", Model)

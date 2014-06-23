@@ -1,0 +1,49 @@
+﻿@model List<DLL_Backend.Pedido>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Marca", Ancho=150},
+            new ColumnaGrilla {Campo="Modelo", Ancho=150},
+            new ColumnaGrilla {Campo="Color", Ancho=100},
+            new ColumnaGrilla {Campo="FechaPedido", Ancho=80, Titulo = "F.Pedido"},
+            new ColumnaGrilla {Campo="FechaEsperado", Ancho=80, Titulo = "F.Esperado"},
+            new ColumnaGrilla {Campo="Costo", Ancho=150},
+            new ColumnaGrilla {Campo="Sucursal", Ancho=170,
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"},
+            new ColumnaGrilla {Campo="FechaReserva", Ancho=80, Titulo="F.Reserva"},
+            new ColumnaGrilla {Campo="Seniado", Ancho=74},
+            new ColumnaGrilla {Campo="Vendedor", Ancho=100,
+                   Hipervinculo=true, Haccion="details", Hcontrolador="Vendedores", HCampoParametro="Vendedor.Codigo"},
+            new ColumnaGrilla {Campo="Cliente", Ancho=150,
+                Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Cliente.Codigo"},
+            //new ColumnaGrilla {Campo="FechaRecibido", Ancho=80, Titulo = "F.Recibido"},
+            //new ColumnaGrilla {Campo="Vehiculo", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+            //        Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="Vehiculo.Codigo"},
+            //new ColumnaGrilla {Campo="DescripcionEstado", Ancho=100, Titulo="Estado"},                    
+            new ColumnaGrilla {Campo="Observaciones", Ancho=250, LargoMax=70}};
+            
+        
+    ig.NameGrid = "grilla";
+    ig.Controller = PedidosController.CONTROLLER;
+    ig.ActionCallbackRoute = "listaGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Pedido.PedidoMD);
+    
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = PedidosController.CONTROLLER;
+    ig.AccionDobleClick = BaseController.DETAILS;
+
+    ig.TextoAcciones2 = "Recibir";
+    ig.AddButton2(new BotonGrilla(PedidosController.RECIBIR, PedidosController.CONTROLLER, "hipervinculo", "Recibir Pedido", "Recibir", 50));
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+  

@@ -34,6 +34,7 @@
 
     List<MVCxGridViewColumn> listGridViewsColumn = new List<MVCxGridViewColumn>();
     MVCxGridViewColumn listGridViewsBotones = null;
+    MVCxGridViewColumn listGridViewsBotones2 = null;
 
     //------------- COLUMNAS POR REFLECTION ------------------------------------
 
@@ -41,7 +42,7 @@
     if (ig.VisibleColumns == null) {
         ig.VisibleColumns = new List<ColumnaGrilla>();
 
-        //obtengo los campos por refletion
+        //obtengo los campos por reflection
         PropertyInfo[] propertiesinfo = ig.TypeOfModel.GetProperties();
         foreach (PropertyInfo propertyInfo in propertiesinfo) {
             if (ig.HiddenColumns == null || !ig.HiddenColumns.Contains(propertyInfo.Name)) {
@@ -70,7 +71,7 @@
 
             //Buscar la propiedad asociada para obtener sus datos:
             DisplayAttribute displayAttribute = null;
-            
+
             PropertyInfo propertyInfo = null;
             foreach (var x in propertiesinfo) {
                 if (x.Name == cg.Campo) {
@@ -78,11 +79,11 @@
                     break; //salir del foreach
                 }
             }
-            
+
             if (propertyInfo != null) {
                 //Acceder al data annotation de la columna
                 object[] arrayDisplayAttribute = propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), true);
-            
+
                 if (arrayDisplayAttribute != null && arrayDisplayAttribute.Length > 0) {
                     displayAttribute = (DisplayAttribute)arrayDisplayAttribute[0];
                 }
@@ -136,10 +137,10 @@
                         break;
                 }
             } else { //Si no se especifica, usar la alineacion por defecto.
-                if (GeneralUtils.isDateTime(propertyInfo,cg)) {
+                if (GeneralUtils.isDateTime(propertyInfo, cg)) {
                     gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Center;
                 }
-                if (GeneralUtils.isImporte(propertyInfo, cg) || GeneralUtils.isInteger(propertyInfo,cg)) {
+                if (GeneralUtils.isImporte(propertyInfo, cg) || GeneralUtils.isInteger(propertyInfo, cg)) {
                     gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Right;
                 }
             }
@@ -220,21 +221,22 @@
 
     //---------------------- COLUMNA BOTONES ------------------------------------------------
 
-    if (ig.Botones == null || ig.Botones.Count > 0) { //Si viene nulo van los por defecto, si viene con algo lo especificado (que puede ser nada)
+    if (ig.UsarBotones) {
+
         listGridViewsBotones = new MVCxGridViewColumn();
 
         listGridViewsBotones.Caption = "Acciones";
         listGridViewsBotones.CellStyle.HorizontalAlign = HorizontalAlign.Center;
 
-        if (ig.Botones == null) {//van los 3 por defecto
+        if (ig.Botones == null || ig.Botones.Count == 0) {//van los 3 por defecto porque dice UsarBotones (if anterior)
             listGridViewsBotones.Width = Unit.Pixel(90);
         } else {
-            listGridViewsBotones.Width = Unit.Pixel(30 * ig.Botones.Count);
+            listGridViewsBotones.Width = Unit.Pixel(30 * ig.Botones.Count); //vienen botones, ver la cantidad
         }
 
         listGridViewsBotones.SetDataItemTemplateContent(c => {
             var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
-            if (ig.Botones == null) {
+            if (ig.Botones == null || ig.Botones.Count == 0) {  //meter a prepo los botones por defecto, ajax o comunes
                 if (ig.BotonesAjax) {
                     ViewContext.Writer.WriteLine(@Html.BotonAjax("details", "", id, "boton-consultar-mf", "Consultar").ToHtmlString());
                     ViewContext.Writer.WriteLine(@Html.BotonAjax("edit", "", id, "boton-editar-mf", "Editar").ToHtmlString());
@@ -249,15 +251,44 @@
                     if (b is BotonAjaxGrilla) {
                         ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen(b.Accion, b.Controlador, (int)id, b.Clase, b.Tooltip).ToHtmlString());
                     } else {
-                        ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, id, b.Clase, b.Tooltip).ToHtmlString());
+                        ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());
                     }
-                    
+
                 }
             }
         });
     }
-        
+    if (ig.Botones2 != null && ig.Botones2.Count > 0) {
+        //Hay grupo de botones secundario
+        listGridViewsBotones2 = new MVCxGridViewColumn();
+        if (string.IsNullOrWhiteSpace(ig.TextoAcciones2)) {
+            listGridViewsBotones2.Caption = "Acciones";
+        } else {
+            listGridViewsBotones2.Caption = ig.TextoAcciones2;
+        }
+        int tot = 0;
+        foreach (var b in ig.Botones2) {
+            if (b.Ancho <= 0) {
+                tot += 30;
+            } else {
+                tot += b.Ancho;
+            }
+        }
+        listGridViewsBotones2.Width = Unit.Pixel(tot); //calcular tamanio total de los botones (30 si vino vacio el ancho)
+        listGridViewsBotones2.SetDataItemTemplateContent(c => {
+            var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
+            foreach (BotonGrilla b in ig.Botones2) {
+                if (b.Tipo == BotonGrilla.TIPO.IMAGEN) {
+                    ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, id, b.Clase, b.Tooltip).ToHtmlString());
+                } else {
+                    ViewContext.Writer.WriteLine(@Html.BotonTexto(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip, b.Texto).ToHtmlString());
+                }
+
+            }
+        });
+    }
 }
+
 
 @{
     //--------------------------------------GENERAR LA GRILLA ---------------------------------------------    
@@ -315,8 +346,16 @@
             settings.Columns.Add(listGridViewsBotones);
         }
 
+        if (ig.AccionesAlComienzo && listGridViewsBotones2 != null) {
+            settings.Columns.Add(listGridViewsBotones2);
+        }
+
         foreach (var c in listGridViewsColumn) {
             settings.Columns.Add(c);
+        }
+
+        if (!ig.AccionesAlComienzo && listGridViewsBotones2 != null) {
+            settings.Columns.Add(listGridViewsBotones2);
         }
         if (!ig.AccionesAlComienzo && listGridViewsBotones != null) {
             settings.Columns.Add(listGridViewsBotones);

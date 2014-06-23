@@ -1,0 +1,145 @@
+﻿@model DLL_Backend.Pedido
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@Html.Hidden("hd_soloLectura", ((bool?)ViewBag.SoloLectura) ?? false);
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Marca)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Marca, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Marca)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Modelo)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Modelo, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Modelo)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Color)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Color, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Color)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.FechaPedido)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.TextBoxOrdisplayFor(model => model.FechaPedido, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+    @Html.ValidationMessageFor(model => model.FechaPedido)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.FechaEsperado)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.TextBoxOrdisplayFor(model => model.FechaEsperado, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+    @Html.ValidationMessageFor(model => model.FechaEsperado)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Sucursal)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, (bool?)ViewBag.SoloLectura,
+                model => model.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
+    @Html.ValidationMessageFor(model => model.Sucursal)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Costo)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.DdlOrDisplayImporteFor(model=>model.Costo, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.Costo.Monto)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.DescripcionEstado)
+</div>
+<div  class="@((((bool?)ViewBag.SoloLectura)??false)?"":"renglon-alto")" >
+    @Html.EditorOrDisplayFor(model => model.DescripcionEstado, true)
+</div>
+<div class="clear-both"></div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Reservado)
+    </div>
+    <div class="@((((bool?)ViewBag.SoloLectura)??false)?"":"renglon-alto")" >
+        @Html.CheckBoxOrDisplayFor(model => model.Reservado, (bool?)ViewBag.SoloLectura??false||Model.Seniado, new { id="cb_reservado"})
+    </div>
+    <div class="clear-both"></div>
+
+<div id="div_reserva">
+
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.Cliente)
+    </div>
+    <div class="editor-field editor-field-xlarge xxlarge">
+        @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, (bool?)ViewBag.SoloLectura??false||Model.Seniado,
+                model => model.Cliente.Nombre,
+                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null, new { id = "ddlClientes", @class="xxlarge" })
+        @Html.ValidationMessageFor(model => model.Cliente)
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.Vendedor)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, (bool?)ViewBag.SoloLectura??false||Model.Seniado,
+                model => model.Vendedor.Nombre,
+                new SelectList(ViewBag.Vendedores, "Codigo", "Nombre"), null, new { id = "ddlVendedores", @class="xxlarge" })
+        @Html.ValidationMessageFor(model => model.Vendedor)
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.FechaReserva)
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.TextBoxOrdisplayFor(model => model.FechaReserva, (bool?)ViewBag.SoloLectura??false||Model.Seniado, 
+                                                                "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+        @Html.ValidationMessageFor(model => model.FechaReserva)
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Seniado)
+    </div>
+    <div  class="@((((bool?)ViewBag.SoloLectura)??false)?"":"renglon-alto") floatLeft">
+        @Html.EditorOrDisplayFor(model => model.Seniado, true)
+        
+    </div>
+    <div class="floatLeft"  style="padding-left:20px; display:@(Model.Seniado?"block":"none")">
+        @Html.ActionLink("Ver Seña", "VerSenia", new { id = Model.Codigo })
+    </div>
+    <div class="clear-both"></div>
+
+</div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Observaciones)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+    @Html.ValidationMessageFor(model => model.Observaciones)
+</div>
+<div class="clear-both"></div>
+
+<div class="espacio2"></div>
