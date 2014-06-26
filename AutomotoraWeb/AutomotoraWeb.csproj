@@ -235,7 +235,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Bank\ChequesListController.cs" />
     <Compile Include="Controllers\Bank\Maintenance\CuentasBancariasController.cs" />
+    <Compile Include="Controllers\Financing\ConsultasFinController.cs" />
     <Compile Include="Controllers\Financing\Maintenance\FinancistasController.cs" />
     <Compile Include="Controllers\Sales\DocumentacionController.cs" />
     <Compile Include="Controllers\Sales\SeniasController.cs" />
@@ -276,6 +278,7 @@
     <Compile Include="Models\ListadoPedidosModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />
+    <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\Listados\DXListadoVentas.cs">
@@ -294,6 +297,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Listados\DXListadoDocumentacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXSituacionCliente.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportClientes.cs">
@@ -1561,6 +1567,7 @@
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\PedidosGestion.js" />
+    <Content Include="Scripts\AutomotoraWeb\SitCliente.js" />
     <Content Include="Scripts\AutomotoraWeb\VentasListado.js" />
     <Content Include="Scripts\AutomotoraWeb\SeniasListado.js" />
     <Content Include="Scripts\AutomotoraWeb\PedidosListado.js" />
@@ -1720,6 +1727,16 @@
     <Content Include="Views\Senias\details.cshtml" />
     <Content Include="Views\Ventas\details.cshtml" />
     <Content Include="Views\Pedidos\recibir.cshtml" />
+    <Content Include="Views\ConsultasFin\SitCliente.cshtml" />
+    <Content Include="Views\ConsultasFin\_sitCliente.cshtml" />
+    <Content Include="Views\ConsultasFin\_sitClienteCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_sitClienteVales.cshtml" />
+    <Content Include="Views\ConsultasFin\_sitClienteCheques.cshtml" />
+    <Content Include="Views\ConsultasFin\ConsultaVale.cshtml" />
+    <Content Include="Views\ConsultasFin\ConsultaFinanciacion.cshtml" />
+    <Content Include="Views\ChequesList\ConsultaCheque.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportSitCliente.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportSitCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1758,6 +1775,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoDocumentacion.resx">
       <DependentUpon>DXListadoDocumentacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXSituacionCliente.resx">
+      <DependentUpon>DXSituacionCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportClientes.resx">
       <DependentUpon>DXReportClientes.cs</DependentUpon>

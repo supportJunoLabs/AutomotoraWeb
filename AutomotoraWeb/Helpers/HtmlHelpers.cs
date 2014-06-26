@@ -249,14 +249,18 @@ namespace AutomotoraWeb.Helpers {
 
 
             bool isRequired = false;
-            isRequired= metadata.IsRequired;
-                
-            //if (metadata.ContainerType != null) {
-            //    isRequired = metadata.ContainerType.GetProperty(metadata.PropertyName)
-            //                    .GetCustomAttributes(typeof(RequiredAttribute), false)
-            //                    .Length == 1;
-            //}
 
+            if (metadata.ModelType.Equals(true.GetType())) {//para los boolean que van con checkbox no le pongo * nunca
+                isRequired = false;
+            } else {
+                isRequired = metadata.IsRequired;
+            }
+
+            //if ((metadata.ModelType.IsValueType && metadata.ModelType.GetCustomAttributes(typeof(RequiredAttribute), true).Any()) ||
+            //      (!metadata.ModelType.IsValueType && metadata.IsRequired)) {
+            //        isRequired = true;
+            //}
+       
             TagBuilder tag = new TagBuilder("label");
             tag.Attributes.Add(
                 "for",
