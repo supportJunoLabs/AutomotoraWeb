@@ -54,3 +54,35 @@ a.visited.hipervinculo {
 a.hipervinculo {
     text-decoration: underline;
 }
+
+.label-mini  {
+    width: 60px;
+}
+
+.label-small  {
+    width: 120px;
+}
+
+.label-medium {
+    width: 150px;
+}
+
+.label-large {
+    width: 250px;
+}
+
+.label-xlarge {
+    width: 420px;
+}
+
+.label-xxlarge  {
+    width: 530px;
+}
+
+.display-label-small {
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+    width: 120px;
+}

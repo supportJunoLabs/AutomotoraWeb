@@ -1,6 +1,7 @@
 ﻿@model DLL_Backend.Cliente
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
+@using AutomotoraWeb.Models;
 
 @{
     ViewBag.Title = "Consulta Situación Cliente";
@@ -33,7 +34,12 @@
 }
 
 <div id="divListado">
-    @Html.Partial("_sitCliente", Model)
+    @{
+        SituacionCliente sit = new SituacionCliente();
+        sit.generarSituacion(Model);
+        }
+
+    @Html.Partial("_sitCliente", sit)
 </div>
 
 @section Scripts {

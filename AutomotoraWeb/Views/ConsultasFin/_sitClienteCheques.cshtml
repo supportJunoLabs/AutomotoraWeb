@@ -1,4 +1,4 @@
-﻿@model DLL_Backend.Cliente
+﻿@model AutomotoraWeb.Models.SituacionCliente
 @using System.Web.UI.WebControls;
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.General;
@@ -36,4 +36,13 @@
     ViewBag.InfoGrilla = ig;
 }
 
-@Html.Partial("_generalGrid", Model.ChequesPendientesNoFinalizados())
+@Html.Partial("_generalGrid", Model.Cheques)
+
+<div class="clear-both"></div>
+<div style="padding-top: 20px">
+    <div class="floatLeft label-large">
+        <div class="display-label"> Total Cheques: </div> 
+        @Html.DisplayFor(m => m.TotalCheques.ImporteTexto)
+    </div>
+</div>
+<div class="clear-both"></div>

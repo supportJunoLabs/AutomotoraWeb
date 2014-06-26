@@ -1,5 +1,10 @@
-﻿@model DLL_Backend.Cliente
+﻿@model AutomotoraWeb.Models.SituacionCliente
 @using AutomotoraWeb.Helpers;
+
+
+<div>
+    Riesgo Cliente: @Html.DisplayFor(m=>m.TotalDeuda.ImporteTexto)
+</div>
 
 <div class="well" style="margin-top: 40px; width: 1000px; height: 1100px;">
     <ul class="nav nav-tabs">

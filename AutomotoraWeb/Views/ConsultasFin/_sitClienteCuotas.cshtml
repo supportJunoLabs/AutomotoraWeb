@@ -1,10 +1,11 @@
-﻿@model DLL_Backend.Cliente
+﻿@model AutomotoraWeb.Models.SituacionCliente
 @using System.Web.UI.WebControls;
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.General;
 @using AutomotoraWeb.Controllers.Financing;
 @using AutomotoraWeb.Controllers.Sales;
 @using AutomotoraWeb.Models;
+
 
 @{
     InfoGrilla ig = new InfoGrilla();
@@ -19,8 +20,8 @@
             new ColumnaGrilla {Campo="ImporteCobrado", Ancho=150, Titulo="Pago"},
             new ColumnaGrilla {Campo="FechaCobro", Ancho=80, Titulo="F.Pago"}
     };
-            
-        
+
+
     ig.NameGrid = "grilla_cuotas";
     ig.Controller = ConsultasFinController.CONTROLLER;
     ig.ActionCallbackRoute = "GrillaCuotasCliente";
@@ -29,7 +30,7 @@
 
     ig.AccionesAlComienzo = true;
     ig.AddButton(new BotonGrilla("ConsultaFinanciacion", ConsultasFinController.CONTROLLER, "boton-consultar-mf", "Consulta Financiacion"));
-    
+
     ig.DobleClick = true;
     ig.ControladorDobleClick = ConsultasFinController.CONTROLLER;
     ig.AccionDobleClick = "ConsultaFinanciacion";
@@ -37,4 +38,25 @@
     ViewBag.InfoGrilla = ig;
 }
 
-@Html.Partial("_generalGrid", Model.CuotasPendientesNoFinalizadas())
+@Html.Partial("_generalGrid", Model.Cuotas)
+
+<div class="clear-both"></div>
+<div style="padding-top: 20px">
+    <div class="floatLeft label-large">
+        <div class="display-label-small"> Total Cuotas: </div> 
+        @Html.DisplayFor(m => m.TotalCuotas.ImporteTexto)
+
+    </div>
+    <div class="floatLeft label-large">
+         <div class="display-label-small"> Pago Cuotas: </div>
+        @Html.DisplayFor(m => m.TotalPagoCuotas.ImporteTexto)
+
+    </div>
+    <div class="floatLeft label-large">
+         <div class="display-label-small"> Saldo Cuotas: </div>
+        @Html.DisplayFor(m => m.TotalSaldoCuotas.ImporteTexto)
+
+    </div>
+</div>
+<div class="clear-both"></div>
+

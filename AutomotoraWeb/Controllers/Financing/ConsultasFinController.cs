@@ -32,6 +32,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             return c;
         }
 
+
+        //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult SitCliente(int? idCliente) {
             Cliente c = _consultarCliente(idCliente);
             return View(c);
@@ -39,6 +41,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
 
         [HttpPost]
+        //se invoca desde el boton actualizar e imprimir. Devuelve la pagina completa
         public ActionResult SitCliente(Cliente model, string btnSubmit) {
             int? idCliente = model.Codigo;
             Cliente c = _consultarCliente(idCliente);
@@ -48,24 +51,36 @@ namespace AutomotoraWeb.Controllers.Financing {
              return View(c);
         }
 
+        //Se invoca por json al actualizar la ddl de clientes, devuelve solo la partial de contenido.
         public ActionResult SitClientePartial(int? idCliente) {
             Cliente c = _consultarCliente(idCliente);
-            return PartialView("_sitCliente", c);
+            SituacionCliente sit = new SituacionCliente();
+            sit.generarSituacion(c);
+            return PartialView("_sitCliente", sit);
         }
 
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
         public ActionResult GrillaCuotasCliente(int? idParametros) {
             Cliente c = _consultarCliente(idParametros);
-            return PartialView("_sitClienteCuotas", c);
+            SituacionCliente sit = new SituacionCliente();
+            sit.generarSituacion(c);
+            return PartialView("_sitClienteCuotas", sit);
         }
 
+        //Se invoca desde paginacion, ordenacion etc, de grilla de vales. Devuelve la partial del tab de vales
         public ActionResult GrillaValesCliente(int? idParametros) {
             Cliente c = _consultarCliente(idParametros);
-            return PartialView("_sitClienteVales", c);
+            SituacionCliente sit = new SituacionCliente();
+            sit.generarSituacion(c);
+            return PartialView("_sitClienteVales", sit);
         }
 
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cheques. Devuelve la partial del tab de cheques
         public ActionResult GrillaChequesCliente(int? idParametros) {
             Cliente c = _consultarCliente(idParametros);
-            return PartialView("_sitClienteCheques", c);
+            SituacionCliente sit = new SituacionCliente();
+            sit.generarSituacion(c);
+            return PartialView("_sitClienteCheques", sit);
         }
 
         #endregion
