@@ -1,0 +1,17 @@
+﻿@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoReporte ir = new InfoReporte();
+    ir.AccionReporte = "_reporteSituacionCliente";
+    ir.Controlador = ConsultasFinController.CONTROLLER;
+    ir.AccionExportacion = "_reporteSituacionClienteExport";
+    ir.TieneIdParametros= true;
+
+    ViewBag.InfoReporte = ir;
+    }
+
+@Html.Partial("_generalReport")
+
+

@@ -1,0 +1,41 @@
+﻿@model DLL_Backend.Cliente
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    ViewBag.Title = "Consulta Situación Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm()) {
+    
+    <div class="display-label ">
+        Cliente*
+    </div>
+    <div class="editor-field editor-field-xlarge xxlarge">
+        @Html.DdlOrDisplayFor(model => model.Codigo, false, model => model.Nombre,
+                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), "--Seleccionar Cliente--",
+                new { id = "ddlClientes", @class = "xxlarge" })
+    </div>
+   
+
+    <div class="btn-toolbar floatLeft" style="margin-left: 70px">
+        <div style="height: 0px; width: 100%"></div>
+        <div class="btn-group">
+            <input type="submit" id="Submit1" title="Refresh" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
+        </div>
+        <div class="btn-group" style="margin-left: 10px">
+            <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" value="Imprimir" />
+        </div>
+    </div>
+
+    <div class="clear-both"></div>
+}
+
+<div id="divListado">
+    @Html.Partial("_sitCliente", Model)
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/SitCliente.js"></script>
+}

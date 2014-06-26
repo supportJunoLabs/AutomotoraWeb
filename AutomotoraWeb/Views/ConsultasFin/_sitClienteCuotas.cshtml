@@ -1,0 +1,40 @@
+﻿@model DLL_Backend.Cliente
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            //Falta apuntar a la venta, no al vehiculo
+            new ColumnaGrilla {Campo="VehiculoOrigen", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="VehiculoOrigen.Codigo"},
+            new ColumnaGrilla {Campo="Numero", Ancho=70, Titulo="Cuota Gral"},
+            new ColumnaGrilla {Campo="NumeroCuotaSet", Ancho=70, Titulo="Cuota"},
+            new ColumnaGrilla {Campo="Vencimiento", Ancho=80, Titulo="F.Vencimiento"},
+            new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},
+            new ColumnaGrilla {Campo="ImporteCobrado", Ancho=150, Titulo="Pago"},
+            new ColumnaGrilla {Campo="FechaCobro", Ancho=80, Titulo="F.Pago"}
+    };
+            
+        
+    ig.NameGrid = "grilla_cuotas";
+    ig.Controller = ConsultasFinController.CONTROLLER;
+    ig.ActionCallbackRoute = "GrillaCuotasCliente";
+    ig.KeyFieldName = "Venta.Codigo"; //clave que se usa para el doble click y los botones de accion  
+    ig.TypeOfModel = typeof(DLL_Backend.Cuota);
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ConsultaFinanciacion", ConsultasFinController.CONTROLLER, "boton-consultar-mf", "Consulta Financiacion"));
+    
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = ConsultasFinController.CONTROLLER;
+    ig.AccionDobleClick = "ConsultaFinanciacion";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model.CuotasPendientesNoFinalizadas())
