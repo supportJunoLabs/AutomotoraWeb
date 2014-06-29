@@ -1,4 +1,8 @@
-﻿.floatLeft {
+﻿input[readonly] {
+    cursor: default;
+}
+
+.floatLeft {
     float: left;
 }
 
