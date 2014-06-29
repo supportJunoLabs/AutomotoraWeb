@@ -1,0 +1,161 @@
+﻿@model AutomotoraWeb.Models.ListadoCajasModel
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
+
+@{
+    ViewBag.Title = "Listado Movimientos Caja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    select {
+        width: 130px;
+    }
+
+    .labelAjustable {
+        margin-right: 5px;
+    }
+
+    .separacion {
+        margin-right: 25px;
+    }
+
+    .labelWidth {
+        width: 80px !important;
+    }
+
+    .inputTextWidth {
+        width: 120px;
+    }
+
+    .selectWidth {
+        width: 100px !important;
+    }
+
+    fieldset {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    legend {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+@using (Html.BeginForm()) {
+    @Html.HiddenFor(model => model.idParametros)
+    
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")      
+    
+    <div id="filtros" style="border: 1px solid #A3C0E8; margin-right: 5px">
+        <div id="containerLinea1">
+
+            <div id="filtro_fechas" class="floatLeft">
+                <fieldset id="fieldsetFecha">
+                    <legend>Fecha</legend>
+                    <div id="periodo" style="margin-top: 10px;">
+                        <div id="containerDesde">
+                            <div class="floatLeft labelWidth" style="text-align: right; padding-right: 5px;">
+                                <label>Desde</label>
+                            </div>
+                            <div class="floatRight editor-field editor-field-small ">
+                                @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new { id = "fdesde", @class = "calendarAW floatRight" })
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                        <div id="containerHasta">
+                            <div class="floatLeft labelWidth" style="text-align: right; padding-right: 5px;">
+                                <label>Hasta</label>
+                            </div>
+                            <div class="floatRight editor-field editor-field-small">
+                                @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new { id = "fhasta", @class = "calendarAW floatRight" })
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtro_moneda" class="floatLeft">
+                <fieldset id="fieldsetMoneda">
+                    <legend>Moneda</legend>
+                    <div style="margin-top: 10px;" id="monedas">
+                        @Html.DropDownListFor(model => model.Filtro.Moneda.Codigo, new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), new { @class = "medium" })
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtro_sucursal" class="floatLeft">
+                <fieldset id="fieldsetSucursal">
+                    <legend>Sucursal</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.FiltrarSucursal, new { id = "cb_filtrarSucursal" }) Filtrar Sucursal
+                    </div>
+                    <div class="xxlarge" style="margin-top: 10px;" id="sucursales">
+                        @Html.DropDownListFor(model => model.Filtro.Sucursal.Codigo, new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), new { @class = "medium" })
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtro_financista" class="floatLeft">
+                <fieldset id="fieldsetfinancista">
+                    <legend>Financista</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.FiltrarFinancista, new { id = "cb_filtrarFinancista" }) Filtrar Financista
+                    </div>
+                    <div style="margin-top: 10px;" id="financistas">
+                        @Html.DropDownListFor(model => model.Filtro.Financista.Codigo, new SelectList(ViewBag.Financistas, "Codigo", "Nombre"), new { @class = "medium" })
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="btn-toolbar floatLeft" style="margin-left: 70px">
+                <div style="height: 0px; width: 100%"></div>
+                <div class="btn-group">
+                    <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
+                </div>
+                <div class="btn-group" style="margin-left: 10px">
+                    <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir Efectivo" value="ImprimirEf" />
+                </div>
+                <div class="btn-group" style="margin-left: 10px">
+                    <input type="submit" id="Submit3" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir Cheques" value="ImprimirCh" />
+                </div>
+            </div>
+            <div class="clear-both"></div>
+
+        </div>
+
+    </div>
+}
+
+
+<div class="clear-both"></div>
+
+<div id="divGrilla">
+
+    <div class="well" style="margin-top: 40px; width: 1350px; height: 1300px;">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#efectivo_tab" data-toggle="tab">Efectivo</a></li>
+            <li><a href="#cheques_tab" data-toggle="tab">Cheques</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active in" id="efectivo_tab">
+                @Html.Partial("_listEfectivo", Model)
+            </div>
+            <div class="tab-pane fade" id="cheques_tab">
+                @Html.Partial("_listCheques", Model)
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/CajaListado.js"></script>
+}
+
+

@@ -1,0 +1,27 @@
+﻿@model AutomotoraWeb.Models.ListadoCajasModel
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
+
+
+ <div style="padding-top: 20px;padding-bottom:30px">
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Saldo Inicial: </div>
+            @Html.DisplayFor(m => m.Resultado.SaldoInicialEfectivo.ImporteTexto)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+
+    @Html.Partial("_listGrillaEfectivo", Model.Resultado.MovimientosEfectivo)
+
+    <div style="padding-top: 20px;padding-bottom:30px">
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Total Movimientos: </div>
+            @Html.DisplayFor(m => m.Resultado.TotalMovsEfectivo.ImporteTexto)
+        </div>
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Saldo Final: </div>
+            @Html.DisplayFor(m => m.Resultado.SaldoFinalEfectivo.ImporteTexto)
+        </div>
+    </div>
+    <div class="clear-both"></div>

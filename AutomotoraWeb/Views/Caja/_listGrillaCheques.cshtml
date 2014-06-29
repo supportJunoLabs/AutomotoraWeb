@@ -1,0 +1,49 @@
+﻿@model List<DLL_Backend.MovimientoCajaCheque>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Fecha", Ancho=80},
+            new ColumnaGrilla{Campo="NumeroRecibo", Ancho=70, Titulo="Transaccion",
+                 Hipervinculo=true, Haccion="ConsultaTransaccion", Hcontrolador="Transacciones", HCampoParametro="NumeroRecibo"},
+            new ColumnaGrilla {Campo="ImporteEntrada", Ancho=130, Titulo="Entrada"},
+            new ColumnaGrilla {Campo="ImporteSalida", Ancho=130, Titulo="Salida"},
+            new ColumnaGrilla{Campo="Cheque.Banco", Ancho=70, Titulo="Banco"},
+            new ColumnaGrilla{Campo="Cheque.NumeroCheque", Ancho=50, Titulo="Cheque Nro"},
+            new ColumnaGrilla {Campo="Recibo.FinancistaDuenio.Nombre", Ancho=100, Titulo="Financista",
+                   Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="Recibo.FinancistaDuenio.Codigo"},
+             new ColumnaGrilla {Campo="Recibo.Cliente.Nombre", Ancho=150, Titulo="Cliente",
+                Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Recibo.Cliente.Codigo"},
+            new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=90, Titulo="Sucursal", 
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"},
+            new ColumnaGrilla {Campo="Recibo.TipoRecibo.Descripcion", Ancho=90,  Titulo="Tipo"},                   
+            new ColumnaGrilla {Campo="Descripcion", Ancho=250, LargoMax=70, Titulo="Detalle"},
+            new ColumnaGrilla {Campo="Cheque.Observaciones", Ancho=250, LargoMax=70, Titulo="Observaciones"},
+     };
+                        
+        
+    ig.NameGrid = "grillaCheques";
+    ig.Controller = CajaController.CONTROLLER;
+    ig.ActionCallbackRoute = "ListGrillaCheques";
+    ig.KeyFieldName = "NumeroRecibo";
+    ig.TypeOfModel = typeof(DLL_Backend.MovimientoCajaCheque);
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ConsultaCheque", ChequesListController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
+
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = ChequesListController.CONTROLLER;
+    ig.AccionDobleClick = "ConsultaCheque";
+    ig.registrosPorPagina = 20;
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+
