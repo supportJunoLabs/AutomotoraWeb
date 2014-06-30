@@ -46,14 +46,16 @@ namespace AutomotoraWeb.Controllers.Financing
             this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
             this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(model.Filtro.Moneda));
             if (ModelState.IsValid) {
-                if (btnSubmit == "ImprimirEf") {
-                    model.TipoReporte = ListadoCajasModel.CAJA_REPORTE.EFECTIVO;
+                if (model.Accion == ListadoCajasModel.ACCION.IMPRIMIR_EFECTIVO || model.Accion == ListadoCajasModel.ACCION.IMPRIMIR_CHEQUES) {
+                //if (btnSubmit == "ImprimirEf") {
+//                    model.TipoReporte = ListadoCajasModel.CAJA_REPORTE.EFECTIVO;
                     return this.Report(model);
                 }
-                if (btnSubmit == "ImprimirCh") {
-                    model.TipoReporte = ListadoCajasModel.CAJA_REPORTE.CHEQUES;
-                    return this.Report(model);
-                }
+                ////if (btnSubmit == "ImprimirCh") {
+                //if (model.Accion==ListadoCajasModel.ACCION.IMPRIMIR_EFECTIVO){
+                //    model.TipoReporte = ListadoCajasModel.CAJA_REPORTE.CHEQUES;
+                //    return this.Report(model);
+                //}
                 model.Resultado = _obtenerListado(model);
             }
             return View(model);
@@ -90,7 +92,8 @@ namespace AutomotoraWeb.Controllers.Financing
             ListadoCajasModel model = null;
             model = (ListadoCajasModel)Session[idParametros];
             XtraReport rep = null;
-            if (model.TipoReporte == ListadoCajasModel.CAJA_REPORTE.EFECTIVO) {
+            if (model.Accion==ListadoCajasModel.ACCION.IMPRIMIR_EFECTIVO){
+            //if (model.TipoReporte == ListadoCajasModel.CAJA_REPORTE.EFECTIVO) {
                 rep = new DXListadoMovsCajaEfectivo();
             } else {
                 rep = new DXListadoMovsCajaCheques();
@@ -104,18 +107,15 @@ namespace AutomotoraWeb.Controllers.Financing
             Session[idParametros] = model;
             ViewData["idParametros"] = idParametros;
             ViewData["Report"] = rep;
-            if (model.TipoReporte == ListadoCajasModel.CAJA_REPORTE.EFECTIVO) {
-                return PartialView("_report");
-            } else {
-                return PartialView("_report");
-            }
+            return PartialView("_report");
         }
 
         public ActionResult ReportExport(string idParametros) {
             ListadoCajasModel model = null;
             model = (ListadoCajasModel)Session[idParametros];
             XtraReport rep = null;
-            if (model.TipoReporte == ListadoCajasModel.CAJA_REPORTE.EFECTIVO) {
+             if (model.Accion==ListadoCajasModel.ACCION.IMPRIMIR_EFECTIVO){
+            //if (model.TipoReporte == ListadoCajasModel.CAJA_REPORTE.EFECTIVO) {
                 rep = new DXListadoMovsCajaEfectivo();
             } else {
                 rep = new DXListadoMovsCajaCheques();

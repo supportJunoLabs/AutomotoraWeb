@@ -12,9 +12,11 @@ namespace AutomotoraWeb.Models {
         public string idParametros { get; set; }
         public bool FiltrarSucursal { get; set; }
         public bool FiltrarFinancista { get; set; }
-        public CAJA_REPORTE TipoReporte { get; set; }
+        //public CAJA_REPORTE TipoReporte { get; set; }
+        public ACCION Accion { get; set; }
 
-        public enum CAJA_REPORTE { EFECTIVO, CHEQUES };
+        //public enum CAJA_REPORTE { EFECTIVO, CHEQUES };
+        public enum ACCION { ACTUALIZAR, IMPRIMIR_EFECTIVO, IMPRIMIR_CHEQUES}
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Desde { get; set; }
@@ -30,7 +32,8 @@ namespace AutomotoraWeb.Models {
             Hasta = DateTime.Now.Date;
             FiltrarSucursal = false;
             FiltrarFinancista = false;
-            TipoReporte = CAJA_REPORTE.EFECTIVO;
+            //TipoReporte = CAJA_REPORTE.EFECTIVO;
+            Accion = ACCION.ACTUALIZAR;
         }
 
         public void AcomodarFiltro() {

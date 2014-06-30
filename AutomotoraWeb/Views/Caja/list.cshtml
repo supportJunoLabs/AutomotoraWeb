@@ -1,6 +1,7 @@
 ﻿@model AutomotoraWeb.Models.ListadoCajasModel
 @using AutomotoraWeb.Controllers.Sales;
 @using DLL_Backend;
+@using System.Web.Mvc;
 
 @{
     ViewBag.Title = "Listado Movimientos Caja";
@@ -45,11 +46,13 @@
 </style>
 
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm(null, null, FormMethod.Post,new { id="formPrincipal" })) {
     @Html.HiddenFor(model => model.idParametros)
     
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")      
+    
+    @Html.HiddenFor(model => model.Accion, new { id = "accion" })
     
     <div id="filtros" style="border: 1px solid #A3C0E8; margin-right: 5px">
         <div id="containerLinea1">
@@ -116,14 +119,14 @@
             <div class="btn-toolbar floatLeft" style="margin-left: 70px">
                 <div style="height: 0px; width: 100%"></div>
                 <div class="btn-group">
-                    <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar"  />
+                    <input type="button" id="btn_actualizar" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar"  />
                 </div>
-                <div class="btn-group" style="margin-left: 10px">
-                    <input type="submit" id="Submit2" class="btn btn-primary2-mf"  name="btnSubmit" title="Imprimir Efectivo" value="ImprimirEf" />
-                </div>
-                <div class="btn-group" style="margin-left: 10px">
-                    <input type="submit" id="Submit3" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir Cheques" value="ImprimirCh" />
-                </div>
+                @*<div class="btn-group" style="margin-left: 10px">
+                    <input type="button" id="btn_imprimir_efectivo" class="btn btn-primary2-mf"  name="btnSubmit" title="Imprimir Efectivo" value="Imprimir" />
+                </div>*@
+                @*<div class="btn-group" style="margin-left: 10px">
+                    <input type="button" id="btn_imprimir_cheques" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir Cheques" value="Imprimir" />
+                </div>*@
             </div>
             <div class="clear-both"></div>
 

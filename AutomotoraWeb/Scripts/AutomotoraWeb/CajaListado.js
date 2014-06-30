@@ -5,7 +5,25 @@
     var filtrarFinancista = $("#cb_filtrarFinancista").prop('checked')
     _showHideFinancista(filtrarFinancista);
 
+    $("#btn_actualizar").click(function () {
+        //alert("click");
+        $("#accion").val ( "ACTUALIZAR");
+        $('form#formPrincipal').submit();
+    });
+
+    $("#btn_imprimir_efectivo").click(function () {
+        //alert("click");
+        $("#accion").val("IMPRIMIR_EFECTIVO");
+        $('form#formPrincipal').submit();
+    });
+
+    $("#btn_imprimir_cheques").click(function () {
+        //alert("click");
+        $("#accion").val("IMPRIMIR_CHEQUES");
+        $('form#formPrincipal').submit();
+    });
 });
+
 
 
 $("#cb_filtrarSucursal").change(function () {
