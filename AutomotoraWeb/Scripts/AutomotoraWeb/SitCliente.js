@@ -8,7 +8,7 @@
     $.ajax({
         cache: false,
         type: "GET",
-        url:'/ConsultasFin/SitClientePartial/',
+        url: '/ConsultasFin/ListSitClientePartial/',
         data: { "idCliente": selectedID },
     success: function (data)
     {

@@ -271,6 +271,7 @@
     <Compile Include="Models\BotonAjaxGrilla.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ListadoCuotasValesModel.cs" />
     <Compile Include="Models\ListadoCajasModel.cs" />
     <Compile Include="Models\ListadoDocumentacionModel.cs" />
     <Compile Include="Models\ListadoVentasModel.cs" />
@@ -284,6 +285,9 @@
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Listados\DXListadoSituacionCuotas.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Listados\DXListadoMovsCajaCheques.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1576,6 +1580,7 @@
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\CuotasValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\PedidosGestion.js" />
     <Content Include="Scripts\AutomotoraWeb\SitCliente.js" />
     <Content Include="Scripts\AutomotoraWeb\VentasListado.js" />
@@ -1737,8 +1742,8 @@
     <Content Include="Views\Senias\details.cshtml" />
     <Content Include="Views\Ventas\details.cshtml" />
     <Content Include="Views\Pedidos\recibir.cshtml" />
-    <Content Include="Views\ConsultasFin\SitCliente.cshtml" />
-    <Content Include="Views\ConsultasFin\_sitCliente.cshtml" />
+    <Content Include="Views\ConsultasFin\ListSitCliente.cshtml" />
+    <Content Include="Views\ConsultasFin\_listSitCliente.cshtml" />
     <Content Include="Views\ConsultasFin\_sitClienteCuotas.cshtml" />
     <Content Include="Views\ConsultasFin\_sitClienteVales.cshtml" />
     <Content Include="Views\ConsultasFin\_sitClienteCheques.cshtml" />
@@ -1755,9 +1760,15 @@
     <Content Include="Views\Transacciones\Transacciones.cshtml" />
     <Content Include="Views\Transacciones\Transaccion.cshtml" />
     <Content Include="Views\Caja\Report.cshtml" />
-    <Content Include="Views\Caja\_reportCheques.cshtml" />
-    <Content Include="Views\Caja\_reportEfectivo.cshtml" />
     <Content Include="Views\Caja\_report.cshtml" />
+    <Content Include="Views\ConsultasFin\ListSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_listSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaSitClienteCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaSitClienteCheques.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaSitClienteVales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1779,6 +1790,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\Listados\DXListadoSituacionCuotas.resx">
+      <DependentUpon>DXListadoSituacionCuotas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoMovsCajaCheques.resx">
       <DependentUpon>DXListadoMovsCajaCheques.cs</DependentUpon>
     </EmbeddedResource>

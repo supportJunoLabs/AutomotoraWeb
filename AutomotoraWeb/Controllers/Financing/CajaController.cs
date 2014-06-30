@@ -105,9 +105,9 @@ namespace AutomotoraWeb.Controllers.Financing
             ViewData["idParametros"] = idParametros;
             ViewData["Report"] = rep;
             if (model.TipoReporte == ListadoCajasModel.CAJA_REPORTE.EFECTIVO) {
-                return PartialView("_reportEfectivo");
+                return PartialView("_report");
             } else {
-                return PartialView("_reportCheques");
+                return PartialView("_report");
             }
         }
 
