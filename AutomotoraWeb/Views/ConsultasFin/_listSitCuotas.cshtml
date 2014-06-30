@@ -1,0 +1,23 @@
+﻿@model AutomotoraWeb.Models.ListadoCuotasValesModel
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
+
+
+
+    @Html.Partial("_listGrillaSitCuotas", Model.Resultado.Cuotas)
+
+    <div style="padding-top: 20px;padding-bottom:30px">
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Total Cuotas: </div>
+            @Html.DisplayFor(m => m.Resultado.ImporteTotal.ImporteTexto)
+        </div>
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Total Pagos: </div>
+            @Html.DisplayFor(m => m.Resultado.ImporteACuenta.ImporteTexto)
+        </div>
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Saldo: </div>
+            @Html.DisplayFor(m => m.Resultado.ImporteSaldo.ImporteTexto)
+        </div>
+    </div>
+    <div class="clear-both"></div>

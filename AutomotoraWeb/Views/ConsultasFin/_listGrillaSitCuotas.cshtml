@@ -1,0 +1,48 @@
+﻿@model List<DLL_Backend.Cuota>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+             new ColumnaGrilla {Campo="VehiculoOrigen", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="VehiculoOrigen.Codigo"},
+            new ColumnaGrilla {Campo="Numero", Ancho=70, Titulo="Cuota Gral"},
+            new ColumnaGrilla {Campo="NumeroCuotaSet", Ancho=70, Titulo="Cuota"},
+            new ColumnaGrilla {Campo="Vencimiento", Ancho=80, Titulo="F.Vencimiento"},
+            new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},
+            new ColumnaGrilla {Campo="ImporteCobrado", Ancho=150, Titulo="Pago"},
+            new ColumnaGrilla {Campo="FechaCobro", Ancho=80, Titulo="F.Pago"},
+            new ColumnaGrilla {Campo="DescripcionEstado", Ancho=80, Titulo="Estado"},
+            new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista",
+                Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="Financista.Codigo"},
+            new ColumnaGrilla {Campo="CodigoExterno", Ancho=80, Titulo="Cod Externo"},
+            new ColumnaGrilla {Campo="Venta.Cliente.Nombre", Ancho=200, Titulo="Cliente", LargoMax=40,
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Venta.Cliente.Codigo"},
+            
+     };
+                        
+        
+    ig.NameGrid = "grillaSitCuotas";
+    ig.Controller = ConsultasFinController.CONTROLLER;
+    ig.ActionCallbackRoute = "ListGrillaSitCuotas";
+    ig.KeyFieldName = "Venta.Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Cuota);
+    ig.registrosPorPagina = 20;
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ConsultaFinanciacion", ConsultasFinController.CONTROLLER, "boton-consultar-mf", "Consulta Financiacion"));
+
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = ConsultasFinController.CONTROLLER;
+    ig.AccionDobleClick = "ConsultaFinanciacion";
+
+    ViewBag.InfoGrilla = ig;
+}   
+
+@Html.Partial("_generalGrid", Model)
+
