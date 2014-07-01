@@ -36,7 +36,7 @@ namespace AutomotoraWeb.Controllers.Financing
         }
 
         [HttpPost]
-        public ActionResult List(ListadoCajasModel model, string btnSubmit) {
+        public ActionResult List(ListadoCajasModel model) {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
             ViewBag.Sucursales = Sucursal.Sucursales;
@@ -46,16 +46,10 @@ namespace AutomotoraWeb.Controllers.Financing
             this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
             this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(model.Filtro.Moneda));
             if (ModelState.IsValid) {
-                if (model.Accion == ListadoCajasModel.ACCION.IMPRIMIR_EFECTIVO || model.Accion == ListadoCajasModel.ACCION.IMPRIMIR_CHEQUES) {
-                //if (btnSubmit == "ImprimirEf") {
-//                    model.TipoReporte = ListadoCajasModel.CAJA_REPORTE.EFECTIVO;
+                if (model.Accion == ListadoCajasModel.ACCION.IMPRIMIR) {
                     return this.Report(model);
                 }
-                ////if (btnSubmit == "ImprimirCh") {
-                //if (model.Accion==ListadoCajasModel.ACCION.IMPRIMIR_EFECTIVO){
-                //    model.TipoReporte = ListadoCajasModel.CAJA_REPORTE.CHEQUES;
-                //    return this.Report(model);
-                //}
+                model.TabActual = ListadoCajasModel.TABS.EFECTIVO;//En cada refresh vuelvo al inicial
                 model.Resultado = _obtenerListado(model);
             }
             return View(model);
@@ -92,8 +86,7 @@ namespace AutomotoraWeb.Controllers.Financing
             ListadoCajasModel model = null;
             model = (ListadoCajasModel)Session[idParametros];
             XtraReport rep = null;
-            if (model.Accion==ListadoCajasModel.ACCION.IMPRIMIR_EFECTIVO){
-            //if (model.TipoReporte == ListadoCajasModel.CAJA_REPORTE.EFECTIVO) {
+            if (model.TabActual==ListadoCajasModel.TABS.EFECTIVO){
                 rep = new DXListadoMovsCajaEfectivo();
             } else {
                 rep = new DXListadoMovsCajaCheques();
@@ -114,8 +107,7 @@ namespace AutomotoraWeb.Controllers.Financing
             ListadoCajasModel model = null;
             model = (ListadoCajasModel)Session[idParametros];
             XtraReport rep = null;
-             if (model.Accion==ListadoCajasModel.ACCION.IMPRIMIR_EFECTIVO){
-            //if (model.TipoReporte == ListadoCajasModel.CAJA_REPORTE.EFECTIVO) {
+             if (model.TabActual==ListadoCajasModel.TABS.EFECTIVO){
                 rep = new DXListadoMovsCajaEfectivo();
             } else {
                 rep = new DXListadoMovsCajaCheques();

@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+
+    $("#tabActual").val("EFECTIVO");//porque al volver siempre quedo en el primer tab
+
     var filtrarSucursal = $("#cb_filtrarSucursal").prop('checked')
     _showHideSucursal(filtrarSucursal);
 
@@ -7,21 +10,26 @@
 
     $("#btn_actualizar").click(function () {
         //alert("click");
-        $("#accion").val ( "ACTUALIZAR");
+        $("#accion").val("ACTUALIZAR");
         $('form#formPrincipal').submit();
     });
 
-    $("#btn_imprimir_efectivo").click(function () {
+    $("#btn_imprimir").click(function () {
         //alert("click");
-        $("#accion").val("IMPRIMIR_EFECTIVO");
+        $("#accion").val("IMPRIMIR");
         $('form#formPrincipal').submit();
     });
 
-    $("#btn_imprimir_cheques").click(function () {
+    $("#titulo_tab1").click(function () {
         //alert("click");
-        $("#accion").val("IMPRIMIR_CHEQUES");
-        $('form#formPrincipal').submit();
+        $("#tabActual").val("EFECTIVO");
     });
+
+    $("#titulo_tab2").click(function () {
+        //alert("click");
+        $("#tabActual").val("CHEQUES");
+      });
+
 });
 
 
