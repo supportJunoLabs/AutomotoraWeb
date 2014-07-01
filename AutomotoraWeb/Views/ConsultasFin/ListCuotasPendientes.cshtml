@@ -3,7 +3,7 @@
 @using DLL_Backend;
 
 @{
-    ViewBag.Title = "Listado Situacion Cuotas";
+    ViewBag.Title = "Listado Cuotas Pendientes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -45,8 +45,10 @@
 </style>
 
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm(null, null, FormMethod.Post,new { id="formPrincipal" })) {
     @Html.HiddenFor(model => model.idParametros)
+    @Html.HiddenFor(model => model.Accion, new { id = "accion" })
+    @Html.HiddenFor(model => model.TabActual, new { id = "tabActual" })
     @Html.HiddenFor(model => model.TipoListado)
     
     @Html.ValidationSummary(true)
@@ -96,10 +98,10 @@
             <div class="btn-toolbar floatLeft" style="margin-left: 70px">
                 <div style="height: 0px; width: 100%"></div>
                 <div class="btn-group">
-                    <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar"  />
+                    <input type="button" id="btn_actualizar" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar"  />
                 </div>
                 <div class="btn-group" style="margin-left: 10px">
-                    <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
+                    <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
                 </div>
             </div>
             <div class="clear-both"></div>
@@ -113,7 +115,7 @@
 <div class="clear-both"></div>
 
 <div id="divGrilla">
-    @Html.Partial("_listSitCuotas", Model)
+    @Html.Partial("_listCuotasPendientes", Model)
 </div>
 
 @section Scripts {

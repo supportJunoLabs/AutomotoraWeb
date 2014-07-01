@@ -13,8 +13,12 @@ namespace AutomotoraWeb.Models {
         public bool FiltrarFinancista { get; set; }
         public TIPO_LISTADO TipoListado { get; set; }
         public ListadoCuotasVales.ALCANCE Alcance { get; set; }
+        public ACCIONES Accion { get; set; }
+        public TABS TabActual { get; set; }
 
-        public enum TIPO_LISTADO { SITUACION_CUOTAS, VALES_PENDIENTES, CUOTAS_PENDIENTES, CHEQUES_VALES_PENDIENTES}
+        public enum TIPO_LISTADO { SITUACION_CUOTAS, VALES_PENDIENTES, CUOTAS_PENDIENTES, CUOTAS_VALES_PENDIENTES}
+        public enum ACCIONES { ACTUALIZAR, IMPRIMIR}
+        public enum TABS { TAB1, TAB2, TAB3}
         
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Desde { get; set; }
@@ -32,12 +36,13 @@ namespace AutomotoraWeb.Models {
             FiltrarFinancista = false;
             TipoListado = TIPO_LISTADO.SITUACION_CUOTAS;
             Alcance = ListadoCuotasVales.ALCANCE.CUOTAS;
+            Accion = ACCIONES.ACTUALIZAR;
+            TabActual = TABS.TAB1;
         }
 
-        public void obtenerListado (TIPO_LISTADO tipo){
-            TipoListado = tipo;
+        public void obtenerListado (){
             AcomodarFiltro();
-            switch (tipo) { 
+            switch (TipoListado) { 
                 case TIPO_LISTADO.SITUACION_CUOTAS:
                     Filtro.Situacion = CuotaValeFiltro.SITUACION.NO_ANULADAS;
                     Alcance = ListadoCuotasVales.ALCANCE.CUOTAS;
@@ -50,7 +55,7 @@ namespace AutomotoraWeb.Models {
                     Filtro.Situacion = CuotaValeFiltro.SITUACION.PENDIENTES_COBRABLES;
                     Alcance = ListadoCuotasVales.ALCANCE.CUOTAS;
                     break;
-                case TIPO_LISTADO.CHEQUES_VALES_PENDIENTES:
+                case TIPO_LISTADO.CUOTAS_VALES_PENDIENTES:
                     Filtro.Situacion = CuotaValeFiltro.SITUACION.PENDIENTES_COBRABLES;
                     Alcance = ListadoCuotasVales.ALCANCE.AMBOS;
                     break;

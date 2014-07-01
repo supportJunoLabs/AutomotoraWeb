@@ -1769,6 +1769,16 @@
     <Content Include="Views\ConsultasFin\_listGrillaSitClienteCuotas.cshtml" />
     <Content Include="Views\ConsultasFin\_listGrillaSitClienteCheques.cshtml" />
     <Content Include="Views\ConsultasFin\_listGrillaSitClienteVales.cshtml" />
+    <Content Include="Views\ConsultasFin\ListCuotasPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasPendientesDet.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasPendientesDet.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportCuotasPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportCuotasPendientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

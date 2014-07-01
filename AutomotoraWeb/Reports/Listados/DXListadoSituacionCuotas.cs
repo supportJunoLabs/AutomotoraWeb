@@ -203,14 +203,15 @@ public class DXListadoSituacionCuotas : DevExpress.XtraReports.UI.XtraReport {
             // xrLabel1
             // 
             this.xrLabel1.Font = new System.Drawing.Font("Arial", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
-            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 21.10417F);
+            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 21.10418F);
             this.xrLabel1.Name = "xrLabel1";
             this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel1.SizeF = new System.Drawing.SizeF(650.0001F, 22.99999F);
             this.xrLabel1.StylePriority.UseFont = false;
             this.xrLabel1.StylePriority.UseTextAlignment = false;
-            this.xrLabel1.Text = "SITUACION CUOTAS";
+            this.xrLabel1.Text = "TITULO REPORTE  (situacion cuotas o cuotas pendientes)";
             this.xrLabel1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
+            this.xrLabel1.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xrLabel1_BeforePrint);
             // 
             // xrDetalleFiltros
             // 
@@ -733,5 +734,9 @@ public class DXListadoSituacionCuotas : DevExpress.XtraReports.UI.XtraReport {
 
     private void xrDetalleFiltros_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
         xrDetalleFiltros.Text =(string)(this.Parameters["detalleFiltros"].Value);
+    }
+
+    private void xrLabel1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+        xrLabel1.Text = (string)(this.Parameters["tituloReporte"].Value);
     }
 }

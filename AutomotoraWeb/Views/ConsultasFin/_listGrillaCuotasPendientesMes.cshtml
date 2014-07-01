@@ -1,0 +1,42 @@
+﻿@model List<DLL_Backend.ListadoCuotasValesRegistroMes>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Anio", Titulo="Año", Ancho=50},
+            new ColumnaGrilla {Campo="Mes", Titulo="Mes", Ancho=50},
+            new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista",
+                Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="Financista.Codigo"},
+            new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},
+            new ColumnaGrilla {Campo="ACuenta", Ancho=150, Titulo="Pago"},
+            new ColumnaGrilla {Campo="Saldo", Ancho=150, Titulo="Saldo"},
+            new ColumnaGrilla {Campo="Cantidad", Ancho=150, Titulo="Cantidad"}
+     };
+                        
+        
+    ig.NameGrid = "grillaCuotasPendienteMes";
+    ig.Controller = ConsultasFinController.CONTROLLER;
+    ig.ActionCallbackRoute = "ListGrillaCuotasPendientesMes";
+    ig.KeyFieldName = null;
+    ig.TypeOfModel = typeof(DLL_Backend.ListadoCuotasValesRegistroMes);
+    ig.registrosPorPagina = 20;
+
+    ig.UsarBotones = false;
+    //ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ListSitCliente", ConsultasFinController.CONTROLLER, "boton-consultar-mf", "Consulta Situación Cliente"));
+
+    ig.DobleClick = false;
+    ig.ControladorDobleClick = null;
+    ig.AccionDobleClick = null;
+
+    ViewBag.InfoGrilla = ig;
+}   
+
+@Html.Partial("_generalGrid", Model)
+
