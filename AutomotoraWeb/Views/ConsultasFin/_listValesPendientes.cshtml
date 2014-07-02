@@ -3,7 +3,7 @@
 
 <div style="padding-top: 20px;padding-bottom:0px">
         <div class="floatLeft label-large">
-            <div class="display-label-small">Total Cuotas: </div>
+            <div class="display-label-small">Total Vales: </div>
             @Html.DisplayFor(m => m.Resultado.ImporteTotal.ImporteTexto)
         </div>
         <div class="floatLeft label-large">
@@ -28,14 +28,14 @@
         <li><a href="#detalle_tab" data-toggle="tab" id="titulo_tab3">Detallado</a></li>
     </ul>
     <div id="myTabContent" class="tab-content">
-        <div class="tab-pane active in" id="mes_tab">
-            @Html.Partial("_listCuotasPendientesMes", Model.Resultado)
+         <div class="tab-pane active in" id="mes_tab">
+            @Html.Partial("_listValesPendientesMes", Model.Resultado)
         </div>
         <div class="tab-pane fade" id="cliente_tab">
-             @Html.Partial("_listCuotasPendientesCli", Model.Resultado)
+             @Html.Partial("_listValesPendientesCli", Model.Resultado)
         </div>
         <div class="tab-pane fade" id="detalle_tab">
-            @Html.Partial("_listCuotasPendientesDet", Model.Resultado)
+            @Html.Partial("_listValesPendientesDet", Model.Resultado)
         </div>
     </div>
 </div>

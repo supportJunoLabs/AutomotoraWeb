@@ -219,7 +219,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ReportSitCuotasPartial(string idParametros) {
             ListadoCuotasValesModel model = null;
             model = (ListadoCuotasValesModel)Session[idParametros];
-            XtraReport rep = new DXListadoSituacionCuotas();
+            XtraReport rep = new DXListadoCuotas();
             model.obtenerListado();
             List<ListadoCuotasVales> ll = new List<ListadoCuotasVales>();
             ll.Add(model.Resultado);
@@ -234,7 +234,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ReportSitCuotasExport(string idParametros) {
             ListadoCuotasValesModel model = null;
             model = (ListadoCuotasValesModel)Session[idParametros];
-            XtraReport rep = new DXListadoSituacionCuotas();
+            XtraReport rep = new DXListadoCuotas();
             List<ListadoCuotasVales> ll = new List<ListadoCuotasVales>();
             ll.Add(model.Resultado);
             rep.DataSource = ll;
@@ -345,14 +345,14 @@ namespace AutomotoraWeb.Controllers.Financing {
             ll.Add(model.Resultado);
             XtraReport rep = null;
             switch (model.TabActual) {
-                case ListadoCuotasValesModel.TABS.TAB1:
-                    rep = new DXListadoSituacionCuotas();
+                case ListadoCuotasValesModel.TABS.TAB3:
+                    rep = new DXListadoCuotas();
                     break;
                 case ListadoCuotasValesModel.TABS.TAB2:
-                    rep = new DXListadoSituacionCuotas();
+                    rep = new DXListadoCuotasValesCli();
                     break;
-                case ListadoCuotasValesModel.TABS.TAB3:
-                    rep = new DXListadoSituacionCuotas();
+                case ListadoCuotasValesModel.TABS.TAB1:
+                    rep = new DXListadoCuotasValesMes();
                     break;
             }
             rep.DataSource = ll;
@@ -369,6 +369,101 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult ReportCuotasPendientesExport(string idParametros) {
             XtraReport rep = _generarReporteCuotasPendientes(idParametros);
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
+
+        #region ConsultaValesPendientes
+
+        //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+        public ActionResult ListValesPendientes() {
+            ListadoCuotasValesModel model = new ListadoCuotasValesModel();
+            model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.VALES_PENDIENTES;
+            string s = SessionUtils.generarIdVarSesion("ListadoValesPend", Session[SessionUtils.SESSION_USER].ToString());
+            Session[s] = model;
+            model.idParametros = s;
+            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            ViewData["idParametros"] = model.idParametros;
+            model.obtenerListado();
+            return View(model);
+        }
+        [HttpPost]
+        //Se invoca desde el boton actualizar o imprimir.
+        public ActionResult ListValesPendientes(ListadoCuotasValesModel model) {
+            Session[model.idParametros] = model; //filtros actualizados
+            ViewData["idParametros"] = model.idParametros;
+            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+            if (ModelState.IsValid) {
+                if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
+                    return this.ReportValesPendientes(model);
+                }
+                model.obtenerListado();
+                model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
+            }
+            return View(model);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult ListGrillaValesPendientesDet(string idParametros) {
+            ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
+            ViewData["idParametros"] = model.idParametros;
+            model.obtenerListado();
+            return PartialView("_listGrillaValesPendientesDet", model.Resultado.Vales);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de vales. Devuelve la partial del tab de vales
+        public ActionResult ListGrillaValesPendientesCli(string idParametros) {
+            ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
+            ViewData["idParametros"] = model.idParametros;
+            model.obtenerListado();
+            return PartialView("_listGrillaCuotasValesCli", model.Resultado.AgrupCliente);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cheques. Devuelve la partial del tab de cheques
+        public ActionResult ListGrillaValesPendientesMes(string idParametros) {
+            ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
+            ViewData["idParametros"] = model.idParametros;
+            model.obtenerListado();
+            return PartialView("_listGrillaValesPendientesMes", model.Resultado.AgrupMes);
+        }
+
+        public ActionResult ReportValesPendientes(ListadoCuotasValesModel model) {
+            return View("ReportValesPendientes", model);
+        }
+
+        private XtraReport _generarReporteValesPendientes(string idParametros) {
+            ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
+            model.obtenerListado();
+            List<ListadoCuotasVales> ll = new List<ListadoCuotasVales>();
+            ll.Add(model.Resultado);
+            XtraReport rep = null;
+            switch (model.TabActual) {
+                case ListadoCuotasValesModel.TABS.TAB3:
+                    rep = new DXListadoVales();
+                    break;
+                case ListadoCuotasValesModel.TABS.TAB2:
+                    rep = new DXListadoCuotasValesCli();
+                    break;
+                case ListadoCuotasValesModel.TABS.TAB1:
+                    rep = new DXListadoCuotasValesMes();
+                    break;
+            }
+            rep.DataSource = ll;
+            setParamsToReport(rep, model);
+            return rep;
+        }
+
+        public ActionResult ReportValesPendientesPartial(string idParametros) {
+            XtraReport rep = _generarReporteValesPendientes(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportValesPendientes");
+        }
+
+        public ActionResult ReportValesPendientesExport(string idParametros) {
+            XtraReport rep = _generarReporteValesPendientes(idParametros);
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 

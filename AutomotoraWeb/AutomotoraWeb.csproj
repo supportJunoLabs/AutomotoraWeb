@@ -285,7 +285,16 @@
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\Listados\DXListadoSituacionCuotas.cs">
+    <Compile Include="Reports\Listados\DXListadoVales.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoCuotasValesMes.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoCuotasValesCli.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoCuotas.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Listados\DXListadoMovsCajaCheques.cs">
@@ -1779,6 +1788,16 @@
     <Content Include="Views\ConsultasFin\_listCuotasPendientesMes.cshtml" />
     <Content Include="Views\ConsultasFin\ReportCuotasPendientes.cshtml" />
     <Content Include="Views\ConsultasFin\_reportCuotasPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\ListValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listValesPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listValesPendientesDet.cshtml" />
+    <Content Include="Views\ConsultasFin\_listValesPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaValesPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaValesPendientesDet.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaValesPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportValesPendientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1800,8 +1819,17 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="Reports\Listados\DXListadoSituacionCuotas.resx">
-      <DependentUpon>DXListadoSituacionCuotas.cs</DependentUpon>
+    <EmbeddedResource Include="Reports\Listados\DXListadoVales.resx">
+      <DependentUpon>DXListadoVales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoCuotasValesMes.resx">
+      <DependentUpon>DXListadoCuotasValesMes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoCuotasValesCli.resx">
+      <DependentUpon>DXListadoCuotasValesCli.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoCuotas.resx">
+      <DependentUpon>DXListadoCuotas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoMovsCajaCheques.resx">
       <DependentUpon>DXListadoMovsCajaCheques.cs</DependentUpon>
