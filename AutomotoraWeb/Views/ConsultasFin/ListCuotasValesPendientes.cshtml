@@ -1,0 +1,125 @@
+﻿@model AutomotoraWeb.Models.ListadoCuotasValesModel
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
+
+@{
+    ViewBag.Title = "Listado Cuotas y Vales Pendientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    select {
+        width: 130px;
+    }
+
+    .labelAjustable {
+        margin-right: 5px;
+    }
+
+    .separacion {
+        margin-right: 25px;
+    }
+
+    .labelWidth {
+        width: 80px !important;
+    }
+
+    .inputTextWidth {
+        width: 120px;
+    }
+
+    .selectWidth {
+        width: 100px !important;
+    }
+
+    fieldset {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    legend {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post,new { id="formPrincipal" })) {
+    @Html.HiddenFor(model => model.idParametros)
+    @Html.HiddenFor(model => model.Accion, new { id = "accion" })
+    @Html.HiddenFor(model => model.TabActual, new { id = "tabActual" })
+    @Html.HiddenFor(model => model.TipoListado)
+    
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")      
+    
+    <div id="filtros" style="border: 1px solid #A3C0E8; margin-right: 5px">
+        <div id="containerLinea1">
+
+            <div id="filtro_fechas" class="floatLeft">
+                <fieldset id="fieldsetFecha">
+                    <legend>Fecha</legend>
+                    <div id="periodo" style="margin-top: 10px;">
+                        <div id="containerDesde" class="floatLeft">
+                            <div class="floatLeft labelWidth" style="text-align: right; padding-right: 5px;">
+                                <label>Desde</label>
+                            </div>
+                            <div class="floatRight editor-field editor-field-small ">
+                                @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new { id = "fdesde", @class = "calendarAW floatRight" })
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                        <div id="containerHasta" class="floatLeft">
+                            <div class="floatLeft labelWidth" style="text-align: right; padding-right: 5px;">
+                                <label>Hasta</label>
+                            </div>
+                            <div class="floatRight editor-field editor-field-small">
+                                @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new { id = "fhasta", @class = "calendarAW floatRight" })
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtro_financista" class="floatLeft">
+                <fieldset id="fieldsetfinancista">
+                    <legend>Financista</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.FiltrarFinancista, new { id = "cb_filtrarFinancista" }) Filtrar Financista
+                    </div>
+                    <div style="margin-top: 10px;" id="financistas">
+                        @Html.DropDownListFor(model => model.Filtro.Financista.Codigo, new SelectList(ViewBag.Financistas, "Codigo", "Nombre"), new { @class = "medium" })
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="btn-toolbar floatLeft" style="margin-left: 70px">
+                <div style="height: 0px; width: 100%"></div>
+                <div class="btn-group">
+                    <input type="button" id="btn_actualizar" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar"  />
+                </div>
+                <div class="btn-group" style="margin-left: 10px">
+                    <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
+                </div>
+            </div>
+            <div class="clear-both"></div>
+
+        </div>
+
+    </div>
+}
+
+
+<div class="clear-both"></div>
+
+<div id="divGrilla">
+    @Html.Partial("_listCuotasValesPendientes", Model)
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/CuotasValesListado.js"></script>
+}
+
+

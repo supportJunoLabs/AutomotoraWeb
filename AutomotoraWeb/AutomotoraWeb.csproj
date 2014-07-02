@@ -1798,6 +1798,14 @@
     <Content Include="Views\ConsultasFin\_listGrillaValesPendientesMes.cshtml" />
     <Content Include="Views\ConsultasFin\ReportValesPendientes.cshtml" />
     <Content Include="Views\ConsultasFin\_reportValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportCuotasValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\ListCuotasValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportCuotasValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasValesPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasValesPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasValesPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasValesPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasValesPendientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

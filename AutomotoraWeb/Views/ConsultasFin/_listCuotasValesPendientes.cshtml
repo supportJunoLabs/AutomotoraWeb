@@ -1,0 +1,37 @@
+﻿@model AutomotoraWeb.Models.ListadoCuotasValesModel
+@using AutomotoraWeb.Helpers;
+
+<div style="padding-top: 20px;padding-bottom:0px">
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Total : </div>
+            @Html.DisplayFor(m => m.Resultado.ImporteTotal.ImporteTexto)
+        </div>
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Total Pagos: </div>
+            @Html.DisplayFor(m => m.Resultado.ImporteACuenta.ImporteTexto)
+        </div>
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Saldo: </div>
+            @Html.DisplayFor(m => m.Resultado.ImporteSaldo.ImporteTexto)
+        </div>
+      <div class="floatLeft label-large">
+            <div class="display-label-small">Cantidad: </div>
+            @Html.DisplayFor(m => m.Resultado.Cantidad)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+<div class="well" style="margin-top: 10px; width: 1300px; height: 1100px;">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#mes_tab" data-toggle="tab" id="titulo_tab1">Mensual</a></li>
+        <li><a href="#cliente_tab" data-toggle="tab" id="titulo_tab2">Cliente</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+         <div class="tab-pane active in" id="mes_tab">
+            @Html.Partial("_listValesPendientesMes", Model.Resultado)
+        </div>
+        <div class="tab-pane fade" id="cliente_tab">
+             @Html.Partial("_listValesPendientesCli", Model.Resultado)
+        </div>
+    </div>
+</div>
