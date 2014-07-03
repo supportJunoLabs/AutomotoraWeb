@@ -55,7 +55,15 @@
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")      
     
-    <div id="filtros" style="border: 1px solid #A3C0E8; margin-right: 5px">
+    <div id="filtros" class="block" style="margin-right: 5px">
+        <div class="btn-toolbar botoneraListado">
+            <div class="btn-group">
+                <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
+            </div>
+            <div class="btn-group" style="margin-left: 10px">
+                <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" value="Imprimir" />
+            </div>
+        </div>
         <div id="containerLinea1">
 
             <div id="filtro_estad0s" class="floatLeft">
@@ -63,8 +71,7 @@
                     <legend>Estados</legend>
                     <div>
                         @Html.DevExpress().CheckBoxListFor(model => model.EstadosConsultar,
-                        settings =>
-                        {
+                        settings => {
                             settings.Name = "cbl_estados";
                             settings.Properties.ValueField = "Codigo";
                             settings.Properties.TextField = "Descripcion";
@@ -85,25 +92,13 @@
                                     }
                                 }
                             };
-                           
+
                             //settings.Properties.RepeatColumns = 5;
-                        }).BindList(Model.EstadosPosibles).GetHtml()   
+                        }).BindList(Model.EstadosPosibles).GetHtml()
                     </div>
                 </fieldset>
             </div>
 
-
-        <div class="btn-toolbar floatLeft" style="margin-left: 70px">
-                <div style="height: 0px; width: 100%"></div>
-                <div class="btn-group">
-                    <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
-                </div>
-                <div class="btn-group" style="margin-left: 10px">
-                    <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" value="Imprimir" />
-                </div>
-            </div>
-
-           
             <div class="clear-both"></div>
 
         </div>

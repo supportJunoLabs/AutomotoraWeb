@@ -17,6 +17,9 @@ namespace AutomotoraWeb.Controllers.Financing
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
+            ViewBag.Sucursales = Sucursal.Sucursales;
+            ViewBag.Monedas = Moneda.Monedas;
+            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
         }
 
         #region Listados
@@ -27,9 +30,6 @@ namespace AutomotoraWeb.Controllers.Financing
             string s = SessionUtils.generarIdVarSesion("ListadoCaja", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
-            ViewBag.Sucursales = Sucursal.Sucursales;
-            ViewBag.Monedas= Moneda.Monedas;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             ViewData["idParametros"] = model.idParametros;
             model.Resultado = _obtenerListado(model);
             return View(model);
@@ -39,9 +39,9 @@ namespace AutomotoraWeb.Controllers.Financing
         public ActionResult List(ListadoCajasModel model) {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            ViewBag.Sucursales = Sucursal.Sucursales;
-            ViewBag.Monedas = Moneda.Monedas;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            //ViewBag.Sucursales = Sucursal.Sucursales;
+            //ViewBag.Monedas = Moneda.Monedas;
+            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
             this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
             this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(model.Filtro.Moneda));

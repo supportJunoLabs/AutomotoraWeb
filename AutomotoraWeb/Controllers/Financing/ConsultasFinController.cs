@@ -18,6 +18,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
             ViewBag.Clientes = Cliente.Clientes();
+            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
         }
 
 
@@ -179,7 +180,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             string s = SessionUtils.generarIdVarSesion("ListadoCaja", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             ViewData["idParametros"] = model.idParametros;
             model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.SITUACION_CUOTAS;
             model.obtenerListado();
@@ -191,7 +192,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListSitCuotas(ListadoCuotasValesModel model, string btnSubmit) {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
             if (ModelState.IsValid) {
                 //if (model.Accion==ListadoCuotasValesModel.ACCIONES.IMPRIMIR){
@@ -288,7 +289,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             string s = SessionUtils.generarIdVarSesion("ListadoCuotasPend", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             ViewData["idParametros"] = model.idParametros;
             model.obtenerListado();
             return View(model);
@@ -298,7 +299,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListCuotasPendientes(ListadoCuotasValesModel model) {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
             if (ModelState.IsValid) {
                 if (model.Accion==ListadoCuotasValesModel.ACCIONES.IMPRIMIR){
@@ -383,7 +384,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             string s = SessionUtils.generarIdVarSesion("ListadoValesPend", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             ViewData["idParametros"] = model.idParametros;
             model.obtenerListado();
             return View(model);
@@ -393,7 +394,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListValesPendientes(ListadoCuotasValesModel model) {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
             if (ModelState.IsValid) {
                 if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
@@ -478,7 +479,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             string s = SessionUtils.generarIdVarSesion("ListadoCuotasValesPend", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             ViewData["idParametros"] = model.idParametros;
             model.obtenerListado();
             return View(model);
@@ -488,7 +489,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListCuotasValesPendientes(ListadoCuotasValesModel model) {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
             if (ModelState.IsValid) {
                 if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {

@@ -51,9 +51,18 @@
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")      
     
-    <div id="filtros" style="border: 1px solid #A3C0E8; margin-right: 5px">
+    <div id="filtros" class="block" style="margin-right: 5px">
+        <div class="btn-toolbar botoneraListado">
+            <div class="btn-group">
+                <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
+            </div>
+            <div class="btn-group" style="margin-left: 10px">
+                <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" value="Imprimir" />
+            </div>
+        </div>
+
         <div id="containerLinea1">
-            <div id ="filtro_objeto" class="floatLeft">
+            <div id="filtro_objeto" class="floatLeft">
                 <fieldset id="field_objecto">
                     <legend>Seña sobre</legend>
                     <div>
@@ -62,16 +71,16 @@
                     </div>
                     <div style="vertical-align: middle">
                         @Html.RadioButtonFor(model => model.Filtro.Vehiculos, false, new { id = "rb_pedidos" })  Pedidos
-                         <div style="margin-left:30px;" id="filtro_pedidos">
-                            <div class="">
-                                @Html.CheckBoxFor(model => model.Filtro.PedidosPendientes, new { id="cb_pedidos_pendientes"}) Pendientes
-                            </div>
-                            <div class="">
-                                @Html.CheckBoxFor(model => model.Filtro.PedidosRecibidos, new { id="cb_pedidos_recibidos"}) Recibidos
-                            </div>
-                        </div>
+                         <div style="margin-left: 30px;" id="filtro_pedidos">
+                             <div class="">
+                                 @Html.CheckBoxFor(model => model.Filtro.PedidosPendientes, new { id = "cb_pedidos_pendientes" }) Pendientes
+                             </div>
+                             <div class="">
+                                 @Html.CheckBoxFor(model => model.Filtro.PedidosRecibidos, new { id = "cb_pedidos_recibidos" }) Recibidos
+                             </div>
+                         </div>
                     </div>
-                 </fieldset>
+                </fieldset>
             </div>
 
             <div id="filtro_estado" class="floatLeft">
@@ -130,11 +139,11 @@
                 </fieldset>
             </div>
 
-            <div class="clear-both"></div> 
+            <div class="clear-both"></div>
 
         </div>
-         <div id="containerLinea2">
-             <div id="filtro_cliente" class="floatLeft">
+        <div id="containerLinea2">
+            <div id="filtro_cliente" class="floatLeft">
                 <fieldset id="fieldsetcliente">
                     <legend>Cliente</legend>
                     <div>
@@ -158,17 +167,9 @@
                 </fieldset>
             </div>
 
-              <div class="btn-toolbar floatLeft" style="margin-left: 70px">
-                <div style="height: 0px; width: 100%"></div>
-                <div class="btn-group">
-                    <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
-                </div>
-                <div class="btn-group" style="margin-left: 10px">
-                    <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" value="Imprimir" />
-                </div>
-            </div>
 
-            <div class="clear-both"></div> 
+
+            <div class="clear-both"></div>
 
         </div>
 

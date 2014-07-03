@@ -29,10 +29,10 @@
     ig.TypeOfModel = typeof(DLL_Backend.Cheque);
 
     ig.AccionesAlComienzo = true;
-    ig.AddButton(new BotonGrilla("ConsultaCheque", ChequesListController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
+    ig.AddButton(new BotonGrilla("ConsultaCheque", ChequesController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
     
     ig.DobleClick = true;
-    ig.ControladorDobleClick = ChequesListController.CONTROLLER;
+    ig.ControladorDobleClick = ChequesController.CONTROLLER;
     ig.AccionDobleClick = "ConsultaCheque";
 
     ViewBag.InfoGrilla = ig;

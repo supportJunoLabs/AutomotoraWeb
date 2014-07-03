@@ -35,10 +35,10 @@
     ig.TypeOfModel = typeof(DLL_Backend.MovimientoCajaCheque);
 
     ig.AccionesAlComienzo = true;
-    ig.AddButton(new BotonGrilla("ConsultaCheque", ChequesListController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
+    ig.AddButton(new BotonGrilla("ConsultaCheque", ChequesController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
 
     ig.DobleClick = true;
-    ig.ControladorDobleClick = ChequesListController.CONTROLLER;
+    ig.ControladorDobleClick = ChequesController.CONTROLLER;
     ig.AccionDobleClick = "ConsultaCheque";
     ig.registrosPorPagina = 20;
 

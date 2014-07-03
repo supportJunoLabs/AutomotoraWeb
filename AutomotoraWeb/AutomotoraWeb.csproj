@@ -235,7 +235,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\Bank\ChequesListController.cs" />
+    <Compile Include="Controllers\Bank\ChequesController.cs" />
     <Compile Include="Controllers\Bank\Maintenance\CuentasBancariasController.cs" />
     <Compile Include="Controllers\Financing\CajaController.cs" />
     <Compile Include="Controllers\Financing\ConsultasFinController.cs" />
@@ -271,6 +271,7 @@
     <Compile Include="Models\BotonAjaxGrilla.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ListadoChequesModel.cs" />
     <Compile Include="Models\ListadoCuotasValesModel.cs" />
     <Compile Include="Models\ListadoCajasModel.cs" />
     <Compile Include="Models\ListadoDocumentacionModel.cs" />
@@ -1589,6 +1590,7 @@
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\CuotasValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\PedidosGestion.js" />
     <Content Include="Scripts\AutomotoraWeb\SitCliente.js" />
@@ -1758,7 +1760,7 @@
     <Content Include="Views\ConsultasFin\_sitClienteCheques.cshtml" />
     <Content Include="Views\ConsultasFin\ConsultaVale.cshtml" />
     <Content Include="Views\ConsultasFin\ConsultaFinanciacion.cshtml" />
-    <Content Include="Views\ChequesList\ConsultaCheque.cshtml" />
+    <Content Include="Views\Cheques\ConsultaCheque.cshtml" />
     <Content Include="Views\ConsultasFin\ReportSitCliente.cshtml" />
     <Content Include="Views\ConsultasFin\_reportSitCliente.cshtml" />
     <Content Include="Views\Caja\list.cshtml" />
@@ -1806,11 +1808,14 @@
     <Content Include="Views\ConsultasFin\_listGrillaCuotasValesPendientesCli.cshtml" />
     <Content Include="Views\ConsultasFin\_listGrillaCuotasValesPendientesMes.cshtml" />
     <Content Include="Views\ConsultasFin\_listCuotasValesPendientes.cshtml" />
+    <Content Include="Views\Cheques\ListCheques.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
     <Folder Include="Reports\Transacciones\" />
+    <Folder Include="Views\Cuotas\" />
+    <Folder Include="Views\Vales\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

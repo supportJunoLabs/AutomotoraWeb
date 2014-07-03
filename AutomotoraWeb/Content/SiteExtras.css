@@ -90,3 +90,15 @@ a.hipervinculo {
     margin-right: 10px;
     width: 120px;
 }
+
+.botoneraListado {
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #dddddd), color-stop(1, #fafafa));
+    padding-left: 1em;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #a6a6a6;
+    margin-top:0px;
+    height: 35px;
+    padding-top:5px;
+    padding-left: 10px;
+    vertical-align:middle;
+}
