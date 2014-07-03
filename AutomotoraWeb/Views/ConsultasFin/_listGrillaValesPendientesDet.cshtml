@@ -33,10 +33,10 @@
     ig.registrosPorPagina = 20;
 
     ig.AccionesAlComienzo = true;
-    ig.AddButton(new BotonGrilla("ConsultaVale", ConsultasFinController.CONTROLLER, "boton-consultar-mf", "Consulta Financiacion"));
+    ig.AddButton(new BotonGrilla("ConsultaVale", ValesController.CONTROLLER, "boton-consultar-mf", "Consulta Financiacion"));
 
     ig.DobleClick = true;
-    ig.ControladorDobleClick = ConsultasFinController.CONTROLLER;
+    ig.ControladorDobleClick = ValesController.CONTROLLER;
     ig.AccionDobleClick = "ConsultaVale";
 
     ViewBag.InfoGrilla = ig;

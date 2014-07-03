@@ -125,28 +125,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         #endregion
 
 
-        #region ConsultaVales
-
-        private Vale _consultarVale(string idVale) {
-            Vale v = new Vale();
-            if (idVale != null && idVale.Trim() != "") {
-                v.Codigo = idVale;
-                v.Consultar();
-            }
-            ViewData["idParametros"] = v.Codigo;
-            return v;
-        }
-
-        public ActionResult ConsultaVale(string idVale) {
-            Vale v = _consultarVale(idVale);
-            return View("ConsultaVale", v);
-        }
-
-        //public ActionResult ConsultaValeCliente(int? idCliente) { 
-
-        //}
-
-        #endregion
+      
 
         #region ConsultaFinanciacion
 
@@ -244,39 +223,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
 
-        private void setParamsToReport(XtraReport report, ListadoCuotasValesModel model) {
-            Parameter param = new Parameter();
-            param.Name = "detalleFiltros";
-            param.Type = typeof(string);
-            param.Value = model.detallesFiltro();
-            param.Description = "Detalle Filtros";
-            param.Visible = false;
-            report.Parameters.Add(param);
-
-            string s = "TITULO REPORTE";
-            switch (model.TipoListado) {
-                case ListadoCuotasValesModel.TIPO_LISTADO.SITUACION_CUOTAS:
-                    s = "SITUACION CUOTAS";
-                    break;
-                case ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_PENDIENTES:
-                    s = "CUOTAS PENDIENTES";
-                    break;
-                case ListadoCuotasValesModel.TIPO_LISTADO.VALES_PENDIENTES:
-                    s = "VALES PENDIENTES";
-                    break;
-                case ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_VALES_PENDIENTES:
-                    s = "CUOTAS Y VALES PENDIENTES";
-                    break;
-            }
-
-            Parameter param1 = new Parameter();
-            param1.Name = "tituloReporte";
-            param1.Type = typeof(string);
-            param1.Value = s;
-            param1.Description = "Titulo Reporte";
-            param1.Visible = false;
-            report.Parameters.Add(param1);
-        }
+    
 
         #endregion
 
@@ -553,6 +500,40 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         #endregion
+
+        private void setParamsToReport(XtraReport report, ListadoCuotasValesModel model) {
+            Parameter param = new Parameter();
+            param.Name = "detalleFiltros";
+            param.Type = typeof(string);
+            param.Value = model.detallesFiltro();
+            param.Description = "Detalle Filtros";
+            param.Visible = false;
+            report.Parameters.Add(param);
+
+            string s = "TITULO REPORTE";
+            switch (model.TipoListado) {
+                case ListadoCuotasValesModel.TIPO_LISTADO.SITUACION_CUOTAS:
+                    s = "SITUACION CUOTAS";
+                    break;
+                case ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_PENDIENTES:
+                    s = "CUOTAS PENDIENTES";
+                    break;
+                case ListadoCuotasValesModel.TIPO_LISTADO.VALES_PENDIENTES:
+                    s = "VALES PENDIENTES";
+                    break;
+                case ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_VALES_PENDIENTES:
+                    s = "CUOTAS Y VALES PENDIENTES";
+                    break;
+            }
+
+            Parameter param1 = new Parameter();
+            param1.Name = "tituloReporte";
+            param1.Type = typeof(string);
+            param1.Value = s;
+            param1.Description = "Titulo Reporte";
+            param1.Visible = false;
+            report.Parameters.Add(param1);
+        }
 
     }
 }
