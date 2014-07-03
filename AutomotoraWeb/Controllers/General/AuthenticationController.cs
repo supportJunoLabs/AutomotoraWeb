@@ -94,6 +94,14 @@ namespace AutomotoraWeb.Controllers.General {
 
         [HttpGet]
         public ActionResult Logout() {
+            string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
+            Usuario u = new Usuario();
+            u.Username = userName;
+            try {
+                u.Logout();
+            } catch { 
+                //lo saco igual.
+            }
             FormsAuthentication.SignOut();
             Session.Remove(SessionUtils.SESSION_USER_NAME);
             return View(LOGIN);
