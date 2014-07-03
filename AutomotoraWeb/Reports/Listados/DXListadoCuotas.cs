@@ -94,7 +94,6 @@ public class DXListadoCuotas : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel52 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel51 = new DevExpress.XtraReports.UI.XRLabel();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrDetalleFiltros = new DevExpress.XtraReports.UI.XRLabel();
@@ -138,6 +137,7 @@ public class DXListadoCuotas : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel6 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel5 = new DevExpress.XtraReports.UI.XRLabel();
             this.CuotaNro = new DevExpress.XtraReports.UI.CalculatedField();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
@@ -188,10 +188,6 @@ public class DXListadoCuotas : DevExpress.XtraReports.UI.XtraReport {
             this.BottomMargin.Name = "BottomMargin";
             this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.BottomMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
-            // 
-            // bindingSource1
-            // 
-            this.bindingSource1.DataSource = typeof(DLL_Backend.ListadoCuotasVales);
             // 
             // ReportHeader
             // 
@@ -708,7 +704,11 @@ public class DXListadoCuotas : DevExpress.XtraReports.UI.XtraReport {
             this.CuotaNro.Expression = "ToStr([Cuotas.Numero])  +  \'/\' + ToStr([Cuotas.NumeroCuotaSet])";
             this.CuotaNro.Name = "CuotaNro";
             // 
-            // DXListadoSituacionCuotas
+            // bindingSource1
+            // 
+            this.bindingSource1.DataSource = typeof(DLL_Backend.ListadoCuotasVales);
+            // 
+            // DXListadoCuotas
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
             this.Detail,

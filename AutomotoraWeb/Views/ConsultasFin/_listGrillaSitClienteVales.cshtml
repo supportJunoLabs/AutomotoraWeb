@@ -30,10 +30,10 @@
     ig.TypeOfModel = typeof(DLL_Backend.Vale);
 
     ig.AccionesAlComienzo = true;
-    ig.AddButton(new BotonGrilla("ConsultaVale", ConsultasFinController.CONTROLLER, "boton-consultar-mf", "Consulta Vale"));
+    ig.AddButton(new BotonGrilla("ConsultaVale", ValesController.CONTROLLER, "boton-consultar-mf", "Consulta Vale"));
     
     ig.DobleClick = true;
-    ig.ControladorDobleClick = ConsultasFinController.CONTROLLER;
+    ig.ControladorDobleClick = ValesController.CONTROLLER;
     ig.AccionDobleClick = "ConsultaVale";
 
     ViewBag.InfoGrilla = ig;

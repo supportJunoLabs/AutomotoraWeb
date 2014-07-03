@@ -241,6 +241,7 @@
     <Compile Include="Controllers\Financing\ConsultasFinController.cs" />
     <Compile Include="Controllers\Financing\Maintenance\FinancistasController.cs" />
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
+    <Compile Include="Controllers\Financing\ValesController.cs" />
     <Compile Include="Controllers\Sales\DocumentacionController.cs" />
     <Compile Include="Controllers\Sales\SeniasController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
@@ -286,6 +287,9 @@
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Listados\DXListadoCheques.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Listados\DXListadoVales.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1758,7 +1762,7 @@
     <Content Include="Views\ConsultasFin\_sitClienteCuotas.cshtml" />
     <Content Include="Views\ConsultasFin\_sitClienteVales.cshtml" />
     <Content Include="Views\ConsultasFin\_sitClienteCheques.cshtml" />
-    <Content Include="Views\ConsultasFin\ConsultaVale.cshtml" />
+    <Content Include="Views\Vales\ConsultaVale.cshtml" />
     <Content Include="Views\ConsultasFin\ConsultaFinanciacion.cshtml" />
     <Content Include="Views\Cheques\ConsultaCheque.cshtml" />
     <Content Include="Views\ConsultasFin\ReportSitCliente.cshtml" />
@@ -1809,13 +1813,16 @@
     <Content Include="Views\ConsultasFin\_listGrillaCuotasValesPendientesMes.cshtml" />
     <Content Include="Views\ConsultasFin\_listCuotasValesPendientes.cshtml" />
     <Content Include="Views\Cheques\ListCheques.cshtml" />
+    <Content Include="Views\Cheques\_listCheques.cshtml" />
+    <Content Include="Views\Cheques\_listGrillaCheques.cshtml" />
+    <Content Include="Views\Cheques\ReportCheques.cshtml" />
+    <Content Include="Views\Cheques\_reportCheques.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
     <Folder Include="Reports\Transacciones\" />
     <Folder Include="Views\Cuotas\" />
-    <Folder Include="Views\Vales\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1832,6 +1839,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\Listados\DXListadoCheques.resx">
+      <DependentUpon>DXListadoCheques.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoVales.resx">
       <DependentUpon>DXListadoVales.cs</DependentUpon>
     </EmbeddedResource>
