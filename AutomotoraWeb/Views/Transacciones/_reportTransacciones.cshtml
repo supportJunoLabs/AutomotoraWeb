@@ -1,0 +1,16 @@
+﻿@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoReporte ir = new InfoReporte();
+    ir.AccionReporte = "ReportTransaccionesPartial";
+    ir.Controlador = TransaccionesController.CONTROLLER;
+    ir.AccionExportacion = "ReportTransaccionesExport";
+    ir.TieneIdParametros= true;
+
+    ViewBag.InfoReporte = ir;
+    }
+
+@Html.Partial("_generalReport")
+
+

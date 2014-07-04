@@ -1,0 +1,28 @@
+﻿@model DLL_Backend.Vale
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    ViewBag.Title = "Consulta Vales Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Venta.Cliente)
+</div>
+<div class="editor-field editor-field-xlarge xxlarge">
+    @Html.DdlOrDisplayFor(model => model.Venta.Cliente.Codigo, false, model => model.Venta.Cliente.Nombre,
+                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), "--Seleccionar Cliente--",
+                new { id = "ddlClientes", @class = "xxlarge" })
+</div>
+<div class="clear-both"></div>
+
+<div id="divConsulta">
+    CONSULTA VALE PENDIENTE
+   @* @Html.Partial("_sitCliente", Model)*@
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/ValesCliente.js"></script>
+}

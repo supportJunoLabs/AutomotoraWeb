@@ -235,8 +235,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Bank\ChequesController.cs" />
     <Compile Include="Controllers\Bank\Maintenance\CuentasBancariasController.cs" />
+    <Compile Include="Controllers\Financing\CajaController.cs" />
+    <Compile Include="Controllers\Financing\ConsultasFinController.cs" />
     <Compile Include="Controllers\Financing\Maintenance\FinancistasController.cs" />
+    <Compile Include="Controllers\Financing\TransaccionesController.cs" />
+    <Compile Include="Controllers\Financing\ValesController.cs" />
     <Compile Include="Controllers\Sales\DocumentacionController.cs" />
     <Compile Include="Controllers\Sales\SeniasController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
@@ -267,6 +272,10 @@
     <Compile Include="Models\BotonAjaxGrilla.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ListadoTransaccionesModel.cs" />
+    <Compile Include="Models\ListadoChequesModel.cs" />
+    <Compile Include="Models\ListadoCuotasValesModel.cs" />
+    <Compile Include="Models\ListadoCajasModel.cs" />
     <Compile Include="Models\ListadoDocumentacionModel.cs" />
     <Compile Include="Models\ListadoVentasModel.cs" />
     <Compile Include="Models\ListadoSeniasModel.cs" />
@@ -276,8 +285,33 @@
     <Compile Include="Models\ListadoPedidosModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />
+    <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Listados\DXListadoTransacciones.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoCheques.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoVales.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoCuotasValesMes.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoCuotasValesCli.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoCuotas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoMovsCajaCheques.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXListadoMovsCajaEfectivo.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Listados\DXListadoVentas.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -294,6 +328,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Listados\DXListadoDocumentacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Listados\DXSituacionCliente.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportClientes.cs">
@@ -1560,7 +1597,12 @@
     <Content Include="Content\Images\vssver2.scc" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\TransaccionesListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\CuotasValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\PedidosGestion.js" />
+    <Content Include="Scripts\AutomotoraWeb\SitCliente.js" />
     <Content Include="Scripts\AutomotoraWeb\VentasListado.js" />
     <Content Include="Scripts\AutomotoraWeb\SeniasListado.js" />
     <Content Include="Scripts\AutomotoraWeb\PedidosListado.js" />
@@ -1720,11 +1762,76 @@
     <Content Include="Views\Senias\details.cshtml" />
     <Content Include="Views\Ventas\details.cshtml" />
     <Content Include="Views\Pedidos\recibir.cshtml" />
+    <Content Include="Views\ConsultasFin\ListSitCliente.cshtml" />
+    <Content Include="Views\ConsultasFin\_listSitCliente.cshtml" />
+    <Content Include="Views\ConsultasFin\_sitClienteCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_sitClienteVales.cshtml" />
+    <Content Include="Views\ConsultasFin\_sitClienteCheques.cshtml" />
+    <Content Include="Views\Vales\ConsultaVale.cshtml" />
+    <Content Include="Views\ConsultasFin\ConsultaFinanciacion.cshtml" />
+    <Content Include="Views\Cheques\ConsultaCheque.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportSitCliente.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportSitCliente.cshtml" />
+    <Content Include="Views\Caja\list.cshtml" />
+    <Content Include="Views\Caja\_listGrillaCheques.cshtml" />
+    <Content Include="Views\Caja\_listCheques.cshtml" />
+    <Content Include="Views\Caja\_listEfectivo.cshtml" />
+    <Content Include="Views\Caja\_listGrillaEfectivo.cshtml" />
+    <Content Include="Views\Transacciones\List.cshtml" />
+    <Content Include="Views\Transacciones\Transaccion.cshtml" />
+    <Content Include="Views\Caja\Report.cshtml" />
+    <Content Include="Views\Caja\_report.cshtml" />
+    <Content Include="Views\ConsultasFin\ListSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_listSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportSitCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaSitClienteCuotas.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaSitClienteCheques.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaSitClienteVales.cshtml" />
+    <Content Include="Views\ConsultasFin\ListCuotasPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasPendientesDet.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasPendientesDet.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportCuotasPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportCuotasPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\ListValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listValesPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listValesPendientesDet.cshtml" />
+    <Content Include="Views\ConsultasFin\_listValesPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaValesPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaValesPendientesDet.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaValesPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\ReportCuotasValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\ListCuotasValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_reportCuotasValesPendientes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasValesPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasValesPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasValesPendientesCli.cshtml" />
+    <Content Include="Views\ConsultasFin\_listGrillaCuotasValesPendientesMes.cshtml" />
+    <Content Include="Views\ConsultasFin\_listCuotasValesPendientes.cshtml" />
+    <Content Include="Views\Cheques\ListCheques.cshtml" />
+    <Content Include="Views\Cheques\_listCheques.cshtml" />
+    <Content Include="Views\Cheques\_listGrillaCheques.cshtml" />
+    <Content Include="Views\Cheques\ReportCheques.cshtml" />
+    <Content Include="Views\Cheques\_reportCheques.cshtml" />
+    <Content Include="Views\Transacciones\ReportTransacciones.cshtml" />
+    <Content Include="Views\Transacciones\_reportTransacciones.cshtml" />
+    <Content Include="Views\Transacciones\_listGrillaTransacciones.cshtml" />
+    <Content Include="Views\Transacciones\_listTransacciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
     <Folder Include="Reports\Transacciones\" />
+    <Folder Include="Views\Cuotas\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1741,6 +1848,30 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\Listados\DXListadoTransacciones.resx">
+      <DependentUpon>DXListadoTransacciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoCheques.resx">
+      <DependentUpon>DXListadoCheques.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoVales.resx">
+      <DependentUpon>DXListadoVales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoCuotasValesMes.resx">
+      <DependentUpon>DXListadoCuotasValesMes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoCuotasValesCli.resx">
+      <DependentUpon>DXListadoCuotasValesCli.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoCuotas.resx">
+      <DependentUpon>DXListadoCuotas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoMovsCajaCheques.resx">
+      <DependentUpon>DXListadoMovsCajaCheques.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXListadoMovsCajaEfectivo.resx">
+      <DependentUpon>DXListadoMovsCajaEfectivo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoVentas.resx">
       <DependentUpon>DXListadoVentas.cs</DependentUpon>
     </EmbeddedResource>
@@ -1758,6 +1889,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoDocumentacion.resx">
       <DependentUpon>DXListadoDocumentacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Listados\DXSituacionCliente.resx">
+      <DependentUpon>DXSituacionCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportClientes.resx">
       <DependentUpon>DXReportClientes.cs</DependentUpon>

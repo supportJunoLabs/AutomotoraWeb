@@ -1,0 +1,46 @@
+﻿@model List<DLL_Backend.Vale>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+             new ColumnaGrilla {Campo="VehiculoOrigen", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="VehiculoOrigen.Codigo"},
+            new ColumnaGrilla {Campo="Codigo", Ancho=70, Titulo="Codigo"},
+            new ColumnaGrilla {Campo="Vencimiento", Ancho=80, Titulo="F.Vencimiento"},
+            new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},
+            new ColumnaGrilla {Campo="ImporteCobrado", Ancho=150, Titulo="Pago"},
+            new ColumnaGrilla {Campo="FechaCobro", Ancho=80, Titulo="F.Pago"},
+            new ColumnaGrilla {Campo="DescripcionEstado", Ancho=80, Titulo="Estado"},
+            new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista",
+                Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="Financista.Codigo"},
+            new ColumnaGrilla {Campo="Venta.Cliente.Nombre", Ancho=200, Titulo="Cliente", LargoMax=40,
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Venta.Cliente.Codigo"},
+            new ColumnaGrilla {Campo="Observaciones", Ancho=200, Titulo="Observaciones"}
+     };
+                        
+        
+    ig.NameGrid = "grillaValesPendienteDet";
+    ig.Controller = ConsultasFinController.CONTROLLER;
+    ig.ActionCallbackRoute = "ListGrillaValesPendientesDet";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Cuota);
+    ig.registrosPorPagina = 20;
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ConsultaVale", ValesController.CONTROLLER, "boton-consultar-mf", "Consulta Financiacion"));
+
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = ValesController.CONTROLLER;
+    ig.AccionDobleClick = "ConsultaVale";
+
+    ViewBag.InfoGrilla = ig;
+}   
+
+@Html.Partial("_generalGrid", Model)
+

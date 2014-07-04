@@ -1,0 +1,29 @@
+﻿@model AutomotoraWeb.Models.ListadoCajasModel
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
+
+ <div style="padding-bottom:30px">
+@*      <div class="btn-group floatLeft" style="padding-bottom:20px" >
+        <input type="button" id="btn_imprimir_cheques" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir Efectivo" value="Imprimir" />
+    </div>*@
+        <div class="floatLeft label-large" style="padding-left: 180px;">
+            <div class="display-label-small">Saldo Inicial: </div>
+            @Html.DisplayFor(m => m.Resultado.SaldoInicialCheques.ImporteTexto)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+
+    @Html.Partial("_listGrillaCheques", Model.Resultado.MovimientosCheques)
+
+    <div style="padding-top: 20px;padding-bottom:30px">
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Total Movimientos: </div>
+            @Html.DisplayFor(m => m.Resultado.TotalMovsCheques.ImporteTexto)
+        </div>
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Saldo Final: </div>
+            @Html.DisplayFor(m => m.Resultado.SaldoFinalCheques.ImporteTexto)
+        </div>
+    </div>
+    <div class="clear-both"></div>

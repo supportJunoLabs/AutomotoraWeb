@@ -1,0 +1,41 @@
+﻿@model List<DLL_Backend.ListadoCuotasValesRegistroCliente>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Cliente.Nombre", Ancho=200, Titulo="Cliente", LargoMax=40,
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Cliente.Codigo"},
+            new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista",
+                Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="Financista.Codigo"},
+            new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},
+            new ColumnaGrilla {Campo="ACuenta", Ancho=150, Titulo="Pago"},
+            new ColumnaGrilla {Campo="Saldo", Ancho=150, Titulo="Saldo"},
+            new ColumnaGrilla {Campo="Cantidad", Ancho=150, Titulo="Cantidad"}
+     };
+                        
+        
+    ig.NameGrid = "grillaCuotasValesPendienteCli";
+    ig.Controller = ConsultasFinController.CONTROLLER;
+    ig.ActionCallbackRoute = "ListGrillaCuotasValesPendientesCli";
+    ig.KeyFieldName = "CodigoCliente";
+    ig.TypeOfModel = typeof(DLL_Backend.ListadoCuotasValesRegistroCliente);
+    ig.registrosPorPagina = 20;
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ListSitCliente", ConsultasFinController.CONTROLLER, "boton-consultar-mf", "Consulta Situación Cliente"));
+
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = ConsultasFinController.CONTROLLER;
+    ig.AccionDobleClick = "ListSitCliente";
+
+    ViewBag.InfoGrilla = ig;
+}   
+
+@Html.Partial("_generalGrid", Model)
+

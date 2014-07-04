@@ -1,4 +1,8 @@
-﻿.floatLeft {
+﻿input[readonly] {
+    cursor: default;
+}
+
+.floatLeft {
     float: left;
 }
 
@@ -53,4 +57,48 @@ a.visited.hipervinculo {
 
 a.hipervinculo {
     text-decoration: underline;
+}
+
+.label-mini  {
+    width: 60px;
+}
+
+.label-small  {
+    width: 120px;
+}
+
+.label-medium {
+    width: 150px;
+}
+
+.label-large {
+    width: 250px;
+}
+
+.label-xlarge {
+    width: 420px;
+}
+
+.label-xxlarge  {
+    width: 530px;
+}
+
+.display-label-small {
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+    width: 120px;
+}
+
+.botoneraListado {
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #dddddd), color-stop(1, #fafafa));
+    padding-left: 1em;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #a6a6a6;
+    margin-top:0px;
+    height: 35px;
+    padding-top:5px;
+    padding-left: 10px;
+    vertical-align:middle;
 }

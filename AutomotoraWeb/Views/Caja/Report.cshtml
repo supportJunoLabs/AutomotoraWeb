@@ -1,0 +1,16 @@
+﻿@model AutomotoraWeb.Models.ListadoCajasModel
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Models;
+
+@{ 
+    ViewBag.Title = "Listado Movimientos de Caja";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.LIST).Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
+
+
+ @Html.Partial("_report")

@@ -1,0 +1,42 @@
+﻿@model AutomotoraWeb.Models.SituacionCliente
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Codigo", Ancho=70, Titulo = "Vale", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                Hipervinculo=true, Haccion="ConsultaVale", Hcontrolador="ConsultasFin", HCampoParametro="Codigo"},
+            new ColumnaGrilla {Campo="Vencimiento", Ancho=80, Titulo="F.Vencimiento"},
+            new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},
+            new ColumnaGrilla {Campo="ImporteCobrado", Ancho=150, Titulo="Pago"},
+            new ColumnaGrilla {Campo="FechaCobro", Ancho=80, Titulo="F.Pago"},
+            new ColumnaGrilla {Campo="DescripcionEstado", Ancho=80, Titulo="Estado"},
+            new ColumnaGrilla {Campo="Venta.Vehiculo", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="Venta.Vehiculo.Codigo"},
+            new ColumnaGrilla {Campo="Observaciones", Ancho=200}
+    };
+            
+        
+    ig.NameGrid = "grilla_vales";
+    ig.Controller = ConsultasFinController.CONTROLLER;
+    ig.ActionCallbackRoute = "GrillaValesCliente";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Vale);
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ConsultaVale", ValesController.CONTROLLER, "boton-consultar-mf", "Consulta Vale"));
+    
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = ValesController.CONTROLLER;
+    ig.AccionDobleClick = "ConsultaVale";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model.Vales)

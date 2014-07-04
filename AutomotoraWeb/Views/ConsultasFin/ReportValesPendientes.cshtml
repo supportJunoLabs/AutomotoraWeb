@@ -1,0 +1,15 @@
+﻿@model AutomotoraWeb.Models.ListadoCuotasValesModel
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Cuotas Pendientes";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", "ListValesPendientes").Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reportValesPendientes", Model)

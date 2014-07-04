@@ -1,0 +1,30 @@
+﻿@model AutomotoraWeb.Models.SituacionCliente
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+
+@Html.Partial("_listGrillaSitClienteVales", Model)
+
+<div class="clear-both"></div>
+<div style="padding-top: 20px">
+    <div class="floatLeft label-large">
+        <div class="display-label-small"> Total Vales: </div> 
+        @Html.DisplayFor(m => m.TotalVales.ImporteTexto)
+
+    </div>
+    <div class="floatLeft label-large">
+         <div class="display-label-small"> Pago Vales: </div>
+        @Html.DisplayFor(m => m.TotalPagoVales.ImporteTexto)
+
+    </div>
+    <div class="floatLeft label-large">
+         <div class="display-label-small"> Saldo Vales: </div>
+        @Html.DisplayFor(m => m.TotalSaldoVales.ImporteTexto)
+
+    </div>
+</div>
+<div class="clear-both"></div>

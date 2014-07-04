@@ -99,7 +99,7 @@ namespace AutomotoraWeb.Controllers.Financing.Maintenance
         }
 
         private List<Financista> _listaElementos() {
-            return Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            return Financista.FinancistasTodos;
         }
 
         //-----------------------------------------------------------------------------------------------------

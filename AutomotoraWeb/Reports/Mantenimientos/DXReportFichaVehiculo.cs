@@ -216,9 +216,9 @@ public class DXReportFichaVehiculo : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel63 = new DevExpress.XtraReports.UI.XRLabel();
             this.DetailReport2 = new DevExpress.XtraReports.UI.DetailReportBand();
             this.Detail3 = new DevExpress.XtraReports.UI.DetailBand();
+            this.xr_Foto = new DevExpress.XtraReports.UI.XRPictureBox();
             this.ReportHeader3 = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.xrLabel65 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xr_Foto = new DevExpress.XtraReports.UI.XRPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
@@ -987,7 +987,7 @@ public class DXReportFichaVehiculo : DevExpress.XtraReports.UI.XtraReport {
             this.Detail2,
             this.ReportHeader2,
             this.GroupHeader2});
-            this.DetailReport1.DataMember = "DocumentacionActiva";
+            this.DetailReport1.DataMember = "Documentacion";
             this.DetailReport1.DataSource = this.bindingSource1;
             this.DetailReport1.Level = 1;
             this.DetailReport1.Name = "DetailReport1";
@@ -1006,52 +1006,47 @@ public class DXReportFichaVehiculo : DevExpress.XtraReports.UI.XtraReport {
             // xrLabel54
             // 
             this.xrLabel54.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "DocumentacionActiva.Observaciones")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Documentacion.Observaciones")});
             this.xrLabel54.LocationFloat = new DevExpress.Utils.PointFloat(401.0417F, 0F);
             this.xrLabel54.Name = "xrLabel54";
             this.xrLabel54.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel54.SizeF = new System.Drawing.SizeF(238.9582F, 23F);
-            this.xrLabel54.Text = "xrLabel54";
             // 
             // xrLabel53
             // 
             this.xrLabel53.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "DocumentacionActiva.Poseedor")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Documentacion.Poseedor")});
             this.xrLabel53.LocationFloat = new DevExpress.Utils.PointFloat(301.0417F, 0F);
             this.xrLabel53.Name = "xrLabel53";
             this.xrLabel53.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel53.SizeF = new System.Drawing.SizeF(100F, 23F);
-            this.xrLabel53.Text = "xrLabel53";
             // 
             // xrLabel50
             // 
             this.xrLabel50.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "DocumentacionActiva.Estado.Descripcion")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Documentacion.Estado.Descripcion")});
             this.xrLabel50.LocationFloat = new DevExpress.Utils.PointFloat(201.0417F, 0F);
             this.xrLabel50.Name = "xrLabel50";
             this.xrLabel50.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel50.SizeF = new System.Drawing.SizeF(100F, 23F);
-            this.xrLabel50.Text = "xrLabel50";
             // 
             // xrLabel49
             // 
             this.xrLabel49.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "DocumentacionActiva.TipoDocumento.Nombre")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Documentacion.TipoDocumento.Nombre")});
             this.xrLabel49.LocationFloat = new DevExpress.Utils.PointFloat(74.5834F, 0F);
             this.xrLabel49.Name = "xrLabel49";
             this.xrLabel49.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel49.SizeF = new System.Drawing.SizeF(126.4583F, 23F);
-            this.xrLabel49.Text = "xrLabel49";
             // 
             // xrLabel48
             // 
             this.xrLabel48.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "DocumentacionActiva.Fecha", "{0:dd/MM/yy}")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Documentacion.Fecha", "{0:dd/MM/yy}")});
             this.xrLabel48.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 0F);
             this.xrLabel48.Name = "xrLabel48";
             this.xrLabel48.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel48.SizeF = new System.Drawing.SizeF(64.5834F, 23F);
-            this.xrLabel48.Text = "xrLabel48";
             // 
             // ReportHeader2
             // 
@@ -1156,6 +1151,14 @@ public class DXReportFichaVehiculo : DevExpress.XtraReports.UI.XtraReport {
             this.Detail3.MultiColumn.Mode = DevExpress.XtraReports.UI.MultiColumnMode.UseColumnWidth;
             this.Detail3.Name = "Detail3";
             // 
+            // xr_Foto
+            // 
+            this.xr_Foto.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 9.999974F);
+            this.xr_Foto.Name = "xr_Foto";
+            this.xr_Foto.SizeF = new System.Drawing.SizeF(132F, 99F);
+            this.xr_Foto.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
+            this.xr_Foto.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xr_Foto_BeforePrint);
+            // 
             // ReportHeader3
             // 
             this.ReportHeader3.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
@@ -1174,14 +1177,6 @@ public class DXReportFichaVehiculo : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel65.SizeF = new System.Drawing.SizeF(131.25F, 23F);
             this.xrLabel65.StylePriority.UseFont = false;
             this.xrLabel65.Text = "IMAGENES";
-            // 
-            // xr_Foto
-            // 
-            this.xr_Foto.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 9.999974F);
-            this.xr_Foto.Name = "xr_Foto";
-            this.xr_Foto.SizeF = new System.Drawing.SizeF(132F, 99F);
-            this.xr_Foto.Sizing = DevExpress.XtraPrinting.ImageSizeMode.StretchImage;
-            this.xr_Foto.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xr_Foto_BeforePrint);
             // 
             // DXReportFichaVehiculo
             // 

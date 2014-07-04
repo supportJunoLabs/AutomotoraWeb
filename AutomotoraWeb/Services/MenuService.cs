@@ -45,7 +45,7 @@ namespace AutomotoraWeb.Services {
 
             Usuario user = new Usuario();
             user.setearAuditoria(userName, IP);
-            user.Username = userName;
+            user.UserName = userName;
             List<OpcionMenu> listOpcionMenu = user.OpcionesHabilitadas();
             var orderedListOpcionMenu =
                 from m in listOpcionMenu

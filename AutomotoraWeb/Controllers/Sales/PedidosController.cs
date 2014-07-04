@@ -155,7 +155,7 @@ namespace AutomotoraWeb.Controllers.Sales
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
                     string IP = HttpContext.Request.UserHostAddress;
                     Usuario u = new Usuario();
-                    u.Username = userName;
+                    u.UserName = userName;
                     td.ModificarDatos(u, IP);
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {

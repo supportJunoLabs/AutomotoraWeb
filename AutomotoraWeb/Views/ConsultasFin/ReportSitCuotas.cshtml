@@ -1,0 +1,15 @@
+﻿@model AutomotoraWeb.Models.ListadoCuotasValesModel
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Situacion de Cuotas";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", "SitCuotas").Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reportSitCuotas", Model)
