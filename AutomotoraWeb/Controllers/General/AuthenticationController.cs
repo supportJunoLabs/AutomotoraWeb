@@ -35,7 +35,7 @@ namespace AutomotoraWeb.Controllers.General {
                     if (SecurityService.Instance.login(model.UserName, model.Password, IP)) {
 
                         Usuario usuario = new Usuario();
-                        usuario.Username = model.UserName;
+                        usuario.UserName = model.UserName;
                         usuario.Consultar(Usuario.MODO_CONSULTA.AVANZADO);
 
                         FormsAuthentication.SetAuthCookie(model.UserName, false);
@@ -96,7 +96,7 @@ namespace AutomotoraWeb.Controllers.General {
         public ActionResult Logout() {
             string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
             Usuario u = new Usuario();
-            u.Username = userName;
+            u.UserName = userName;
             try {
                 u.Logout();
             } catch { 

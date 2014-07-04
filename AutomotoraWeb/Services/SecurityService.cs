@@ -36,7 +36,7 @@ namespace AutomotoraWeb.Services {
 
         public bool login(string userName, string password, string ip) {
             Usuario user = new Usuario();
-            user.Username = userName;
+            user.UserName = userName;
             user.Clave = password;
             user.setearAuditoria(userName, ip);
 
@@ -47,7 +47,7 @@ namespace AutomotoraWeb.Services {
 
         public void changePassword(string userName, string actualPassword, string newPassword, string repeatNewPassword, string ip) {
             Usuario user = new Usuario();
-            user.Username = userName;
+            user.UserName = userName;
             user.Clave = actualPassword;
             user.setearAuditoria(userName, ip);
 
@@ -73,7 +73,7 @@ namespace AutomotoraWeb.Services {
             //}
 
             Usuario u = new Usuario();
-            u.Username = userName;
+            u.UserName = userName;
             OpcionMenu om = new OpcionMenu();
             om.Accion = action;
             om.Controlador = controller;
