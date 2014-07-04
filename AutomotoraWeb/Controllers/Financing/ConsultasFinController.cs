@@ -18,7 +18,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
             ViewBag.Clientes = Cliente.Clientes();
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            ViewBag.Financistas = Financista.FinancistasTodos;
         }
 
 

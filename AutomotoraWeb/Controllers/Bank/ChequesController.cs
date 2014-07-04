@@ -18,7 +18,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
             ViewBag.Sucursales = Sucursal.Sucursales;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            ViewBag.Financistas = Financista.FinancistasTodos;
         }
 
 

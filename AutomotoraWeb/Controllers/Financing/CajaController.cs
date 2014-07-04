@@ -19,7 +19,7 @@ namespace AutomotoraWeb.Controllers.Financing
             base.OnActionExecuting(filterContext);
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Monedas = Moneda.Monedas;
-            ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+            ViewBag.Financistas = Financista.FinancistasTodos;
         }
 
         #region Listados
