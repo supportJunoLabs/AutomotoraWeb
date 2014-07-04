@@ -25,7 +25,7 @@
     ViewBag.InfoGrilla = ig;
     
     if ((ViewBag.SoloLectura != null) && ((bool)ViewBag.SoloLectura)){
-        ig.Botones = new List<BotonGrilla>(); // Para no mostrar botones de detalles, edicion y eliminacion
+        ig.AddButton(new BotonAjaxGrilla(VehiculosController.DETAILS_GASTO, VehiculosController.CONTROLLER, "boton-consultar-mf boton-consultar-gasto", "Consulta gasto"));
     } else {
         ig.AddButton(new BotonAjaxGrilla(VehiculosController.DETAILS_GASTO, VehiculosController.CONTROLLER, "boton-consultar-mf boton-consultar-gasto", "Consulta gasto"));
         ig.AddButton(new BotonAjaxGrilla(VehiculosController.EDIT_GASTO, VehiculosController.CONTROLLER, "boton-editar-mf boton-editar-gasto", "Edición de Gasto"));

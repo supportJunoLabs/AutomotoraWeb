@@ -25,6 +25,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public const string DELETE_GASTO = "deleteGasto";
         public const string DETAILS_DOC = "detailDoc";
         public const string EDIT_DOC = "editDoc";
+        public const string DELETE_DOC = "deleteDoc";
 
         public const string OK = "OK";
         public const string ERROR = "ERROR";
@@ -531,6 +532,13 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return PartialView("_popupDocumentacion", docAuto);
         }
 
+        public ActionResult deleteDoc(int id) {
+            DocAuto docAuto = this._obtenerDocumentacion(id);
+            ViewBag.SoloLectura = true;
+            ViewBag.Estados = EstadoDocumento.EstadosDocumentoListables();
+            return PartialView("_popupDocumentacion", docAuto);
+        }
+
         public ActionResult listDocumentos(int idParametros) {
             ViewData["idParametros"] = idParametros;
             return PartialView("_listDocumentos", _listaDocumentos(idParametros));
@@ -547,7 +555,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
             if (errors.Count == 0) {
                 try {
-                    //docAuto.ModificarDatos();
+                    docAuto.ModificarDatos();
                     return Json(new { Result = "OK" });
                 } catch (UsuarioException exc) {
                     return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
@@ -558,10 +566,26 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         }
 
+        [HttpPost]
+        public ActionResult deleteDoc(DocAuto docAuto) {
+            try {
+                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                string IP = HttpContext.Request.UserHostAddress;
+                docAuto.Eliminar(userName, IP);
+
+                Vehiculo vehiculo = docAuto.Vehiculo;
+                vehiculo.Consultar();
+
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+            }
+        }
+
         private DocAuto _obtenerDocumentacion(int id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
             DocAuto docAuto = new DocAuto();
             docAuto.Codigo = id;
-            //docAuto.Consultar();
+            docAuto.Consultar();
             return docAuto;
         }
 

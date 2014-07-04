@@ -46,6 +46,22 @@
         </div>
     </div>
 
+    <div id="containerDeleteDocumentacionPopup" title="Eliminar Documentación" style="display: none;">
+        <div id="containerDeleteDocumentacionPopupForm">
+
+        </div>
+        <div>
+            <div class="floatLeft" style="margin-top: 15px;">
+                @(Html.Bootstrap().Button().Text("Eliminar").Id("deleteDocumentacion").Style(TwitterBootstrap2.ButtonStyle.Primary))
+                @(Html.Bootstrap().Button().Text("Cancelar").Id("cancelDeleteDocumentacion").Style(TwitterBootstrap2.ButtonStyle.Primary))
+            </div>
+            <div class="floatLeft">
+                <div id="messageErrorDeleteDocumentacion" style="margin-left: 15px; color: red;"></div>
+            </div>
+            <div class="clearBoth"></div>
+        </div>
+    </div>
+
 </div>
 
 
@@ -82,6 +98,23 @@
                 async: true,
                 data: 'id=' + id,
                 success: showEditDocumentacionPopup,
+                error: general_showErrorPopup
+            });
+
+        });
+
+        $(".boton-eliminar-doc").live("click", function () {
+
+            $("#messageErrorDeleteDocumentacion").html("");
+
+            var id = _getId($(this));
+
+            $.ajax({
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                type: 'GET',
+                async: true,
+                data: 'id=' + id,
+                success: showDeleteDocumentacionPopup,
                 error: general_showErrorPopup
             });
 
@@ -132,6 +165,15 @@
             general_closePopup("containerEditDocumentacionPopup");
         });
 
+        $("#deleteDocumentacion").live("click", function () {
+            var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            _eventClickActionGasto(urlAction, "containerDeleteDocumentacionPopup", "messageErrorDeleteDocumentacion");
+        });
+
+        $("#cancelDeleteDocumentacion").live("click", function () {
+            general_closePopup("containerDeleteDocumentacionPopup");
+        });
+
         /* ================================================== */
 
         function getJsonDocumentacion() {
@@ -171,6 +213,10 @@
 
     function showEditDocumentacionPopup(data) {
         general_showPopup(data, "containerEditDocumentacionPopup", 350, 760);
+    }
+
+    function showDeleteDocumentacionPopup(data) {
+        general_showPopup(data, "containerDeleteDocumentacionPopup", 220, 500);
     }
 
     /* ================================================== */

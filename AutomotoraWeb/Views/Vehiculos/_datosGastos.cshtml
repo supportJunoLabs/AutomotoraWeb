@@ -244,7 +244,7 @@
         
         $("#deleteGasto").live("click", function () {
             var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
-            _eventClickActionGasto(urlAction, "containerDeleteGastosPopup", "messageDeleteEditGasto");
+            _eventClickActionGasto(urlAction, "containerDeleteGastosPopup", "messageErrorDeleteGasto");
         });
 
         $("#cancelDeleteGasto").live("click", function () {
