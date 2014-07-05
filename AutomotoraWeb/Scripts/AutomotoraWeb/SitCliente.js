@@ -10,16 +10,17 @@
         type: "GET",
         url: '/ConsultasFin/ListSitClientePartial/',
         data: { "idCliente": selectedID },
-    success: function (data)
-    {
-        $('#divListado').html('');
-        $('#divListado').html(data);
-    },
-    error: function (xhr, ajaxOptions, thrownError)
-    {
-        alert('Error al traer los datos.');                    
-    }
-});
+        success: function (data) {
+            $('#divListado').html('');
+            $('#divListado').html(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            
+            alert('Error al traer los datos.');                    
+        },
+        beforeSend: showLoading,
+        complete: hideLoading
+    });
 
    
 
