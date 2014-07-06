@@ -1,0 +1,84 @@
+﻿@model DLL_Backend.MovBanco
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@Html.HiddenFor(m => m.ImporteMov.Moneda.Codigo)
+
+<div class="display-label">
+    Cuenta:
+</div>
+<div class="editor-field-xxlarge renglon-alto">
+    @Html.DisplayFor(model => model.Cuenta.Nombre, true)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label editor-date-field">
+    @Html.LabelForRequired(model => model.FechaMov)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.TextBoxOrdisplayFor(model => model.FechaMov, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+    @Html.ValidationMessageFor(model => model.FechaMov)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.ImporteMov)
+</div>
+<div class="editor-field editor-field-small renglon-alto" >
+    @Html.DdlOrDisplayImporteFor(model=>model.ImporteMov, (bool?)ViewBag.SoloLectura, true)
+    @Html.ValidationMessageFor(model => model.ImporteMov.Monto)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.TipoMov)
+</div>
+<div class="editor-field editor-field-small renglon-alto">
+    <div class="floatLeft">
+        @Html.RadioButtonFor(model => model.TipoMov, MovBanco.MOVBANCO_SALIDA, new { @checked = "checked" })  Debito
+    </div>
+    <div class="floatLeft" style="margin-left: 30px">
+        @Html.RadioButtonFor(model => model.TipoMov, MovBanco.MOVBANCO_ENTRADA)  Credito
+    </div>
+    @Html.ValidationMessageFor(model => model.TipoMov)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.ConceptoMov)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.ConceptoMov, (bool?)ViewBag.SoloLectura)
+    @Html.ValidationMessageFor(model => model.ConceptoMov)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.DescripcionMov)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.TextAreaOrDisplayFor(model => model.DescripcionMov, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+    @Html.ValidationMessageFor(model => model.DescripcionMov)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.ConciliadoMov)
+</div>
+<div class="renglon-alto">
+    @Html.CheckBoxOrDisplayFor(model => model.ConciliadoMov, true)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.FechaConciliado)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.DisplayFor(model => model.FechaConciliado)
+</div>
+<div class="clear-both"></div>
+
+<div class="espacio2"></div>
