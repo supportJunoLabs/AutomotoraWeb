@@ -50,20 +50,20 @@ namespace AutomotoraWeb.Helpers {
         public static MvcHtmlString DdlOrDisplayFor<TModel, TProperty, TProperty1>(this HtmlHelper<TModel> htmlHelper,
            Expression<Func<TModel, TProperty>> expression_ddl, bool? soloLectura,
            Expression<Func<TModel, TProperty1>> expression_label,
-           IEnumerable<SelectListItem> selectList, 
-            string optionLabel = null, 
+           IEnumerable<SelectListItem> selectList,
+            string optionLabel = null,
             object htmlAttributes = null) {
             if (!(soloLectura ?? false)) {
                 return htmlHelper.DropDownListFor(expression_ddl, selectList, optionLabel, htmlAttributes);
             } else {
                 return MvcHtmlString.Create(
-                     htmlHelper.DisplayFor(expression_label, htmlAttributes) .ToString() +
+                     htmlHelper.DisplayFor(expression_label, htmlAttributes).ToString() +
                       htmlHelper.HiddenFor(expression_ddl, htmlAttributes).ToString()
                 );
             }
         }
 
- 
+
         public static MvcHtmlString TextAreaOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
             object htmlAttributes) {
@@ -121,7 +121,7 @@ namespace AutomotoraWeb.Helpers {
             Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
             object htmlAttributes) {
             if (!(soloLectura ?? false)) {
-                return htmlHelper.TextBoxFor(expression,  htmlAttributes);
+                return htmlHelper.TextBoxFor(expression, htmlAttributes);
             } else {
                 return MvcHtmlString.Create(
                    htmlHelper.DisplayFor(expression, htmlAttributes).ToString() +
@@ -144,13 +144,13 @@ namespace AutomotoraWeb.Helpers {
 
             //crear la div que va dentro del link anchor
             TagBuilder tagBuilder = new TagBuilder("a");
-            if (!string.IsNullOrWhiteSpace(clase)){
+            if (!string.IsNullOrWhiteSpace(clase)) {
                 tagBuilder.MergeAttribute("class", clase);
             }
             if (!string.IsNullOrWhiteSpace(tooltip)) {
                 tagBuilder.MergeAttribute("title", tooltip);
             }
-            tagBuilder.InnerHtml=texto;
+            tagBuilder.InnerHtml = texto;
             tagBuilder.MergeAttribute("href", url);
             string sa = tagBuilder.ToString(TagRenderMode.Normal);
             return MvcHtmlString.Create(sa);
@@ -180,7 +180,7 @@ namespace AutomotoraWeb.Helpers {
 
             return MvcHtmlString.Create(html.ToString());
         }
-
+        //--------------------------------------------------------------------------------
 
         public static MvcHtmlString BotonAjaxImagen(this HtmlHelper helper, string accion, string controlador, int id, string clase, string tooltip) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
@@ -204,9 +204,7 @@ namespace AutomotoraWeb.Helpers {
             return MvcHtmlString.Create(html.ToString());
         }
 
-        //--------------------------------------------------------------------------------
-
-        public static MvcHtmlString BotonAjax(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
+        public static MvcHtmlString BotonAjaxImagen(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
             //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
 
@@ -226,6 +224,65 @@ namespace AutomotoraWeb.Helpers {
 
             return MvcHtmlString.Create(html.ToString());
         }
+
+        //--------------------------------------------------------------------------------
+
+        public static MvcHtmlString BotonAjaxTexto(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip, string texto) {
+            //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
+            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
+
+            UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            String url = urlHelper.Action(accion, controlador, parametros);
+
+            //crear la div que va dentro del link anchor
+            TagBuilder tagBuilder = new TagBuilder("div");
+            if (!string.IsNullOrWhiteSpace(clase)){
+                tagBuilder.MergeAttribute("class", clase);
+            }
+            if(!string.IsNullOrWhiteSpace(tooltip)){
+                tagBuilder.MergeAttribute("title", tooltip);
+            }
+            tagBuilder.InnerHtml = texto;
+            tagBuilder.MergeAttribute("style", "cursor:pointer");
+            tagBuilder.MergeAttribute("id", "btn_" + parametros + "_" + accion);
+
+            string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
+
+            StringBuilder html = new StringBuilder();
+            html.Append(sdiv);
+
+            return MvcHtmlString.Create(html.ToString());
+        }
+
+
+        public static MvcHtmlString BotonAjaxTexto(this HtmlHelper helper, string accion, string controlador, int id, string clase, string tooltip, string texto) {
+            //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
+            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
+
+
+            UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            String url = urlHelper.Action(accion, controlador, id);
+
+            //crear la div que va dentro del link anchor
+            TagBuilder tagBuilder = new TagBuilder("div");
+            if (!string.IsNullOrWhiteSpace(clase)) {
+                tagBuilder.MergeAttribute("class", clase);
+            }
+            if (!string.IsNullOrWhiteSpace(tooltip)) {
+                tagBuilder.MergeAttribute("title", tooltip);
+            }
+            tagBuilder.InnerHtml = texto;
+            tagBuilder.MergeAttribute("style", "cursor:pointer");
+            tagBuilder.MergeAttribute("id", "btn_" + id + "_" + accion);
+            string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
+
+            StringBuilder html = new StringBuilder();
+            html.Append(sdiv);
+
+            return MvcHtmlString.Create(html.ToString());
+        }
+
+        
 
         //--------------------------------------------------------------------------------
 
@@ -260,7 +317,7 @@ namespace AutomotoraWeb.Helpers {
             //      (!metadata.ModelType.IsValueType && metadata.IsRequired)) {
             //        isRequired = true;
             //}
-       
+
             TagBuilder tag = new TagBuilder("label");
             tag.Attributes.Add(
                 "for",
@@ -271,7 +328,7 @@ namespace AutomotoraWeb.Helpers {
 
             tag.Attributes.Add("class", "display-label");
             if (isRequired) {
-                  //label_required que estaba antes no existe
+                //label_required que estaba antes no existe
                 tag.Attributes.Add("style", "display: inline !important");
             }
 
@@ -294,8 +351,8 @@ namespace AutomotoraWeb.Helpers {
             return MvcHtmlString.Create(output);
         }
 
-        public static MvcHtmlString DdlOrDisplayImporteFor<TModel>(this HtmlHelper<TModel> htmlHelper, 
-            Expression<Func<TModel, Importe>> expression, bool? soloLectura) {
+        public static MvcHtmlString DdlOrDisplayImporteFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, Importe>> expression, bool? soloLectura, bool? monedaFija=false) {
 
             Importe imp = null;
             if (expression != null) {
@@ -312,47 +369,57 @@ namespace AutomotoraWeb.Helpers {
             string propertyName = data.PropertyName;
             string controlName = propertyName.Replace(".", "");
 
-            bool escritura = ! (soloLectura ?? false);
+            bool escritura = !(soloLectura ?? false);
+            bool monFija = monedaFija ?? false;
 
             if (escritura) {
-                var builder = new TagBuilder("select");
-                builder.Attributes["data-val"] = "true";
-                builder.Attributes["data-val-number"] = "El campo Codigo debe ser un número";
-                builder.Attributes["data-val-required"] = "El campo Codigo es obligatorio";
-                builder.Attributes["id"] = "ddl"+controlName+"Moneda";
-                builder.Attributes["name"] = propertyName+".Moneda.Codigo";
-                builder.Attributes["style"] = "width: 150px";
-                builder.Attributes["class"] = "valid";
+                string output = "";
+                if (!monFija) {
 
-                StringBuilder opciones = new StringBuilder();
-                foreach (Moneda m in Moneda.Monedas) {
-                    TagBuilder optionBuilder = new TagBuilder("option");
-                    optionBuilder.MergeAttribute("value", m.Codigo.ToString());
-                    optionBuilder.InnerHtml = m.Nombre;
-                    if (m.Codigo == imp.Moneda.Codigo) {
-                        optionBuilder.MergeAttribute("selected", "selected");
+                    var builder = new TagBuilder("select");
+                    builder.Attributes["data-val"] = "true";
+                    builder.Attributes["data-val-number"] = "El campo Codigo debe ser un número";
+                    builder.Attributes["data-val-required"] = "El campo Codigo es obligatorio";
+                    builder.Attributes["id"] = "ddl" + controlName + "Moneda";
+                    builder.Attributes["name"] = propertyName + ".Moneda.Codigo";
+                    builder.Attributes["style"] = "width: 150px";
+                    builder.Attributes["class"] = "valid";
+
+                    StringBuilder opciones = new StringBuilder();
+                    foreach (Moneda m in Moneda.Monedas) {
+                        TagBuilder optionBuilder = new TagBuilder("option");
+                        optionBuilder.MergeAttribute("value", m.Codigo.ToString());
+                        optionBuilder.InnerHtml = m.Nombre;
+                        if (m.Codigo == imp.Moneda.Codigo) {
+                            optionBuilder.MergeAttribute("selected", "selected");
+                        }
+                        opciones.Append(optionBuilder.ToString());
+                        builder.InnerHtml = opciones.ToString();
                     }
-                    opciones.Append(optionBuilder.ToString());
-                    builder.InnerHtml = opciones.ToString();
+                    output = builder.ToString(TagRenderMode.Normal);
+                } else {
+                    if (imp.Moneda != null && imp.Moneda.Nombre != null) {
+                        output = imp.Moneda.Nombre;
+                    }
                 }
-                var output = builder.ToString(TagRenderMode.Normal);
 
                 var builder2 = new TagBuilder("input");
                 builder2.Attributes["data-val"] = "true";
                 builder2.Attributes["data-val-number"] = "El campo Monto debe ser un número";
                 builder2.Attributes["data-val-required"] = "El importe es requerido";
-                builder2.Attributes["id"] = "tx"+controlName+"Monto";
-                builder2.Attributes["name"] = propertyName+".Monto";
+                builder2.Attributes["id"] = "tx" + controlName + "Monto";
+                builder2.Attributes["name"] = propertyName + ".Monto";
                 builder2.Attributes["type"] = "text";
                 builder2.Attributes["value"] = imp.Monto.ToString();
+                builder2.Attributes["class"] = "alinearDerecha";
                 var output2 = builder2.ToString(TagRenderMode.Normal);
 
                 return MvcHtmlString.Create(output + "  " + output2);
             } else {
 
-                var builder3= new TagBuilder("input");
+                var builder3 = new TagBuilder("input");
                 builder3.Attributes["data-val"] = "true";
-                builder3.Attributes["id"] = "hd"+controlName+"Moneda";
+                builder3.Attributes["id"] = "hd" + controlName + "Moneda";
                 builder3.Attributes["name"] = propertyName + ".Moneda.Codigo";
                 builder3.Attributes["type"] = "hidden";
                 builder3.Attributes["value"] = imp.Moneda.Codigo.ToString();
@@ -366,11 +433,11 @@ namespace AutomotoraWeb.Helpers {
                 builder4.Attributes["value"] = imp.Monto.ToString();
                 var output4 = builder4.ToString(TagRenderMode.Normal);
 
-                return MvcHtmlString.Create( imp.ToString()+" "+output3+ " "+output4);
+                return MvcHtmlString.Create(imp.ToString() + " " + output3 + " " + output4);
             }
         }
 
 
-   
+
     }
 }

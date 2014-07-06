@@ -224,7 +224,7 @@
 
     //---------------------- COLUMNA BOTONES ------------------------------------------------
 
-    if (ig.UsarBotones) {
+    if (ig.UsarBotones) { //refiere al grupo uno, siempre son imagen, pueden no estar usarBotones=false
 
         listGridViewsBotones = new MVCxGridViewColumn();
 
@@ -239,16 +239,16 @@
 
         listGridViewsBotones.SetDataItemTemplateContent(c => {
             var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
-            if (ig.Botones == null || ig.Botones.Count == 0) {  //meter a prepo los botones por defecto, ajax o comunes
+            if (ig.Botones == null || ig.Botones.Count == 0) {  //meter a prepo los botones por defecto, ajax o comunes 
                 if (ig.BotonesAjax) {
-                    ViewContext.Writer.WriteLine(@Html.BotonAjax("details", "", id, "boton-consultar-mf", "Consultar").ToHtmlString());
-                    ViewContext.Writer.WriteLine(@Html.BotonAjax("edit", "", id, "boton-editar-mf", "Editar").ToHtmlString());
-                    ViewContext.Writer.WriteLine(@Html.BotonAjax("delete", "", id, "boton-eliminar-mf", "Eliminar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen("details", "", id, "boton-consultar-mf", "Consultar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen("edit", "", id, "boton-editar-mf", "Editar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen("delete", "", id, "boton-eliminar-mf", "Eliminar").ToHtmlString());
                 } else {
                     ViewContext.Writer.WriteLine(@Html.BotonImagen("details", ig.Controller, new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
                     ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", ig.Controller, new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
                     ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", ig.Controller, new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());
-                }
+                }   
             } else {
                 foreach (BotonGrilla b in ig.Botones) {
                     if (b is BotonAjaxGrilla) {
@@ -261,7 +261,7 @@
             }
         });
     }
-    if (ig.Botones2 != null && ig.Botones2.Count > 0) {
+    if (ig.Botones2 != null && ig.Botones2.Count > 0) {  //grupo 2 son opcionales y pueden ser de tipo imagen o texto
         //Hay grupo de botones secundario
         listGridViewsBotones2 = new MVCxGridViewColumn();
         if (string.IsNullOrWhiteSpace(ig.TextoAcciones2)) {
@@ -281,10 +281,18 @@
         listGridViewsBotones2.SetDataItemTemplateContent(c => {
             var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
             foreach (BotonGrilla b in ig.Botones2) {
-                if (b.Tipo == BotonGrilla.TIPO.IMAGEN) {
-                    ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, id, b.Clase, b.Tooltip).ToHtmlString());
+                if (b is BotonAjaxGrilla) {
+                    if (b.Tipo == BotonGrilla.TIPO.IMAGEN) {
+                        ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen(b.Accion, b.Controlador, (int)id, b.Clase, b.Tooltip).ToHtmlString());
+                    } else {
+                        ViewContext.Writer.WriteLine(@Html.BotonAjaxTexto(b.Accion, b.Controlador, (int)id, b.Clase, b.Tooltip, b.Texto).ToHtmlString());
+                    }
                 } else {
-                    ViewContext.Writer.WriteLine(@Html.BotonTexto(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip, b.Texto).ToHtmlString());
+                    if (b.Tipo == BotonGrilla.TIPO.IMAGEN) {
+                        ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, id, b.Clase, b.Tooltip).ToHtmlString());
+                    } else {
+                        ViewContext.Writer.WriteLine(@Html.BotonTexto(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip, b.Texto).ToHtmlString());
+                    }
                 }
 
             }

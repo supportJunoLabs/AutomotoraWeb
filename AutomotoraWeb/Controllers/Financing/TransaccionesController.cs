@@ -15,12 +15,7 @@ namespace AutomotoraWeb.Controllers.Financing
     public class TransaccionesController : FinancingController
     {
 
-        public static string BCONTROLLER = "Financing";
         public static string CONTROLLER = "Transacciones";
-
-        public override string getParentControllerName() {
-            return BCONTROLLER;
-        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
