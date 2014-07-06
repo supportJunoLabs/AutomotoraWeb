@@ -237,6 +237,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Bank\ChequesController.cs" />
     <Compile Include="Controllers\Bank\Maintenance\CuentasBancariasController.cs" />
+    <Compile Include="Controllers\Bank\MovimientosController.cs" />
     <Compile Include="Controllers\Financing\CajaController.cs" />
     <Compile Include="Controllers\Financing\ConsultasFinController.cs" />
     <Compile Include="Controllers\Financing\Maintenance\FinancistasController.cs" />
@@ -285,6 +286,7 @@
     <Compile Include="Models\ListadoPedidosModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />
+    <Compile Include="Models\MovimientosBancoModel.cs" />
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1827,6 +1829,11 @@
     <Content Include="Views\Transacciones\_reportTransacciones.cshtml" />
     <Content Include="Views\Transacciones\_listGrillaTransacciones.cshtml" />
     <Content Include="Views\Transacciones\_listTransacciones.cshtml" />
+    <Content Include="Views\Movimientos\Show.cshtml" />
+    <Content Include="Views\Movimientos\_listGrillaMovimientos.cshtml" />
+    <Content Include="Views\Movimientos\_listMovimientos.cshtml" />
+    <Content Include="Views\Movimientos\create.cshtml" />
+    <Content Include="Views\Movimientos\_datosDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

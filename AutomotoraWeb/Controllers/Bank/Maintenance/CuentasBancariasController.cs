@@ -99,7 +99,7 @@ namespace AutomotoraWeb.Controllers.Bank.Maintenance
         }
 
         private List<CuentaBancaria> _listaElementos() {
-            return CuentaBancaria.CuentasBancarias();
+            return CuentaBancaria.CuentasBancarias;
         }
 
         //-----------------------------------------------------------------------------------------------------

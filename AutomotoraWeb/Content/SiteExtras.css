@@ -102,3 +102,15 @@ a.hipervinculo {
     padding-left: 10px;
     vertical-align:middle;
 }
+
+.hipervinculoGrillaAjax {
+    color: #005580;
+    text-decoration:underline;
+    float: left;
+    margin-right: 5px;
+
+}
+.hipervinculoGrillaAjax:hover {
+    color: #CC6600;
+    text-decoration: underline;
+}
