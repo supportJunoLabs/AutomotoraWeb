@@ -1,0 +1,72 @@
+﻿@model AutomotoraWeb.Models.MovimientosBancoModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    ViewBag.Title = "Movimientos Cuenta Bancaria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm()) {
+    @Html.HiddenFor(model => model.idParametros)
+    
+    <div id="filtros" class="block" style="margin-right: 5px">
+        <div class="btn-toolbar botoneraListado">
+            <div class="btn-group">
+                <input type="submit" id="btn_actualizar" title="Actualizar Movimientos" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
+            </div>
+        </div>
+        <div id="containerLinea1">
+            <div id="filtro_cuenta" class="floatLeft" style="margin-left:20px">
+                <div class="display-label" style="width: 100px">
+                    Cuenta Bancaria:
+                </div>
+                <div class="editor-field editor-field-xlarge xxlarge">
+                    @Html.DdlOrDisplayFor(model => model.Cuenta.Codigo, false, model => model.Cuenta.Nombre,
+                new SelectList(ViewBag.Cuentas, "Codigo", "Nombre"), "--Seleccionar Cuenta--",
+                new { id = "ddlCuentas", @class = "xxlarge" })
+                </div>
+            </div>
+            <div id="filtro_fechas" class="floatLeft" style="margin-left:20px">
+                <div id="periodo">
+                    <div id="containerDesde" class="floatLeft">
+                        <div class="floatLeft" style="text-align: right; padding-right: 5px;">
+                            <label>Desde</label>
+                        </div>
+                        <div class="floatRight editor-field editor-field-small ">
+                            @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new { id = "fdesde", @class = "calendarAW floatRight" })
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div id="containerHasta" class="floatLeft">
+                        <div class="floatLeft" style="text-align: right; padding-right: 5px; padding-left: 20px">
+                            <label>Hasta</label>
+                        </div>
+                        <div class="floatRight editor-field editor-field-small">
+                            @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new { id = "fhasta", @class = "calendarAW floatRight" })
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clear-both"></div>
+        </div>
+    </div>
+}
+
+<div id="divListado">
+    @{
+        if (Model.Cuenta!=null && Model.Cuenta.Codigo>0){
+            Model.generarListado();
+            @Html.Partial("_listMovimientos", Model)
+        }
+    }
+
+     
+</div>
+
+@section Scripts {
+   
+}

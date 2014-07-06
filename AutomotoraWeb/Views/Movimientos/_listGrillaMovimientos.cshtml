@@ -1,0 +1,44 @@
+﻿@model AutomotoraWeb.Models.MovimientosBancoModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.General;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+          new ColumnaGrilla {Campo="FechaMov", Ancho=80, Titulo="Fecha"},
+         new ColumnaGrilla {Campo="ImporteDebito", Ancho=150, Titulo="Debito"},
+         new ColumnaGrilla {Campo="ImporteCredito", Ancho=150, Titulo="Credito"},
+         new ColumnaGrilla {Campo="ConceptoMov", Ancho=150, Titulo="Concepto"},
+         new ColumnaGrilla {Campo="FechaConciliado", Ancho=80, Titulo="F.Conciliado"},
+         new ColumnaGrilla {Campo="DescripcionMov", Ancho=200, Titulo="Observaciones"}
+    };
+
+
+    ig.NameGrid = "grilla_movs";
+    ig.Controller = MovimientosController.CONTROLLER;
+    ig.ActionCallbackRoute = "GrillaMovimientos";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.MovBanco);
+
+    ig.AccionesAlComienzo = false;
+    ig.UsarBotones = true;
+
+    ig.AddButton(new BotonGrilla("details", MovimientosController.CONTROLLER, "boton-consultar-mf", "Consultar Movimiento"));
+
+    ig.TextoAcciones2="Operaciones";
+    ig.AddButton2(new BotonAjaxGrilla("ConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax", "Marcar como Conciliado", "Conciliar", 100));
+    ig.AddButton2(new BotonAjaxGrilla("DesConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax", "Quitar marca de conciliado", "Des-Conciliar", 140));
+    ig.AddButton2(new BotonAjaxGrilla("ExtornarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax", "Extornar Movimiento", "Extornar", 100));
+    
+    ig.DobleClick = false;
+    ig.ControladorDobleClick = MovimientosController.CONTROLLER;
+    ig.AccionDobleClick = "details";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model.Resultado)

@@ -1,0 +1,18 @@
+﻿@model AutomotoraWeb.Models.MovimientosBancoModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.General;
+
+ <div class="btn-toolbar">
+        <div class="btn-group">
+            @(Html.Bootstrap().ActionLinkButton("Agregar ", BaseController.CREATE ).RouteValues(new { id = Model.Cuenta.Codigo}).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
+        )
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-primary2-mf" title="Imprimir listado" href='@Url.Action(BaseController.REPORT)'>Imprimir Listado</a>
+        </div>
+    </div>
+
+@Html.Partial("_listGrillaMovimientos", Model)
