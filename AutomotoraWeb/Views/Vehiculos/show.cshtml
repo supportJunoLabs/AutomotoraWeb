@@ -22,3 +22,16 @@
     </div>
 </div>
 
+@Html.Partial("_gridLookupVehiculo")
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#gridLookupVehiculos_I").change(function () {
+                alert($("#gridLookupVehiculos_I option:selected").val());
+            });
+        });
+    </script>
+}
+
+

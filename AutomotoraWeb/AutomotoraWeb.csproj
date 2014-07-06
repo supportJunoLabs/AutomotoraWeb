@@ -1827,6 +1827,7 @@
     <Content Include="Views\Transacciones\_reportTransacciones.cshtml" />
     <Content Include="Views\Transacciones\_listGrillaTransacciones.cshtml" />
     <Content Include="Views\Transacciones\_listTransacciones.cshtml" />
+    <Content Include="Views\Vehiculos\_gridLookupVehiculo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

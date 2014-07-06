@@ -67,6 +67,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         //public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vehiculo vehiculo) {
         public ActionResult Show() {
+            ViewBag.ListVehiculos = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.EN_STOCK); // TODO: QUITAR
             return View(_listaElementos());
         }
 
@@ -625,5 +626,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #endregion
         //---------------------------------------------------------------------
+
+        public ActionResult GridLookupVehiculo() {
+            ViewBag.ListVehiculos = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.EN_STOCK);
+            return PartialView("_gridLookupVehiculo");
+        }
     }
 }
