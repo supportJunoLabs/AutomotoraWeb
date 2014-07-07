@@ -91,6 +91,29 @@ namespace AutomotoraWeb.Controllers.Bank
            return View(mov);
        }
 
+       [HttpPost]
+       public JsonResult Conciliar(int id) {
+            MovBanco mov = new MovBanco();
+            mov.Codigo = id;
+            mov.Consultar();
+            if (mov.ConciliadoMov) {
+                return Json(new { Result = "ERROR", ErrorMessage = "Ya esta conciliado" });
+            }
+            mov.Conciliar(DateTime.Now.Date);
+            return Json(new { Result = "OK"});
+       }
+
+       [HttpPost]
+       public JsonResult Desconciliar(int id) {
+           MovBanco mov = new MovBanco();
+           mov.Codigo = id;
+           mov.Consultar();
+           if (!mov.ConciliadoMov) {
+               return Json(new { Result = "ERROR", ErrorMessage = "No esta conciliado" });
+           }
+           mov.DesConciliar(); 
+           return Json(new { Result = "OK" });
+       }
 
     }
 }

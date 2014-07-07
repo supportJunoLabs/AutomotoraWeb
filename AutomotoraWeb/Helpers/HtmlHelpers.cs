@@ -204,7 +204,7 @@ namespace AutomotoraWeb.Helpers {
             return MvcHtmlString.Create(html.ToString());
         }
 
-        /*public static MvcHtmlString BotonAjaxImagen(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
+        public static MvcHtmlString BotonAjaxImagen(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
             //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
 
@@ -223,11 +223,11 @@ namespace AutomotoraWeb.Helpers {
             html.Append(sdiv);
 
             return MvcHtmlString.Create(html.ToString());
-        }*/
+        }
 
         //--------------------------------------------------------------------------------
 
-        /*public static MvcHtmlString BotonAjaxTexto(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip, string texto) {
+        public static MvcHtmlString BotonAjaxTexto(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip, string texto) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
             //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
 
@@ -252,7 +252,7 @@ namespace AutomotoraWeb.Helpers {
             html.Append(sdiv);
 
             return MvcHtmlString.Create(html.ToString());
-        }*/
+        }
 
 
         public static MvcHtmlString BotonAjaxTexto(this HtmlHelper helper, string accion, string controlador, int id, string clase, string tooltip, string texto) {

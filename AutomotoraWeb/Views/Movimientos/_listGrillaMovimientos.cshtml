@@ -30,9 +30,9 @@
     ig.AddButton(new BotonGrilla("details", MovimientosController.CONTROLLER, "boton-consultar-mf", "Consultar Movimiento"));
 
     ig.TextoAcciones2="Operaciones";
-    ig.AddButton2(new BotonAjaxGrilla("ConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax", "Marcar como Conciliado", "Conciliar", 100));
-    ig.AddButton2(new BotonAjaxGrilla("DesConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax", "Quitar marca de conciliado", "Des-Conciliar", 140));
-    ig.AddButton2(new BotonAjaxGrilla("ExtornarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax", "Extornar Movimiento", "Extornar", 100));
+    ig.AddButton2(new BotonAjaxGrilla("ConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-conciliar", "Marcar como Conciliado", "Conciliar", 100));
+    ig.AddButton2(new BotonAjaxGrilla("DesConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-desconciliar", "Quitar marca de conciliado", "Des-Conciliar", 140));
+    ig.AddButton2(new BotonAjaxGrilla("ExtornarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-extornar", "Extornar Movimiento", "Extornar", 100));
     
     ig.DobleClick = false;
     ig.ControladorDobleClick = MovimientosController.CONTROLLER;

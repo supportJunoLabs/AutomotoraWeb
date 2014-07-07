@@ -23,7 +23,11 @@ function general_closePopup(idContainer) {
 }
 
 function general_showErrorPopup(jqXHR, textStatus, errorThrown) {
-    alert("Error al obtener datos para generar popup: " + textStatus + " | " + errorThrown);
+    alert("Se ha producido un error: " + textStatus + " | " + errorThrown);
+}
+
+function general_showAvisoPopup(message) {
+    alert(message);
 }
 
 function general_showErrorAction(idErrorContainerm, textStatus, errorThrown) {
