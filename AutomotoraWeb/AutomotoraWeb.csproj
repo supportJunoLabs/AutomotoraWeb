@@ -1606,6 +1606,7 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\MovsBancoGestion.js" />
     <Content Include="Scripts\AutomotoraWeb\MovsBancoListado.js" />
     <Content Include="Scripts\AutomotoraWeb\TransaccionesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\CuotasValesListado.js" />
