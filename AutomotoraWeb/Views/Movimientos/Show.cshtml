@@ -2,9 +2,10 @@
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = "Movimientos Cuenta Bancaria";
+    ViewBag.Title = "Movimientos Bancarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,11 +17,14 @@
             <div class="btn-group">
                 <input type="submit" id="btn_actualizar" title="Actualizar Movimientos" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
             </div>
+            <div class="btn-group">
+            <a class="btn btn-primary2-mf" title="Listados" href='@Url.Action(BaseController.LIST)'>Listados</a>
+        </div>
         </div>
         <div id="containerLinea1">
             <div id="filtro_cuenta" class="floatLeft" style="margin-left:20px">
                 <div class="display-label" style="width: 105px">
-                    Cuenta Bancaria:
+                    Cuenta Bancaria
                 </div>
                 <div class="editor-field editor-field-xlarge xxlarge">
                     @Html.DdlOrDisplayFor(model => model.Cuenta.Codigo, false, model => model.Cuenta.Nombre,
@@ -28,20 +32,23 @@
                 new { id = "ddlCuentas", @class = "xxlarge" })
                 </div>
             </div>
-            <div id="filtro_fechas" class="floatLeft" style="margin-left:20px">
+            <div class="clear-both"></div>
+        </div>
+         <div id="containerLinea2" style="margin-left:20px">
+               <div id="filtro_fechas" class="floatLeft" >
                 <div id="periodo">
                     <div id="containerDesde" class="floatLeft">
-                        <div class="floatLeft" style="text-align: right; padding-right: 5px;">
-                            <label>Desde</label>
+                        <div class="floatLeft display-label" style="width:105px" >
+                            Desde
                         </div>
-                        <div class="floatRight editor-field editor-field-small ">
+                        <div class="floatLeft editor-field editor-field-small ">
                             @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new { id = "fdesde", @class = "calendarAW floatRight" })
                         </div>
                         <div class="clear-both"></div>
                     </div>
                     <div id="containerHasta" class="floatLeft">
-                        <div class="floatLeft" style="text-align: right; padding-right: 5px; padding-left: 20px">
-                            <label>Hasta</label>
+                        <div class="floatLeft display-label" style="text-align: right; padding-right: 5px; padding-left: 20px">
+                            Hasta
                         </div>
                         <div class="floatRight editor-field editor-field-small">
                             @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new { id = "fhasta", @class = "calendarAW floatRight" })
@@ -50,9 +57,9 @@
                     </div>
                 </div>
             </div>
-
-            <div class="clear-both"></div>
-        </div>
+             <div class="clear-both"></div>
+         </div>
+        
     </div>
 }
 

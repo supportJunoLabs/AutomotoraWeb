@@ -273,6 +273,7 @@
     <Compile Include="Models\BotonAjaxGrilla.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\EstadoCuentaModel.cs" />
     <Compile Include="Models\ListadoTransaccionesModel.cs" />
     <Compile Include="Models\ListadoChequesModel.cs" />
     <Compile Include="Models\ListadoCuotasValesModel.cs" />
@@ -290,6 +291,9 @@
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Listados\DXEstadoCuenta.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Listados\DXListadoTransacciones.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1602,6 +1606,7 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\MovsBancoListado.js" />
     <Content Include="Scripts\AutomotoraWeb\TransaccionesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\CuotasValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\PedidosGestion.js" />
@@ -1835,6 +1840,14 @@
     <Content Include="Views\Movimientos\_listMovimientos.cshtml" />
     <Content Include="Views\Movimientos\create.cshtml" />
     <Content Include="Views\Movimientos\_datosDetalle.cshtml" />
+    <Content Include="Views\Movimientos\List.cshtml" />
+    <Content Include="Views\Movimientos\_listMovimientosRep.cshtml" />
+    <Content Include="Views\Movimientos\_listGrillaMovimientosRep.cshtml" />
+    <Content Include="Views\Movimientos\Report.cshtml" />
+    <Content Include="Views\Movimientos\_report.cshtml" />
+    <Content Include="Views\Movimientos\edit.cshtml" />
+    <Content Include="Views\Movimientos\details.cshtml" />
+    <Content Include="Views\Movimientos\delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1857,6 +1870,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\Listados\DXEstadoCuenta.resx">
+      <DependentUpon>DXEstadoCuenta.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoTransacciones.resx">
       <DependentUpon>DXListadoTransacciones.cs</DependentUpon>
     </EmbeddedResource>

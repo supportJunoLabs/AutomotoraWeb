@@ -12,7 +12,7 @@
 </div>
 <div class="clear-both"></div>
 
-<div class="display-label editor-date-field">
+<div class="display-label">
     @Html.LabelForRequired(model => model.FechaMov)
 </div>
 <div class="editor-field editor-field-small">
@@ -21,27 +21,35 @@
 </div>
 <div class="clear-both"></div>
 
-<div class="display-label">
-    @Html.DisplayNameFor(model => model.ImporteMov)
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.ImporteMov)
 </div>
-<div class="editor-field editor-field-small renglon-alto" >
-    @Html.DdlOrDisplayImporteFor(model=>model.ImporteMov, (bool?)ViewBag.SoloLectura, true)
+<div class="editor-field editor-field-small">
+    @Html.DdlOrDisplayImporteFor(model => model.ImporteMov, (bool?)ViewBag.SoloLectura, true)
     @Html.ValidationMessageFor(model => model.ImporteMov.Monto)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.TipoMov)
+    @Html.LabelForRequired(model => model.TipoMov)
 </div>
-<div class="editor-field editor-field-small renglon-alto">
-    <div class="floatLeft">
-        @Html.RadioButtonFor(model => model.TipoMov, MovBanco.MOVBANCO_SALIDA, new { @checked = "checked" })  Debito
+
+@{ if (((bool?)ViewBag.SoloLectura) ?? false) {
+    <div class="editor-field editor-field-small">
+        @Html.DisplayFor(model => model.DescripcionTipoMov)
     </div>
-    <div class="floatLeft" style="margin-left: 30px">
-        @Html.RadioButtonFor(model => model.TipoMov, MovBanco.MOVBANCO_ENTRADA)  Credito
+   } else {
+    <div class="editor-field editor-field-small renglon-alto">
+        <div class="floatLeft">
+            @Html.RadioButtonFor(model => model.TipoMov, MovBanco.MOVBANCO_SALIDA, new { @checked = "checked" })  Debito
+        </div>
+        <div class="floatLeft" style="margin-left: 30px">
+            @Html.RadioButtonFor(model => model.TipoMov, MovBanco.MOVBANCO_ENTRADA)  Credito
+        </div>
+        @Html.ValidationMessageFor(model => model.TipoMov)
     </div>
-    @Html.ValidationMessageFor(model => model.TipoMov)
-</div>
+   }
+}
 <div class="clear-both"></div>
 
 
@@ -67,9 +75,17 @@
 <div class="display-label ">
     @Html.LabelForRequired(model => model.ConciliadoMov)
 </div>
-<div class="renglon-alto">
-    @Html.CheckBoxOrDisplayFor(model => model.ConciliadoMov, true)
-</div>
+   @{ if (((bool?)ViewBag.SoloLectura) ?? false) {
+        <div>
+             @Html.CheckBoxOrDisplayFor(model => model.ConciliadoMov, true)
+        </div>
+    }else{
+        <div class="renglon-alto">
+             @Html.CheckBoxOrDisplayFor(model => model.ConciliadoMov, true)
+        </div>
+    }
+    }
+   
 <div class="clear-both"></div>
 
 

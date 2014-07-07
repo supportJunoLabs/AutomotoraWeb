@@ -1,0 +1,35 @@
+﻿@model AutomotoraWeb.Models.EstadoCuentaModel
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
+
+<div style="padding-bottom: 30px" id="siniGeneral">
+    <div class="floatLeft label-xxlarge" style="padding-left: 0px;">
+        <div class="display-label">Saldo Anterior: </div>
+        @Html.DisplayFor(m => m.EstadoCuenta.SaldoInicial.ImporteTexto)
+    </div>
+</div>
+<div style="padding-bottom: 30px" id="siniConciliado">
+    <div class="floatLeft label-xxlarge" style="padding-left: 0px;">
+        <div class="display-label">Saldo Anterior Conciliado: </div>
+        @Html.DisplayFor(m => m.EstadoCuenta.SaldoInicialConciliado.ImporteTexto)
+    </div>
+</div>
+
+<div class="clear-both"></div>
+
+    @Html.Partial("_listGrillaMovimientosRep", Model)
+
+<div style="padding-top: 30px" id="sfinGeneral">
+    <div class="floatLeft label-xxlarge" style="padding-left: 0px;">
+        <div class="display-label">Saldo Final: </div>
+        @Html.DisplayFor(m => m.EstadoCuenta.SaldoFinal.ImporteTexto)
+    </div>
+</div>
+<div style="padding-top: 30px" id="sfinConciliado">
+    <div class="floatLeft label-xxlarge" style="padding-left: 0px;">
+        <div class="display-label">Saldo Final Conciliado: </div>
+        @Html.DisplayFor(m => m.EstadoCuenta.SaldoFinalConciliado.ImporteTexto)
+    </div>
+</div>
+
+<div class="clear-both"></div>

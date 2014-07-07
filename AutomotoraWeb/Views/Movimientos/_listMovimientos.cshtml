@@ -11,7 +11,7 @@
         )
         </div>
         <div class="btn-group">
-            <a class="btn btn-primary2-mf" title="Imprimir listado" href='@Url.Action(BaseController.REPORT)'>Imprimir Listado</a>
+            <a class="btn btn-primary2-mf" title="Imprimir Listado" href='@Url.Action(BaseController.REPORT)'>Imprimir</a>
         </div>
     </div>
 
@@ -67,6 +67,29 @@
                 complete: hideLoading
             });
         });
+
+@*        $(".boton-extornar").live("click", function () {
+
+            var id = _getId($(this));
+
+            $.ajax({
+                url: '@(Url.Action("Extornar", "Movimientos"))',
+                type: 'GET',
+                async: true,
+                data: 'id=' + id,
+                //success: function (data) {
+                //    if (data.Result == "OK") {
+                //        grilla_movs.Refresh();
+                //    }
+                //    else {
+                //        general_showAvisoPopup(data.ErrorMessage);
+                //    }
+                //},
+                error: general_showErrorPopup,
+                beforeSend: showLoading,
+                complete: hideLoading
+            });
+          });*@
 
         /* ================================================== */
 
