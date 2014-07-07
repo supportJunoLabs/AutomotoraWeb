@@ -13,5 +13,6 @@ namespace AutomotoraWeb.Models {
         public BotonAjaxGrilla(string accion, string controlador, string clase, string tooltip, string texto, int ancho)
             : base(accion, controlador, clase, tooltip, texto, ancho) {
         }
-    }
+
+      }
 }

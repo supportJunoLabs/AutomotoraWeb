@@ -182,41 +182,42 @@ namespace AutomotoraWeb.Helpers {
         }
         //--------------------------------------------------------------------------------
 
-        public static MvcHtmlString BotonAjaxImagen(this HtmlHelper helper, string accion, string controlador, int id, string clase, string tooltip) {
-            //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
-            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
+        //public static MvcHtmlString BotonAjaxImagen(this HtmlHelper helper, string accion, string controlador, int id, string clase, string tooltip) {
+        //    //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
+        //    //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
 
 
-            UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            String url = urlHelper.Action(accion, controlador, id);
+        //    UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+        //    String url = urlHelper.Action(accion, controlador, id);
 
-            //crear la div que va dentro del link anchor
-            TagBuilder tagBuilder = new TagBuilder("div");
-            tagBuilder.MergeAttribute("class", clase);
-            tagBuilder.MergeAttribute("title", tooltip);
-            tagBuilder.MergeAttribute("style", "cursor:pointer");
-            tagBuilder.MergeAttribute("id", "btn_" + id + "_" + accion);
-            string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
+        //    //crear la div que va dentro del link anchor
+        //    TagBuilder tagBuilder = new TagBuilder("div");
+        //    tagBuilder.MergeAttribute("class", clase);
+        //    tagBuilder.MergeAttribute("title", tooltip);
+        //    tagBuilder.MergeAttribute("style", "cursor:pointer");
+        //    tagBuilder.MergeAttribute("id", "btn_" + id + "_" + accion);
+        //    string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
 
-            StringBuilder html = new StringBuilder();
-            html.Append(sdiv);
+        //    StringBuilder html = new StringBuilder();
+        //    html.Append(sdiv);
 
-            return MvcHtmlString.Create(html.ToString());
-        }
+        //    return MvcHtmlString.Create(html.ToString());
+        //}
 
         public static MvcHtmlString BotonAjaxImagen(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip) {
             //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
             //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
 
-            UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            String url = urlHelper.Action(accion, controlador, parametros);
+            //UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+            //String url = urlHelper.Action(accion, controlador, parametros);
 
             //crear la div que va dentro del link anchor
             TagBuilder tagBuilder = new TagBuilder("div");
             tagBuilder.MergeAttribute("class", clase);
             tagBuilder.MergeAttribute("title", tooltip);
             tagBuilder.MergeAttribute("style", "cursor:pointer");
-            tagBuilder.MergeAttribute("id", "btn_" + parametros + "_" + accion);
+            string sid = parametros.GetType().GetProperty("id").GetValue(parametros, null).ToString();
+            tagBuilder.MergeAttribute("id", "btn_" + sid + "_" + accion);
             string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
 
             StringBuilder html = new StringBuilder();
@@ -228,7 +229,7 @@ namespace AutomotoraWeb.Helpers {
         //--------------------------------------------------------------------------------
 
         public static MvcHtmlString BotonAjaxTexto(this HtmlHelper helper, string accion, string controlador, object parametros, string clase, string tooltip, string texto) {
-            //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
+            //genera una div con un texto tipo link
             //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
 
             UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
@@ -244,7 +245,8 @@ namespace AutomotoraWeb.Helpers {
             }
             tagBuilder.InnerHtml = texto;
             tagBuilder.MergeAttribute("style", "cursor:pointer");
-            tagBuilder.MergeAttribute("id", "btn_" + parametros + "_" + accion);
+            string sid = parametros.GetType().GetProperty("id").GetValue(parametros, null).ToString();
+            tagBuilder.MergeAttribute("id", "btn_" + sid + "_" + accion);
 
             string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
 
@@ -255,32 +257,32 @@ namespace AutomotoraWeb.Helpers {
         }
 
 
-        public static MvcHtmlString BotonAjaxTexto(this HtmlHelper helper, string accion, string controlador, int id, string clase, string tooltip, string texto) {
-            //genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
-            //se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
+        //public static MvcHtmlString BotonAjaxTexto(this HtmlHelper helper, string accion, string controlador, int id, string clase, string tooltip, string texto) {
+        ////    genera una div dentro de un anchor con un estilo que le pone la imagen de fondo
+        ////    se usa por ejemplo en las grillas devexpress de los mantenimientos para consulta, eliminar, modificar en cada registro (vía ajax).
 
 
-            UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
-            String url = urlHelper.Action(accion, controlador, id);
+        //    UrlHelper urlHelper = new UrlHelper(helper.ViewContext.RequestContext);
+        //    String url = urlHelper.Action(accion, controlador, id);
 
-            //crear la div que va dentro del link anchor
-            TagBuilder tagBuilder = new TagBuilder("div");
-            if (!string.IsNullOrWhiteSpace(clase)) {
-                tagBuilder.MergeAttribute("class", clase);
-            }
-            if (!string.IsNullOrWhiteSpace(tooltip)) {
-                tagBuilder.MergeAttribute("title", tooltip);
-            }
-            tagBuilder.InnerHtml = texto;
-            tagBuilder.MergeAttribute("style", "cursor:pointer");
-            tagBuilder.MergeAttribute("id", "btn_" + id + "_" + accion);
-            string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
+        //    crear la div que va dentro del link anchor
+        //    TagBuilder tagBuilder = new TagBuilder("div");
+        //    if (!string.IsNullOrWhiteSpace(clase)) {
+        //        tagBuilder.MergeAttribute("class", clase);
+        //    }
+        //    if (!string.IsNullOrWhiteSpace(tooltip)) {
+        //        tagBuilder.MergeAttribute("title", tooltip);
+        //    }
+        //    tagBuilder.InnerHtml = texto;
+        //    tagBuilder.MergeAttribute("style", "cursor:pointer");
+        //    tagBuilder.MergeAttribute("id", "btn_" + id + "_" + accion);
+        //    string sdiv = tagBuilder.ToString(TagRenderMode.Normal);
 
-            StringBuilder html = new StringBuilder();
-            html.Append(sdiv);
+        //    StringBuilder html = new StringBuilder();
+        //    html.Append(sdiv);
 
-            return MvcHtmlString.Create(html.ToString());
-        }
+        //    return MvcHtmlString.Create(html.ToString());
+        //}
 
         
 
@@ -412,6 +414,7 @@ namespace AutomotoraWeb.Helpers {
                 builder2.Attributes["type"] = "text";
                 builder2.Attributes["value"] = imp.Monto.ToString();
                 builder2.Attributes["class"] = "alinearDerecha";
+                builder2.Attributes["style"] = "margin-left: 10px";
                 var output2 = builder2.ToString(TagRenderMode.Normal);
 
                 return MvcHtmlString.Create(output + "  " + output2);

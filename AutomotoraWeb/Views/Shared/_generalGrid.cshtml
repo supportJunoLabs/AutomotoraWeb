@@ -241,9 +241,9 @@
             var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
             if (ig.Botones == null || ig.Botones.Count == 0) {  //meter a prepo los botones por defecto, ajax o comunes 
                 if (ig.BotonesAjax) {
-                    ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen("details", "", id, "boton-consultar-mf", "Consultar").ToHtmlString());
-                    ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen("edit", "", id, "boton-editar-mf", "Editar").ToHtmlString());
-                    ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen("delete", "", id, "boton-eliminar-mf", "Eliminar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen("details", "", new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen("edit", "", new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
+                    ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen("delete", "", new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());
                 } else {
                     ViewContext.Writer.WriteLine(@Html.BotonImagen("details", ig.Controller, new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
                     ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", ig.Controller, new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
@@ -252,7 +252,7 @@
             } else {
                 foreach (BotonGrilla b in ig.Botones) {
                     if (b is BotonAjaxGrilla) {
-                        ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen(b.Accion, b.Controlador, (int)id, b.Clase, b.Tooltip).ToHtmlString());
+                        ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());
                     } else {
                         ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());
                     }
@@ -283,13 +283,13 @@
             foreach (BotonGrilla b in ig.Botones2) {
                 if (b is BotonAjaxGrilla) {
                     if (b.Tipo == BotonGrilla.TIPO.IMAGEN) {
-                        ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen(b.Accion, b.Controlador, (int)id, b.Clase, b.Tooltip).ToHtmlString());
+                        ViewContext.Writer.WriteLine(@Html.BotonAjaxImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());
                     } else {
-                        ViewContext.Writer.WriteLine(@Html.BotonAjaxTexto(b.Accion, b.Controlador, (int)id, b.Clase, b.Tooltip, b.Texto).ToHtmlString());
+                        ViewContext.Writer.WriteLine(@Html.BotonAjaxTexto(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip, b.Texto).ToHtmlString());
                     }
                 } else {
                     if (b.Tipo == BotonGrilla.TIPO.IMAGEN) {
-                        ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, id, b.Clase, b.Tooltip).ToHtmlString());
+                        ViewContext.Writer.WriteLine(@Html.BotonImagen(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip).ToHtmlString());
                     } else {
                         ViewContext.Writer.WriteLine(@Html.BotonTexto(b.Accion, b.Controlador, new { id = id }, b.Clase, b.Tooltip, b.Texto).ToHtmlString());
                     }
