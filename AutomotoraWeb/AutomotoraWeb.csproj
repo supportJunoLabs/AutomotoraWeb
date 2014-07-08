@@ -270,6 +270,7 @@
     <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
+    <Compile Include="Models\BancoSaldoModel.cs" />
     <Compile Include="Models\BotonAjaxGrilla.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
@@ -291,6 +292,9 @@
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Listados\DXSaldosBanco.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Listados\DXEstadoCuenta.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1608,6 +1612,7 @@
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\MovsBancoGestion.js" />
     <Content Include="Scripts\AutomotoraWeb\MovsBancoListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\SaldosBanco.js" />
     <Content Include="Scripts\AutomotoraWeb\TransaccionesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\CuotasValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\PedidosGestion.js" />
@@ -1849,6 +1854,10 @@
     <Content Include="Views\Movimientos\edit.cshtml" />
     <Content Include="Views\Movimientos\details.cshtml" />
     <Content Include="Views\Movimientos\delete.cshtml" />
+    <Content Include="Views\Movimientos\Saldos.cshtml" />
+    <Content Include="Views\Movimientos\_saldosGrilla.cshtml" />
+    <Content Include="Views\Movimientos\ReportSaldos.cshtml" />
+    <Content Include="Views\Movimientos\_reportSaldos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1871,6 +1880,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\Listados\DXSaldosBanco.resx">
+      <DependentUpon>DXSaldosBanco.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXEstadoCuenta.resx">
       <DependentUpon>DXEstadoCuenta.cs</DependentUpon>
     </EmbeddedResource>

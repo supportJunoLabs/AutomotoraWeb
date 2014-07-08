@@ -1,0 +1,16 @@
+﻿@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoReporte ir = new InfoReporte();
+    ir.AccionReporte = "ReportPartialSaldos";
+    ir.Controlador = MovimientosController.CONTROLLER;
+    ir.AccionExportacion = "ReportExportSaldos";
+    ir.TieneIdParametros= true;
+
+    ViewBag.InfoReporte = ir;
+    }
+
+@Html.Partial("_generalReport")
+
+

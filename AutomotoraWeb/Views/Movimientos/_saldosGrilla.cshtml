@@ -1,0 +1,42 @@
+﻿@model List<AutomotoraWeb.Models.BancoSaldoLineaModel>
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Bank.Maintenance
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+          new ColumnaGrilla {Campo="Cuenta.Banco", Ancho=150, Titulo="Banco"},
+         new ColumnaGrilla {Campo="Cuenta.Numero", Ancho=100, Titulo="Numero"},
+         new ColumnaGrilla {Campo="Cuenta.Tipo", Ancho=150, Titulo="Tipo"},
+         new ColumnaGrilla {Campo="Cuenta.Moneda.Nombre", Ancho=150, Titulo="Moneda"},
+         new ColumnaGrilla {Campo="Saldo.ImporteTexto", Ancho=150, Titulo="Saldo", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+         new ColumnaGrilla {Campo="SaldoConciliado.ImporteTexto", Ancho=150, Titulo="Saldo Conciliado", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA}
+    };
+
+
+    ig.NameGrid = "grilla_saldos";
+    ig.Controller = MovimientosController.CONTROLLER;
+    ig.ActionCallbackRoute = "GrillaSaldos";
+    ig.KeyFieldName = "CodigoCuenta";
+    ig.TypeOfModel = typeof(AutomotoraWeb.Models.BancoSaldoLineaModel);
+
+    ig.AccionesAlComienzo = true;
+    ig.UsarBotones = true;
+
+    ig.AddButton(new BotonGrilla("details", CuentasBancariasController.CONTROLLER, "boton-consultar-mf", "Cuenta Bancaria"));
+    //a proposito no hay modificar o eliminar, se debe extornar y hacer de vuelta.
+
+  
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = CuentasBancariasController.CONTROLLER;
+    ig.AccionDobleClick = "details";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)

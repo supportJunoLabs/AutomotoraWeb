@@ -44,7 +44,6 @@ namespace AutomotoraWeb.Controllers.Bank {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
             this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(model.Cuenta));
-            model.generarListado();
             if (ModelState.IsValid) {
                 model.generarListado();
             } else {
@@ -58,7 +57,6 @@ namespace AutomotoraWeb.Controllers.Bank {
             MovimientosBancoModel model = (MovimientosBancoModel)Session[idParametros];
             ViewData["idParametros"] = model;
             this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(model.Cuenta));
-            model.generarListado();
             if (ModelState.IsValid) {
                 model.generarListado();
             } else {
@@ -278,6 +276,68 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #endregion
 
+        #region Mantenimiento
+
+        public ActionResult Saldos() {
+            BancoSaldoModel model = new BancoSaldoModel();
+            string s = SessionUtils.generarIdVarSesion("SaldosBanco", Session[SessionUtils.SESSION_USER].ToString());
+            model.idParametros = s;
+            Session[s] = model;
+            ViewData["idParametros"] = model.idParametros;
+            model.generarListado();
+            return View(model);
+        }
+
+        [HttpPost]
+        //se invoca desde el boton actualizar e imprimir. Devuelve la pagina completa
+        public ActionResult Saldos(BancoSaldoModel model) {
+            Session[model.idParametros] = model; //filtros actualizados
+            ViewData["idParametros"] = model.idParametros;
+            if (model.Accion == BancoSaldoModel.ACCIONES.IMPRIMIR) {
+                return this.ReportSaldos(model);
+            }
+            model.generarListado();
+            return View(model);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. 
+        public ActionResult GrillaSaldos(string idParametros) {
+            BancoSaldoModel model = (BancoSaldoModel)Session[idParametros];
+            ViewData["idParametros"] = model;
+            model.generarListado();
+            return PartialView("_saldosGrilla", model.Saldos);
+        }
+
+        public ActionResult ReportSaldos(BancoSaldoModel model) {
+            return View("ReportSaldos", model);
+        }
+
+
+        private XtraReport _generarReporteSaldos(string idParametros) {
+            BancoSaldoModel model = (BancoSaldoModel)Session[idParametros];
+            model.generarListado();
+            List<BancoSaldoModel> ll = new List<BancoSaldoModel>();
+            ll.Add(model);
+            XtraReport rep = new DXSaldosBanco();
+            rep.DataSource = ll;
+            //setParamsToReport(rep, model);
+            return rep;
+        }
+
+        public ActionResult ReportPartialSaldos(string idParametros) {
+            XtraReport rep = _generarReporteSaldos(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportSaldos");
+        }
+
+        public ActionResult ReportExportSaldos(string idParametros) {
+            XtraReport rep = _generarReporteSaldos(idParametros);
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+
+        #endregion
 
     }
 }

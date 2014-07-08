@@ -1,0 +1,48 @@
+﻿@model AutomotoraWeb.Models.BancoSaldoModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    ViewBag.Title = "Cuentas Bancarias: Saldos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+    @Html.HiddenFor(model => model.idParametros)
+    @Html.HiddenFor(model => model.Accion, new { id = "accion" })
+
+    <div id="filtros" class="block" style="margin-right: 5px">
+        <div class="btn-toolbar botoneraListado">
+            <div class="btn-group">
+                <input type="button" id="btn_actualizar" title="Listar" class="btn btn-primary" name="btn_actualizar" value="Actualizar" />
+            </div>
+            <div class="btn-group" style="margin-left: 10px">
+                <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btn_imprimir" title="Imprimir" value="Imprimir" />
+            </div>
+        </div>
+        <div id="containerLinea2" style="margin-left: 20px; margin-top:20px">
+            <div id="filtro_fechas" class="floatLeft">
+                <div id="containerDesde" class="floatLeft">
+                    <div class="floatLeft display-label display-label-small" >
+                        Fecha Saldo
+                    </div>
+                    <div class="floatLeft editor-field editor-field-small ">
+                        @Html.TextBoxFor(model => model.Fecha, "{0:dd/MM/yyyy}", new { id = "fecha", @class = "calendarAW floatRight" })
+                    </div>
+                    <div class="clear-both"></div>
+                </div>
+
+            </div>
+            <div class="clear-both"></div>
+        </div>
+    </div>
+}
+
+<div id="divListado">
+        @Html.Partial("_saldosGrilla", Model.Saldos)
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/SaldosBanco.js"></script>
+}
