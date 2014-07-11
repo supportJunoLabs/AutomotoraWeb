@@ -1858,6 +1858,8 @@
     <Content Include="Views\Movimientos\_saldosGrilla.cshtml" />
     <Content Include="Views\Movimientos\ReportSaldos.cshtml" />
     <Content Include="Views\Movimientos\_reportSaldos.cshtml" />
+    <Content Include="Views\Cheques\Depositar.cshtml" />
+    <Content Include="Views\Cheques\_selectCheque.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
