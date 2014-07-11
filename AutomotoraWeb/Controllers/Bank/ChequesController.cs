@@ -176,7 +176,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             if (ModelState.IsValid) {
                 try {
                     tr.Ejecutar();
-                    return RedirectToAction(BankController.INDEX, BankController.BCONTROLLER);
+                    return RedirectToAction("ReciboDeposito", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
@@ -185,6 +185,34 @@ namespace AutomotoraWeb.Controllers.Bank {
             }
 
             return View(tr);
+        }
+
+        public ActionResult ReciboDeposito(int id) {
+            ViewData["idParametros"] = id;
+            return View("ReciboDeposito");
+        }
+
+        private XtraReport _generarReciboDeposito(int id) {
+            TRChequeDepositarDescontar tr = (TRChequeDepositarDescontar)Transaccion.ObtenerTransaccion(id);
+            List<TRChequeDepositarDescontar> ll = new List<TRChequeDepositarDescontar>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboDepositarCheque();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboDepositoPartial(int idParametros) {
+            XtraReport rep = _generarReciboDeposito(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportCheques");
+        }
+
+        public ActionResult ReciboDepositoExport(int idParametros) {
+            XtraReport rep = _generarReciboDeposito(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
         #endregion
