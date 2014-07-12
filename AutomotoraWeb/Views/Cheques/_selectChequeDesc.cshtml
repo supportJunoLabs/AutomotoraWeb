@@ -1,0 +1,61 @@
+﻿@model List<DLL_Backend.Cheque>
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.TipoControl = InfoGrilla.TIPO_CONTROL.GRIDLOOKUP;
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Banco", Ancho=100, Titulo="Banco"},
+        new ColumnaGrilla {Campo="Cuenta", Ancho=100, Titulo="Cuenta"},
+        new ColumnaGrilla {Campo="NumeroCheque", Ancho=80, Titulo="Numero"},
+        new ColumnaGrilla {Campo="Importe", Ancho=120, Titulo="Importe"},
+        new ColumnaGrilla {Campo="FechaVencimiento", Ancho=90, Titulo="Vencimiento"},
+        new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista"}, 
+        new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=100, Titulo="Sucursal"},
+        new ColumnaGrilla {Campo="Observaciones", Ancho=200}
+    };
+
+    ig.NameGrid = "gridCheques";
+    ig.Controller = ChequesController.CONTROLLER;
+    ig.ActionCallbackRoute = "ChequesDescontablesGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Cheque);
+    ig.FormatoSeleccionLookup = "{0}, {2}, {3}, {4:dd/MM/yyyy}";
+    ig.registrosPorPagina = 10;
+    ig.AnchoSeleccion = 530;
+ 
+    ig.FocusedRowChangedAccion ="chequeSelected";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+
+
+@*@Html.DevExpress().GridLookup(settings=> {
+settings.Name="gridCheques";
+    settings.GridViewProperties.CallbackRouteValues = new {Controller="Cheques", Action="ChequesDepositablesGrilla"};
+        settings.Columns.Add("Banco");
+        settings.Columns.Add("NumeroCheque", "Numero");
+        settings.Columns.Add("Importe.ImporteTexto", "Importe");
+        
+        MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
+        gridViewColumn.FieldName = "FechaVencimiento";
+        gridViewColumn.Caption="Vencimiento";
+        gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+        gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+        settings.Columns.Add(gridViewColumn);
+    
+        settings.Columns.Add("Financista.Nombre", "Financista");
+        settings.Columns.Add("Sucursal.Nombre", "Sucursal");
+        settings.Columns.Add("Observaciones", "Observaciones");
+    
+        settings.KeyFieldName = "Codigo";
+        settings.Properties.SelectionMode = DevExpress.Web.ASPxGridLookup.GridLookupSelectionMode.Single;
+        settings.GridViewClientSideEvents.FocusedRowChanged = "function(s,e){answerToEvent(s,e);}";
+        settings.Properties.TextFormatString = "{1}, {2}, {3}, {4}";
+}).BindList(Model).GetHtml()*@

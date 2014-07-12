@@ -3,15 +3,13 @@
 @using DLL_Backend;
 
 @{
-    ViewBag.Title = "Depositar Cheque";
+    ViewBag.Title = "Descontar Cheque";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    HtmlHelper.ClientValidationEnabled = true;  //lo hago a mano del lado del server porque a todo le llama codigo y queda feo
+    HtmlHelper.ClientValidationEnabled = false;  //lo hago a mano del lado del server porque a todo le llama codigo y queda feo
 }
 
    @Html.Partial("_depositarDescontar", Model)
-             
 
- 
 
 <script type="text/javascript"> 
 

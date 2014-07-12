@@ -1865,6 +1865,9 @@
     <Content Include="Views\Cheques\_selectCheque.cshtml" />
     <Content Include="Views\Cheques\ReciboDeposito.cshtml" />
     <Content Include="Views\Cheques\_reciboDeposito.cshtml" />
+    <Content Include="Views\Cheques\_selectChequeDesc.cshtml" />
+    <Content Include="Views\Cheques\_depositarDescontar.cshtml" />
+    <Content Include="Views\Cheques\Descontar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -148,15 +148,23 @@ namespace AutomotoraWeb.Controllers.Bank {
             return View(model);
         }
 
+        public ActionResult Descontar() {
+            TRChequeDepositarDescontar model = new TRChequeDepositarDescontar();
+            model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR;
+            return View( model);
+        }
+
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
         public ActionResult ChequesDepositablesGrilla() {
             return PartialView("_selectCheque", Cheque.ChequesDepositables());
         }
 
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult ChequesDescontablesGrilla() {
+            return PartialView("_selectChequeDesc", Cheque.ChequesDescontables());
+        }
 
-        [HttpPost]
-        public ActionResult Depositar(TRChequeDepositarDescontar tr) {
-
+        private ActionResult DepositarDescontar(TRChequeDepositarDescontar tr) {
             //Hacer las validaciones del ModelState manualmente porque los mensajes por defecto son muy feos:
             ModelState.Clear();
             if (tr.Cuenta == null || tr.Cuenta.Codigo <= 0) {
@@ -172,7 +180,6 @@ namespace AutomotoraWeb.Controllers.Bank {
                 ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
             }
 
-
             if (ModelState.IsValid) {
                 try {
                     tr.Ejecutar();
@@ -183,8 +190,17 @@ namespace AutomotoraWeb.Controllers.Bank {
                     return View(tr);
                 }
             }
-
             return View(tr);
+    }
+
+        [HttpPost]
+        public ActionResult Descontar(TRChequeDepositarDescontar tr) {
+            return DepositarDescontar(tr);
+        }
+
+        [HttpPost]
+        public ActionResult Depositar(TRChequeDepositarDescontar tr) {
+            return DepositarDescontar(tr);
         }
 
         public ActionResult ReciboDeposito(int id) {
@@ -205,7 +221,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             XtraReport rep = _generarReciboDeposito(idParametros);
             ViewData["idParametros"] = idParametros;
             ViewData["Report"] = rep;
-            return PartialView("_reportCheques");
+            return PartialView("_reciboDeposito");
         }
 
         public ActionResult ReciboDepositoExport(int idParametros) {
