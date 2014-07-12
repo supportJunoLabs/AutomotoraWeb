@@ -9,6 +9,7 @@ using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
+using AutomotoraWeb.Controllers.General;
 
 namespace AutomotoraWeb.Controllers.Bank {
     public class ChequesController : BankController {
@@ -17,8 +18,22 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (usuario==null){
+                filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
+                return;
+            }
+
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Financistas = Financista.FinancistasTodos;
+            ViewBag.Cuentas = CuentaBancaria.CuentasBancarias;
+            if (usuario.MultiSucursal) {
+                ViewBag.SucursalesTransaccion = Sucursal.Sucursales;
+            } else {
+                List<Sucursal> listSucursal = new List<Sucursal>();
+                listSucursal.Add(usuario.Sucursal);
+                ViewBag.SucursalesTransaccion = listSucursal;
+            }
         }
 
 
@@ -122,6 +137,83 @@ namespace AutomotoraWeb.Controllers.Bank {
             param.Visible = false;
             report.Parameters.Add(param);
           }
+
+        #endregion
+
+        #region DepositarCheque
+
+        public ActionResult Depositar() {
+            TRChequeDepositarDescontar model = new TRChequeDepositarDescontar();
+            model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR;
+            return View(model);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult ChequesDepositablesGrilla() {
+            return PartialView("_selectCheque", Cheque.ChequesDepositables());
+        }
+
+
+        [HttpPost]
+        public ActionResult Depositar(TRChequeDepositarDescontar tr) {
+
+            //Hacer las validaciones del ModelState manualmente porque los mensajes por defecto son muy feos:
+            ModelState.Clear();
+            if (tr.Cuenta == null || tr.Cuenta.Codigo <= 0) {
+                ModelState.AddModelError("Cuenta.Codigo", "La Cuenta es requerida");
+            }
+            if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
+                ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
+            }
+            if (string.IsNullOrWhiteSpace(tr.NumeroComprobante)) {
+                ModelState.AddModelError("NumeroComprobante", "El Numero de Comprobante es requerido");
+            }
+            if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
+                ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
+            }
+
+
+            if (ModelState.IsValid) {
+                try {
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboDeposito", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(tr);
+                }
+            }
+
+            return View(tr);
+        }
+
+        public ActionResult ReciboDeposito(int id) {
+            ViewData["idParametros"] = id;
+            return View("ReciboDeposito");
+        }
+
+        private XtraReport _generarReciboDeposito(int id) {
+            TRChequeDepositarDescontar tr = (TRChequeDepositarDescontar)Transaccion.ObtenerTransaccion(id);
+            List<TRChequeDepositarDescontar> ll = new List<TRChequeDepositarDescontar>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboDepositarCheque();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboDepositoPartial(int idParametros) {
+            XtraReport rep = _generarReciboDeposito(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportCheques");
+        }
+
+        public ActionResult ReciboDepositoExport(int idParametros) {
+            XtraReport rep = _generarReciboDeposito(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
 
         #endregion
 

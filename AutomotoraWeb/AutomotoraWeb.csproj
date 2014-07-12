@@ -367,6 +367,9 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboDepositarCheque.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\MenuService.cs" />
     <Compile Include="Services\SecurityService.cs" />
@@ -1858,11 +1861,14 @@
     <Content Include="Views\Movimientos\_saldosGrilla.cshtml" />
     <Content Include="Views\Movimientos\ReportSaldos.cshtml" />
     <Content Include="Views\Movimientos\_reportSaldos.cshtml" />
+    <Content Include="Views\Cheques\Depositar.cshtml" />
+    <Content Include="Views\Cheques\_selectCheque.cshtml" />
+    <Content Include="Views\Cheques\ReciboDeposito.cshtml" />
+    <Content Include="Views\Cheques\_reciboDeposito.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
-    <Folder Include="Reports\Transacciones\" />
     <Folder Include="Views\Cuotas\" />
   </ItemGroup>
   <ItemGroup>
@@ -1954,6 +1960,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboDepositarCheque.resx">
+      <DependentUpon>DXReciboDepositarCheque.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

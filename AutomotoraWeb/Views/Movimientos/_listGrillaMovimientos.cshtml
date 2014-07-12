@@ -10,10 +10,10 @@
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
           new ColumnaGrilla {Campo="FechaMov", Ancho=80, Titulo="Fecha"},
-         new ColumnaGrilla {Campo="ImporteDebito", Ancho=150, Titulo="Debito"},
-         new ColumnaGrilla {Campo="ImporteCredito", Ancho=150, Titulo="Credito"},
-         new ColumnaGrilla {Campo="ConceptoMov", Ancho=250, Titulo="Concepto"},
-         new ColumnaGrilla {Campo="FechaConciliado", Ancho=80, Titulo="F.Conciliado"},
+         new ColumnaGrilla {Campo="ImporteDebito", Ancho=130, Titulo="Debito"},
+         new ColumnaGrilla {Campo="ImporteCredito", Ancho=130, Titulo="Credito"},
+         new ColumnaGrilla {Campo="ConceptoMov", Ancho=200, Titulo="Concepto"},
+         new ColumnaGrilla {Campo="FechaConciliado", Ancho=80, Titulo="Conciliado"},
          new ColumnaGrilla {Campo="DescripcionMov", Ancho=250, Titulo="Observaciones"}
     };
 
@@ -31,9 +31,9 @@
     //a proposito no hay modificar o eliminar, se debe extornar y hacer de vuelta.
 
     ig.TextoAcciones2="Operaciones";
-    ig.AddButton2(new BotonAjaxGrilla("ConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-conciliar", "Marcar como Conciliado", "Conciliar", 100));
-    ig.AddButton2(new BotonAjaxGrilla("DesConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-desconciliar", "Quitar marca de conciliado", "Des-Conciliar", 140));
-    ig.AddButton2(new BotonGrilla("ExtornarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax", "Extornar Movimiento", "Extornar", 100));
+    ig.AddButton2(new BotonAjaxGrilla("ConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-conciliar", "Marcar como Conciliado", "Conciliar", 60));
+    ig.AddButton2(new BotonAjaxGrilla("DesConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-desconciliar", "Quitar marca de conciliado", "Des-Conciliar", 60));
+    ig.AddButton2(new BotonGrilla("ExtornarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax", "Extornar Movimiento", "Extornar", 60));
     
     ig.DobleClick = true;
     ig.ControladorDobleClick = MovimientosController.CONTROLLER;

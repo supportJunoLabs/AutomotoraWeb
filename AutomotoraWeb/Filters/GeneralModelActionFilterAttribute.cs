@@ -48,8 +48,12 @@ namespace AutomotoraWeb.Filters {
                 if (model is AbstractModel) {
                     ((AbstractModel)model).IP = origen;
                     ((AbstractModel)model).UserName = nomUsuario;
-                } else if (model is Auditable) {
+                } 
+                if (model is Auditable) {
                     ((Auditable)model).setearAuditoria(nomUsuario, origen);
+                }
+                if (model is Transaccion) {
+                    ((Transaccion)model).setearAuditoria(nomUsuario, origen);
                 }
             }
 

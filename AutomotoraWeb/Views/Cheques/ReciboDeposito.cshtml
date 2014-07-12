@@ -1,0 +1,13 @@
+﻿@using AutomotoraWeb.Controllers.Bank;
+
+@{ 
+    ViewBag.Title = "Listado Cheques";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", BankController.INDEX, BankController.BCONTROLLER).Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboDeposito")

@@ -3,16 +3,16 @@
     $("#tabActual").val("EFECTIVO");//porque al volver siempre quedo en el primer tab
 
     var filtrarSucursal = $("#cb_filtrarSucursal").prop('checked')
-    _showHideSucursal(filtrarSucursal);
-
-    var filtrarFinancista = $("#cb_filtrarFinancista").prop('checked')
-    _showHideFinancista(filtrarFinancista);
-
-    $("#btn_actualizar").click(function () {
+    _showHideSucursal(filtrarSucursal); $("#btn_actualizar").click(function () {
         //alert("click");
         $("#accion").val("ACTUALIZAR");
         $('form#formPrincipal').submit();
     });
+
+    var filtrarFinancista = $("#cb_filtrarFinancista").prop('checked')
+    _showHideFinancista(filtrarFinancista);
+
+   
 
     $("#btn_imprimir").click(function () {
         //alert("click");

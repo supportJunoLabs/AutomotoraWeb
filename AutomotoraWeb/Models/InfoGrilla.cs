@@ -5,18 +5,29 @@ using System.Web;
 
 namespace AutomotoraWeb.Models {
     public class InfoGrilla {
+
+        public enum TIPO_CONTROL { GRILLA, GRIDLOOKUP}
+
         public string NameGrid { get; set; }
         public string Controller { get; set; }
         public string ActionCallbackRoute { get; set; }
         public string KeyFieldName { get; set; }
         public Type TypeOfModel { get; set; }
 
+        private TIPO_CONTROL _tipoControl = TIPO_CONTROL.GRILLA;
+        public TIPO_CONTROL TipoControl {
+            get { return _tipoControl; }
+            set { _tipoControl = value; }
+        }
+
         private bool accionesAlComienzo = false;
         public bool AccionesAlComienzo{
             get { return accionesAlComienzo; }
             set { accionesAlComienzo = value; }
         }
+
         public int registrosPorPagina { get; set; }
+
         private bool registrosPorPaginaVisible = true;
         public bool RegistrosPorPaginaVisible {
             get { return registrosPorPaginaVisible; }
@@ -31,6 +42,15 @@ namespace AutomotoraWeb.Models {
         public string ControladorDobleClick { get; set; }
         public string AccionDobleClick { get; set; }
 
+
+        // atributos para lookupgrid
+        public string FocusedRowChangedAccion { get; set; }
+        public string FormatoSeleccionLookup { get; set; }
+        public int AnchoSeleccion { get; set; }
+
+
+        //-------------------- Botones acciones principales (siempre imagenes: ajax o link ) ---------------------------
+
         private bool usarBotones = true;
         public bool UsarBotones {
             get { return usarBotones; }
@@ -38,24 +58,17 @@ namespace AutomotoraWeb.Models {
         }
 
         private bool botonesAjax = false;
-        public bool BotonesAjax {  //indica si usar lso botones ajax o los normales en el grupo principal
+        public bool BotonesAjax {  //indica si para los botones automaticos usar botones ajax o link
             get { return botonesAjax; }
             set { botonesAjax = value; }
         }
 
-        //-------------------- Conjunto de acciones secundarias---------------------------
+        //-------------------- Conjunto de acciones secundarias (imagen o texto, ajax o link ) ---------------------------
 
         public string TextoAcciones2 { get; set; }
-        private bool botonesAjax2 = false;  //por ahora queda hecho solo para botones comunes
-        //public bool BotonesAjax2 {  //indica si usar lso botones ajax o los normales en el grupo secundario
-        //    get { return botonesAjax2; }
-        //    set { botonesAjax2 = value; }
-        //}
         public List<BotonGrilla> Botones2 { get; set; } //lista de botones del grupo secundario,
 
         //---------------------------------------------------------------------------------
-
-
 
         public List<string> HiddenColumns { get; set; } //columnas que no hay que mostrar
         

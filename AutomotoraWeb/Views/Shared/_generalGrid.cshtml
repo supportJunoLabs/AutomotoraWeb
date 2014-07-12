@@ -105,7 +105,7 @@
                     gridViewColumn.Caption = cg.Campo;
                 }
             }
-            
+
             //Ancho
             if (defineAnchos) {
                 if (cg.Ancho > 0) {
@@ -231,11 +231,16 @@
         listGridViewsBotones.Caption = "Acciones";
         listGridViewsBotones.CellStyle.HorizontalAlign = HorizontalAlign.Center;
 
+        int tot = 0;
         if (ig.Botones == null || ig.Botones.Count == 0) {//van los 3 por defecto porque dice UsarBotones (if anterior)
-            listGridViewsBotones.Width = Unit.Pixel(90);
+            tot = 90;
         } else {
-            listGridViewsBotones.Width = Unit.Pixel(30 * ig.Botones.Count); //vienen botones, ver la cantidad
+            tot =30 * ig.Botones.Count; //vienen botones, ver la cantidad
         }
+        if (tot<60){
+            tot = 60;
+        }
+        listGridViewsBotones.Width =  Unit.Pixel(tot);
 
         listGridViewsBotones.SetDataItemTemplateContent(c => {
             var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
@@ -248,7 +253,7 @@
                     ViewContext.Writer.WriteLine(@Html.BotonImagen("details", ig.Controller, new { id = id }, "boton-consultar-mf", "Consultar").ToHtmlString());
                     ViewContext.Writer.WriteLine(@Html.BotonImagen("edit", ig.Controller, new { id = id }, "boton-editar-mf", "Editar").ToHtmlString());
                     ViewContext.Writer.WriteLine(@Html.BotonImagen("delete", ig.Controller, new { id = id }, "boton-eliminar-mf", "Eliminar").ToHtmlString());
-                }   
+                }
             } else {
                 foreach (BotonGrilla b in ig.Botones) {
                     if (b is BotonAjaxGrilla) {
@@ -277,6 +282,9 @@
                 tot += b.Ancho;
             }
         }
+        if(tot<90){
+            tot = 90;
+        }
         listGridViewsBotones2.Width = Unit.Pixel(tot); //calcular tamanio total de los botones (30 si vino vacio el ancho)
         listGridViewsBotones2.SetDataItemTemplateContent(c => {
             var id = DataBinder.Eval(c.DataItem, (String)(ig.KeyFieldName));
@@ -302,81 +310,160 @@
 
 
 @{
-    //--------------------------------------GENERAR LA GRILLA ---------------------------------------------    
+    //--------------------------------------GENERAR LA GRILLA O EL LOOKUP ---------------------------------------------    
 }
 
-@(Html.DevExpress().GridView(
-    settings => {
-        settings.Name = ig.NameGrid;
-        settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"] };
-        if (!defineAnchos) {
-            settings.Width = Unit.Percentage(98);
-        } else {
-            settings.Width = Unit.Pixel(sumaAnchos + 90);
-        }
-        settings.SettingsBehavior.AllowSort = true;
-        settings.SettingsBehavior.AllowGroup = true;
-        settings.Settings.ShowGroupPanel = true;
-        settings.KeyFieldName = ig.KeyFieldName;
+@{ 
+    
+    if (ig.TipoControl == InfoGrilla.TIPO_CONTROL.GRILLA) {
+       
+    @(Html.DevExpress().GridView(
+            settings => {
+                settings.Name = ig.NameGrid;
+                settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"] };
+           
+                settings.SettingsBehavior.AllowSort = true;
+                settings.SettingsBehavior.AllowGroup = true;
+                settings.Settings.ShowGroupPanel = true;
+                settings.KeyFieldName = ig.KeyFieldName;
 
-        //Adds
+                //Adds
 
-        settings.SettingsPager.AlwaysShowPager = true;
-        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
-        settings.SettingsPager.FirstPageButton.Visible = true;
-        settings.SettingsPager.LastPageButton.Visible = true;
-        if (ig.registrosPorPagina <= 0) {
-            settings.SettingsPager.PageSize = 30;
-        } else {
-            settings.SettingsPager.PageSize = ig.registrosPorPagina;
-        }
-        settings.SettingsPager.PageSizeItemSettings.Visible = ig.RegistrosPorPaginaVisible;
+                settings.SettingsPager.AlwaysShowPager = true;
+                settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+                settings.SettingsPager.FirstPageButton.Visible = true;
+                settings.SettingsPager.LastPageButton.Visible = true;
+                if (ig.registrosPorPagina <= 0) {
+                    settings.SettingsPager.PageSize = 30;
+                } else {
+                    settings.SettingsPager.PageSize = ig.registrosPorPagina;
+                }
+                settings.SettingsPager.PageSizeItemSettings.Visible = ig.RegistrosPorPaginaVisible;
 
-        //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "30", "50", "100" };
+                //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "30", "50", "100" };
 
-        //Adds       
+                //Adds       
 
-        //Filtros
-        settings.Settings.ShowHeaderFilterButton = true;
-        settings.Settings.ShowFilterRow = true;
+                //Filtros
+                settings.Settings.ShowHeaderFilterButton = true;
+                settings.Settings.ShowFilterRow = true;
 
-        settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
-        settings.SettingsText.FilterBarClear = "QuitarFiltros";
-        settings.Settings.ShowFilterRowMenu = true;
-        settings.CommandColumn.ShowClearFilterButton = true;
-        settings.Settings.ShowHeaderFilterBlankItems = false;
+                settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+                settings.SettingsText.FilterBarClear = "QuitarFiltros";
+                settings.Settings.ShowFilterRowMenu = true;
+                settings.CommandColumn.ShowClearFilterButton = true;
+                settings.Settings.ShowHeaderFilterBlankItems = false;
 
-        settings.SettingsPopup.HeaderFilter.MinWidth = 300;
-        settings.SettingsPopup.HeaderFilter.MinHeight = 200;
+                settings.SettingsPopup.HeaderFilter.MinWidth = 300;
+                settings.SettingsPopup.HeaderFilter.MinHeight = 200;
 
-        settings.Settings.ShowFooter = true;
+                settings.Settings.ShowFooter = true;
 
-        if (ig.DobleClick) {
-            settings.ClientSideEvents.RowDblClick = "function(s, e){ window.open('" + @Url.Action(ig.AccionDobleClick, ig.ControladorDobleClick) + "/' + s.GetRowKey(e.visibleIndex), '_self'); }";
-        }
+                if (ig.DobleClick) {
+                    settings.ClientSideEvents.RowDblClick = "function(s, e){ window.open('" + @Url.Action(ig.AccionDobleClick, ig.ControladorDobleClick) + "/' + s.GetRowKey(e.visibleIndex), '_self'); }";
+                }
 
-        if (ig.AccionesAlComienzo && listGridViewsBotones != null) {
-            settings.Columns.Add(listGridViewsBotones);
-        }
+                if (ig.AccionesAlComienzo && listGridViewsBotones != null) {
+                    settings.Columns.Add(listGridViewsBotones);
+                }
 
-        if (ig.AccionesAlComienzo && listGridViewsBotones2 != null) {
-            settings.Columns.Add(listGridViewsBotones2);
-        }
+                if (ig.AccionesAlComienzo && listGridViewsBotones2 != null) {
+                    settings.Columns.Add(listGridViewsBotones2);
+                }
 
-        foreach (var c in listGridViewsColumn) {
-            c.Settings.HeaderFilterMode = HeaderFilterMode.CheckedList;
-            settings.Columns.Add(c);
-        }
+                foreach (var c in listGridViewsColumn) {
+                    c.Settings.HeaderFilterMode = HeaderFilterMode.CheckedList;
+                    settings.Columns.Add(c);
+                }
 
-        if (!ig.AccionesAlComienzo && listGridViewsBotones2 != null) {
-            settings.Columns.Add(listGridViewsBotones2);
-        }
-        if (!ig.AccionesAlComienzo && listGridViewsBotones != null) {
-            settings.Columns.Add(listGridViewsBotones);
-        }
+                if (!ig.AccionesAlComienzo && listGridViewsBotones2 != null) {
+                    settings.Columns.Add(listGridViewsBotones2);
+                }
+                if (!ig.AccionesAlComienzo && listGridViewsBotones != null) {
+                    settings.Columns.Add(listGridViewsBotones);
+                }
+                
+                 if (!defineAnchos) {
+                    settings.Width = Unit.Percentage(98);
+                } else {
+                    settings.Settings.UseFixedTableLayout = true;
+                    sumaAnchos = 0;
+                     foreach( MVCxGridViewColumn col in settings.Columns){
+                         sumaAnchos += (int)col.Width.Value;
+                     }
+                     
+                    settings.Width = Unit.Pixel(sumaAnchos + 14*settings.Columns.Count);
+                }
+
+            }
+        ).Bind(Model).GetHtml())
+    }
+}
+
+
+@{ 
+    
+    if (ig.TipoControl == InfoGrilla.TIPO_CONTROL.GRIDLOOKUP) {
+
+    @(Html.DevExpress().GridLookup(
+            settings => {
+                settings.Name = ig.NameGrid;
+                settings.GridViewProperties.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"] };
+                if (defineAnchos) {
+                     settings.GridViewProperties.Settings.UseFixedTableLayout = true;
+                }
+                if (ig.AnchoSeleccion > 0) {
+                    settings.Width = Unit.Pixel(ig.AnchoSeleccion);
+                }
+                settings.GridViewProperties.SettingsBehavior.AllowSort = true;
+                settings.GridViewProperties.SettingsBehavior.AllowGroup = true;
+                settings.GridViewProperties.Settings.ShowGroupPanel = true;
+                settings.KeyFieldName = ig.KeyFieldName;
+
+                //Adds
+                settings.GridViewProperties.SettingsPager.AlwaysShowPager = true;
+                settings.GridViewProperties.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+                settings.GridViewProperties.SettingsPager.FirstPageButton.Visible = true;
+                settings.GridViewProperties.SettingsPager.LastPageButton.Visible = true;
+                if (ig.registrosPorPagina <= 0) {
+                    settings.GridViewProperties.SettingsPager.PageSize = 30;
+                } else {
+                    settings.GridViewProperties.SettingsPager.PageSize = ig.registrosPorPagina;
+                }
+                settings.GridViewProperties.SettingsPager.PageSizeItemSettings.Visible = ig.RegistrosPorPaginaVisible;
+
+                //Filtros
+                settings.GridViewProperties.Settings.ShowHeaderFilterButton = true;
+                settings.GridViewProperties.Settings.ShowFilterRow = true;
+                settings.GridViewProperties.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+                settings.GridViewProperties.SettingsText.FilterBarClear = "QuitarFiltros";
+                settings.GridViewProperties.Settings.ShowFilterRowMenu = true;
+                settings.CommandColumn.ShowClearFilterButton = true;
+                settings.GridViewProperties.Settings.ShowHeaderFilterBlankItems = false;
+
+                settings.GridViewProperties.SettingsPopup.HeaderFilter.MinWidth = 300;
+                settings.GridViewProperties.SettingsPopup.HeaderFilter.MinHeight = 200;
+
+                settings.GridViewProperties.Settings.ShowFooter = true;
+
+                if (!string.IsNullOrWhiteSpace(ig.FormatoSeleccionLookup)) {
+                    settings.Properties.TextFormatString = ig.FormatoSeleccionLookup;
+                }
+
+                if (!string.IsNullOrWhiteSpace(ig.FocusedRowChangedAccion)) {
+                    string s = "function(s,e){" + ig.FocusedRowChangedAccion + "(s,e);}";
+                    settings.GridViewClientSideEvents.FocusedRowChanged = s ;
+                }
+
+                foreach (var c in listGridViewsColumn) {
+                    c.Settings.HeaderFilterMode = HeaderFilterMode.CheckedList;
+                    settings.Columns.Add(c);
+                }
+
+            }).BindList(Model).GetHtml())
 
     }
-).Bind(Model).GetHtml())
+}
 
 
 

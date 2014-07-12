@@ -86,6 +86,8 @@ textarea {
     font-weight: normal;
     color: #ff0000;
     font-size: 12px;
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
 .validation-summary-valid {
