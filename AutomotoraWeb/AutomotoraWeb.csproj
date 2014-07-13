@@ -386,6 +386,15 @@
     <Content Include="Content\Images\24\edit.png" />
     <Content Include="Content\Images\agregar.png" />
     <Content Include="Content\Images\agregar2.png" />
+    <Content Include="Content\Images\autos\345-95-0001.jpg" />
+    <Content Include="Content\Images\autos\345-95-0002.jpg" />
+    <Content Include="Content\Images\autos\345-95-0003.jpg" />
+    <Content Include="Content\Images\autos\345-95-0004.jpg" />
+    <Content Include="Content\Images\autos\345-95-0005.jpg" />
+    <Content Include="Content\Images\autos\345-95-0006.jpg" />
+    <Content Include="Content\Images\autos\345-95-0007.jpg" />
+    <Content Include="Content\Images\autos\345-95-0008.jpg" />
+    <Content Include="Content\Images\autos\345-95-0009.jpg" />
     <Content Include="Content\Images\consultar.png" />
     <Content Include="Content\Images\Delete.png" />
     <Content Include="Content\Images\edit.png" />

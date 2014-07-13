@@ -30,17 +30,74 @@
                 buttons: [ { text: "Cerrar", click: function() { $( this ).dialog( "close" ); } } ]
             });
         });
+
+        //---------------------------------------------------------------
+
+        function savePhotoOrder(){
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: '/vehiculos/savePhotoOrder/',
+                data: getJsonOrderedPhotos(),
+                success: function(data){
+                    if (data.Result != "OK") {
+                        general_showAvisoPopup('Error al salvar orden de fotos.');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showAvisoPopup('Error al salvar orden de fotos.');
+                },
+                beforeSend: showLoading,
+                complete: hideLoading
+            });
+        }
+
+        //---------------------------------------------------------------
+
+        function getJsonOrderedPhotos() {
+            var arrayImgElements = $("#sortable li img");
+            var arrayPhotos = [];
+
+            for (var i = 0; i < arrayImgElements.length; i++) {
+                var item = getJsonPhoto(arrayImgElements[i]);
+                myarray.push(item);
+            }
+
+            var codigoVehiculo = $("#codigo").val();
+
+            return JSON.stringify({ Codigo: codigoVehiculo, Fotos: arrayPhotos });
+        }
+
+        //---------------------------------------------------------------
+
+        function getJsonPhoto(imgElement) {
+
+            var splitSrc = imgElement.attr("src").split("/");
+            var lengthSrc = splitSrc.length;
+            var fileName = splitSrc[lengthSrc - 1];
+
+            var photo = {
+                Archivo: fileName,
+                Codigo: imgElement.attr("id"),
+                Orden: imgElement.attr("title")
+            };
+
+            return JSON.stringify(photo);
+        }
+
+        //---------------------------------------------------------------
+
     }); 
 </script>
  
 <ul id="sortable">
     @foreach (FotoAuto fotoAuto in Model.Fotos) {
-        <li class="vehiculoImageContainer"><img id="img_@fotoAuto.Codigo" title="@fotoAuto.Orden" class="vehiculoImg" src="@fotoAuto.Archivo" /></li>
+        <li class="vehiculoImageContainer"><img id="@fotoAuto.Codigo" title="@fotoAuto.Orden" class="vehiculoImg" src="~/Content/Images/autos/@fotoAuto.Archivo" style="cursor: move;" /></li>
     }
 </ul>
 
 @foreach (FotoAuto fotoAuto in Model.Fotos) {
-    <div id="popup_content_img_@fotoAuto.Codigo" style="display: none;"><img src="@fotoAuto.Archivo" /></div>
+    <div id="popup_content_img_@fotoAuto.Codigo" style="display: none;"><img src="~/Content/Images/autos/@fotoAuto.Archivo" /></div>
 }
 
 

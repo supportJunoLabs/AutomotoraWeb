@@ -625,6 +625,36 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         #endregion
+
+        //---------------------------------------------------
+        //---------------------------------------------------
+
+        #region Fotos
+
+        public JsonResult savePhotoOrder(Vehiculo vehiculo) {
+
+            try {
+                Vehiculo vehiculoOriginal = new Vehiculo();
+                vehiculoOriginal.Codigo = vehiculo.Codigo;
+                vehiculoOriginal.Consultar();
+                foreach (FotoAuto fotoAuto in vehiculo.Fotos) {
+                    var foto = from f in vehiculoOriginal.Fotos where (fotoAuto.Codigo == f.Codigo) select f;
+                    if (foto != null) {
+                        FotoAuto fa = (FotoAuto)foto;
+                        fa.Orden = fotoAuto.Orden;
+                        fa.ModificarDatos();
+                    }
+                }
+
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+            }
+
+        }
+
+        #endregion
+
         //---------------------------------------------------------------------
 
         public ActionResult GridLookupVehiculo() {
