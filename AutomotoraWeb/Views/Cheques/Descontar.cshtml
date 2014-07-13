@@ -5,26 +5,8 @@
 @{
     ViewBag.Title = "Descontar Cheque";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    HtmlHelper.ClientValidationEnabled = false;  //lo hago a mano del lado del server porque a todo le llama codigo y queda feo
 }
 
    @Html.Partial("_depositarDescontar", Model)
 
-
-<script type="text/javascript"> 
-
-    //Saco las validacion de required y las dejo para hacer del server, porque los mensajes por defecto son feos y dicen siempre codigo.
-    $(document).ready(function () {
-            $("*").removeAttr("data-val-required");
-        }
-    );
-
-
-    function chequeSelected(s, e) {
-        //alert("hola");
-        var g = gridCheques.GetGridView();  //obtener referencia a la grilla
-        var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
-        //alert(valor);
-        $("#codigoCheque").val(valor);
-    }
-</script> 
+ <script src="~/Scripts/AutomotoraWeb/DepositarDescontarCheque.js"></script>

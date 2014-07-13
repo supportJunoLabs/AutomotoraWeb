@@ -6,9 +6,9 @@ using DevExpress.XtraReports.UI;
 using DLL_Backend;
 
 /// <summary>
-/// Summary description for DXReciboDepositarCheque
+/// Summary description for DXReciboTransfCheque
 /// </summary>
-public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
+public class DXReciboTransfCheque : DevExpress.XtraReports.UI.XtraReport {
     private DevExpress.XtraReports.UI.DetailBand Detail;
     private DevExpress.XtraReports.UI.TopMarginBand TopMargin;
     private DevExpress.XtraReports.UI.BottomMarginBand BottomMargin;
@@ -19,9 +19,6 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
     private XRLabel xrLabel3;
     private XRLabel xrLabel2;
     private XRLabel xr_titulo;
-    private XRLabel xrLabel31;
-    private XRLabel xrLabel30;
-    private XRLabel xrLabel29;
     private XRLabel xrLabel28;
     private XRLabel xrLabel27;
     private XRLabel xrLabel26;
@@ -38,9 +35,6 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
     private XRLabel xrLabel15;
     private XRLabel xrLabel14;
     private XRLabel xrLabel13;
-    private XRLabel xrLabel12;
-    private XRLabel xrLabel11;
-    private XRLabel xrLabel10;
     private XRLabel xrLabel9;
     private XRLabel xrLabel8;
     private XRLabel xrLabel7;
@@ -51,17 +45,15 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
     private XRLine xrLine1;
     private XRPageInfo xrPageInfo1;
     private XRPageInfo xrPageInfo2;
-    private XRLabel xrLabel33;
-    private XRLabel xrLabel32;
     private XRLabel xrLabel34;
-    private XRLabel xr_importe;
-    private XRLabel lbl_importe;
+    private XRLabel xrLabel10;
+    private XRLabel xrLabel1;
     /// <summary>
     /// Required designer variable.
     /// </summary>
     private System.ComponentModel.IContainer components = null;
 
-    public DXReciboDepositarCheque() {
+    public DXReciboTransfCheque() {
         InitializeComponent();
         //
         // TODO: Add constructor logic here
@@ -88,14 +80,7 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
     private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
-            this.xr_importe = new DevExpress.XtraReports.UI.XRLabel();
-            this.lbl_importe = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel34 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel33 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel32 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel31 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel30 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel29 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel28 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel27 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel26 = new DevExpress.XtraReports.UI.XRLabel();
@@ -112,9 +97,6 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel15 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel14 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel13 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel12 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel11 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel10 = new DevExpress.XtraReports.UI.XRLabel();
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.xrLabel52 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel51 = new DevExpress.XtraReports.UI.XRLabel();
@@ -133,6 +115,8 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
             this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
             this.xrPageInfo1 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
+            this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel10 = new DevExpress.XtraReports.UI.XRLabel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
@@ -140,14 +124,9 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
             // Detail
             // 
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-            this.xr_importe,
-            this.lbl_importe,
+            this.xrLabel10,
+            this.xrLabel1,
             this.xrLabel34,
-            this.xrLabel33,
-            this.xrLabel32,
-            this.xrLabel31,
-            this.xrLabel30,
-            this.xrLabel29,
             this.xrLabel28,
             this.xrLabel27,
             this.xrLabel26,
@@ -163,84 +142,21 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel16,
             this.xrLabel15,
             this.xrLabel14,
-            this.xrLabel13,
-            this.xrLabel12,
-            this.xrLabel11,
-            this.xrLabel10});
+            this.xrLabel13});
             this.Detail.HeightF = 271.875F;
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
-            // xr_importe
-            // 
-            this.xr_importe.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Importe.ImporteTexto")});
-            this.xr_importe.LocationFloat = new DevExpress.Utils.PointFloat(380.2084F, 78.99993F);
-            this.xr_importe.Name = "xr_importe";
-            this.xr_importe.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xr_importe.SizeF = new System.Drawing.SizeF(139.5833F, 23F);
-            this.xr_importe.Text = "xr_importe";
-            // 
-            // lbl_importe
-            // 
-            this.lbl_importe.LocationFloat = new DevExpress.Utils.PointFloat(280.2084F, 78.99996F);
-            this.lbl_importe.Name = "lbl_importe";
-            this.lbl_importe.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.lbl_importe.SizeF = new System.Drawing.SizeF(100F, 23F);
-            this.lbl_importe.Text = "Importe Recibido";
-            // 
             // xrLabel34
             // 
             this.xrLabel34.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Observaciones")});
-            this.xrLabel34.LocationFloat = new DevExpress.Utils.PointFloat(9.998719F, 220.75F);
+            this.xrLabel34.LocationFloat = new DevExpress.Utils.PointFloat(8.333302F, 194F);
             this.xrLabel34.Name = "xrLabel34";
             this.xrLabel34.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel34.SizeF = new System.Drawing.SizeF(630.0005F, 23F);
             this.xrLabel34.Text = "xrLabel34";
-            // 
-            // xrLabel33
-            // 
-            this.xrLabel33.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Cheque.Financista.Nombre")});
-            this.xrLabel33.LocationFloat = new DevExpress.Utils.PointFloat(95.83334F, 194F);
-            this.xrLabel33.Name = "xrLabel33";
-            this.xrLabel33.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel33.SizeF = new System.Drawing.SizeF(166.6666F, 23F);
-            this.xrLabel33.Text = "xrLabel33";
-            // 
-            // xrLabel32
-            // 
-            this.xrLabel32.LocationFloat = new DevExpress.Utils.PointFloat(8.333302F, 194F);
-            this.xrLabel32.Name = "xrLabel32";
-            this.xrLabel32.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel32.SizeF = new System.Drawing.SizeF(87.49998F, 23F);
-            this.xrLabel32.Text = "Financista";
-            // 
-            // xrLabel31
-            // 
-            this.xrLabel31.LocationFloat = new DevExpress.Utils.PointFloat(280.2083F, 56.00001F);
-            this.xrLabel31.Name = "xrLabel31";
-            this.xrLabel31.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel31.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
-            this.xrLabel31.Text = "Concepto";
-            // 
-            // xrLabel30
-            // 
-            this.xrLabel30.LocationFloat = new DevExpress.Utils.PointFloat(280.2083F, 33.00002F);
-            this.xrLabel30.Name = "xrLabel30";
-            this.xrLabel30.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel30.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
-            this.xrLabel30.Text = "Cuenta";
-            // 
-            // xrLabel29
-            // 
-            this.xrLabel29.LocationFloat = new DevExpress.Utils.PointFloat(280.2083F, 10.00001F);
-            this.xrLabel29.Name = "xrLabel29";
-            this.xrLabel29.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel29.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
-            this.xrLabel29.Text = "Banco";
             // 
             // xrLabel28
             // 
@@ -386,36 +302,6 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel13.SizeF = new System.Drawing.SizeF(166.6666F, 23F);
             this.xrLabel13.Text = "xrLabel13";
             // 
-            // xrLabel12
-            // 
-            this.xrLabel12.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "MovimientoGenerado.ConceptoMov")});
-            this.xrLabel12.LocationFloat = new DevExpress.Utils.PointFloat(351.0417F, 56.00001F);
-            this.xrLabel12.Name = "xrLabel12";
-            this.xrLabel12.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel12.SizeF = new System.Drawing.SizeF(288.9583F, 23F);
-            this.xrLabel12.Text = "xrLabel12";
-            // 
-            // xrLabel11
-            // 
-            this.xrLabel11.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Cuenta.Numero")});
-            this.xrLabel11.LocationFloat = new DevExpress.Utils.PointFloat(351.0417F, 32.99999F);
-            this.xrLabel11.Name = "xrLabel11";
-            this.xrLabel11.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel11.SizeF = new System.Drawing.SizeF(100F, 23F);
-            this.xrLabel11.Text = "xrLabel11";
-            // 
-            // xrLabel10
-            // 
-            this.xrLabel10.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Cuenta.Banco")});
-            this.xrLabel10.LocationFloat = new DevExpress.Utils.PointFloat(351.0417F, 10.00001F);
-            this.xrLabel10.Name = "xrLabel10";
-            this.xrLabel10.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel10.SizeF = new System.Drawing.SizeF(100F, 23F);
-            this.xrLabel10.Text = "xrLabel10";
-            // 
             // TopMargin
             // 
             this.TopMargin.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
@@ -475,12 +361,12 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
             // xrLabel9
             // 
             this.xrLabel9.Font = new System.Drawing.Font("Arial", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
-            this.xrLabel9.LocationFloat = new DevExpress.Utils.PointFloat(280.2084F, 84.45832F);
+            this.xrLabel9.LocationFloat = new DevExpress.Utils.PointFloat(307.2917F, 84.45832F);
             this.xrLabel9.Name = "xrLabel9";
             this.xrLabel9.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel9.SizeF = new System.Drawing.SizeF(100F, 23F);
+            this.xrLabel9.SizeF = new System.Drawing.SizeF(143.75F, 23F);
             this.xrLabel9.StylePriority.UseFont = false;
-            this.xrLabel9.Text = "CUENTA";
+            this.xrLabel9.Text = "TRANSFERIDO A:";
             // 
             // xrLabel8
             // 
@@ -540,7 +426,7 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
             this.xr_titulo.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xr_titulo.SizeF = new System.Drawing.SizeF(298.75F, 23F);
             this.xr_titulo.StylePriority.UseFont = false;
-            this.xr_titulo.Text = "CHEQUE DEPOSITADO / DESCONTADO";
+            this.xr_titulo.Text = "TRANSFERENCIA CHEQUE";
             this.xr_titulo.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xr_titulo_BeforePrint);
             // 
             // xrLabel4
@@ -606,11 +492,31 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
             this.xrPageInfo2.StylePriority.UseTextAlignment = false;
             this.xrPageInfo2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
+            // xrLabel1
+            // 
+            this.xrLabel1.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Financista.Nombre")});
+            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(307.2917F, 10.00001F);
+            this.xrLabel1.Name = "xrLabel1";
+            this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel1.SizeF = new System.Drawing.SizeF(293.75F, 23F);
+            this.xrLabel1.Text = "xrLabel1";
+            // 
+            // xrLabel10
+            // 
+            this.xrLabel10.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Tercero")});
+            this.xrLabel10.LocationFloat = new DevExpress.Utils.PointFloat(307.2917F, 33.00001F);
+            this.xrLabel10.Name = "xrLabel10";
+            this.xrLabel10.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel10.SizeF = new System.Drawing.SizeF(293.75F, 23F);
+            this.xrLabel10.Text = "xrLabel10";
+            // 
             // bindingSource1
             // 
-            this.bindingSource1.DataSource = typeof(DLL_Backend.TRChequeDepositarDescontar);
+            this.bindingSource1.DataSource = typeof(DLL_Backend.TRChequePasar);
             // 
-            // DXReciboDepositarCheque
+            // DXReciboTransfCheque
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
             this.Detail,
@@ -629,14 +535,14 @@ public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
     #endregion
 
     private void xr_titulo_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-        if (GetCurrentColumnValue("TipoDestino").ToString() == TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR.ToString()) {
-            xr_titulo.Text = "CHEQUE DEPOSITADO";
-            xr_importe.Visible = false;
-            lbl_importe.Visible = false;
-        } else {
-            xr_titulo.Text = "CHEQUE DESCONTADO";
-            xr_importe.Visible = true;
-            lbl_importe.Visible = true;
-        }
+        //if (GetCurrentColumnValue("TipoDestino").ToString() == TRChequePasar.TIPO_DESTINO.DEPOSITAR.ToString()) {
+        //    xr_titulo.Text = "CHEQUE DEPOSITADO";
+        //    xr_importe.Visible = false;
+        //    lbl_importe.Visible = false;
+        //} else {
+        //    xr_titulo.Text = "CHEQUE DESCONTADO";
+        //    xr_importe.Visible = true;
+        //    lbl_importe.Visible = true;
+        //}
     }
 }

@@ -41,10 +41,10 @@ select.medium {
   width: 150px;
 }
 select.large {
-  width: 210px;
+  width: 250px;
 }
 select.xlarge {
-  width: 270px;
+  width: 420px;
 }
 select.xxlarge {
   width: 530px;
