@@ -274,6 +274,7 @@
     <Compile Include="Models\BotonAjaxGrilla.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ChequeTransfSucModel.cs" />
     <Compile Include="Models\EstadoCuentaModel.cs" />
     <Compile Include="Models\ListadoTransaccionesModel.cs" />
     <Compile Include="Models\ListadoChequesModel.cs" />
@@ -365,6 +366,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboTransfSucCheque.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Transacciones\DXReciboTransfCheque.cs">
@@ -1877,6 +1881,10 @@
     <Content Include="Views\Cheques\_selectChequePasar.cshtml" />
     <Content Include="Views\Cheques\ReciboTransf.cshtml" />
     <Content Include="Views\Cheques\_reciboTransf.cshtml" />
+    <Content Include="Views\Cheques\_selectChequeTransfSuc.cshtml" />
+    <Content Include="Views\Cheques\TransfSuc.cshtml" />
+    <Content Include="Views\Cheques\ReciboTransfSuc.cshtml" />
+    <Content Include="Views\Cheques\_reciboTransfSuc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1972,6 +1980,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfSucCheque.resx">
+      <DependentUpon>DXReciboTransfSucCheque.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfCheque.resx">
       <DependentUpon>DXReciboTransfCheque.cs</DependentUpon>

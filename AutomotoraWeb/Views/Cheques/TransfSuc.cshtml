@@ -1,0 +1,129 @@
+﻿@model AutomotoraWeb.Models.ChequeTransfSucModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@*Tiene que estar arriba o no funciona la grilla*@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btn_transferir").click(function () {
+            gridCheques.GetSelectedFieldValues("Codigo", CodigosSeleccionadosCallBack);
+        });
+
+       
+    });
+
+    //function dale() {
+    //    gridCheques.GetSelectedFieldValues("Codigo", CodigosSeleccionadosCallBack);
+    //    var x = gridCheques.GetSelectedRowCount();
+    //    alert(x);
+    //    //$('form#formPrincipal').submit();
+    //}
+
+    function CodigosSeleccionadosCallBack(values) {
+        //alert("hola");
+        var selectedIDs;
+        selectedIDs = "";
+        for (var index = 0; index < values.length; index++) {
+            selectedIDs += values[index] + ",";
+        }
+        //alert(selectedIDs);
+        $("#chequesIds").val(selectedIDs);
+        //alert($("#chequesIds").val());
+        $('form#formPrincipal').submit();
+    }
+
+    function SelectionChanged(s, e) {
+        s.GetSelectedFieldValues("ImporteTexto", GetSelectedFieldValuesCallback);
+    }
+    function GetSelectedFieldValuesCallback(values) {
+        SelectedRows.BeginUpdate();
+        try {
+            SelectedRows.ClearItems();
+            for (var i = 0; i < values.length; i++) {
+                SelectedRows.AddItem(values[i]);
+            }
+        } finally {
+            SelectedRows.EndUpdate();
+        }
+        $("#count").html(gridCheques.GetSelectedRowCount());
+
+    } 
+</script>
+
+
+@{
+    ViewBag.Title = "Transferir Cheques entre Sucursales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="validation-summary-errors">
+    <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+</div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+   
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+    @Html.HiddenFor(model => model.ChequesIds, new {id="chequesIds"})
+
+    <div>
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.SucursalOrigen)
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.SucursalOrigen.Codigo, (bool?)ViewBag.SoloLectura, model => model.SucursalOrigen.Nombre,
+                new SelectList(ViewBag.SucursalesTransaccion, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "large" })
+            @Html.ValidationMessageFor(model => model.SucursalOrigen)
+        </div>
+    </div>
+    <div class="clear-both"></div>   
+    
+    <div>
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.SucursalDestino)
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.SucursalDestino.Codigo, (bool?)ViewBag.SoloLectura, model => model.SucursalDestino.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursalesDest", @class = "large" })
+            @Html.ValidationMessageFor(model => model.SucursalDestino)
+        </div>
+    </div>
+    <div class="clear-both"></div>  
+
+    <div class="selection_form">
+        <div class="floatLeft"  style="margin-right:10px">
+            <div class="text">
+                Seleccionados:
+            </div>
+            <div>
+            @Html.DevExpress().ListBox(
+            settings => {
+                settings.Name = "SelectedRows";
+                settings.Width = 120;
+                settings.Height = 300;
+                settings.Properties.EnableClientSideAPI = true;
+            }).GetHtml()
+            </div>
+            <div class="text">
+                Cantidad:&nbsp;<strong id="count">0</strong>
+            </div>
+            <div class="clear-both"></div>
+            <div class="espacio2"
+             <div class="btn-toolbar">
+               @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Transferir").Id("btn_transferir"))
+            </div>     
+        </div>
+        <div class="floatLeft">
+            @Html.Partial("_selectChequeTransfSuc", Cheque.ChequesTransferiblesSucursal(Model.SucursalOrigen))
+        </div>
+    </div>
+
+}
+
+
+<script type="text/javascript">
+
+</script>

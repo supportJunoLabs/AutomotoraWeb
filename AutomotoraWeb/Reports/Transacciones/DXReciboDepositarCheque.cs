@@ -6,7 +6,7 @@ using DevExpress.XtraReports.UI;
 using DLL_Backend;
 
 /// <summary>
-/// Summary description for DXReciboDepositarCheque
+/// Summary description for DXReciboDepositarCheque.
 /// </summary>
 public class DXReciboDepositarCheque : DevExpress.XtraReports.UI.XtraReport {
     private DevExpress.XtraReports.UI.DetailBand Detail;

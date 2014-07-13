@@ -340,8 +340,6 @@
                 }
                 settings.SettingsPager.PageSizeItemSettings.Visible = ig.RegistrosPorPaginaVisible;
 
-                //settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "30", "50", "100" };
-
                 //Adds       
 
                 //Filtros
@@ -356,6 +354,22 @@
 
                 settings.SettingsPopup.HeaderFilter.MinWidth = 300;
                 settings.SettingsPopup.HeaderFilter.MinHeight = 200;
+                
+                //EndlessMode
+                if (ig.EndlessMode) {
+                    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+                    settings.Settings.VerticalScrollableHeight = 400;
+                    settings.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+                }
+
+                //checkboxes de seleccion de filas
+                if (ig.ChecksSeleccion) {
+                    settings.CommandColumn.Visible = true;
+                    settings.CommandColumn.ShowSelectCheckbox = true;
+                    settings.ClientSideEvents.SelectionChanged = ig.AccionSeleccion;
+                    settings.CommandColumn.Width = Unit.Pixel(30);
+                }
+                
 
                 settings.Settings.ShowFooter = true;
 
@@ -382,18 +396,18 @@
                 if (!ig.AccionesAlComienzo && listGridViewsBotones != null) {
                     settings.Columns.Add(listGridViewsBotones);
                 }
-                
-                 if (!defineAnchos) {
-                    settings.Width = Unit.Percentage(98);
-                } else {
-                    settings.Settings.UseFixedTableLayout = true;
-                    sumaAnchos = 0;
-                     foreach( MVCxGridViewColumn col in settings.Columns){
-                         sumaAnchos += (int)col.Width.Value;
-                     }
-                     
-                    settings.Width = Unit.Pixel(sumaAnchos + 14*settings.Columns.Count);
-                }
+
+               if (!defineAnchos) {
+                        settings.Width = Unit.Percentage(98);
+                    } else {
+                        settings.Settings.UseFixedTableLayout = true;
+                        sumaAnchos = 0;
+                        foreach (MVCxGridViewColumn col in settings.Columns) {
+                            sumaAnchos += (int)col.Width.Value;
+                        }
+
+                        settings.Width = Unit.Pixel(sumaAnchos + 14 * settings.Columns.Count);
+                    }
 
             }
         ).Bind(Model).GetHtml())
@@ -445,6 +459,15 @@
                 settings.GridViewProperties.SettingsPopup.HeaderFilter.MinHeight = 200;
 
                 settings.GridViewProperties.Settings.ShowFooter = true;
+                
+                //EndlessMode, es soportado en gridlookup
+                //http://documentation.devexpress.com/#AspNet/CustomDocument15467
+                //if (ig.EndlessMode) {
+                //    settings.GridViewProperties.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+                //    settings.GridViewProperties.Settings.VerticalScrollableHeight = 400;
+                //    settings.GridViewProperties.SettingsPager.Mode = GridViewPagerMode.EndlessPaging;
+                //}
+                
 
                 if (!string.IsNullOrWhiteSpace(ig.FormatoSeleccionLookup)) {
                     settings.Properties.TextFormatString = ig.FormatoSeleccionLookup;
