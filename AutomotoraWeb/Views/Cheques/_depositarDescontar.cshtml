@@ -1,0 +1,108 @@
+﻿@model DLL_Backend.TRChequeDepositarDescontar
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+
+<div class="validation-summary-errors">
+    <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+</div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+   
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    @Html.HiddenFor(model => model.TipoDestino);
+   
+    <div>
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Cuenta)
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.Cuenta.Codigo, (bool?)ViewBag.SoloLectura, model => model.Cuenta.Nombre,
+                new SelectList(ViewBag.Cuentas, "Codigo", "Nombre"), "--Seleccionar Cuenta--",
+                new { id = "ddlCuentas", @class = "xxlarge" })
+            @Html.ValidationMessageFor(model => model.Cuenta.Codigo)
+        </div>
+    </div>
+    <div class="clear-both"></div>   
+    
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Cheque)
+    </div>
+    <div class="renglon-alto editor-field-xlarge">
+        <div class="floatLeft">
+            @{ if (Model.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR) {
+                @Html.Partial("_selectCheque", Cheque.ChequesDepositables())
+               } else {
+                @Html.Partial("_selectChequeDesc", Cheque.ChequesDescontables())
+               }
+            }
+        </div>
+        <div class="floatLeft" style="margin-left: 5px">
+            @Html.ValidationMessageFor(model => model.Cheque.Codigo)
+        </div>
+        @Html.HiddenFor(model => model.Cheque.Codigo, new { id = "codigoCheque" })
+
+    </div>
+    <div class="clear-both"></div>   
+    
+    <div>
+        @{ if (Model.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR) {
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Importe)
+            </div>
+            <div class="editor-field editor-field-small">
+                @Html.DdlOrDisplayImporteFor(model => model.Importe, (bool?)ViewBag.SoloLectura)
+                @Html.ValidationMessageFor(model => model.Importe.Monto)
+            </div>
+            <div class="clear-both"></div>
+                
+           }
+        }
+    </div>
+    
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.NumeroComprobante)
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.TextBoxFor(model => model.NumeroComprobante)
+        @Html.ValidationMessageFor(model => model.NumeroComprobante)
+    </div>
+    <div class="clear-both"></div>   
+    <div>
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Sucursal)
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, (bool?)ViewBag.SoloLectura, model => model.Sucursal.Nombre,
+                new SelectList(ViewBag.SucursalesTransaccion, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "xlarge" })
+            @Html.ValidationMessageFor(model => model.Sucursal)
+        </div>
+    </div>
+    <div class="clear-both"></div>   
+    
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+        @Html.ValidationMessageFor(model => model.Observaciones)
+
+    </div>
+    <div class="clear-both"></div>   
+    
+    <div class="espacio2"></div>
+    <div class="btn-toolbar">
+        @{ if (Model.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR) {
+            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Depositar Cheque"))
+           } else {
+            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Descontar Cheque"))
+           }
+        }
+    </div>
+    
+}
+
+

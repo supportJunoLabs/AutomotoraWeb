@@ -42,6 +42,20 @@ namespace AutomotoraWeb.Models {
         public string ControladorDobleClick { get; set; }
         public string AccionDobleClick { get; set; }
 
+        //para endless mode
+        private bool _endlessMode=false;
+        public bool EndlessMode {
+            get { return _endlessMode; }
+            set { _endlessMode = value; }
+        }
+
+        //para multiseleccion con checkbox
+        private bool _checksSeleccion = false;
+        public bool ChecksSeleccion {
+            get { return _checksSeleccion; }
+            set { _checksSeleccion = value; }
+        }
+        public string AccionSeleccion { get; set; }
 
         // atributos para lookupgrid
         public string FocusedRowChangedAccion { get; set; }

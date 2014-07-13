@@ -19,7 +19,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (usuario==null){
+            if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
             }
@@ -136,7 +136,87 @@ namespace AutomotoraWeb.Controllers.Bank {
             param.Description = "Detalle Filtros";
             param.Visible = false;
             report.Parameters.Add(param);
-          }
+        }
+
+        #endregion
+
+        #region PasarCheque
+
+        public ActionResult Pasar() {
+            TRChequePasar model = new TRChequePasar();
+            model.TipoDestino = TRChequePasar.TIPO_DESTINO.FINANCISTA;
+            return View(model);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult ChequesTransferiblesGrilla() {
+            return PartialView("_selectChequePasar", Cheque.ChequesTransferibles());
+        }
+
+        [HttpPost]
+        public ActionResult Pasar(TRChequePasar tr) {
+            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Financista", MetadataManager.IgnorablesDDL(tr.Financista));
+
+            //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
+            ModelState.Remove("Cheque.Codigo");
+            ModelState.Remove("Sucursal.Codigo");
+            
+            if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
+                ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
+            }
+            if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
+                ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
+            }
+            if (tr.TipoDestino == TRChequePasar.TIPO_DESTINO.FINANCISTA && (tr.Financista == null || tr.Financista.Codigo <= 0)) {
+                ModelState.AddModelError("Financista.Codigo", "El Financista es requerido");
+            }
+            if (tr.TipoDestino == TRChequePasar.TIPO_DESTINO.TERCERO && string.IsNullOrWhiteSpace(tr.Tercero)) {
+                ModelState.AddModelError("Tercero", "El Tercero es requerido");
+            }
+
+            if (ModelState.IsValid) {
+                try {
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboTransf", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(tr);
+                }
+            }
+            return View(tr);
+        }
+
+        public ActionResult ReciboTransf(int id) {
+            ViewData["idParametros"] = id;
+            return View("ReciboTransf");
+        }
+
+        private XtraReport _generarReciboTransf(int id) {
+            TRChequePasar tr = (TRChequePasar)Transaccion.ObtenerTransaccion(id);
+            List<TRChequePasar> ll = new List<TRChequePasar>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboTransfCheque();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboTransfPartial(int idParametros) {
+            XtraReport rep = _generarReciboTransf(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboTransf");
+        }
+
+        public ActionResult ReciboTransfExport(int idParametros) {
+            XtraReport rep = _generarReciboTransf(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
 
         #endregion
 
@@ -148,30 +228,46 @@ namespace AutomotoraWeb.Controllers.Bank {
             return View(model);
         }
 
+        public ActionResult Descontar() {
+            TRChequeDepositarDescontar model = new TRChequeDepositarDescontar();
+            model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR;
+            return View(model);
+        }
+
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
         public ActionResult ChequesDepositablesGrilla() {
             return PartialView("_selectCheque", Cheque.ChequesDepositables());
         }
 
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult ChequesDescontablesGrilla() {
+            return PartialView("_selectChequeDesc", Cheque.ChequesDescontables());
+        }
 
-        [HttpPost]
-        public ActionResult Depositar(TRChequeDepositarDescontar tr) {
+        private ActionResult DepositarDescontar(TRChequeDepositarDescontar tr) {
 
-            //Hacer las validaciones del ModelState manualmente porque los mensajes por defecto son muy feos:
-            ModelState.Clear();
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            if (tr.Importe != null && tr.Importe.Moneda!=null) {
+                this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
+            }
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(tr.Cuenta));
+            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
+
+
+            //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
+            ModelState.Remove("Cheque.Codigo");
+            ModelState.Remove("Cuenta.Codigo");
+            ModelState.Remove("Sucursal.Codigo");
+
             if (tr.Cuenta == null || tr.Cuenta.Codigo <= 0) {
                 ModelState.AddModelError("Cuenta.Codigo", "La Cuenta es requerida");
             }
             if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
                 ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
             }
-            if (string.IsNullOrWhiteSpace(tr.NumeroComprobante)) {
-                ModelState.AddModelError("NumeroComprobante", "El Numero de Comprobante es requerido");
-            }
             if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
                 ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
             }
-
 
             if (ModelState.IsValid) {
                 try {
@@ -183,8 +279,17 @@ namespace AutomotoraWeb.Controllers.Bank {
                     return View(tr);
                 }
             }
-
             return View(tr);
+        }
+
+        [HttpPost]
+        public ActionResult Descontar(TRChequeDepositarDescontar tr) {
+            return DepositarDescontar(tr);
+        }
+
+        [HttpPost]
+        public ActionResult Depositar(TRChequeDepositarDescontar tr) {
+            return DepositarDescontar(tr);
         }
 
         public ActionResult ReciboDeposito(int id) {
@@ -205,7 +310,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             XtraReport rep = _generarReciboDeposito(idParametros);
             ViewData["idParametros"] = idParametros;
             ViewData["Report"] = rep;
-            return PartialView("_reportCheques");
+            return PartialView("_reciboDeposito");
         }
 
         public ActionResult ReciboDepositoExport(int idParametros) {
@@ -217,5 +322,104 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #endregion
 
+        #region ChequesTransferirSucursal
+
+        public ActionResult TransfSuc() {
+            ChequeTransfSucModel model = new ChequeTransfSucModel();
+            Sucursal suc = ((List<Sucursal>)ViewBag.SucursalesTransaccion)[0];
+            model.SucursalOrigen = suc;
+            ViewData["idParametros"] = suc.Codigo;
+            return View(model);
+        }
+
+         public ActionResult ChequesTransfSucGrilla(int idParametros) {
+             ViewData["idParametros"] = idParametros;
+             Sucursal suc = new Sucursal();
+             suc.Codigo=idParametros;
+             var cheques=Cheque.ChequesTransferiblesSucursal(suc);
+             return PartialView("_selectChequeTransfSuc", cheques);
+        }
+
+         [HttpPost]
+         public ActionResult TransfSuc( ChequeTransfSucModel model) {
+             this.eliminarValidacionesIgnorables("SucursalOrigen", MetadataManager.IgnorablesDDL(model.SucursalOrigen));
+             this.eliminarValidacionesIgnorables("SucursalDestino", MetadataManager.IgnorablesDDL(model.SucursalDestino));
+             ViewData["idParametros"] = model.SucursalOrigen.Codigo;
+             if (ModelState.IsValid) {
+                 try {
+                     TRChequeTransfSucursal tr = new TRChequeTransfSucursal();
+                     tr.SucursalOrigen = model.SucursalOrigen;
+                     tr.SucursalDestino = model.SucursalDestino;
+
+                     string scheques = model.ChequesIds;
+
+                     if (string.IsNullOrWhiteSpace(scheques)) {
+                         ViewBag.ErrorCode = "CH001";
+                         ViewBag.ErrorMessage = "No hay cheques seleccionados";
+                         return View(model);
+                     }
+
+                     string[] ach = scheques.Split(new Char[] { ','});
+                     foreach (string s in ach) {
+                         if (!string.IsNullOrWhiteSpace(s)) {
+                             Cheque och = new Cheque();
+                             och.Codigo = Int32.Parse(s);
+                             tr.Cheques.Add(och);
+                         }
+                     }
+                     if (tr.Cheques.Count == 0) {
+                         ViewBag.ErrorCode = "CH001";
+                         ViewBag.ErrorMessage = "No hay cheques seleccionados";
+                         return View(model);
+                     }
+
+                     //Como no estoy usando una Transaccion del backend (que lo setea el filter) sino del modelo tengo que setear estos dos atributos a mano:
+                     string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
+                     string origen = HttpContext.Request.UserHostAddress;
+                     tr.setearAuditoria(nomUsuario, origen);
+
+                     tr.Ejecutar();
+
+                     return RedirectToAction("ReciboTransfSuc", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
+
+                 } catch (UsuarioException exc) {
+                     ViewBag.ErrorCode = exc.Codigo;
+                     ViewBag.ErrorMessage = exc.Message;
+                     return View(model);
+                 }
+             }
+             return View(model);
+         }
+
+         public ActionResult ReciboTransfSuc(int id) {
+             ViewData["idParametros"] = id;
+             return View("ReciboTransfSuc");
+         }
+
+
+         private XtraReport _generarReciboTransfSuc(int id) {
+             TRChequeTransfSucursal tr = (TRChequeTransfSucursal)Transaccion.ObtenerTransaccion(id);
+             List<TRChequeTransfSucursal> ll = new List<TRChequeTransfSucursal>();
+             ll.Add(tr);
+             XtraReport rep = new DXReciboTransfSucCheque();
+             rep.DataSource = ll;
+             return rep;
+         }
+
+         public ActionResult ReciboTransfSucPartial(int idParametros) {
+             XtraReport rep = _generarReciboTransfSuc(idParametros);
+             ViewData["idParametros"] = idParametros;
+             ViewData["Report"] = rep;
+             return PartialView("_reciboTransfSuc");
+         }
+
+         public ActionResult ReciboTransfSucExport(int idParametros) {
+             XtraReport rep = _generarReciboTransfSuc(idParametros);
+             ViewData["idParametros"] = idParametros;
+             ViewData["Report"] = rep;
+             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+         }
+
+        #endregion
     }
 }

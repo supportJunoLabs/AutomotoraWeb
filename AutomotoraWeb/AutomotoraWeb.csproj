@@ -274,6 +274,7 @@
     <Compile Include="Models\BotonAjaxGrilla.cs" />
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ChequeTransfSucModel.cs" />
     <Compile Include="Models\EstadoCuentaModel.cs" />
     <Compile Include="Models\ListadoTransaccionesModel.cs" />
     <Compile Include="Models\ListadoChequesModel.cs" />
@@ -365,6 +366,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboTransfSucCheque.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboTransfCheque.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Transacciones\DXReciboDepositarCheque.cs">
@@ -1622,8 +1629,10 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\DepositarDescontarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\MovsBancoGestion.js" />
     <Content Include="Scripts\AutomotoraWeb\MovsBancoListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\SaldosBanco.js" />
     <Content Include="Scripts\AutomotoraWeb\TransaccionesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\CuotasValesListado.js" />
@@ -1874,6 +1883,17 @@
     <Content Include="Views\Cheques\_selectCheque.cshtml" />
     <Content Include="Views\Cheques\ReciboDeposito.cshtml" />
     <Content Include="Views\Cheques\_reciboDeposito.cshtml" />
+    <Content Include="Views\Cheques\_selectChequeDesc.cshtml" />
+    <Content Include="Views\Cheques\_depositarDescontar.cshtml" />
+    <Content Include="Views\Cheques\Descontar.cshtml" />
+    <Content Include="Views\Cheques\Pasar.cshtml" />
+    <Content Include="Views\Cheques\_selectChequePasar.cshtml" />
+    <Content Include="Views\Cheques\ReciboTransf.cshtml" />
+    <Content Include="Views\Cheques\_reciboTransf.cshtml" />
+    <Content Include="Views\Cheques\_selectChequeTransfSuc.cshtml" />
+    <Content Include="Views\Cheques\TransfSuc.cshtml" />
+    <Content Include="Views\Cheques\ReciboTransfSuc.cshtml" />
+    <Content Include="Views\Cheques\_reciboTransfSuc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1969,6 +1989,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfSucCheque.resx">
+      <DependentUpon>DXReciboTransfSucCheque.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfCheque.resx">
+      <DependentUpon>DXReciboTransfCheque.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboDepositarCheque.resx">
       <DependentUpon>DXReciboDepositarCheque.cs</DependentUpon>
