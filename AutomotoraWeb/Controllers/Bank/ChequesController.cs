@@ -36,6 +36,8 @@ namespace AutomotoraWeb.Controllers.Bank {
             }
         }
 
+       
+
 
         #region ListadoCheques
 
@@ -95,6 +97,15 @@ namespace AutomotoraWeb.Controllers.Bank {
             setParamsToReport(rep, model);
             return rep;
         }
+        private void setParamsToReport(XtraReport report, ListadoChequesModel model) {
+            Parameter param = new Parameter();
+            param.Name = "detalleFiltros";
+            param.Type = typeof(string);
+            param.Value = model.detallesFiltro();
+            param.Description = "Detalle Filtros";
+            param.Visible = false;
+            report.Parameters.Add(param);
+        }
 
         public ActionResult ReportChequesPartial(string idParametros) {
             XtraReport rep = _generarReporteCheques(idParametros);
@@ -119,23 +130,20 @@ namespace AutomotoraWeb.Controllers.Bank {
             if (idCheque != null && idCheque != 0) {
                 ch.Consultar();
             }
-            ViewData["idParametros"] = ch.Codigo;
             return ch;
         }
 
-        public ActionResult ConsultaCheque(int? idCheque) {
-            Cheque ch = _consultarCheque(idCheque);
+        public ActionResult ConsultaCheque(int? id) {
+            Cheque ch = _consultarCheque(id);
+            ViewData["idParametros"] = ch.Codigo;
             return View("ConsultaCheque", ch);
         }
 
-        private void setParamsToReport(XtraReport report, ListadoChequesModel model) {
-            Parameter param = new Parameter();
-            param.Name = "detalleFiltros";
-            param.Type = typeof(string);
-            param.Value = model.detallesFiltro();
-            param.Description = "Detalle Filtros";
-            param.Visible = false;
-            report.Parameters.Add(param);
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult GrillaMovsCheques(int idParametros) {
+            Cheque ch = _consultarCheque(idParametros);
+            ViewData["idParametros"] = ch.Codigo;
+            return PartialView("_movimientosCheque", ch.Movimientos);
         }
 
         #endregion
@@ -421,5 +429,92 @@ namespace AutomotoraWeb.Controllers.Bank {
          }
 
         #endregion
+
+         #region RechazarCheque
+
+         public ActionResult Rechazar() {
+             TRChequeRechazar model = new TRChequeRechazar();
+             return View(model);
+         }
+
+         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+         public ActionResult ChequesRechazablesGrilla() {
+             return PartialView("_selectChequeRechazar", Cheque.ChequesRechazables());
+         }
+
+         [HttpPost]
+         public ActionResult Rechazar(TRChequeRechazar tr) {
+             this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
+             this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+
+             //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
+             ModelState.Remove("Cheque.Codigo");
+             ModelState.Remove("Sucursal.Codigo");
+
+             if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
+                 ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
+             }
+             if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
+                 ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
+             }
+             
+             if (ModelState.IsValid) {
+                 try {
+                     tr.Ejecutar();
+                     return RedirectToAction("ReciboRech", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
+                 } catch (UsuarioException exc) {
+                     ViewBag.ErrorCode = exc.Codigo;
+                     ViewBag.ErrorMessage = exc.Message;
+                     return View(tr);
+                 }
+             }
+             return View(tr);
+         }
+
+         public ActionResult ReciboRech(int id) {
+             ViewData["idParametros"] = id;
+             return View("ReciboRech");
+         }
+
+         private XtraReport _generarReciboRech(int id) {
+             TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id);
+             List<TRChequeRechazar> ll = new List<TRChequeRechazar>();
+             ll.Add(tr);
+             XtraReport rep = new DXReciboRechazarCheque();
+             rep.DataSource = ll;
+             return rep;
+         }
+
+         public ActionResult ReciboRechPartial(int idParametros) {
+             XtraReport rep = _generarReciboRech(idParametros);
+             ViewData["idParametros"] = idParametros;
+             ViewData["Report"] = rep;
+             return PartialView("_reciboRech");
+         }
+
+         public ActionResult ReciboRechExport(int idParametros) {
+             XtraReport rep = _generarReciboRech(idParametros);
+             ViewData["idParametros"] = idParametros;
+             ViewData["Report"] = rep;
+             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+         }
+
+
+         #endregion
+
+
+         #region CanjearChequeRechazado
+
+         public ActionResult CanjeRechazado() {
+             TRChequeRechazadoCanje model = new TRChequeRechazadoCanje();
+             return View(model);
+         }
+
+         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+         public ActionResult ChequesCanjeablesGrilla(){
+             return PartialView("_selectChequeCanjear", Cheque.ChequesRechazados());
+         }
+         #endregion
+
     }
 }

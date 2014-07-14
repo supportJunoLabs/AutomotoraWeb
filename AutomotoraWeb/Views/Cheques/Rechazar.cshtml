@@ -1,9 +1,9 @@
-﻿@model DLL_Backend.TRChequePasar
+﻿@model DLL_Backend.TRChequeRechazar
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 
 @{
-    ViewBag.Title = "Pasar Cheque";
+    ViewBag.Title = "Registrar Cheque Rechazado";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,7 +21,7 @@
     </div>
     <div class="renglon-alto editor-field-xlarge">
         <div class="floatLeft">
-            @Html.Partial("_selectChequePasar", Cheque.ChequesTransferibles())
+            @Html.Partial("_selectChequeRechazar", Cheque.ChequesRechazables())
         </div>
         <div class="floatLeft" style="margin-left: 5px">
             @Html.ValidationMessageFor(model => model.Cheque.Codigo)
@@ -30,29 +30,6 @@
 
     </div>
     <div class="clear-both"></div>
-    <div class="block" style="height:80px; padding-top:10px; padding-left:10px">
-        <div>
-            <div class="renglon-alto display-label">
-                @Html.RadioButtonFor(model => model.TipoDestino, TRChequePasar.TIPO_DESTINO.FINANCISTA, new { id = "rb_financista" })  Financista
-            </div>
-            <div id="financistas">
-                @Html.DropDownListFor(model => model.Financista.Codigo, new SelectList(ViewBag.Financistas, "Codigo", "Nombre"), new { @class = "large" })
-            </div>
-        </div>
-        <div class="clear-both"></div>
-        <div>
-            <div class=" renglon-alto display-label">
-                @Html.RadioButtonFor(model => model.TipoDestino, TRChequePasar.TIPO_DESTINO.TERCERO, new { id = "rb_tercero" })  Tercero
-            </div>
-            <div class="editor-field editor-field-large" id="tercero">
-                @Html.TextBoxFor(model => model.Tercero)
-                @Html.ValidationMessageFor(model => model.Tercero)
-            </div>
-        </div>
-    </div>
-    
-    <div class="clear-both"></div>
-        
     <div>
         <div class="display-label">
             @Html.LabelForRequired(model => model.Sucursal)
@@ -78,10 +55,9 @@
     
     <div class="espacio2"></div>
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Transferir Cheque"))
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Cheque Rechazado"))
     </div>     
 
 }
 
-
-<script type="text/javascript" src="/scripts/AutomotoraWeb/PasarCheque.js"></script>
+<script src="~/Scripts/AutomotoraWeb/RechazarCheque.js"></script>

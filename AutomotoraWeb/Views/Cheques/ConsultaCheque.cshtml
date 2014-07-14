@@ -7,12 +7,106 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@Html.HiddenFor(m => m.Codigo)
 
-<div id="divConsulta">
-    CONSULTA CHEQUE PENDIENTE
-   @* @Html.Partial("_sitCliente", Model)*@
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Banco)
 </div>
+<div class="editor-field ">
+    @Html.DisplayFor(model => model.Banco)
+</div>
+<div class="clear-both"></div>
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Cuenta)
+</div>
+<div class="editor-field ">
+    @Html.DisplayFor(model => model.Cuenta)
+</div>
+<div class="clear-both"></div>
 
-@section Scripts {
-    <script type="text/javascript" src="/scripts/AutomotoraWeb/ValesCliente.js"></script>
-}
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Librador)
+</div>
+<div class="editor-field ">
+    @Html.DisplayFor(model => model.Librador)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.NumeroCheque)
+</div>
+<div class="editor-field ">
+    @Html.DisplayFor(model => model.NumeroCheque)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.FechaValor)
+</div>
+<div class="editor-field ">
+    @Html.DisplayFor(model => model.FechaValor, "{0:dd/MM/yyyy}")
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.FechaVencimiento)
+</div>
+<div class="editor-field ">
+    @Html.DisplayFor(model => model.FechaVencimiento, "{0:dd/MM/yyyy}")
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Importe)
+</div>
+<div class="editor-field ">
+    @Html.DisplayFor(model => model.Importe.ImporteTexto)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.DescripcionEstado)
+</div>
+<div class="editor-field ">
+    <div>@Html.DisplayFor(model => model.DescripcionEstado)</div>
+    <div>@Html.DisplayFor(model => model.DescripcionAdicionalDestino)</div>
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Observaciones)
+</div>
+<div class="editor-field ">
+    @Html.DisplayFor(model => model.Observaciones)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Financista)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.Financista.Nombre)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.DetalleOrigen)
+</div>
+<div class="editor-field">
+    @Html.DisplayFor(model => model.DetalleOrigen)
+    
+</div>
+<div class="clear-both"></div>
+
+<div class="espacio2"></div>
+
+<div id="movimientos" class="cabezalBloque">
+    Movimientos
+</div>
+<div>
+    @Html.Partial("_movimientosCheque", Model.Movimientos);
+</div>
