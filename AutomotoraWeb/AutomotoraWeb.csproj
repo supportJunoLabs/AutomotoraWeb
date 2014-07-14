@@ -1632,7 +1632,7 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
-    <Content Include="Scripts\AutomotoraWeb\Copia de PasarCheque.js" />
+    <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\RechazarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\DepositarDescontarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\MovsBancoGestion.js" />
