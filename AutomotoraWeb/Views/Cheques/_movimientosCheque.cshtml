@@ -1,0 +1,39 @@
+﻿@model List<DLL_Backend.MovimientoCajaCheque>
+@using AutomotoraWeb.Models;
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.Financing;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Recibo.Numero", Ancho=70, Titulo="Trans.",
+         Hipervinculo=true, Haccion="ConsultaTransaccion", Hcontrolador="Transacciones", HCampoParametro="Recibo.Numero"},
+        new ColumnaGrilla {Campo="Fecha", Ancho=80, Titulo="Fecha"},
+        //new ColumnaGrilla {Campo="Recibo.TipoRecibo", Ancho=150, Titulo="Tipo"}, 
+        //new ColumnaGrilla {Campo="Recibo.NumeroOperacion", Ancho=90, Titulo="Operacion"},
+        new ColumnaGrilla {Campo="DescripcionTipo", Ancho=110, Titulo="Tipo Movimiento"},
+       // new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},
+        new ColumnaGrilla {Campo="Descripcion", Ancho=250, Titulo="Detalle"},
+        new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=100, Titulo="Sucursal",
+                Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"}
+     };
+        
+    ig.NameGrid = "grillaMovs";
+    ig.Controller = ChequesController.CONTROLLER;
+    ig.ActionCallbackRoute = "GrillaMovsCheques";
+    ig.KeyFieldName = "NumeroRecibo";
+    ig.TypeOfModel = typeof(DLL_Backend.MovimientoCajaCheque);
+    ig.registrosPorPagina = 20;
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ConsultaTransaccion", TransaccionesController.CONTROLLER, "boton-consultar-mf", "Consulta Transaccion"));
+
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = TransaccionesController.CONTROLLER;
+    ig.AccionDobleClick = "ConsultaTransaccion";
+
+    ViewBag.InfoGrilla = ig;
+}   
+
+@Html.Partial("_generalGrid", Model)

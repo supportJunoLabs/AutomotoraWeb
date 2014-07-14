@@ -2,54 +2,8 @@
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 
-@*Tiene que estar arriba o no funciona la grilla*@
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $("#btn_transferir").click(function () {
-            gridCheques.GetSelectedFieldValues("Codigo", CodigosSeleccionadosCallBack);
-        });
-
-       
-    });
-
-    //function dale() {
-    //    gridCheques.GetSelectedFieldValues("Codigo", CodigosSeleccionadosCallBack);
-    //    var x = gridCheques.GetSelectedRowCount();
-    //    alert(x);
-    //    //$('form#formPrincipal').submit();
-    //}
-
-    function CodigosSeleccionadosCallBack(values) {
-        //alert("hola");
-        var selectedIDs;
-        selectedIDs = "";
-        for (var index = 0; index < values.length; index++) {
-            selectedIDs += values[index] + ",";
-        }
-        //alert(selectedIDs);
-        $("#chequesIds").val(selectedIDs);
-        //alert($("#chequesIds").val());
-        $('form#formPrincipal').submit();
-    }
-
-    function SelectionChanged(s, e) {
-        s.GetSelectedFieldValues("ImporteTexto", GetSelectedFieldValuesCallback);
-    }
-    function GetSelectedFieldValuesCallback(values) {
-        SelectedRows.BeginUpdate();
-        try {
-            SelectedRows.ClearItems();
-            for (var i = 0; i < values.length; i++) {
-                SelectedRows.AddItem(values[i]);
-            }
-        } finally {
-            SelectedRows.EndUpdate();
-        }
-        $("#count").html(gridCheques.GetSelectedRowCount());
-
-    } 
-</script>
+@*Tiene que estar arriba o no funciona la grilla devexpress*@
+<script src="~/Scripts/AutomotoraWeb/TransfChequesSuc.js"></script>
 
 
 @{

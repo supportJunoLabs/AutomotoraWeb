@@ -114,3 +114,17 @@ a.hipervinculo {
     color: #CC6600;
     text-decoration: underline;
 }
+
+
+.cabezalBloque{
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #dddddd), color-stop(1, #fafafa));
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #a6a6a6;
+    padding-top:15px;
+    height: 35px;
+    padding-left: 10px;
+    vertical-align:middle;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom:20px;
+}
