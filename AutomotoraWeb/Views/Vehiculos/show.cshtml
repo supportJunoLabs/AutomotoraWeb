@@ -22,22 +22,11 @@
     </div>
 </div>
 
-@Html.Partial("_gridLookupVehiculo")
-
 @section Scripts {
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".dxgvDataRow_Aqua").live("mouseup", function () {
-                alert($(this).html());
-                //alert($("#gridLookupVehiculos_I").val());
-            });
 
-            /*$("#gridLookupVehiculos_I").change(function () {
-                alert("AAA");
-                //alert($("#gridLookupVehiculos_I option:selected").val());
-            });*/
         });
-
     </script>
 }
 
