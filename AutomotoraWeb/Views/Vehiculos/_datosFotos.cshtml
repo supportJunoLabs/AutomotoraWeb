@@ -19,25 +19,64 @@
 
 <script>
     $(document).ready(function () {
-        $( "#sortable" ).sortable();
+        $("#sortable" ).sortable();
         $("#sortable").disableSelection();
         $(".vehiculoImg").live("click", function () {
             var id = $(this).attr("id");
-            $("#popup_content_" + id).dialog({
+            $("#popup_content_img_" + id).dialog({
                 modal: true,
                 width: 'auto',
                 height: 'auto',
-                buttons: [ { text: "Cerrar", click: function() { $( this ).dialog( "close" ); } } ]
+                buttons: [
+                    { text: "Eliminar Imagen", click: function() {
+                        $(this).dialog("close");
+                        deleteImage(id);
+                    } },
+                    { text: "Cerrar Dialogo", click: function() {
+                        $(this).dialog("close");
+                    } }
+                ]
             });
         });
+
+
+        $("#btnSaveOrder").click(savePhotoOrder);
+
+        //---------------------------------------------------------------
+
+        function deleteImage(id) {
+            $.ajax({
+                url: '/vehiculos/removePhoto/',
+                cache: false,
+                type: "POST",
+                async: true,
+                data: 'codePhoto=' + id,
+                success: function (data) {
+                    if (data.Result == "OK") {
+                        $("#" + id).parent().remove();
+                    }
+                    else {
+                        general_showAvisoPopup('Error al eliminar foto.');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showAvisoPopup('Error al eliminar foto.');
+                },
+                beforeSend: showLoading,
+                complete: hideLoading
+            });
+        }
 
         //---------------------------------------------------------------
 
         function savePhotoOrder(){
             $.ajax({
+                url: '/vehiculos/savePhotoOrder/',
                 cache: false,
                 type: "POST",
-                url: '/vehiculos/savePhotoOrder/',
+                async: true,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
                 data: getJsonOrderedPhotos(),
                 success: function(data){
                     if (data.Result != "OK") {
@@ -59,30 +98,30 @@
             var arrayPhotos = [];
 
             for (var i = 0; i < arrayImgElements.length; i++) {
-                var item = getJsonPhoto(arrayImgElements[i]);
-                myarray.push(item);
+                var item = getJsonPhoto(arrayImgElements[i], i+1);
+                arrayPhotos.push(item);
             }
 
-            var codigoVehiculo = $("#codigo").val();
+            var codigoVehiculo = parseInt($("#Codigo").val());
+            var vehiculo = { Codigo: codigoVehiculo, Fotos: arrayPhotos };
 
-            return JSON.stringify({ Codigo: codigoVehiculo, Fotos: arrayPhotos });
+            return JSON.stringify(vehiculo);
         }
 
         //---------------------------------------------------------------
 
-        function getJsonPhoto(imgElement) {
-
-            var splitSrc = imgElement.attr("src").split("/");
+        function getJsonPhoto(imgElement, order) {
+            var splitSrc = imgElement.src.split("/");
             var lengthSrc = splitSrc.length;
             var fileName = splitSrc[lengthSrc - 1];
 
             var photo = {
                 Archivo: fileName,
-                Codigo: imgElement.attr("id"),
-                Orden: imgElement.attr("title")
+                Codigo: parseInt(imgElement.id),
+                Orden: order
             };
 
-            return JSON.stringify(photo);
+            return photo;
         }
 
         //---------------------------------------------------------------
@@ -90,8 +129,18 @@
     }); 
 </script>
  
+<div class="btn-group">
+    @(Html.Bootstrap().ActionLinkButton("Agregar Foto", VehiculosController.ADD_PHOTO, VehiculosController.CONTROLLER).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary)))
+</div>
+
+<div class="btn-toolbar">
+    <div class="btn-group">
+        <button class="btn-primary  btn" id="btnSaveOrder" type="button">Guardar Orden</button>
+    </div>
+</div>
+
 <ul id="sortable">
-    @foreach (FotoAuto fotoAuto in Model.Fotos) {
+    @foreach (FotoAuto fotoAuto in ViewBag.ShortedListFotoAuto) {
         <li class="vehiculoImageContainer"><img id="@fotoAuto.Codigo" title="@fotoAuto.Orden" class="vehiculoImg" src="~/Content/Images/autos/@fotoAuto.Archivo" style="cursor: move;" /></li>
     }
 </ul>

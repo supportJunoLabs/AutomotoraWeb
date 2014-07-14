@@ -13,6 +13,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using System.Globalization;
+using System.Collections;
 
 namespace AutomotoraWeb.Controllers.Sales.Maintenance {
     public class VehiculosController : SalesController, IMaintenance {
@@ -26,6 +27,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public const string DETAILS_DOC = "detailDoc";
         public const string EDIT_DOC = "editDoc";
         public const string DELETE_DOC = "deleteDoc";
+        public const string ADD_PHOTO = "addPhoto";
 
         public const string OK = "OK";
         public const string ERROR = "ERROR";
@@ -104,6 +106,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             try {
                 Vehiculo vehiculo = _obtenerElemento(id);
                 _addResumeGastosToViewBag(vehiculo);
+                ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
                 return View(vehiculo);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -631,8 +634,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #region Fotos
 
-        public JsonResult savePhotoOrder(Vehiculo vehiculo) {
+        public JsonResult addPhoto() {
+            return Json(new { Result = "OK" }); // TODO
+        }
 
+        [HttpPost]
+        public JsonResult savePhotoOrder(Vehiculo vehiculo) {
             try {
                 Vehiculo vehiculoOriginal = new Vehiculo();
                 vehiculoOriginal.Codigo = vehiculo.Codigo;
@@ -640,7 +647,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 foreach (FotoAuto fotoAuto in vehiculo.Fotos) {
                     var foto = from f in vehiculoOriginal.Fotos where (fotoAuto.Codigo == f.Codigo) select f;
                     if (foto != null) {
-                        FotoAuto fa = (FotoAuto)foto;
+                        FotoAuto fa = foto.First<FotoAuto>();
                         fa.Orden = fotoAuto.Orden;
                         fa.ModificarDatos();
                     }
@@ -651,6 +658,53 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
             }
 
+        }
+
+        [HttpPost]
+        public JsonResult removePhoto(int codePhoto) {
+            try {
+                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                string IP = HttpContext.Request.UserHostAddress;
+                FotoAuto fotoAuto = new FotoAuto();
+                fotoAuto.Codigo = codePhoto;
+                fotoAuto.Eliminar(userName, IP);
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+            }
+
+        }
+
+        private List<FotoAuto> shortListFotoAuto(List<FotoAuto> listFotoAuto) {
+
+            ArrayList arrayListFotoAuto = new ArrayList();
+            foreach (FotoAuto fa in listFotoAuto) {
+                arrayListFotoAuto.Add(fa);
+            }
+
+            // esta variable sirve para hacer los cambios
+            FotoAuto auxiliar;
+
+            // las iteraciones van a ser cada vez más pequeñas, 
+            // porque los números más grandes ya van siendo ordenados al final
+            for (int i = arrayListFotoAuto.Count - 1; i > 0; i--) {
+                //las iteraciones son siempre desde el principio hasta el límite puesto arriba
+                for (int j = 0; j < i; j++) {
+                    //si el número es más grande que el próximo, se cambian de lugar
+                    if (((FotoAuto)(arrayListFotoAuto[j])).Orden > ((FotoAuto)(arrayListFotoAuto[j + 1])).Orden) {
+                        auxiliar = ((FotoAuto)(arrayListFotoAuto[j]));
+                        arrayListFotoAuto[j] = (FotoAuto)(arrayListFotoAuto[j + 1]);
+                        arrayListFotoAuto[j + 1] = auxiliar;
+                    }
+                }
+            }
+
+            List<FotoAuto> shortedListFotoAuto = new List<FotoAuto>();
+            foreach (FotoAuto fa in arrayListFotoAuto) {
+                shortedListFotoAuto.Add(fa);
+            }
+
+            return shortedListFotoAuto;
         }
 
         #endregion
