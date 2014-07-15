@@ -10,13 +10,14 @@
     InfoGrilla ig = new InfoGrilla();
 
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-        new ColumnaGrilla {Campo="Cuenta.Banco"},
-        new ColumnaGrilla {Campo="Cuenta.Numero"},
+        new ColumnaGrilla {Campo="Cuenta.Banco", Titulo="Banco"},
+        new ColumnaGrilla {Campo="Cuenta.Numero", Titulo="Cuenta"},
             new ColumnaGrilla {Campo="Numero", LargoMax=15},
             new ColumnaGrilla {Campo="FechaEmision"},
             new ColumnaGrilla {Campo="FechaVencimiento"},
             new ColumnaGrilla {Campo="Importe"},
             new ColumnaGrilla {Campo="Observaciones", LargoMax=80},
+            new ColumnaGrilla {Campo="DescripcionEstado", Titulo="Estado"}
     };
             
     ig.NameGrid = "grilla";

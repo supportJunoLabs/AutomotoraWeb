@@ -48,17 +48,18 @@ function inicializarModal(titulo, contenido, textoAceptar, textoCancelar) {
     } else {
         $("#myModalContent").html("");
     }
-    
     if (textoAceptar){
         $("#myModalAcepta").html(textoAceptar);
+        $("#myModalAcepta").on ("click", function(){
+            $('#myModal').modal('hide');
+            callBackAceptar();
+        })
     } else {
         $("#myModalAcepta").hide();
     }
     if (textoCancelar) {
         $("#myModalCancela").html(textoCancelar);
-        //alert("no es nulo");
     } else {
         $("#myModalCancela").hide();
-        //alert("es nulo");
     }
 }

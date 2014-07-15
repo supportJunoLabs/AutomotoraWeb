@@ -28,12 +28,9 @@
     <div class="btn-toolbar">
         @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Guardar").Id("btn_guardar"))
         @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
-
     </div>
     
   }
-
-@Html.Partial("_modalConfirmation");
 
 <script src="~/Scripts/AutomotoraWeb/ChEmitido.js"></script>
 <script src="~/Scripts/AutomotoraWeb/ChEmitidoCreateModif.js"></script>
