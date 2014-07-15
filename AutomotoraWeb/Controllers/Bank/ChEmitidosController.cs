@@ -27,6 +27,8 @@ namespace AutomotoraWeb.Controllers.Bank
             base.OnActionExecuting(filterContext);
         }
 
+        #region mantenimiento
+
         public ActionResult Show( int? id) {
             CuentaBancaria c = new CuentaBancaria();
             if ((id ?? 0) > 0) {
@@ -123,7 +125,6 @@ namespace AutomotoraWeb.Controllers.Bank
              return View(ch);
          }
 
-
          [HttpPost]
          public ActionResult Edit(ChequeEmitido ch) {
              this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(ch.Importe.Moneda));
@@ -141,8 +142,6 @@ namespace AutomotoraWeb.Controllers.Bank
              }
              return View(ch);
          }
-
-
 
          [HttpPost]
          public ActionResult Delete(ChequeEmitido ch) {
@@ -164,6 +163,10 @@ namespace AutomotoraWeb.Controllers.Bank
              }
             return View(ch);
          }
+
+        #endregion
+
+         #region listadoyreporte
 
          //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
          public ActionResult List() {
@@ -236,5 +239,35 @@ namespace AutomotoraWeb.Controllers.Bank
              return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
          }
 
+        #endregion
+
+        #region debitarVencidos
+         public ActionResult Debitar() {
+             return View();
+         }
+
+         [HttpPost]
+         public ActionResult EjecutarDebitar() {
+             try {
+                 string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                 string IP = HttpContext.Request.UserHostAddress;
+                 int cant = ChequeEmitido.DebitarVencidos(userName, IP);
+                 ViewBag.ErrorCode = "0";
+                 if (cant == 0) {
+                     ViewBag.ErrorMessage = "No se encontraron cheques emitidos pendientes vencidos.";
+                 } else if (cant==1){
+                     ViewBag.ErrorMessage = "Ejecución exitosa. Se generó 1 débito.";
+                 } else {
+                     ViewBag.ErrorMessage = "Ejecución exitosa. Se generaron " + cant + " débitos.";
+                 }
+                 return View("debitar");
+             } catch (UsuarioException exc) {
+                 ViewBag.ErrorCode = exc.Codigo;
+                 ViewBag.ErrorMessage = exc.Message;
+                 return View("debitar");
+             }
+         }
+
+        #endregion
     }
 }

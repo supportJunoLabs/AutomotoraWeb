@@ -1,6 +1,22 @@
 ﻿@{
-    ViewBag.Title = "Debitar";
+    ViewBag.Title = "Debitar Cheques Emitidos Vencidos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Debitar</h2>
+<div class="renglon-alto"></div>  
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="renglon-alto"></div>  
+
+@using (Html.BeginForm("EjecutarDebitar", null, FormMethod.Post,new { id="formPrincipal" })) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")    
+    
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-cogs").Text(" Debitar Cheques Vencidos"))
+    </div>
+    <div class="clear-both"></div>  
+
+}
