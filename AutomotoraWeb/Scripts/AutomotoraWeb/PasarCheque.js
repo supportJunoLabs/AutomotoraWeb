@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
     var esFinancista = $("#rb_financista").prop('checked');
     _opcionFinancista(esFinancista);
+
+    $("#codigoCheque").attr("data-val-required", "El cheque es Requerido");
 });
 
 $("input[name='TipoDestino']").on("change", function () {

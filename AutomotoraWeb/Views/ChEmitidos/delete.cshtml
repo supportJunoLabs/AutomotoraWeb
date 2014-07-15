@@ -1,0 +1,47 @@
+﻿@model DLL_Backend.ChequeEmitido
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidad + ": Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(null, null, FormMethod.Post,new { id="formPrincipal" })) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        @Html.HiddenFor(model => model.Codigo)
+
+        @Html.Partial("_datosDetalle", Model)
+
+    </fieldset>
+    
+    <div class="espacio2"></div>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Eliminar").Id("btn_eliminar").HtmlAttributes(new { @data_toggle = "modal", data_target="#myModal" }))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+    </div>
+
+}
+
+
+@Html.Partial("_modalConfirmation")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        inicializarModal("Confirmacion", "Confirma la eliminacion de esta cheque emitido?", "Aceptar", "Cancelar");
+        
+        $("#myModalAcepta").click(function () {
+            //alert("acepta");
+            $('#myModal').modal('hide');
+            $("#formPrincipal").submit();
+        });
+    });
+</script>
+

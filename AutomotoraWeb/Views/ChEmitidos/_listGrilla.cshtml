@@ -1,0 +1,42 @@
+﻿@model List<DLL_Backend.ChequeEmitido>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Numero", LargoMax=15},
+            new ColumnaGrilla {Campo="FechaEmision"},
+            new ColumnaGrilla {Campo="FechaVencimiento"},
+            new ColumnaGrilla {Campo="Importe"},
+            new ColumnaGrilla {Campo="Observaciones", LargoMax=80},
+    };
+            
+    ig.NameGrid = "grilla";
+    ig.Controller = ChEmitidosController.CONTROLLER;
+    ig.ActionCallbackRoute = "listaGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.ChequeEmitido.ChequeEmitidoMD);
+
+    ViewBag.InfoGrilla = ig;
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = ChEmitidosController.CONTROLLER;
+    ig.AccionDobleClick = BaseController.DETAILS;
+
+    ig.formatoCondicional = (s, e) => {
+        if (e.GetValue("FechaEmision") == null) {
+            return;
+        }
+        if (((DateTime)e.GetValue("FechaEmision")) < DateTime.Now.Date)
+            e.Row.BackColor = System.Drawing.Color.FromArgb(211, 235, 183);
+    };
+    
+}
+
+@Html.Partial("_generalGrid", Model)
+  

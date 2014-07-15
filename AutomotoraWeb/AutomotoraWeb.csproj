@@ -236,6 +236,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Bank\ChequesController.cs" />
+    <Compile Include="Controllers\Bank\ChEmitidosController.cs" />
     <Compile Include="Controllers\Bank\Maintenance\CuentasBancariasController.cs" />
     <Compile Include="Controllers\Bank\MovimientosController.cs" />
     <Compile Include="Controllers\Financing\CajaController.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\ChequeTransfSucModel.cs" />
+    <Compile Include="Models\ListadoChequesEmitidosModel.cs" />
     <Compile Include="Models\EstadoCuentaModel.cs" />
     <Compile Include="Models\ListadoTransaccionesModel.cs" />
     <Compile Include="Models\ListadoChequesModel.cs" />
@@ -293,6 +295,9 @@
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Listados\DXListadoChequesEmitidos.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Listados\DXSaldosBanco.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1631,7 +1636,10 @@
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\ChEmitido.js" />
+    <Content Include="Scripts\AutomotoraWeb\ChEmitidoCreateModif.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\ChequesEmitidosListado.js" />
     <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\RechazarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\DepositarDescontarCheque.js" />
@@ -1907,9 +1915,21 @@
     <Content Include="Views\Cheques\_selectChequeRechazar.cshtml" />
     <Content Include="Views\Cheques\ReciboRech.cshtml" />
     <Content Include="Views\Cheques\_reciboRech.cshtml" />
-    <Content Include="Views\Cheques\Copia de Pasar.cshtml" />
     <Content Include="Views\Cheques\CanjeRechazado.cshtml" />
+    <Content Include="Views\ChEmitidos\_listGrilla.cshtml" />
+    <Content Include="Views\ChEmitidos\create.cshtml" />
+    <Content Include="Views\ChEmitidos\edit.cshtml" />
+    <Content Include="Views\ChEmitidos\details.cshtml" />
+    <Content Include="Views\ChEmitidos\delete.cshtml" />
+    <Content Include="Views\ChEmitidos\_datosDetalle.cshtml" />
+    <Content Include="Views\ChEmitidos\Debitar.cshtml" />
+    <Content Include="Views\ChEmitidos\List.cshtml" />
+    <Content Include="Views\ChEmitidos\_listCheques.cshtml" />
+    <Content Include="Views\ChEmitidos\Report.cshtml" />
+    <Content Include="Views\ChEmitidos\_report.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
+    <Content Include="Views\ChEmitidos\show.cshtml" />
+    <Content Include="Views\Shared\_modalConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1931,6 +1951,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\Listados\DXListadoChequesEmitidos.resx">
+      <DependentUpon>DXListadoChequesEmitidos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXSaldosBanco.resx">
       <DependentUpon>DXSaldosBanco.cs</DependentUpon>
     </EmbeddedResource>

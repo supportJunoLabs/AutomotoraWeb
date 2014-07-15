@@ -21,3 +21,8 @@ function sumarMeses(fecha, meses) {
     dt.setMonth(dt.getMonth() + meses);
     return dt;
 }
+
+function fechaDesdeTexto(fechatexto) {
+    var b = fechatexto.split('/');
+    return (new Date(b[2], b[1] - 1, b[0]));
+}

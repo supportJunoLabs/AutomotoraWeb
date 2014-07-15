@@ -1,0 +1,15 @@
+﻿@model AutomotoraWeb.Models.ListadoChequesEmitidosModel
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Listado Cheques Emitidos";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", "List").Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_report", Model)

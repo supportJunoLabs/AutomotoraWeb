@@ -34,4 +34,31 @@ function general_showErrorAction(idErrorContainerm, textStatus, errorThrown) {
     $("#" + idErrorContainerm).html("Error al intentar realizar la acción: " + textStatus + " | " + errorThrown);
 }
 
-/* ================================================== */
+
+
+function inicializarModal(titulo, contenido, textoAceptar, textoCancelar) {
+    //alert(textoCancelar);
+    if (titulo) {
+        $("#myModalTitle").html(titulo);
+    } else {
+        $("#myModalTitle").html("");
+    }
+    if (contenido) {
+        $("#myModalContent").html(contenido);
+    } else {
+        $("#myModalContent").html("");
+    }
+    
+    if (textoAceptar){
+        $("#myModalAcepta").html(textoAceptar);
+    } else {
+        $("#myModalAcepta").hide();
+    }
+    if (textoCancelar) {
+        $("#myModalCancela").html(textoCancelar);
+        //alert("no es nulo");
+    } else {
+        $("#myModalCancela").hide();
+        //alert("es nulo");
+    }
+}

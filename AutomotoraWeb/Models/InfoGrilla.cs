@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Web.ASPxGridView;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -62,6 +63,8 @@ namespace AutomotoraWeb.Models {
         public string FormatoSeleccionLookup { get; set; }
         public int AnchoSeleccion { get; set; }
 
+        public Action <object, ASPxGridViewTableRowEventArgs> formatoCondicional;
+  
 
         //-------------------- Botones acciones principales (siempre imagenes: ajax o link ) ---------------------------
 

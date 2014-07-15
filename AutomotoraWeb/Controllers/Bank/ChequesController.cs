@@ -169,14 +169,12 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Cheque.Codigo");
-            ModelState.Remove("Sucursal.Codigo");
-            
+
             if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
                 ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
             }
-            if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
-                ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
-            }
+            
+            //Se valida de este lado, porque no siempre es requerido.
             if (tr.TipoDestino == TRChequePasar.TIPO_DESTINO.FINANCISTA && (tr.Financista == null || tr.Financista.Codigo <= 0)) {
                 ModelState.AddModelError("Financista.Codigo", "El Financista es requerido");
             }
@@ -264,17 +262,9 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Cheque.Codigo");
-            ModelState.Remove("Cuenta.Codigo");
-            ModelState.Remove("Sucursal.Codigo");
 
-            if (tr.Cuenta == null || tr.Cuenta.Codigo <= 0) {
-                ModelState.AddModelError("Cuenta.Codigo", "La Cuenta es requerida");
-            }
             if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
                 ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
-            }
-            if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
-                ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
             }
 
             if (ModelState.IsValid) {

@@ -1,6 +1,6 @@
 ﻿//Saco las validacion de required y las dejo para hacer del server, porque los mensajes por defecto son feos y dicen siempre codigo.
 $(document).ready(function () {
-        $("#ddlCuentas").removeAttr("data-val-required");
+    $("#ddlCuentas").attr("data-val-required", "La cuenta es requerida");
     }
 );
 

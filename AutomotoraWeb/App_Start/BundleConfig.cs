@@ -54,7 +54,6 @@ namespace AutomotoraWeb {
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                          "~/Content/SiteExtras.js"));
-            
 
         }
     }

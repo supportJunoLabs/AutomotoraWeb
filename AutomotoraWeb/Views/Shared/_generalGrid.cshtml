@@ -398,17 +398,18 @@
                 }
 
                if (!defineAnchos) {
-                        settings.Width = Unit.Percentage(98);
-                    } else {
-                        settings.Settings.UseFixedTableLayout = true;
-                        sumaAnchos = 0;
-                        foreach (MVCxGridViewColumn col in settings.Columns) {
-                            sumaAnchos += (int)col.Width.Value;
-                        }
-
-                        settings.Width = Unit.Pixel(sumaAnchos + 14 * settings.Columns.Count);
+                     settings.Width = Unit.Percentage(98);
+               } else {
+                    settings.Settings.UseFixedTableLayout = true;
+                    sumaAnchos = 0;
+                    foreach (MVCxGridViewColumn col in settings.Columns) {
+                        sumaAnchos += (int)col.Width.Value;
                     }
 
+                    settings.Width = Unit.Pixel(sumaAnchos + 14 * settings.Columns.Count);
+               }
+               //settings.HtmlRowPrepared = ig.formatoCondicional;
+                
             }
         ).Bind(Model).GetHtml())
     }
@@ -482,6 +483,8 @@
                     c.Settings.HeaderFilterMode = HeaderFilterMode.CheckedList;
                     settings.Columns.Add(c);
                 }
+                
+               
 
             }).BindList(Model).GetHtml())
 
