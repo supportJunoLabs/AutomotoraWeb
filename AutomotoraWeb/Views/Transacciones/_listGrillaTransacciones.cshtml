@@ -10,10 +10,10 @@
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
         new ColumnaGrilla {Campo="Fecha", Ancho=80, Titulo="Fecha"},
-        new ColumnaGrilla {Campo="Numero", Ancho=50, Titulo="Trans.",
+        new ColumnaGrilla {Campo="Numero", Ancho=60, Titulo="Trans.",
          Hipervinculo=true, Haccion="ConsultaTransaccion", Hcontrolador="Transacciones", HCampoParametro="Numero"},
         new ColumnaGrilla {Campo="TipoRecibo", Ancho=150, Titulo="Tipo"},
-        new ColumnaGrilla {Campo="NumeroOperacion", Ancho=50, Titulo="Operacion"},
+        new ColumnaGrilla {Campo="NumeroOperacion", Ancho=80, Titulo="Operacion"},
         new ColumnaGrilla {Campo="Vehiculo", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
                 Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="Vehiculo.Codigo"},
         new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},         
@@ -22,7 +22,7 @@
         new ColumnaGrilla {Campo="FinancistaOperacion.Nombre", Ancho=120, Titulo="Financista", LargoMax=20,
                 Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="FinancistaOperacion.Codigo"},
         new ColumnaGrilla {Campo="Observaciones", Ancho=250, LargoMax=70},
-        new ColumnaGrilla {Campo="Usuario.UserName", Ancho=50, Titulo="Usuario"},
+        new ColumnaGrilla {Campo="Usuario.UserName", Ancho=70, Titulo="Usuario"},
         new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=100, Titulo="Sucursal",
                 Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"}
      };

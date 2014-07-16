@@ -59,14 +59,14 @@ namespace AutomotoraWeb.Controllers.Financing
             ListadoCajasModel model = (ListadoCajasModel)Session[idParametros];
             model.Resultado = _obtenerListado(model);
             ViewData["idParametros"] = model.idParametros;
-            return PartialView("_listGrillaCheques", model.Resultado.MovimientosCheques);
+            return PartialView("_listGrillaCheques", model);
         }
 
         public ActionResult ListGrillaEfectivo(string idParametros) {
             ListadoCajasModel model = (ListadoCajasModel)Session[idParametros];
             model.Resultado = _obtenerListado(model);
             ViewData["idParametros"] = model.idParametros;
-            return PartialView("_listGrillaEfectivo", model.Resultado.MovimientosEfectivo);
+            return PartialView("_listGrillaEfectivo", model);
         }
 
 

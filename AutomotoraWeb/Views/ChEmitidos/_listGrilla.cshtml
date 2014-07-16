@@ -1,4 +1,4 @@
-﻿@model List<DLL_Backend.ChequeEmitido>
+﻿@model DLL_Backend.CuentaBancaria
 @using System.Web.UI.WebControls;
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Bank;
@@ -13,7 +13,7 @@
             new ColumnaGrilla {Campo="Numero", LargoMax=15},
             new ColumnaGrilla {Campo="FechaEmision"},
             new ColumnaGrilla {Campo="FechaVencimiento"},
-            new ColumnaGrilla {Campo="Importe"},
+            new ColumnaGrilla {Campo="Importe.Monto", Formato="#,##0.00", Titulo="Debitos "+ Model.Moneda.Simbolo, TotalSuma=true},
             new ColumnaGrilla {Campo="Observaciones", LargoMax=80},
     };
             
@@ -38,5 +38,5 @@
     
 }
 
-@Html.Partial("_generalGrid", Model)
+@Html.Partial("_generalGrid", Model.ChequesEmitidosPendientes())
   

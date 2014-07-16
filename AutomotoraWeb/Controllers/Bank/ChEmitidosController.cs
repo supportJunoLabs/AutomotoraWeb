@@ -33,6 +33,11 @@ namespace AutomotoraWeb.Controllers.Bank
             CuentaBancaria c = new CuentaBancaria();
             if ((id ?? 0) > 0) {
                 c.Codigo = id ?? 0;
+                c.Consultar();
+            } else {
+                c.Codigo = 0;
+                c.Moneda = new Moneda();
+                c.Moneda.Codigo = 0;
             }
             return View(c);
         }
@@ -40,23 +45,35 @@ namespace AutomotoraWeb.Controllers.Bank
         //Se invoca desde la grilla
         public ActionResult ListaGrilla(int? idParametros) {
             if ((idParametros??0 )<=0 ){
-                return PartialView("_listaGrilla", new List<ChequeEmitido>());
+                CuentaBancaria c = new CuentaBancaria();
+                c.Codigo = 0;
+                c.Moneda = new Moneda();
+                c.Moneda.Codigo = 0;
+                return PartialView("_listaGrilla", c);
             }
             CuentaBancaria cuenta = new CuentaBancaria();
             cuenta.Codigo = idParametros??0;
+            cuenta.Consultar();
             ViewData["idParametros"] = idParametros;
-            return PartialView("_listGrilla", cuenta.ChequesEmitidosPendientes());
+            return PartialView("_listGrilla", cuenta);
         }
 
         //Se invoca por json al actualizar la ddl de cuentas
         public ActionResult CuentaSelected(int? idCuenta) {
             CuentaBancaria c = new CuentaBancaria();
             c.Codigo = idCuenta ?? 0;
+            if (c.Codigo > 0) {
+                c.Consultar();
+            } else {
+                c.Codigo = 0;
+                c.Moneda = new Moneda();
+                c.Moneda.Codigo = 0;
+            }
             ViewData["idParametros"] = c.Codigo;
             if (idCuenta != null && idCuenta != 0) {
-                return PartialView("_listGrilla", c.ChequesEmitidosPendientes());
+                return PartialView("_listGrilla", c);
             }
-            return PartialView("_listaGrilla", new List<ChequeEmitido>());
+            return PartialView("_listaGrilla", c);
         }
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
@@ -64,7 +81,11 @@ namespace AutomotoraWeb.Controllers.Bank
         public ActionResult Show(CuentaBancaria model) {
             ModelState.Clear();
             if (model == null || model.Codigo <= 0) {
-                return View(model);
+                model.Codigo = 0;
+                model.Moneda = new Moneda();
+                model.Moneda.Codigo = 0;
+            } else {
+                model.Consultar();
             }
             ViewData["idParametros"] = model.Codigo;
             return View(model);

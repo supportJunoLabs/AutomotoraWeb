@@ -38,6 +38,7 @@
     List<MVCxGridViewColumn> listGridViewsColumn = new List<MVCxGridViewColumn>();
     MVCxGridViewColumn listGridViewsBotones = null;
     MVCxGridViewColumn listGridViewsBotones2 = null;
+    List<string> totalesSuma = new List<string>();
 
     //------------- COLUMNAS POR REFLECTION ------------------------------------
 
@@ -71,7 +72,8 @@
             if (ig.HiddenColumns != null && ig.HiddenColumns.Contains(cg.Campo)) {
                 continue; //seguir con la proxima porque esta no va
             }
-
+            
+     
             //Buscar la propiedad asociada para obtener sus datos:
             DisplayAttribute displayAttribute = null;
 
@@ -94,6 +96,11 @@
 
             MVCxGridViewColumn gridViewColumn = new MVCxGridViewColumn();
             gridViewColumn.FieldName = cg.Campo;
+
+            //Ver si hay que mostrar total
+            if (cg.TotalSuma){
+                totalesSuma.Add(cg.Campo);
+            }
 
             //Titulo de la columna
             if (!string.IsNullOrWhiteSpace(cg.Titulo)) {
@@ -161,6 +168,10 @@
                 gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
             }
 
+            if (!string.IsNullOrWhiteSpace(cg.Formato)) {
+                gridViewColumn.PropertiesEdit.DisplayFormatString = cg.Formato;
+            }
+
             if (!GeneralUtils.isBoolean(propertyInfo, cg)) {
                 if (cg.Hipervinculo) {
                     gridViewColumn.SetDataItemTemplateContent(container => {
@@ -218,6 +229,7 @@
                     });
                 }
             } //if not boolean
+            
             listGridViewsColumn.Add(gridViewColumn);
         } //foreach
     }//if columnasvisibles
@@ -326,6 +338,7 @@
                 settings.SettingsBehavior.AllowGroup = true;
                 settings.Settings.ShowGroupPanel = true;
                 settings.KeyFieldName = ig.KeyFieldName;
+                
 
                 //Adds
 
@@ -410,6 +423,11 @@
                }
                //settings.HtmlRowPrepared = ig.formatoCondicional;
                 
+                //totales suma
+               foreach (string s in totalesSuma) {
+                   settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, s);
+               }
+                
             }
         ).Bind(Model).GetHtml())
     }
@@ -461,7 +479,7 @@
 
                 settings.GridViewProperties.Settings.ShowFooter = true;
                 
-                //EndlessMode, es soportado en gridlookup
+                //EndlessMode, NO es soportado en gridlookup
                 //http://documentation.devexpress.com/#AspNet/CustomDocument15467
                 //if (ig.EndlessMode) {
                 //    settings.GridViewProperties.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
@@ -484,7 +502,7 @@
                     settings.Columns.Add(c);
                 }
                 
-               
+                              
 
             }).BindList(Model).GetHtml())
 

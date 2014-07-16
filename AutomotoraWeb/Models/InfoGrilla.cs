@@ -192,6 +192,10 @@ namespace AutomotoraWeb.Models {
         public bool EsBoolean { get; set; }
         public bool EsImporte { get; set; }
 
+        public string Formato { get; set; }
+
+        public bool TotalSuma { get; set; }
+
 
 
         public ColumnaGrilla(){
@@ -203,6 +207,7 @@ namespace AutomotoraWeb.Models {
             EsEntero = false;
             EsFecha = false;
             EsImporte = false;
+            TotalSuma = false;
         }
 
         public override bool Equals(object obj) {

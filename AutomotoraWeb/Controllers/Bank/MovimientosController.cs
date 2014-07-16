@@ -29,6 +29,8 @@ namespace AutomotoraWeb.Controllers.Bank {
             if (id != null && id > 0) {
                 model.Cuenta = new CuentaBancaria();
                 model.Cuenta.Codigo = (id ?? 0);
+                model.Cuenta.Moneda = new Moneda();
+                model.Cuenta.Moneda.Codigo = 0;
             }
             string s = SessionUtils.generarIdVarSesion("MovimientosBanco", Session[SessionUtils.SESSION_USER].ToString());
             model.idParametros = s;

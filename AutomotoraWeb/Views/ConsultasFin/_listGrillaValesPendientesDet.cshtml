@@ -5,6 +5,7 @@
 @using AutomotoraWeb.Controllers.Bank;
 @using AutomotoraWeb.Controllers.Financing;
 @using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
 
 @{
     InfoGrilla ig = new InfoGrilla();
@@ -13,8 +14,10 @@
                 Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="VehiculoOrigen.Codigo"},
             new ColumnaGrilla {Campo="Codigo", Ancho=70, Titulo="Codigo"},
             new ColumnaGrilla {Campo="Vencimiento", Ancho=80, Titulo="F.Vencimiento"},
-            new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},
-            new ColumnaGrilla {Campo="ImporteCobrado", Ancho=150, Titulo="Pago"},
+            new ColumnaGrilla {Campo="Importe", Ancho=110, Titulo="Importe"},
+            new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Ancho=90, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
+            new ColumnaGrilla {Campo="ImporteCobrado", Ancho=110, Titulo="Pago"},
+            new ColumnaGrilla {Campo="ImporteCobrado.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Ancho=90, Titulo="Pago "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
             new ColumnaGrilla {Campo="FechaCobro", Ancho=80, Titulo="F.Pago"},
             new ColumnaGrilla {Campo="DescripcionEstado", Ancho=80, Titulo="Estado"},
             new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista",

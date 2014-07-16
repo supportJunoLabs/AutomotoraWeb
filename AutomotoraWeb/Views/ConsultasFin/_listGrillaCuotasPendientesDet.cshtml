@@ -5,24 +5,27 @@
 @using AutomotoraWeb.Controllers.Bank;
 @using AutomotoraWeb.Controllers.Financing;
 @using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
 
 @{
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
              new ColumnaGrilla {Campo="VehiculoOrigen", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
                 Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="VehiculoOrigen.Codigo"},
-            new ColumnaGrilla {Campo="Numero", Ancho=70, Titulo="Cuota Gral"},
-            new ColumnaGrilla {Campo="NumeroCuotaSet", Ancho=70, Titulo="Cuota"},
-            new ColumnaGrilla {Campo="Vencimiento", Ancho=80, Titulo="F.Vencimiento"},
-            new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},
-            new ColumnaGrilla {Campo="ImporteCobrado", Ancho=150, Titulo="Pago"},
+            new ColumnaGrilla {Campo="Numero", Ancho=55, Titulo="C.Gral"},
+            new ColumnaGrilla {Campo="NumeroCuotaSet", Ancho=60, Titulo="Cuota"},
+            new ColumnaGrilla {Campo="Vencimiento", Ancho=90, Titulo="Vencimiento"},
+            new ColumnaGrilla {Campo="Importe", Ancho=100, Titulo="Importe"},
+            new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Ancho=90, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
+            new ColumnaGrilla {Campo="ImporteCobrado", Ancho=100, Titulo="Pago"},
+            new ColumnaGrilla {Campo="ImporteCobrado.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Ancho=80, Titulo="Pago "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
             new ColumnaGrilla {Campo="FechaCobro", Ancho=80, Titulo="F.Pago"},
             new ColumnaGrilla {Campo="DescripcionEstado", Ancho=80, Titulo="Estado"},
             new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista",
                 Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="Financista.Codigo"},
-            new ColumnaGrilla {Campo="CodigoExterno", Ancho=80, Titulo="Cod Externo"},
+            new ColumnaGrilla {Campo="CodigoExterno", Ancho=90, Titulo="Cod Externo"},
             new ColumnaGrilla {Campo="Venta.Cliente.Nombre", Ancho=200, Titulo="Cliente", LargoMax=40,
-                    Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Venta.Cliente.Codigo"},
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Venta.Cliente.Codigo"}
             
      };
                         
