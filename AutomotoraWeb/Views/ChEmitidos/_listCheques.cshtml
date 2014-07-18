@@ -32,12 +32,13 @@
     ig.ControladorDobleClick = ChEmitidosController.CONTROLLER;
     ig.AccionDobleClick = BaseController.DETAILS;
 
-    ig.formatoCondicional = (s, e) => {
-        if (e.GetValue("FechaEmision") == null) {
+    ig.FuncionHtmlRowPrepared = (s, e) => {
+        if (e.GetValue("FechaVencimiento") == null) {
             return;
         }
-        if (((DateTime)e.GetValue("FechaEmision")) < DateTime.Now.Date)
+        if (((DateTime)e.GetValue("FechaVencimiento")) < DateTime.Now.Date)
             e.Row.BackColor = System.Drawing.Color.FromArgb(211, 235, 183);
+            //e.Row.BackColor = System.Drawing.Color.FromArgb(204, 255, 204);
     };
     
 }

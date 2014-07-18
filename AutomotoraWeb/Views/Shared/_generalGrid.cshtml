@@ -421,7 +421,9 @@
 
                     settings.Width = Unit.Pixel(sumaAnchos + 14 * settings.Columns.Count);
                }
-               //settings.HtmlRowPrepared = ig.formatoCondicional;
+               if (ig.FuncionHtmlRowPrepared != null) {
+                   settings.HtmlRowPrepared = new ASPxGridViewTableRowEventHandler(ig.FuncionHtmlRowPrepared);
+               }
                 
                 //totales suma
                foreach (string s in totalesSuma) {

@@ -10,9 +10,9 @@
             @(Html.Bootstrap().ActionLinkButton("Agregar ", BaseController.CREATE ).RouteValues(new { id = Model.Cuenta.Codigo}).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
         )
         </div>
-        <div class="btn-group">
+       @* <div class="btn-group">
             <a class="btn btn-primary2-mf" title="Imprimir Listado" href='@Url.Action(BaseController.REPORT)'>Imprimir</a>
-        </div>
+        </div>*@
     </div>
 
 @Html.Partial("_listGrillaMovimientos", Model)
