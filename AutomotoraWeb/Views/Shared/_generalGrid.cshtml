@@ -165,6 +165,7 @@
 
             // si es fecha
             if (GeneralUtils.isDateTime(propertyInfo, cg)) {
+                gridViewColumn.ColumnType = MVCxGridViewColumnType.DateEdit;
                 gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
             }
 
@@ -337,8 +338,12 @@
                 settings.SettingsBehavior.AllowSort = true;
                 settings.SettingsBehavior.AllowGroup = true;
                 settings.Settings.ShowGroupPanel = true;
+                settings.SettingsBehavior.AllowDragDrop = true;
                 settings.KeyFieldName = ig.KeyFieldName;
-                
+            
+                //por ahora no lo habilito porque se ignoran los anchos manuales. Envie consulta a devexpress.
+                //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+                //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
 
                 //Adds
 

@@ -1162,7 +1162,7 @@ input[type="color"],
 .uneditable-input {
   display: inline-block !important;
   padding: 4px 6px !important;
-  font-size: 14px !important;
+  /*font-size: 14px !important;*/
   color: #555555 !important;
 }
 
