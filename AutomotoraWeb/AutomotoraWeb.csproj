@@ -276,6 +276,7 @@
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\ChequeTransfSucModel.cs" />
+    <Compile Include="Models\GridLookUpModel.cs" />
     <Compile Include="Models\ListadoChequesEmitidosModel.cs" />
     <Compile Include="Models\EstadoCuentaModel.cs" />
     <Compile Include="Models\ListadoTransaccionesModel.cs" />

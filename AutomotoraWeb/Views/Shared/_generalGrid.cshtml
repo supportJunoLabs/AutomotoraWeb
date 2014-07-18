@@ -506,7 +506,9 @@
                 
                               
 
-            }).BindList(Model).GetHtml())
+            }).BindList( ((GridLookUpModel)Model).Opciones)
+                .Bind(  ((GridLookUpModel)Model).GridLookUpCodigo )
+                .GetHtml())  
 
     }
 }
@@ -514,7 +516,7 @@
 
 
 @*
-    //Queda como muestra de vento cellprepared:
+    //Queda como muestra de evento cellprepared:
     //    settings.HtmlDataCellPrepared = (sender, e) => {
     //        if (ig.TrunkColumns != null && ig.TrunkColumns.Keys.Contains(e.DataColumn.FieldName)) {
     //            if (e.CellValue != null && e.CellValue.ToString().Length > ig.TrunkColumns[e.DataColumn.FieldName]) {

@@ -3,10 +3,43 @@
         gridCheques.GetSelectedFieldValues("Codigo", CodigosSeleccionadosCallBack);
     });
 
+    $("#btn_actualizar").click(function () {
+        cambiarSucursalOrigen();
+    });
 
+    $("#ddlSucursales").change(function () {
+        cambiarSucursalOrigen();
+    });
 });
 
+
+function cambiarSucursalOrigen() {
+    //vaciar la lista de cheques elegidos
+    SelectedRows.ClearItems();
+    $("#count").html(0);
+    //refrescar la grilla de cheques de la sucursal
+    var selectedID = $(ddlSucursales).val();
+    //alert(selectedID);
+    $.ajax({
+        cache: false,
+        type: "GET",
+        url: '/Cheques/SucursalOrigenChanged/',
+        data: { "idSucursal": selectedID },
+        success: function (data) {
+            $('#divGrillaCheques').html('');
+            $('#divGrillaCheques').html(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Error al traer los datos.');
+            //alert(thrownError);
+        },
+        beforeSend: showLoading,
+        complete: hideLoading
+    });
+}
+
 function CodigosSeleccionadosCallBack(values) {
+    //al presionar el boton transferir
     //alert("hola");
     var selectedIDs;
     selectedIDs = "";
@@ -20,6 +53,7 @@ function CodigosSeleccionadosCallBack(values) {
 }
 
 function SelectionChanged(s, e) {
+    //al hacer click en la grilla
     s.GetSelectedFieldValues("ImporteTexto", GetSelectedFieldValuesCallback);
 }
 function GetSelectedFieldValuesCallback(values) {

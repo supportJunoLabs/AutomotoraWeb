@@ -1,6 +1,8 @@
 ﻿@model DLL_Backend.TRChequeDepositarDescontar
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
+@using AutomotoraWeb.Models;
+
 
 
 <div class="validation-summary-errors">
@@ -14,7 +16,32 @@
 
     @Html.HiddenFor(model => model.TipoDestino);
    
-    <div>
+   
+    
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Cheque)
+    </div>
+    <div class="renglon-alto editor-field-xlarge">
+        <div class="floatLeft">
+            @{ 
+                GridLookUpModel gmodel=new GridLookUpModel { GridLookUpCodigo = Model.Cheque.Codigo };
+                if (Model.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR) {
+                     gmodel.Opciones = Cheque.ChequesDepositables();
+                     @Html.Partial("_selectCheque", gmodel)
+               } else {
+                    gmodel.Opciones = Cheque.ChequesDescontables();
+                    @Html.Partial("_selectChequeDesc", gmodel)
+               }
+            }
+        </div>
+        <div class="floatLeft" style="margin-left: 5px">
+            @Html.ValidationMessageFor(model => model.Cheque.Codigo)
+        </div>
+        @Html.HiddenFor(model => model.Cheque.Codigo, new { id = "codigoCheque" })
+            </div>
+    <div class="clear-both"></div>   
+    
+     <div>
         <div class="display-label">
             @Html.LabelForRequired(model => model.Cuenta)
         </div>
@@ -27,30 +54,11 @@
     </div>
     <div class="clear-both"></div>   
     
-    <div class="display-label">
-        @Html.LabelForRequired(model => model.Cheque)
-    </div>
-    <div class="renglon-alto editor-field-xlarge">
-        <div class="floatLeft">
-            @{ if (Model.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR) {
-                @Html.Partial("_selectCheque", Cheque.ChequesDepositables())
-               } else {
-                @Html.Partial("_selectChequeDesc", Cheque.ChequesDescontables())
-               }
-            }
-        </div>
-        <div class="floatLeft" style="margin-left: 5px">
-            @Html.ValidationMessageFor(model => model.Cheque.Codigo)
-        </div>
-        @Html.HiddenFor(model => model.Cheque.Codigo, new { id = "codigoCheque" })
-
-    </div>
-    <div class="clear-both"></div>   
     
     <div>
         @{ if (Model.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR) {
             <div class="display-label">
-                @Html.DisplayNameFor(model => model.Importe)
+                @Html.DisplayNameFor(model => model.Importe) *
             </div>
             <div class="editor-field editor-field-small">
                 @Html.DdlOrDisplayImporteFor(model => model.Importe, (bool?)ViewBag.SoloLectura)
