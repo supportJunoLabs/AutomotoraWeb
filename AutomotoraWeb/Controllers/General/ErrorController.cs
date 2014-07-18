@@ -26,8 +26,9 @@ namespace AutomotoraWeb.Controllers.General
         }
 
         [HttpGet]
-        public ActionResult Error403() {
+        public ActionResult Error403(string id) {
             HttpContext.Response.StatusCode = 403;
+            ViewBag.PermisoFaltante = id;
             return View();
         }
     }
