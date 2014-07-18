@@ -44,7 +44,7 @@
 </style>
 
 
-@using (Html.BeginForm(null, null, FormMethod.Post,new { id="formPrincipal" })) {
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
     @Html.HiddenFor(model => model.idParametros)
     @Html.HiddenFor(model => model.Accion, new { id = "accion" })
     
@@ -54,12 +54,12 @@
     <div id="filtros" class="block" style="margin-right: 5px">
         <div class="btn-toolbar botoneraListado">
             <div class="btn-group">
-                    <input type="button" id="btn_actualizar" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar"  />
-                </div>
-                <div class="btn-group" style="margin-left: 10px">
-                    <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
-                </div>
+                <input type="button" id="btn_actualizar" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
             </div>
+            <div class="btn-group" style="margin-left: 10px">
+                <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
+            </div>
+        </div>
         <div id="containerLinea1">
 
             <div id="filtro_fechas" class="floatLeft">
@@ -76,7 +76,7 @@
                             <div class="clear-both"></div>
                         </div>
                         <div id="containerHasta" class="floatLeft">
-                            <div class="floatLeft" style="text-align: right; padding-right: 5px; padding-left:20px">
+                            <div class="floatLeft" style="text-align: right; padding-right: 5px; padding-left: 20px">
                                 <label>Hasta</label>
                             </div>
                             <div class="floatRight editor-field editor-field-small">
@@ -88,7 +88,7 @@
                 </fieldset>
             </div>
 
-             <div id="filtro_estado" class="floatLeft">
+            <div id="filtro_estado" class="floatLeft">
                 <fieldset id="fieldsetEstado">
                     <legend>Estado</legend>
                     <div>
@@ -103,20 +103,33 @@
                     <div>
                         @Html.RadioButtonFor(model => model.Filtro.Status, ChequeEmitido.CHEQUE_ANULADO, new { id = "rb_anulados" })  Anulados
                     </div>
-               </fieldset>
+                </fieldset>
             </div>
 
-             <div id="filtro_cuenta" class="floatLeft">
+            <div id="filtro_cuenta" class="floatLeft">
                 <fieldset id="fieldsetCuenta">
                     <legend>Sucursal</legend>
                     <div>
                         @Html.CheckBoxFor(model => model.FiltrarCuenta, new { id = "cb_filtrarCuenta" }) Filtrar Cuenta
                     </div>
                     <div style="margin-top: 10px;" id="cuentas">
-                        @Html.DropDownListFor(model => model.Filtro.Cuenta.Codigo, new SelectList(ViewBag.Cuentas, "Codigo", "Nombre"), new { @class = "xxlarge" })
+                        @Html.DropDownListFor(model => model.Filtro.Cuenta.Codigo, new SelectList(ViewBag.Cuentas, "Codigo", "Nombre"), new { @class = "large" })
                     </div>
                 </fieldset>
             </div>
+
+            <div id="filtro_moneda" class="floatLeft">
+                <fieldset id="fieldsetMoneda">
+                    <legend>Moneda</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.FiltrarMoneda, new { id = "cb_filtrarMoneda" }) Filtrar Moneda
+                    </div>
+                    <div style="margin-top: 10px;" id="monedas">
+                        @Html.DropDownListFor(model => model.Filtro.Moneda.Codigo, new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), new { @class = "medium" })
+                    </div>
+                </fieldset>
+            </div>
+
 
         </div>
     </div>
@@ -126,14 +139,22 @@
 <div class="clear-both"></div>
 
 <div id="divGrilla">
-    @Html.Partial("_listCheques", Model.Resultado)
+    @Html.Partial("_listCheques", Model)
 </div>
 
 <div style="padding-top: 30px" id="sfinGeneral">
-    <div class="floatLeft label-xxlarge" style="padding-left: 0px;">
+    <div class="label-xxlarge" style="padding-left: 0px;">
         <div class="display-label">Total: </div>
-        @Html.DisplayFor(m => m.Total.ImporteTexto)
+        @Html.DisplayFor(m => m.Resultado.Total.ImporteTexto)
     </div>
+    @{if (Model.Resultado.Total.Moneda.Codigo != Moneda.MonedaDefault.Codigo) {
+        <div class="label-xxlarge" style="padding-left: 0px;">
+            <div class="display-label">Total: </div>
+            @Html.DisplayFor(m => m.Resultado.Total.ImporteEnMonedaDefault().ImporteTexto)
+        </div>
+      }
+    }
+
 </div>
 
 
