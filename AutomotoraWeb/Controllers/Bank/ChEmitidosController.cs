@@ -207,6 +207,7 @@ namespace AutomotoraWeb.Controllers.Bank
              ViewData["idParametros"] = model.idParametros;
              //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
              this.eliminarValidacionesIgnorables("Filtro.Cuenta", MetadataManager.IgnorablesDDL(model.Filtro.Cuenta));
+             this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(model.Filtro.Moneda));
              if (ModelState.IsValid) {
                  if (model.Accion == ListadoChequesEmitidosModel.ACCIONES.IMPRIMIR) {
                      return this.Report(model);

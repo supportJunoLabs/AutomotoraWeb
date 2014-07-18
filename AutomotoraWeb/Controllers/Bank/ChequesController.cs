@@ -153,12 +153,15 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult Pasar() {
             TRChequePasar model = new TRChequePasar();
             model.TipoDestino = TRChequePasar.TIPO_DESTINO.FINANCISTA;
+            model.Cheque = new Cheque();
+            model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
             return View(model);
         }
 
-        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-        public ActionResult ChequesTransferiblesGrilla() {
-            return PartialView("_selectChequePasar", Cheque.ChequesTransferibles());
+        //Se invoca desde paginacion, ordenacion etc, de grilla 
+        public ActionResult ChequesTransferiblesGrilla(GridLookUpModel model) {
+            model.Opciones= Cheque.ChequesTransferibles();
+            return PartialView("_selectChequePasar", model);
         }
 
         [HttpPost]
@@ -230,24 +233,29 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult Depositar() {
             TRChequeDepositarDescontar model = new TRChequeDepositarDescontar();
+            model.Cheque = new Cheque();
             model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR;
+            model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
             return View(model);
         }
 
         public ActionResult Descontar() {
             TRChequeDepositarDescontar model = new TRChequeDepositarDescontar();
+            model.Cheque = new Cheque();
             model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR;
             return View(model);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-        public ActionResult ChequesDepositablesGrilla() {
-            return PartialView("_selectCheque", Cheque.ChequesDepositables());
+        public ActionResult ChequesDepositablesGrilla(GridLookUpModel model) {
+            model.Opciones = Cheque.ChequesDepositables();
+            return PartialView("_selectCheque", model);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-        public ActionResult ChequesDescontablesGrilla() {
-            return PartialView("_selectChequeDesc", Cheque.ChequesDescontables());
+        public ActionResult ChequesDescontablesGrilla(GridLookUpModel model) {
+            model.Opciones = Cheque.ChequesDescontables();
+            return PartialView("_selectChequeDesc", model);
         }
 
         private ActionResult DepositarDescontar(TRChequeDepositarDescontar tr) {
@@ -324,10 +332,18 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult TransfSuc() {
             ChequeTransfSucModel model = new ChequeTransfSucModel();
-            Sucursal suc = ((List<Sucursal>)ViewBag.SucursalesTransaccion)[0];
+            Sucursal suc = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
             model.SucursalOrigen = suc;
             ViewData["idParametros"] = suc.Codigo;
             return View(model);
+        }
+
+        public ActionResult SucursalOrigenChanged(int? idSucursal) {
+            ViewData["idParametros"] = idSucursal;
+            Sucursal suc = new Sucursal();
+            suc.Codigo = idSucursal??0;
+            var cheques = Cheque.ChequesTransferiblesSucursal(suc);
+            return PartialView("_selectChequeTransfSuc", cheques);
         }
 
          public ActionResult ChequesTransfSucGrilla(int idParametros) {
@@ -424,12 +440,15 @@ namespace AutomotoraWeb.Controllers.Bank {
 
          public ActionResult Rechazar() {
              TRChequeRechazar model = new TRChequeRechazar();
+             model.Cheque = new Cheque();
+             model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
              return View(model);
          }
 
          //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-         public ActionResult ChequesRechazablesGrilla() {
-             return PartialView("_selectChequeRechazar", Cheque.ChequesRechazables());
+         public ActionResult ChequesRechazablesGrilla(GridLookUpModel model) {
+             model.Opciones = Cheque.ChequesRechazables();
+             return PartialView("_selectChequeRechazar", model);
          }
 
          [HttpPost]
@@ -497,12 +516,15 @@ namespace AutomotoraWeb.Controllers.Bank {
 
          public ActionResult CanjeRechazado() {
              TRChequeRechazadoCanje model = new TRChequeRechazadoCanje();
+             model.Cheque = new Cheque();
+             model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
              return View(model);
          }
 
          //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-         public ActionResult ChequesCanjeablesGrilla(){
-             return PartialView("_selectChequeCanjear", Cheque.ChequesRechazados());
+         public ActionResult ChequesCanjeablesGrilla(GridLookUpModel model) {
+             model.Opciones = Cheque.ChequesRechazados();
+             return PartialView("_selectChequeCanjear",model);
          }
          #endregion
 

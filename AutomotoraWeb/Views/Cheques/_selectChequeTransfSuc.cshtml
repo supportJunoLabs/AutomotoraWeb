@@ -4,38 +4,18 @@
 @using AutomotoraWeb.Models;
 @using AutomotoraWeb.Controllers.Bank;
 
-@*@Html.DevExpress().GridView(
-    settings =>
-    {
-        settings.Name = "gridCheques";
-        settings.KeyFieldName = "Codigo";
-        settings.CallbackRouteValues = new { Controller = "Cheques", Action = "ChequesTransfSucGrilla", idParametros = ViewData["idParametros"] };
-        settings.ControlStyle.CssClass = "grid";
-
-        //settings.Columns.Add("Codigo");
-        settings.Columns.Add("Banco");
-        settings.Columns.Add("Cuenta");
-        settings.Columns.Add("NumeroCheque");
-        settings.Columns.Add("ImporteTexto");
-        settings.Columns.Add("FechaVencimiento");
-
-        settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowSelectCheckbox = true;
-
-        //settings.ClientSideEvents.SelectionChanged = "SelectionChanged";
-    }).Bind(Model).GetHtml()*@
 
 @{
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
         //new ColumnaGrilla{Campo="Codigo"},
         new ColumnaGrilla {Campo="Banco", Ancho=100, Titulo="Banco"},
-        new ColumnaGrilla {Campo="Cuenta", Ancho=100, Titulo="Cuenta"},
-        new ColumnaGrilla {Campo="NumeroCheque", Ancho=100, Titulo="Numero"},
-        new ColumnaGrilla {Campo="ImporteTexto", Ancho=120, Titulo="Importe", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+        //  new ColumnaGrilla {Campo="Cuenta", Ancho=100, Titulo="Cuenta"},
+        new ColumnaGrilla {Campo="NumeroCheque", Ancho=90, Titulo="Numero"},
+        new ColumnaGrilla {Campo="ImporteTexto", Ancho=100, Titulo="Importe", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
         new ColumnaGrilla {Campo="FechaVencimiento", Ancho=90, Titulo="Vencimiento"},
         new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista"}, 
-        //new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=100, Titulo="Sucursal"},
+        new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=100, Titulo="Sucursal"},
         new ColumnaGrilla {Campo="Observaciones", Ancho=150, LargoMax=30},
         
     };

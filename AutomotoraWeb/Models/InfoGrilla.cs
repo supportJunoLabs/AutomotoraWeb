@@ -63,7 +63,7 @@ namespace AutomotoraWeb.Models {
         public string FormatoSeleccionLookup { get; set; }
         public int AnchoSeleccion { get; set; }
 
-        public Action <object, ASPxGridViewTableRowEventArgs> formatoCondicional;
+        public Action<object, ASPxGridViewTableRowEventArgs> FuncionHtmlRowPrepared;
   
 
         //-------------------- Botones acciones principales (siempre imagenes: ajax o link ) ---------------------------

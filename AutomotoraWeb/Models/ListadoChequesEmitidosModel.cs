@@ -8,10 +8,10 @@ using System.ComponentModel.DataAnnotations;
 namespace AutomotoraWeb.Models {
     public class ListadoChequesEmitidosModel {
         public ChequeEmitidoFiltro Filtro { get; set; }
-        public List<ChequeEmitido> Resultado { get; set; }
-        public Importe Total{get; set;}
+        public ListadoChequesEmitidos Resultado { get; set; }
         public string idParametros { get; set; }
         public bool FiltrarCuenta { get; set; }
+        public bool FiltrarMoneda { get; set; }
         public  ACCIONES Accion { get; set; }
 
         public enum ACCIONES { ACTUALIZAR, IMPRIMIR}
@@ -28,27 +28,19 @@ namespace AutomotoraWeb.Models {
             Filtro.UsaFechas = true;
             Filtro.Situacion = ChequeEmitidoFiltro.SITUACION.POR_ESTADO;
             Filtro.Status = ChequeEmitido.CHEQUE_PENDIENTE;
-            Resultado = null;
+            Resultado = new ListadoChequesEmitidos();
+            Resultado.Cheques = new List<ChequeEmitido>();
+            Resultado.Total = new Importe(Moneda.MonedaDefault, 0);
             Desde = DateTime.Now.Date;
             Hasta = DateTime.Now.Date.AddMonths(1);
             FiltrarCuenta = false;
+            FiltrarMoneda = false;
             Accion = ACCIONES.ACTUALIZAR;
         }
 
         public void obtenerListado (){
             AcomodarFiltro();
-            Resultado=ChequeEmitido.Cheques(Filtro);
-            if (FiltrarCuenta) {
-                Total = new Importe(Filtro.Cuenta.Moneda, 0);
-                foreach (var ch in Resultado) {
-                    Total.Monto += ch.Importe.Monto;
-                }
-            } else {
-                Total = new Importe(Moneda.MonedaDefault, 0);
-                foreach (var ch in Resultado) {
-                    Total.Monto += ch.Importe.ValorEnMonedaDefault();
-                }
-            }
+            Resultado = ListadoChequesEmitidos.obtenerListado(Filtro);
         }
 
         private void AcomodarFiltro() {
@@ -58,6 +50,11 @@ namespace AutomotoraWeb.Models {
                 Filtro.Cuenta = null;
             } else {
                 this.Filtro.Cuenta.Consultar(); //para completar el nombre 
+            }
+            if (!FiltrarMoneda) {
+                Filtro.Moneda = null;
+            } else {
+                this.Filtro.Moneda.Consultar(); //para completar el nombre 
             }
          
         }
@@ -71,6 +68,9 @@ namespace AutomotoraWeb.Models {
             s += "  ";
             if (this.FiltrarCuenta) {
                 s += "Cuenta: " + this.Filtro.Cuenta.ToString() + "    ";
+            }
+            if (this.FiltrarMoneda) {
+                s += "Moneda: " + this.Filtro.Moneda.ToString() + "    ";
             }
             return s;
         }

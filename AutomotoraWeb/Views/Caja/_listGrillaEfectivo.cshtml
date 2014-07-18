@@ -16,8 +16,8 @@
             //new ColumnaGrilla {Campo="ImporteEntrada", Ancho=120, Titulo="Entrada"},
             //new ColumnaGrilla {Campo="ImporteSalida", Ancho=120, Titulo="Salida"},
             
-            new ColumnaGrilla {Campo="ImporteEntrada.Monto", Formato="#,##0.00", Ancho=100, Visible=false, Titulo="Entradas "+ Model.Filtro.Moneda.Simbolo, TotalSuma=true},
-            new ColumnaGrilla {Campo="ImporteSalida.Monto", Formato="#,##0.00", Ancho=100, Visible=false, Titulo="Salidas "+ Model.Filtro.Moneda.Simbolo, TotalSuma=true},
+            new ColumnaGrilla {Campo="ImporteEntrada.Monto", Formato="#,##0.00", Ancho=100,  Titulo="Entradas "+ Model.Filtro.Moneda.Simbolo, TotalSuma=true},
+            new ColumnaGrilla {Campo="ImporteSalida.Monto", Formato="#,##0.00", Ancho=100, Titulo="Salidas "+ Model.Filtro.Moneda.Simbolo, TotalSuma=true},
             
             new ColumnaGrilla {Campo="Recibo.FinancistaDuenio", Ancho=100, Titulo="Financista",
                    Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="Recibo.FinancistaDuenio.Codigo"},
@@ -25,7 +25,7 @@
                 Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Recibo.Cliente.Codigo"},
             new ColumnaGrilla {Campo="Sucursal", Ancho=90, 
                     Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"},
-            new ColumnaGrilla {Campo="Recibo.TipoRecibo.Descripcion", Ancho=90,  Titulo="Tipo"},                   
+            new ColumnaGrilla {Campo="Recibo.TipoRecibo.Descripcion", Ancho=120,  Titulo="Tipo"},                   
             new ColumnaGrilla {Campo="Descripcion", Ancho=250, LargoMax=70, Titulo="Detalle"}
      };
                         

@@ -1,6 +1,7 @@
 ﻿@model DLL_Backend.TRChequePasar
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
+@using AutomotoraWeb.Models;
 
 @{
     ViewBag.Title = "Pasar Cheque";
@@ -16,12 +17,15 @@
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
 
+    
+
     <div class="display-label">
         @Html.LabelForRequired(model => model.Cheque)
     </div>
     <div class="renglon-alto editor-field-xlarge">
         <div class="floatLeft">
-            @Html.Partial("_selectChequePasar", Cheque.ChequesTransferibles())
+            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Cheque.ChequesTransferibles(), GridLookUpCodigo=Model.Cheque.Codigo  };}
+            @Html.Partial("_selectChequePasar", gmodel )
         </div>
         <div class="floatLeft" style="margin-left: 5px">
             @Html.ValidationMessageFor(model => model.Cheque.Codigo)
@@ -30,7 +34,7 @@
 
     </div>
     <div class="clear-both"></div>
-    <div class="block" style="height:80px; padding-top:10px; padding-left:10px">
+    <div class="block" style="height:80px; padding-top:10px; padding-left:10px; margin-right:10px">
         <div>
             <div class="renglon-alto display-label">
                 @Html.RadioButtonFor(model => model.TipoDestino, TRChequePasar.TIPO_DESTINO.FINANCISTA, new { id = "rb_financista" })  Financista

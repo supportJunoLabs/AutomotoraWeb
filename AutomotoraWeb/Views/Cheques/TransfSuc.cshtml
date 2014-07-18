@@ -19,18 +19,21 @@
    
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
-    @Html.HiddenFor(model => model.ChequesIds, new {id="chequesIds"})
+    @Html.HiddenFor(model => model.ChequesIds, new { id = "chequesIds" })
 
     <div>
         <div class="display-label">
             @Html.LabelForRequired(model => model.SucursalOrigen)
         </div>
-        <div class="editor-field editor-field-xlarge xxlarge">
+        <div class="editor-field editor-field-xlarge xxlarge" style="margin-right:20px">
             @Html.DdlOrDisplayFor(model => model.SucursalOrigen.Codigo, (bool?)ViewBag.SoloLectura, model => model.SucursalOrigen.Nombre,
                 new SelectList(ViewBag.SucursalesTransaccion, "Codigo", "Nombre"), null,
                 new { id = "ddlSucursales", @class = "large" })
             @Html.ValidationMessageFor(model => model.SucursalOrigen)
         </div>
+         <div style="padding-left:20px">
+                <input type="button" id="btn_actualizar" class="btn btn-primary2-mf" name="btnActualizar" value="Actualizar" />
+         </div>
     </div>
     <div class="clear-both"></div>   
     
@@ -46,8 +49,19 @@
         </div>
     </div>
     <div class="clear-both"></div>  
+    
+      <div class="display-label ">
+        @Html.LabelForRequired(model => model.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+        @Html.ValidationMessageFor(model => model.Observaciones)
 
-    <div class="selection_form">
+    </div>
+    <div class="clear-both"></div>   
+
+    <div style="width:2000px">
+    <div class="selection_form" >
         <div class="floatLeft"  style="margin-right:10px">
             <div class="text">
                 Seleccionados:
@@ -70,14 +84,14 @@
                @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Transferir").Id("btn_transferir"))
             </div>     
         </div>
-        <div class="floatLeft">
+        <div class="floatLeft" id="divGrillaCheques">
             @Html.Partial("_selectChequeTransfSuc", Cheque.ChequesTransferiblesSucursal(Model.SucursalOrigen))
         </div>
     </div>
+    </div>
+    <div class="clear-both"></div>   
 
+  
 }
 
-
-<script type="text/javascript">
-
-</script>
+<script src="~/Scripts/AutomotoraWeb/TransfChequesSuc.js"></script>
