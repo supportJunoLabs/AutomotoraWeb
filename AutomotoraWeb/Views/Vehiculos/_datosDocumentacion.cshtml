@@ -6,6 +6,15 @@
 <div class="row-fluid">
     @Html.HiddenFor(model => model.Codigo, new { id = "idVehiculoDocumentacion"})
 
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            @if ((ViewBag.SoloLectura != null) && (!(bool)ViewBag.SoloLectura)){
+                @(Html.Bootstrap().Button().Text("Agregar").Id("createDetailsDocumentacion").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
+            }
+        )
+        </div>
+    </div>
+
     <div id="divGrillaDocumentos">
         @if (Model != null){
             @Html.Partial("_listDocumentos", Model.Documentacion)
@@ -13,6 +22,22 @@
         else{
             @Html.Partial("_listDocumentos", new List<DocAuto>())
         }
+    </div>
+
+    <div id="containerCreateDocumentacionPopup" title="Crear Gasto" style="display: none;">
+        <div id="containerCreateDocumentacionPopupForm">
+
+        </div>
+        <div>
+            <div class="floatLeft">
+                @(Html.Bootstrap().Button().Text("Guardar").Id("saveCreateDocumentacion").Style(TwitterBootstrap2.ButtonStyle.Primary))
+                @(Html.Bootstrap().Button().Text("Cancelar").Id("cancelCreateDocumentacion").Style(TwitterBootstrap2.ButtonStyle.Primary))
+            </div>
+            <div class="floatLeft">
+                <div id="messageErrorCreateDocumentacion" style="margin-left: 15px; color: red;"></div>
+            </div>
+            <div class="clearBoth"></div>
+        </div>
     </div>
 
     <div id="containerDetailsDocumentacionPopup" title="Detalles de Documentación" style="display: none;">
@@ -69,6 +94,23 @@
     $(document).ready(function () {
 
         /* ========================================= */
+
+        $("#createDetailsDocumentacion").live("click", function () {
+
+            $("#messageErrorCreateDocumentacion").html("");
+
+            var id = _getId($(this));
+
+            $.ajax({
+                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                type: 'GET',
+                async: true,
+                data: 'idVehiculo=' + $("#idVehiculoDocumentacion").val(),
+                success: showCreateDocumentacionPopup,
+                error: general_showErrorPopup
+            });
+
+        });
 
         $(".boton-consultar-doc").live("click", function () {
 
@@ -152,6 +194,15 @@
         }
 
 
+        $("#saveCreateDocumentacion").live("click", function () {
+            var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            _eventClickActionDocumentacion(urlAction, "containerCreateDocumentacionPopup", "messageErrorCreateDocumentacion");
+        });
+
+        $("#cancelCreateDocumentacion").live("click", function () {
+            general_closePopup("containerCreateDocumentacionPopup");
+        });
+
         $("#closeDetailsDocumentacion").live("click", function () {
             general_closePopup("containerDetailsDocumentacionPopup");
         });
@@ -206,6 +257,9 @@
 
     /* ================================================== */
 
+    function showCreateDocumentacionPopup(data) {
+        general_showPopup(data, "containerCreateDocumentacionPopup", 350, 760);
+    }
 
     function showDetailsDocumentacionPopup(data) {
         general_showPopup(data, "containerDetailsDocumentacionPopup", 220, 500);

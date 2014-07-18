@@ -24,6 +24,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public const string CREATE_GASTO = "createGasto";
         public const string EDIT_GASTO = "editGasto";
         public const string DELETE_GASTO = "deleteGasto";
+        public const string CREATE_DOC = "createDoc";
         public const string DETAILS_DOC = "detailDoc";
         public const string EDIT_DOC = "editDoc";
         public const string DELETE_DOC = "deleteDoc";
@@ -523,6 +524,18 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         #region Documentos
 
+        public ActionResult createDoc(int idVehiculo) {
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = idVehiculo;
+            vehiculo.Consultar();
+            DocAuto docAuto = new DocAuto();
+            docAuto.Fecha = DateTime.Now;
+            docAuto.Vehiculo = vehiculo;
+            ViewBag.Estados = EstadoDocumento.EstadosDocumentoListables();
+            return PartialView("_popupDocumentacion", docAuto);
+        }
+
+
         public ActionResult detailDoc(int id) {
             DocAuto docAuto = this._obtenerDocumentacion(id);
             ViewBag.SoloLectura = true;
@@ -546,6 +559,28 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult listDocumentos(int idParametros) {
             ViewData["idParametros"] = idParametros;
             return PartialView("_listDocumentos", _listaDocumentos(idParametros));
+        }
+
+        [HttpPost]
+        public JsonResult createDoc(DocAuto docAuto) {
+
+            Vehiculo vehiculo = docAuto.Vehiculo;
+            vehiculo.Consultar();
+            docAuto.Vehiculo = vehiculo;
+
+            List<String> errors = this.validateAtributesDocumentacion(docAuto);
+
+            if (errors.Count == 0) {
+                try {
+                    docAuto.Agregar();
+                    vehiculo.Consultar();
+                    return Json(new { Result = "OK" });
+                } catch (UsuarioException exc) {
+                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+                }
+            }
+
+            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
         }
 
         [HttpPost]
