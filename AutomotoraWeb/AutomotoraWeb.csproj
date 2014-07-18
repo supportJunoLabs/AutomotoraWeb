@@ -374,6 +374,9 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboDescontarVale.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Transacciones\DXReciboRechazarCheque.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1641,6 +1644,7 @@
     <Content Include="Scripts\AutomotoraWeb\ChEmitidoCreateModif.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesEmitidosListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\RechazarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\DepositarDescontarCheque.js" />
@@ -1931,6 +1935,11 @@
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
+    <Content Include="Views\Vales\Descontar.cshtml" />
+    <Content Include="Views\Vales\_descontar.cshtml" />
+    <Content Include="Views\Vales\_selectValeDesc.cshtml" />
+    <Content Include="Views\Vales\ReciboDescuento.cshtml" />
+    <Content Include="Views\Vales\_reciboDescuento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2029,6 +2038,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboDescontarVale.resx">
+      <DependentUpon>DXReciboDescontarVale.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboRechazarCheque.resx">
       <DependentUpon>DXReciboRechazarCheque.cs</DependentUpon>

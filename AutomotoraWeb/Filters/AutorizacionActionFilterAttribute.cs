@@ -40,7 +40,8 @@ namespace AutomotoraWeb {
                     Dictionary<string, Dictionary<string, bool>> dictionaryOptions = (Dictionary<string, Dictionary<string, bool>>)(filterContext.HttpContext.Application.Contents[SessionUtils.APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS]);
                     string userName = (string)(filterContext.HttpContext.Session[SessionUtils.SESSION_USER_NAME]);
                     if (!SecurityService.Instance.hasAccess(actionName, controllerName, userName, dictionaryOptions)) {
-                        filterContext.Result = new RedirectResult("/Error403");
+                        string spermiso = controllerName.ToLower() + "|" + actionName.ToLower();
+                        filterContext.Result = new RedirectResult("/Error/Error403/"+spermiso);
                     }
                 }
             }

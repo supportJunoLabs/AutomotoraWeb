@@ -275,6 +275,11 @@ namespace AutomotoraWeb.Controllers.Bank {
                 ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
             }
 
+            if (tr.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR &&
+                tr.Importe.Monto <= 0) {
+                    ModelState.AddModelError("Importe.Monto", "Debe especificar un importe valido");
+            }
+
             if (ModelState.IsValid) {
                 try {
                     tr.Ejecutar();

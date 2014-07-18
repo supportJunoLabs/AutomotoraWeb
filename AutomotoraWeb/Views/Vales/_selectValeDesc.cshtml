@@ -1,0 +1,35 @@
+﻿@model GridLookUpModel
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Financing;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.TipoControl = InfoGrilla.TIPO_CONTROL.GRIDLOOKUP;
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Codigo", Ancho=100, Titulo="Codigo"},
+        new ColumnaGrilla {Campo="Importe", Ancho=120, Titulo="Importe", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+        new ColumnaGrilla {Campo="Vencimiento", Ancho=100, Titulo="Vencimiento"},
+        new ColumnaGrilla {Campo="VehiculoOrigen.Ficha", Ancho=90, Titulo="Ficha"},
+        new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista"}, 
+        new ColumnaGrilla {Campo="Observaciones", Ancho=250}
+    };
+
+    ig.NameGrid = "gridVales";
+    ig.Controller = ValesController.CONTROLLER;
+    ig.ActionCallbackRoute = "ValesDescontablesGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Vale);
+    ig.FormatoSeleccionLookup = "Vale:{0}, {1}, Vto:{2:dd/MM/yyyy}, Ficha:{3}";
+    ig.registrosPorPagina = 10;
+    ig.AnchoSeleccion = 530;
+ 
+    ig.FocusedRowChangedAccion ="valeSelected";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+

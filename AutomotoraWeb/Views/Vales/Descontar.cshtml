@@ -1,0 +1,12 @@
+﻿@model DLL_Backend.TRValeDescontar
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    ViewBag.Title = "Descontar Vale";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+   @Html.Partial("_descontar", Model)
+
+ <script src="~/Scripts/AutomotoraWeb/DescontarVale.js"></script>
