@@ -27,6 +27,8 @@
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.ChequeEmitido.ChequeEmitidoMD);
 
+    ig.AddButton(new BotonGrilla(BaseController.DETAILS, ChEmitidosController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
+
     ViewBag.InfoGrilla = ig;
     ig.DobleClick = true;
     ig.ControladorDobleClick = ChEmitidosController.CONTROLLER;
@@ -37,8 +39,8 @@
             return;
         }
         if (((DateTime)e.GetValue("FechaVencimiento")) < DateTime.Now.Date)
-            e.Row.BackColor = System.Drawing.Color.FromArgb(211, 235, 183);
-            //e.Row.BackColor = System.Drawing.Color.FromArgb(204, 255, 204);
+            //e.Row.BackColor = System.Drawing.Color.FromArgb(211, 235, 183);
+            e.Row.BackColor = System.Drawing.Color.FromArgb(204, 255, 204);
     };
     
 }
