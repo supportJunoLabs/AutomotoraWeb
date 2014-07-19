@@ -64,6 +64,13 @@ namespace AutomotoraWeb.Models {
         public int AnchoSeleccion { get; set; }
 
         public Action<object, ASPxGridViewTableRowEventArgs> FuncionHtmlRowPrepared;
+
+        private bool _usarViewData = false;
+        public bool UsarViewData {
+            get { return _usarViewData; }
+            set { _usarViewData = value; }
+        }
+        public string ClaveViewData;
   
 
         //-------------------- Botones acciones principales (siempre imagenes: ajax o link ) ---------------------------

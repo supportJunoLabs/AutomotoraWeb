@@ -330,17 +330,17 @@
     
     if (ig.TipoControl == InfoGrilla.TIPO_CONTROL.GRILLA) {
        
-    @(Html.DevExpress().GridView(
+     var grillaSettings=  Html.DevExpress().GridView(
             settings => {
                 settings.Name = ig.NameGrid;
                 settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"] };
-           
+
                 settings.SettingsBehavior.AllowSort = true;
                 settings.SettingsBehavior.AllowGroup = true;
                 settings.Settings.ShowGroupPanel = true;
                 settings.SettingsBehavior.AllowDragDrop = true;
                 settings.KeyFieldName = ig.KeyFieldName;
-            
+
                 //por ahora no lo habilito porque se ignoran los anchos manuales. Envie consulta a devexpress.
                 //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
                 //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
@@ -372,7 +372,7 @@
 
                 settings.SettingsPopup.HeaderFilter.MinWidth = 300;
                 settings.SettingsPopup.HeaderFilter.MinHeight = 200;
-                
+
                 //EndlessMode
                 if (ig.EndlessMode) {
                     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
@@ -387,7 +387,7 @@
                     settings.ClientSideEvents.SelectionChanged = ig.AccionSeleccion;
                     settings.CommandColumn.Width = Unit.Pixel(30);
                 }
-                
+
 
                 settings.Settings.ShowFooter = true;
 
@@ -415,9 +415,9 @@
                     settings.Columns.Add(listGridViewsBotones);
                 }
 
-               if (!defineAnchos) {
-                     settings.Width = Unit.Percentage(98);
-               } else {
+                if (!defineAnchos) {
+                    settings.Width = Unit.Percentage(98);
+                } else {
                     settings.Settings.UseFixedTableLayout = true;
                     sumaAnchos = 0;
                     foreach (MVCxGridViewColumn col in settings.Columns) {
@@ -425,18 +425,22 @@
                     }
 
                     settings.Width = Unit.Pixel(sumaAnchos + 14 * settings.Columns.Count);
-               }
-               if (ig.FuncionHtmlRowPrepared != null) {
-                   settings.HtmlRowPrepared = new ASPxGridViewTableRowEventHandler(ig.FuncionHtmlRowPrepared);
-               }
-                
+                }
+                if (ig.FuncionHtmlRowPrepared != null) {
+                    settings.HtmlRowPrepared = new ASPxGridViewTableRowEventHandler(ig.FuncionHtmlRowPrepared);
+                }
+
                 //totales suma
-               foreach (string s in totalesSuma) {
-                   settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, s);
-               }
-                
-            }
-        ).Bind(Model).GetHtml())
+                foreach (string s in totalesSuma) {
+                    settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, s);
+                }
+        });
+    
+        if (ig.UsarViewData){
+            @grillaSettings.Bind(ViewData[ig.ClaveViewData]).GetHtml()
+        }else{
+            @grillaSettings.Bind(Model).GetHtml()
+        }
     }
 }
 
