@@ -126,12 +126,74 @@
 
         //---------------------------------------------------------------
 
+        $('#uploadFileBtn').click(function () {
+
+            var formdata = new FormData(); //FormData object
+            var fileInputFoto = $("#fileInputFoto");
+            //Iterating through each files selected in fileInputFoto
+            for (i = 0; i < fileInputFoto.prop('files').length; i++) {
+                //Appending each file to FormData object
+                formdata.append(fileInputFoto.prop('files')[i].name, fileInputFoto.prop('files')[i]);
+            }
+
+            formdata.append("idsesion", $("#camposesion").val());
+            formdata.append("idVehiculo", $("#idVehiculoFoto").val());
+
+            //alert($("#camposesion").val());
+
+            $.ajax({
+                type: "POST",
+                url: '/Vehiculos/Upload',
+                data: formdata,
+                processData: false,
+                success: function (data) {
+                    if (data.fileName != null) {
+                        var emptyLiImage = $("#emptyLiImage").html();
+                        var strLiImage = emptyLiImage.replace("ID_IMG_TO_REPLACE", data.code).replace("TITLE_TO_REPLACE", data.order).replace("FILE_NAME_TO_REPLACE", data.fileName);
+                        $("#sortable").append(strLiImage);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error al subir archivo");
+                },
+                dataType: 'json',
+                contentType: false,
+                mimeType: 'multipart/form-data',
+                beforeSend: function (x) {
+                    if (x && x.overrideMimeType) {
+                        x.overrideMimeType("multipart/form-data");
+                    }
+                }
+            });
+        });
+
     }); 
 </script>
- 
-<div class="btn-group">
-    @(Html.Bootstrap().ActionLinkButton("Agregar Foto", VehiculosController.ADD_PHOTO, VehiculosController.CONTROLLER).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary)))
+
+@Html.HiddenFor(model => model.Codigo, new { id = "idVehiculoFoto"})
+
+<div style="display: none;" id="emptyLiImage">
+    <li class="vehiculoImageContainer"><img id="ID_IMG_TO_REPLACE" title="TITLE_TO_REPLACE" class="vehiculoImg" src="~/Content/Images/autos/FILE_NAME_TO_REPLACE" style="cursor: move;" /></li>
 </div>
+<!-- ===========  FOTO  =============== -->
+
+<div class="clear-both"></div>
+<div id="fotoModif">
+    <div class="editor-field editor-field-xxlarge">
+        <input id="fileInputFoto" type="file">
+        <button id="uploadFileBtn" class="btn-default btn btn-primary" type="button">Subir Imagen</button>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="editor-label ">
+        &nbsp;
+    </div>
+
+    <div class="clear-both"></div>
+    <div class="espacio2"></div>
+</div>
+
+<!-- ================================== -->
 
 <div class="btn-toolbar">
     <div class="btn-group">
