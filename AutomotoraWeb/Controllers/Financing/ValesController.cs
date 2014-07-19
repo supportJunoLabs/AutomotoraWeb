@@ -28,6 +28,8 @@ namespace AutomotoraWeb.Controllers.Financing
 
             ViewBag.Cuentas = CuentaBancaria.CuentasBancarias;
             ViewBag.Sucursales = Sucursal.Sucursales;
+            ViewBag.Financistas = Financista.FinancistasTodos;
+
             if (usuario.MultiSucursal) {
                 ViewBag.SucursalesTransaccion = Sucursal.Sucursales;
             } else {
@@ -138,5 +140,172 @@ namespace AutomotoraWeb.Controllers.Financing
         }
 
         #endregion
+
+
+        #region ListadoVales
+
+        //Se invoca desde el menu de financiaciones,en lugar de banco.
+        public ActionResult ListValesF() {
+            return RedirectToAction("ListVales");
+        }
+
+
+        //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+        public ActionResult ListVales() {
+            ListadoValesModel model = new ListadoValesModel();
+            string s = SessionUtils.generarIdVarSesion("ListadoVales", Session[SessionUtils.SESSION_USER].ToString());
+            Session[s] = model;
+            model.idParametros = s;
+            ViewData["idParametros"] = model.idParametros;
+            model.obtenerListado();
+            return View(model);
+        }
+
+        [HttpPost]
+        //Se invoca desde el boton actualizar o imprimir.
+        public ActionResult ListVales(ListadoValesModel model) {
+            Session[model.idParametros] = model; //filtros actualizados
+            ViewData["idParametros"] = model.idParametros;
+            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+            if (ModelState.IsValid) {
+                if (model.Accion == ListadoValesModel.ACCIONES.IMPRIMIR) {
+                    return this.ReportVales(model);
+                }
+                model.obtenerListado();
+            }
+            return View(model);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult ListGrillaVales(string idParametros) {
+            ListadoValesModel model = (ListadoValesModel)Session[idParametros];
+            ViewData["idParametros"] = model.idParametros;
+            model.obtenerListado();
+            return PartialView("_listGrillaVales", model.Resultado.Vales);
+        }
+
+        public ActionResult ReportVales(ListadoValesModel model) {
+            return View("ReportVales", model);
+        }
+
+        private XtraReport _generarReporteVales(string idParametros) {
+            ListadoValesModel model = (ListadoValesModel)Session[idParametros];
+            model.obtenerListado();
+            List<ListadoVales> ll = new List<ListadoVales>();
+            ll.Add(model.Resultado);
+            XtraReport rep = new DXListadoVales();
+            rep.DataSource = ll;
+            setParamsToReport(rep, model);
+            return rep;
+        }
+        private void setParamsToReport(XtraReport report, ListadoValesModel model) {
+            Parameter param = new Parameter();
+            param.Name = "detalleFiltros";
+            param.Type = typeof(string);
+            param.Value = model.detallesFiltro();
+            param.Description = "Detalle Filtros";
+            param.Visible = false;
+            report.Parameters.Add(param);
+
+            string s = "LISTADO VALES";
+            Parameter param1 = new Parameter();
+            param1.Name = "tituloReporte";
+            param1.Type = typeof(string);
+            param1.Value = s;
+            param1.Description = "Titulo Reporte";
+            param1.Visible = false;
+            report.Parameters.Add(param1);
+
+        }
+
+        public ActionResult ReportValesPartial(string idParametros) {
+            XtraReport rep = _generarReporteVales(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportVales");
+        }
+
+        public ActionResult ReportValesExport(string idParametros) {
+            XtraReport rep = _generarReporteVales(idParametros);
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
+
+        #region RechazarVale
+
+        public ActionResult Rechazar() {
+            TRValeRechazar model = new TRValeRechazar();
+            model.Vale = new Vale();
+            model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+            return View(model);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult ValesRechazablesGrilla(GridLookUpModel model) {
+            model.Opciones = Vale.ValesRechazables();
+            return PartialView("_selectValeRechazar", model);
+        }
+
+        [HttpPost]
+        public ActionResult Rechazar(TRValeRechazar tr) {
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+
+            //Sacar la validacion del Vale porque sale con texto feo y hacerla manualmente
+            ModelState.Remove("Vale.Codigo");
+            ModelState.Remove("Sucursal.Codigo");
+
+            if (tr.Vale == null || string.IsNullOrWhiteSpace(tr.Vale.Codigo )) {
+                ModelState.AddModelError("Vale.Codigo", "El Vale es requerido");
+            }
+            if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
+                ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
+            }
+
+            if (ModelState.IsValid) {
+                try {
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboRech", ValesController.CONTROLLER, new { id = tr.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(tr);
+                }
+            }
+            return View(tr);
+        }
+
+        public ActionResult ReciboRech(int id) {
+            ViewData["idParametros"] = id;
+            return View("ReciboRech");
+        }
+
+        private XtraReport _generarReciboRech(int id) {
+            TRValeRechazar tr = (TRValeRechazar)Transaccion.ObtenerTransaccion(id);
+            List<TRValeRechazar> ll = new List<TRValeRechazar>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboRechazarVale();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboRechPartial(int idParametros) {
+            XtraReport rep = _generarReciboRech(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboRech");
+        }
+
+        public ActionResult ReciboRechExport(int idParametros) {
+            XtraReport rep = _generarReciboRech(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+
+        #endregion
+
     }
 }

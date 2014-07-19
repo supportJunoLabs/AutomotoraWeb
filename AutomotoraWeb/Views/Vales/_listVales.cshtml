@@ -1,0 +1,13 @@
+﻿@model AutomotoraWeb.Models.ListadoValesModel
+@using AutomotoraWeb.Helpers;
+
+<div style="padding-top:0px;padding-bottom:30px">
+        <div class="floatLeft label-large">
+            <div class="display-label-small">Total : </div>
+            @Html.DisplayFor(m => m.Resultado.Total.ImporteTexto)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+@Html.Partial("_listGrillaVales", Model.Resultado.Vales)
+

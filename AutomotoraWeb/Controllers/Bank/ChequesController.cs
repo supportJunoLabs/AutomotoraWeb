@@ -36,9 +36,6 @@ namespace AutomotoraWeb.Controllers.Bank {
             }
         }
 
-       
-
-
         #region ListadoCheques
 
         //Se invoca desde el menu de financiaciones,en lugar de banco.

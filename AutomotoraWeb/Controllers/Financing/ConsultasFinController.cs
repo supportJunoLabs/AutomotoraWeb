@@ -389,7 +389,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             XtraReport rep = null;
             switch (model.TabActual) {
                 case ListadoCuotasValesModel.TABS.TAB3:
-                    rep = new DXListadoVales();
+                    rep = new DXListadoValesFin();
                     break;
                 case ListadoCuotasValesModel.TABS.TAB2:
                     rep = new DXListadoCuotasValesCli();

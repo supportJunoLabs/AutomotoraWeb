@@ -3,7 +3,7 @@
 @using DLL_Backend;
 
 @{
-    ViewBag.Title = "Consulta Vales Cliente";
+    ViewBag.Title = "Consulta Vale";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,7 +13,7 @@
 </div>
 <div class="editor-field editor-field-xlarge xxlarge">
     @Html.DdlOrDisplayFor(model => model.Venta.Cliente.Codigo, false, model => model.Venta.Cliente.Nombre,
-                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), "--Seleccionar Cliente--",
+                new SelectList(Cliente.Clientes(), "Codigo", "Nombre"), "--Seleccionar Cliente--",
                 new { id = "ddlClientes", @class = "xxlarge" })
 </div>
 <div class="clear-both"></div>
