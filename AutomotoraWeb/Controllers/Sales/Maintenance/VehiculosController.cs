@@ -14,12 +14,14 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using System.Globalization;
 using System.Collections;
+using System.IO;
+using System.Drawing;
 
 namespace AutomotoraWeb.Controllers.Sales.Maintenance {
     public class VehiculosController : SalesController, IMaintenance {
 
         public static string CONTROLLER = "vehiculos";
-        public const string PHOTO_FOLDER = "~/Content/Images/vehiculos/";
+        public const string PHOTO_FOLDER = "~/Content/Images/autos/";
         public const string DETAILS_GASTO = "detailGasto";
         public const string CREATE_GASTO = "createGasto";
         public const string EDIT_GASTO = "editGasto";
@@ -33,6 +35,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public const string OK = "OK";
         public const string ERROR = "ERROR";
         public const string VALIDATION_ERROR = "VALIDATION_ERROR";
+
+        private const int MAX_ANCHO_FOTO = 250;
         
 
         //No usarlo mas porque da lios de permisos al invocar esta accion si no tiene permisos full en vehiculos (ej: usuario de solo consulta a traves de listados)
@@ -743,6 +747,101 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         #endregion
+
+        //---------------------------------------------------------------------
+
+        public string getFileName(Vehiculo vehiculo) {
+            string fileName = "";
+
+            int newNumber = 0;
+            foreach (FotoAuto fa in vehiculo.Fotos) {
+                string aux = fa.Archivo.Split('-')[2];
+                string aux2 = aux.Split('.')[0];
+                int number = int.Parse(aux2);
+                if (number > newNumber) {
+                    newNumber = number;
+                }
+            }
+
+            newNumber = newNumber + 1;
+
+            string zeros = "000";
+            if (newNumber > 99) {
+                zeros = "0";
+            }
+            else if (newNumber > 9) {
+                zeros = "00";
+            }
+
+            fileName = vehiculo.Ficha.Replace('/', '-') + "-" + zeros + newNumber;
+
+            return fileName;
+        }
+
+        [HttpPost]
+        public JsonResult Upload(FormCollection col) {
+            string fileName = null;
+            //string fileRandomName = "";
+
+            if (Request.Files.Count > 0) {
+
+                int idVehiculo = int.Parse(col["idVehiculo"]);
+                Vehiculo vehiculo = new Vehiculo();
+                vehiculo.Codigo = idVehiculo;
+                vehiculo.Consultar();
+                int order = vehiculo.Fotos.Count;
+
+                HttpPostedFileBase file = Request.Files[0]; //Uploaded file
+
+                string extension = getExtensionFile(file.FileName);
+                fileName = getFileName(vehiculo) + extension; 
+
+                //---------------------------------------------------
+                //Use the following properties to get file's name, size and MIMEType
+                int fileSize = file.ContentLength;
+                string mimeType = file.ContentType;
+                Stream fileContent = file.InputStream;
+                //To save file, use SaveAs method
+                file.SaveAs(Server.MapPath(PHOTO_FOLDER) + fileName);
+
+                Bitmap image1 = (Bitmap)Image.FromFile(Server.MapPath(PHOTO_FOLDER) + fileName, true);
+                Bitmap image2 = (Bitmap)ImageUtils.CambiarTamanio(image1, MAX_ANCHO_FOTO, 0, 0);
+                image2.Save(Server.MapPath(PHOTO_FOLDER) + fileName);
+
+                //---------------------------------------------------
+
+                FotoAuto fotoAuto = new FotoAuto();
+                fotoAuto.Vehiculo = vehiculo;
+                fotoAuto.Orden = order;
+                fotoAuto.Archivo = fileName;
+                string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
+                string origen = HttpContext.Request.UserHostAddress;
+                fotoAuto.setearAuditoria(nomUsuario, origen);
+                fotoAuto.Agregar(); 
+
+                //---------------------------------------------------
+
+                return Json(new { code = fotoAuto.Codigo, order = order, fileName = fileName });
+
+            } else {
+                return Json(new { fileName = fileName });
+            }
+            
+        }
+
+
+        //-----------------------------------------------------------------------------------------------------
+
+        private string getExtensionFile(string fileName) {
+            //se corrige porque no andaba bien cuando hay un punto como parte del nombre del archivo, ademas del que separa la extension. 
+            //se debe tomar el ultimo punto
+            string extension = "";
+            if (fileName.Contains('.')) {
+                int pos = fileName.LastIndexOf('.');
+                extension = fileName.Substring(pos);
+            }
+            return extension.ToLower();
+        }
 
         //---------------------------------------------------------------------
 
