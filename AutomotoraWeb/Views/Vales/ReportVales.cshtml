@@ -1,0 +1,15 @@
+﻿@model AutomotoraWeb.Models.ListadoValesModel
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Listado Vales";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", "ListVales").Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reportVales", Model)

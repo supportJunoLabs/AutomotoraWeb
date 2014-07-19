@@ -1,0 +1,65 @@
+﻿@model DLL_Backend.TRValeRechazar
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    ViewBag.Title = "Registrar Vale Impago";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="validation-summary-errors">
+    <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+</div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+   
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Vale)
+    </div>
+    <div class="renglon-alto editor-field-xlarge">
+        <div class="floatLeft">
+            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vale.ValesRechazables(), GridLookUpCodigo = Model.Vale.Codigo };}
+            @Html.Partial("_selectValeRechazar", gmodel)
+        </div>
+        <div class="floatLeft" style="margin-left: 5px">
+            @Html.ValidationMessageFor(model => model.Vale.Codigo)
+        </div>
+        @Html.HiddenFor(model => model.Vale.Codigo, new { id = "codigoVale" })
+
+    </div>
+    <div class="clear-both"></div>
+    <div>
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Sucursal)
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, (bool?)ViewBag.SoloLectura, model => model.Sucursal.Nombre,
+                new SelectList(ViewBag.SucursalesTransaccion, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "large" })
+            @Html.ValidationMessageFor(model => model.Sucursal)
+        </div>
+    </div>
+    <div class="clear-both"></div>   
+        
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+        @Html.ValidationMessageFor(model => model.Observaciones)
+
+    </div>
+    <div class="clear-both"></div>   
+    
+    <div class="espacio2"></div>
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Vale Impago"))
+    </div>     
+
+}
+
+<script src="~/Scripts/AutomotoraWeb/RechazarVale.js"></script>

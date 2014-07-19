@@ -12,7 +12,8 @@
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
              new ColumnaGrilla {Campo="VehiculoOrigen", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
                 Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="VehiculoOrigen.Codigo"},
-            new ColumnaGrilla {Campo="Codigo", Ancho=70, Titulo="Codigo"},
+            new ColumnaGrilla {Campo="Codigo", Ancho=70, Titulo="Codigo",
+                Hipervinculo=true, Haccion="ConsultaVale", Hcontrolador=ValesController.CONTROLLER, HCampoParametro="Codigo"},
             new ColumnaGrilla {Campo="Vencimiento", Ancho=80, Titulo="F.Vencimiento"},
             new ColumnaGrilla {Campo="Importe", Ancho=110, Titulo="Importe"},
             new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Ancho=90, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},

@@ -29,7 +29,7 @@ namespace AutomotoraWeb.Models {
         public ListadoTransaccionesModel() {
             Filtro = new ReciboFiltro();
             Resultado = new List<Recibo>();
-            Desde = DateTime.Now.Date.AddMonths(-1);
+            Desde = DateTime.Now.Date;
             Hasta = DateTime.Now.Date;
             FiltrarFinancista = false;
             FiltrarSucursal = false;

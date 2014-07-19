@@ -11,7 +11,7 @@
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
             new ColumnaGrilla {Campo="Codigo", Ancho=70, Titulo = "Vale", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
-                Hipervinculo=true, Haccion="ConsultaVale", Hcontrolador="ConsultasFin", HCampoParametro="Codigo"},
+                Hipervinculo=true, Haccion="ConsultaVale", Hcontrolador=ValesController.CONTROLLER, HCampoParametro="Codigo"},
             new ColumnaGrilla {Campo="Vencimiento", Ancho=90, Titulo="Vencimiento"},
             new ColumnaGrilla {Campo="Importe", Ancho=110, Titulo="Importe"},
             new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Ancho=100, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},

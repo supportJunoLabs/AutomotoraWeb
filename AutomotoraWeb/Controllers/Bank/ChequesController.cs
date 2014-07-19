@@ -36,9 +36,6 @@ namespace AutomotoraWeb.Controllers.Bank {
             }
         }
 
-       
-
-
         #region ListadoCheques
 
         //Se invoca desde el menu de financiaciones,en lugar de banco.
@@ -273,6 +270,11 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
                 ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
+            }
+
+            if (tr.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR &&
+                tr.Importe.Monto <= 0) {
+                    ModelState.AddModelError("Importe.Monto", "Debe especificar un importe valido");
             }
 
             if (ModelState.IsValid) {

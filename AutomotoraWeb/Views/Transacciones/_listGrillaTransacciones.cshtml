@@ -12,7 +12,7 @@
         new ColumnaGrilla {Campo="Fecha", Ancho=80, Titulo="Fecha"},
         new ColumnaGrilla {Campo="Numero", Ancho=60, Titulo="Trans.",
          Hipervinculo=true, Haccion="ConsultaTransaccion", Hcontrolador="Transacciones", HCampoParametro="Numero"},
-        new ColumnaGrilla {Campo="TipoRecibo", Ancho=150, Titulo="Tipo"},
+        new ColumnaGrilla {Campo="TipoRecibo.Descripcion", Ancho=150, Titulo="Tipo"},
         new ColumnaGrilla {Campo="NumeroOperacion", Ancho=80, Titulo="Operacion"},
         new ColumnaGrilla {Campo="Vehiculo", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
                 Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="Vehiculo.Codigo"},
@@ -36,7 +36,7 @@
     ig.registrosPorPagina = 20;
 
     ig.AccionesAlComienzo = true;
-    ig.AddButton(new BotonGrilla("ConsultaTransaccion", TransaccionesController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
+    ig.AddButton(new BotonGrilla("ConsultaTransaccion", TransaccionesController.CONTROLLER, "boton-consultar-mf", "Consulta Transaccion"));
 
     ig.DobleClick = true;
     ig.ControladorDobleClick = TransaccionesController.CONTROLLER;

@@ -276,6 +276,7 @@
     <Compile Include="Models\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\ChequeTransfSucModel.cs" />
+    <Compile Include="Models\ListadoValesModel.cs" />
     <Compile Include="Models\GridLookUpModel.cs" />
     <Compile Include="Models\ListadoChequesEmitidosModel.cs" />
     <Compile Include="Models\EstadoCuentaModel.cs" />
@@ -296,6 +297,9 @@
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Listados\DXListadoVales.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Listados\DXListadoChequesEmitidos.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -311,7 +315,7 @@
     <Compile Include="Reports\Listados\DXListadoCheques.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\Listados\DXListadoVales.cs">
+    <Compile Include="Reports\Listados\DXListadoValesFin.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Listados\DXListadoCuotasValesMes.cs">
@@ -372,6 +376,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboRechazarVale.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboDescontarVale.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Transacciones\DXReciboRechazarCheque.cs">
@@ -1641,6 +1651,9 @@
     <Content Include="Scripts\AutomotoraWeb\ChEmitidoCreateModif.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesEmitidosListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\RechazarVale.js" />
+    <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\RechazarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\DepositarDescontarCheque.js" />
@@ -1912,7 +1925,7 @@
     <Content Include="Views\Cheques\ReciboTransfSuc.cshtml" />
     <Content Include="Views\Cheques\_reciboTransfSuc.cshtml" />
     <Content Include="Views\Cheques\_movimientosCheque.cshtml" />
-    <Content Include="Views\Cheques\Rechazar.cshtml" />
+    <Content Include="Views\Vales\Rechazar.cshtml" />
     <Content Include="Views\Cheques\_selectChequeRechazar.cshtml" />
     <Content Include="Views\Cheques\ReciboRech.cshtml" />
     <Content Include="Views\Cheques\_reciboRech.cshtml" />
@@ -1931,6 +1944,20 @@
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
+    <Content Include="Views\Vales\Descontar.cshtml" />
+    <Content Include="Views\Vales\_descontar.cshtml" />
+    <Content Include="Views\Vales\_selectValeDesc.cshtml" />
+    <Content Include="Views\Vales\ReciboDescuento.cshtml" />
+    <Content Include="Views\Vales\_reciboDescuento.cshtml" />
+    <Content Include="Views\Vales\ListVales.cshtml" />
+    <Content Include="Views\Vales\_listVales.cshtml" />
+    <Content Include="Views\Vales\_listGrillaVales.cshtml" />
+    <Content Include="Views\Vales\ReportVales.cshtml" />
+    <Content Include="Views\Vales\_reportVales.cshtml" />
+    <Content Include="Views\Cheques\Rechazar.cshtml" />
+    <Content Include="Views\Vales\_selectValeRechazar.cshtml" />
+    <Content Include="Views\Vales\ReciboRech.cshtml" />
+    <Content Include="Views\Vales\_reciboRech.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1952,6 +1979,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\Listados\DXListadoVales.resx">
+      <DependentUpon>DXListadoVales.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoChequesEmitidos.resx">
       <DependentUpon>DXListadoChequesEmitidos.cs</DependentUpon>
     </EmbeddedResource>
@@ -1967,8 +1997,8 @@
     <EmbeddedResource Include="Reports\Listados\DXListadoCheques.resx">
       <DependentUpon>DXListadoCheques.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\Listados\DXListadoVales.resx">
-      <DependentUpon>DXListadoVales.cs</DependentUpon>
+    <EmbeddedResource Include="Reports\Listados\DXListadoValesFin.resx">
+      <DependentUpon>DXListadoValesFin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoCuotasValesMes.resx">
       <DependentUpon>DXListadoCuotasValesMes.cs</DependentUpon>
@@ -2029,6 +2059,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboRechazarVale.resx">
+      <DependentUpon>DXReciboRechazarVale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboDescontarVale.resx">
+      <DependentUpon>DXReciboDescontarVale.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboRechazarCheque.resx">
       <DependentUpon>DXReciboRechazarCheque.cs</DependentUpon>

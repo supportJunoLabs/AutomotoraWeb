@@ -1,0 +1,13 @@
+﻿@using AutomotoraWeb.Controllers.Financing;
+
+@{ 
+    ViewBag.Title = "Vale Descontado Impago";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", FinancingController.INDEX, FinancingController.BCONTROLLER).Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboRech")
