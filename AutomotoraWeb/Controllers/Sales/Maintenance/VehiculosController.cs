@@ -72,9 +72,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
 
-        //public ActionResult Show([ModelBinder(typeof(DevExpressEditorsBinder))] Vehiculo vehiculo) {
         public ActionResult Show() {
-            ViewBag.ListVehiculos = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.EN_STOCK); // TODO: QUITAR
             return View(_listaElementos());
         }
 
@@ -89,7 +87,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Create() {
-            return View();
+           return View();
         }
 
         public ActionResult Edit(int id) {
@@ -136,7 +134,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         private List<Vehiculo> _listaElementos() {
-            return Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.TODOS);
+            List<Vehiculo> list = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.EN_STOCK);
+            list.Reverse();
+            return list;
         }
 
         //-----------------------------------------------------------------------------------------------------

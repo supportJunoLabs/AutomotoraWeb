@@ -3,24 +3,36 @@
 @using DLL_Backend;
 @using System.Globalization;
 
- <style>
-    #sortable { list-style-type: none; margin: 0; padding: 0; width: 650px; }
-    .vehiculoImageContainer{
-      border: 1px solid gray;
-      width: 160px; 
-      height: 100px;
-      float: left;
+@{
+    bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+}
+
+<style>
+    #sortable {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 650px;
     }
-    .vehiculoImageContainer img{
-      height:100px;
-      width:160px;
+
+    .vehiculoImageContainer {
+        border: 1px solid gray;
+        width: 160px;
+        height: 100px;
+        float: left;
     }
+
+        .vehiculoImageContainer img {
+            height: 100px;
+            width: 160px;
+        }
 </style>
 
 <script>
     $(document).ready(function () {
-        $("#sortable" ).sortable();
+        $("#sortable").sortable();
         $("#sortable").disableSelection();
+        $(".sortable_solo_lectura").sortable("destroy")
         $(".vehiculoImg").live("click", function () {
             var id = $(this).attr("id");
             $("#popup_content_img_" + id).dialog({
@@ -28,13 +40,23 @@
                 width: 'auto',
                 height: 'auto',
                 buttons: [
-                    { text: "Eliminar Imagen", click: function() {
-                        $(this).dialog("close");
-                        deleteImage(id);
-                    } },
-                    { text: "Cerrar Dialogo", click: function() {
-                        $(this).dialog("close");
-                    } }
+
+                    @if(!modoConsulta){
+                    <text>
+                    {   
+                        text: "Eliminar Imagen", click: function () {
+                            $(this).dialog("close");
+                            deleteImage(id);
+                        }
+                    },
+                    </text>
+                    }
+
+                    {
+                        text: "Cerrar Dialogo", click: function () {
+                            $(this).dialog("close");
+                        }
+                    }
                 ]
             });
         });
@@ -69,7 +91,7 @@
 
         //---------------------------------------------------------------
 
-        function savePhotoOrder(){
+        function savePhotoOrder() {
             $.ajax({
                 url: '/vehiculos/savePhotoOrder/',
                 cache: false,
@@ -78,9 +100,12 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: getJsonOrderedPhotos(),
-                success: function(data){
+                success: function (data) {
                     if (data.Result != "OK") {
                         general_showAvisoPopup('Error al salvar orden de fotos.');
+                    } else {
+                        inicializarModal("Confirmación", "Orden guardado correctamente", null, "OK");
+                        $('#myModal').modal('show');
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -98,7 +123,7 @@
             var arrayPhotos = [];
 
             for (var i = 0; i < arrayImgElements.length; i++) {
-                var item = getJsonPhoto(arrayImgElements[i], i+1);
+                var item = getJsonPhoto(arrayImgElements[i], i + 1);
                 arrayPhotos.push(item);
             }
 
@@ -167,49 +192,60 @@
             });
         });
 
-    }); 
+    });
 </script>
 
-@Html.HiddenFor(model => model.Codigo, new { id = "idVehiculoFoto"})
+@Html.HiddenFor(model => model.Codigo, new { id = "idVehiculoFoto" })
 
 <div style="display: none;" id="emptyLiImage">
-    <li class="vehiculoImageContainer"><img id="ID_IMG_TO_REPLACE" title="TITLE_TO_REPLACE" class="vehiculoImg" src="~/Content/Images/autos/FILE_NAME_TO_REPLACE" style="cursor: move;" /></li>
+    <li class="vehiculoImageContainer">
+        <img id="ID_IMG_TO_REPLACE" title="TITLE_TO_REPLACE" class="vehiculoImg" src="~/Content/Images/autos/FILE_NAME_TO_REPLACE" style="cursor: move;" />
+    </li>
 </div>
 <!-- ===========  FOTO  =============== -->
 
 <div class="clear-both"></div>
-<div id="fotoModif">
-    <div class="editor-field editor-field-xxlarge">
-        <input id="fileInputFoto" type="file">
-        <button id="uploadFileBtn" class="btn-default btn btn-primary" type="button">Subir Imagen</button>
+
+
+@{
+    if (!modoConsulta) {
+    <div id="fotoModif">
+        <div class="editor-field editor-field-xxlarge">
+            <input id="fileInputFoto" type="file">
+            <button id="uploadFileBtn" class="btn-default btn btn-primary" type="button">Subir Imagen</button>
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="editor-label ">
+            &nbsp;
+        </div>
+
+        <div class="clear-both"></div>
+        <div class="espacio2"></div>
     </div>
-    <div class="clear-both"></div>
 
-    <div class="editor-label ">
-        &nbsp;
+    <!-- ================================== -->
+
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <button class="btn-primary  btn" id="btnSaveOrder" type="button">Guardar Orden</button>
+        </div>
     </div>
-
-    <div class="clear-both"></div>
-    <div class="espacio2"></div>
-</div>
-
-<!-- ================================== -->
-
-<div class="btn-toolbar">
-    <div class="btn-group">
-        <button class="btn-primary  btn" id="btnSaveOrder" type="button">Guardar Orden</button>
-    </div>
-</div>
+    }
+}
 
 
-<ul id="sortable">
+<ul id="sortable"  class="@(!modoConsulta ? "" : "sortable_solo_lectura")">
     @foreach (FotoAuto fotoAuto in ViewBag.ShortedListFotoAuto) {
-        <li class="vehiculoImageContainer"><img id="@fotoAuto.Codigo" title="@fotoAuto.Orden" class="vehiculoImg" src="~/Content/Images/autos/@fotoAuto.Archivo" style="cursor: move;" /></li>
+        <li class="vehiculoImageContainer">
+            <img id="@fotoAuto.Codigo" title="@fotoAuto.Orden" class="vehiculoImg" src="~/Content/Images/autos/@fotoAuto.Archivo" style="cursor: move;" /></li>
     }
 </ul>
 
 @foreach (FotoAuto fotoAuto in Model.Fotos) {
-    <div id="popup_content_img_@fotoAuto.Codigo" style="display: none;"><img src="~/Content/Images/autos/@fotoAuto.Archivo" /></div>
+    <div id="popup_content_img_@fotoAuto.Codigo" style="display: none;">
+        <img src="~/Content/Images/autos/@fotoAuto.Archivo" />
+    </div>
 }
 
 
