@@ -255,13 +255,15 @@
 
         function getJsonGasto() {
             var gasto = {
-                Codigo: $("#hiddenCodioGasto").val(),
+                Codigo: $("#hiddenCodigoGasto").val(),
                 Fecha: $("#txtFechaGasto").val(),
                 ImporteGasto: {
                     Moneda: {
-                        Codigo: $("#ddlMonedaImporteGasto").val()
+                        Codigo: $("#ddlImporteGastoMoneda").val()
+                        //Codigo: $("#ddlMonedaImporteGasto").val()
                     },
-                    Monto: $("#ImporteGasto_Monto").val()
+                //Monto: $("#ImporteGasto_Monto").val()
+                    Monto: $("#txImporteGastoMonto").val()
                 },
                 Descripcion: $("#txtDescripcionGasto").val(),
                 Observaciones: $("#txtObservacionesGasto").val(),

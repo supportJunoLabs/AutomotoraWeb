@@ -39,7 +39,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             Session[s] = model;
             model.idParametros = s;
             ViewData["idParametros"] = model.idParametros;
-            model.EstadosPosibles = EstadoDocumento.EstadosDocumentoListables();
+            model.EstadosPosibles = EstadoDocumento.EstadosDocumento();
             model.Resultado = _listaElementos(model);
             return View(model);
         }

@@ -37,7 +37,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public const string VALIDATION_ERROR = "VALIDATION_ERROR";
 
         private const int MAX_ANCHO_FOTO = 250;
-        
+
 
         //No usarlo mas porque da lios de permisos al invocar esta accion si no tiene permisos full en vehiculos (ej: usuario de solo consulta a traves de listados)
         //ademas, ya no es mas el estandar.
@@ -66,7 +66,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 ViewBag.Departamentos = Departamento.Departamentos();
                 ViewBag.TiposCombustible = DLL_Backend.TipoCombustible.TiposCombustible();
                 ViewBag.Monedas = Moneda.Monedas;
-            } else { 
+                ViewBag.EstadosDocumento = EstadoDocumento.EstadosDocumento();
+                ViewBag.TiposDocumento = TipoDocumento.TiposDocumento();
+            } else {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
             }
         }
@@ -87,7 +89,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Create() {
-           return View();
+            return View();
         }
 
         public ActionResult Edit(int id) {
@@ -397,21 +399,23 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             gasto.ImporteGasto.Moneda.Consultar();
             gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
 
+            //validacion del controller
             List<String> errors = this.validateAtributesGastos(gasto);
-
-            if (errors.Count == 0) {
-                try {
-                    gasto.Agregar();
-
-                    vehiculo.Consultar();
-
-                    return createJsonResultGastosOK(vehiculo);
-                } catch (UsuarioException exc) {
-                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
-                }
+            if (errors.Count > 0) {
+                return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
             }
 
-            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+            //envio al backend
+            try {
+                gasto.Agregar();
+                vehiculo.Consultar();
+                return createJsonResultGastosOK(vehiculo);
+            } catch (UsuarioException exc) {
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
+            }
+
         }
 
         [HttpPost]
@@ -423,22 +427,22 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             gasto.ImporteGasto.Moneda.Consultar();
             gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
 
+            //validacion del controller
             List<String> errors = this.validateAtributesGastos(gasto);
-
-            if (errors.Count == 0) {
-                try {
-                    gasto.ModificarDatos();
-
-                    vehiculo.Consultar();
-
-                    return createJsonResultGastosOK(vehiculo);
-                } catch (UsuarioException exc) {
-                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
-                }
+            if (errors.Count > 0) {
+                return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
             }
 
-            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
-
+            //envio al backend
+            try {
+                gasto.ModificarDatos();
+                vehiculo.Consultar();
+                return createJsonResultGastosOK(vehiculo);
+            } catch (UsuarioException exc) {
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
+            }
         }
 
         [HttpPost]
@@ -453,7 +457,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
                 return createJsonResultGastosOK(vehiculo);
             } catch (UsuarioException exc) {
-                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
             }
         }
 
@@ -472,7 +478,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 ActualCostMoneda = actualCost.Moneda.Simbolo,
                 ActualCostMonto = actualCost.Monto.ToString("N", CultureInfo.InvariantCulture)
             });
-        } 
+        }
 
         //-------------------------------
 
@@ -492,22 +498,22 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             if ((gasto.Fecha == null) || (gasto.Fecha.Ticks == 0)) {
                 errors.Add("El campo Fecha es obligatorio");
             }
-            
+
             if ((gasto.ImporteGasto == null) || (gasto.ImporteGasto.Monto <= 0)) {
-                errors.Add("El campo Importe es obligatorio, y debe ser mayor a 0"); 
+                errors.Add("El campo Importe es obligatorio, y debe ser mayor a 0");
             }
-            
+
             if ((gasto.Descripcion == null) || (gasto.Descripcion == "")) {
                 errors.Add("El campo Descripcion es obligatorio");
             }
-            
+
             if ((gasto.Descripcion != null) && (gasto.Descripcion.Length > 80)) {
                 errors.Add("El campo Descripcion debe tener como maximo 80 caracteres");
             }
-            
+
             if ((gasto.Observaciones != null) && (gasto.Observaciones.Length > 80)) {
                 errors.Add("El campo Observaciones debe tener como maximo 80 caracteres");
-            } 
+            }
 
             return errors;
         }
@@ -515,10 +521,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         //-------------------------------
 
         private List<Gasto> _listaGastos(int id) {
-                Vehiculo vehiculo = new Vehiculo();
-                vehiculo.Codigo = id;
-                vehiculo.Consultar();
-                return vehiculo.DetalleGastos;
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = id;
+            vehiculo.Consultar();
+            return vehiculo.DetalleGastos;
         }
 
         #endregion
@@ -535,7 +541,6 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             DocAuto docAuto = new DocAuto();
             docAuto.Fecha = DateTime.Now;
             docAuto.Vehiculo = vehiculo;
-            ViewBag.Estados = EstadoDocumento.EstadosDocumentoListables();
             return PartialView("_popupDocumentacion", docAuto);
         }
 
@@ -543,20 +548,18 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult detailDoc(int id) {
             DocAuto docAuto = this._obtenerDocumentacion(id);
             ViewBag.SoloLectura = true;
-            ViewBag.Estados = EstadoDocumento.EstadosDocumentoListables();
             return PartialView("_popupDocumentacion", docAuto);
         }
 
         public ActionResult editDoc(int id) {
             DocAuto docAuto = this._obtenerDocumentacion(id);
-            ViewBag.Estados = EstadoDocumento.EstadosDocumentoListables();
+
             return PartialView("_popupDocumentacion", docAuto);
         }
 
         public ActionResult deleteDoc(int id) {
             DocAuto docAuto = this._obtenerDocumentacion(id);
             ViewBag.SoloLectura = true;
-            ViewBag.Estados = EstadoDocumento.EstadosDocumentoListables();
             return PartialView("_popupDocumentacion", docAuto);
         }
 
@@ -572,19 +575,21 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             vehiculo.Consultar();
             docAuto.Vehiculo = vehiculo;
 
+            //validacion del controller
             List<String> errors = this.validateAtributesDocumentacion(docAuto);
-
-            if (errors.Count == 0) {
-                try {
-                    docAuto.Agregar();
-                    vehiculo.Consultar();
-                    return Json(new { Result = "OK" });
-                } catch (UsuarioException exc) {
-                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
-                }
+            if (errors.Count > 0) {
+                return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
             }
-
-            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+            //envio al backend
+            try {
+                docAuto.Agregar();
+                vehiculo.Consultar();
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
+            }
         }
 
         [HttpPost]
@@ -594,18 +599,20 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             vehiculo.Consultar();
             docAuto.Vehiculo = vehiculo;
 
+            //validacion del controller
             List<String> errors = this.validateAtributesDocumentacion(docAuto);
-
-            if (errors.Count == 0) {
-                try {
-                    docAuto.ModificarDatos();
-                    return Json(new { Result = "OK" });
-                } catch (UsuarioException exc) {
-                    return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
-                }
+            if (errors.Count > 0) {
+                return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
             }
 
-            return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+            try {
+                docAuto.ModificarDatos();
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
+            }
 
         }
 
@@ -621,7 +628,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
                 return Json(new { Result = "OK" });
             } catch (UsuarioException exc) {
-                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
             }
         }
 
@@ -633,10 +642,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         private List<DocAuto> _listaDocumentos(int id) {
-                Vehiculo vehiculo = new Vehiculo();
-                vehiculo.Codigo = id;
-                vehiculo.Consultar();
-                return vehiculo.Documentacion;
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = id;
+            vehiculo.Consultar();
+            return vehiculo.Documentacion;
         }
 
         private List<String> validateAtributesDocumentacion(DocAuto docAuto) {
@@ -655,8 +664,12 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 errors.Add("La fecha es requerida");
             }
 
+            if (string.IsNullOrWhiteSpace(docAuto.Poseedor)){
+                errors.Add("Poseedor es requerido" );
+            }
+
             if ((docAuto.Poseedor != null) && (docAuto.Poseedor.Length > 80)) {
-                errors.Add("Nombre: Largo maximo 40 caracteres");
+                errors.Add("Poseedor: Largo maximo 40 caracteres");
             }
 
             if ((docAuto.Observaciones != null) && (docAuto.Observaciones.Length > 80)) {
@@ -768,8 +781,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             string zeros = "000";
             if (newNumber > 99) {
                 zeros = "0";
-            }
-            else if (newNumber > 9) {
+            } else if (newNumber > 9) {
                 zeros = "00";
             }
 
@@ -794,7 +806,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 HttpPostedFileBase file = Request.Files[0]; //Uploaded file
 
                 string extension = getExtensionFile(file.FileName);
-                fileName = getFileName(vehiculo) + extension; 
+                fileName = getFileName(vehiculo) + extension;
 
                 //---------------------------------------------------
                 //Use the following properties to get file's name, size and MIMEType
@@ -817,7 +829,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
                 string origen = HttpContext.Request.UserHostAddress;
                 fotoAuto.setearAuditoria(nomUsuario, origen);
-                fotoAuto.Agregar(); 
+                fotoAuto.Agregar();
 
                 //---------------------------------------------------
 
@@ -826,7 +838,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             } else {
                 return Json(new { fileName = fileName });
             }
-            
+
         }
 
 

@@ -2,8 +2,19 @@
 @using AutomotoraWeb.Helpers;
 
 <div>
-    @Html.HiddenFor(model => model.Codigo, new { id = "hiddenCodioGasto"})
-    @Html.HiddenFor(model => model.TipoDocumento.Codigo, new { id = "hiddenTipoDocumentoCodigoDocumentacion"})
+    @Html.HiddenFor(model => model.Codigo, new { id = "hiddenCodigoDoc"})
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.TipoDocumento)
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayFor(model => model.TipoDocumento.Codigo, (bool?)ViewBag.SoloLectura,
+                    model => model.TipoDocumento.Nombre,
+                    new SelectList(ViewBag.TiposDocumento, "Codigo", "Nombre"), null, new { id = "ddlTipoDocumento", @class="large" })
+        @Html.ValidationMessageFor(model => model.TipoDocumento)
+    </div>
+    <div class="clear-both"></div>
+
 
     <div class="display-label ">
         @Html.DisplayNameFor(model => model.Poseedor)
@@ -38,7 +49,7 @@
     <div class="editor-field editor-field-small">
         @Html.DdlOrDisplayFor(model => model.Estado.Codigo, (bool?)ViewBag.SoloLectura,
                     model => model.Estado.Descripcion,
-                    new SelectList(ViewBag.Estados, "Codigo", "Descripcion"), null, new { id = "ddlEstadoDocumentacion", styl="width: 10px;" })
+                    new SelectList(ViewBag.EstadosDocumento, "Codigo", "Descripcion"), null, new { id = "ddlEstadoDocumentacion", @class="large" })
         @Html.ValidationMessageFor(model => model.Estado)
     </div>
     <div class="clear-both"></div>
