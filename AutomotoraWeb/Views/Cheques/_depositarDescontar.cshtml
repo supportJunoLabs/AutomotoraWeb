@@ -3,7 +3,10 @@
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
 
-
+@{
+    bool cambiarSucursal = ViewBag.Multisucursal;
+    bool modoConsulta=(((bool?)(ViewBag.SoloLectura))??false);
+ }
 
 <div class="validation-summary-errors">
     <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
@@ -46,7 +49,7 @@
             @Html.LabelForRequired(model => model.Cuenta)
         </div>
         <div class="editor-field editor-field-xlarge xxlarge">
-            @Html.DdlOrDisplayFor(model => model.Cuenta.Codigo, (bool?)ViewBag.SoloLectura, model => model.Cuenta.Nombre,
+            @Html.DdlOrDisplayFor(model => model.Cuenta.Codigo, modoConsulta, model => model.Cuenta.Nombre,
                 new SelectList(ViewBag.Cuentas, "Codigo", "Nombre"), "--Seleccionar Cuenta--",
                 new { id = "ddlCuentas", @class = "xxlarge" })
             @Html.ValidationMessageFor(model => model.Cuenta.Codigo)
@@ -61,7 +64,7 @@
                 @Html.DisplayNameFor(model => model.Importe) *
             </div>
             <div class="editor-field editor-field-small">
-                @Html.DdlOrDisplayImporteFor(model => model.Importe, (bool?)ViewBag.SoloLectura)
+                @Html.DdlOrDisplayImporteFor(model => model.Importe, modoConsulta)
                 @Html.ValidationMessageFor(model => model.Importe.Monto)
             </div>
             <div class="clear-both"></div>
@@ -82,9 +85,9 @@
         <div class="display-label">
             @Html.LabelForRequired(model => model.Sucursal)
         </div>
-        <div class="editor-field editor-field-xlarge xxlarge">
-            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, (bool?)ViewBag.SoloLectura, model => model.Sucursal.Nombre,
-                new SelectList(ViewBag.SucursalesTransaccion, "Codigo", "Nombre"), null,
+        <div class="editor-field editor-field-xlarge xxlarge @(modoConsulta?"":"renglon-alto")">
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta||!cambiarSucursal, model => model.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
                 new { id = "ddlSucursales", @class = "xlarge" })
             @Html.ValidationMessageFor(model => model.Sucursal)
         </div>

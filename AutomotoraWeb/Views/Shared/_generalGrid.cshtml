@@ -111,9 +111,9 @@
                     foreach (MVCxGridViewColumn col in settings.Columns) {
                         sumaAnchos += (int)col.Width.Value;
                     }
-                    settings.Width = Unit.Pixel(sumaAnchos + 14 * settings.Columns.Count);
+                    settings.Width = Unit.Pixel(sumaAnchos + 1 * settings.Columns.Count);
                 }
-                //settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+                settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
                 
                 if (ig.FuncionHtmlRowPrepared != null) {
                     settings.HtmlRowPrepared = new ASPxGridViewTableRowEventHandler(ig.FuncionHtmlRowPrepared);

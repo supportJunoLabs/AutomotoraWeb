@@ -38,17 +38,6 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         private const int MAX_ANCHO_FOTO = 250;
 
-
-        //No usarlo mas porque da lios de permisos al invocar esta accion si no tiene permisos full en vehiculos (ej: usuario de solo consulta a traves de listados)
-        //ademas, ya no es mas el estandar.
-        //public ContentResult NombreEntidad() {
-        //    return new ContentResult { Content = "Vehiculo" };
-        //}
-
-        //public ContentResult NombreEntidades() {
-        //    return new ContentResult { Content = "Vehiculos" };
-        //}
-
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext); //esto tiene que ser lo primero, si no, falla si se llama directamente la consulta del usuario si nadie esta logueado
             ViewBag.NombreEntidades = "Vehiculos";
@@ -56,13 +45,15 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
             // Verificamos que seguimos en una session (sino se redirige al login)
             if (usuario != null) {
-                if (usuario.MultiSucursal) {
-                    ViewBag.Sucursales = Sucursal.Sucursales;
-                } else {
-                    List<Sucursal> listSucursal = new List<Sucursal>();
-                    listSucursal.Add(usuario.Sucursal);
-                    ViewBag.Sucursales = listSucursal;
-                }
+                //if (usuario.MultiSucursal) {
+                //    ViewBag.Sucursales = Sucursal.Sucursales;
+                //} else {
+                //    List<Sucursal> listSucursal = new List<Sucursal>();
+                //    listSucursal.Add(usuario.Sucursal);
+                //    ViewBag.Sucursales = listSucursal;
+                //}
+                ViewBag.MultiSucursal = usuario.MultiSucursal;
+                ViewBag.Sucursales = Sucursal.Sucursales;
                 ViewBag.Departamentos = Departamento.Departamentos();
                 ViewBag.TiposCombustible = DLL_Backend.TipoCombustible.TiposCombustible();
                 ViewBag.Monedas = Moneda.Monedas;
@@ -72,7 +63,6 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
             }
         }
-
 
         public ActionResult Show() {
             return View(_listaElementos());
@@ -89,7 +79,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Create() {
-            return View();
+            Vehiculo v = new Vehiculo();
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            v.Sucursal = usuario.Sucursal;
+            return View(v);
         }
 
         public ActionResult Edit(int id) {
@@ -183,9 +176,11 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                     vehiculo.ModificarDatos();
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
+                    vehiculo.Consultar(); //para completar datos asociados
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     _addResumeGastosToViewBag(vehiculo);
+                    ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
                     return View(vehiculo);
                 }
             }
@@ -209,9 +204,11 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                     vehiculo.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
+                    vehiculo.Consultar(); //para completar datos asociados
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     _addResumeGastosToViewBag(vehiculo);
+                    ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
                     return View(vehiculo);
                 }
             }

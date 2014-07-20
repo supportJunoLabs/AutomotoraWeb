@@ -249,7 +249,7 @@
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\TiposDocumentoController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\VehiculosController.cs" />
-    <Compile Include="Controllers\Sales\Maintenance\Vehiculos\GastosController.cs" />
+    <Compile Include="Controllers\Sales\Maintenance\GastosController.cs" />
     <Compile Include="Controllers\Sales\PedidosController.cs" />
     <Compile Include="Controllers\Sales\VentasController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
@@ -1804,11 +1804,6 @@
     <Content Include="Views\Senias\_reportGrilla.cshtml" />
     <Content Include="Views\Senias\report.cshtml" />
     <Content Include="Views\Senias\_reportList.cshtml" />
-    <Content Include="Views\Vehiculos\gastosDetails.cshtml" />
-    <Content Include="Views\Vehiculos\gastosDelete.cshtml" />
-    <Content Include="Views\Vehiculos\gastosCreate.cshtml" />
-    <Content Include="Views\Vehiculos\gastosEdit.cshtml" />
-    <Content Include="Views\Vehiculos\gastos_DatosDetalle.cshtml" />
     <Content Include="Views\Ventas\list.cshtml" />
     <Content Include="Views\Ventas\report.cshtml" />
     <Content Include="Views\Ventas\_reportGrilla.cshtml" />
@@ -1894,7 +1889,6 @@
     <Content Include="Views\Transacciones\_reportTransacciones.cshtml" />
     <Content Include="Views\Transacciones\_listGrillaTransacciones.cshtml" />
     <Content Include="Views\Transacciones\_listTransacciones.cshtml" />
-    <Content Include="Views\Vehiculos\_gridLookupVehiculo.cshtml" />
     <Content Include="Views\Movimientos\Show.cshtml" />
     <Content Include="Views\Movimientos\_listGrillaMovimientos.cshtml" />
     <Content Include="Views\Movimientos\_listMovimientos.cshtml" />

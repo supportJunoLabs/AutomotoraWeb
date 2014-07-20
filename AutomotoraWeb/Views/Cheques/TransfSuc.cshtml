@@ -9,6 +9,9 @@
 @{
     ViewBag.Title = "Transferir Cheques entre Sucursales";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    bool cambiarSucursal = ViewBag.Multisucursal;
+    bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
 }
 
 <div class="validation-summary-errors">
@@ -26,8 +29,8 @@
             @Html.LabelForRequired(model => model.SucursalOrigen)
         </div>
         <div class="editor-field editor-field-xlarge xxlarge" style="margin-right:20px">
-            @Html.DdlOrDisplayFor(model => model.SucursalOrigen.Codigo, (bool?)ViewBag.SoloLectura, model => model.SucursalOrigen.Nombre,
-                new SelectList(ViewBag.SucursalesTransaccion, "Codigo", "Nombre"), null,
+            @Html.DdlOrDisplayFor(model => model.SucursalOrigen.Codigo, modoConsulta||!cambiarSucursal, model => model.SucursalOrigen.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
                 new { id = "ddlSucursales", @class = "large" })
             @Html.ValidationMessageFor(model => model.SucursalOrigen)
         </div>

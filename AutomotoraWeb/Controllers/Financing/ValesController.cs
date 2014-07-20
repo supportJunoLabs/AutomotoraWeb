@@ -25,18 +25,18 @@ namespace AutomotoraWeb.Controllers.Financing
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
             }
-
+            ViewBag.MultiSucursal = usuario.MultiSucursal;
             ViewBag.Cuentas = CuentaBancaria.CuentasBancarias;
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Financistas = Financista.FinancistasTodos;
 
-            if (usuario.MultiSucursal) {
-                ViewBag.SucursalesTransaccion = Sucursal.Sucursales;
-            } else {
-                List<Sucursal> listSucursal = new List<Sucursal>();
-                listSucursal.Add(usuario.Sucursal);
-                ViewBag.SucursalesTransaccion = listSucursal;
-            }
+            //if (usuario.MultiSucursal) {
+            //    ViewBag.SucursalesTransaccion = Sucursal.Sucursales;
+            //} else {
+            //    List<Sucursal> listSucursal = new List<Sucursal>();
+            //    listSucursal.Add(usuario.Sucursal);
+            //    ViewBag.SucursalesTransaccion = listSucursal;
+            //}
         }
 
         #region ConsultaVales
