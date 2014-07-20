@@ -28,6 +28,9 @@ namespace AutomotoraWeb {
             //Application.Add(SessionUtils.APPLICATION_SYSTEM_NAME, CompanyService.getSystemName());
             Application.Add(SessionUtils.APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS, SecurityService.Instance.getPermissiblesControllerAction());
 
+            //usar por defecto el binder de devexpress
+            ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
+
             Bootstrap.Configure();
         }
     }

@@ -9,20 +9,20 @@
 @{
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-            new ColumnaGrilla {Campo="Marca", Ancho=150},
-            new ColumnaGrilla {Campo="Modelo", Ancho=150},
-            new ColumnaGrilla {Campo="Color", Ancho=100},
-            new ColumnaGrilla {Campo="FechaPedido", Ancho=80, Titulo = "F.Pedido"},
-            new ColumnaGrilla {Campo="FechaEsperado", Ancho=80, Titulo = "F.Esperado"},
+            new ColumnaGrilla {Campo="Marca", Ancho=100},
+            new ColumnaGrilla {Campo="Modelo", Ancho=100},
+            new ColumnaGrilla {Campo="Color", Ancho=70},
+            new ColumnaGrilla {Campo="FechaPedido", Ancho=100, Titulo = "F.Pedido"},
+            new ColumnaGrilla {Campo="FechaEsperado", Ancho=100, Titulo = "F.Esperado"},
             new ColumnaGrilla {Campo="Costo", Ancho=120},
             new ColumnaGrilla {Campo="Costo.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Ancho=100, Titulo="Costo "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
-            new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=170, Titulo="Sucursal",
+            new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=90, Titulo="Sucursal",
                     Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"},
             new ColumnaGrilla {Campo="FechaReserva", Ancho=80, Titulo="F.Reserva"},
             new ColumnaGrilla {Campo="Seniado", Ancho=74},
             new ColumnaGrilla {Campo="Vendedor.Nombre", Ancho=100, Titulo="Vendedor",
                    Hipervinculo=true, Haccion="details", Hcontrolador="Vendedores", HCampoParametro="Vendedor.Codigo"},
-            new ColumnaGrilla {Campo="Cliente.Nombre", Ancho=150, Titulo="Cliente",
+            new ColumnaGrilla {Campo="Cliente.Nombre", Ancho=150, Titulo="Cliente", LargoMax=40,
                 Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Cliente.Codigo"},
             //new ColumnaGrilla {Campo="FechaRecibido", Ancho=80, Titulo = "F.Recibido"},
             //new ColumnaGrilla {Campo="Vehiculo", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
@@ -36,6 +36,7 @@
     ig.ActionCallbackRoute = "listaGrilla";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Pedido.PedidoMD);
+    ig.BotonesMtoEstandar = true;
     
     ig.DobleClick = true;
     ig.ControladorDobleClick = PedidosController.CONTROLLER;

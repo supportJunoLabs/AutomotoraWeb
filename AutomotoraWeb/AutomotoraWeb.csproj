@@ -272,12 +272,14 @@
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
     <Compile Include="Models\BancoSaldoModel.cs" />
-    <Compile Include="Models\BotonAjaxGrilla.cs" />
-    <Compile Include="Models\BotonGrilla.cs" />
+    <Compile Include="Models\Grilla\BotonAjaxGrilla.cs" />
+    <Compile Include="Models\Grilla\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\ChequeTransfSucModel.cs" />
+    <Compile Include="Models\Grilla\ColumnaGrilla.cs" />
+    <Compile Include="Models\Grilla\ObjetoGrilla.cs" />
     <Compile Include="Models\ListadoValesModel.cs" />
-    <Compile Include="Models\GridLookUpModel.cs" />
+    <Compile Include="Models\Grilla\GridLookUpModel.cs" />
     <Compile Include="Models\ListadoChequesEmitidosModel.cs" />
     <Compile Include="Models\EstadoCuentaModel.cs" />
     <Compile Include="Models\ListadoTransaccionesModel.cs" />
@@ -289,7 +291,7 @@
     <Compile Include="Models\ListadoSeniasModel.cs" />
     <Compile Include="Models\InfoReporte.cs" />
     <Compile Include="Models\ListadoVehiculosModel.cs" />
-    <Compile Include="Models\InfoGrilla.cs" />
+    <Compile Include="Models\Grilla\InfoGrilla.cs" />
     <Compile Include="Models\ListadoPedidosModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MenuOptionModel.cs" />

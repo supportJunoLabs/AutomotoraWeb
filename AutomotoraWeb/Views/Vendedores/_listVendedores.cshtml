@@ -7,16 +7,22 @@
 @{
     
     InfoGrilla ig = new InfoGrilla();
-    ig.HiddenColumns = new List<string>() { "Codigo", "Foto" , "Direccion", "FechaIngreso" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
 
-    ig.TrunkColumns = new Dictionary<string, int>() { {"Telefono", 30}, {"Observaciones", 30} };
-
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Nombre"},
+            new ColumnaGrilla {Campo="Telefono", LargoMax=30},    
+            new ColumnaGrilla {Campo="Habilitado"},
+            new ColumnaGrilla {Campo="Mail"},
+            new ColumnaGrilla {Campo="Observaciones", LargoMax=50}
+    };
+        
     ig.NameGrid = "gridVendedores";
     ig.Controller = VendedoresController.CONTROLLER;
     ig.ActionCallbackRoute = "listVendedores";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Vendedor.VendedorMD);
     ig.DobleClick = true;
+    ig.BotonesMtoEstandar = true;
 
     ViewBag.InfoGrilla = ig;
 }
