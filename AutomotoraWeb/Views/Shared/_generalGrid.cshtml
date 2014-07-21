@@ -27,16 +27,23 @@
                 settings.Name = ig.NameGrid;
                 settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"] };
 
-                settings.SettingsBehavior.AllowSort = true;
-                settings.SettingsBehavior.AllowGroup = true;
-                settings.Settings.ShowGroupPanel = true;
-                settings.SettingsBehavior.AllowDragDrop = true;
+                
+                settings.SettingsBehavior.AllowSort = !ig.Estatica;
+                settings.SettingsBehavior.AllowGroup = !ig.Estatica;
+                settings.Settings.ShowGroupPanel = !ig.Estatica;
+                settings.SettingsBehavior.AllowDragDrop = !ig.Estatica;
+                
                 settings.KeyFieldName = ig.KeyFieldName;
 
-                settings.SettingsPager.AlwaysShowPager = true;
-                settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
-                settings.SettingsPager.FirstPageButton.Visible = true;
-                settings.SettingsPager.LastPageButton.Visible = true;
+                if (!ig.Estatica) {
+                    settings.SettingsPager.AlwaysShowPager = true;
+                    settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+                } else {
+                    settings.SettingsPager.AlwaysShowPager = false;
+                    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+                }
+                settings.SettingsPager.FirstPageButton.Visible = !ig.Estatica;
+                settings.SettingsPager.LastPageButton.Visible = !ig.Estatica;
                 if (ig.registrosPorPagina <= 0) {
                     settings.SettingsPager.PageSize = 30;
                 } else {
@@ -45,14 +52,18 @@
                 settings.SettingsPager.PageSizeItemSettings.Visible = ig.RegistrosPorPaginaVisible;
 
                 //Filtros
-                settings.Settings.ShowHeaderFilterButton = true;
-                settings.Settings.ShowFilterRow = true;
+                settings.Settings.ShowHeaderFilterButton = !ig.Estatica;
+                settings.Settings.ShowFilterRow = !ig.Estatica;
 
-                settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+                if (!ig.Estatica) {
+                    settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible;
+                } else {
+                    settings.Settings.ShowFilterBar = GridViewStatusBarMode.Hidden;
+                }
                 settings.SettingsText.FilterBarClear = "QuitarFiltros";
-                settings.Settings.ShowFilterRowMenu = true;
-                settings.CommandColumn.ShowClearFilterButton = true;
-                settings.Settings.ShowHeaderFilterBlankItems = false;
+                settings.Settings.ShowFilterRowMenu = !ig.Estatica;
+                settings.CommandColumn.ShowClearFilterButton = !ig.Estatica;
+                settings.Settings.ShowHeaderFilterBlankItems = !ig.Estatica;
 
                 settings.SettingsPopup.HeaderFilter.MinWidth = 300;
                 settings.SettingsPopup.HeaderFilter.MinHeight = 200;
@@ -73,7 +84,7 @@
                 }
 
 
-                settings.Settings.ShowFooter = true;
+                settings.Settings.ShowFooter = !ig.Estatica;
 
                 if (ig.DobleClick) {
                     settings.ClientSideEvents.RowDblClick = "function(s, e){ window.open('" + @Url.Action(ig.AccionDobleClick, ig.ControladorDobleClick) + "/' + s.GetRowKey(e.visibleIndex), '_self'); }";
@@ -113,7 +124,11 @@
                     }
                     settings.Width = Unit.Pixel(sumaAnchos + 1 * settings.Columns.Count);
                 }
-                settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+                if (!ig.Estatica) {
+                    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+                } else {
+                    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Disabled;
+                }
                 
                 if (ig.FuncionHtmlRowPrepared != null) {
                     settings.HtmlRowPrepared = new ASPxGridViewTableRowEventHandler(ig.FuncionHtmlRowPrepared);

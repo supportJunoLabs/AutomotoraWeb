@@ -38,6 +38,12 @@ namespace AutomotoraWeb.Models {
         public string ControladorDobleClick { get; set; }
         public string AccionDobleClick { get; set; }
 
+        private bool _estatica = false;
+        public bool Estatica {
+            get { return _estatica; }
+            set { _estatica=value;}
+        }
+
         //para endless mode
         private bool _endlessMode = false;
         public bool EndlessMode {
