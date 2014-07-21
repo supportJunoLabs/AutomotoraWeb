@@ -1,0 +1,24 @@
+﻿@model List<DLL_Backend.Perfil>
+@using  AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Nombre", Titulo="Perfiles", Ancho=200}
+    };
+            
+    ig.NameGrid = "grilla";
+    ig.Controller = AuthenticationController.CONTROLLER;
+    ig.ActionCallbackRoute = "perfilesUsuario";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Perfil.PerfilMD);
+    ig.Estatica = true;
+    //ig.EndlessMode = true;
+    
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+  

@@ -114,5 +114,33 @@ namespace AutomotoraWeb.Controllers.General {
             Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
             return RedirectToAction(dest.Accion, dest.Controlador);
         }
+
+        public ActionResult BaseUltimoModulo() {
+            Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
+            return RedirectToAction(dest.Accion, dest.Controlador);
+        }
+
+        public ActionResult VerPerfil() {
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (usuario == null) {
+                return RedirectToAction(AuthenticationController.CONTROLLER, AuthenticationController.LOGIN);
+            }
+            Usuario u = new Usuario();
+            u.Codigo = usuario.Codigo;
+            u.Consultar(Usuario.MODO_CONSULTA.AVANZADO);
+            return View("VerPerfil", u); //devuelvo otro para no guardar el usuario pesado y completo en la variable de sesion
+        }
+
+        public ActionResult PerfilesUsuario() {
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (usuario == null) {
+                return RedirectToAction(AuthenticationController.CONTROLLER, AuthenticationController.LOGIN);
+            }
+            Usuario u = new Usuario();
+            u.Codigo = usuario.Codigo;
+            u.Consultar(Usuario.MODO_CONSULTA.AVANZADO);
+            return View("_perfilesUsuario", u.Perfiles);
+        
+        }
     }
 }

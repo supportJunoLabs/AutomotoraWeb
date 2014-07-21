@@ -1937,6 +1937,8 @@
     <Content Include="Views\ChEmitidos\_listCheques.cshtml" />
     <Content Include="Views\ChEmitidos\Report.cshtml" />
     <Content Include="Views\ChEmitidos\_report.cshtml" />
+    <Content Include="Views\Authentication\verPerfil.cshtml" />
+    <Content Include="Views\Authentication\_perfilesUsuario.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
