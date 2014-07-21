@@ -3,15 +3,19 @@
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Sales.Maintenance;
 @using AutomotoraWeb.Models;
+@using DLL_Backend;
 
 @{
     
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
             new ColumnaGrilla {Campo="Fecha"},
-            new ColumnaGrilla {Campo="Descripcion", LargoMax=15},
-            new ColumnaGrilla {Campo="ImporteGasto"},
-            new ColumnaGrilla {Campo="Observaciones", LargoMax=15},
+            new ColumnaGrilla {Campo="Descripcion", LargoMax=45},
+            new ColumnaGrilla {Campo="ImporteGasto", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Titulo="Importe"},
+            new ColumnaGrilla {Campo="Cotizacion", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Titulo="Cotizacion"},
+            new ColumnaGrilla {Campo="ImporteMonedaDefault.Monto", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                        Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
+            new ColumnaGrilla {Campo="Observaciones", LargoMax=30}
     };
     
     ig.NameGrid = "gridGastos";

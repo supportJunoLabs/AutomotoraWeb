@@ -43,25 +43,16 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             ViewBag.NombreEntidades = "Vehiculos";
             ViewBag.NombreEntidad = "Vehiculo";
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            // Verificamos que seguimos en una session (sino se redirige al login)
-            if (usuario != null) {
-                //if (usuario.MultiSucursal) {
-                //    ViewBag.Sucursales = Sucursal.Sucursales;
-                //} else {
-                //    List<Sucursal> listSucursal = new List<Sucursal>();
-                //    listSucursal.Add(usuario.Sucursal);
-                //    ViewBag.Sucursales = listSucursal;
-                //}
-                ViewBag.MultiSucursal = usuario.MultiSucursal;
-                ViewBag.Sucursales = Sucursal.Sucursales;
-                ViewBag.Departamentos = Departamento.Departamentos();
-                ViewBag.TiposCombustible = DLL_Backend.TipoCombustible.TiposCombustible();
-                ViewBag.Monedas = Moneda.Monedas;
-                ViewBag.EstadosDocumento = EstadoDocumento.EstadosDocumento();
-                ViewBag.TiposDocumento = TipoDocumento.TiposDocumento();
-            } else {
+            if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
             }
+            ViewBag.MultiSucursal = usuario.MultiSucursal;
+            ViewBag.Sucursales = Sucursal.Sucursales;
+            ViewBag.Departamentos = Departamento.Departamentos();
+            ViewBag.TiposCombustible = DLL_Backend.TipoCombustible.TiposCombustible();
+            ViewBag.Monedas = Moneda.Monedas;
+            ViewBag.EstadosDocumento = EstadoDocumento.EstadosDocumento();
+            ViewBag.TiposDocumento = TipoDocumento.TiposDocumento();
         }
 
         public ActionResult Show() {
@@ -86,19 +77,69 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         public ActionResult Edit(int id) {
-            ViewData["idParametros"] = id.ToString();
-            ViewBag.SoloLectura = false;
-            return VistaElemento(id);
+            try {
+                Vehiculo vehiculo = _obtenerElemento(id);
+
+                ViewData["idParametros"] = id.ToString();
+                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+
+                try {
+                    vehiculo.Modificable(usuario);
+                } catch (UsuarioException ex) {
+                    //No es modificable por este usuario
+                    ViewBag.SoloLectura = true;
+                    ViewBag.ErrorCode = ex.Codigo;
+                    ViewBag.ErrorMessage = ex.Message + " Se despliega en modo consulta";
+                    return VistaElemento("details", vehiculo);
+                }
+                return VistaElemento("edit", vehiculo);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("details", id);
+            }
         }
 
         public ActionResult Delete(int id) {
-            ViewData["idParametros"] = id.ToString();
-            ViewBag.SoloLectura = true;
-            return VistaElemento(id);
+
+            try {
+
+                ViewData["idParametros"] = id.ToString();
+                ViewBag.SoloLectura = true;
+
+                Vehiculo vehiculo = _obtenerElemento(id);
+                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+
+                try {
+                    vehiculo.Eliminable(usuario);
+                } catch (UsuarioException ex) {
+                    //No es eliminable por este usuario
+                    ViewBag.SoloLectura = true;
+                    ViewBag.ErrorCode = ex.Codigo;
+                    ViewBag.ErrorMessage = ex.Message + " Se despliega en modo consulta";
+                    return VistaElemento("details", vehiculo);
+                }
+                return VistaElemento(id);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("details", id);
+            }
         }
 
         //-----------------------------------------------------------------------------------------------------
 
+        private ActionResult VistaElemento(string nomvista, Vehiculo vehiculo) {
+            try {
+                _addResumeGastosToViewBag(vehiculo);
+                ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
+                return View(nomvista, vehiculo);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
 
         private ActionResult VistaElemento(int id) {
             try {
@@ -393,8 +434,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             Vehiculo vehiculo = gasto.Vehiculo;
             vehiculo.Consultar();
             gasto.Vehiculo = vehiculo;
-            gasto.ImporteGasto.Moneda.Consultar();
-            gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
+
+            //no es necesario este paso, porque lo hace el backend
+            //gasto.ImporteGasto.Moneda.Consultar();
+            //gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
 
             //validacion del controller
             List<String> errors = this.validateAtributesGastos(gasto);
@@ -421,8 +464,10 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             Vehiculo vehiculo = gasto.Vehiculo;
             vehiculo.Consultar();
             gasto.Vehiculo = vehiculo;
-            gasto.ImporteGasto.Moneda.Consultar();
-            gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
+
+            //En la modificacion la cotizacion la ingresa el usuario, no se sobreescribe
+            //gasto.ImporteGasto.Moneda.Consultar();
+            //gasto.Cotizacion = gasto.ImporteGasto.Moneda.Cotizacion;
 
             //validacion del controller
             List<String> errors = this.validateAtributesGastos(gasto);
@@ -661,8 +706,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 errors.Add("La fecha es requerida");
             }
 
-            if (string.IsNullOrWhiteSpace(docAuto.Poseedor)){
-                errors.Add("Poseedor es requerido" );
+            if (string.IsNullOrWhiteSpace(docAuto.Poseedor)) {
+                errors.Add("Poseedor es requerido");
             }
 
             if ((docAuto.Poseedor != null) && (docAuto.Poseedor.Length > 80)) {

@@ -3,12 +3,16 @@
 @using DLL_Backend;
 @using System.Globalization;
 
+@{
+    bool modoConsulta=(((bool?)(ViewBag.SoloLectura))??false);
+ }
+
 <div class="row-fluid">
     @Html.HiddenFor(model => model.Codigo, new { id = "idVehiculoDocumentacion"})
 
     <div class="btn-toolbar">
         <div class="btn-group">
-            @if ((ViewBag.SoloLectura != null) && (!(bool)ViewBag.SoloLectura)){
+            @if (!modoConsulta) {
                 @(Html.Bootstrap().Button().Text("Agregar").Id("createDetailsDocumentacion").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
             }
         )

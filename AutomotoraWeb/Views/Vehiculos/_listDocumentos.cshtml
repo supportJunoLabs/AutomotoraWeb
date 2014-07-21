@@ -7,8 +7,15 @@
 @{
     
     InfoGrilla ig = new InfoGrilla();
-    ig.HiddenColumns = new List<string>() { "Codigo", "Fecha", "Observaciones", "Documento", "Poseedor" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
-
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Fecha"},
+            new ColumnaGrilla {Campo="TipoDocumento"},
+            new ColumnaGrilla {Campo="Estado.Descripcion", Titulo="Estado"},
+            new ColumnaGrilla {Campo="Poseedor", LargoMax=30},
+            new ColumnaGrilla {Campo="Observaciones", LargoMax=30}
+    };
+    
+    
     ig.NameGrid = "gridDocumentos";
     ig.Controller = VehiculosController.CONTROLLER;
     ig.ActionCallbackRoute = "listDocumentos";
