@@ -75,9 +75,11 @@
             @Html.Partial("_menuConfiguration")
             
             <div id="nomsistema">
-                <a class="brand" href="#" style="color:white;">
+                <a class="brand" href="@Url.Action(SistemaController.INDEX, SistemaController.BCONTROLLER)" style="color:white;">
                     <span>@ViewBag.systemName</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a class="brand" href="@Url.Action(EmpresaController.DETAILS, EmpresaController.CONTROLLER)" style="color:white;">
                     <span>@ViewBag.companyName</span>
                 </a>
             </div>

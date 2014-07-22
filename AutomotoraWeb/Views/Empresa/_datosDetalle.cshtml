@@ -1,0 +1,110 @@
+﻿@model DLL_Backend.Empresa
+@using AutomotoraWeb.Helpers;
+
+@Html.HiddenFor(model => model.Codigo)
+@Html.HiddenFor(model => model.NomEmpresa)
+@Html.HiddenFor(model => model.NomSistema)
+
+@{ bool modoConsulta = (bool?)ViewBag.SoloLectura??false;}
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.NomEmpresa)
+</div>
+<div class="display-field">
+    @Html.DisplayFor(model => model.NomEmpresa)
+</div>
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Direccion)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.EditorOrDisplayFor(model => model.Direccion, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Direccion)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Ciudad)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Ciudad, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Ciudad)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.CodigoPostal)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.CodigoPostal, modoConsulta)
+    @Html.ValidationMessageFor(model => model.CodigoPostal)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Telefono)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Telefono, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Telefono)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Fax)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Fax, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Fax)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Mail)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Mail, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Mail)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Rut)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Rut, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Rut)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.BSE)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.BSE, modoConsulta)
+    @Html.ValidationMessageFor(model => model.BSE)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.BPS)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.BPS, modoConsulta)
+    @Html.ValidationMessageFor(model => model.BPS)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.MTSS)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.MTSS, modoConsulta)
+    @Html.ValidationMessageFor(model => model.MTSS)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="espacio2"></div>

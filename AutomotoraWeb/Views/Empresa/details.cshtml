@@ -3,7 +3,7 @@
 @using AutomotoraWeb.Controllers.Sistema;
 
 @{
-    ViewBag.Title = ViewBag.NombreEntidad + ": Modificar";
+    ViewBag.Title = ViewBag.NombreEntidad + ": Consulta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,11 +15,11 @@
 
     <fieldset>
         <legend></legend>
-        @Html.Partial("_datosDetalle", Model)
+       
+        @Html.Partial("_datosDetalle", Model)   
 
         <div class="btn-toolbar">
-            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
-            @(Html.Bootstrap().ActionLinkButton("Cancelar", "Cancelar").Class("btn btn-default"))
+            @(Html.Bootstrap().ActionLinkButton("Volver", "Cancelar").Class("btn btn-default")) 
 
         </div>
         <div class="clear-both"></div>
