@@ -244,6 +244,7 @@
     <Compile Include="Controllers\Financing\Maintenance\FinancistasController.cs" />
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
     <Compile Include="Controllers\Financing\ValesController.cs" />
+    <Compile Include="Controllers\Sales\AcvsController.cs" />
     <Compile Include="Controllers\Sales\DocumentacionController.cs" />
     <Compile Include="Controllers\Sales\SeniasController.cs" />
     <Compile Include="Controllers\Sales\Maintenance\ClientesController.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
     <Compile Include="Models\BancoSaldoModel.cs" />
+    <Compile Include="Models\ListadoAcvsModel.cs" />
     <Compile Include="Models\Grilla\BotonAjaxGrilla.cs" />
     <Compile Include="Models\Grilla\BotonGrilla.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
@@ -1653,6 +1655,7 @@
     <Content Include="Scripts\AutomotoraWeb\ChEmitidoCreateModif.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesEmitidosListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\AcvsListado.js" />
     <Content Include="Scripts\AutomotoraWeb\RechazarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
@@ -1939,6 +1942,11 @@
     <Content Include="Views\ChEmitidos\_report.cshtml" />
     <Content Include="Views\Authentication\verPerfil.cshtml" />
     <Content Include="Views\Authentication\_perfilesUsuario.cshtml" />
+    <Content Include="Views\Acvs\_reportGrilla.cshtml" />
+    <Content Include="Views\Acvs\_reportList.cshtml" />
+    <Content Include="Views\Acvs\details.cshtml" />
+    <Content Include="Views\Acvs\list.cshtml" />
+    <Content Include="Views\Acvs\report.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
