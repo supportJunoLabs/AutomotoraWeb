@@ -801,7 +801,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             return shortedListFotoAuto;
         }
 
-        #endregion
+      
 
         //---------------------------------------------------------------------
 
@@ -898,6 +898,40 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         //---------------------------------------------------------------------
+
+        #endregion
+
+
+        #region InformacionAsociada
+
+        public ActionResult VerSenia(int id) {
+            Vehiculo v = new Vehiculo();
+            v.Codigo = id;
+            Senia s = v.ObtenerSenia();
+            return RedirectToAction(BaseController.DETAILS, SeniasController.CONTROLLER, new { id = s.Codigo });
+        }
+
+        public ActionResult VerVenta(int id) {
+            Vehiculo v = new Vehiculo();
+            v.Codigo = id;
+            Venta s = v.ObtenerVenta();
+            return RedirectToAction(BaseController.DETAILS, VentasController.CONTROLLER, new { id = s.Codigo });
+        }
+
+        public ActionResult VerPermutaOrigen(int id) {
+            return RedirectToAction(BaseController.DETAILS, VentasController.CONTROLLER, new { id = id});
+        }
+
+        public ActionResult VerPedidoOrigen(int id) {
+            return RedirectToAction(BaseController.DETAILS, PedidosController.CONTROLLER, new { id = id });
+        }
+
+        public ActionResult VerAcvsVigentes(int id) {
+            return RedirectToAction("ListActivosVehiculo", AcvsController.CONTROLLER, new { id = id });
+        }
+
+        #endregion
+
 
         public ActionResult GridLookupVehiculo() {
             ViewBag.ListVehiculos = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.EN_STOCK);

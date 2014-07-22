@@ -1,25 +1,26 @@
 ﻿@model DLL_Backend.Vehiculo
 @using AutomotoraWeb.Helpers;
+@using DLL_Backend;
 
 @{
     bool cambiarSucursal = ViewBag.Multisucursal;
-    bool modoConsulta=(((bool?)(ViewBag.SoloLectura))??false);
- }
+    bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
+}
 
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Ficha)
 </div>
-<div class="editor-field editor-field-large renglon-alto")">
+<div class="editor-field editor-field-large renglon-alto">
     @Html.EditorOrDisplayFor(model => model.Ficha, modoConsulta)
     @Html.ValidationMessageFor(model => model.Ficha)
 </div>
 <div class="clear-both"></div>
 
-<div class="display-label" >
+<div class="display-label">
     @Html.LabelForRequired(model => model.Sucursal)
 </div>
-<div class="editor-field editor-field-large @(modoConsulta?"":"renglon-alto")">
+<div class="editor-field editor-field-large @(modoConsulta ? "" : "renglon-alto")">
     @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta || !cambiarSucursal,
                 model => model.Sucursal.Nombre,
                 new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
@@ -138,15 +139,34 @@
     @Html.TextBoxOrdisplayFor(model => model.FechaAdquirido, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
     @Html.ValidationMessageFor(model => model.FechaAdquirido)
 </div>
+@{ if (Model != null) {
+       Pedido ped = Model.PedidoOrigen;
+       if (ped != null) {
+            <div class="floatLeft" style="padding-left: 20px;">
+                    @(Html.Bootstrap().ActionLinkButton("Pedido Origen", "VerPedidoOrigen").RouteValues(new { id = ped.Codigo }).Class("btn-info  btn-small"))
+            </div>
+       }
+   }
+}
+
 <div class="clear-both"></div>
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Costo)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.DdlOrDisplayImporteFor(model=>model.Costo, modoConsulta)
+    @Html.DdlOrDisplayImporteFor(model => model.Costo, modoConsulta)
     @Html.ValidationMessageFor(model => model.Costo.Monto)
 </div>
+@{ if (Model != null) {
+       Venta origen = Model.ObtenerVentaOrigenPermuta();
+       if (origen != null) {
+            <div class="floatLeft hipervinculo" style="padding-left: 20px;">
+                @(Html.Bootstrap().ActionLinkButton("Permuta Origen", "VerPermutaOrigen").RouteValues(new { id = origen.Codigo }).Class("btn-info  btn-small"))
+            </div>
+       }
+   }
+}
 <div class="clear-both"></div>
 
 <div class="display-label">
@@ -161,8 +181,8 @@
 <div class="display-label">
     @Html.LabelForRequired(model => model.TotalGastos)
 </div>
-<div  class="@(modoConsulta?"":"renglon-alto")">
-    @Html.DdlOrDisplayImporteFor(model=>model.TotalGastos, true)
+<div  class="@(modoConsulta ? "" : "renglon-alto")">
+    @Html.DdlOrDisplayImporteFor(model => model.TotalGastos, true)
     @Html.ValidationMessageFor(model => model.TotalGastos)
 </div>
 <div class="clear-both"></div>
@@ -171,7 +191,7 @@
     @Html.LabelForRequired(model => model.PrecioVenta)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.DdlOrDisplayImporteFor(model=>model.PrecioVenta,modoConsulta)
+    @Html.DdlOrDisplayImporteFor(model => model.PrecioVenta, modoConsulta)
     @Html.ValidationMessageFor(model => model.PrecioVenta.Monto)
 </div>
 <div class="clear-both"></div>
@@ -179,14 +199,36 @@
 <div class="display-label">
     @Html.LabelForRequired(model => model.DescripcionEstado)
 </div>
-<div  class="@(modoConsulta?"":"renglon-alto")">
-    @{ if (Model!=null){
-            @Html.EditorOrDisplayFor(model => model.DescripcionEstado, true)
-       }else{
-           <div>En Venta</div>
+<div  class="@(modoConsulta ? "" : "renglon-alto")">
+    @{ if (Model != null) {
+           <div class="editor-field">
+                @Html.EditorOrDisplayFor(model => model.DescripcionEstado, true)
+            </div>
+       } else {
+        <div class="editor-field">En Venta</div>
        }
-   }
+    }
 </div>
+
+@{ if (Model != null && Model.TieneSeniaActiva()) {
+    <div class="floatLeft " style="padding-left: 20px;">
+        @(Html.Bootstrap().ActionLinkButton("Ver Seña", "VerSenia").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
+    </div>
+   }
+   if (Model != null && Model.TieneVentaActiva()) {
+    <div class="floatLeft hipervinculo" style="padding-left: 20px;">
+        @(Html.Bootstrap().ActionLinkButton("Ver Venta", "VerVenta").RouteValues(new { id = Model.Codigo }).Class("btn-info btn-small"))
+    </div>
+   }
+   
+   if (Model != null && Model.TieneACV()) {
+    <div class="floatLeft hipervinculo" style="padding-left: 20px;">
+        @(Html.Bootstrap().ActionLinkButton("Pagos a cuenta venta", "VerAcvsVigentes").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
+    </div>
+   }
+}
+
+
 <div class="clear-both"></div>
 
 
