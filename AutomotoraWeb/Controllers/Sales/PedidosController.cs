@@ -10,6 +10,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Controllers.Sales.Maintenance;
 
 namespace AutomotoraWeb.Controllers.Sales
 {
@@ -301,6 +302,10 @@ namespace AutomotoraWeb.Controllers.Sales
 
         }
         #endregion
+
+        public ActionResult VerVehiculo(int id) {
+            return RedirectToAction(BaseController.DETAILS, VehiculosController.CONTROLLER, new { id = id });
+        }
 
 
 

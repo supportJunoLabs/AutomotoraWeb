@@ -2,7 +2,7 @@
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 
-@Html.Hidden("hd_soloLectura", ((bool?)ViewBag.SoloLectura) ?? false);
+@Html.Hidden("hd_soloLectura", ((bool?)ViewBag.SoloLectura) ?? false)
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Marca)
@@ -72,9 +72,20 @@
 <div class="display-label">
     @Html.LabelForRequired(model => model.DescripcionEstado)
 </div>
-<div  class="@((((bool?)ViewBag.SoloLectura)??false)?"":"renglon-alto")" >
+<div  class="@((((bool?)ViewBag.SoloLectura)??false)?"":"renglon-alto") floatLeft" >
     @Html.EditorOrDisplayFor(model => model.DescripcionEstado, true)
 </div>
+@{ if (Model != null) {
+       Vehiculo vhc= Model.Vehiculo;
+       if (vhc != null) {
+            <div class="floatLeft" style="padding-left: 20px;">
+                    @(Html.Bootstrap().ActionLinkButton("Ver Vehiculo "+vhc.Ficha, "VerVehiculo").RouteValues(new { id = vhc.Codigo }).Class("btn-info  btn-small"))
+            </div>
+       }
+   }
+}
+
+
 <div class="clear-both"></div>
 
     <div class="display-label">
@@ -127,7 +138,7 @@
         
     </div>
     <div class="floatLeft"  style="padding-left:20px; display:@(Model.Seniado?"block":"none")">
-        @Html.ActionLink("Ver Seña", "VerSenia", new { id = Model.Codigo })
+        @(Html.Bootstrap().ActionLinkButton("Ver Seña", "VerSenia").RouteValues(new { id = Model.Codigo }).Class("btn-small btn-info"))
     </div>
     <div class="clear-both"></div>
 
