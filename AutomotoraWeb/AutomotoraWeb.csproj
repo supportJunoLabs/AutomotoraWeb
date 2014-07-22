@@ -272,6 +272,7 @@
     <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
+    <Compile Include="Models\AlertaModel.cs" />
     <Compile Include="Models\BancoSaldoModel.cs" />
     <Compile Include="Models\ListadoAcvsModel.cs" />
     <Compile Include="Models\Grilla\BotonAjaxGrilla.cs" />
@@ -1969,6 +1970,7 @@
     <Content Include="Views\Vales\_reciboRech.cshtml" />
     <Content Include="Views\Empresa\details.cshtml" />
     <Content Include="Views\Empresa\_datosDetalle.cshtml" />
+    <Content Include="Views\Shared\_alertas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

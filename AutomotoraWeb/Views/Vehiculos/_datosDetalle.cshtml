@@ -139,7 +139,7 @@
     @Html.TextBoxOrdisplayFor(model => model.FechaAdquirido, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
     @Html.ValidationMessageFor(model => model.FechaAdquirido)
 </div>
-@{ if (Model != null) {
+@{ if (Model != null && Model.Codigo>0) {
        Pedido ped = Model.PedidoOrigen;
        if (ped != null) {
             <div class="floatLeft" style="padding-left: 20px;">
@@ -158,7 +158,7 @@
     @Html.DdlOrDisplayImporteFor(model => model.Costo, modoConsulta)
     @Html.ValidationMessageFor(model => model.Costo.Monto)
 </div>
-@{ if (Model != null) {
+@{ if (Model != null && Model.Codigo > 0) {
        Venta origen = Model.ObtenerVentaOrigenPermuta();
        if (origen != null) {
             <div class="floatLeft hipervinculo" style="padding-left: 20px;">
@@ -200,7 +200,7 @@
     @Html.LabelForRequired(model => model.DescripcionEstado)
 </div>
 <div  class="@(modoConsulta ? "" : "renglon-alto")">
-    @{ if (Model != null) {
+    @{ if (Model != null && Model.Codigo > 0) {
            <div class="editor-field">
                 @Html.EditorOrDisplayFor(model => model.DescripcionEstado, true)
             </div>
@@ -210,18 +210,18 @@
     }
 </div>
 
-@{ if (Model != null && Model.TieneSeniaActiva()) {
+@{ if (Model != null && Model.Codigo > 0 && Model.TieneSeniaActiva()) {
     <div class="floatLeft " style="padding-left: 20px;">
         @(Html.Bootstrap().ActionLinkButton("Ver Seña", "VerSenia").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
     </div>
    }
-   if (Model != null && Model.TieneVentaActiva()) {
+    if (Model != null && Model.Codigo > 0 && Model.TieneVentaActiva()) {
     <div class="floatLeft hipervinculo" style="padding-left: 20px;">
         @(Html.Bootstrap().ActionLinkButton("Ver Venta", "VerVenta").RouteValues(new { id = Model.Codigo }).Class("btn-info btn-small"))
     </div>
    }
-   
-   if (Model != null && Model.TieneACV()) {
+
+    if (Model != null && Model.Codigo > 0 && Model.TieneACV()) {
     <div class="floatLeft hipervinculo" style="padding-left: 20px;">
         @(Html.Bootstrap().ActionLinkButton("Pagos a cuenta venta", "VerAcvsVigentes").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
     </div>
