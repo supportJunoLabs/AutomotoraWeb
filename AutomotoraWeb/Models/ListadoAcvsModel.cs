@@ -110,8 +110,7 @@ namespace AutomotoraWeb.Models {
 
         public void obtenerListado() {
             AcomodarFiltro();
-            //Falta cambiar por el verdadero metodo que trae segun el filtro
-            Resultado = ACuentaVenta.ACuentaVentas(ACuentaVenta.ACV_TIPO_LISTADO.TODOS, null);
+            Resultado = ACuentaVenta.ACuentaVentas(this.Filtro);
         }
     }
 }

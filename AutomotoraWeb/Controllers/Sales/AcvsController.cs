@@ -136,7 +136,7 @@ namespace AutomotoraWeb.Controllers.Sales
         private XtraReport _generarReporte(string idParametros) {
             ListadoAcvsModel model = (ListadoAcvsModel)Session[idParametros];
             model.obtenerListado();
-            XtraReport rep = new DXListadoChequesEmitidos(); //Falta cambiar por el reporte verdadero
+            XtraReport rep = new DXListadoAcvs(); //Falta cambiar por el reporte verdadero
             rep.DataSource = model.Resultado;
             setParamsToReport(rep, model);
             return rep;
