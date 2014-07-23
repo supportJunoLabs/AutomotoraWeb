@@ -3,12 +3,16 @@
 @using DLL_Backend;
 @using System.Globalization;
 
+@{
+    bool modoConsulta=(((bool?)(ViewBag.SoloLectura))??false);
+ }
+
 <div class="row-fluid">
     @Html.HiddenFor(model => model.Codigo, new { id = "idVehiculoDocumentacion"})
 
     <div class="btn-toolbar">
         <div class="btn-group">
-            @if ((ViewBag.SoloLectura != null) && (!(bool)ViewBag.SoloLectura)){
+            @if (!modoConsulta) {
                 @(Html.Bootstrap().Button().Text("Agregar").Id("createDetailsDocumentacion").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
             }
         )
@@ -24,7 +28,7 @@
         }
     </div>
 
-    <div id="containerCreateDocumentacionPopup" title="Crear Gasto" style="display: none;">
+    <div id="containerCreateDocumentacionPopup" title="Agregar Documento" style="display: none;">
         <div id="containerCreateDocumentacionPopupForm">
 
         </div>
@@ -217,8 +221,9 @@
         });
 
         $("#deleteDocumentacion").live("click", function () {
+            //alert("hola");  
             var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
-            _eventClickActionGasto(urlAction, "containerDeleteDocumentacionPopup", "messageErrorDeleteDocumentacion");
+            _eventClickActionDocumentacion(urlAction, "containerDeleteDocumentacionPopup", "messageErrorDeleteDocumentacion");
         });
 
         $("#cancelDeleteDocumentacion").live("click", function () {
@@ -228,14 +233,17 @@
         /* ================================================== */
 
         function getJsonDocumentacion() {
+            //alert($("#ddlEstadoDocumentacion").val());
             var documentacion = {
-                Codigo: $("#hiddenCodioDocumentacion").val(),
-                Estado: $("#ddlEstadoDocumentacion").val(),
+                Codigo: $("#hiddenCodigoDoc").val(),
+                Estado: {
+                    Codigo: $("#ddlEstadoDocumentacion").val()
+                },
                 Fecha: $("#txtFechaDocumentacion").val(),
                 Observaciones: $("#txtObservacionesDocumentacion").val(),
                 Poseedor: $("#txtPoseedorDocumentacion").val(),
                 TipoDocumento: {
-                    Codigo : $("#hiddenTipoDocumentoCodigoDocumentacion").val()
+                    Codigo: $("#ddlTipoDocumento").val()
                 },
                 Vehiculo: {
                     Codigo: $("#idVehiculoDocumentacion").val()

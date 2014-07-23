@@ -24,7 +24,7 @@ namespace AutomotoraWeb.Models {
 
         public string detallesFiltro() {
             string s ="Estados: ";
-            EstadosPosibles = EstadoDocumento.EstadosDocumentoListables();
+            EstadosPosibles = EstadoDocumento.EstadosDocumento();
 
             if (EstadosConsultar != null) {
                 foreach (var i in EstadosConsultar) {

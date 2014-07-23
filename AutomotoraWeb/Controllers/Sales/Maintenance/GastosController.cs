@@ -8,7 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace AutomotoraWeb.Controllers.Sales.Maintenance.Vehiculos
+namespace AutomotoraWeb.Controllers.Sales.Maintenance
 {
     public class GastosController : SalesController
     {

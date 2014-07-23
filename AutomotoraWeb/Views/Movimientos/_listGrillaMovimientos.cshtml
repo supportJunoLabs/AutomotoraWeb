@@ -23,16 +23,15 @@
     ig.ActionCallbackRoute = "GrillaMovimientos";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.MovBanco);
-
-    ig.AccionesAlComienzo = false;
-    ig.UsarBotones = true;
+    
+    //A proposito no hay mantenimiento, los movimientos solo se pueden extornar y hacer de vuelta, pero no modificar o eliminar
+    //ig.BotonesMtoEstandar = true;
 
     ig.AddButton(new BotonGrilla("details", MovimientosController.CONTROLLER, "boton-consultar-mf", "Consultar Movimiento"));
-    //a proposito no hay modificar o eliminar, se debe extornar y hacer de vuelta.
 
     ig.TextoAcciones2 = "Operaciones";
     ig.AddButton2(new BotonAjaxGrilla("ConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-conciliar", "Marcar como Conciliado", "Conciliar", 60));
-    ig.AddButton2(new BotonAjaxGrilla("DesConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-desconciliar", "Quitar marca de conciliado", "Des-Conciliar", 60));
+    ig.AddButton2(new BotonAjaxGrilla("DesConciliarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax boton-desconciliar", "Quitar marca de conciliado", "Des-Conciliar", 80));
     ig.AddButton2(new BotonGrilla("ExtornarMov", MovimientosController.CONTROLLER, "hipervinculoGrillaAjax", "Extornar Movimiento", "Extornar", 60));
 
     ig.DobleClick = true;

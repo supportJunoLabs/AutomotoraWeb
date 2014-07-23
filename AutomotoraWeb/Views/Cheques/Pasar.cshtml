@@ -6,6 +6,10 @@
 @{
     ViewBag.Title = "Pasar Cheque";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    bool cambiarSucursal = ViewBag.Multisucursal;
+    bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
+
 }
 
 <div class="validation-summary-errors">
@@ -61,9 +65,9 @@
         <div class="display-label">
             @Html.LabelForRequired(model => model.Sucursal)
         </div>
-        <div class="editor-field editor-field-xlarge xxlarge">
-            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, (bool?)ViewBag.SoloLectura, model => model.Sucursal.Nombre,
-                new SelectList(ViewBag.SucursalesTransaccion, "Codigo", "Nombre"), null,
+        <div class="editor-field editor-field-xlarge xxlarge  @(modoConsulta?"":"renglon-alto")">
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta||!cambiarSucursal, model => model.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
                 new { id = "ddlSucursales", @class = "large" })
             @Html.ValidationMessageFor(model => model.Sucursal)
         </div>

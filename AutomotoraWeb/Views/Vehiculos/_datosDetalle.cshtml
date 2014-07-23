@@ -1,21 +1,27 @@
 ﻿@model DLL_Backend.Vehiculo
 @using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    bool cambiarSucursal = ViewBag.Multisucursal;
+    bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
+}
 
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Ficha)
+    @Html.LabelForRequired(model => model.Ficha)
 </div>
-<div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Ficha, (bool?)ViewBag.SoloLectura)
+<div class="editor-field editor-field-large renglon-alto">
+    @Html.EditorOrDisplayFor(model => model.Ficha, modoConsulta)
     @Html.ValidationMessageFor(model => model.Ficha)
 </div>
 <div class="clear-both"></div>
 
-<div class="display-label ">
-    @Html.DisplayNameFor(model => model.Sucursal)
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Sucursal)
 </div>
-<div class="editor-field editor-field-large">
-    @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, (bool?)ViewBag.SoloLectura,
+<div class="editor-field editor-field-large @(modoConsulta ? "" : "renglon-alto")">
+    @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta || !cambiarSucursal,
                 model => model.Sucursal.Nombre,
                 new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
     @Html.ValidationMessageFor(model => model.Sucursal)
@@ -23,46 +29,46 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Marca)
+    @Html.LabelForRequired(model => model.Marca)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Marca, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Marca, modoConsulta)
     @Html.ValidationMessageFor(model => model.Marca)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Modelo)
+    @Html.LabelForRequired(model => model.Modelo)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Modelo, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Modelo, modoConsulta)
     @Html.ValidationMessageFor(model => model.Modelo)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Anio)
+    @Html.LabelForRequired(model => model.Anio)
 </div>
-<div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Anio, (bool?)ViewBag.SoloLectura)
+<div class="editor-field editor-field-small">
+    @Html.EditorOrDisplayFor(model => model.Anio, modoConsulta)
     @Html.ValidationMessageFor(model => model.Anio)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Matricula)
+    @Html.LabelForRequired(model => model.Matricula)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Matricula, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Matricula, modoConsulta)
     @Html.ValidationMessageFor(model => model.Matricula)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Departamento)
+    @Html.LabelForRequired(model => model.Departamento)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.DdlOrDisplayFor(model => model.Departamento.Codigo, (bool?)ViewBag.SoloLectura,
+    @Html.DdlOrDisplayFor(model => model.Departamento.Codigo, modoConsulta,
                 model => model.Departamento.Nombre,
                 new SelectList(ViewBag.Departamentos, "Codigo", "Nombre"), null, new { id = "ddlDepartamento" })
     @Html.ValidationMessageFor(model => model.Departamento)
@@ -71,55 +77,55 @@
 
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Color)
+    @Html.LabelForRequired(model => model.Color)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Color, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Color, modoConsulta)
     @Html.ValidationMessageFor(model => model.Color)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Padron)
+    @Html.LabelForRequired(model => model.Padron)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Padron, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Padron, modoConsulta)
     @Html.ValidationMessageFor(model => model.Padron)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Motor)
+    @Html.LabelForRequired(model => model.Motor)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Motor, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Motor, modoConsulta)
     @Html.ValidationMessageFor(model => model.Motor)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Chasis)
+    @Html.LabelForRequired(model => model.Chasis)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Chasis, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Chasis, modoConsulta)
     @Html.ValidationMessageFor(model => model.Chasis)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Kilometros)
+    @Html.LabelForRequired(model => model.Kilometros)
 </div>
-<div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Kilometros, (bool?)ViewBag.SoloLectura)
+<div class="editor-field editor-field-small">
+    @Html.EditorOrDisplayFor(model => model.Kilometros, modoConsulta)
     @Html.ValidationMessageFor(model => model.Kilometros)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.TipoCombustible)
+    @Html.LabelForRequired(model => model.TipoCombustible)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.DdlOrDisplayFor(model => model.TipoCombustible.Codigo, (bool?)ViewBag.SoloLectura,
+    @Html.DdlOrDisplayFor(model => model.TipoCombustible.Codigo, modoConsulta,
                 model => model.TipoCombustible.Descripcion,
                 new SelectList(ViewBag.TiposCombustible, "Codigo", "Descripcion"), null, new { id = "ddlTipoCombustible" })
     @Html.ValidationMessageFor(model => model.TipoCombustible)
@@ -127,71 +133,110 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.FechaAdquirido)
-</div>
-<div class="editor-field editor-field-large">
-    @Html.TextBoxOrdisplayFor(model => model.FechaAdquirido, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
-    @Html.ValidationMessageFor(model => model.FechaAdquirido)
-</div>
-<div class="clear-both"></div>
-
-<div class="display-label">
-    @Html.DisplayNameFor(model => model.Costo)
+    @Html.LabelForRequired(model => model.FechaAdquirido)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.DdlOrDisplayFor(model => model.Costo.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
-                model => model.Costo.Moneda.Nombre,
-                new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), null, new { id = "ddlMonedaCosto", styl="width: 10px;" })
-    @Html.EditorOrDisplayFor(model => model.Costo.Monto, (bool?)ViewBag.SoloLectura)
-    @Html.ValidationMessageFor(model => model.Costo.Monto)
+    @Html.TextBoxOrdisplayFor(model => model.FechaAdquirido, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+    @Html.ValidationMessageFor(model => model.FechaAdquirido)
 </div>
+@{ if (Model != null && Model.Codigo>0) {
+       Pedido ped = Model.PedidoOrigen;
+       if (ped != null) {
+            <div class="floatLeft" style="padding-left: 20px;">
+                    @(Html.Bootstrap().ActionLinkButton("Pedido Origen", "VerPedidoOrigen").RouteValues(new { id = ped.Codigo }).Class("btn-info  btn-small"))
+            </div>
+       }
+   }
+}
+
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Propietario)
+    @Html.LabelForRequired(model => model.Costo)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.DdlOrDisplayImporteFor(model => model.Costo, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Costo.Monto)
+</div>
+@{ if (Model != null && Model.Codigo > 0) {
+       Venta origen = Model.ObtenerVentaOrigenPermuta();
+       if (origen != null) {
+            <div class="floatLeft hipervinculo" style="padding-left: 20px;">
+                @(Html.Bootstrap().ActionLinkButton("Permuta Origen", "VerPermutaOrigen").RouteValues(new { id = origen.Codigo }).Class("btn-info  btn-small"))
+            </div>
+       }
+   }
+}
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Propietario)
 </div>
 <div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Propietario, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Propietario, modoConsulta)
     @Html.ValidationMessageFor(model => model.Propietario)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.TotalGastos)
+    @Html.LabelForRequired(model => model.TotalGastos)
 </div>
-<div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.TotalGastos.Monto, (bool?)ViewBag.SoloLectura)
+<div  class="@(modoConsulta ? "" : "renglon-alto")">
+    @Html.DdlOrDisplayImporteFor(model => model.TotalGastos, true)
     @Html.ValidationMessageFor(model => model.TotalGastos)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.PrecioVenta)
+    @Html.LabelForRequired(model => model.PrecioVenta)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.DdlOrDisplayFor(model => model.PrecioVenta.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
-                model => model.Costo.Moneda.Nombre,
-                new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), null, new { id = "ddlMonedaPrecioVenta" })
-    @Html.EditorOrDisplayFor(model => model.PrecioVenta.Monto, (bool?)ViewBag.SoloLectura)
+    @Html.DdlOrDisplayImporteFor(model => model.PrecioVenta, modoConsulta)
     @Html.ValidationMessageFor(model => model.PrecioVenta.Monto)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.DisplayNameFor(model => model.Status)
+    @Html.LabelForRequired(model => model.DescripcionEstado)
 </div>
-<div class="editor-field editor-field-large">
-    @Html.EditorOrDisplayFor(model => model.Status, (bool?)ViewBag.SoloLectura)
-    @Html.ValidationMessageFor(model => model.Status)
+<div  class="@(modoConsulta ? "" : "renglon-alto")">
+    @{ if (Model != null && Model.Codigo > 0) {
+           <div class="editor-field">
+                @Html.EditorOrDisplayFor(model => model.DescripcionEstado, true)
+            </div>
+       } else {
+        <div class="editor-field">En Venta</div>
+       }
+    }
 </div>
+
+@{ if (Model != null && Model.Codigo > 0 && Model.TieneSeniaActiva()) {
+    <div class="floatLeft " style="padding-left: 20px;">
+        @(Html.Bootstrap().ActionLinkButton("Ver Seña", "VerSenia").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
+    </div>
+   }
+    if (Model != null && Model.Codigo > 0 && Model.TieneVentaActiva()) {
+    <div class="floatLeft hipervinculo" style="padding-left: 20px;">
+        @(Html.Bootstrap().ActionLinkButton("Ver Venta", "VerVenta").RouteValues(new { id = Model.Codigo }).Class("btn-info btn-small"))
+    </div>
+   }
+
+    if (Model != null && Model.Codigo > 0 && Model.TieneACV()) {
+    <div class="floatLeft hipervinculo" style="padding-left: 20px;">
+        @(Html.Bootstrap().ActionLinkButton("Pagos a cuenta venta", "VerAcvsVigentes").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
+    </div>
+   }
+}
+
+
 <div class="clear-both"></div>
 
 
 <div class="display-label ">
-    @Html.DisplayNameFor(model => model.Observaciones)
+    @Html.LabelForRequired(model => model.Observaciones)
 </div>
 <div class="editor-field editor-field-xxlarge">
-    @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+    @Html.TextAreaOrDisplayFor(model => model.Observaciones, modoConsulta, new { style = "width: 530px; height: 60px" })
     @Html.ValidationMessageFor(model => model.Observaciones)
 </div>
 <div class="clear-both"></div>

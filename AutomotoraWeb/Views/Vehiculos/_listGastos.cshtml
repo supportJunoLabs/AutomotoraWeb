@@ -2,23 +2,28 @@
 @using System.Web.UI.WebControls
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Sales.Maintenance;
-@using AutomotoraWeb.Controllers.Sales.Maintenance.Vehiculos;
 @using AutomotoraWeb.Models;
+@using DLL_Backend;
 
 @{
     
     InfoGrilla ig = new InfoGrilla();
-    ig.HiddenColumns = new List<string>() { "Codigo" }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
-
-    ig.TrunkColumns = new Dictionary<string, int>() { {"Descripcion", 15}, { "Observaciones", 15 }  };
-
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Fecha"},
+            new ColumnaGrilla {Campo="Descripcion", LargoMax=45},
+            new ColumnaGrilla {Campo="ImporteGasto", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Titulo="Importe"},
+            new ColumnaGrilla {Campo="Cotizacion", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Titulo="Cotizacion"},
+            new ColumnaGrilla {Campo="ImporteMonedaDefault.Monto", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                        Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
+            new ColumnaGrilla {Campo="Observaciones", LargoMax=30}
+    };
+    
     ig.NameGrid = "gridGastos";
     ig.Controller = VehiculosController.CONTROLLER;
     ig.ActionCallbackRoute = "listGastos";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Gasto.GastoMD);
     ig.DobleClick = true;
-    ig.BotonesAjax = true;
     ig.registrosPorPagina = 7;
     ig.RegistrosPorPaginaVisible = false;
     

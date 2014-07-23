@@ -1,6 +1,46 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@using DLL_Backend;
+
+@{
+    ViewBag.Title = "Módulo de Gestión Bancaria";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>Contenido Inicial Banco</p>
+@Html.Partial("_alertas", "BANCO")
+
+<div class="row-fluid">
+
+    <div class="block" style="margin-right:2%">
+        <a href="#page-stats" class="block-heading" data-toggle="collapse">Estadisticas y Pendientes</a>
+        <div id="page-stats" class="block-body collapse in">
+            @{  EstadisticaBasica estad = new EstadisticaBasica();
+                var datos = estad.estadisticasBanco();
+                foreach (var k in datos.Keys) {
+                <div class="stat-widget-container">
+                    <div class="stat-widget">
+                        <div class="stat-button">
+                            <p class="title">@(datos[k])</p>
+                            <p class="detail">@(k)</p>
+                        </div>
+                    </div>
+                </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>
+
+<div class="block" style="margin-right:2%">
+        <a href="#widget1container" class="block-heading" data-toggle="collapse">Funcionalidades </a>
+        <div id="widget1container" class="block-body collapse in">
+            <h2>Qué puedo hacer en este módulo?</h2>
+            <p>Desde este módulo puede acceder a las diferentes funcionalidades de gestión de cuentas bancarias</p>
+            <p>Maneja cuatro grandes conceptos: Cuentas Bancarias, Movimientos Bancarios, Cheques emitidos y Cheques recibidos</p>
+            <p>Los movimientos bancarios se registran directamente en el libro de banco, y permite manejar la conciliacion con el estado de cuenta de su banco</p>
+            <p>Los cheques emitidos se registran, y llegados el día de su vencimiento se debitan automáticamente de la cuenta correspondiente</p>
+            <p>Los cheques recibidos de la operativa general del sistema se centralizan en este modulo y pueden realizarse varias operaciones sobre ellos, incluido su deposito en la cuenta bancaria correspondiente
+             Tambien esta disponible una funcionalidad similar para los vales o conformes recibidos que pueden operarse a nivel bancario.
+            </p>
+            <p>En la opcion Banco, encuentre consulta de saldos, estado de cuenta y diferentes listado</p>
+        </div>
+</div>

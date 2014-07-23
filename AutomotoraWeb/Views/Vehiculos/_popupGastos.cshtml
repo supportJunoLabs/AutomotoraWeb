@@ -1,21 +1,53 @@
 ﻿@model DLL_Backend.Gasto
 @using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+    bool mostrarCotizacion;
+    if (modoConsulta){
+        mostrarCotizacion=true; //en modo consulta la muestro, salvo que ya sea moneda default
+        if (Model.ImporteGasto.Moneda.Equals(Moneda.MonedaDefault)){
+            mostrarCotizacion = false;
+        }
+    }else {//en modo edicion, la cotizacion se muestra y se puede cambiar solo en la edicion, NO en el alta que usa la del dia
+        if (Model.Codigo>0){
+            mostrarCotizacion = true;
+        }else{
+            mostrarCotizacion = false;
+        }
+    }
+}
+
 
 <div>
-    @Html.HiddenFor(model => model.Codigo, new { id = "hiddenCodioGasto"})
+    @Html.HiddenFor(model => model.Codigo, new { id = "hiddenCodigoGasto" })
 
     <div class="display-label">
         @Html.DisplayNameFor(model => model.ImporteGasto)
     </div>
     <div class="editor-field editor-field-small">
-        @Html.DdlOrDisplayFor(model => model.ImporteGasto.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
+        @Html.DdlOrDisplayImporteFor(model => model.ImporteGasto, (bool?)ViewBag.SoloLectura)
+        @*@Html.DdlOrDisplayFor(model => model.ImporteGasto.Moneda.Codigo, (bool?)ViewBag.SoloLectura,
                     model => model.ImporteGasto.Moneda.Nombre,
                     new SelectList(ViewBag.Monedas, "Codigo", "Nombre"), null, new { id = "ddlMonedaImporteGasto", styl="width: 10px;" })
-        @Html.EditorOrDisplayFor(model => model.ImporteGasto.Monto, (bool?)ViewBag.SoloLectura)
+        @Html.EditorOrDisplayFor(model => model.ImporteGasto.Monto, (bool?)ViewBag.SoloLectura)*@
         @Html.ValidationMessageFor(model => model.ImporteGasto.Monto)
     </div>
     <div class="clear-both"></div>
-    
+
+    @{ if (mostrarCotizacion) {
+        <div class="display-label">
+            @Html.DisplayNameFor(model => model.Cotizacion)
+        </div>
+        <div class="editor-field editor-field-medium">
+            @Html.TextBoxOrdisplayFor(model => model.Cotizacion, (bool?)ViewBag.SoloLectura, new { id = "txtCotizacionGasto" })
+            @Html.ValidationMessageFor(model => model.Cotizacion)
+        </div>
+        <div class="clear-both"></div>
+       }
+    }
+
     <div class="display-label">
         @Html.DisplayNameFor(model => model.Fecha)
     </div>

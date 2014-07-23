@@ -23,17 +23,17 @@ namespace AutomotoraWeb.Controllers.Bank {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
             }
-
+            ViewBag.MultiSucursal = usuario.MultiSucursal;
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Financistas = Financista.FinancistasTodos;
             ViewBag.Cuentas = CuentaBancaria.CuentasBancarias;
-            if (usuario.MultiSucursal) {
-                ViewBag.SucursalesTransaccion = Sucursal.Sucursales;
-            } else {
-                List<Sucursal> listSucursal = new List<Sucursal>();
-                listSucursal.Add(usuario.Sucursal);
-                ViewBag.SucursalesTransaccion = listSucursal;
-            }
+            //if (usuario.MultiSucursal) {
+            //    ViewBag.SucursalesTransaccion = Sucursal.Sucursales;
+            //} else {
+            //    List<Sucursal> listSucursal = new List<Sucursal>();
+            //    listSucursal.Add(usuario.Sucursal);
+            //    ViewBag.SucursalesTransaccion = listSucursal;
+            //}
         }
 
         #region ListadoCheques
@@ -240,6 +240,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             TRChequeDepositarDescontar model = new TRChequeDepositarDescontar();
             model.Cheque = new Cheque();
             model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR;
+            model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
             return View(model);
         }
 

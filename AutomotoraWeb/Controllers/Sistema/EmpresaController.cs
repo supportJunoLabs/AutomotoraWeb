@@ -27,6 +27,11 @@ namespace AutomotoraWeb.Controllers.Sistema {
             return VistaElemento();
         }
 
+        public ActionResult Details() {
+            ViewBag.SoloLectura = true;
+            return VistaElemento();
+        }
+
         private ActionResult VistaElemento() {
             try {
                 //por las dudas que haya habido cambios en la base, lo tomamos de la base para este mantenimiento

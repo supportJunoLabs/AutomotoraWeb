@@ -1,6 +1,44 @@
-﻿@{
-    ViewBag.Title = "Ventas";
+﻿@using DLL_Backend;
+
+@{
+    ViewBag.Title = "Módulo de Gestión Comercial";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>Contenido Inicial Ventas</p>
+@Html.Partial("_alertas", "VENTAS")
+
+<div class="row-fluid">
+
+    <div class="block" style="margin-right:2%">
+        <a href="#page-stats" class="block-heading" data-toggle="collapse">Estadisticas y Pendientes</a>
+        <div id="page-stats" class="block-body collapse in">
+            @{  EstadisticaBasica estad = new EstadisticaBasica();
+                var datos = estad.estadisticasVentas();
+                foreach (var k in datos.Keys) {
+                <div class="stat-widget-container">
+                    <div class="stat-widget">
+                        <div class="stat-button">
+                            <p class="title">@(datos[k])</p>
+                            <p class="detail">@(k)</p>
+                        </div>
+                    </div>
+                </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>
+
+<div class="block" style="margin-right:2%">
+        <a href="#widget1container" class="block-heading" data-toggle="collapse">Funcionalidades </a>
+        <div id="widget1container" class="block-body collapse in">
+            <h2>Qué puedo hacer en este módulo?</h2>
+            <p>En este módulo es donde se definen las transacciones comerciales de la empresa, y que luego se gestionan en los módulos siguientes.</p>
+            <p>Ingreso pedidos de vehiculos que le realizan sus clientes para no perder ninguna oportunidad de negocios, y haga su seguimiento hasta encontrar el mismo y concretar la transaccion.</p>
+            <p>Registre la operativa habitual de sus transacciones comerciales: Señas, Ventas, Entregas a Cuenta, y más.</p>
+            <p>En la opcion de Consultas y Listados, encontrará diferentes y potentes modos de consultar la información, analizar la gestión comercial en forma resumida y detallada de acuerdo a sus necesidades.</p>
+
+        </div>
+</div>
+

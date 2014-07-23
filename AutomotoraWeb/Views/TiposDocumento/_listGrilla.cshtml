@@ -14,13 +14,12 @@
             new ColumnaGrilla {Campo="Observaciones", LargoMax=50},
     };
             
-    //ig.HiddenColumns = new List<string>() {  "Codigo"   }; // En esta lista hay que agregar las columnas que no se quieran mostrar en la grilla
-    //ig.TrunkColumns = new Dictionary<string, int>() { { "Nombre", 30 }, { "Observaciones", 50 }};
     ig.NameGrid = "grilla";
     ig.Controller = TiposDocumentoController.CONTROLLER;
     ig.ActionCallbackRoute = "listaGrilla";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.TipoDocumento.TipoDocumentoMD);
+    ig.BotonesMtoEstandar = true;
 
     ViewBag.InfoGrilla = ig;
     ig.DobleClick = true;
