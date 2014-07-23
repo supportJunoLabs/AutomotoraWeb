@@ -24,7 +24,7 @@
     
     <div class="btn-toolbar">
         @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Eliminar").Id("btn_eliminar").HtmlAttributes(new { @data_toggle = "modal", data_target="#myModal" }))
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.DETAILS).RouteValues(new {id=Model.Codigo }).Class("btn btn-default"))
     </div>
 
 }

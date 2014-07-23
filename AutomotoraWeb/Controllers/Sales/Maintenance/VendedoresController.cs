@@ -105,7 +105,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             }
         }
 
-        public ActionResult Cancelar(string s) {
+        public ActionResult Cancelar(string s, int id) {
 
             if (Session[s+FILE_RANDOM_NAME] != null && (string)Session[s+FILE_RANDOM_NAME] != IMAGEN_SIN_FOTO) {
                 if (System.IO.File.Exists(Server.MapPath(PHOTO_FOLDER_TMP) + Session[s+FILE_RANDOM_NAME])) {
@@ -113,7 +113,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
                 }
             }
             Session[s+FILE_RANDOM_NAME] = null;
-            return RedirectToAction(BaseController.SHOW);
+            return RedirectToAction(BaseController.DETAILS, new { id = id });
         }
 
         //-----------------------------------------------------------------------------------------------------

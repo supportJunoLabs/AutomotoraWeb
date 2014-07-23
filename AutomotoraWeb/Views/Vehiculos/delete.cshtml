@@ -23,7 +23,7 @@
     
             <div class="btn-toolbar">
                 @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Data(new { id = Model.Codigo }))
-                @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+                @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.DETAILS).RouteValues(new {id=Model.Codigo }).Class("btn btn-default"))
             </div>
         </div>
         <div>

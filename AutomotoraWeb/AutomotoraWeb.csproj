@@ -1661,6 +1661,7 @@
     <Content Include="Scripts\AutomotoraWeb\ChequesEmitidosListado.js" />
     <Content Include="Scripts\AutomotoraWeb\AcvsListado.js" />
     <Content Include="Scripts\AutomotoraWeb\RechazarVale.js" />
+    <Content Include="Scripts\AutomotoraWeb\ValesCliente.js" />
     <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
@@ -1971,6 +1972,7 @@
     <Content Include="Views\Empresa\details.cshtml" />
     <Content Include="Views\Empresa\_datosDetalle.cshtml" />
     <Content Include="Views\Shared\_alertas.cshtml" />
+    <Content Include="Views\Clientes\_ventasCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

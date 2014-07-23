@@ -1,6 +1,11 @@
-﻿@model DLL_Backend.Cliente
+﻿@model DLL_Backend.Cliente  
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
+@using AutomotoraWeb.Controllers.Financing;
+
+@{
+    bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
+}
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Nombre)
@@ -10,6 +15,14 @@
     @Html.EditorOrDisplayFor(model => model.Nombre, (bool?)ViewBag.SoloLectura)
     @Html.ValidationMessageFor(model => model.Nombre)
 </div>
+@{ if (Model != null && Model.Codigo>0) {
+        <div class="floatLeft" style="padding-left: 20px;">
+                @(Html.Bootstrap().ActionLinkButton("Situacion Cliente", "ListSitCliente", ConsultasFinController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
+        </div>
+    }
+}
+
+
 <div class="clear-both"></div>
 
 <div class="display-label">

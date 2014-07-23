@@ -25,16 +25,27 @@
     </div>
     <div class="renglon-alto editor-field-xlarge">
         <div class="floatLeft">
-            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Cheque.ChequesRechazables(), GridLookUpCodigo = Model.Cheque.Codigo };}
+            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Model.ChequesRechazables(), GridLookUpCodigo = Model.Cheque.Codigo };}
             @Html.Partial("_selectChequeRechazar", gmodel)
         </div>
         <div class="floatLeft" style="margin-left: 5px">
             @Html.ValidationMessageFor(model => model.Cheque.Codigo)
         </div>
+        <div class="floatLeft" style="padding-left: 20px;">
+                    <input type="button" id="btn_VerCheque" title="Consulta Cheque" class="btn btn-info btn-small" name="btn_VerCheque" value="Consulta Cheque" />
+                </div>
         @Html.HiddenFor(model => model.Cheque.Codigo, new { id = "codigoCheque" })
 
     </div>
     <div class="clear-both"></div>
+    
+    <div class="display-label">
+        Movimiento Anterior
+    </div>
+    <div class="renglon-alto editor-field-xlarge" id="destinoAnt">
+    </div>
+    <div class="clear-both"></div>
+    
     <div>
         <div class="display-label">
             @Html.LabelForRequired(model => model.Sucursal)

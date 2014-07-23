@@ -27,7 +27,7 @@
         @if (Model.EstadoRecibible) { 
             @(Html.Bootstrap().ActionLinkButton("Recibir", PedidosController.RECIBIR).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
         }
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.DETAILS).RouteValues(new {id=Model.Codigo }).Class("btn btn-default"))
     </div>
     <div class="clear-both"></div>
 }

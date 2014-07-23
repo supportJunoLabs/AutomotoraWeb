@@ -450,7 +450,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
          //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
          public ActionResult ChequesRechazablesGrilla(GridLookUpModel model) {
-             model.Opciones = Cheque.ChequesRechazables();
+             model.Opciones = new TRChequeRechazar().ChequesRechazables();
              return PartialView("_selectChequeRechazar", model);
          }
 

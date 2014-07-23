@@ -161,7 +161,7 @@
 @{ if (Model != null && Model.Codigo > 0) {
        Venta origen = Model.ObtenerVentaOrigenPermuta();
        if (origen != null) {
-            <div class="floatLeft hipervinculo" style="padding-left: 20px;">
+            <div class="floatLeft" style="padding-left: 20px;">
                 @(Html.Bootstrap().ActionLinkButton("Permuta Origen", "VerPermutaOrigen").RouteValues(new { id = origen.Codigo }).Class("btn-info  btn-small"))
             </div>
        }
@@ -199,13 +199,13 @@
 <div class="display-label">
     @Html.LabelForRequired(model => model.DescripcionEstado)
 </div>
-<div  class="@(modoConsulta ? "" : "renglon-alto")">
+<div  class="@(modoConsulta ? "" : "renglon-alto") floatLeft">
     @{ if (Model != null && Model.Codigo > 0) {
-           <div class="editor-field">
+           <div class="editor-field floatLeft">
                 @Html.EditorOrDisplayFor(model => model.DescripcionEstado, true)
             </div>
        } else {
-        <div class="editor-field">En Venta</div>
+        <div class="editor-field floatLeft">En Venta</div>
        }
     }
 </div>
@@ -216,13 +216,13 @@
     </div>
    }
     if (Model != null && Model.Codigo > 0 && Model.TieneVentaActiva()) {
-    <div class="floatLeft hipervinculo" style="padding-left: 20px;">
+    <div class="floatLeft" style="padding-left: 20px;">
         @(Html.Bootstrap().ActionLinkButton("Ver Venta", "VerVenta").RouteValues(new { id = Model.Codigo }).Class("btn-info btn-small"))
     </div>
    }
 
     if (Model != null && Model.Codigo > 0 && Model.TieneACV()) {
-    <div class="floatLeft hipervinculo" style="padding-left: 20px;">
+    <div class="floatLeft" style="padding-left: 20px;">
         @(Html.Bootstrap().ActionLinkButton("Pagos a cuenta venta", "VerAcvsVigentes").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
     </div>
    }

@@ -5,7 +5,7 @@
  @{  List<Alerta> ll = Alerta.obtenerAlertasActivas(Model);
      foreach(Alerta al in ll){
          
-         <div class="alert @(AlertaModel.EstiloAlerta(al.Tipo))" style="margin-right:2%">
+         <div class="alert @(AlertaModel.EstiloAlerta(al.Tipo))" >
                 <button type="button" class="close" data-dismiss="alert">×</button>
                     @(al.Contenido)
         </div>

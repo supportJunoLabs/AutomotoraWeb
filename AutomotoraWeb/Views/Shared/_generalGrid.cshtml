@@ -112,7 +112,7 @@
 
                 if (!ig.anchosDefinidos()) { //si no vienen definidos los anchos de ninguna columna, ocupa todo el espacio
                     settings.Settings.UseFixedTableLayout = false;
-                    settings.Width = Unit.Percentage(98); // lo llevo a 98% porque si no se pega al borde derecho y queda feo
+                    settings.Width = Unit.Percentage(100); 
                 } else {
                     //si vienen los anchos calculo el ancho en funcion de la suma de las columnas
                     settings.Settings.UseFixedTableLayout = true;

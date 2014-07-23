@@ -21,7 +21,7 @@
 
         <div class="btn-toolbar">
             @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
-            @(Html.Bootstrap().ActionLinkButton("Cancelar", "Cancelar").RouteValues(new{s=Model.idsesion}).Class("btn btn-default"))
+            @(Html.Bootstrap().ActionLinkButton("Cancelar", "Cancelar").RouteValues(new{s=Model.idsesion, id=Model.Vendedor.Codigo}).Class("btn btn-default"))
         </div>
         <div class="clear-both"></div>
 

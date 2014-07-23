@@ -104,7 +104,7 @@
     
 
     <!-- CONTENT -->
-    <div class="content">
+    <div class="content" >
         <ul class="nav nav-pills breadcrumb">
             @{
                 if (ViewBag.parentControllerName == SalesController.BCONTROLLER) { 
@@ -133,8 +133,8 @@
             <h1 class="page-title">@ViewBag.Title</h1>
         </div>
 
-        <div class="container-fluid">
-            <div class="row-fluid pageContainer">
+        <div class="container-fluid" style="margin-right:2%">
+            <div class="row-fluid pageContainer" >
                 @RenderBody()
             </div>
         </div>

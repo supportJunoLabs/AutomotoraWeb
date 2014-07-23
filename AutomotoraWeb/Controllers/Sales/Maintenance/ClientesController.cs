@@ -100,7 +100,15 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
+            ViewData["idParametros"] = id;
             return VistaElemento(id);
+        }
+
+        public ActionResult GrillaVentasCliente(int idParametros) {
+            Cliente c = new Cliente();
+            c.Codigo = idParametros;
+            ViewData["idParametros"] = idParametros;
+            return PartialView("_ventasCliente", c);
         }
 
         public ActionResult Create() {
@@ -111,6 +119,8 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         public ActionResult Edit(int id) {
             return VistaElemento(id);
         }
+
+
 
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;

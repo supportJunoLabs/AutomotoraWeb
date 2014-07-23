@@ -27,18 +27,13 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewBag.Monedas = Moneda.Monedas;
             ViewBag.Clientes = Cliente.Clientes();
             ViewBag.Vendedores = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
+
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (usuario== null){
+            if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
-                return;
             }
-            if (usuario.MultiSucursal) {
-                ViewBag.Sucursales = Sucursal.Sucursales;
-            } else {
-                List<Sucursal> listSucursal = new List<Sucursal>();
-                listSucursal.Add(usuario.Sucursal);
-                ViewBag.Sucursales = listSucursal;
-            }
+            ViewBag.MultiSucursal = usuario.MultiSucursal;
+            ViewBag.Sucursales = Sucursal.Sucursales;
         }
 
 
@@ -63,6 +58,7 @@ namespace AutomotoraWeb.Controllers.Sales
             //ped.Cliente = new Cliente();
             //ped.Vendedor = new Vendedor();
             ped.FechaPedido = DateTime.Now.Date;
+            ped.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
             return View(ped);
         }
 

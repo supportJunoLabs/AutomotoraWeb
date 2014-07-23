@@ -22,6 +22,12 @@
         complete: hideLoading
     });
 
-   
-
 });
+
+$('#btn_VerCliente').click(function () {
+    var selectedID = $('#ddlClientes').val();
+    if (selectedID) {
+        window.location = "/Clientes/details/" + selectedID;
+    }
+});
+   

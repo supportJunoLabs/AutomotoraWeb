@@ -41,9 +41,10 @@
     ig.DobleClick = true;
     ig.ControladorDobleClick = PedidosController.CONTROLLER;
     ig.AccionDobleClick = BaseController.DETAILS;
+    ig.AccionesAlComienzo = true;
 
     ig.TextoAcciones2 = "Recibir";
-    ig.AddButton2(new BotonGrilla(PedidosController.RECIBIR, PedidosController.CONTROLLER, "hipervinculo", "Recibir Pedido", "Recibir", 50));
+    ig.AddButton2(new BotonGrilla(PedidosController.RECIBIR, PedidosController.CONTROLLER, "hipervinculo", "Recibir Pedido", "Recibir", 40));
 
     ViewBag.InfoGrilla = ig;
 }

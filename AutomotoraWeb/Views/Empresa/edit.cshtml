@@ -1,6 +1,7 @@
 ﻿@model DLL_Backend.Empresa
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Sistema;
+@using AutomotoraWeb.Controllers.General;
 
 @{
     ViewBag.Title = ViewBag.NombreEntidad + ": Modificar";
@@ -19,7 +20,8 @@
 
         <div class="btn-toolbar">
             @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text(" Guardar"))
-            @(Html.Bootstrap().ActionLinkButton("Cancelar", "Cancelar").Class("btn btn-default"))
+            @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.DETAILS).RouteValues(new {id=Model.Codigo }).Class("btn btn-default"))
+            
 
         </div>
         <div class="clear-both"></div>

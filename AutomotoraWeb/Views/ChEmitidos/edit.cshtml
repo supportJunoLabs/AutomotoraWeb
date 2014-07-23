@@ -23,7 +23,7 @@
     
     <div class="btn-toolbar">
         @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Guardar").Id("btn_guardar"))
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.DETAILS).RouteValues(new {id=Model.Codigo }).Class("btn btn-default"))
     </div>
     <div class="clear-both"></div>
 }

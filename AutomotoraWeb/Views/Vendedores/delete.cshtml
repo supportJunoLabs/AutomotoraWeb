@@ -25,7 +25,7 @@
     
     <div class="btn-toolbar">
         @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Tooltip("Eliminar Vendedor").Data(new { id = Model.Vendedor.Codigo }))
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.SHOW).Class("btn btn-default"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.DETAILS).RouteValues(new {id=Model.Vendedor.Codigo }).Class("btn btn-default"))
     </div>
 
 }

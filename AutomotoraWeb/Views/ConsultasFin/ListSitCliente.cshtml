@@ -2,6 +2,8 @@
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Sales.Maintenance;
 
 @{
     ViewBag.Title = "Consulta Situación Cliente";
@@ -20,8 +22,8 @@
                 <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" value="Imprimir" />
             </div>
         </div>
-        <div id="filtro_cliente" style="padding-left:20px; padding-top:20px; padding-bottom:10px">
-            <div class="display-label" style="width:70px" >
+        <div id="filtro_cliente" style="padding-left: 20px; padding-top: 20px; padding-bottom: 10px">
+            <div class="display-label" style="width: 70px">
                 Cliente*
             </div>
             <div class="editor-field editor-field-xlarge xxlarge">
@@ -29,6 +31,9 @@
                 new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), "--Seleccionar Cliente--",
                 new { id = "ddlClientes", @class = "xxlarge" })
             </div>
+            <div class="floatLeft" style="padding-left: 20px;">
+                    <input type="button" id="btn_VerCliente" title="Datos Cliente" class="btn btn-info btn-small" name="btn_VerCliente" value="Datos Cliente" />
+                </div>
             <div class="clear-both"></div>
         </div>
     </div>
