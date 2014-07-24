@@ -4,6 +4,7 @@
     var selectedID = $(this).val();
 
     //alert(selectedID);
+    $("#abtn_VerCliente").prop("href", "/Clientes/details/" + selectedID);
 
     $.ajax({
         cache: false,
@@ -24,10 +25,10 @@
 
 });
 
-$('#btn_VerCliente').click(function () {
-    var selectedID = $('#ddlClientes').val();
-    if (selectedID) {
-        window.location = "/Clientes/details/" + selectedID;
-    }
-});
+//$('#btn_VerCliente').click(function () {
+//    var selectedID = $('#ddlClientes').val();
+//    if (selectedID) {
+//        window.location = "/Clientes/details/" + selectedID;
+//    }
+//});
    

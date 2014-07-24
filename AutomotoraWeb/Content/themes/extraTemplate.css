@@ -95,9 +95,9 @@ textarea {
 }
 
 
-label {
+/*label {
     font-weight: normal;
-}
+}*/
 
 
 .botonera {
@@ -1092,8 +1092,8 @@ table.table.list tr:first-child td {
 
 .display-label {
     float: left;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 12px !important;
+    font-weight: bold !important;
     margin-right: 10px;
     width: 150px;
 }

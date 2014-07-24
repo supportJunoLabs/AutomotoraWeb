@@ -35,8 +35,8 @@ namespace AutomotoraWeb.Models {
             TotalPagoCuotas = new Importe(Moneda.MonedaDefault, 0);
             TotalSaldoCuotas = new Importe(Moneda.MonedaDefault, 0);
             foreach (Cuota c in Cuotas) {
-                TotalCuotas.Monto += c.Importe.ValorEnMonedaDefault();
-                TotalPagoCuotas.Monto += c.ImporteCobrado.ValorEnMonedaDefault();
+                TotalCuotas.Monto += c.Importe.ValorEnMonedaDefault;
+                TotalPagoCuotas.Monto += c.ImporteCobrado.ValorEnMonedaDefault;
             }
             TotalSaldoCuotas.Monto = TotalCuotas.Monto - TotalPagoCuotas.Monto;
 
@@ -45,14 +45,14 @@ namespace AutomotoraWeb.Models {
             TotalSaldoVales = new Importe(Moneda.MonedaDefault, 0);
 
             foreach (Vale v in Vales) {
-                TotalVales.Monto += v.Importe.ValorEnMonedaDefault();
-                TotalPagoVales.Monto += v.ImporteCobrado.ValorEnMonedaDefault();
+                TotalVales.Monto += v.Importe.ValorEnMonedaDefault;
+                TotalPagoVales.Monto += v.ImporteCobrado.ValorEnMonedaDefault;
             }
             TotalSaldoVales.Monto = TotalVales.Monto - TotalPagoVales.Monto;
 
             TotalCheques= new Importe(Moneda.MonedaDefault, 0);
             foreach (Cheque ch in Cheques) {
-                TotalCheques.Monto += ch.Importe.ValorEnMonedaDefault();
+                TotalCheques.Monto += ch.Importe.ValorEnMonedaDefault;
             }
             TotalDeuda = new Importe(Moneda.MonedaDefault, 0);
             TotalDeuda.Monto = TotalSaldoCuotas.Monto + TotalSaldoVales.Monto + TotalCheques.Monto;

@@ -60,7 +60,7 @@
                     <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
                 </div>
             </div>
-        <div id="containerLinea1">
+        <div id="containerLinea1" style="padding-bottom:20px">
 
             <div id="filtro_fechas" class="floatLeft">
                 <fieldset id="fieldsetFecha">
@@ -91,25 +91,25 @@
              <div id="filtro_estado" class="floatLeft">
                 <fieldset id="fieldsetEstado">
                     <legend>Estado</legend>
-                    <div>
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.PENDIENTES, new { id = "rb_pendientes" })  Pendientes
                     </div>
-                    <div style="vertical-align: middle">
+                    <div class="renglon-bajo" >
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.DEPOSITADOS, new { id = "rb_depositados" })  Depositados
                     </div>
-                    <div>
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.DESCONTADOS, new { id = "rb_descontados" })  Descontados
                     </div>
-                    <div>
+                    <div class="renglon-bajo" >
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.RECHAZADOS, new { id = "rb_rechazados" })  Rechazados
                     </div>
-                    <div>
+                    <div class="renglon-bajo" >
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.TERCEROS, new { id = "rb_terceros" })  Pasados a Terceros
                     </div>
-                    <div>
+                    <div class="renglon-bajo" >
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.CANJEADOS, new { id = "rb_canjeados" })  Canjeados
                     </div>
-                    <div>
+                    <div class="renglon-bajo" >
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.RETIRADOS, new { id = "rb_retirados" })  Retirados Caja
                     </div>
                 </fieldset>

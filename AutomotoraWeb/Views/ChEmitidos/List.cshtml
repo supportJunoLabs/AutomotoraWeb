@@ -140,7 +140,7 @@
 
 <div id="divGrilla">
     @Html.Partial("_listCheques", Model)
-</div>
+</div>-
 
 <div style="padding-top: 30px" id="sfinGeneral">
     <div class="label-xxlarge" style="padding-left: 0px;">
@@ -150,7 +150,7 @@
     @{if (Model.Resultado.Total.Moneda.Codigo != Moneda.MonedaDefault.Codigo) {
         <div class="label-xxlarge" style="padding-left: 0px;">
             <div class="display-label">Total: </div>
-            @Html.DisplayFor(m => m.Resultado.Total.ImporteEnMonedaDefault().ImporteTexto)
+            @Html.DisplayFor(m => m.Resultado.Total.ImporteEnMonedaDefault.ImporteTexto)
         </div>
       }
     }

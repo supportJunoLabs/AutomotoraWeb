@@ -26,4 +26,5 @@ function chequeSelected(s, e) {
     var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
     //alert(valor);
     $("#codigoCheque").val(valor);
+    $("#abtn_verCheque").prop("href", "/Cheques/ConsultaCheque/" + valor);
 }

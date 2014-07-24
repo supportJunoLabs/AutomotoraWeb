@@ -538,7 +538,7 @@ public class DXListadoChequesEmitidos : DevExpress.XtraReports.UI.XtraReport {
         ListadoChequesEmitidos res = (ListadoChequesEmitidos)GetCurrentColumnValue("Resultado");
         if (res != null && res.Total!=null && res.Total.Moneda!=null && res.Total.Moneda.Codigo>0) {
             if (res.Total.Moneda.Codigo != Moneda.MonedaDefault.Codigo) {
-                xrLabel2.Text = res.Total.ImporteEnMonedaDefault().ImporteTexto;
+                xrLabel2.Text = res.Total.ImporteEnMonedaDefault.ImporteTexto;
                 xrLabel2.Visible = true;
             } else {
                 xrLabel2.Visible = false;

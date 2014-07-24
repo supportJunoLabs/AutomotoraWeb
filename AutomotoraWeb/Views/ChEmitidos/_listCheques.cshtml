@@ -20,16 +20,16 @@
         //si vino en una moneda diferente a default, es porque hay solo una moneda, ya que si hay mas de una viene en moneda default. La puedo sumar
         if (Model.Resultado.Total.Moneda.Codigo!=Moneda.MonedaDefault.Codigo){
             ig.VisibleColumns.Add(new ColumnaGrilla { Campo = "Importe.Monto", Formato = "#,##0.00", Titulo = "Importe " + Model.Resultado.Total.Moneda.Simbolo, TotalSuma = true, Ancho = 120 });
-            ig.VisibleColumns.Add(new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, Ancho=120});
+            ig.VisibleColumns.Add(new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, Ancho=120});
         }else{
             //si vino en moneda default es porque habia mas de una o porque se pidio asi:
             if (Model.FiltrarMoneda || Model.FiltrarCuenta){
                 //Asi es porque se pidio con filtro de moneda o de cuenta que  tiene moneda (el caso de contradiccion se elimina si no hay saldo
-                ig.VisibleColumns.Add(new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, Ancho=120});
+                ig.VisibleColumns.Add(new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, Ancho=120});
             }else{
                 //es porque hay mas de una moneda involucrada, no se puede sumar la columna original, solo la convertida
                  ig.VisibleColumns.Add(new ColumnaGrilla {Campo="Importe", Titulo="Importe", Ancho=150});
-                 ig.VisibleColumns.Add(new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, Ancho=120});
+                 ig.VisibleColumns.Add(new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, Ancho=120});
             }
         }
     }

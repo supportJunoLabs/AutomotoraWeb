@@ -24,16 +24,30 @@
     </div>
     <div class="renglon-alto editor-field-xlarge">
         <div class="floatLeft">
-            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vale.ValesRechazables(), GridLookUpCodigo = Model.Vale.Codigo };}
+            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Model.ValesRechazables(), GridLookUpCodigo = Model.Vale.Codigo };}
             @Html.Partial("_selectValeRechazar", gmodel)
         </div>
         <div class="floatLeft" style="margin-left: 5px">
             @Html.ValidationMessageFor(model => model.Vale.Codigo)
         </div>
+        <div class="floatLeft" style="padding-left: 20px;">
+            <a href="#" id="abtn_verVale">
+                  @Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Consulta Vale").Id("btn_verVale")
+            </a>
+        </div>
         @Html.HiddenFor(model => model.Vale.Codigo, new { id = "codigoVale" })
 
     </div>
     <div class="clear-both"></div>
+    
+    <div class="display-label">
+        Movimiento Anterior
+    </div>
+    <div class="renglon-alto editor-field-xlarge" id="destinoAnt">
+    </div>
+    <div class="clear-both"></div>
+    
+    
     <div>
         <div class="display-label">
             @Html.LabelForRequired(model => model.Sucursal)

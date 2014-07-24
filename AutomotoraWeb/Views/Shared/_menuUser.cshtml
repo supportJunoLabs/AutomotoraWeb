@@ -9,11 +9,11 @@
                 <i class="icon-user"></i>@ViewBag.UserName<i class="icon-caret-down"></i>
             </a>
 
-            <ul class="dropdown-menu" >
+            <ul class="dropdown-menu"  role="menu">
             @if(ViewBag.menuOptions!=null){
                 foreach (var x in (Dictionary<int, MenuOptionModel>)(ViewBag.menuOptions[MenuService.MENU_USER])) {
                     <li>@Html.ActionLink(x.Value.OpcionName, x.Value.Action, x.Value.Controlller)</li>
-                    <li class="divider clear-both"></li>
+                    <div class="clear-both"></div>
                 }
             }
             </ul>

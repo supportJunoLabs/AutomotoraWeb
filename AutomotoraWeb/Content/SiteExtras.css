@@ -31,6 +31,16 @@ input[type="checkbox"] {
     vertical-align:middle;
 }
 
+.renglon-bajo {
+    height:20px; 
+    vertical-align:middle;
+}
+
+.renglon-estandar {
+    height:30px; 
+    vertical-align:middle;
+}
+
 select.mini {
   width: 60px;
 }
@@ -91,6 +101,15 @@ a.hipervinculo {
     width: 120px;
 }
 
+
+.display-label-mini {
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+    width: 70px;
+}
+
 .botoneraListado {
     background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #dddddd), color-stop(1, #fafafa));
     padding-left: 1em;
@@ -127,4 +146,14 @@ a.hipervinculo {
     font-weight: bold;
     font-size: 14px;
     margin-bottom:20px;
+}
+
+body {
+    line-height: 30px;
+}
+
+
+input[type="radio"]{
+    margin-top: -1px;
+  vertical-align: middle;
 }

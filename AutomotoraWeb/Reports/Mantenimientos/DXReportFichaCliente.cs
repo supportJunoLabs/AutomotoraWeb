@@ -1002,7 +1002,7 @@ public class DXReportFichaCliente : DevExpress.XtraReports.UI.XtraReport {
             // xrLabel59
             // 
             this.xrLabel59.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Ventas.ImporteMonedaDefault.ImporteEnMonedaDefaultProp.ImporteTexto")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Ventas.ImporteMonedaDefault.ImporteEnMonedaDefault.ImporteTexto")});
             this.xrLabel59.Font = new System.Drawing.Font("Times New Roman", 9F);
             this.xrLabel59.LocationFloat = new DevExpress.Utils.PointFloat(380.4166F, 0F);
             this.xrLabel59.Name = "xrLabel59";
