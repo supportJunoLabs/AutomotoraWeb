@@ -1,0 +1,13 @@
+﻿@model DLL_Backend.Cheque
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Consulta Cheque";
+}
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", "ConsultaCheque").Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
+</div>
+<div class="clear-both"></div>
+
+@Html.Partial("_reportCheque")

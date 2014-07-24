@@ -1,6 +1,11 @@
 ﻿@model DLL_Backend.Cheque
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.Sales.Maintenance;
+@using AutomotoraWeb.Controllers.Sistema;
+@using AutomotoraWeb.Controllers.Financing.Maintenance;
 
 @{
     ViewBag.Title = "Consulta Cheque";
@@ -8,6 +13,17 @@
 }
 
 @Html.HiddenFor(m => m.Codigo)
+
+<div id="filtros" class="block">
+    <div class="btn-toolbar botoneraListado">
+        <div class="floatLeft" style="padding-left: 20px;">
+            @Html.Bootstrap().ActionLinkButton("Actualizar", "ConsultaCheque").Class("btn-primary ").RouteValues(new { id=Model.Codigo})
+        </div>
+        <div class="btn-group" style="margin-left: 10px">
+            @Html.Bootstrap().ActionLinkButton("Imprimir", "ReportCheque").Class("btn-primary2-mf").Id("btn_imprimir").RouteValues(new{id=Model.Codigo})
+        </div>
+    </div>
+</div>
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Banco)
@@ -70,7 +86,9 @@
     @Html.LabelForRequired(model => model.DescripcionEstado)
 </div>
 <div class="editor-field ">
+    <strong>
     <div>@Html.DisplayFor(model => model.DescripcionEstado)</div>
+        </strong>
     <div>@Html.DisplayFor(model => model.DescripcionAdicionalDestino)</div>
 </div>
 <div class="clear-both"></div>
@@ -88,7 +106,7 @@
     @Html.LabelForRequired(model => model.Financista)
 </div>
 <div class="editor-field">
-    @Html.DisplayFor(model => model.Financista.Nombre)
+    @Html.Bootstrap().ActionLink(Model.Financista.Nombre, BaseController.DETAILS, FinancistasController.CONTROLLER).RouteValues(new { id = Model.Financista.Codigo })
 </div>
 <div class="clear-both"></div>
 
@@ -101,6 +119,33 @@
     
 </div>
 <div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.ClienteOrigen)
+</div>
+<div class="editor-field">
+        @Html.Bootstrap().ActionLink(Model.ClienteOrigen.Nombre, BaseController.DETAILS, ClientesController.CONTROLLER).RouteValues(new { id = Model.ClienteOrigen.Codigo })
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.VehiculoOrigen)
+</div>
+<div class="editor-field">
+     @Html.Bootstrap().ActionLink(Model.VehiculoOrigen.Ficha, BaseController.DETAILS, VehiculosController.CONTROLLER).RouteValues(new { id = Model.VehiculoOrigen.Codigo })
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Sucursal)
+</div>
+<div class="editor-field">
+    @Html.Bootstrap().ActionLink(Model.Sucursal.Nombre, BaseController.DETAILS, SucursalesController.CONTROLLER).RouteValues(new { id = Model.Sucursal.Codigo })
+</div>
+<div class="clear-both"></div>
+
 
 <div class="espacio2"></div>
 

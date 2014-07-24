@@ -303,6 +303,9 @@
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Consultas\DXReportConsultaCheque.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Consultas\DXReportConsultaVale.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1959,6 +1962,8 @@
     <Content Include="Views\Acvs\list.cshtml" />
     <Content Include="Views\Acvs\report.cshtml" />
     <Content Include="Views\ChEmitidos\_chequesDebitar.cshtml" />
+    <Content Include="Views\Cheques\ReportCheque.cshtml" />
+    <Content Include="Views\Cheques\_reportCheque.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
@@ -2005,6 +2010,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\Consultas\DXReportConsultaCheque.resx">
+      <DependentUpon>DXReportConsultaCheque.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Consultas\DXReportConsultaVale.resx">
       <DependentUpon>DXReportConsultaVale.cs</DependentUpon>
     </EmbeddedResource>

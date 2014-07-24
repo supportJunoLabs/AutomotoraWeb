@@ -43,25 +43,23 @@
     }
 </style>
 
-
-@using (Html.BeginForm(null, null, FormMethod.Post,new { id="formPrincipal" })) {
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
     @Html.HiddenFor(model => model.idParametros)
     @Html.HiddenFor(model => model.Accion, new { id = "accion" })
     
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")      
     
-    <div id="filtros" class="block" style="margin-right: 5px">
+    <div id="filtros" class="block">
         <div class="btn-toolbar botoneraListado">
             <div class="btn-group">
-                    <input type="button" id="btn_actualizar" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar"  />
-                </div>
-                <div class="btn-group" style="margin-left: 10px">
-                    <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
-                </div>
+                <input type="button" id="btn_actualizar" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
             </div>
-        <div id="containerLinea1" style="padding-bottom:20px">
-
+            <div class="btn-group" style="margin-left: 10px">
+                <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
+            </div>
+        </div>
+        <div id="containerLinea1" style="padding-bottom: 20px; height:200px">
             <div id="filtro_fechas" class="floatLeft">
                 <fieldset id="fieldsetFecha">
                     <legend>Fecha</legend>
@@ -76,7 +74,7 @@
                             <div class="clear-both"></div>
                         </div>
                         <div id="containerHasta" class="floatLeft">
-                            <div class="floatLeft" style="text-align: right; padding-right: 5px; padding-left:20px">
+                            <div class="floatLeft" style="text-align: right; padding-right: 5px; padding-left: 20px">
                                 <label>Hasta</label>
                             </div>
                             <div class="floatRight editor-field editor-field-small">
@@ -87,35 +85,35 @@
                     </div>
                 </fieldset>
             </div>
-
-             <div id="filtro_estado" class="floatLeft">
+            
+            <div id="filtro_estado" class="floatLeft">
                 <fieldset id="fieldsetEstado">
                     <legend>Estado</legend>
                     <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.PENDIENTES, new { id = "rb_pendientes" })  Pendientes
                     </div>
-                    <div class="renglon-bajo" >
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.DEPOSITADOS, new { id = "rb_depositados" })  Depositados
                     </div>
                     <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.DESCONTADOS, new { id = "rb_descontados" })  Descontados
                     </div>
-                    <div class="renglon-bajo" >
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.RECHAZADOS, new { id = "rb_rechazados" })  Rechazados
                     </div>
-                    <div class="renglon-bajo" >
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.TERCEROS, new { id = "rb_terceros" })  Pasados a Terceros
                     </div>
-                    <div class="renglon-bajo" >
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.CANJEADOS, new { id = "rb_canjeados" })  Canjeados
                     </div>
-                    <div class="renglon-bajo" >
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Situacion, ChequeFiltro.SITUACION.RETIRADOS, new { id = "rb_retirados" })  Retirados Caja
                     </div>
                 </fieldset>
             </div>
 
-             <div id="filtro_sucursal" class="floatLeft">
+            <div id="filtro_sucursal" class="floatLeft">
                 <fieldset id="fieldsetsucursal">
                     <legend>Sucursal</legend>
                     <div>
@@ -138,13 +136,13 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="clear-both"></div>
         </div>
     </div>
+
 }
 
 
-<div class="clear-both"></div>
+    <div class="clear-both"></div>   
 
 <div id="divGrilla">
     @Html.Partial("_listCheques", Model)

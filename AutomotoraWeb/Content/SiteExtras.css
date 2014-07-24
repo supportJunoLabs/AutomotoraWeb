@@ -152,8 +152,10 @@ body {
     line-height: 30px;
 }
 
-
 input[type="radio"]{
     margin-top: -1px;
   vertical-align: middle;
+}
+input[type="checkbox"] {
+    vertical-align: top;
 }

@@ -41,6 +41,10 @@
     legend {
         margin-bottom: 10px;
     }
+
+       body {
+        line-height:20px;
+    }
 </style>
 
 
@@ -51,7 +55,7 @@
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")      
     
-    <div id="filtros" class="block" style="margin-right: 5px">
+    <div id="filtros" class="block" >
         <div class="btn-toolbar botoneraListado">
             <div class="btn-group">
                 <input type="button" id="btn_actualizar" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
@@ -60,7 +64,7 @@
                 <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
             </div>
         </div>
-        <div id="containerLinea1">
+        <div id="containerLinea1" style="padding-bottom:20px ;height:130px" >
 
             <div id="filtro_fechas" class="floatLeft">
                 <fieldset id="fieldsetFecha">
@@ -91,16 +95,16 @@
             <div id="filtro_estado" class="floatLeft">
                 <fieldset id="fieldsetEstado">
                     <legend>Estado</legend>
-                    <div>
+                    <div >
                         @Html.RadioButtonFor(model => model.Filtro.Status, ChequeEmitido.CHEQUE_PENDIENTE, new { id = "rb_pendientes" })  Pendientes
                     </div>
-                    <div style="vertical-align: middle">
+                    <div >
                         @Html.RadioButtonFor(model => model.Filtro.Status, ChequeEmitido.CHEQUE_DEBITADO, new { id = "rb_debitados" })  Debitados
                     </div>
-                    <div>
+                    <div >
                         @Html.RadioButtonFor(model => model.Filtro.Status, ChequeEmitido.CHEQUE_EXTORNADO, new { id = "rb_extornados" })  Extornados
                     </div>
-                    <div>
+                    <div >
                         @Html.RadioButtonFor(model => model.Filtro.Status, ChequeEmitido.CHEQUE_ANULADO, new { id = "rb_anulados" })  Anulados
                     </div>
                 </fieldset>
@@ -140,7 +144,7 @@
 
 <div id="divGrilla">
     @Html.Partial("_listCheques", Model)
-</div>-
+</div>
 
 <div style="padding-top: 30px" id="sfinGeneral">
     <div class="label-xxlarge" style="padding-left: 0px;">
