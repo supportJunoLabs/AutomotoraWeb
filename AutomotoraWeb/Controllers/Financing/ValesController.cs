@@ -30,35 +30,91 @@ namespace AutomotoraWeb.Controllers.Financing
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Financistas = Financista.FinancistasTodos;
 
-            //if (usuario.MultiSucursal) {
-            //    ViewBag.SucursalesTransaccion = Sucursal.Sucursales;
-            //} else {
-            //    List<Sucursal> listSucursal = new List<Sucursal>();
-            //    listSucursal.Add(usuario.Sucursal);
-            //    ViewBag.SucursalesTransaccion = listSucursal;
-            //}
         }
 
         #region ConsultaVales
 
-        private Vale _consultarVale(string idVale) {
-            Vale v = new Vale();
-            if (idVale != null && idVale.Trim() != "") {
-                v.Codigo = idVale;
-                v.Consultar();
+        //El id Corrresonde al numero de vale
+        public ActionResult ConsultaVale(string id) {
+            ConsultaValeModel m = new ConsultaValeModel();
+            m.Vale = new Vale();
+            m.Cliente = new Cliente();
+            if (!string.IsNullOrWhiteSpace(id)) {
+                m.Vale.Codigo = id;
+                m.Vale.Consultar();
+                m.Cliente = m.Vale.ClienteOrigen;
             }
-            ViewData["idParametros"] = v.Codigo;
-            return v;
+            ViewBag.SoloLectura = true;
+            return View("ConsultaVale", m);
         }
 
-        public ActionResult ConsultaVale(string idVale) {
-            Vale v = _consultarVale(idVale);
-            return View("ConsultaVale", v);
+        //El id corresponde al cliente
+        public ActionResult ConsultaValesCliente(int? id) {
+            ConsultaValeModel m = new ConsultaValeModel();
+            m.Vale = new Vale();
+            m.Cliente = new Cliente();
+            if (id != null) {
+                m.Cliente.Codigo = id??0;
+                m.Cliente.Consultar();
+            }
+            ViewBag.SoloLectura = true;
+            return View("ConsultaVale", m);
         }
 
-        //public ActionResult ConsultaValeCliente(int? idCliente) { 
+        //desde el javascript de cambio en ddl clientes
+        public ActionResult ValesCliente(int idCliente) {
+            ConsultaValeModel m = new ConsultaValeModel();
+            m.Cliente = new Cliente();
+            m.Cliente.Codigo = idCliente;
+            ViewBag.SoloLectura = true;
+            return PartialView("_valesCliente", m);
+        }
 
-        //}
+
+        //desde el javascript de cambio en ddl vales
+        public ActionResult DetallesVale(string idVale) {
+            ConsultaValeModel m = new ConsultaValeModel();
+            m.Vale = new Vale();
+            m.Vale.Codigo = idVale;
+            m.Vale.Consultar();
+            m.Cliente = m.Vale.ClienteOrigen;
+            ViewBag.SoloLectura = true;
+            return PartialView("_datosDetalleVale", m);
+        }
+
+        public ActionResult ReportVale(string id) {
+            if (string.IsNullOrWhiteSpace(id)) {
+                return RedirectToAction("ConsultaVale");
+            }
+            Vale v = new Vale();
+            v.Codigo = id;
+            //v.Consultar();
+            ViewData["idParametros"] = id;
+            return View("ReportVale", v);
+        }
+
+        public ActionResult ReportValePartial(string idParametros) {
+            XtraReport rep = _generarReporteVale(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportVale");
+        }
+
+        public ActionResult ReportValeExport(string idParametros) {
+            XtraReport rep = _generarReporteVale(idParametros);
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        private XtraReport _generarReporteVale(string idParametros) {
+            Vale v = new Vale();
+            v.Codigo = idParametros;
+            v.Consultar();
+            List<Vale> ll = new List<Vale>();
+            ll.Add(v);
+            XtraReport rep = new DXReportConsultaVale();
+            rep.DataSource = ll;
+            return rep;
+        }
 
         #endregion
 
@@ -243,7 +299,7 @@ namespace AutomotoraWeb.Controllers.Financing
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
         public ActionResult ValesRechazablesGrilla(GridLookUpModel model) {
-            model.Opciones = Vale.ValesRechazables();
+            model.Opciones = new TRValeRechazar().ValesRechazables();
             return PartialView("_selectValeRechazar", model);
         }
 

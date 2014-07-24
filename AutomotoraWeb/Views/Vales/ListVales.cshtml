@@ -60,7 +60,7 @@
                     <input type="button" id="btn_imprimir" class="btn btn-primary2-mf" name="btnSubmit" title="Imprimir" value="Imprimir" />
                 </div>
             </div>
-        <div id="containerLinea1">
+        <div id="containerLinea1" style="padding-bottom:20px    ">
 
             <div id="filtro_fechas" class="floatLeft">
                 <fieldset id="fieldsetFecha">
@@ -91,22 +91,22 @@
              <div id="filtro_estado" class="floatLeft">
                 <fieldset id="fieldsetEstado">
                     <legend>Estado</legend>
-                    <div>
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Estado, ValeFiltro.ESTADO_VALE.PENDIENTE_PARCIAL, new { id = "rb_pendientesyparciales" })  Pendientes o Pago Parcial
                     </div>
-                    <div style="vertical-align: middle">
+                    <div  class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Estado, ValeFiltro.ESTADO_VALE.PENDIENTE, new { id = "rb_pendientes" })  Pendientes
                     </div>
-                    <div>
+                    <div  class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Estado, ValeFiltro.ESTADO_VALE.PAGO_PARCIAL, new { id = "rb_parciales" })  Pago Parcial
                     </div>
-                    <div>
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Estado, ValeFiltro.ESTADO_VALE.COBRADO, new { id = "rb_cobrados" })  Cobrados
                     </div>
-                    <div>
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Estado, ValeFiltro.ESTADO_VALE.DESCONTADO, new { id = "rb_descontados" })  Descontados
                     </div>
-                    <div>
+                    <div class="renglon-bajo">
                         @Html.RadioButtonFor(model => model.Filtro.Estado, ValeFiltro.ESTADO_VALE.RENOVADO, new { id = "rb_renovados" })  Renovados
                     </div>
                 </fieldset>

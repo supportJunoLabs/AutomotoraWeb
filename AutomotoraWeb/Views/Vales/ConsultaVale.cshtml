@@ -1,4 +1,4 @@
-﻿@model DLL_Backend.Vale
+﻿@model AutomotoraWeb.Models.ConsultaValeModel
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 
@@ -7,24 +7,42 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="display-label ">
-    @Html.LabelForRequired(model => model.Venta.Cliente)
-</div>
-<div class="editor-field editor-field-xlarge xxlarge">
-    @Html.DdlOrDisplayFor(model => model.Venta.Cliente.Codigo, false, model => model.Venta.Cliente.Nombre,
-                new SelectList(Cliente.Clientes(), "Codigo", "Nombre"), "--Seleccionar Cliente--",
+<div id="filtros" class="block">
+    <div class="btn-toolbar botoneraListado">
+        <div class="floatLeft" style="padding-left: 20px;">
+            @Html.Bootstrap().Button().Text("Actualizar").Class("btn-primary ").Id("btn_refreshVales")
+        </div>
+        <div class="btn-group" style="margin-left: 10px">
+            @Html.Bootstrap().ActionLinkButton("Imprimir", "ReportVale").Class("btn-primary2-mf").Id("btn_imprimir").RouteValues(new{id=Model.Vale.Codigo})
+        </div>
+    </div>
+
+    <div style="margin-left: 30px">
+        <div class="display-label label-mini">
+            @Html.LabelFor(model => model.Cliente)
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, false, model => model.Cliente.Nombre,
+                new SelectList(Vale.ClientesVales(), "Codigo", "Nombre"), "--Seleccionar Cliente--",
                 new { id = "ddlClientes", @class = "xxlarge" })
-</div>
-<div class="floatLeft" style="padding-left: 20px;">
-    <input type="button" id="btn_VerCliente" title="Datos Cliente" class="btn btn-info btn-small" name="btn_VerCliente" value="Datos Cliente" />
-</div>
-<div class="clear-both"></div>
+        </div>
+        <div class="floatLeft" style="padding-left: 20px;">
+            <a href="/ConsultaVale/#" id="abtn_verCliente">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Datos Cliente").Id("btn_verCliente")
+            </a>
+        </div>
+        <div class="clear-both"></div>
 
-<div id="divConsulta">
-    CONSULTA VALE PENDIENTE
-   @* @Html.Partial("_sitCliente", Model)*@
+        <div id="divValesCliente">
+            @Html.Partial("_valesCliente", Model)
+        </div>
+    </div>
+
 </div>
 
-@section Scripts {
-    <script type="text/javascript" src="/scripts/AutomotoraWeb/ValesCliente.js"></script>
-}
+<div id="divDetalleVale">
+    @Html.Partial("_datosDetalleVale", Model)
+</div>
+
+
+<script type="text/javascript" src="/scripts/AutomotoraWeb/ConsultaVale1.js"></script>

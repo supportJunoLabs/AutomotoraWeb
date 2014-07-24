@@ -1,0 +1,13 @@
+﻿@model DLL_Backend.Vale
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Consulta de Vales";
+}
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", "ConsultaVale").Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
+</div>
+<div class="clear-both"></div>
+
+@Html.Partial("_reportVale")

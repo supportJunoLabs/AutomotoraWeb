@@ -1,0 +1,17 @@
+﻿@model AutomotoraWeb.Models.ConsultaValeModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+<div class="display-label label-mini">
+    @Html.LabelFor(model => model.Vale)
+</div>
+<div class="editor-field editor-field-xlarge xxlarge floatLeft">
+    @Html.DdlOrDisplayFor(model => model.Vale.Codigo, false, model => model.Vale.Descripcion,
+                new SelectList(Model.Cliente.ValesNoAnulados(), "Codigo", "Descripcion"), "--Seleccionar Vale--",
+                new { id = "ddlVales", @class = "xxlarge" })
+</div>
+
+
+<div class="clear-both"></div>
+
+<script type="text/javascript" src="/scripts/AutomotoraWeb/ConsultaVale2.js"></script>

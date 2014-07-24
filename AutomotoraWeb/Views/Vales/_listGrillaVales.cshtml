@@ -13,7 +13,12 @@
         new ColumnaGrilla {Campo="Codigo", Ancho=100, Titulo="Codigo",
                  Hipervinculo=true, Haccion="ConsultaVale", Hcontrolador=ValesController.CONTROLLER, HCampoParametro="Codigo"},
         new ColumnaGrilla {Campo="Importe", Ancho=120, Titulo="Importe", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
-        new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Ancho=100, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
+        new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Ancho=100, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
+        new ColumnaGrilla {Campo ="ImporteCobrado",Ancho=120, Titulo="Cobrado", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+        new ColumnaGrilla {Campo="ImporteCobrado.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Ancho=100, Titulo="Cobrado "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
+        new ColumnaGrilla {Campo ="ImporteSaldo",Ancho=120, Titulo="Saldo", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+        new ColumnaGrilla {Campo="ImporteSaldo.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Ancho=100, Titulo="Saldo "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
+            
         new ColumnaGrilla {Campo="Vencimiento", Ancho=100, Titulo="Vencimiento"},
         new ColumnaGrilla {Campo="ClienteOrigen.Nombre", Ancho=200, Titulo="Cliente", LargoMax=40,
                     Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="ClienteOrigen.Codigo"},
