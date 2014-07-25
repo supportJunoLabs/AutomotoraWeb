@@ -1,0 +1,42 @@
+﻿@model List<DLL_Backend.ChequeEmitido>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Cuenta.Banco", Titulo="Banco", Ancho=100},
+        new ColumnaGrilla {Campo="Cuenta.Numero", Titulo="Cuenta", Ancho=70},
+        new ColumnaGrilla {Campo="Numero", LargoMax=15, Ancho=70},
+        new ColumnaGrilla {Campo="FechaEmision", Ancho=90, Titulo="F.Emision"},
+        new ColumnaGrilla {Campo="FechaVencimiento", Titulo="Vencimiento", Ancho=100},
+        new ColumnaGrilla {Campo="Importe", Titulo="Importe", Ancho=150},
+        new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, Ancho=120},
+        new ColumnaGrilla {Campo="DescripcionEstado", Titulo="Estado", Ancho=90},
+        new ColumnaGrilla {Campo="Observaciones", LargoMax=80, Ancho=200}
+        };
+    
+             
+    ig.NameGrid = "grilla";
+    ig.Controller = ChEmitidosController.CONTROLLER;
+    ig.ActionCallbackRoute = "grillaDebitables";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.ChequeEmitido.ChequeEmitidoMD);
+    ig.Estatica = true;
+
+    ig.AddButton(new BotonGrilla(BaseController.DETAILS, ChEmitidosController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
+    ig.AccionesAlComienzo = true;
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = ChEmitidosController.CONTROLLER;
+    ig.AccionDobleClick = BaseController.DETAILS;
+    ViewBag.InfoGrilla = ig;    
+
+}
+
+@Html.Partial("_generalGrid", Model)
+  

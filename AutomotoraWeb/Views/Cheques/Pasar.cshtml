@@ -34,6 +34,11 @@
         <div class="floatLeft" style="margin-left: 5px">
             @Html.ValidationMessageFor(model => model.Cheque.Codigo)
         </div>
+        <div class="floatLeft" style="padding-left: 20px;">
+            <a href="#" id="abtn_verCheque">
+                  @Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Consulta Cheque").Id("btn_verCheque")
+            </a>
+        </div>
         @Html.HiddenFor(model => model.Cheque.Codigo, new { id = "codigoCheque" })
 
     </div>

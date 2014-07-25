@@ -1,9 +1,12 @@
-﻿@{
+﻿@using DLL_Backend;
+
+@{
     ViewBag.Title = "Debitar Cheques Emitidos Vencidos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="renglon-alto"></div>  
+
+@Html.Partial("_chequesDebitar", ChequeEmitido.ChequesDebitables())
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 

@@ -268,6 +268,10 @@ namespace AutomotoraWeb.Controllers.Bank
              return View();
          }
 
+         public ActionResult GrillaDebitables() {
+             return PartialView("_chequesDebitar", ChequeEmitido.ChequesDebitables());
+         }
+
          [HttpPost]
          public ActionResult EjecutarDebitar() {
              try {

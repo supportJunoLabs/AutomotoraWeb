@@ -274,6 +274,7 @@
     <Compile Include="Models\AbstractModel.cs" />
     <Compile Include="Models\AlertaModel.cs" />
     <Compile Include="Models\BancoSaldoModel.cs" />
+    <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ListadoAcvsModel.cs" />
     <Compile Include="Models\Grilla\BotonAjaxGrilla.cs" />
     <Compile Include="Models\Grilla\BotonGrilla.cs" />
@@ -302,6 +303,12 @@
     <Compile Include="Models\SituacionCliente.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Consultas\DXReportConsultaCheque.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Consultas\DXReportConsultaVale.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Listados\DXListadoAcvs.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -1657,11 +1664,13 @@
     <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChEmitido.js" />
     <Content Include="Scripts\AutomotoraWeb\ChEmitidoCreateModif.js" />
+    <Content Include="Scripts\AutomotoraWeb\ChequesEmitidosShow.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesEmitidosListado.js" />
     <Content Include="Scripts\AutomotoraWeb\AcvsListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\ConsultaVale2.js" />
     <Content Include="Scripts\AutomotoraWeb\RechazarVale.js" />
-    <Content Include="Scripts\AutomotoraWeb\ValesCliente.js" />
+    <Content Include="Scripts\AutomotoraWeb\ConsultaVale1.js" />
     <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
@@ -1952,6 +1961,9 @@
     <Content Include="Views\Acvs\details.cshtml" />
     <Content Include="Views\Acvs\list.cshtml" />
     <Content Include="Views\Acvs\report.cshtml" />
+    <Content Include="Views\ChEmitidos\_chequesDebitar.cshtml" />
+    <Content Include="Views\Cheques\ReportCheque.cshtml" />
+    <Content Include="Views\Cheques\_reportCheque.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
@@ -1984,6 +1996,10 @@
     <Content Include="Views\Ventas\_seleccionMPFinanciacion.cshtml" />
     <Content Include="Views\Ventas\_seleccionMPVales.cshtml" />
     <Content Include="Views\Ventas\_seleccionMPPermuta.cshtml" />
+    <Content Include="Views\Vales\_valesCliente.cshtml" />
+    <Content Include="Views\Vales\_datosDetalleVale.cshtml" />
+    <Content Include="Views\Vales\ReportVale.cshtml" />
+    <Content Include="Views\Vales\_reportVale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2005,6 +2021,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\Consultas\DXReportConsultaCheque.resx">
+      <DependentUpon>DXReportConsultaCheque.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Consultas\DXReportConsultaVale.resx">
+      <DependentUpon>DXReportConsultaVale.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoAcvs.resx">
       <DependentUpon>DXListadoAcvs.cs</DependentUpon>
     </EmbeddedResource>

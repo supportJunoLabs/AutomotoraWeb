@@ -20,7 +20,7 @@
             new ColumnaGrilla {Campo="Vehiculo.Anio", Ancho=50, Titulo="Año", Alineacion=ColumnaGrilla.ALINEACIONES.CENTRO, EsEntero=true},
             new ColumnaGrilla {Campo="Vehiculo.Matricula", Ancho=100, Titulo="Matricula"},
             new ColumnaGrilla {Campo="Importe", Ancho=120},
-            new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefaultProp.Monto",Formato="#,##0.00", Ancho=100, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
+            new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Ancho=100, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true},
             new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=120, Titulo="Sucursal",
                     Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"},
             new ColumnaGrilla {Campo="Vendedor.Nombre", Ancho=150, Titulo="Vendedor",

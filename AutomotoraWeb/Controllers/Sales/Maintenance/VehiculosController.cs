@@ -162,9 +162,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         private void _addResumeGastosToViewBag(Vehiculo vehiculo) {
-            ViewBag.initialCost = vehiculo.Costo.ImporteEnMonedaDefault();
+            ViewBag.initialCost = vehiculo.Costo.ImporteEnMonedaDefault;
             ViewBag.totalGastos = vehiculo.TotalGastos;
-            Importe actualCost = vehiculo.Costo.ImporteEnMonedaDefault();
+            Importe actualCost = vehiculo.Costo.ImporteEnMonedaDefault;
             actualCost.Monto = actualCost.Monto + vehiculo.TotalGastos.Monto;
             ViewBag.actualCost = actualCost;
         }
@@ -506,9 +506,9 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
         }
 
         private JsonResult createJsonResultGastosOK(Vehiculo vehiculo) {
-            Importe initialCost = vehiculo.Costo.ImporteEnMonedaDefault();
+            Importe initialCost = vehiculo.Costo.ImporteEnMonedaDefault;
             Importe totalGastos = vehiculo.TotalGastos;
-            Importe actualCost = vehiculo.Costo.ImporteEnMonedaDefault();
+            Importe actualCost = vehiculo.Costo.ImporteEnMonedaDefault;
             actualCost.Monto = actualCost.Monto + vehiculo.TotalGastos.Monto;
 
             return Json(new {

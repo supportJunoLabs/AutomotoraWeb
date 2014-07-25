@@ -143,6 +143,41 @@ namespace AutomotoraWeb.Controllers.Bank {
             return PartialView("_movimientosCheque", ch.Movimientos);
         }
 
+        public ActionResult ReportCheque(int? id) {
+            if (id==null || id==0) {
+                return RedirectToAction("ConsultaCheque");
+            }
+            Cheque v = new Cheque();
+            v.Codigo = id??0;
+            //v.Consultar();
+            ViewData["idParametros"] = id;
+            return View("ReportCheque", v);
+        }
+
+        public ActionResult ReportChequePartial(int idParametros) {
+            XtraReport rep = _generarReporteCheque(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportCheque");
+        }
+
+        public ActionResult ReportChequeExport(int idParametros) {
+            XtraReport rep = _generarReporteCheque(idParametros);
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        private XtraReport _generarReporteCheque(int idParametros) {
+            Cheque v = new Cheque();
+            v.Codigo = idParametros;
+            v.Consultar();
+            List<Cheque> ll = new List<Cheque>();
+            ll.Add(v);
+            XtraReport rep = new DXReportConsultaCheque();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+
         #endregion
 
         #region PasarCheque

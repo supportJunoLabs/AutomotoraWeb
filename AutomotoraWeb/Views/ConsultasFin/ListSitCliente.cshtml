@@ -32,8 +32,10 @@
                 new { id = "ddlClientes", @class = "xxlarge" })
             </div>
             <div class="floatLeft" style="padding-left: 20px;">
-                    <input type="button" id="btn_VerCliente" title="Datos Cliente" class="btn btn-info btn-small" name="btn_VerCliente" value="Datos Cliente" />
-                </div>
+                <a href="#" id="abtn_VerCliente">
+                    @Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Datos Cliente").Id("btn_VerCliente")
+                </a>
+            </div>
             <div class="clear-both"></div>
         </div>
     </div>

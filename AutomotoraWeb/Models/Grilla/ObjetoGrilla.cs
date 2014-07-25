@@ -264,7 +264,7 @@ namespace AutomotoraWeb.Models {
                     listGridViewsBotones.Caption = "Acciones";
                     listGridViewsBotones.CellStyle.HorizontalAlign = HorizontalAlign.Center;
                     int tot = 30 * ig.Botones.Count; //vienen botones, ver la cantidad
-                    listGridViewsBotones.Width = Unit.Pixel(90);
+                    //listGridViewsBotones.Width = Unit.Pixel(90);
                     if (tot < 60) {
                         tot = 60;
                     }
