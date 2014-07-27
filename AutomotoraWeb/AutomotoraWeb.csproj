@@ -1995,7 +1995,6 @@
     <Content Include="Views\Vales\_datosDetalleVale.cshtml" />
     <Content Include="Views\Vales\ReportVale.cshtml" />
     <Content Include="Views\Vales\_reportVale.cshtml" />
-    <Content Include="Views\ConsultasFin\ConsultaVale.cshtml" />
     <Content Include="Views\ConsultasFin\_financiacionesCliente.cshtml" />
     <Content Include="Views\ConsultasFin\_selectFinanciacionConsultar.cshtml" />
     <Content Include="Views\ConsultasFin\_datosDetalleFinanciacion.cshtml" />
