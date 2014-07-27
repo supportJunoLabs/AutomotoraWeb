@@ -67,8 +67,9 @@
         //---------------------------------------------------------------
 
         function deleteImage(id) {
+            var destino='/vehiculos/removePhoto/';
             $.ajax({
-                url: '/vehiculos/removePhoto/',
+                url: destino,
                 cache: false,
                 type: "POST",
                 async: true,
@@ -83,6 +84,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     general_showAvisoPopup('Error al eliminar foto.');
+                    general_showErrorAction(containerErrorMessage, textStatus, errorThrown);
                 },
                 beforeSend: showLoading,
                 complete: hideLoading
@@ -92,8 +94,9 @@
         //---------------------------------------------------------------
 
         function savePhotoOrder() {
+            var destino ='/vehiculos/savePhotoOrder/'
             $.ajax({
-                url: '/vehiculos/savePhotoOrder/',
+                url: destino,
                 cache: false,
                 type: "POST",
                 async: true,
@@ -110,6 +113,7 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     general_showAvisoPopup('Error al salvar orden de fotos.');
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
                 },
                 beforeSend: showLoading,
                 complete: hideLoading
@@ -165,10 +169,10 @@
             formdata.append("idVehiculo", $("#idVehiculoFoto").val());
 
             //alert($("#camposesion").val());
-
+            var destino = '/Vehiculos/Upload';
             $.ajax({
                 type: "POST",
-                url: '/Vehiculos/Upload',
+                url: destino,
                 data: formdata,
                 processData: false,
                 success: function (data) {
@@ -180,6 +184,7 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert("Error al subir archivo");
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
                 },
                 dataType: 'json',
                 contentType: false,

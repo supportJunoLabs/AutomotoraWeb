@@ -5,19 +5,18 @@
 
     //alert(selectedID);
     $("#abtn_VerCliente").prop("href", "/Clientes/details/" + selectedID);
-
+    var destino = '/ConsultasFin/ListSitClientePartial/';
     $.ajax({
         cache: false,
         type: "GET",
-        url: '/ConsultasFin/ListSitClientePartial/',
+        url: destino,
         data: { "idCliente": selectedID },
         success: function (data) {
             $('#divListado').html('');
             $('#divListado').html(data);
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            
-            alert('Error al traer los datos.');                    
+            general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
         },
         beforeSend: showLoading,
         complete: hideLoading

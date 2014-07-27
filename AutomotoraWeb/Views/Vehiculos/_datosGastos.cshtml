@@ -125,14 +125,16 @@
             $("#messageErrorCreateGasto").html("");
 
             var id = _getId($(this));
-
+            var destino='@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))'
             $.ajax({
-                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                url: destino,
                 type: 'GET',
                 async: true,
                 data: 'idVehiculo=' + $("#idVehiculoGasto").val(),
                 success: showCreateGastosPopup,
-                error: general_showErrorPopup
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                }
             });
 
         });
@@ -142,14 +144,16 @@
             $("#messageErrorDetailGasto").html("");
 
             var id = _getId($(this));
-
+            var destino = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DETAILS_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))'
             $.ajax({
-                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DETAILS_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                url: destino,
                 type: 'GET',
                 async: true,
                 data: 'id=' + id,
                 success: showDetailsGastosPopup,
-                error: general_showErrorPopup
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                }
             });
         });
 
@@ -158,14 +162,16 @@
             $("#messageErrorEditGasto").html("");
 
             var id = _getId($(this));
-
+            var destino = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
             $.ajax({
-                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                url: destino,
                 type: 'GET',
                 async: true,
                 data: 'id=' + id,
                 success: showEditGastosPopup,
-                error: general_showErrorPopup
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                }
             });
 
         });
@@ -175,14 +181,16 @@
             $("#messageErrorDeleteGasto").html("");
 
             var id = _getId($(this));
-
+            var destino = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
             $.ajax({
-                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                url: destino,
                 type: 'GET',
                 async: true,
                 data: 'id=' + id,
                 success: showDeleteGastosPopup,
-                error: general_showErrorPopup
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                }
             });
 
         });
@@ -297,15 +305,15 @@
     }
 
     function showDetailsGastosPopup(data){
-        general_showPopup(data, "containerDetailsGastosPopup", 220, 500);
+        general_showPopup(data, "containerDetailsGastosPopup", 250, 500);
     }
 
     function showEditGastosPopup(data){
-        general_showPopup(data, "containerEditGastosPopup", 350, 760);
+        general_showPopup(data, "containerEditGastosPopup", 400, 760);
     }
 
     function showDeleteGastosPopup(data){
-        general_showPopup(data, "containerDeleteGastosPopup", 220, 500);
+        general_showPopup(data, "containerDeleteGastosPopup", 250, 500);
     }
 
     /* ================================================== */

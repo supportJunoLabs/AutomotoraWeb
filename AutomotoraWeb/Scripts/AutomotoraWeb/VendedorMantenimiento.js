@@ -3,16 +3,17 @@ $(document).ready(function () {
 
     $('#deleteFotoBtn').click(function () {
         //alert("borrar foto");
+        var destino='/Vendedores/DeleteFoto';
         $.ajax({
             type: "POST",
-            url: '/Vendedores/DeleteFoto',
+            url: destino,
             data: $("#camposesion").val(),
             processData: false,
             success: function (data) {
                     $("#imgPhoto").attr("src", "../../Content/Images/ExampleImage.png");
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert("Error al desasociar foto");
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
             dataType: 'json',
             contentType: false,
@@ -34,10 +35,10 @@ $(document).ready(function () {
         formdata.append("idsesion", $("#camposesion").val());
 
         //alert($("#camposesion").val());
-
+        var destino='/Vendedores/Upload';
         $.ajax({
             type: "POST",
-            url: '/Vendedores/Upload',
+            url: destino,
             data: formdata,
             processData: false,
             success: function (data) {
@@ -48,6 +49,7 @@ $(document).ready(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Error al subir archivo");
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
             dataType: 'json',
             contentType: false,

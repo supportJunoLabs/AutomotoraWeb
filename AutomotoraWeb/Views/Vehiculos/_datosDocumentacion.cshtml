@@ -104,14 +104,16 @@
             $("#messageErrorCreateDocumentacion").html("");
 
             var id = _getId($(this));
-
+            var destino='@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
             $.ajax({
-                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                url: destino,
                 type: 'GET',
                 async: true,
                 data: 'idVehiculo=' + $("#idVehiculoDocumentacion").val(),
                 success: showCreateDocumentacionPopup,
-                error: general_showErrorPopup
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                }
             });
 
         });
@@ -121,14 +123,16 @@
             $("#messageErrorDetailDocumentacion").html("");
 
             var id = _getId($(this));
-
+            var destino = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DETAILS_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
             $.ajax({
-                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DETAILS_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                url: destino ,
                 type: 'GET',
                 async: true,
                 data: 'id=' + id,
                 success: showDetailsDocumentacionPopup,
-                error: general_showErrorPopup
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                }
             });
         });
 
@@ -137,14 +141,16 @@
             $("#messageErrorEditDocumentacion").html("");
 
             var id = _getId($(this));
-
+            var destino = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
             $.ajax({
-                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                url: destino ,
                 type: 'GET',
                 async: true,
                 data: 'id=' + id,
                 success: showEditDocumentacionPopup,
-                error: general_showErrorPopup
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                }
             });
 
         });
@@ -154,14 +160,16 @@
             $("#messageErrorDeleteDocumentacion").html("");
 
             var id = _getId($(this));
-
+            var destino = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
             $.ajax({
-                url: '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))',
+                url: destino,
                 type: 'GET',
                 async: true,
                 data: 'id=' + id,
                 success: showDeleteDocumentacionPopup,
-                error: general_showErrorPopup
+                error: function (xhr, ajaxOptions, thrownError) {
+                    general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                }
             });
 
         });
