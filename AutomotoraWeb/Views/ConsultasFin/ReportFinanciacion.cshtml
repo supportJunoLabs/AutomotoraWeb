@@ -1,0 +1,15 @@
+﻿@model DLL_Backend.Venta
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Situacion de Cuotas";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", "ConsultaFinanciacion").Class("btn btn-default").RouteValues(new { id=Model.Codigo}))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reportFinanciacion", Model)
