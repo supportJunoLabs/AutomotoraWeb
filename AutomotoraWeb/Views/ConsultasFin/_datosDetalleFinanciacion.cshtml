@@ -1,0 +1,147 @@
+﻿@model AutomotoraWeb.Models.ConsultaVentaModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.Sales.Maintenance;
+
+
+@{ bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false; }
+
+@{ if (Model.Venta != null && Model.Venta.Codigo > 0) {
+    
+    <div class="block">
+        <a href="#datosVenta" class="block-heading icon-play-circle" data-toggle="collapse">&nbsp;&nbsp;&nbsp;Venta</a>
+        <div id="datosVenta" class="block-body collapse in" style="padding-top: 10px; padding-bottom: 10px">
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Codigo)
+            </div>
+            <div class="floatLeft">
+                @Html.DisplayFor(model => model.Venta.Codigo)
+            </div>
+            <div class="floatLeft" style="padding-left: 20px;">
+                @(Html.Bootstrap().ActionLinkButton("Ver Venta", BaseController.DETAILS,
+                    VentasController.CONTROLLER).RouteValues(new { id = Model.Venta.Codigo }).Class("btn-info btn-small"))
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Cliente)
+            </div>
+            <div>
+                @(Html.Bootstrap().ActionLink(Model.Venta.Cliente.Nombre, BaseController.DETAILS,
+                    ClientesController.CONTROLLER).RouteValues(new { id = Model.Venta.Cliente.Codigo }))
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Vehiculo)
+            </div>
+            <div>
+                @(Html.Bootstrap().ActionLink(Model.Venta.Vehiculo.Ficha, BaseController.DETAILS,
+                    VehiculosController.CONTROLLER).RouteValues(new { id = Model.Venta.Vehiculo.Codigo }))
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Vehiculo.Marca)
+            </div>
+            <div>
+                @Html.DisplayFor(model => model.Venta.Vehiculo.Marca)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Vehiculo.Modelo)
+            </div>
+            <div>
+                @Html.DisplayFor(model => model.Venta.Vehiculo.Modelo)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Vehiculo.Anio)
+            </div>
+            <div>
+                @Html.DisplayFor(model => model.Venta.Vehiculo.Anio)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Vehiculo.Matricula)
+            </div>
+            <div>
+                @Html.DisplayFor(model => model.Venta.Vehiculo.Matricula)
+            </div>
+            <div class="clear-both"></div>
+
+             <div class="display-label">
+                Precio
+            </div>
+            <div>
+                @Html.DisplayFor(model => model.Venta.Importe.ImporteTexto)
+            </div>
+            <div class="clear-both"></div>
+
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Vehiculo.Observaciones)
+            </div>
+            <div>
+                @Html.DisplayFor(model => model.Venta.Vehiculo.Observaciones)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Fecha)
+            </div>
+            <div>
+                @Html.DisplayFor(model => model.Venta.Fecha, "{0:dd/MM/yyyy}")
+            </div>
+            <div class="clear-both"></div>
+
+             <div class="display-label">
+                Importe Financiacion:
+            </div>
+            <div>
+                @Html.DisplayFor(model => model.Venta.Financiacion.MontoFinanciado.ImporteTexto)
+            </div>
+            <div class="clear-both"></div>
+
+           
+            <div class="display-label">
+                @Html.DisplayNameFor(model => model.Venta.Observaciones)
+            </div>
+            <div>
+                @Html.DisplayFor(model => model.Venta.Observaciones)
+            </div>
+            <div class="clear-both"></div>
+
+        </div>
+    </div>
+    
+    <div class="block">
+        <a href="#datosVigente" class="block-heading icon-play-circle" data-toggle="collapse">&nbsp;&nbsp;&nbsp;Financiación Vigente</a>
+        <div id="datosVigente" class="block-body collapse in" style="padding-top: 10px; padding-bottom: 10px">
+            @Html.Partial("_cuotasVigentesFinanciacion", Model.Venta.Financiacion.CuotasVigentes)
+        </div>
+    </div>
+    
+    
+       int i = 0;
+       foreach (FinanciacionHistoria fh in Model.Venta.Financiacion.obtenerHistorico()) {
+           i++;
+            <div class="block">
+                <a href="#historico@(i)" class="block-heading icon-play-circle" data-toggle="collapse">&nbsp;&nbsp;&nbsp;@(fh.Fecha.ToString("dd/MM/yyyy"))</a>
+                <div id="historico@(i)" class="block-body collapse out" style="padding-top:10px; padding-bottom:10px">
+                    <div >
+                        @(fh.Observaciones)
+                    </div>
+                    <div>
+                         @Html.Partial("_cuotasHistoricoFinanciacion", fh)
+                    </div>
+                </div>
+            </div>
+       }
+   } 
+}

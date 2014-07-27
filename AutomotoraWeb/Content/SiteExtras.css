@@ -159,3 +159,13 @@ input[type="radio"]{
 input[type="checkbox"] {
     vertical-align: top;
 }
+
+panel-primary {
+    color: #fff;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+
+.block-body table {
+        margin-top: 0px;
+    }

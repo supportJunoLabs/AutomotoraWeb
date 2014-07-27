@@ -1,31 +1,48 @@
-﻿@model DLL_Backend.Venta
+﻿@model AutomotoraWeb.Models.ConsultaVentaModel
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 
 @{
-    ViewBag.Title = "Consulta Financiaciones";
+    ViewBag.Title = "Consulta Financiación";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<div class="display-label ">
-    @Html.LabelForRequired(model => model.Cliente)
-</div>
-<div class="editor-field editor-field-xlarge xxlarge">
-    @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, false, model => model.Cliente.Nombre,
-                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), "--Seleccionar Cliente--",
+<div id="filtros" class="block" style="height:150px">
+    <div class="btn-toolbar botoneraListado">
+        <div class="floatLeft" style="padding-left: 20px">
+            @Html.Bootstrap().Button().Text("Actualizar").Class("btn-primary ").Id("btn_refresh")
+        </div>
+        <div class="btn-group" style="margin-left: 10px">
+            @Html.Bootstrap().ActionLinkButton("Imprimir", "ReportFinanciacion").Class("btn-primary2-mf").Id("btn_imprimir").RouteValues(new{id=Model.Venta.Codigo})
+        </div>
+    </div>
+
+    <div style="margin-left: 30px">
+        <div class="display-label label-small">
+            Cliente
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, false, model => model.Cliente.Nombre,
+                new SelectList(Financiacion.ClientesCuotas(), "Codigo", "Nombre"), "--Seleccionar Cliente--",
                 new { id = "ddlClientes", @class = "xxlarge" })
-</div>
-<div class="clear-both"></div>
+        </div>
+        <div class="floatLeft" style="padding-left: 20px;">
+            <a href="/ConsultaVale/#" id="abtn_verCliente">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Datos Cliente").Id("btn_verCliente")
+            </a>
+        </div>
+        <div class="clear-both"></div>
 
-<div id="divConsulta">
-    CONSULTA FINANCIACION <br />
-    SE ELIJE CLIENTE<br />
-    SE ELIJE UNA DE SUS VENTAS FINANCIADAS<br />
-    O DEBE PODER VENIR ELEGIDA 
-   @* @Html.Partial("_sitCliente", Model)*@
+        <div id="divVentasCliente">
+            @Html.Partial("_financiacionesCliente", Model)
+        </div>
+    </div>
+
 </div>
 
-@section Scripts {
-    <script type="text/javascript" src="/scripts/AutomotoraWeb/ValesCliente.js"></script>
-}
+<div id="divDetalleFinanciacion">
+    @Html.Partial("_datosDetalleFinanciacion", Model)
+</div>
+
+<script type="text/javascript" src="/scripts/AutomotoraWeb/ConsultaFinanciacion1.js"></script>

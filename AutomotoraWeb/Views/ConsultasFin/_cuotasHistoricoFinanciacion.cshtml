@@ -1,0 +1,35 @@
+﻿@model DLL_Backend.FinanciacionHistoria
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Financing;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Numero", Titulo="Cuota Gral", Ancho=80, Alineacion=ColumnaGrilla.ALINEACIONES.CENTRO},
+            new ColumnaGrilla {Campo="NumeroCuotaSetTexto", Titulo="Cuota", Ancho=80, Alineacion=ColumnaGrilla.ALINEACIONES.CENTRO},
+            new ColumnaGrilla {Campo="Importe.ImporteTexto", Titulo="Importe", Ancho=120, Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+            new ColumnaGrilla {Campo="Vencimiento", Titulo="Vencimiento", Ancho=100}//,
+            //new ColumnaGrilla {Campo="ImporteCobrado.ImporteTexto", Titulo="Pago"},
+            //new ColumnaGrilla {Campo="FechaCobro", Titulo="Fecha"},
+            //new ColumnaGrilla {Campo="DescripcionEstado", Titulo="Estado"},
+            // new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista",
+            //    Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="Financista.Codigo"},
+            //new ColumnaGrilla {Campo="CodigoExterno", Titulo="Cod.Financista"}
+
+     };
+    
+    ig.NameGrid = "grillaCuotasHistorico"+Model.Set.ToString();
+    ig.Controller = ConsultasFinController.CONTROLLER;
+    //ig.ActionCallbackRoute = "CuotasVigentesVenta";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Cuota.CuotaMD);
+    ig.DobleClick = false;
+    ig.BotonesMtoEstandar = false;
+    ig.Estatica=true;
+    
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model.Cuotas)
