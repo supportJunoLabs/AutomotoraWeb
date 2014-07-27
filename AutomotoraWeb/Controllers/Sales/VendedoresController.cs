@@ -17,7 +17,7 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 
-namespace AutomotoraWeb.Controllers.Sales.Maintenance {
+namespace AutomotoraWeb.Controllers.Sales {
     public class VendedoresController : SalesController, IMaintenance {
 
         public static string CONTROLLER = "vendedores";

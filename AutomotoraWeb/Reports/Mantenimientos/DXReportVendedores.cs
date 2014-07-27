@@ -6,7 +6,7 @@ using DevExpress.XtraReports.UI;
 using DLL_Backend;
 using AutomotoraWeb.Utils;
 using System.Web;
-using AutomotoraWeb.Controllers.Sales.Maintenance;
+using AutomotoraWeb.Controllers.Sales;
 
 /// <summary>
 /// Summary description for DXReportVendedores

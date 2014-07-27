@@ -1,5 +1,5 @@
 ﻿@model DLL_Backend.Vehiculo
-@using AutomotoraWeb.Controllers.Sales.Maintenance;
+@using AutomotoraWeb.Controllers.Sales;
 @using DLL_Backend;
 @using System.Globalization;
 
@@ -125,7 +125,7 @@
             $("#messageErrorCreateGasto").html("");
 
             var id = _getId($(this));
-            var destino='@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))'
+            var destino='@(Url.Action(VehiculosController.CREATE_GASTO, VehiculosController.CONTROLLER))'
             $.ajax({
                 url: destino,
                 type: 'GET',
@@ -144,7 +144,7 @@
             $("#messageErrorDetailGasto").html("");
 
             var id = _getId($(this));
-            var destino = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DETAILS_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))'
+            var destino = '@(Url.Action(VehiculosController.DETAILS_GASTO, VehiculosController.CONTROLLER))'
             $.ajax({
                 url: destino,
                 type: 'GET',
@@ -162,7 +162,7 @@
             $("#messageErrorEditGasto").html("");
 
             var id = _getId($(this));
-            var destino = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var destino = '@(Url.Action(VehiculosController.EDIT_GASTO, VehiculosController.CONTROLLER))';
             $.ajax({
                 url: destino,
                 type: 'GET',
@@ -181,7 +181,7 @@
             $("#messageErrorDeleteGasto").html("");
 
             var id = _getId($(this));
-            var destino = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var destino = '@(Url.Action(VehiculosController.DELETE_GASTO, VehiculosController.CONTROLLER))';
             $.ajax({
                 url: destino,
                 type: 'GET',
@@ -234,7 +234,7 @@
         }
 
         $("#saveCreateGasto").live("click", function () {
-            var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CREATE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var urlAction = '@(Url.Action(VehiculosController.CREATE_GASTO, VehiculosController.CONTROLLER))';
             _eventClickActionGasto(urlAction, "containerCreateGastosPopup", "messageErrorCreateGasto");
         });
         
@@ -247,7 +247,7 @@
         });
 
         $("#saveEditGasto").live("click", function () {
-            var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.EDIT_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var urlAction = '@(Url.Action(VehiculosController.EDIT_GASTO, VehiculosController.CONTROLLER))';
             _eventClickActionGasto(urlAction, "containerEditGastosPopup", "messageErrorEditGasto");
         });
 
@@ -256,7 +256,7 @@
         });
         
         $("#deleteGasto").live("click", function () {
-            var urlAction = '@(Url.Action(AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.DELETE_GASTO, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var urlAction = '@(Url.Action(VehiculosController.DELETE_GASTO, VehiculosController.CONTROLLER))';
             _eventClickActionGasto(urlAction, "containerDeleteGastosPopup", "messageErrorDeleteGasto");
         });
 

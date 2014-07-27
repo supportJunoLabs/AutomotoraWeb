@@ -17,7 +17,7 @@ using System.Collections;
 using System.IO;
 using System.Drawing;
 
-namespace AutomotoraWeb.Controllers.Sales.Maintenance {
+namespace AutomotoraWeb.Controllers.Sales {
     public class VehiculosController : SalesController, IMaintenance {
 
         public static string CONTROLLER = "vehiculos";
