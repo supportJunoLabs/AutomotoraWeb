@@ -34,6 +34,11 @@ namespace AutomotoraWeb.Controllers.Sales
             return VistaElemento(id);
         }
 
+        public ActionResult VentaVehiculo() {
+            Venta venta = new Venta();
+            return View(venta);
+        }
+
         private ActionResult VistaElemento(int id) {
             try {
                 Venta td = _obtenerElemento(id);

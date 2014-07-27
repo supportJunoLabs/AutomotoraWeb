@@ -1991,6 +1991,17 @@
     <Content Include="Views\Empresa\_datosDetalle.cshtml" />
     <Content Include="Views\Shared\_alertas.cshtml" />
     <Content Include="Views\Clientes\_ventasCliente.cshtml" />
+    <Content Include="Views\Ventas\ventaVehiculo.cshtml" />
+    <Content Include="Views\Ventas\_seleccionDeVehiculos.cshtml" />
+    <Content Include="Views\Ventas\_seleccionDeCondicionesDeVenta.cshtml" />
+    <Content Include="Views\Ventas\_seleccionDeMetodosDePago.cshtml" />
+    <Content Include="Views\Ventas\_seleccionDeSeñasACVs.cshtml" />
+    <Content Include="Views\Ventas\_seleccionMPEfectivo.cshtml" />
+    <Content Include="Views\Ventas\_seleccionMPCheques.cshtml" />
+    <Content Include="Views\Ventas\_seleccionMPBanco.cshtml" />
+    <Content Include="Views\Ventas\_seleccionMPFinanciacion.cshtml" />
+    <Content Include="Views\Ventas\_seleccionMPVales.cshtml" />
+    <Content Include="Views\Ventas\_seleccionMPPermuta.cshtml" />
     <Content Include="Views\Vales\_valesCliente.cshtml" />
     <Content Include="Views\Vales\_datosDetalleVale.cshtml" />
     <Content Include="Views\Vales\ReportVale.cshtml" />
