@@ -11,11 +11,11 @@
     @Html.HiddenFor(model => model.Codigo, new { id = "idVehiculoDocumentacion"})
 
     <div class="btn-toolbar">
-        <div class="btn-group">
+        <div class="btn-toolbar">
             @if (!modoConsulta) {
                 @(Html.Bootstrap().Button().Text("Agregar").Id("createDetailsDocumentacion").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
             }
-        )
+            @(Html.Bootstrap().ActionLinkButton("Generar Comprobante", "ComprobanteDocumentacion", "Documentacion").RouteValues(new { id=Model.Codigo}).Id("generarComprobante").Style(TwitterBootstrap2.ButtonStyle.Default))
         </div>
     </div>
 
@@ -104,7 +104,7 @@
             $("#messageErrorCreateDocumentacion").html("");
 
             var id = _getId($(this));
-            var destino='@(Url.Action(VehiculosController.CREATE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var destino='@(Url.Action(VehiculosController.CREATE_DOC, VehiculosController.CONTROLLER))';
             $.ajax({
                 url: destino,
                 type: 'GET',
@@ -123,7 +123,7 @@
             $("#messageErrorDetailDocumentacion").html("");
 
             var id = _getId($(this));
-            var destino = '@(Url.Action(VehiculosController.DETAILS_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var destino = '@(Url.Action(VehiculosController.DETAILS_DOC, VehiculosController.CONTROLLER))';
             $.ajax({
                 url: destino ,
                 type: 'GET',
@@ -141,7 +141,7 @@
             $("#messageErrorEditDocumentacion").html("");
 
             var id = _getId($(this));
-            var destino = '@(Url.Action(VehiculosController.EDIT_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var destino = '@(Url.Action(VehiculosController.EDIT_DOC, VehiculosController.CONTROLLER))';
             $.ajax({
                 url: destino ,
                 type: 'GET',
@@ -160,7 +160,7 @@
             $("#messageErrorDeleteDocumentacion").html("");
 
             var id = _getId($(this));
-            var destino = '@(Url.Action(VehiculosController.DELETE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var destino = '@(Url.Action(VehiculosController.DELETE_DOC, VehiculosController.CONTROLLER))';
             $.ajax({
                 url: destino,
                 type: 'GET',
@@ -207,7 +207,7 @@
 
 
         $("#saveCreateDocumentacion").live("click", function () {
-            var urlAction = '@(Url.Action(VehiculosController.CREATE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var urlAction = '@(Url.Action(VehiculosController.CREATE_DOC, VehiculosController.CONTROLLER))';
             _eventClickActionDocumentacion(urlAction, "containerCreateDocumentacionPopup", "messageErrorCreateDocumentacion");
         });
 
@@ -220,7 +220,7 @@
         });
 
         $("#saveEditDocumentacion").live("click", function () {
-            var urlAction = '@(Url.Action(VehiculosController.EDIT_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var urlAction = '@(Url.Action(VehiculosController.EDIT_DOC, VehiculosController.CONTROLLER))';
             _eventClickActionDocumentacion(urlAction, "containerEditDocumentacionPopup", "messageErrorEditDocumentacion");
         });
 
@@ -230,7 +230,7 @@
 
         $("#deleteDocumentacion").live("click", function () {
             //alert("hola");  
-            var urlAction = '@(Url.Action(VehiculosController.DELETE_DOC, AutomotoraWeb.Controllers.Sales.Maintenance.VehiculosController.CONTROLLER))';
+            var urlAction = '@(Url.Action(VehiculosController.DELETE_DOC, VehiculosController.CONTROLLER))';
             _eventClickActionDocumentacion(urlAction, "containerDeleteDocumentacionPopup", "messageErrorDeleteDocumentacion");
         });
 
