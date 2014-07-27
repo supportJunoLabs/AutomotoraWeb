@@ -164,7 +164,8 @@
                     //en la lookup no se pone el ancho total como en la gridview, porque al ser flotanto no la extiende en el div contenedor
                     settings.GridViewProperties.Settings.UseFixedTableLayout = true;
                 }
-                settings.GridViewProperties.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+                //En la gridlookup no permito el resizing porque se dibuja mal la grilla y no respeta los valores.
+                //settings.GridViewProperties.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
 
                 //Ancho del combo donde se muestran las opciones elegidas
                 if (ig.AnchoSeleccion > 0) {
