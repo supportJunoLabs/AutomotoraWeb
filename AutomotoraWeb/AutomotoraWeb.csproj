@@ -2000,6 +2000,7 @@
     <Content Include="Views\Vales\_datosDetalleVale.cshtml" />
     <Content Include="Views\Vales\ReportVale.cshtml" />
     <Content Include="Views\Vales\_reportVale.cshtml" />
+    <Content Include="Views\Ventas\_selectVehiculo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

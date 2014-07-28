@@ -6,29 +6,63 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
-
-    <div class="well" style="margin-top: 10px; width: 1000px; height: 630px;">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#vehiculos_tab" data-toggle="tab">Vehiculo</a></li>
-            <li><a href="#condiciones_de_venta_tab" data-toggle="tab">Condiciones de Venta</a></li>
-            <li><a href="#metodos_de_pago_tab" data-toggle="tab">Métodos de Pago</a></li>
-            <li><a href="#senias_y_ACVs_tab" data-toggle="tab">Señas y ACVs</a></li>
-        </ul>
-        <div id="myTabContent" class="tab-content">
-            <div class="tab-pane active in" id="vehiculos_tab">
+<div class="well" style="margin-top: 10px; width: 1000px; height: 630px;">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#vehiculos_tab" data-toggle="tab">Vehiculo</a></li>
+        <li><a href="#condiciones_de_venta_tab" data-toggle="tab">Condiciones de Venta</a></li>
+        <li><a href="#metodos_de_pago_tab" data-toggle="tab">Métodos de Pago</a></li>
+        <li><a href="#senias_y_ACVs_tab" data-toggle="tab">Señas y ACVs</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane active in" id="vehiculos_tab">
+            <div style="height: 545px;">
                 @Html.Partial("_seleccionDeVehiculos", Model)
             </div>
-            <div class="tab-pane fade" id="condiciones_de_venta_tab">
+            <div style="float: right;">
+                <button class="btn-primary  btn" id="btnNextVehiculo" type="button">Siguiente</button>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="condiciones_de_venta_tab">
+            <div style="height: 545px;">
                 @Html.Partial("_seleccionDeCondicionesDeVenta", Model)
             </div>
-            <div class="tab-pane fade" id="metodos_de_pago_tab">
+            <div style="float: right;">
+                <button class="btn-primary  btn" id="btnNextCondicionesDeVenta" type="button">Siguiente</button>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="metodos_de_pago_tab">
+            <div style="height: 535px;">
                 @Html.Partial("_seleccionDeMetodosDePago", Model)
             </div>
-            <div class="tab-pane fade" id="senias_y_ACVs_tab">
+            <div style="float: right;">
+                <button class="btn-primary  btn" id="btnNextMetodosDePago" type="button">Siguiente</button>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="senias_y_ACVs_tab">
+            <div style="height: 545px;">
                 @Html.Partial("_seleccionDeSeñasACVs", Model)
+            </div>
+            <div style="float: right;">
+                <button class="btn-primary  btn" id="btnNextSeñasACVs" type="button">Siguiente</button>
             </div>
         </div>
     </div>
-
 </div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+        $("#btnNextVehiculo").click(function () {
+            activaTab('condiciones_de_venta_tab');
+        });
+
+        function activaTab(tab) {
+            $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+        };
+        
+    </script>
+}

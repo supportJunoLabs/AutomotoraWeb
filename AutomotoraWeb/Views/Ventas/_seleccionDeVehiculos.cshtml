@@ -1,5 +1,34 @@
 ﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
 
 <div>
-    <div>Vehiculo: <select id="selectVehiculo"></select></div>
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Vehiculo)
+    </div>
+    <div class="renglon-alto editor-field-xlarge">
+        <div class="floatLeft">
+            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES), GridLookUpCodigo=Model.Vehiculo.Codigo };}
+            @Html.Partial("_selectVehiculo", gmodel )
+        </div>
+        <div class="floatLeft" style="margin-left: 5px">
+            @Html.ValidationMessageFor(model => model.Vehiculo.Codigo)
+        </div>
+        @Html.HiddenFor(model => model.Vehiculo.Codigo, new { id = "codigoVehiculo" })
+
+    </div>
+
 </div>
+
+<script type="text/javascript">
+
+    function vehiculoSelected(s, e) {
+        //alert("hola");
+        var g = gridVehiculos.GetGridView();  //obtener referencia a la grilla
+        var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+        //alert(valor);
+        $("#codigoVehiculo").val(valor);
+    }
+
+</script>
