@@ -30,6 +30,7 @@ namespace AutomotoraWeb.Controllers.Sales
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
+                return;
             }
             ViewBag.MultiSucursal = usuario.MultiSucursal;
             ViewBag.Sucursales = Sucursal.Sucursales;

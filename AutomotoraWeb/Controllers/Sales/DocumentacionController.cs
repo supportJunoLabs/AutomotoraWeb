@@ -28,9 +28,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
 
-        //--------------------------METODOS PARA LISTADOS DE Documentacion   -----------------------------
-
-        #region Listados
+      #region Listados
 
         public ActionResult List() {
 
@@ -81,9 +79,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         #endregion
-        //---------- METODOS PARA REPORTES DE LISTADOS DE Documentacion  -----------------------------
 
-        #region Reportes
+      #region Reportes
         public ActionResult Report(ListadoDocumentacionModel model) {
             return View("report", model);
         }
@@ -121,7 +118,100 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
         #endregion
 
+        public ActionResult ComprobanteDocumentacion(int id) {
+            ComprobanteDocumentacionModel model = new ComprobanteDocumentacionModel();
+            string s = SessionUtils.generarIdVarSesion("ComprobanteDocumentacion", Session[SessionUtils.SESSION_USER].ToString());
+            model.idParametros = s;
+            ViewData["idParametros"] = model.idParametros;
+            Vehiculo v = new Vehiculo();
+            v.Codigo = id;
+            v.Consultar();
+            Session[s] = model;
+            model.Comprobante.Vehiculo = v;
+            return View(model);
+        }
 
+        public ActionResult GrillaDocsVehiculo(string idParametros) {
+            try {
+                ComprobanteDocumentacionModel model = (ComprobanteDocumentacionModel)Session[idParametros];
+                ViewData["idParametros"] = idParametros;
+                model.Comprobante.Vehiculo.Consultar();
+                return PartialView("_selectDocumentacion", model.Comprobante.Vehiculo.Documentacion);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("ComprobanteDocumentacion");
+            }
+        }
 
+        [HttpPost]
+        public ActionResult ComprobanteDocumentacion(ComprobanteDocumentacionModel model) {
+
+            Session[model.idParametros] = model; //filtros actualizados
+            ViewData["idParametros"] = model.idParametros;
+            this.eliminarValidacionesIgnorables("Comprobante.Vehiculo", MetadataManager.IgnorablesDDL(model.Comprobante.Vehiculo));
+
+            if (ModelState.IsValid) {
+                try {
+                    string sdocs = model.DocsIds;
+                    model.Comprobante.Documentos = new List<DocAuto>();
+
+                    if (string.IsNullOrWhiteSpace(sdocs)) {
+                        ViewBag.ErrorCode = "D001";
+                        ViewBag.ErrorMessage = "No hay documentos seleccionados";
+                        return View(model);
+                    }
+
+                    string[] ach = sdocs.Split(new Char[] { ',' });
+                    foreach (string s in ach) {
+                        if (!string.IsNullOrWhiteSpace(s)) {
+                            DocAuto x = new DocAuto();
+                            x.Codigo = Int32.Parse(s);
+                            model.Comprobante.Documentos.Add(x);
+                            x.Consultar();
+                        }
+                    }
+                    model.Comprobante.Vehiculo.Consultar();
+                    return this.ReportComprobante(model);
+
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(model);
+                }
+            }
+            return View(model);
+        }
+
+        public ActionResult ReportComprobante(ComprobanteDocumentacionModel model) {
+            return View("ReportComprobante", model);
+        }
+
+        public ActionResult ReportComprobantePartial(string idParametros) {
+            ComprobanteDocumentacionModel model = null;
+            XtraReport rep = new DXComprobanteDocumentacion();
+            model = (ComprobanteDocumentacionModel)Session[idParametros];
+            
+            List<ComprobanteDocumentacion> ll = new List<DLL_Backend.ComprobanteDocumentacion>();
+            ll.Add(model.Comprobante);
+            rep.DataSource = ll;
+            Session[idParametros] = model;
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportComprobante");
+        }
+
+        public ActionResult ReportComprobanteExport(string idParametros) {
+            ComprobanteDocumentacionModel model = null;
+            XtraReport rep = new DXComprobanteDocumentacion();
+            model = (ComprobanteDocumentacionModel)Session[idParametros];
+            model.Comprobante.Vehiculo.Consultar();
+            List<ComprobanteDocumentacion> ll = new List<DLL_Backend.ComprobanteDocumentacion>();
+            ll.Add(model.Comprobante);
+            rep.DataSource = ll;
+            ViewData["idParametros"] = idParametros;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+
+        }
     }
 }

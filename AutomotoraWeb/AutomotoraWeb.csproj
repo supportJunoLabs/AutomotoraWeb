@@ -274,6 +274,7 @@
     <Compile Include="Models\AbstractModel.cs" />
     <Compile Include="Models\AlertaModel.cs" />
     <Compile Include="Models\BancoSaldoModel.cs" />
+    <Compile Include="Models\ComprobanteDocumentacionModel.cs" />
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
     <Compile Include="Models\ListadoAcvsModel.cs" />
@@ -413,6 +414,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Transacciones\DXReciboDepositarCheque.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXComprobanteDocumentacion.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\CompanyService.cs" />
@@ -1672,6 +1676,7 @@
     <Content Include="Scripts\AutomotoraWeb\ChequesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChequesEmitidosListado.js" />
     <Content Include="Scripts\AutomotoraWeb\AcvsListado.js" />
+    <Content Include="Scripts\AutomotoraWeb\ComprobanteDocumentacion.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale2.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaFinanciacion1.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaFinanciacion2.js" />
@@ -2013,6 +2018,10 @@
     <Content Include="Views\ConsultasFin\_cuotasHistoricoFinanciacion.cshtml" />
     <Content Include="Views\ConsultasFin\ReportFinanciacion.cshtml" />
     <Content Include="Views\ConsultasFin\_reportFinanciacion.cshtml" />
+    <Content Include="Views\Documentacion\ComprobanteDocumentacion.cshtml" />
+    <Content Include="Views\Documentacion\_selectDocumentacion.cshtml" />
+    <Content Include="Views\Documentacion\ReportComprobante.cshtml" />
+    <Content Include="Views\Documentacion\_reportComprobante.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2144,6 +2153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboDepositarCheque.resx">
       <DependentUpon>DXReciboDepositarCheque.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXComprobanteDocumentacion.resx">
+      <DependentUpon>DXComprobanteDocumentacion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

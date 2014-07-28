@@ -24,7 +24,7 @@
     <div class="display-label">
         @Html.LabelForRequired(model => model.Cheque)
     </div>
-    <div class="renglon-alto editor-field-xlarge">
+    <div class="renglon-alto editor-field-xlarge editor-gridlookup">
         <div class="floatLeft">
             @{ 
                 GridLookUpModel gmodel=new GridLookUpModel { GridLookUpCodigo = Model.Cheque.Codigo };
@@ -55,7 +55,7 @@
         <div class="display-label">
             @Html.LabelForRequired(model => model.Cuenta)
         </div>
-        <div class="editor-field editor-field-xlarge xxlarge">
+        <div class="editor-field editor-field-xlarge xxlarge editor-select">
             @Html.DdlOrDisplayFor(model => model.Cuenta.Codigo, modoConsulta, model => model.Cuenta.Nombre,
                 new SelectList(ViewBag.Cuentas, "Codigo", "Nombre"), "--Seleccionar Cuenta--",
                 new { id = "ddlCuentas", @class = "xxlarge" })
