@@ -10,7 +10,7 @@ using AutomotoraWeb.Controllers;
 using AutomotoraWeb.Controllers.General;
 using AutomotoraWeb.Utils;
 using AutomotoraWeb.Services;
-using AutomotoraWeb.Controllers.Sales.Maintenance;
+using AutomotoraWeb.Controllers.Sales;
 
 namespace AutomotoraWeb {
 

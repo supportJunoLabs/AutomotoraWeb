@@ -10,7 +10,6 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
-using AutomotoraWeb.Controllers.Sales.Maintenance;
 
 namespace AutomotoraWeb.Controllers.Sales
 {
@@ -31,6 +30,7 @@ namespace AutomotoraWeb.Controllers.Sales
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
+                return;
             }
             ViewBag.MultiSucursal = usuario.MultiSucursal;
             ViewBag.Sucursales = Sucursal.Sucursales;

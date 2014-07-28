@@ -48,7 +48,7 @@ namespace AutomotoraWeb.Controllers.Financing
             return View("ConsultaVale", m);
         }
 
-        //El id corresponde al cliente
+        //El id corresponde al cliente, cuando entro con el cliente elegido
         public ActionResult ConsultaValesCliente(int? id) {
             ConsultaValeModel m = new ConsultaValeModel();
             m.Vale = new Vale();

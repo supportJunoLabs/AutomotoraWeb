@@ -13,7 +13,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 
-namespace AutomotoraWeb.Controllers.Bank.Maintenance
+namespace AutomotoraWeb.Controllers.Bank
 {
     public class CuentasBancariasController : BankController, IMaintenance {
 

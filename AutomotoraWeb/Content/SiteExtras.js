@@ -26,6 +26,10 @@ function general_showErrorPopup(jqXHR, textStatus, errorThrown) {
     alert("Se ha producido un error: " + textStatus + " | " + errorThrown);
 }
 
+function general_showErrorPopup(jqXHR, textStatus, errorThrown, metodoInvocado) {
+    alert("Se ha producido un error: " + textStatus + " | " + errorThrown + " | " + metodoInvocado);
+}
+
 function general_showAvisoPopup(message) {
     alert(message);
 }

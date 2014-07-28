@@ -17,7 +17,7 @@ using System.Collections;
 using System.IO;
 using System.Drawing;
 
-namespace AutomotoraWeb.Controllers.Sales.Maintenance {
+namespace AutomotoraWeb.Controllers.Sales {
     public class VehiculosController : SalesController, IMaintenance {
 
         public static string CONTROLLER = "vehiculos";
@@ -45,6 +45,7 @@ namespace AutomotoraWeb.Controllers.Sales.Maintenance {
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
+                return;
             }
             ViewBag.MultiSucursal = usuario.MultiSucursal;
             ViewBag.Sucursales = Sucursal.Sucursales;

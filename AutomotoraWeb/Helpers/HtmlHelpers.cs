@@ -66,7 +66,7 @@ namespace AutomotoraWeb.Helpers {
 
         public static MvcHtmlString TextAreaOrDisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
-            object htmlAttributes) {
+            object htmlAttributes = null) {
             if (!(soloLectura ?? false)) {
                 return htmlHelper.TextAreaFor(expression, htmlAttributes);
             } else {
@@ -328,10 +328,10 @@ namespace AutomotoraWeb.Helpers {
                 )
             );
 
-            tag.Attributes.Add("class", "display-label");
+            //tag.Attributes.Add("class", "display-label");
             if (isRequired) {
                 //label_required que estaba antes no existe
-                tag.Attributes.Add("style", "display: inline !important");
+                //tag.Attributes.Add("style", "display: inline !important");
             }
 
             if (isRequired) {

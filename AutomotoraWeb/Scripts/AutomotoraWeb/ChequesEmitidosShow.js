@@ -8,17 +8,18 @@ $('#ddlCuentas').change(function () {
     var selectedID = $(this).val();
     $("#abtn_agregar").prop("href", "/ChEmitidos/Create/" + selectedID);
     //alert(selectedID);
+    var destino='/ChEmitidos/CuentaSelected/';
     $.ajax({
         cache: false,
         type: "GET",
-        url: '/ChEmitidos/CuentaSelected/',
+        url: destino,
         data: { "idCuenta": selectedID },
         success: function (data) {
             $('#divGrilla').html('');
             $('#divGrilla').html(data);
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert('Error al traer los datos.');
+            general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
         },
         beforeSend: showLoading,
         complete: hideLoading

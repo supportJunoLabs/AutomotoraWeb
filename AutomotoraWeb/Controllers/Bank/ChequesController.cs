@@ -136,7 +136,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             return View("ConsultaCheque", ch);
         }
 
-        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. 
         public ActionResult GrillaMovsCheques(int idParametros) {
             Cheque ch = _consultarCheque(idParametros);
             ViewData["idParametros"] = ch.Codigo;
@@ -190,7 +190,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             return View(model);
         }
 
-        //Se invoca desde paginacion, ordenacion etc, de grilla 
+        //Se invoca para cargar opciones de la gridlookup 
         public ActionResult ChequesTransferiblesGrilla(GridLookUpModel model) {
             model.Opciones= Cheque.ChequesTransferibles();
             return PartialView("_selectChequePasar", model);

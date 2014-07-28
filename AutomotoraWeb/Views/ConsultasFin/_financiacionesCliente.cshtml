@@ -1,0 +1,21 @@
+﻿@model AutomotoraWeb.Models.ConsultaVentaModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+<div class="display-label label-small">
+    Financiacion
+</div>
+<div class="editor-field editor-field-xlarge xxlarge floatLeft">
+     @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Model.Cliente.VentasCuotas(), 
+                            GridLookUpCodigo=Model.Venta.Codigo};}
+     @Html.Partial("_selectFinanciacionConsultar", gmodel )
+
+    @Html.HiddenFor(model => model.Venta.Codigo, new { id = "codigoVenta" })
+
+</div>
+
+
+<div class="clear-both"></div>
+
+<script type="text/javascript" src="/scripts/AutomotoraWeb/ConsultaFinanciacion2.js"></script>

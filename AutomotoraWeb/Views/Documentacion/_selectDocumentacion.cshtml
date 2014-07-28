@@ -1,0 +1,32 @@
+﻿@model List<DLL_Backend.DocAuto>
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sales;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        //new ColumnaGrilla{Campo="Codigo"},
+        new ColumnaGrilla {Campo="TipoDocumento.Nombre", Ancho=250, Titulo="Documento"},
+        new ColumnaGrilla {Campo="TipoDocumento.Observaciones", Ancho=250, Titulo="Descripcion"},
+        new ColumnaGrilla {Campo="Observaciones", Ancho=350}
+    };
+
+    ig.ChecksSeleccion = true;
+    //ig.AccionSeleccion = "SelectionChanged";
+    ig.NameGrid = "gridDocumentos";
+    ig.Controller = DocumentacionController.CONTROLLER;
+    ig.ActionCallbackRoute = "GrillaDocsVehiculo";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.DocAuto);
+    ig.registrosPorPagina = 15;
+    ig.Estatica = true;
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+
+

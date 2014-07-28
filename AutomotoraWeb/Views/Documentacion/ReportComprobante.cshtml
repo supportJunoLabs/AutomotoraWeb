@@ -1,0 +1,14 @@
+﻿@model AutomotoraWeb.Models.ComprobanteDocumentacionModel
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Comprobante Documentación";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", "ComprobanteDocumentacion").Class("btn btn-default").RouteValues(new { id=Model.Comprobante.Vehiculo.Codigo}))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reportComprobante")

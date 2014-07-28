@@ -13,7 +13,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 
-namespace AutomotoraWeb.Controllers.Sales.Maintenance {
+namespace AutomotoraWeb.Controllers.Sales {
     public class ClientesController : SalesController, IMaintenance {
 
         public static string CONTROLLER = "clientes";

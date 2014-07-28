@@ -1,0 +1,125 @@
+﻿@model AutomotoraWeb.Models.ComprobanteDocumentacionModel
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+@using DLL_Backend;
+@using AutomotoraWeb.Helpers;
+
+@{
+    ViewBag.Title = "Comprobante Documentación";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   
+}
+
+
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    @Html.HiddenFor(model => model.DocsIds, new { id = "docsIds" })
+    @Html.HiddenFor(model => model.Comprobante.Vehiculo.Codigo)
+
+    <div class="block">
+        <div class="block-body">
+
+            <div class="display-label">
+                @Html.LabelFor(model => model.Comprobante.Vehiculo.Ficha)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Comprobante.Vehiculo.Ficha)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.LabelFor(model => model.Comprobante.Vehiculo.Marca)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Comprobante.Vehiculo.Marca)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.LabelFor(model => model.Comprobante.Vehiculo.Modelo)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Comprobante.Vehiculo.Modelo)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.LabelFor(model => model.Comprobante.Vehiculo.Anio)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Comprobante.Vehiculo.Anio)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                @Html.LabelFor(model => model.Comprobante.Vehiculo.Observaciones)
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Comprobante.Vehiculo.Observaciones)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+    </div>
+    
+    <div class="espacio2"></div>
+
+    <div class="display-label">
+        Operacion
+    </div>
+    <div class="renglon-alto">
+        @Html.RadioButtonFor(model => model.Comprobante.Tipo, ComprobanteDocumentacion.TIPO_COMPROBANTE.ENTREGAR, new { id = "rb_entregar" })  Entregar
+        &nbsp; &nbsp;&nbsp;&nbsp;
+        @Html.RadioButtonFor(model => model.Comprobante.Tipo, ComprobanteDocumentacion.TIPO_COMPROBANTE.RECIBIR, new { id = "rb_recibir" })  Recibir
+        @Html.ValidationMessageFor(model => model.Comprobante.Tipo)
+    </div>
+    <div class="clear-both"></div>
+    
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Comprobante.Fecha)
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.TextBoxOrdisplayFor(model => model.Comprobante.Fecha, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+        @Html.ValidationMessageFor(model => model.Comprobante.Fecha)
+    </div>
+    <div class="clear-both"></div>
+    
+    
+    <div class="display-label">
+        @Html.LabelFor(model => model.Comprobante.OrigenDestino, new { id="label_destino"})
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.EditorOrDisplayFor(model => model.Comprobante.OrigenDestino, (bool?)ViewBag.SoloLectura)
+        @Html.ValidationMessageFor(model => model.Comprobante.OrigenDestino)
+    </div>
+    <div class="clear-both"></div>
+    
+    
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.Comprobante.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge editor-textarea">
+        @Html.TextAreaOrDisplayFor(model => model.Comprobante.Observaciones, (bool?)ViewBag.SoloLectura)
+        @Html.ValidationMessageFor(model => model.Comprobante.Observaciones)
+    </div>
+    <div class="clear-both"></div>
+    <div class="espacio2"></div>
+    
+    <div class="floatLeft" id="divGrillaCheques">
+        @Html.Partial("_selectDocumentacion", Model.Comprobante.Vehiculo.Documentacion)
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="espacio2"></div>
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-cog").Text(" Generar Comprobante").Id("btn_generar"))
+    </div>     
+
+}
+
+<script src="~/Scripts/AutomotoraWeb/ComprobanteDocumentacion.js"></script>

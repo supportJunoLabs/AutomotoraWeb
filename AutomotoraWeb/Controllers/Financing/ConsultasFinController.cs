@@ -125,28 +125,101 @@ namespace AutomotoraWeb.Controllers.Financing {
         #endregion
 
 
-      
-
         #region ConsultaFinanciacion
 
-        private Venta _consultarFinanciacion(int? idVenta) {
-            Venta v = new Venta();
-            v.Codigo = idVenta ?? 0;
-            if (idVenta != null && idVenta != 0) {
-                v.Consultar();
+        public ActionResult ConsultaFinanciacion(int? id) {
+            ConsultaVentaModel m = new ConsultaVentaModel();
+            m.Venta = new Venta();
+            m.Cliente = new Cliente();
+            if (id!=null && id>0) {
+                m.Venta.Codigo = id??0;
+                m.Venta.Consultar();
+                m.Cliente = m.Venta.Cliente;
             }
-            ViewData["idParametros"] = v.Codigo;
-            return v;
+            ViewBag.SoloLectura = true;
+            ViewData["idParametros"] = m.Cliente.Codigo;
+            return View("ConsultaFinanciacion", m);
         }
 
-        public ActionResult ConsultaFinanciacion(int? idVenta) {
-            Venta v = _consultarFinanciacion(idVenta);
-            return View("ConsultaFinanciacion", v);
+        //El id corresponde al cliente, cuando entro con el cliente elegido
+        public ActionResult ConsultaFinanciacionesCliente(int? id) {
+            ConsultaVentaModel m = new ConsultaVentaModel();
+            m.Venta = new Venta();
+            m.Cliente = new Cliente();
+            if (id != null) {
+                m.Cliente.Codigo = id ?? 0;
+                m.Cliente.Consultar();
+            }
+            ViewBag.SoloLectura = true;
+            ViewData["idParametros"] = m.Cliente.Codigo;
+            return View("ConsultaFinanciacion", m);
         }
 
-        //public ActionResult ConsultaFinanciacionesCliente(int? idCliente) { 
+        //desde el javascript de cambio en ddl clientes
+        public ActionResult VentasFinCliente(int idCliente) {
+            ConsultaVentaModel m = new ConsultaVentaModel();
+            m.Cliente = new Cliente();
+            m.Venta = new Venta();
+            m.Cliente.Codigo = idCliente;
+            ViewBag.SoloLectura = true;
+            ViewData["idParametros"] = m.Cliente.Codigo;
+            return PartialView("_financiacionesCliente", m);
+        }
 
-        //}
+        public ActionResult GrillaFinanciacionesCliente(int idParametros) {
+            Cliente c = new Cliente();
+            c.Codigo=idParametros;
+            c.Consultar();
+            GridLookUpModel model = new GridLookUpModel();
+            model.Opciones= c.VentasCuotas();
+            ViewData["idParametros"] = idParametros;
+            return PartialView("_selectFinanciacionConsultar", model);
+        }
+
+        //desde el javascript de cambio en ddl vales
+        public ActionResult DetallesFinanciacion(int idVenta) {
+            ConsultaVentaModel m = new ConsultaVentaModel();
+            m.Venta = new Venta();
+            m.Venta.Codigo = idVenta;
+            m.Venta.Consultar();
+            m.Cliente = m.Venta.Cliente;
+            ViewBag.SoloLectura = true;
+            return PartialView("_datosDetalleFinanciacion", m);
+        }
+
+        //desde el boton imprimir de la consulta
+        public ActionResult ReportFinanciacion(int id) {
+            Venta model = new Venta();
+            model.Codigo = id;
+            ViewData["idParametros"] = id;
+            return View("ReportFinanciacion", model);
+        }
+
+        public ActionResult ReportFinanciacionPartial(int idParametros) {
+            Venta model = new Venta();
+            model.Codigo=idParametros;
+            model.Consultar();
+            XtraReport rep = new DXReportConsultaFinanciacion();
+            List<Venta> ll = new List<Venta>();
+            ll.Add(model);
+            rep.DataSource = ll;
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportFinanciacion");
+        }
+
+        public ActionResult ReportFinanciacionExport(int idParametros) {
+            Venta model = new Venta();
+            model.Codigo = idParametros;
+            model.Consultar();
+            XtraReport rep = new DXReportConsultaFinanciacion();
+            List<Venta> ll = new List<Venta>();
+            ll.Add(model);
+            rep.DataSource = ll;
+            ViewData["idParametros"] = idParametros;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
 
         #endregion
 
