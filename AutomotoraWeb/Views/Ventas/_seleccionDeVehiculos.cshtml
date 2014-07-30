@@ -18,17 +18,58 @@
         @Html.HiddenFor(model => model.Vehiculo.Codigo, new { id = "codigoVehiculo" })
 
     </div>
+</div>
+
+<div>
+    @Html.HiddenFor(model => model.Vehiculo.Codigo)
+
+    <div>
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Vehiculo.Ficha)
+        </div>
+        <div class="editor-field editor-field-large renglon-alto">
+            <input id="vehiculoFicha" value="" disabled="disabled" />
+        </div>
+        <div class="clear-both"></div>
+
+    </div>
 
 </div>
 
 <script type="text/javascript">
 
     function vehiculoSelected(s, e) {
-        //alert("hola");
         var g = gridVehiculos.GetGridView();  //obtener referencia a la grilla
         var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
-        //alert(valor);
         $("#codigoVehiculo").val(valor);
+
+        consultarDatosVehiculo(valor)
+    }
+
+    function consultarDatosVehiculo(codigo) {
+        var destino = '@(Url.Action("details", "vehiculos"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'codigo=' + codigo,
+            success: refreshDatosVehiculo,
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function refreshDatosVehiculo(data) {
+        if (data.Result == "OK") {
+            $("#vehiculoFicha").val(data.Vehiculo.Ficha);
+        }
+        else {
+            general_showAvisoPopup("Error al obtener los datos del vehiculo: " + data.Codigo + " | " + data.ErrorMessage);
+        }
+        
     }
 
 </script>

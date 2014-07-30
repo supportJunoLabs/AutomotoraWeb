@@ -16,6 +16,7 @@ using System.Globalization;
 using System.Collections;
 using System.IO;
 using System.Drawing;
+using System.Web.Script.Serialization;
 
 namespace AutomotoraWeb.Controllers.Sales {
     public class VehiculosController : SalesController, IMaintenance {
@@ -937,6 +938,19 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult GridLookupVehiculo() {
             ViewBag.ListVehiculos = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.EN_STOCK);
             return PartialView("_gridLookupVehiculo");
+        }
+
+        [HttpPost]
+        public JsonResult details(int codigo) {
+            try {
+                Vehiculo vehiculo = new Vehiculo();
+                vehiculo.Codigo = codigo;
+                vehiculo.Consultar();
+
+                return Json(new { Result = "OK", Vehiculo = vehiculo }, JsonRequestBehavior.AllowGet);
+            } catch (UsuarioException exc) {
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+            }
         }
     }
 }
