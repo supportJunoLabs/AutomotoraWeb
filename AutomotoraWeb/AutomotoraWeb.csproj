@@ -245,6 +245,7 @@
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
     <Compile Include="Controllers\Financing\ValesController.cs" />
     <Compile Include="Controllers\Sales\AcvsController.cs" />
+    <Compile Include="Controllers\Sales\DocumentacionLegalController.cs" />
     <Compile Include="Controllers\Sales\DocumentacionController.cs" />
     <Compile Include="Controllers\Sales\SeniasController.cs" />
     <Compile Include="Controllers\Sales\ClientesController.cs" />
@@ -398,6 +399,9 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboVenta.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Transacciones\DXReciboRechazarVale.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -417,6 +421,21 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Transacciones\DXComprobanteDocumentacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\_DXSubrepPermutaVenta.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\_DXValesVenta.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\_DXCuotasVenta.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\_DXSubrepPago.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\_DXSubrepVentaSenia.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\CompanyService.cs" />
@@ -2022,6 +2041,8 @@
     <Content Include="Views\Documentacion\_selectDocumentacion.cshtml" />
     <Content Include="Views\Documentacion\ReportComprobante.cshtml" />
     <Content Include="Views\Documentacion\_reportComprobante.cshtml" />
+    <Content Include="Views\DocumentacionLegal\ReportComprobanteVenta.cshtml" />
+    <Content Include="Views\DocumentacionLegal\_reportComprobanteVenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2136,6 +2157,9 @@
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboVenta.resx">
+      <DependentUpon>DXReciboVenta.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboRechazarVale.resx">
       <DependentUpon>DXReciboRechazarVale.cs</DependentUpon>
     </EmbeddedResource>
@@ -2156,6 +2180,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXComprobanteDocumentacion.resx">
       <DependentUpon>DXComprobanteDocumentacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\_DXCuotasVenta.resx">
+      <DependentUpon>_DXCuotasVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\_DXSubrepPago.resx">
+      <DependentUpon>_DXSubrepPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\_DXSubrepPermutaVenta.resx">
+      <DependentUpon>_DXSubrepPermutaVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\_DXSubrepVentaSenia.resx">
+      <DependentUpon>_DXSubrepVentaSenia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\_DXValesVenta.resx">
+      <DependentUpon>_DXValesVenta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
