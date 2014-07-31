@@ -23,11 +23,11 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         public ActionResult DocComprobanteVenta(int id) {
-            //Venta v = new Venta();
-            //v.Codigo=id;
+            Venta v = new Venta();
+            v.Codigo=id;
             ////v.Consultar();
             ViewData["idParametros"] = id;
-            return View("ReportComprobanteVenta");
+            return View("ReportComprobanteVenta", v);
         }
 
         public ActionResult ReportComprobanteVentaPartial(int idParametros) {
