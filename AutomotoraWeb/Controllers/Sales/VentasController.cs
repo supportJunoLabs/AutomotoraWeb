@@ -37,6 +37,8 @@ namespace AutomotoraWeb.Controllers.Sales
         public ActionResult VentaVehiculo() {
             Venta venta = new Venta();
             venta.Vehiculo = new Vehiculo();
+            venta.Cliente = new Cliente();
+            venta.Vendedor = new Vendedor();
             return View(venta);
         }
 
@@ -150,15 +152,6 @@ namespace AutomotoraWeb.Controllers.Sales
         }
         #endregion
 
-        #region SeleccionDeVehiculo
- 
-        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-        public ActionResult VehiculosVendiblesGrilla(GridLookUpModel model) {
-            model.Opciones= Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES);
-            return PartialView("_selectVehiculo", model);
-        }
- 
-        #endregion
 
     }
 }

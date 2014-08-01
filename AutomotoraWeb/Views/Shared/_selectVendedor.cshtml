@@ -1,0 +1,30 @@
+﻿@model GridLookUpModel
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sales;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.TipoControl = InfoGrilla.TIPO_CONTROL.GRIDLOOKUP;
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Mail", Ancho=60, Titulo="Mail"}, 
+        new ColumnaGrilla {Campo="Nombre", Ancho=60, Titulo="Nombre"},
+        new ColumnaGrilla {Campo="Telefono", Ancho=100, Titulo="Telefono"}
+    };
+
+    ig.NameGrid = "gridVendedores";
+    ig.Controller = VendedoresController.CONTROLLER;
+    ig.ActionCallbackRoute = "VendedoresGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Vehiculo);
+    ig.FormatoSeleccionLookup = "{1}";
+    ig.registrosPorPagina = 10;
+    ig.AnchoSeleccion = 530;
+
+    ig.FocusedRowChangedAccion = "vendedorSelected";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)

@@ -940,6 +940,14 @@ namespace AutomotoraWeb.Controllers.Sales {
             return PartialView("_gridLookupVehiculo");
         }
 
+        #region SeleccionDeVehiculo
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult VehiculosVendiblesGrilla(GridLookUpModel model) {
+            model.Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES);
+            return PartialView("_selectVehiculo", model);
+        }
+
         [HttpPost]
         public JsonResult details(int codigo) {
             try {
@@ -947,10 +955,32 @@ namespace AutomotoraWeb.Controllers.Sales {
                 vehiculo.Codigo = codigo;
                 vehiculo.Consultar();
 
-                return Json(new { Result = "OK", Vehiculo = vehiculo }, JsonRequestBehavior.AllowGet);
+                return Json(new { 
+                                  Result = "OK", 
+                                  Vehiculo = new { 
+                                                   Ficha = vehiculo.Ficha,
+                                                   Sucursal = vehiculo.Sucursal.Nombre,
+                                                   Marca = vehiculo.Marca,
+                                                   Modelo = vehiculo.Modelo,
+                                                   Anio = vehiculo.Anio,
+                                                   Departamento = vehiculo.Departamento.Nombre,
+                                                   Color = vehiculo.Color,
+                                                   Matricula = vehiculo.Matricula,
+                                                   Padron = vehiculo.Padron,
+                                                   Motor = vehiculo.Motor,
+                                                   Chasis = vehiculo.Chasis,
+                                                   Propietario = vehiculo.Propietario,
+                                                   PrecioLista = vehiculo.PrecioVenta.ImporteTexto,
+                                                   Estado = vehiculo.Status,
+                                                   Observaciones = vehiculo.Observaciones
+                                             } 
+                            }
+                );
             } catch (UsuarioException exc) {
                 return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
             }
         }
+
+        #endregion
     }
 }

@@ -2030,7 +2030,7 @@
     <Content Include="Views\Vales\_datosDetalleVale.cshtml" />
     <Content Include="Views\Vales\ReportVale.cshtml" />
     <Content Include="Views\Vales\_reportVale.cshtml" />
-    <Content Include="Views\Ventas\_selectVehiculo.cshtml" />
+    <Content Include="Views\Shared\_selectVehiculo.cshtml" />
     <Content Include="Views\ConsultasFin\_financiacionesCliente.cshtml" />
     <Content Include="Views\ConsultasFin\_selectFinanciacionConsultar.cshtml" />
     <Content Include="Views\ConsultasFin\_datosDetalleFinanciacion.cshtml" />
@@ -2044,6 +2044,10 @@
     <Content Include="Views\Documentacion\_reportComprobante.cshtml" />
     <Content Include="Views\DocumentacionLegal\ReportComprobanteVenta.cshtml" />
     <Content Include="Views\DocumentacionLegal\_reportComprobanteVenta.cshtml" />
+    <Content Include="Views\Shared\_selectCliente.cshtml" />
+    <Content Include="Views\Shared\_selectVendedor.cshtml" />
+    <Content Include="Views\Ventas\_seleccionDeCliente.cshtml" />
+    <Content Include="Views\Ventas\_seleccionDeVendedor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
