@@ -9,8 +9,8 @@
     </div>
     <div class="renglon-alto editor-field-xlarge">
         <div class="floatLeft">
-            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES), GridLookUpCodigo=Model.Vehiculo.Codigo };}
-            @Html.Partial("_selectVehiculo", gmodel )
+            @{GridLookUpModel gmodelVehiculo = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES), GridLookUpCodigo=Model.Vehiculo.Codigo };}
+            @Html.Partial("_selectVehiculo", gmodelVehiculo )
         </div>
         <div class="floatLeft" style="margin-left: 5px">
             @Html.ValidationMessageFor(model => model.Vehiculo.Codigo)
@@ -25,37 +25,37 @@
 
     <div class="floatLeft" style="margin-right: 110px;">
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Ficha)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Ficha)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoFicha" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Marca)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Marca)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoMarca" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Anio)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Anio)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoAnio" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Matricula)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Matricula)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoMatricula" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Motor)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Motor)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoMotor" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Propietario)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Propietario)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoPropietario" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.PrecioVenta)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.PrecioVenta)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoPrecioVenta" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
@@ -63,37 +63,37 @@
 
     <div class="floatLeft">
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Sucursal.Nombre)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Sucursal.Nombre)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoSucursal" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Modelo)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Modelo)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoModelo" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Departamento)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Departamento)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoDepartamento" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Padron)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Padron)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoPadron" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Chasis)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Chasis)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoChasis" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Color)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Color)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoColor" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label">@Html.LabelForRequired(model => model.Vehiculo.Status)</div>
+            <div class="display-label display-label-vehiculo">@Html.LabelForRequired(model => model.Vehiculo.Status)</div>
             <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoStatus" value="" disabled="disabled" /></div>
             <div class="clear-both"></div>
         </div>
@@ -103,7 +103,7 @@
 
     <div>
         <div class="dataLine">
-            <div class="display-label ">@Html.LabelForRequired(model => model.Observaciones)</div>
+            <div class="display-label display-label-vehiculo ">@Html.LabelForRequired(model => model.Observaciones)</div>
             <div class="editor-field editor-field-xxlarge"><textarea id="vehiculoObservaciones" style="width: 725px; height: 60px"  disabled="disabled"></textarea></div>
             <div class="clear-both"></div>
         </div>
@@ -111,8 +111,8 @@
 </div>
 
 <style type="text/css">
-    .display-label {
-        width: 90px;
+    .display-label-vehiculo {
+        width: 90px !important;
     }
     .dataLine {
         margin-top: 8px;

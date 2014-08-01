@@ -869,14 +869,14 @@ public class DXReciboVenta : DevExpress.XtraReports.UI.XtraReport {
     private void sr_pagos_acv_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
         Venta v = (Venta)GetCurrentColumnValue("MySelf");
         PagoTransaccion p1 = v.pagosTransaccionesPreventa();
-        if (p1 != null && p1.CantMovs>0) {
-            List<PagoTransaccion> ll = new List<PagoTransaccion>();
-            ll.Add(p1);
-            sr_pagos_acv.ReportSource.DataSource = ll;
-            gf_acv.Visible = true;
-        } else {
-            gf_acv.Visible = false;
-        }
+        //if (p1 != null && p1.CantMovs>0) {
+        //    List<PagoTransaccion> ll = new List<PagoTransaccion>();
+        //    ll.Add(p1);
+        //    sr_pagos_acv.ReportSource.DataSource = ll;
+        //    gf_acv.Visible = true;
+        //} else {
+        //    gf_acv.Visible = false;
+        //}
     }
 
 
@@ -948,17 +948,17 @@ public class DXReciboVenta : DevExpress.XtraReports.UI.XtraReport {
     private void gf_acv_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
          Venta v = (Venta)GetCurrentColumnValue("MySelf");
         PagoTransaccion p1 = v.pagosTransaccionesPreventa();
-        if (p1 == null || p1.CantMovs <= 0) {
-            gf_acv.Visible = false;
+        //if (p1 == null || p1.CantMovs <= 0) {
+        //    gf_acv.Visible = false;
 
-        }
+        //}
     }
 
     private void gf_pago_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
         PagoTransaccion p = (PagoTransaccion)GetCurrentColumnValue("Pago");
-        if  (p==null || p.CantMovs<=0) {
-            gf_pago.Visible = false;
-        }
+        //if  (p==null || p.CantMovs<=0) {
+        //    gf_pago.Visible = false;
+        //}
     }
 
     private void gf_senia_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {

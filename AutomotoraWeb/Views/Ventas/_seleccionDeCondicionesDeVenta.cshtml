@@ -1,6 +1,14 @@
 ﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
 
 <div>
-    <div>Cliente: <select id="selectCliente"></select></div>
-    <div>Vendedor: <select id="selectVendedor"></select></div>
+    <div>
+        @Html.Partial("_seleccionDeCliente", Model)
+    </div>
+    <div style="margin-top:8px;">
+        @Html.Partial("_seleccionDeVendedor", Model)
+    </div>
 </div>
+
