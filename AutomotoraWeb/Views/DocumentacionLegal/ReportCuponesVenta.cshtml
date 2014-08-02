@@ -1,0 +1,15 @@
+﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Cupones de Financiación de Venta";
+}
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.DETAILS, VentasController.CONTROLLER).Class("btn btn-default").RouteValues(new {id=Model.Codigo }))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reportCuponesVenta")

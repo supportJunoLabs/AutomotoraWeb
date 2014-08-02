@@ -399,6 +399,9 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXCuponesVenta.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Transacciones\DXReciboVenta.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -2048,6 +2051,8 @@
     <Content Include="Views\Shared\_selectVendedor.cshtml" />
     <Content Include="Views\Ventas\_seleccionDeCliente.cshtml" />
     <Content Include="Views\Ventas\_seleccionDeVendedor.cshtml" />
+    <Content Include="Views\DocumentacionLegal\ReportCuponesVenta.cshtml" />
+    <Content Include="Views\DocumentacionLegal\_reportCuponesVenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2161,6 +2166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXCuponesVenta.resx">
+      <DependentUpon>DXCuponesVenta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboVenta.resx">
       <DependentUpon>DXReciboVenta.cs</DependentUpon>

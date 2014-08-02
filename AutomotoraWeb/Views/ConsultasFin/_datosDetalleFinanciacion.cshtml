@@ -124,6 +124,10 @@
         <div id="datosVigente" class="block-body collapse in" style="padding-top: 10px; padding-bottom: 10px">
             @Html.Partial("_cuotasVigentesFinanciacion", Model.Venta.Financiacion.CuotasVigentes)
         </div>
+        <div style="padding-left:15px; padding-bottom:10px">
+             @(Html.Bootstrap().ActionLinkButton("Generar Cupones", "DocCuponesVenta",
+                    DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Venta.Codigo }).Class("btn-primary"))
+        </div>
     </div>
     
     

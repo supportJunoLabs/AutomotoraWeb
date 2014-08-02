@@ -95,12 +95,47 @@ namespace AutomotoraWeb.Controllers.Sales {
              return generarDocumento(id, "VALE_VENTA", "VAL");
         }
 
-         public FileStreamResult DocCuponesVenta(int id) {
-             //Este es diferente, todavia no esta listo
-             //CUPONES_VENTA, CUP       
-             return null;
+         public ActionResult DocCuponesVenta(int id) {
+             Venta v = new Venta();
+             v.Codigo = id;
+             ////v.Consultar();
+             ViewData["idParametros"] = id;
+             return View("ReportCuponesVenta", v);
         }
 
+         private XtraReport _reporteCupones(int idVenta) {
+             DocumentoLegal doc = new DocumentoLegal();
+             doc.Codigo = "CUPONES_VENTA";
+             doc.Consultar();
+
+             Venta v = new Venta();
+             v.Codigo = idVenta;
+             v.Consultar();
+
+             VentaCupones vc = doc.ObtenerVentaCupones(v);
+             vc.Cabezal = vc.Cabezal.Replace("[RETURN]", Environment.NewLine);
+             XtraReport rep = new DXCuponesVenta();
+             List<VentaCupones> ll = new List<VentaCupones>();
+             ll.Add(vc);
+             rep.DataSource = ll;
+
+             return rep;
+         }
+
+         public ActionResult ReportCuponesVentaPartial(int idParametros) {
+             ViewData["idParametros"] = idParametros;
+             XtraReport rep = _reporteCupones(idParametros);
+             ViewData["Report"] = rep;
+             return PartialView("_reportCuponesVenta");
+         }
+
+         public ActionResult ReportCuponesVentaExport(int idParametros) {
+             ViewData["idParametros"] = idParametros;
+             ViewData["idParametros"] = idParametros;
+             XtraReport rep = _reporteCupones(idParametros);
+             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+
+         }
             
 
         private FileStreamResult generarDocumento(int idVenta, string tipoDoc, string nomDoc) {
