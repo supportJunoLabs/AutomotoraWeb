@@ -182,6 +182,10 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region PasarCheque
 
+        public ActionResult PasarF(){
+            return RedirectToAction("Pasar");
+        }
+
         public ActionResult Pasar() {
             TRChequePasar model = new TRChequePasar();
             model.TipoDestino = TRChequePasar.TIPO_DESTINO.FINANCISTA;
@@ -232,7 +236,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult ReciboTransf(int id) {
             ViewData["idParametros"] = id;
-            return View("ReciboTransf");
+            TRChequePasar tr = (TRChequePasar)Transaccion.ObtenerTransaccion(id);
+            return View("ReciboTransf",tr);
         }
 
         private XtraReport _generarReciboTransf(int id) {
@@ -261,7 +266,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #endregion
 
-        #region DepositarCheque
+        #region DepositarDescontarCheque
 
         public ActionResult Depositar() {
             TRChequeDepositarDescontar model = new TRChequeDepositarDescontar();
@@ -337,8 +342,9 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         public ActionResult ReciboDeposito(int id) {
+            TRChequeDepositarDescontar tr = (TRChequeDepositarDescontar)Transaccion.ObtenerTransaccion(id);
             ViewData["idParametros"] = id;
-            return View("ReciboDeposito");
+            return View("ReciboDeposito",tr);
         }
 
         private XtraReport _generarReciboDeposito(int id) {
@@ -520,7 +526,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
          public ActionResult ReciboRech(int id) {
              ViewData["idParametros"] = id;
-             return View("ReciboRech");
+             TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id);
+             return View("ReciboRech", tr);
          }
 
          private XtraReport _generarReciboRech(int id) {
