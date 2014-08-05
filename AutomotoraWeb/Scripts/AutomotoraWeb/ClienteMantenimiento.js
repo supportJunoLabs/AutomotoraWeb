@@ -22,21 +22,37 @@ $("#ddlMaritalStatus").change(function () {
 });
 
 function _showHideSpouseBlock(optionSelected) {
-    //alert(optionSelected);
-    $.getJSON("/Clientes/mostrarDatosConyuge", { codEcivil: optionSelected },
-        function (data) {
-            //alert(data.mostrar);
+    var destino = '/Clientes/mostrarDatosConyuge';
+    $.ajax({
+        cache: false,
+        type: "GET",
+        url: destino,
+        data: { "codEcivil": optionSelected },
+        success: function (data) {
             if (!data.mostrar) {
-                //alert("1");
                 $("#spouseBlock").hide();
             } else {
-                //alert("2");
                 $("#spouseBlock").show();
             }
         },
-        function () {
-            alert("Se produjo algun error en invocacion a metodo Json");
-        }
-    );
-    //alert("final");
+        error: function (xhr, ajaxOptions, thrownError) {
+            general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+        },
+        beforeSend: showLoading,
+        complete: hideLoading
+    });
+
+
+    //$.getJSON("/Clientes/mostrarDatosConyuge", { codEcivil: optionSelected },
+    //    function (data) {
+    //        if (!data.mostrar) {
+    //            $("#spouseBlock").hide();
+    //        } else {
+    //            $("#spouseBlock").show();
+    //        }
+    //    },
+    //    function (xhr, ajaxOptions, thrownError) {
+    //        general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+    //    }
+    //);
 }
