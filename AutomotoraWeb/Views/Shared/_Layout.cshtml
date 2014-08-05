@@ -163,25 +163,28 @@
 
     <script>
 
-        jQuery.validator.addMethod(
-              'date',
-              function (value, element, params) {
-                  if (this.optional(element)) {
-                      return true;
-                  };
-                  var result = false;
-                  try {
-                      $.datepicker.parseDate('dd/mm/yy', value);
-                      result = true;
-                  } catch (err) {
-                      result = false;
-                  }
-                  return result;
+
+        $(document).ready(function () {
+
+         jQuery.validator.addMethod(
+          'date',
+          function (value, element, params) {
+              if (this.optional(element)) {
+                  return true;
+              };
+              var result = false;
+              try {
+                  $.datepicker.parseDate('dd/mm/yy', value);
+                  result = true;
+              } catch (err) {
+                  result = false;
+              }
+              return result;
               },
               ''
           );
 
-        $(document).ready(function () {
+
             $("input[data-val-length-max], textarea[data-val-length-max]").each(function () {
                 var $this = $(this);
                 var data = $this.data();
