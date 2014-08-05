@@ -1,22 +1,23 @@
-﻿@model AutomotoraWeb.Models.ConsultaValeModel
+﻿@model AutomotoraWeb.Models.RenovarValeModel
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
-@using System.Collections.Generic;
 
 @{
-    ViewBag.Title = "Consulta Vale";
+    ViewBag.Title = "Renovar Vale";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+
+@using (Html.BeginForm("Renovar", null, FormMethod.Post, new { id = "formPrincipal" })) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
 <div id="filtros" class="block">
     <div class="btn-toolbar botoneraListado">
         <div class="floatLeft" style="padding-left: 20px;">
             @Html.Bootstrap().Button().Text("Actualizar").Class("btn-primary ").Id("btn_refreshVales")
-        </div>
-        <div class="btn-group" style="margin-left: 10px">
-            @Html.Bootstrap().ActionLinkButton("Imprimir", "ReportVale").Class("btn-primary2-mf").Id("btn_imprimir").RouteValues(new{id=Model.Vale.Codigo})
         </div>
     </div>
 
@@ -37,19 +38,16 @@
         <div class="clear-both"></div>
 
         <div id="divValesCliente">
-            @Html.Partial("_valesCliente", Model)
+            @Html.Partial("_valesRenovarCliente", Model)
         </div>
     </div>
 
 </div>
-
-<div id="divDetalleVale">
-    @Html.Partial("_datosDetalleVale", Model.Vale)
+    
+<div id ="divValeRenovacion">
+    @Html.Partial("_valeRenovacion", Model)  
 </div>
 
-<div id ="divValesAnteriores">
-    @Html.Partial("_valesAnteriores", Model.Vale)
-</div>
+}
 
-
-<script type="text/javascript" src="/scripts/AutomotoraWeb/ConsultaVale1.js"></script>
+<script type="text/javascript" src="/scripts/AutomotoraWeb/RenovarVale1.js"></script>

@@ -10,12 +10,16 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
+using Newtonsoft.Json.Linq;
+using System.Globalization;
 
-namespace AutomotoraWeb.Controllers.Financing
-{
-    public class ValesController : FinancingController
-    {
+namespace AutomotoraWeb.Controllers.Financing {
+    public class ValesController : FinancingController {
         public static string CONTROLLER = "Vales";
+
+        private Usuario _usuario() {
+            return (Usuario)(Session[SessionUtils.SESSION_USER]);
+        }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
@@ -29,8 +33,166 @@ namespace AutomotoraWeb.Controllers.Financing
             ViewBag.Cuentas = CuentaBancaria.CuentasBancarias;
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Financistas = Financista.FinancistasTodos;
+            ViewBag.Sucursal = usuario.Sucursal;
 
         }
+
+        #region RenovarVale
+
+        //El id Corrresonde al numero de vale
+        public ActionResult Renovar(string id) {
+            try {
+                RenovarValeModel m = new RenovarValeModel(_usuario());
+                if (!string.IsNullOrWhiteSpace(id)) {
+                    m.Transaccion.Vale.Codigo = id;
+                    m.Transaccion.Vale.Consultar();
+                    m.Cliente = m.Transaccion.Vale.ClienteOrigen;
+                    if (!m.Cliente.ValesPendientesOperables().Contains(m.Transaccion.Vale)) {
+                        ViewBag.ErrorCode = "ERR";
+                        ViewBag.ErrorMessage = "Vale "+id+" no habilitado para renovar o inexistente";
+                        m.Transaccion.Vale = new Vale();
+                        return View( new RenovarValeModel(_usuario()));
+                    }
+                    m.Sugerido = m.Transaccion.Vale.CobroSugerido();
+                    m.Transaccion.Importe = m.Sugerido.CobroSugerido;
+                }
+                ViewBag.SoloLectura = true;
+                return View( m);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View( new RenovarValeModel(_usuario()));
+            }
+        }
+
+        //El id corresponde al cliente, cuando entro con el cliente elegido
+        public ActionResult RenovarCliente(int? id) {
+            try {
+                RenovarValeModel m = new RenovarValeModel(_usuario());
+                if (id != null) {
+                    m.Cliente.Codigo = id ?? 0;
+                    m.Cliente.Consultar();
+                }
+                ViewBag.SoloLectura = true;
+                return View("Renovar", m);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("Renovar", new RenovarValeModel(_usuario()));
+            }
+        }
+
+        //desde el javascript de cambio en ddl clientes
+        public ActionResult ValesRenovablesCliente(int? idCliente) {
+            RenovarValeModel m = new RenovarValeModel(_usuario());
+            if (idCliente != null && idCliente > 0) {
+                m.Cliente.Codigo = idCliente ?? 0;
+            }
+            ViewBag.SoloLectura = true;
+            return PartialView("_valesRenovarCliente", m);
+        }
+
+        //desde el javascript de cambio en ddl vales
+        public ActionResult DetallesValeRenovacion(string idVale) {
+            if (!string.IsNullOrWhiteSpace(idVale)) {
+                RenovarValeModel m = new RenovarValeModel(_usuario());
+                m.Transaccion.Vale.Codigo = idVale;
+                m.Transaccion.Vale.Consultar();
+                m.Sugerido = m.Transaccion.Vale.CobroSugerido();
+                m.Transaccion.Importe = m.Sugerido.CobroSugerido;
+                ViewBag.SoloLectura = true;
+                return PartialView("_valeRenovacion", m);
+            } else {
+                return PartialView("_valeRenovacion", new RenovarValeModel(_usuario()));
+            }
+        }
+
+        [HttpPost]
+        public JsonResult FechaRenovacionModif(AuxValeRenovacion datos) {
+
+            Vale v = new Vale();
+            v.Codigo = datos.IdVale;
+            v.Consultar();
+            DateTime fecha = DateTime.ParseExact(datos.FechaRenov, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            ValeCobroSugerido sug = v.CobroSugerido(fecha);
+
+            AuxValeRenovacionSug result = new AuxValeRenovacionSug();
+            result.CodMoneda = sug.CobroSugerido.Moneda.Codigo;
+            result.Total = sug.CobroSugerido.Monto;
+
+            result.TotalTexto = sug.CobroSugerido.ImporteTexto;
+            result.InteresesTexto = sug.Intereses.ImporteTexto;
+            
+            return this.Json(result);
+        }
+
+        [HttpPost]
+        public ActionResult Renovar(RenovarValeModel m) {
+
+            ViewBag.SoloLectura = true;
+
+            this.eliminarValidacionesIgnorables("Transaccion.Vale", MetadataManager.IgnorablesDDL(m.Transaccion.Vale));
+            this.eliminarValidacionesIgnorables("Transaccion.Sucursal", MetadataManager.IgnorablesDDL(m.Transaccion.Sucursal));
+            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(m.Cliente));
+            this.eliminarValidacionesIgnorables("Transaccion.Importe.Moneda", MetadataManager.IgnorablesDDL(m.Transaccion.Importe.Moneda));
+
+            //Sacar la validacion del Vale porque sale con texto feo y hacerla manualmente
+            ModelState.Remove("Transaccion.Vale.Codigo");
+            ModelState.Remove("Transaccion.Sucursal.Codigo");
+
+            if (m.Transaccion.Vale == null || string.IsNullOrWhiteSpace(m.Transaccion.Vale.Codigo)) {
+                ModelState.AddModelError("Transaccion.Vale.Codigo", "El Vale es requerido");
+            }
+            if (m.Transaccion.Sucursal == null || m.Transaccion.Sucursal.Codigo <= 0) {
+                ModelState.AddModelError("Transaccion.Sucursal.Codigo", "La Sucursal es requerida");
+            }
+
+            if (ModelState.IsValid) {
+                try {
+                    m.Transaccion.setearAuditoria(m.UserName, m.IP);
+                    m.Transaccion.Ejecutar();
+                    return RedirectToAction("ReciboRenovacion", ValesController.CONTROLLER, new { id = m.Transaccion.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(m);
+                }
+            }
+            m.Transaccion.Vale.Consultar();
+            m.Cliente.Consultar();
+            return View(m);
+        }
+
+        public ActionResult ReciboRenovacion(int id) {
+            TRValeRenovacion tr = (TRValeRenovacion)Transaccion.ObtenerTransaccion(id);
+            ViewData["idParametros"] = id;
+            return View("ReciboRenovacion", tr);
+        }
+        
+        private XtraReport _generarReciboRenovacion(int id) {
+            TRValeRenovacion tr = (TRValeRenovacion)Transaccion.ObtenerTransaccion(id);
+            List<TRValeRenovacion> ll = new List<TRValeRenovacion>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboRenovarVale();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboRenovacionPartial(int idParametros) {
+            XtraReport rep = _generarReciboRenovacion(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboRenovacion");
+        }
+
+        public ActionResult ReciboRenovacionExport(int idParametros) {
+            XtraReport rep = _generarReciboRenovacion(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
 
         #region ConsultaVales
 
@@ -54,7 +216,7 @@ namespace AutomotoraWeb.Controllers.Financing
             m.Vale = new Vale();
             m.Cliente = new Cliente();
             if (id != null) {
-                m.Cliente.Codigo = id??0;
+                m.Cliente.Codigo = id ?? 0;
                 m.Cliente.Consultar();
             }
             ViewBag.SoloLectura = true;
@@ -62,10 +224,12 @@ namespace AutomotoraWeb.Controllers.Financing
         }
 
         //desde el javascript de cambio en ddl clientes
-        public ActionResult ValesCliente(int idCliente) {
+        public ActionResult ValesCliente(int? idCliente) {
             ConsultaValeModel m = new ConsultaValeModel();
-            m.Cliente = new Cliente();
-            m.Cliente.Codigo = idCliente;
+            if (idCliente != null && idCliente > 0) {
+                m.Cliente = new Cliente();
+                m.Cliente.Codigo = idCliente??0;
+            }
             ViewBag.SoloLectura = true;
             return PartialView("_valesCliente", m);
         }
@@ -73,14 +237,26 @@ namespace AutomotoraWeb.Controllers.Financing
 
         //desde el javascript de cambio en ddl vales
         public ActionResult DetallesVale(string idVale) {
-            ConsultaValeModel m = new ConsultaValeModel();
-            m.Vale = new Vale();
-            m.Vale.Codigo = idVale;
-            m.Vale.Consultar();
-            m.Cliente = m.Vale.ClienteOrigen;
+            Vale v = new Vale();
             ViewBag.SoloLectura = true;
-            return PartialView("_datosDetalleVale", m);
+            if (!string.IsNullOrWhiteSpace(idVale)) {
+                v.Codigo = idVale;
+                v.Consultar();
+            } 
+            return PartialView("_datosDetalleVale", v);
         }
+
+
+        //tambien desde el javascript de cambio en ddl vales, para los historicos
+        public ActionResult DetallesValesAnteriores(string idVale) {
+            Vale v = new Vale();
+            ViewBag.SoloLectura = true;
+            if (!string.IsNullOrWhiteSpace(idVale)) {
+                v.Codigo = idVale;
+            }
+            return PartialView("_valesAnteriores", v);
+        }
+
 
         public ActionResult ReportVale(string id) {
             if (string.IsNullOrWhiteSpace(id)) {
@@ -168,15 +344,16 @@ namespace AutomotoraWeb.Controllers.Financing
         }
 
         public ActionResult ReciboDescuento(int id) {
+            TRValeDescontar tr = (TRValeDescontar)Transaccion.ObtenerTransaccion(id);
             ViewData["idParametros"] = id;
-            return View("ReciboDescuento");
+            return View("ReciboDescuento", tr);
         }
 
         private XtraReport _generarReciboDescuento(int id) {
             TRValeDescontar tr = (TRValeDescontar)Transaccion.ObtenerTransaccion(id);
             List<TRValeDescontar> ll = new List<TRValeDescontar>();
             ll.Add(tr);
-            XtraReport rep = new DXReciboDescontarVale();  
+            XtraReport rep = new DXReciboDescontarVale();
             rep.DataSource = ll;
             return rep;
         }
@@ -312,7 +489,7 @@ namespace AutomotoraWeb.Controllers.Financing
             ModelState.Remove("Vale.Codigo");
             ModelState.Remove("Sucursal.Codigo");
 
-            if (tr.Vale == null || string.IsNullOrWhiteSpace(tr.Vale.Codigo )) {
+            if (tr.Vale == null || string.IsNullOrWhiteSpace(tr.Vale.Codigo)) {
                 ModelState.AddModelError("Vale.Codigo", "El Vale es requerido");
             }
             if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
@@ -333,8 +510,9 @@ namespace AutomotoraWeb.Controllers.Financing
         }
 
         public ActionResult ReciboRech(int id) {
+            TRValeRechazar tr = (TRValeRechazar)Transaccion.ObtenerTransaccion(id);
             ViewData["idParametros"] = id;
-            return View("ReciboRech");
+            return View("ReciboRech", tr);
         }
 
         private XtraReport _generarReciboRech(int id) {
@@ -363,5 +541,19 @@ namespace AutomotoraWeb.Controllers.Financing
 
         #endregion
 
+    }   
+
+    public class AuxValeRenovacion {
+        public string IdVale { get; set; }
+        public string FechaRenov { get; set; }
+    }
+
+    public class AuxValeRenovacionSug {
+        public int CodMoneda { get; set; }
+        public double Total { get; set; }
+
+        public string TotalTexto { get; set; }
+        public string InteresesTexto { get; set; }
+        
     }
 }

@@ -9,5 +9,11 @@ namespace AutomotoraWeb.Models {
         public Cliente Cliente { get; set; }
         public Vale Vale { get; set; }
 
+        //constructor
+        public ConsultaValeModel() {
+            Cliente = new Cliente();
+            Vale = new Vale();
+        }
+
     }
 }

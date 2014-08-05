@@ -1,0 +1,21 @@
+﻿@model AutomotoraWeb.Models.RenovarValeModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+<div class="display-label label-mini">
+    @Html.LabelFor(model => model.Transaccion.Vale)
+</div>
+<div class="editor-field editor-field-xlarge xxlarge floatLeft">
+    @Html.DdlOrDisplayFor(model => model.Transaccion.Vale.Codigo, false, model => model.Transaccion.Vale.Descripcion,
+                new SelectList(Model.Cliente.ValesPendientesOperables(), "Codigo", "Descripcion"), "--Seleccionar Vale--",
+                new { id = "ddlVales", @class = "xxlarge" })
+</div>
+ <div class="floatLeft" style="padding-left: 20px;">
+            <a href="/Vales/Renovar/#" id="abtn_verVale">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consulta Vale").Id("btn_vale")
+            </a>
+        </div>
+
+<div class="clear-both"></div>
+
+<script type="text/javascript" src="/scripts/AutomotoraWeb/RenovarVale2.js"></script>

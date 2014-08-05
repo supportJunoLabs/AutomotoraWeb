@@ -1,11 +1,12 @@
-﻿@using AutomotoraWeb.Controllers.Financing;
+﻿@model DLL_Backend.TRValeRechazar
+@using AutomotoraWeb.Controllers.Financing;
 
 @{ 
     ViewBag.Title = "Vale Descontado Impago";
 }
 
 <div class="btn-toolbar">
-    @(Html.Bootstrap().ActionLinkButton("Volver", FinancingController.INDEX, FinancingController.BCONTROLLER).Class("btn btn-default"))
+    @(Html.Bootstrap().ActionLinkButton("Consulta Vale", "ConsultaVale", ValesController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Vale.Codigo}))
 </div>
 <div class="clear-both"></div>
 

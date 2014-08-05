@@ -103,7 +103,7 @@
     <div class="display-label ">
         @Html.LabelForRequired(model => model.Comprobante.Observaciones)
     </div>
-    <div class="editor-field editor-field-xxlarge editor-textarea">
+    <div class="editor-field editor-field-xxlarge">
         @Html.TextAreaOrDisplayFor(model => model.Comprobante.Observaciones, (bool?)ViewBag.SoloLectura)
         @Html.ValidationMessageFor(model => model.Comprobante.Observaciones)
     </div>

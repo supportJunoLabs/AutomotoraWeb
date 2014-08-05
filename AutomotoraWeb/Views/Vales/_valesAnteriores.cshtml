@@ -1,0 +1,15 @@
+﻿@model DLL_Backend.Vale
+@using DLL_Backend;
+
+@{ List<Vale> ll = Model.ValesAnteriores();
+   if (ll != null && ll.Count > 0) {
+           
+    <div class="block">
+        <a href="#datosValesAnteriores" class="block-heading icon-play-circle" data-toggle="collapse">&nbsp;&nbsp;&nbsp;Renovaciones</a>
+        <div id="datosValesAnteriores" class="block-body collapse in" style="padding-top: 10px; padding-bottom: 10px">
+            @Html.Partial("_valesAnterioresGrilla", ll)
+        </div>
+    </div>
+     
+   }
+}

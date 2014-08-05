@@ -134,18 +134,26 @@ a.hipervinculo {
     text-decoration: underline;
 }
 
+.bloque {
+    border: 1px solid #ccc;
+}
 
 .cabezalBloque{
     background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #dddddd), color-stop(1, #fafafa));
     border-top: 1px solid #fff;
     border-bottom: 1px solid #a6a6a6;
-    padding-top:15px;
-    height: 35px;
+    padding-top:10px;
+    padding-bottom:10px;
     padding-left: 10px;
-    vertical-align:middle;
+    padding-right: 10px;
     font-weight: bold;
-    font-size: 14px;
-    margin-bottom:20px;
+    font-size: 12px;
+}
+
+.cuerpoBloque {
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:20px;
 }
 
 body {
@@ -178,6 +186,10 @@ margin-bottom:0px;
 label {
     font-size:12px;
     font-weight:bold;
+}
+
+.editor-date-field {
+    margin-bottom:0px;
 }
 
 .editor-field > select {
