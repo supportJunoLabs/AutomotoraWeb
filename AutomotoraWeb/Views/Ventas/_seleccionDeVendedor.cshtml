@@ -6,7 +6,7 @@
 <div>
 
     <div>
-        <div class="display-label">
+        <div class="display-label-90">
             @Html.LabelForRequired(model => model.Vendedor)
         </div>
         <div class="renglon-alto editor-field-xlarge">
@@ -24,15 +24,6 @@
     <div>
         @Html.HiddenFor(model => model.Vendedor.Codigo)
     </div>
-
-    <style type="text/css">
-        .display-label-vendedor {
-            width: 90px !important;
-        }
-        .dataLine {
-            margin-top: 8px;
-        }
-    </style>
 
     <script type="text/javascript">
 

@@ -104,6 +104,18 @@ namespace AutomotoraWeb.Helpers {
             }
         }
 
+        //public static MvcHtmlString RadioButtonForOrDisplayFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+        //    Expression<Func<TModel, bool>> expression, bool? soloLectura, String valueSelected, object htmlAttributes = null) {
+        //    if (!(soloLectura ?? false)) {
+        //        return htmlHelper.RadioButtonFor(expression, valueSelected, htmlAttributes);
+        //    } else {
+        //        return MvcHtmlString.Create(
+        //             htmlHelper.RadioButtonFor(expression, valueSelected, htmlAttributes).ToString() +
+        //             htmlHelper.HiddenFor(expression, htmlAttributes).ToString()
+        //         );
+        //    }
+        //}
+
         public static MvcHtmlString TextBoxOrdisplayFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression, bool? soloLectura,
             string format, object htmlAttributes) {

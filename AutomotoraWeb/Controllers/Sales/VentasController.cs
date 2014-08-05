@@ -39,6 +39,9 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Vehiculo = new Vehiculo();
             venta.Cliente = new Cliente();
             venta.Vendedor = new Vendedor();
+            venta.Sucursal = new Sucursal();
+
+            ViewBag.Sucursales = Sucursal.Sucursales;
             return View(venta);
         }
 

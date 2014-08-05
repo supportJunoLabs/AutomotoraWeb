@@ -101,6 +101,13 @@ a.hipervinculo {
     width: 120px;
 }
 
+.display-label-90 {
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+    width: 90px;
+}
 
 .display-label-mini {
     float: left;
@@ -108,6 +115,10 @@ a.hipervinculo {
     font-weight: bold;
     margin-right: 10px;
     width: 70px;
+}
+
+.dataLine {
+    margin-top: 8px;
 }
 
 .botoneraListado {
