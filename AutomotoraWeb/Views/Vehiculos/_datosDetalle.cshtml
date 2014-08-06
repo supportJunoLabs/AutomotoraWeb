@@ -7,15 +7,18 @@
     bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
 }
 
-
+@{ if (Model!=null && Model.Codigo>0){
 <div class="display-label">
     @Html.LabelForRequired(model => model.Ficha)
 </div>
 <div class="editor-field editor-field-large renglon-alto">
-    @Html.EditorOrDisplayFor(model => model.Ficha, modoConsulta)
+    <strong>
+    @Html.EditorOrDisplayFor(model => model.Ficha, true)
+    </strong>
     @Html.ValidationMessageFor(model => model.Ficha)
 </div>
 <div class="clear-both"></div>
+}}
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Sucursal)

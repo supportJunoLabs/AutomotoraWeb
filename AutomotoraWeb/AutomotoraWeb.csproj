@@ -2069,6 +2069,7 @@
     <Content Include="Views\Vales\_reciboRenovacion.cshtml" />
     <Content Include="Views\Vales\_valesAnterioresGrilla.cshtml" />
     <Content Include="Views\Vales\_valesAnteriores.cshtml" />
+    <Content Include="Views\Pedidos\_datosVehiculo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,10 +11,8 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
 
-namespace AutomotoraWeb.Controllers.Sales
-{
-    public class PedidosController : SalesController
-    {
+namespace AutomotoraWeb.Controllers.Sales {
+    public class PedidosController : SalesController {
 
         public static string CONTROLLER = "Pedidos";
         public const string RECIBIR = "Recibir";
@@ -26,6 +24,8 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewBag.Monedas = Moneda.Monedas;
             ViewBag.Clientes = Cliente.Clientes();
             ViewBag.Vendedores = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
+            ViewBag.Departamentos = Departamento.Departamentos();
+            ViewBag.TiposCombustible = TipoCombustible.TiposCombustible();
 
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
             if (usuario == null) {
@@ -88,8 +88,67 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         public ActionResult Recibir(int id) {
-            ViewBag.SoloLectura = true;
-            return VistaElemento(id);
+            try {
+                Pedido ped = _obtenerElemento(id);
+                ped.Vehiculo = new Vehiculo();
+                ped.Vehiculo.Marca = ped.Marca;
+                ped.Vehiculo.Modelo = ped.Modelo;
+                ped.Vehiculo.Color = ped.Color;
+                ped.Vehiculo.Costo = ped.Costo;
+                ped.FechaRecibido = DateTime.Now.Date;
+                ped.Vehiculo.FechaAdquirido = ped.FechaRecibido ?? DateTime.Now.Date;
+                ped.Vehiculo.Sucursal = ped.Sucursal;
+
+                return View(ped);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Recibir(Pedido ped) {
+            this.eliminarValidacionesIgnorables("Vehiculo.Departamento", MetadataManager.IgnorablesDDL(ped.Vehiculo.Departamento));
+            this.eliminarValidacionesIgnorables("Vehiculo.TipoCombustible", MetadataManager.IgnorablesDDL(ped.Vehiculo.TipoCombustible));
+            this.eliminarValidacionesIgnorables("Vehiculo.Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Vehiculo.Costo.Moneda));
+            this.eliminarValidacionesIgnorables("Vehiculo.PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(ped.Vehiculo.PrecioVenta.Moneda));
+
+            this.eliminarValidacionesIgnorables("Cliente",  MetadataManager.IgnorablesDDL(ped.Cliente));
+            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(ped.Vendedor));
+            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Costo.Moneda));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(ped.Sucursal));
+
+
+            ModelState.Remove("Vehiculo.Sucursal"); //se toma del vehiculo
+            ModelState.Remove("Cliente.Codigo"); //uede no estar reservado, no tiene cliente ni vendedor
+            ModelState.Remove("Vendedor.Codigo");
+
+            if (ModelState.IsValid) {
+                try {
+                    ped.FechaRecibido = DateTime.Now.Date; //ver despues si lo permito cambiar manualmente
+                    ped.Vehiculo.FechaAdquirido = ped.FechaRecibido??DateTime.Now.Date;
+                    ped.Vehiculo.Sucursal = ped.Sucursal;
+                    Usuario u = new Usuario();
+                    u.UserName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                    string IP = HttpContext.Request.UserHostAddress;
+                    ped.RecibirPedido(u, IP);
+                    return RedirectToAction(BaseController.DETAILS, VehiculosController.CONTROLLER, new { id = ped.Vehiculo.Codigo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    _completarDatos(ped);
+                    return View(ped);
+                }
+            }
+            _completarDatos(ped);
+            return View(ped);
+        }
+
+        private void _completarDatos(Pedido ped){
+            Vehiculo v1 = new Vehiculo(ped.Vehiculo); //para no perder lo que ingreso el usuario
+            ped.Consultar();  //para volver a trare los datos de las entidades asociadas (ej: cliente, vendedor, etc)
+            ped.Vehiculo=v1;
         }
 
         //-----------------------------------------------------------------------------------------------------
@@ -125,7 +184,7 @@ namespace AutomotoraWeb.Controllers.Sales
         public ActionResult Create(Pedido td) {
 
             this.eliminarValidacionesIgnorables(td);
-            
+
             if (ModelState.IsValid) {
                 try {
                     td.Agregar();
@@ -202,7 +261,7 @@ namespace AutomotoraWeb.Controllers.Sales
             }
         }
 
-        
+
         #endregion
 
 

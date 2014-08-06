@@ -83,7 +83,7 @@
 </div>
 @{ if (Model != null) {
        Vehiculo vhc= Model.Vehiculo;
-       if (vhc != null) {
+       if (vhc != null && vhc.Codigo>0) {
             <div class="floatLeft" style="padding-left: 20px;">
                     @(Html.Bootstrap().ActionLinkButton("Ver Vehiculo  "+vhc.Ficha, "VerVehiculo").RouteValues(new { id = vhc.Codigo }).Class("btn-info  btn-small"))
             </div>
