@@ -1,0 +1,41 @@
+﻿@model List<DLL_Backend.Recibo>
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Financing;
+@using DLL_Backend;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+       new ColumnaGrilla {Campo="Fecha", Ancho=80, Titulo="Fecha"},
+        new ColumnaGrilla {Campo="Numero", Ancho=60, Titulo="Trans.",
+         Hipervinculo=true, Haccion="ConsultaTransaccion", Hcontrolador="Transacciones", HCampoParametro="Numero"},
+        new ColumnaGrilla {Campo="TipoRecibo.Descripcion", Ancho=150, Titulo="Tipo"},
+        new ColumnaGrilla {Campo="NumeroOperacion", Ancho=80, Titulo="Operacion"},
+        new ColumnaGrilla {Campo="Importe", Ancho=150, Titulo="Importe"},         
+        new ColumnaGrilla {Campo="Observaciones", Ancho=250, LargoMax=70},
+        new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=100, Titulo="Sucursal",
+                Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Sucursal.Codigo"}
+     };
+                        
+        
+    ig.NameGrid = "grillaValePagos";
+    //ig.Controller = ValesController.CONTROLLER;
+    //ig.ActionCallbackRoute = "ListGrillaVales";
+    ig.KeyFieldName = "Numero";
+    ig.TypeOfModel = typeof(DLL_Backend.Recibo);
+    ig.registrosPorPagina = 20;
+    ig.Estatica = true;
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ConsultaTransaccion", TransaccionesController.CONTROLLER, "boton-consultar-mf", "Consulta Transaccion"));
+    
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = TransaccionesController.CONTROLLER;
+    ig.AccionDobleClick = "ConsultaTransaccion";
+
+    ViewBag.InfoGrilla = ig;
+}   
+
+@Html.Partial("_generalGrid", Model)
+
+

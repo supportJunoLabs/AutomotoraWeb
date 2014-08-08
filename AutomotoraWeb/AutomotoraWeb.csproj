@@ -317,6 +317,9 @@
     <Compile Include="Reports\Consultas\DXReportConsultaVale.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Consultas\_DXSubrepValeDescontado.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Listados\DXListadoAcvs.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -2070,6 +2073,8 @@
     <Content Include="Views\Vales\_valesAnteriores.cshtml" />
     <Content Include="Views\Pedidos\_datosVehiculo.cshtml" />
     <Content Include="Views\Sistema\Mensaje.cshtml" />
+    <Content Include="Views\Vales\_valePagos.cshtml" />
+    <Content Include="Views\Vales\_valePagosGrilla.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2099,6 +2104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Consultas\DXReportConsultaVale.resx">
       <DependentUpon>DXReportConsultaVale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Consultas\_DXSubrepValeDescontado.resx">
+      <DependentUpon>_DXSubrepValeDescontado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoAcvs.resx">
       <DependentUpon>DXListadoAcvs.cs</DependentUpon>
