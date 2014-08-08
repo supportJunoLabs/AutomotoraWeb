@@ -5,7 +5,7 @@
 @{ 
     ViewBag.Title = "Listado Movimientos Bancarios / Estado de Cuenta";
 }
-
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", "List").Class("btn btn-default"))
 </div>

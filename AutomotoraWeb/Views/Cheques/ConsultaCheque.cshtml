@@ -10,6 +10,8 @@
     ViewBag.Title = "Consulta Cheque";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 
 @Html.HiddenFor(m => m.Codigo)
 

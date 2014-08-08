@@ -113,6 +113,7 @@
 <script type="text/javascript">
 
     function vehiculoSelected(s, e) {
+        alert("vehiculo elegido");
         var g = gridVehiculos.GetGridView();  //obtener referencia a la grilla
         var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
         $("#codigoVehiculo").val(valor);

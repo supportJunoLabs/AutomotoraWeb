@@ -5,7 +5,9 @@
 
 @{ 
     ViewBag.Title = "Listado Movimientos de Caja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.LIST).Class("btn btn-default"))

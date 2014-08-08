@@ -5,6 +5,8 @@
 @{ 
     ViewBag.Title = "Consulta Cheque";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Consulta", "ConsultaCheque").Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
 </div>

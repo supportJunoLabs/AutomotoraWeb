@@ -4,6 +4,7 @@
 @{ 
     ViewBag.Title = "Renovacion Vale";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Consulta Vale", "ConsultaVale", ValesController.CONTROLLER).Class("btn btn-default").RouteValues(new {id=Model.NuevoVale.Codigo }))

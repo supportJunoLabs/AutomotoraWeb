@@ -7,11 +7,7 @@
 @{
     ViewBag.Title = "Comprobante Documentación";
     Layout = "~/Views/Shared/_Layout.cshtml";
-   
 }
-
-
-
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {

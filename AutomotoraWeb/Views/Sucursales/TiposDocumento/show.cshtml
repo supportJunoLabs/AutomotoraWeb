@@ -5,24 +5,25 @@
     ViewBag.Title = ViewBag.NombreEntidades;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-    <div class="espacio"></div>
+<div class="espacio"></div>
 <div class="row-fluid contPagina">
     Tipos de documentacion de vehiculo a gestionar durante la compraventa.
 </div>
-    <div class="espacio"></div>
+<div class="espacio"></div>
 
 <div class="row-fluid">
     <div class="btn-toolbar">
         <div class="btn-group">
-            @(Html.Bootstrap().ActionLinkButton("Agregar ", BaseController.CREATE ).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
-        )
+            @(Html.Bootstrap().ActionLinkButton("Agregar ", BaseController.CREATE).AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
+            )
         </div>
         <div class="btn-group">
             <a class="btn btn-primary2-mf" title="Imprimir" href='@Url.Action(BaseController.REPORT)'>Imprimir</a>
         </div>
     </div>
-       
+
     <div id="divGrilla">
         @Html.Partial("_listGrilla", Model)
     </div>

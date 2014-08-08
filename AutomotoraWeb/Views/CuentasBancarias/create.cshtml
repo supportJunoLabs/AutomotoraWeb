@@ -2,12 +2,10 @@
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.General;
 
-
 @{
     ViewBag.Title = ViewBag.NombreEntidad + ": Agregar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm()) {

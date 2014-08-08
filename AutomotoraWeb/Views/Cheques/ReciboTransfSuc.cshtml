@@ -3,6 +3,7 @@
 @{ 
     ViewBag.Title = "Transferir Cheques entre Sucursales";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", BankController.INDEX, BankController.BCONTROLLER).Class("btn btn-default"))

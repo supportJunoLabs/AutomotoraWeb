@@ -5,8 +5,9 @@
 @{
     ViewBag.Title = "Mi Perfil";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 
 <div>
     <h5>@Html.LabelForRequired(m => m.UserName)

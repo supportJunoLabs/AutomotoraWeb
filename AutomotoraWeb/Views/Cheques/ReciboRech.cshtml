@@ -4,6 +4,8 @@
 @{ 
     ViewBag.Title = "Cheque Rechazado";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Consulta Cheque", "ConsultaCheque", ChequesController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Cheque.Codigo}))

@@ -4,6 +4,7 @@
     ViewBag.Title = "Módulo de Gestión Comercial";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @Html.Partial("_alertas", "VENTAS")
 

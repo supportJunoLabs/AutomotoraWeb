@@ -1,5 +1,7 @@
 ﻿@model DLL_Backend.Vehiculo
 @using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
 
 @{
     ViewBag.Title = ViewBag.NombreEntidad + ": Consulta";
@@ -25,6 +27,21 @@
                 @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
                 @(Html.Bootstrap().ActionLinkButton("Imprimir", BaseController.REPORT2).RouteValues(new { idVehiculo = Model.Codigo }).Class("btn btn-primary").Title("Imprimir Ficha"))
                 @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+
+                @{ if (Model!=null && Model.Seniable()){
+                       @(Html.Bootstrap().ActionLinkButton("Señar", "SeniaVehiculo", SeniasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+                }}
+
+                @{ if (Model!=null && Model.Vendible()){
+                       @(Html.Bootstrap().ActionLinkButton("Vender", "VentaVehiculo", VentasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+                }}
+                @{ if (Model!=null && Model.RecibeAcvs()){
+                       @(Html.Bootstrap().ActionLinkButton("A cuenta Venta", "Acv", AcvsController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+                }}
+                 @{ if (Model!=null && Model.Entregable()){
+                       @(Html.Bootstrap().ActionLinkButton("Entregar", "Entregar", VentasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+                }}
+
                 @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
             </div>
         </div>
