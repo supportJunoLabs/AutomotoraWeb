@@ -157,7 +157,7 @@ public class DXReciboDescontarVale : DevExpress.XtraReports.UI.XtraReport {
             // xrLabel14
             // 
             this.xrLabel14.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vale.VehiculoOrigen.Codigo")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vale.VehiculoOrigen.Ficha")});
             this.xrLabel14.LocationFloat = new DevExpress.Utils.PointFloat(95.8333F, 32.99999F);
             this.xrLabel14.Name = "xrLabel14";
             this.xrLabel14.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);

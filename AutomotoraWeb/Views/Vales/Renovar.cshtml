@@ -1,0 +1,53 @@
+﻿@model AutomotoraWeb.Models.RenovarValeModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    ViewBag.Title = "Renovar Vale";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+
+@using (Html.BeginForm("Renovar", null, FormMethod.Post, new { id = "formPrincipal" })) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+<div id="filtros" class="block">
+    <div class="btn-toolbar botoneraListado">
+        <div class="floatLeft" style="padding-left: 20px;">
+            @Html.Bootstrap().Button().Text("Actualizar").Class("btn-primary ").Id("btn_refreshVales")
+        </div>
+    </div>
+
+    <div style="margin-left: 30px">
+        <div class="display-label label-mini">
+            @Html.LabelFor(model => model.Cliente)
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, false, model => model.Cliente.Nombre,
+                new SelectList(Vale.ClientesVales(), "Codigo", "Nombre"), "--Seleccionar Cliente--",
+                new { id = "ddlClientes", @class = "xxlarge" })
+        </div>
+        <div class="floatLeft" style="padding-left: 20px;">
+            <a href="/ConsultaVale/#" id="abtn_verCliente">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Datos Cliente").Id("btn_verCliente")
+            </a>
+        </div>
+        <div class="clear-both"></div>
+
+        <div id="divValesCliente">
+            @Html.Partial("_valesRenovarCliente", Model)
+        </div>
+    </div>
+
+</div>
+    
+<div id ="divValeRenovacion">
+    @Html.Partial("_valeRenovacion", Model)  
+</div>
+
+}
+
+<script type="text/javascript" src="/scripts/AutomotoraWeb/RenovarVale1.js"></script>

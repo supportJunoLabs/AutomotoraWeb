@@ -5,6 +5,7 @@
 @{ 
     ViewBag.Title = "Listado Transacciones";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", "List").Class("btn btn-default"))

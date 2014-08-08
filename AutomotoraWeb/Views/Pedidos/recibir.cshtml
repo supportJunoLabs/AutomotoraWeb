@@ -6,25 +6,57 @@
     ViewBag.Title = ViewBag.NombreEntidad + ": Recibir";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
-    @Html.ValidationSummary("Se han producido errores:")
+   
 
     <fieldset>
         <legend></legend>
         @Html.HiddenFor(model => model.Codigo)
 
-        RECEPCION DE PEDIDOS SIN IMPLEMENTAR
+        @{ViewBag.SoloLectura = true;}
+
+        @Html.Partial("_datosDetalle", Model)
+
+        @{if (Model.Reservado && !Model.Seniado) {
+            <div class="alert alert-success">
+                <span>ATENCION: El pedido está reservado pero <strong>NO</strong> esta señado.<br />
+                    El vehículo estará disponible y podría ser vendido a otro cliente hasta tanto no se registre una seña sobre el mismo.
+                </span>
+            </div>      
+            <div class="espacio2"></div>
+            <div class="espacio2"></div>     
+          }
+        }
+
+        @{ViewBag.SoloLectura = false;}
+
+        <div class="espacio2"></div>
+        <div class="espacio2"></div>
+
+        @Html.ValidationSummary(true)
+        @Html.ValidationSummary("Se han producido errores:")
+        <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+        <div class="espacio2"></div>
+
+        <div class="cabezalBloque">
+            Vehículo
+        </div>
+        <div class="cuerpoBloque">
+            @*@Html.Partial("/Views/Vehiculos/_datosDetalle.cshtml", Model.Vehiculo)*@
+            @Html.Partial("_datosVehiculo", Model)
+        </div>
 
     </fieldset>
     
     <div class="espacio2"></div>
     
+    
+    
+    
     <div class="btn-toolbar">
-        @(Html.Bootstrap().ActionLinkButton("Recibir", PedidosController.RECIBIR).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Recibir"))
         @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
     </div>
 

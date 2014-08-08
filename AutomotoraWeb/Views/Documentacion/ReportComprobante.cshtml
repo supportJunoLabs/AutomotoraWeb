@@ -4,6 +4,8 @@
 @{ 
     ViewBag.Title = "Comprobante Documentación";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", "ComprobanteDocumentacion").Class("btn btn-default").RouteValues(new { id=Model.Comprobante.Vehiculo.Codigo}))

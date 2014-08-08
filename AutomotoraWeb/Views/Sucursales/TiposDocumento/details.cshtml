@@ -2,10 +2,9 @@
 @using AutomotoraWeb.Controllers.General;
 
 @{
-    ViewBag.Title = ViewBag.NombreEntidad + ": Eliminar";
+    ViewBag.Title = ViewBag.NombreEntidad + ": Consulta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm()) {
@@ -23,8 +22,9 @@
     <div class="espacio2"></div>
     
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Data(new { id = Model.Codigo }))
-        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.DETAILS).RouteValues(new {id=Model.Codigo }).Class("btn btn-default"))
+        @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
     </div>
 
 }

@@ -141,6 +141,10 @@
       <HintPath>..\packages\LinqKit.1.0\lib\35\LinqKit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Portable.Licensing">
       <HintPath>..\packages\Portable.Licensing.1.1.0\lib\portable-net40+sl4+wp7+win8\Portable.Licensing.dll</HintPath>
     </Reference>
@@ -167,9 +171,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
@@ -278,6 +279,8 @@
     <Compile Include="Models\ComprobanteDocumentacionModel.cs" />
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
+    <Compile Include="Models\Mensaje.cs" />
+    <Compile Include="Models\RenovarValeModel.cs" />
     <Compile Include="Models\ListadoAcvsModel.cs" />
     <Compile Include="Models\Grilla\BotonAjaxGrilla.cs" />
     <Compile Include="Models\Grilla\BotonGrilla.cs" />
@@ -397,6 +400,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboRenovarVale.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Transacciones\DXCuponesVenta.cs">
@@ -1691,6 +1697,7 @@
     <Content Include="Content\Images\vssver2.scc" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\AutomotoraWeb\ayudaFechas.js" />
     <Content Include="Scripts\AutomotoraWeb\CajaListado.js" />
     <Content Include="Scripts\AutomotoraWeb\ChEmitido.js" />
     <Content Include="Scripts\AutomotoraWeb\ChEmitidoCreateModif.js" />
@@ -1702,8 +1709,11 @@
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale2.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaFinanciacion1.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaFinanciacion2.js" />
+    <Content Include="Scripts\AutomotoraWeb\RenovarVale2.js" />
+    <Content Include="Scripts\AutomotoraWeb\RenovarVale1.js" />
     <Content Include="Scripts\AutomotoraWeb\RechazarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale1.js" />
+    <Content Include="Scripts\AutomotoraWeb\RenovarVale3.js" />
     <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
@@ -1798,15 +1808,15 @@
     <Content Include="Views\Clientes\_reportList.cshtml" />
     <Content Include="Views\Clientes\report.cshtml" />
     <Content Include="Views\Sucursales\_datosDetalle.cshtml" />
-    <Content Include="Views\TiposDocumento\_datosDetalle.cshtml" />
-    <Content Include="Views\TiposDocumento\_listGrilla.cshtml" />
-    <Content Include="Views\TiposDocumento\_reportList.cshtml" />
-    <Content Include="Views\TiposDocumento\create.cshtml" />
-    <Content Include="Views\TiposDocumento\delete.cshtml" />
-    <Content Include="Views\TiposDocumento\details.cshtml" />
-    <Content Include="Views\TiposDocumento\edit.cshtml" />
-    <Content Include="Views\TiposDocumento\report.cshtml" />
-    <Content Include="Views\TiposDocumento\show.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\_datosDetalle.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\_listGrilla.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\_reportList.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\create.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\delete.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\details.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\edit.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\report.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\show.cshtml" />
     <Content Include="Views\Vehiculos\_datosDetalle.cshtml" />
     <Content Include="Views\Vehiculos\_listGrilla.cshtml" />
     <Content Include="Views\Vehiculos\_reportList.cshtml" />
@@ -1891,7 +1901,6 @@
     <Content Include="Views\Caja\_listEfectivo.cshtml" />
     <Content Include="Views\Caja\_listGrillaEfectivo.cshtml" />
     <Content Include="Views\Transacciones\List.cshtml" />
-    <Content Include="Views\Transacciones\Transaccion.cshtml" />
     <Content Include="Views\Caja\Report.cshtml" />
     <Content Include="Views\Caja\_report.cshtml" />
     <Content Include="Views\ConsultasFin\ListSitCuotas.cshtml" />
@@ -2053,6 +2062,15 @@
     <Content Include="Views\Ventas\_seleccionDeVendedor.cshtml" />
     <Content Include="Views\DocumentacionLegal\ReportCuponesVenta.cshtml" />
     <Content Include="Views\DocumentacionLegal\_reportCuponesVenta.cshtml" />
+    <Content Include="Views\Vales\Renovar.cshtml" />
+    <Content Include="Views\Vales\_valesRenovarCliente.cshtml" />
+    <Content Include="Views\Vales\_valeRenovacion.cshtml" />
+    <Content Include="Views\Vales\ReciboRenovacion.cshtml" />
+    <Content Include="Views\Vales\_reciboRenovacion.cshtml" />
+    <Content Include="Views\Vales\_valesAnterioresGrilla.cshtml" />
+    <Content Include="Views\Vales\_valesAnteriores.cshtml" />
+    <Content Include="Views\Pedidos\_datosVehiculo.cshtml" />
+    <Content Include="Views\Sistema\Mensaje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2166,6 +2184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboRenovarVale.resx">
+      <DependentUpon>DXReciboRenovarVale.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXCuponesVenta.resx">
       <DependentUpon>DXCuponesVenta.cs</DependentUpon>

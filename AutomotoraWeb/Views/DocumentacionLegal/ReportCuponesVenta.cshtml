@@ -5,6 +5,7 @@
 @{ 
     ViewBag.Title = "Cupones de Financiación de Venta";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.DETAILS, VentasController.CONTROLLER).Class("btn btn-default").RouteValues(new {id=Model.Codigo }))

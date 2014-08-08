@@ -5,6 +5,8 @@
 @{ 
     ViewBag.Title = "Listado Cheques Emitidos";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", "List").Class("btn btn-default"))

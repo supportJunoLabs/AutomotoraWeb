@@ -1,11 +1,14 @@
-﻿@using AutomotoraWeb.Controllers.Bank;
+﻿@model DLL_Backend.TRChequeDepositarDescontar
+@using AutomotoraWeb.Controllers.Bank;
 
 @{ 
     ViewBag.Title = "Deposito/Descuento Cheque";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 
 <div class="btn-toolbar">
-    @(Html.Bootstrap().ActionLinkButton("Volver", BankController.INDEX, BankController.BCONTROLLER).Class("btn btn-default"))
+    @(Html.Bootstrap().ActionLinkButton("Consulta Cheque", "ConsultaCheque", ChequesController.CONTROLLER).Class("btn btn-default").RouteValues(new { id=Model.Cheque.Codigo}))
 </div>
 <div class="clear-both"></div>
 

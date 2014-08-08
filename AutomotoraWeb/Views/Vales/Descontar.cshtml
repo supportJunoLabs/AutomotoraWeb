@@ -6,6 +6,7 @@
     ViewBag.Title = "Descontar Vale";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
    @Html.Partial("_descontar", Model)
 

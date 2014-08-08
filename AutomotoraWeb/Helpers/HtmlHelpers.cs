@@ -366,7 +366,15 @@ namespace AutomotoraWeb.Helpers {
         }
 
         public static MvcHtmlString DdlOrDisplayImporteFor<TModel>(this HtmlHelper<TModel> htmlHelper,
-            Expression<Func<TModel, Importe>> expression, bool? soloLectura, bool? monedaFija=false) {
+            Expression<Func<TModel, Importe>> expression,  bool? soloLectura, bool? monedaFija=false) {
+                return htmlHelper.DdlOrDisplayImporteFor(expression, null, soloLectura, monedaFija);
+        }
+
+
+        //Cuando esta en un segundo nivel, tengo que pasar el nombre de la property completa, porque el metodo solo me da el primer nivel
+        //ej: para Transaccion.Importe no funciona si no le paso el string completo.
+        public static MvcHtmlString DdlOrDisplayImporteFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, Importe>> expression, string nombreProperty,  bool? soloLectura, bool? monedaFija=false) {
 
             Importe imp = null;
             if (expression != null) {
@@ -379,8 +387,12 @@ namespace AutomotoraWeb.Helpers {
             if (imp == null) {
                 imp = new Importe(Moneda.MonedaDefault, 0);
             }
-            var data = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
-            string propertyName = data.PropertyName;
+            string propertyName = nombreProperty;
+            if (string.IsNullOrWhiteSpace(propertyName)){
+                var data = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+                propertyName = data.PropertyName;
+            }
+
             string controlName = propertyName.Replace(".", "");
 
             bool escritura = !(soloLectura ?? false);

@@ -1,174 +1,190 @@
-﻿@model AutomotoraWeb.Models.ConsultaValeModel
+﻿@model DLL_Backend.Vale
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 @using AutomotoraWeb.Controllers.General;
 @using AutomotoraWeb.Controllers.Sales;
-@using AutomotoraWeb.Controllers.Sales;
 
 @{ bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false; }
 
-@{ if (Model.Vale != null && !string.IsNullOrWhiteSpace(Model.Vale.Codigo)) {
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Vale.Codigo)
-    </div>
-    <div class="editor-field editor-field-medium">
-        @Html.EditorOrDisplayFor(model => model.Vale.Codigo, modoConsulta)
-        @Html.ValidationMessageFor(model => model.Vale.Codigo)
-    </div>
-    <div class="clear-both"></div>
+@{ if (Model != null && !string.IsNullOrWhiteSpace(Model.Codigo)) {
+       
+    <div class="block">
+        <a href="#datosVale" class="block-heading icon-play-circle" data-toggle="collapse">&nbsp;&nbsp;&nbsp;Vale</a>
+        <div id="datosVale" class="block-body collapse in" style="padding-top: 10px; padding-bottom: 10px"> 
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Vale.Importe)
-    </div>
-    <div class="editor-field editor-field-small">
-        @Html.DdlOrDisplayImporteFor(model => model.Vale.Importe, modoConsulta)
-        @Html.ValidationMessageFor(model => model.Vale.Importe.Monto)
-    </div>
-    <div class="clear-both"></div>
+            <div>
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => Model.Codigo)
+                </div>
+                <div class="editor-field editor-field-medium">
+                    @Html.EditorOrDisplayFor(model => model.Codigo, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Codigo)
+                </div>
+                <div class="clear-both"></div>
 
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Importe)
+                </div>
+                <div class="editor-field editor-field-small">
+                    @Html.DdlOrDisplayImporteFor(model => model.Importe, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Importe.Monto)
+                </div>
+                <div class="clear-both"></div>
 
+                <div class="display-label ">
+                    @Html.DisplayNameFor(model => model.Vencimiento)
+                </div>
+                <div class="editor-field editor-field-small">
+                    @Html.TextBoxOrdisplayFor(model => model.Vencimiento, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW", id = "fechaVencimiento" })
+                    @Html.ValidationMessageFor(model => model.Vencimiento)
+                </div>
+                <div class="clear-both"></div>
 
-    <div class="display-label ">
-        @Html.DisplayNameFor(model => model.Vale.Vencimiento)
-    </div>
-    <div class="editor-field editor-field-small">
-        @Html.TextBoxOrdisplayFor(model => model.Vale.Vencimiento, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW", id = "fechaVencimiento" })
-        @Html.ValidationMessageFor(model => model.Vale.Vencimiento)
-    </div>
-    <div class="clear-both"></div>
-    
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Vale.VehiculoOrigen)
-    </div>
-    <div class="editor-field editor-field-medium">
-        @Html.Bootstrap().ActionLink(Model.Vale.VehiculoOrigen.Ficha, BaseController.DETAILS, VehiculosController.CONTROLLER).RouteValues(new { id = Model.Vale.VehiculoOrigen.Codigo })
-    </div>
-    <div class="floatLeft" style="padding-left: 20px;">
-        @(Html.Bootstrap().ActionLinkButton("Ver Venta", BaseController.DETAILS, VentasController.CONTROLLER).RouteValues(new { id = Model.Vale.Venta.Codigo }).Class("btn-info btn-small"))
-    </div>
-    <div class="clear-both"></div>
-    
-    
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.VehiculoOrigen)
+                </div>
+                <div class="editor-field editor-field-medium">
+                    @Html.Bootstrap().ActionLink(Model.VehiculoOrigen.Ficha, BaseController.DETAILS, VehiculosController.CONTROLLER).RouteValues(new { id = Model.VehiculoOrigen.Codigo })
+                </div>
+                <div class="floatLeft" style="padding-left: 20px;">
+                    @(Html.Bootstrap().ActionLinkButton("Ver Venta", BaseController.DETAILS, VentasController.CONTROLLER).RouteValues(new { id = Model.Venta.Codigo }).Class("btn-info btn-small"))
+                </div>
+                <div class="clear-both"></div>
 
-       if (Model.Vale.ImporteCobrado != null && Model.Vale.ImporteCobrado.Monto > 0) {
+            </div>
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Vale.ImporteCobrado)
-    </div>
-    <div class="editor-field editor-field-small">
-        @Html.DdlOrDisplayImporteFor(model => model.Vale.ImporteCobrado, modoConsulta)
-        @Html.ValidationMessageFor(model => model.Vale.ImporteCobrado.Monto)
-    </div>
-    <div class="clear-both"></div>
+            @{ if (Model.ImporteCobrado != null && Model.ImporteCobrado.Monto > 0) {
+                <div>
 
-    <div class="display-label ">
-        @Html.DisplayNameFor(model => model.Vale.FechaCobro)
-    </div>
-    <div class="editor-field editor-field-small">
-        @Html.TextBoxOrdisplayFor(model => model.Vale.FechaCobro, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW", id = "fechaVencimiento" })
-        @Html.ValidationMessageFor(model => model.Vale.FechaCobro)
-    </div>
-    <div class="clear-both"></div>
-    
-    
-     <div class="display-label">
-        @Html.DisplayNameFor(model => model.Vale.Saldo)
-    </div>
-    <div class="editor-field editor-field-small">
-        @Html.DdlOrDisplayImporteFor(model => model.Vale.Saldo, modoConsulta)
-        @Html.ValidationMessageFor(model => model.Vale.Saldo.Monto)
-    </div>
-    <div class="clear-both"></div>
-    
-       }
+                    <div class="display-label">
+                        @Html.DisplayNameFor(model => model.ImporteCobrado)
+                    </div>
+                    <div class="editor-field editor-field-small">
+                        @Html.DdlOrDisplayImporteFor(model => model.ImporteCobrado, modoConsulta)
+                        @Html.ValidationMessageFor(model => model.ImporteCobrado.Monto)
+                    </div>
+                    <div class="clear-both"></div>
 
-    <div class="display-label ">
-        @Html.DisplayNameFor(model => model.Vale.Financista)
-    </div>
-    <div class="editor-field editor-field-xlarge xxlarge">
-        @Html.DdlOrDisplayFor(model => model.Vale.Financista.Codigo, modoConsulta, model => model.Vale.Financista.Nombre,
+                    <div class="display-label ">
+                        @Html.DisplayNameFor(model => model.FechaCobro)
+                    </div>
+                    <div class="editor-field editor-field-small">
+                        @Html.TextBoxOrdisplayFor(model => model.FechaCobro, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW", id = "fechaVencimiento" })
+                        @Html.ValidationMessageFor(model => model.FechaCobro)
+                    </div>
+                    <div class="clear-both"></div>
+
+                    <div class="display-label">
+                        @Html.DisplayNameFor(model => model.Saldo)
+                    </div>
+                    <div class="editor-field editor-field-small">
+                        @Html.DdlOrDisplayImporteFor(model => model.Saldo, modoConsulta)
+                        @Html.ValidationMessageFor(model => model.Saldo.Monto)
+                    </div>
+                    <div class="clear-both"></div>
+
+                </div>
+               }
+            }
+
+            <div>
+
+                <div class="display-label ">
+                    @Html.DisplayNameFor(model => model.Financista)
+                </div>
+                <div class="editor-field editor-field-xlarge xxlarge">
+                    @Html.DdlOrDisplayFor(model => model.Financista.Codigo, modoConsulta, model => model.Financista.Nombre,
                 new SelectList(Financista.FinancistasTodos, "Codigo", "Nombre"), "--Seleccionar Financista--",
                 new { id = "ddlFinancistas", @class = "xxlarge" })
-    </div>
-    <div class="clear-both"></div>
+                </div>
+                <div class="clear-both"></div>
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Vale.Status)
-    </div>
-    <div class="editor-field editor-field-medium">
-        <strong>
-            @Html.EditorOrDisplayFor(model => model.Vale.DescripcionEstado, modoConsulta)
-        </strong>
-        @Html.ValidationMessageFor(model => model.Vale.Status)
-    </div>
-    <div class="clear-both"></div>
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Status)
+                </div>
+                <div class="editor-field editor-field-medium">
+                    <strong>
+                        @Html.EditorOrDisplayFor(model => model.DescripcionEstado, modoConsulta)
+                    </strong>
+                    @Html.ValidationMessageFor(model => model.Status)
+                </div>
+                <div class="clear-both"></div>
 
-    <div class="display-label ">
-        @Html.DisplayNameFor(model => model.Vale.Observaciones)
+                <div class="display-label ">
+                    @Html.DisplayNameFor(model => model.Observaciones)
+                </div>
+                <div class="editor-field editor-field-xxlarge">
+                    @Html.TextAreaOrDisplayFor(model => model.Observaciones, modoConsulta, new { style = "width: 530px; height: 60px" })
+                    @Html.ValidationMessageFor(model => model.Observaciones)
+                </div>
+                <div class="clear-both"></div>
+
+            </div>
+
+            @{ if (Model.MovDescuento != null) { 
+                    <div>
+                        <div class="espacio2"></div>
+                        <div id="movimientos" class="cabezalBloque">
+                            DESCONTADO
+                        </div>
+
+                        <div class="display-label ">
+                            @Html.DisplayNameFor(model => model.MovDescuento.FechaMov)
+                        </div>
+                        <div class="editor-field editor-field-small">
+                            @Html.TextBoxOrdisplayFor(model => model.MovDescuento.FechaMov, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW", id = "fechaDto" })
+                            @Html.ValidationMessageFor(model => model.MovDescuento.FechaMov)
+                        </div>
+                        <div class="clear-both"></div>
+
+                        <div class="display-label">
+                            @Html.DisplayNameFor(model => model.MovDescuento.ConceptoMov)
+                        </div>
+                        <div class="editor-field editor-field-medium">
+                            @Html.EditorOrDisplayFor(model => model.MovDescuento.ConceptoMov, modoConsulta)
+                            @Html.ValidationMessageFor(model => model.MovDescuento.ConceptoMov)
+                        </div>
+                        <div class="clear-both"></div>
+
+                        <div class="display-label ">
+                            @Html.DisplayNameFor(model => model.MovDescuento.DescripcionMov)
+                        </div>
+                        <div class="editor-field editor-field-xxlarge">
+                            @Html.TextAreaOrDisplayFor(model => model.MovDescuento.DescripcionMov, modoConsulta, new { style = "width: 530px; height: 60px" })
+                            @Html.ValidationMessageFor(model => model.MovDescuento.DescripcionMov)
+                        </div>
+                        <div class="clear-both"></div>
+
+                        <div class="display-label ">
+                            @Html.DisplayNameFor(model => model.MovDescuento.Cuenta)
+                        </div>
+                        <div class="editor-field editor-field-xxlarge">
+                            @Html.TextAreaOrDisplayFor(model => model.MovDescuento.Cuenta.Banco, modoConsulta, new { style = "width: 530px; height: 60px" })
+                            @Html.TextAreaOrDisplayFor(model => model.MovDescuento.Cuenta.Numero, modoConsulta, new { style = "width: 530px; height: 60px" })
+                            @Html.ValidationMessageFor(model => model.MovDescuento.Cuenta.Codigo)
+                        </div>
+                        <div class="clear-both"></div>
+
+                        <div class="display-label">
+                            @Html.DisplayNameFor(model => model.MovDescuento.ImporteMov)
+                        </div>
+                        <div class="editor-field editor-field-small">
+                            @Html.DdlOrDisplayImporteFor(model => model.MovDescuento.ImporteMov, modoConsulta)
+                            @Html.ValidationMessageFor(model => model.MovDescuento.ImporteMov.Monto)
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+               }}
+
+            @{if (Model.Status != Vale.VALE_RENOVADO && !string.IsNullOrWhiteSpace(Model.Codigo)) {
+                  <div class="espacio2"></div>
+                  @Html.Bootstrap().ActionLinkButton("Generar Documento", "Vale", DocumentacionLegalController.CONTROLLER).Class("btn-default btn-small").RouteValues(new { id=Model.Codigo})
+              }
+            }
+        </div>
     </div>
-    <div class="editor-field editor-field-xxlarge">
-        @Html.TextAreaOrDisplayFor(model => model.Vale.Observaciones, modoConsulta, new { style = "width: 530px; height: 60px" })
-        @Html.ValidationMessageFor(model => model.Vale.Observaciones)
-    </div>
-    <div class="clear-both"></div>
-    
    }
 }
 
-@{ if (Model.Vale != null && !string.IsNullOrWhiteSpace(Model.Vale.Codigo) && Model.Vale.MovDescuento != null) { 
-       
-    <div class="espacio2"></div>
-    <div id="movimientos" class="cabezalBloque">
-        DESCONTADO
-    </div>
-    
-    <div class="display-label ">
-        @Html.DisplayNameFor(model => model.Vale.MovDescuento.FechaMov)
-    </div>
-    <div class="editor-field editor-field-small">
-        @Html.TextBoxOrdisplayFor(model => model.Vale.MovDescuento.FechaMov, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW", id = "fechaDto" })
-        @Html.ValidationMessageFor(model => model.Vale.MovDescuento.FechaMov)
-    </div>
-    <div class="clear-both"></div>
-    
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Vale.MovDescuento.ConceptoMov)
-    </div>
-    <div class="editor-field editor-field-medium">
-        @Html.EditorOrDisplayFor(model => model.Vale.MovDescuento.ConceptoMov, modoConsulta)
-        @Html.ValidationMessageFor(model => model.Vale.MovDescuento.ConceptoMov)
-    </div>
-    <div class="clear-both"></div>
-    
-    <div class="display-label ">
-        @Html.DisplayNameFor(model => model.Vale.MovDescuento.DescripcionMov)
-    </div>
-    <div class="editor-field editor-field-xxlarge">
-        @Html.TextAreaOrDisplayFor(model => model.Vale.MovDescuento.DescripcionMov, modoConsulta, new { style = "width: 530px; height: 60px" })
-        @Html.ValidationMessageFor(model => model.Vale.MovDescuento.DescripcionMov)
-    </div>
-    <div class="clear-both"></div>   
-    
-    <div class="display-label ">
-        @Html.DisplayNameFor(model => model.Vale.MovDescuento.Cuenta)
-    </div>
-    <div class="editor-field editor-field-xxlarge">
-        @Html.TextAreaOrDisplayFor(model => model.Vale.MovDescuento.Cuenta.Banco, modoConsulta, new { style = "width: 530px; height: 60px" })
-        @Html.TextAreaOrDisplayFor(model => model.Vale.MovDescuento.Cuenta.Numero, modoConsulta, new { style = "width: 530px; height: 60px" })
-        @Html.ValidationMessageFor(model => model.Vale.MovDescuento.Cuenta.Codigo)
-    </div>
-    <div class="clear-both"></div>   
-    
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Vale.MovDescuento.ImporteMov)
-    </div>
-    <div class="editor-field editor-field-small">
-        @Html.DdlOrDisplayImporteFor(model => model.Vale.MovDescuento.ImporteMov, modoConsulta)
-        @Html.ValidationMessageFor(model => model.Vale.MovDescuento.ImporteMov.Monto)
-    </div>
-    <div class="clear-both"></div>
-    
 
-       
-   }}

@@ -10,6 +10,8 @@
     ViewBag.Title = "Consulta Cheque";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 
 @Html.HiddenFor(m => m.Codigo)
 
@@ -124,7 +126,9 @@
     @Html.LabelForRequired(model => model.ClienteOrigen)
 </div>
 <div class="editor-field">
+    @{ if (Model.ClienteOrigen!=null){
         @Html.Bootstrap().ActionLink(Model.ClienteOrigen.Nombre, BaseController.DETAILS, ClientesController.CONTROLLER).RouteValues(new { id = Model.ClienteOrigen.Codigo })
+    }}
 </div>
 <div class="clear-both"></div>
 
@@ -132,7 +136,9 @@
     @Html.LabelForRequired(model => model.VehiculoOrigen)
 </div>
 <div class="editor-field">
+    @{ if (Model.VehiculoOrigen!=null){
      @Html.Bootstrap().ActionLink(Model.VehiculoOrigen.Ficha, BaseController.DETAILS, VehiculosController.CONTROLLER).RouteValues(new { id = Model.VehiculoOrigen.Codigo })
+    }   }
 </div>
 <div class="clear-both"></div>
 
@@ -151,6 +157,6 @@
 <div id="movimientos" class="cabezalBloque">
     Movimientos
 </div>
-<div>
+<div class="cuerpoBloque">
     @Html.Partial("_movimientosCheque", Model.Movimientos);
 </div>

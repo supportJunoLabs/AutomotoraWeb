@@ -5,6 +5,7 @@
 @{ 
     ViewBag.Title = "Listado Vales";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", "ListVales").Class("btn btn-default"))

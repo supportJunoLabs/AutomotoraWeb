@@ -76,9 +76,10 @@ namespace AutomotoraWeb.Controllers.General {
                 try {
                     string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
                     SecurityService.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword, Request.UserHostAddress);
-                    //return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
-                    Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
-                    return RedirectToAction(dest.Accion, dest.Controlador);
+                    Mensaje msj = new Mensaje { Titulo = "Cambio de clave", Contenido=  "Se ha cambiado su clave en forma exitosa" };
+                    //Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
+                    //return RedirectToAction(dest.Accion, dest.Controlador);
+                    return RedirectToAction("Mensaje", SistemaController.CONTROLLER, new {id=SistemaController.MSJ_CAMBIO_CLAVE_OK});
                 } catch (UsuarioException exc) {
                     model.ErrorCode = exc.Codigo;
                     model.ErrorMessage = exc.Message;

@@ -1,0 +1,15 @@
+﻿@model DLL_Backend.TRValeRenovacion
+@using AutomotoraWeb.Controllers.Financing;
+
+@{ 
+    ViewBag.Title = "Renovacion Vale";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Consulta Vale", "ConsultaVale", ValesController.CONTROLLER).Class("btn btn-default").RouteValues(new {id=Model.NuevoVale.Codigo }))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboRenovacion")

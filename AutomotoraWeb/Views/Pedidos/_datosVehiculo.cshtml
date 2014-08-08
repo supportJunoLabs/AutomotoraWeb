@@ -1,0 +1,166 @@
+﻿@model DLL_Backend.Pedido
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    bool cambiarSucursal = ViewBag.Multisucursal;
+    bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
+}
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Marca)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Marca, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Marca)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Modelo)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Modelo, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Modelo)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Anio)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Anio, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Anio)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Matricula)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Matricula, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Matricula)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Vehiculo.Departamento)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.DdlOrDisplayFor(model => model.Vehiculo.Departamento.Codigo, modoConsulta,
+                model => model.Vehiculo.Departamento.Nombre,
+                new SelectList(ViewBag.Departamentos, "Codigo", "Nombre"), null, new { id = "ddlDepartamento" })
+    @Html.ValidationMessageFor(model => model.Vehiculo.Departamento)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Color)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Color, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Color)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Padron)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Padron, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Padron)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Motor)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Motor, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Motor)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Chasis)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Chasis, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Chasis)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Kilometros)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Kilometros, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Kilometros)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Vehiculo.TipoCombustible)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.DdlOrDisplayFor(model => model.Vehiculo.TipoCombustible.Codigo, modoConsulta,
+                model => model.Vehiculo.TipoCombustible.Descripcion,
+                new SelectList(ViewBag.TiposCombustible, "Codigo", "Descripcion"), null, new { id = "ddlTipoCombustible" })
+    @Html.ValidationMessageFor(model => model.Vehiculo.TipoCombustible)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Costo)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.DdlOrDisplayImporteFor(model => model.Vehiculo.Costo, "Vehiculo.Costo", modoConsulta, false)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Costo.Monto)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.Propietario)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Vehiculo.Propietario, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Vehiculo.Propietario)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.PrecioVenta)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.DdlOrDisplayImporteFor(model => model.Vehiculo.PrecioVenta, "Vehiculo.PrecioVenta", modoConsulta, false)
+    @Html.ValidationMessageFor(model => model.Vehiculo.PrecioVenta.Monto)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Vehiculo.DescripcionEstado)
+</div>
+<div  class="@(modoConsulta ? "" : "renglon-alto") floatLeft">
+    @{ if (Model != null && Model.Vehiculo.Codigo > 0) {
+           <div class="editor-field floatLeft">
+                @Html.EditorOrDisplayFor(model => model.Vehiculo.DescripcionEstado, true)
+            </div>
+       } else {
+        <div class="editor-field floatLeft">En Venta</div>
+       }
+    }
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Vehiculo.Observaciones)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.TextAreaOrDisplayFor(model => model.Vehiculo.Observaciones, modoConsulta, new { style = "width: 530px; height: 60px" })
+    @Html.ValidationMessageFor(model => model.Vehiculo.Observaciones)
+</div>
+<div class="clear-both"></div>
+
+<div class="espacio2"></div>

@@ -8,6 +8,7 @@
     ViewBag.Title = "Movimientos Bancarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm()) {
     @Html.HiddenFor(model => model.idParametros)

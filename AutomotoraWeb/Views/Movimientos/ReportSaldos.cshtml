@@ -5,7 +5,7 @@
 @{ 
     ViewBag.Title = "Cuentas Bancarias: Saldos";
 }
-
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", "Saldos").Class("btn btn-default"))
 </div>

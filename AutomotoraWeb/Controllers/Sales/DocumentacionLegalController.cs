@@ -136,6 +136,28 @@ namespace AutomotoraWeb.Controllers.Sales {
              return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
 
          }
+
+         public FileStreamResult Vale(string id) {
+             Vale val = new Vale();
+             val.Codigo = id;
+             val.Consultar();
+
+             DocumentoLegal doc = new DocumentoLegal();
+             doc.Codigo = "VALE_VENTA";
+             doc.Consultar();
+
+             string contenido = generarWord(doc.ObtenerContenido(val));
+
+             Response.ContentType = "application/word";
+             Response.AddHeader("Content-disposition", "attachment; filename=" + "VAL" + "_" + val.Codigo + ".rtf");
+             Response.Buffer = true;
+             Response.Clear();
+             Response.Write(contenido);
+             Response.OutputStream.Flush();
+             Response.End();
+
+             return new FileStreamResult(Response.OutputStream, "application/word");
+         }
             
 
         private FileStreamResult generarDocumento(int idVenta, string tipoDoc, string nomDoc) {

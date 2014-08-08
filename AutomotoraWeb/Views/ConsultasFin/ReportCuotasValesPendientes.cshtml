@@ -5,6 +5,7 @@
 @{ 
     ViewBag.Title = "Cuotas y Vales Pendientes";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", "ListCuotasValesPendientes").Class("btn btn-default"))

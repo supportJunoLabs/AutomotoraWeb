@@ -7,11 +7,7 @@
 @{
     ViewBag.Title = "Comprobante Documentación";
     Layout = "~/Views/Shared/_Layout.cshtml";
-   
 }
-
-
-
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
@@ -103,7 +99,7 @@
     <div class="display-label ">
         @Html.LabelForRequired(model => model.Comprobante.Observaciones)
     </div>
-    <div class="editor-field editor-field-xxlarge editor-textarea">
+    <div class="editor-field editor-field-xxlarge">
         @Html.TextAreaOrDisplayFor(model => model.Comprobante.Observaciones, (bool?)ViewBag.SoloLectura)
         @Html.ValidationMessageFor(model => model.Comprobante.Observaciones)
     </div>

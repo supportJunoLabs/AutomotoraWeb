@@ -131,6 +131,7 @@ a.hipervinculo {
     padding-top:5px;
     padding-left: 10px;
     vertical-align:middle;
+    margin-bottom:0px;
 }
 
 .hipervinculoGrillaAjax {
@@ -145,18 +146,26 @@ a.hipervinculo {
     text-decoration: underline;
 }
 
+.bloque {
+    border: 1px solid #ccc;
+}
 
 .cabezalBloque{
     background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #dddddd), color-stop(1, #fafafa));
     border-top: 1px solid #fff;
     border-bottom: 1px solid #a6a6a6;
-    padding-top:15px;
-    height: 35px;
+    padding-top:7px;
+    padding-bottom:7px;
     padding-left: 10px;
-    vertical-align:middle;
+    padding-right: 10px;
     font-weight: bold;
-    font-size: 14px;
-    margin-bottom:20px;
+    font-size: 12px;
+}
+
+.cuerpoBloque {
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:20px;
 }
 
 body {
@@ -191,6 +200,10 @@ label {
     font-weight:bold;
 }
 
+.editor-date-field {
+    margin-bottom:0px;
+}
+
 .editor-field > select {
     margin-bottom: 10px;
     height: 30px;
@@ -212,4 +225,12 @@ textarea {
     width: 530px; 
     height: 60px;
     margin-bottom:9px;
+}
+
+.modal-header {
+    background: #4d5b76;
+    background: -ms-linear-gradient(bottom, #4d5b76, #6c7a95);
+    background: -moz-linear-gradient(center bottom, #4d5b76 0%, #6c7a95 100%);
+    background: -o-linear-gradient(bottom, #4d5b76, #6c7a95);
+    color: white;
 }

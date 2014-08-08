@@ -1,11 +1,14 @@
 ﻿@model AutomotoraWeb.Models.ConsultaValeModel
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
+@using System.Collections.Generic;
 
 @{
     ViewBag.Title = "Consulta Vale";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div id="filtros" class="block">
     <div class="btn-toolbar botoneraListado">
@@ -41,7 +44,11 @@
 </div>
 
 <div id="divDetalleVale">
-    @Html.Partial("_datosDetalleVale", Model)
+    @Html.Partial("_datosDetalleVale", Model.Vale)
+</div>
+
+<div id ="divValesAnteriores">
+    @Html.Partial("_valesAnteriores", Model.Vale)
 </div>
 
 

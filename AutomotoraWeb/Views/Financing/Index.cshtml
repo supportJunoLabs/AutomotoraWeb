@@ -4,6 +4,8 @@
     ViewBag.Title = "Módulo de Gestión Financiera";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 
 @Html.Partial("_alertas", "FINANC")
 

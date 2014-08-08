@@ -1,0 +1,109 @@
+﻿@model AutomotoraWeb.Models.RenovarValeModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    bool cambiarSucursal = ViewBag.Multisucursal;
+}
+
+@{ if (Model != null && Model.Transaccion.Vale != null && !string.IsNullOrWhiteSpace(Model.Transaccion.Vale.Codigo)) {
+    <div id="divDetalleVale">
+        @Html.Partial("_datosDetalleVale", Model.Transaccion.Vale)
+    </div>
+    
+    <div id="divProximoVale" class="bloque">
+        <div class="cabezalBloque">
+            Renovación
+        </div>
+        <div class="cuerpoBloque">
+
+            <div class="display-label">
+                @Html.LabelForRequired(model => model.Transaccion.Fecha)
+            </div>
+            <div class="editor-field editor-date-field editor-field-small">
+                @Html.TextBoxFor(model => model.Transaccion.Fecha, "{0:dd/MM/yyyy}", new { @class = "calendarAW" , id="fechaRenovacion"})
+                @Html.ValidationMessageFor(model => model.Transaccion.Fecha)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label ">
+                Intereses
+            </div>
+            <div class="editor-field" id="divInteresesSugeridos">
+                @Html.DisplayFor(model => model.Sugerido.Intereses.ImporteTexto, new { id="interesesSugeridos"})
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label editor-field-medium">
+                Total Actual
+            </div>
+            <div class="editor-field editor-field-medium" id="divTotalSugerido"> 
+                @Html.DisplayFor(model => model.Sugerido.CobroSugerido.ImporteTexto)
+            </div>
+            <div class="clear-both"></div>
+            <div class="espacio2"></div>
+
+            <div style="border-top: 1px solid #ccc; padding-top: 20px">
+
+                <div class="display-label ">
+                    Nuevo Vale
+                </div>
+                <div class="editor-field renglon-alto">
+                    <strong>
+                        @Model.Transaccion.Vale.SiguienteCodigo()
+                    </strong>
+                </div>
+                <div class="clear-both"></div>
+
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Transaccion.Importe)
+                </div>
+                <div class="editor-field editor-field-small">
+                    @Html.DdlOrDisplayImporteFor(model => model.Transaccion.Importe,"Transaccion.Importe", false, false)
+                    @Html.ValidationMessageFor(model => model.Transaccion.Importe.Monto)
+                </div>
+                <div class="clear-both"></div>
+
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Transaccion.Vencimiento)
+                </div>
+                <div class="editor-field editor-date-field editor-field-small">
+                    @Html.TextBoxFor(model => model.Transaccion.Vencimiento, "{0:dd/MM/yyyy}", new { @class = "calendarAW"})
+                    @Html.ValidationMessageFor(model => model.Transaccion.Vencimiento)
+                </div>
+                <div class="clear-both"></div>
+
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Transaccion.Sucursal)
+                </div>
+                <div class="editor-field editor-field-xlarge xxlarge">
+                    @Html.DdlOrDisplayFor(model => model.Transaccion.Sucursal.Codigo, !cambiarSucursal, model => model.Transaccion.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "xlarge" })
+                    @Html.ValidationMessageFor(model => model.Transaccion.Sucursal)
+                </div>
+                <div class="clear-both"></div>
+
+                <div class="display-label ">
+                    @Html.LabelForRequired(model => model.Transaccion.Observaciones)
+                </div>
+                <div class="editor-field editor-field-xxlarge">
+                    @Html.TextAreaFor(model => model.Transaccion.Observaciones)
+                    @Html.ValidationMessageFor(model => model.Transaccion.Observaciones)
+                </div>
+                <div class="clear-both"></div>
+
+                <div class="espacio2"></div>
+                <div class="btn-toolbar">
+                    @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Renovar Vale"))
+                </div>
+
+            </div>
+
+        </div>
+    </div>  
+   }
+}
+
+<script src="~/Scripts/AutomotoraWeb/ayudaFechas.js"></script>
+<script src="~/Scripts/AutomotoraWeb/RenovarVale3.js"></script>

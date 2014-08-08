@@ -4,6 +4,8 @@
 @{ 
     ViewBag.Title = ViewBag.NombreEntidades + ": Listado";
 }
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.LIST).Class("btn btn-default"))

@@ -9,6 +9,7 @@
     @Html.DdlOrDisplayFor(model => model.Vale.Codigo, false, model => model.Vale.Descripcion,
                 new SelectList(Model.Cliente.ValesNoAnulados(), "Codigo", "Descripcion"), "--Seleccionar Vale--",
                 new { id = "ddlVales", @class = "xxlarge" })
+    @*@Html.TextBoxFor(model => model.Vale.Codigo)*@
 </div>
 
 
