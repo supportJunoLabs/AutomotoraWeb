@@ -10,6 +10,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Controllers.Sistema;
 
 namespace AutomotoraWeb.Controllers.Sales {
     public class PedidosController : SalesController {
@@ -72,19 +73,23 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         public ActionResult VerSenia(int id) {
-            ViewBag.SoloLectura = true;
-            Pedido ped = new Pedido();
-            ped.Codigo = id;
-            ped.Consultar();
-            if (ped.Seniado) {
-                Senia s = ped.ObtenerSenia();
-                if (s != null) {
-                    return RedirectToAction(BaseController.DETAILS, SeniasController.CONTROLLER, new { id = s.Codigo });
+            try {
+                ViewBag.SoloLectura = true;
+                Pedido ped = new Pedido();
+                ped.Codigo = id;
+                ped.Consultar();
+                if (ped.Seniado) {
+                    Senia s = ped.ObtenerSenia();
+                    if (s != null) {
+                        return RedirectToAction(BaseController.DETAILS, SeniasController.CONTROLLER, new { id = s.Codigo });
+                    }
+                    return RedirectToAction(BaseController.DETAILS, new { id = id });
                 }
-                return RedirectToAction(BaseController.DETAILS, new { id = id });
-            }
 
-            return RedirectToAction(BaseController.DETAILS, new { id = id });
+                return RedirectToAction(BaseController.DETAILS, new { id = id });
+            } catch {
+                return RedirectToAction("Mensaje", SistemaController.CONTROLLER, new { id = SistemaController.MSJ_ERROR});
+            }
         }
 
         public ActionResult Recibir(int id) {
@@ -274,6 +279,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult List() {
 
             ListadoPedidosModel model = new ListadoPedidosModel();
+            try{
             string s = SessionUtils.generarIdVarSesion("ListadoPedidos", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
@@ -283,10 +289,16 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewData["idParametros"] = model.idParametros;
             model.Resultado = _listaElementos(model);
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         [HttpPost]
         public ActionResult List(ListadoPedidosModel model, string btnSubmit) {
+            try{
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
             ViewBag.SucursalesListado = Sucursal.Sucursales;
@@ -302,6 +314,11 @@ namespace AutomotoraWeb.Controllers.Sales {
                 model.Resultado = _listaElementos(model);
             }
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         public ActionResult ReportGrilla(string idParametros) {

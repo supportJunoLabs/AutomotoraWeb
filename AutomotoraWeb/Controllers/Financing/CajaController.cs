@@ -9,10 +9,8 @@ using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.Parameters;
 
-namespace AutomotoraWeb.Controllers.Financing
-{
-    public class CajaController : FinancingController
-    {
+namespace AutomotoraWeb.Controllers.Financing {
+    public class CajaController : FinancingController {
         public static string CONTROLLER = "Caja";
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
@@ -25,23 +23,27 @@ namespace AutomotoraWeb.Controllers.Financing
         #region Listados
 
         public ActionResult List() {
-
             ListadoCajasModel model = new ListadoCajasModel();
-            string s = SessionUtils.generarIdVarSesion("ListadoCaja", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            ViewData["idParametros"] = model.idParametros;
-            model.Resultado = _obtenerListado(model);
-            return View(model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoCaja", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewData["idParametros"] = model.idParametros;
+                model.Resultado = _obtenerListado(model);
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
+
         }
 
         [HttpPost]
         public ActionResult List(ListadoCajasModel model) {
+            try{
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            //ViewBag.Sucursales = Sucursal.Sucursales;
-            //ViewBag.Monedas = Moneda.Monedas;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
             this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
             this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
             this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(model.Filtro.Moneda));
@@ -53,6 +55,11 @@ namespace AutomotoraWeb.Controllers.Financing
                 model.Resultado = _obtenerListado(model);
             }
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         public ActionResult ListGrillaCheques(string idParametros) {
@@ -86,12 +93,12 @@ namespace AutomotoraWeb.Controllers.Financing
             ListadoCajasModel model = null;
             model = (ListadoCajasModel)Session[idParametros];
             XtraReport rep = null;
-            if (model.TabActual==ListadoCajasModel.TABS.EFECTIVO){
+            if (model.TabActual == ListadoCajasModel.TABS.EFECTIVO) {
                 rep = new DXListadoMovsCajaEfectivo();
             } else {
                 rep = new DXListadoMovsCajaCheques();
             }
-            
+
             model.Resultado = _obtenerListado(model);
             List<ListadoMovimientosCaja> ll = new List<ListadoMovimientosCaja>();
             ll.Add(model.Resultado);
@@ -107,7 +114,7 @@ namespace AutomotoraWeb.Controllers.Financing
             ListadoCajasModel model = null;
             model = (ListadoCajasModel)Session[idParametros];
             XtraReport rep = null;
-             if (model.TabActual==ListadoCajasModel.TABS.EFECTIVO){
+            if (model.TabActual == ListadoCajasModel.TABS.EFECTIVO) {
                 rep = new DXListadoMovsCajaEfectivo();
             } else {
                 rep = new DXListadoMovsCajaCheques();
@@ -120,7 +127,7 @@ namespace AutomotoraWeb.Controllers.Financing
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
-     
+
         private void setParamsToReport(XtraReport report, ListadoCajasModel model) {
             Parameter paramSystemName = new Parameter();
             paramSystemName.Name = "detalleFiltros";

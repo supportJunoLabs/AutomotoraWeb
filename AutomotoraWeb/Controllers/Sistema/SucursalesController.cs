@@ -37,16 +37,11 @@ namespace AutomotoraWeb.Controllers.Sistema
 
         //--------------------------------------    REPORT    ----------------------------------------------
         public ActionResult Report() {
-            // Add a report to the view data. 
-            //DXReportSucursales rep = new DXReportSucursales();
-            ////setParamsToReport(rep);
-            //ViewData["Report"] = rep;
             return View();
         }
 
         public ActionResult ReportPartial() {
             DXReportSucursales rep = new DXReportSucursales();
-            //setParamsToReport(rep);
             rep.DataSource = _listaElementos();
             ViewData["Report"] = rep;
             return PartialView("_reportList");
@@ -54,7 +49,6 @@ namespace AutomotoraWeb.Controllers.Sistema
 
         public ActionResult ReportExport() {
             DXReportSucursales rep = new DXReportSucursales();
-            //setParamsToReport(rep);
             rep.DataSource = _listaElementos();
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }

@@ -26,6 +26,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
         }
 
         public const int MSJ_CAMBIO_CLAVE_OK = 1;
+        public const int MSJ_ERROR = 2;
 
         public ActionResult Mensaje(int id) {
             Mensaje msj = new Mensaje{Titulo="", Contenido=""};
@@ -34,6 +35,10 @@ namespace AutomotoraWeb.Controllers.Sistema {
                 case 1:
                     msj.Titulo = "Cambio de Clave";
                     msj.Contenido = "Ha cambiado su clave de acceso exitosamente";
+                    break;
+                case 2:
+                    msj.Titulo = "Error";
+                    msj.Contenido = "Se ha producido un error";
                     break;
             }
 

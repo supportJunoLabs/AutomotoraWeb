@@ -252,7 +252,6 @@
     <Compile Include="Controllers\Sales\ClientesController.cs" />
     <Compile Include="Controllers\Sales\TiposDocumentoController.cs" />
     <Compile Include="Controllers\Sales\VehiculosController.cs" />
-    <Compile Include="Controllers\Sales\GastosController.cs" />
     <Compile Include="Controllers\Sales\PedidosController.cs" />
     <Compile Include="Controllers\Sales\VentasController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />

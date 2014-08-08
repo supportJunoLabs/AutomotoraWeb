@@ -58,6 +58,7 @@ namespace AutomotoraWeb.Controllers.Sales
         public ActionResult List() {
 
             ListadoSeniasModel model = new ListadoSeniasModel();
+            try{
             string s = SessionUtils.generarIdVarSesion("ListadoSenias", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
@@ -67,10 +68,16 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewData["idParametros"] = model.idParametros;
             model.Resultado = _listaElementos(model);
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         [HttpPost]
         public ActionResult List(ListadoSeniasModel model, string btnSubmit) {
+            try{
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
             ViewBag.SucursalesListado = Sucursal.Sucursales;
@@ -86,6 +93,11 @@ namespace AutomotoraWeb.Controllers.Sales
                 model.Resultado = _listaElementos(model);
             }
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         public ActionResult ReportGrilla(string idParametros) {

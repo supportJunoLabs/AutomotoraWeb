@@ -53,6 +53,7 @@ namespace AutomotoraWeb.Controllers.Sales
         public ActionResult List() {
 
             ListadoAcvsModel model = new ListadoAcvsModel();
+            try{
             string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
@@ -62,10 +63,16 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewData["idParametros"] = model.idParametros;
             model.Resultado = _listaElementos(model);
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         public ActionResult ListActivosVehiculo(int id) {
             ListadoAcvsModel model = new ListadoAcvsModel();
+            try{
             string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
@@ -76,11 +83,17 @@ namespace AutomotoraWeb.Controllers.Sales
             model.AcomodarFiltroActivosVehiculo(id);
             model.Resultado = _listaElementos(model);
             return View("List", model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
 
         [HttpPost]
         public ActionResult List(ListadoAcvsModel model, string btnSubmit) {
+            try{
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
             ViewBag.SucursalesListado = Sucursal.Sucursales;
@@ -112,6 +125,11 @@ namespace AutomotoraWeb.Controllers.Sales
                 model.Resultado = _listaElementos(model);
             }
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         public ActionResult ReportGrilla(string idParametros) {

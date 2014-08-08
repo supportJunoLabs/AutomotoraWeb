@@ -27,13 +27,6 @@ namespace AutomotoraWeb.Controllers.Bank {
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Financistas = Financista.FinancistasTodos;
             ViewBag.Cuentas = CuentaBancaria.CuentasBancarias;
-            //if (usuario.MultiSucursal) {
-            //    ViewBag.SucursalesTransaccion = Sucursal.Sucursales;
-            //} else {
-            //    List<Sucursal> listSucursal = new List<Sucursal>();
-            //    listSucursal.Add(usuario.Sucursal);
-            //    ViewBag.SucursalesTransaccion = listSucursal;
-            //}
         }
 
         #region ListadoCheques
@@ -47,29 +40,42 @@ namespace AutomotoraWeb.Controllers.Bank {
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult ListCheques() {
             ListadoChequesModel model = new ListadoChequesModel();
-            string s = SessionUtils.generarIdVarSesion("ListadoCheques", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
-            return View(model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoCheques", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewData["idParametros"] = model.idParametros;
+                model.obtenerListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         [HttpPost]
         //Se invoca desde el boton actualizar o imprimir.
         public ActionResult ListCheques(ListadoChequesModel model) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-            if (ModelState.IsValid) {
-                if (model.Accion == ListadoChequesModel.ACCIONES.IMPRIMIR) {
-                    return this.ReportCheques(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
+                if (ModelState.IsValid) {
+                    if (model.Accion == ListadoChequesModel.ACCIONES.IMPRIMIR) {
+                        return this.ReportCheques(model);
+                    }
+                    model.obtenerListado();
                 }
-                model.obtenerListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
             }
-            return View(model);
+
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
@@ -131,9 +137,15 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         public ActionResult ConsultaCheque(int? id) {
-            Cheque ch = _consultarCheque(id);
-            ViewData["idParametros"] = ch.Codigo;
-            return View("ConsultaCheque", ch);
+            try {
+                Cheque ch = _consultarCheque(id);
+                ViewData["idParametros"] = ch.Codigo;
+                return View("ConsultaCheque", ch);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("ConsultaCheque");
+            }
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. 
@@ -144,14 +156,19 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         public ActionResult ReportCheque(int? id) {
-            if (id==null || id==0) {
-                return RedirectToAction("ConsultaCheque");
+            try {
+                if (id == null || id == 0) {
+                    return RedirectToAction("ConsultaCheque");
+                }
+                Cheque v = new Cheque();
+                v.Codigo = id ?? 0;
+                ViewData["idParametros"] = id;
+                return View("ReportCheque", v);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("ReportCheque");
             }
-            Cheque v = new Cheque();
-            v.Codigo = id??0;
-            //v.Consultar();
-            ViewData["idParametros"] = id;
-            return View("ReportCheque", v);
         }
 
         public ActionResult ReportChequePartial(int idParametros) {
@@ -182,21 +199,27 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region PasarCheque
 
-        public ActionResult PasarF(){
+        public ActionResult PasarF() {
             return RedirectToAction("Pasar");
         }
 
         public ActionResult Pasar() {
             TRChequePasar model = new TRChequePasar();
-            model.TipoDestino = TRChequePasar.TIPO_DESTINO.FINANCISTA;
-            model.Cheque = new Cheque();
-            model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
-            return View(model);
+            try {
+                model.TipoDestino = TRChequePasar.TIPO_DESTINO.FINANCISTA;
+                model.Cheque = new Cheque();
+                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         //Se invoca para cargar opciones de la gridlookup 
         public ActionResult ChequesTransferiblesGrilla(GridLookUpModel model) {
-            model.Opciones= Cheque.ChequesTransferibles();
+            model.Opciones = Cheque.ChequesTransferibles();
             return PartialView("_selectChequePasar", model);
         }
 
@@ -212,7 +235,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
                 ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
             }
-            
+
             //Se valida de este lado, porque no siempre es requerido.
             if (tr.TipoDestino == TRChequePasar.TIPO_DESTINO.FINANCISTA && (tr.Financista == null || tr.Financista.Codigo <= 0)) {
                 ModelState.AddModelError("Financista.Codigo", "El Financista es requerido");
@@ -235,9 +258,15 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         public ActionResult ReciboTransf(int id) {
-            ViewData["idParametros"] = id;
-            TRChequePasar tr = (TRChequePasar)Transaccion.ObtenerTransaccion(id);
-            return View("ReciboTransf",tr);
+            try {
+                ViewData["idParametros"] = id;
+                TRChequePasar tr = (TRChequePasar)Transaccion.ObtenerTransaccion(id);
+                return View("ReciboTransf", tr);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         private XtraReport _generarReciboTransf(int id) {
@@ -270,18 +299,30 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult Depositar() {
             TRChequeDepositarDescontar model = new TRChequeDepositarDescontar();
-            model.Cheque = new Cheque();
-            model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR;
-            model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
-            return View(model);
+            try {
+                model.Cheque = new Cheque();
+                model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR;
+                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         public ActionResult Descontar() {
             TRChequeDepositarDescontar model = new TRChequeDepositarDescontar();
-            model.Cheque = new Cheque();
-            model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR;
-            model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
-            return View(model);
+            try {
+                model.Cheque = new Cheque();
+                model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR;
+                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
@@ -299,7 +340,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         private ActionResult DepositarDescontar(TRChequeDepositarDescontar tr) {
 
             this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            if (tr.Importe != null && tr.Importe.Moneda!=null) {
+            if (tr.Importe != null && tr.Importe.Moneda != null) {
                 this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
             }
             this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(tr.Cuenta));
@@ -315,7 +356,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             if (tr.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR &&
                 tr.Importe.Monto <= 0) {
-                    ModelState.AddModelError("Importe.Monto", "Debe especificar un importe valido");
+                ModelState.AddModelError("Importe.Monto", "Debe especificar un importe valido");
             }
 
             if (ModelState.IsValid) {
@@ -342,9 +383,15 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         public ActionResult ReciboDeposito(int id) {
-            TRChequeDepositarDescontar tr = (TRChequeDepositarDescontar)Transaccion.ObtenerTransaccion(id);
-            ViewData["idParametros"] = id;
-            return View("ReciboDeposito",tr);
+            try {
+                TRChequeDepositarDescontar tr = (TRChequeDepositarDescontar)Transaccion.ObtenerTransaccion(id);
+                ViewData["idParametros"] = id;
+                return View("ReciboDeposito", tr);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         private XtraReport _generarReciboDeposito(int id) {
@@ -376,202 +423,226 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult TransfSuc() {
             ChequeTransfSucModel model = new ChequeTransfSucModel();
-            Sucursal suc = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
-            model.SucursalOrigen = suc;
-            ViewData["idParametros"] = suc.Codigo;
-            return View(model);
+            try {
+                Sucursal suc = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                model.SucursalOrigen = suc;
+                ViewData["idParametros"] = suc.Codigo;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         public ActionResult SucursalOrigenChanged(int? idSucursal) {
             ViewData["idParametros"] = idSucursal;
             Sucursal suc = new Sucursal();
-            suc.Codigo = idSucursal??0;
+            suc.Codigo = idSucursal ?? 0;
             var cheques = Cheque.ChequesTransferiblesSucursal(suc);
             return PartialView("_selectChequeTransfSuc", cheques);
         }
 
-         public ActionResult ChequesTransfSucGrilla(int idParametros) {
-             ViewData["idParametros"] = idParametros;
-             Sucursal suc = new Sucursal();
-             suc.Codigo=idParametros;
-             var cheques=Cheque.ChequesTransferiblesSucursal(suc);
-             return PartialView("_selectChequeTransfSuc", cheques);
+        public ActionResult ChequesTransfSucGrilla(int idParametros) {
+            ViewData["idParametros"] = idParametros;
+            Sucursal suc = new Sucursal();
+            suc.Codigo = idParametros;
+            var cheques = Cheque.ChequesTransferiblesSucursal(suc);
+            return PartialView("_selectChequeTransfSuc", cheques);
         }
 
-         [HttpPost]
-         public ActionResult TransfSuc( ChequeTransfSucModel model) {
-             this.eliminarValidacionesIgnorables("SucursalOrigen", MetadataManager.IgnorablesDDL(model.SucursalOrigen));
-             this.eliminarValidacionesIgnorables("SucursalDestino", MetadataManager.IgnorablesDDL(model.SucursalDestino));
-             ViewData["idParametros"] = model.SucursalOrigen.Codigo;
-             if (ModelState.IsValid) {
-                 try {
-                     TRChequeTransfSucursal tr = new TRChequeTransfSucursal();
-                     tr.SucursalOrigen = model.SucursalOrigen;
-                     tr.SucursalDestino = model.SucursalDestino;
+        [HttpPost]
+        public ActionResult TransfSuc(ChequeTransfSucModel model) {
+            this.eliminarValidacionesIgnorables("SucursalOrigen", MetadataManager.IgnorablesDDL(model.SucursalOrigen));
+            this.eliminarValidacionesIgnorables("SucursalDestino", MetadataManager.IgnorablesDDL(model.SucursalDestino));
+            ViewData["idParametros"] = model.SucursalOrigen.Codigo;
+            if (ModelState.IsValid) {
+                try {
+                    TRChequeTransfSucursal tr = new TRChequeTransfSucursal();
+                    tr.SucursalOrigen = model.SucursalOrigen;
+                    tr.SucursalDestino = model.SucursalDestino;
 
-                     string scheques = model.ChequesIds;
+                    string scheques = model.ChequesIds;
 
-                     if (string.IsNullOrWhiteSpace(scheques)) {
-                         ViewBag.ErrorCode = "CH001";
-                         ViewBag.ErrorMessage = "No hay cheques seleccionados";
-                         return View(model);
-                     }
+                    if (string.IsNullOrWhiteSpace(scheques)) {
+                        ViewBag.ErrorCode = "CH001";
+                        ViewBag.ErrorMessage = "No hay cheques seleccionados";
+                        return View(model);
+                    }
 
-                     string[] ach = scheques.Split(new Char[] { ','});
-                     foreach (string s in ach) {
-                         if (!string.IsNullOrWhiteSpace(s)) {
-                             Cheque och = new Cheque();
-                             och.Codigo = Int32.Parse(s);
-                             tr.Cheques.Add(och);
-                         }
-                     }
-                     if (tr.Cheques.Count == 0) {
-                         ViewBag.ErrorCode = "CH001";
-                         ViewBag.ErrorMessage = "No hay cheques seleccionados";
-                         return View(model);
-                     }
+                    string[] ach = scheques.Split(new Char[] { ',' });
+                    foreach (string s in ach) {
+                        if (!string.IsNullOrWhiteSpace(s)) {
+                            Cheque och = new Cheque();
+                            och.Codigo = Int32.Parse(s);
+                            tr.Cheques.Add(och);
+                        }
+                    }
+                    if (tr.Cheques.Count == 0) {
+                        ViewBag.ErrorCode = "CH001";
+                        ViewBag.ErrorMessage = "No hay cheques seleccionados";
+                        return View(model);
+                    }
 
-                     //Como no estoy usando una Transaccion del backend (que lo setea el filter) sino del modelo tengo que setear estos dos atributos a mano:
-                     string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
-                     string origen = HttpContext.Request.UserHostAddress;
-                     tr.setearAuditoria(nomUsuario, origen);
+                    //Como no estoy usando una Transaccion del backend (que lo setea el filter) sino del modelo tengo que setear estos dos atributos a mano:
+                    string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
+                    string origen = HttpContext.Request.UserHostAddress;
+                    tr.setearAuditoria(nomUsuario, origen);
 
-                     tr.Ejecutar();
+                    tr.Ejecutar();
 
-                     return RedirectToAction("ReciboTransfSuc", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
+                    return RedirectToAction("ReciboTransfSuc", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
 
-                 } catch (UsuarioException exc) {
-                     ViewBag.ErrorCode = exc.Codigo;
-                     ViewBag.ErrorMessage = exc.Message;
-                     return View(model);
-                 }
-             }
-             return View(model);
-         }
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(model);
+                }
+            }
+            return View(model);
+        }
 
-         public ActionResult ReciboTransfSuc(int id) {
-             ViewData["idParametros"] = id;
-             return View("ReciboTransfSuc");
-         }
+        public ActionResult ReciboTransfSuc(int id) {
+            ViewData["idParametros"] = id;
+            return View("ReciboTransfSuc");
+        }
 
 
-         private XtraReport _generarReciboTransfSuc(int id) {
-             TRChequeTransfSucursal tr = (TRChequeTransfSucursal)Transaccion.ObtenerTransaccion(id);
-             List<TRChequeTransfSucursal> ll = new List<TRChequeTransfSucursal>();
-             ll.Add(tr);
-             XtraReport rep = new DXReciboTransfSucCheque();
-             rep.DataSource = ll;
-             return rep;
-         }
+        private XtraReport _generarReciboTransfSuc(int id) {
+            TRChequeTransfSucursal tr = (TRChequeTransfSucursal)Transaccion.ObtenerTransaccion(id);
+            List<TRChequeTransfSucursal> ll = new List<TRChequeTransfSucursal>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboTransfSucCheque();
+            rep.DataSource = ll;
+            return rep;
+        }
 
-         public ActionResult ReciboTransfSucPartial(int idParametros) {
-             XtraReport rep = _generarReciboTransfSuc(idParametros);
-             ViewData["idParametros"] = idParametros;
-             ViewData["Report"] = rep;
-             return PartialView("_reciboTransfSuc");
-         }
+        public ActionResult ReciboTransfSucPartial(int idParametros) {
+            XtraReport rep = _generarReciboTransfSuc(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboTransfSuc");
+        }
 
-         public ActionResult ReciboTransfSucExport(int idParametros) {
-             XtraReport rep = _generarReciboTransfSuc(idParametros);
-             ViewData["idParametros"] = idParametros;
-             ViewData["Report"] = rep;
-             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
-         }
+        public ActionResult ReciboTransfSucExport(int idParametros) {
+            XtraReport rep = _generarReciboTransfSuc(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
 
         #endregion
 
-         #region RechazarCheque
+        #region RechazarCheque
 
-         public ActionResult Rechazar() {
-             TRChequeRechazar model = new TRChequeRechazar();
-             model.Cheque = new Cheque();
-             model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
-             return View(model);
-         }
+        public ActionResult Rechazar() {
+            TRChequeRechazar model = new TRChequeRechazar();
+            try {
+                model.Cheque = new Cheque();
+                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
+        }
 
-         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-         public ActionResult ChequesRechazablesGrilla(GridLookUpModel model) {
-             model.Opciones = new TRChequeRechazar().ChequesRechazables();
-             return PartialView("_selectChequeRechazar", model);
-         }
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult ChequesRechazablesGrilla(GridLookUpModel model) {
+            model.Opciones = new TRChequeRechazar().ChequesRechazables();
+            return PartialView("_selectChequeRechazar", model);
+        }
 
-         [HttpPost]
-         public ActionResult Rechazar(TRChequeRechazar tr) {
-             this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
-             this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+        [HttpPost]
+        public ActionResult Rechazar(TRChequeRechazar tr) {
+            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
 
-             //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
-             ModelState.Remove("Cheque.Codigo");
-             ModelState.Remove("Sucursal.Codigo");
+            //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
+            ModelState.Remove("Cheque.Codigo");
+            ModelState.Remove("Sucursal.Codigo");
 
-             if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
-                 ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
-             }
-             if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
-                 ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
-             }
-             
-             if (ModelState.IsValid) {
-                 try {
-                     tr.Ejecutar();
-                     return RedirectToAction("ReciboRech", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
-                 } catch (UsuarioException exc) {
-                     ViewBag.ErrorCode = exc.Codigo;
-                     ViewBag.ErrorMessage = exc.Message;
-                     return View(tr);
-                 }
-             }
-             return View(tr);
-         }
+            if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
+                ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
+            }
+            if (tr.Sucursal == null || tr.Sucursal.Codigo <= 0) {
+                ModelState.AddModelError("Sucursal.Codigo", "La Sucursal es requerida");
+            }
 
-         public ActionResult ReciboRech(int id) {
-             ViewData["idParametros"] = id;
-             TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id);
-             return View("ReciboRech", tr);
-         }
+            if (ModelState.IsValid) {
+                try {
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboRech", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(tr);
+                }
+            }
+            return View(tr);
+        }
 
-         private XtraReport _generarReciboRech(int id) {
-             TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id);
-             List<TRChequeRechazar> ll = new List<TRChequeRechazar>();
-             ll.Add(tr);
-             XtraReport rep = new DXReciboRechazarCheque();
-             rep.DataSource = ll;
-             return rep;
-         }
+        public ActionResult ReciboRech(int id) {
+            try {
+                ViewData["idParametros"] = id;
+                TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id);
+                return View("ReciboRech", tr);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
 
-         public ActionResult ReciboRechPartial(int idParametros) {
-             XtraReport rep = _generarReciboRech(idParametros);
-             ViewData["idParametros"] = idParametros;
-             ViewData["Report"] = rep;
-             return PartialView("_reciboRech");
-         }
+        private XtraReport _generarReciboRech(int id) {
+            TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id);
+            List<TRChequeRechazar> ll = new List<TRChequeRechazar>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboRechazarCheque();
+            rep.DataSource = ll;
+            return rep;
+        }
 
-         public ActionResult ReciboRechExport(int idParametros) {
-             XtraReport rep = _generarReciboRech(idParametros);
-             ViewData["idParametros"] = idParametros;
-             ViewData["Report"] = rep;
-             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
-         }
+        public ActionResult ReciboRechPartial(int idParametros) {
+            XtraReport rep = _generarReciboRech(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboRech");
+        }
+
+        public ActionResult ReciboRechExport(int idParametros) {
+            XtraReport rep = _generarReciboRech(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
 
 
-         #endregion
+        #endregion
 
 
-         #region CanjearChequeRechazado
+        #region CanjearChequeRechazado
 
-         public ActionResult CanjeRechazado() {
-             TRChequeRechazadoCanje model = new TRChequeRechazadoCanje();
-             model.Cheque = new Cheque();
-             model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
-             return View(model);
-         }
+        public ActionResult CanjeRechazado() {
+            TRChequeRechazadoCanje model = new TRChequeRechazadoCanje();
+            try {
+                model.Cheque = new Cheque();
+                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
+        }
 
-         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-         public ActionResult ChequesCanjeablesGrilla(GridLookUpModel model) {
-             model.Opciones = Cheque.ChequesRechazados();
-             return PartialView("_selectChequeCanjear",model);
-         }
-         #endregion
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult ChequesCanjeablesGrilla(GridLookUpModel model) {
+            model.Opciones = Cheque.ChequesRechazados();
+            return PartialView("_selectChequeCanjear", model);
+        }
+        #endregion
 
     }
 }
