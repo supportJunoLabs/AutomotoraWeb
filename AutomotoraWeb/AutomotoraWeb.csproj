@@ -279,6 +279,7 @@
     <Compile Include="Models\ComprobanteDocumentacionModel.cs" />
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
+    <Compile Include="Models\Mensaje.cs" />
     <Compile Include="Models\RenovarValeModel.cs" />
     <Compile Include="Models\ListadoAcvsModel.cs" />
     <Compile Include="Models\Grilla\BotonAjaxGrilla.cs" />
@@ -1807,15 +1808,15 @@
     <Content Include="Views\Clientes\_reportList.cshtml" />
     <Content Include="Views\Clientes\report.cshtml" />
     <Content Include="Views\Sucursales\_datosDetalle.cshtml" />
-    <Content Include="Views\TiposDocumento\_datosDetalle.cshtml" />
-    <Content Include="Views\TiposDocumento\_listGrilla.cshtml" />
-    <Content Include="Views\TiposDocumento\_reportList.cshtml" />
-    <Content Include="Views\TiposDocumento\create.cshtml" />
-    <Content Include="Views\TiposDocumento\delete.cshtml" />
-    <Content Include="Views\TiposDocumento\details.cshtml" />
-    <Content Include="Views\TiposDocumento\edit.cshtml" />
-    <Content Include="Views\TiposDocumento\report.cshtml" />
-    <Content Include="Views\TiposDocumento\show.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\_datosDetalle.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\_listGrilla.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\_reportList.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\create.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\delete.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\details.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\edit.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\report.cshtml" />
+    <Content Include="Views\Sucursales\TiposDocumento\show.cshtml" />
     <Content Include="Views\Vehiculos\_datosDetalle.cshtml" />
     <Content Include="Views\Vehiculos\_listGrilla.cshtml" />
     <Content Include="Views\Vehiculos\_reportList.cshtml" />
@@ -1900,7 +1901,6 @@
     <Content Include="Views\Caja\_listEfectivo.cshtml" />
     <Content Include="Views\Caja\_listGrillaEfectivo.cshtml" />
     <Content Include="Views\Transacciones\List.cshtml" />
-    <Content Include="Views\Transacciones\Transaccion.cshtml" />
     <Content Include="Views\Caja\Report.cshtml" />
     <Content Include="Views\Caja\_report.cshtml" />
     <Content Include="Views\ConsultasFin\ListSitCuotas.cshtml" />
@@ -2070,6 +2070,7 @@
     <Content Include="Views\Vales\_valesAnterioresGrilla.cshtml" />
     <Content Include="Views\Vales\_valesAnteriores.cshtml" />
     <Content Include="Views\Pedidos\_datosVehiculo.cshtml" />
+    <Content Include="Views\Sistema\Mensaje.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -226,3 +226,11 @@ textarea {
     height: 60px;
     margin-bottom:9px;
 }
+
+.modal-header {
+    background: #4d5b76;
+    background: -ms-linear-gradient(bottom, #4d5b76, #6c7a95);
+    background: -moz-linear-gradient(center bottom, #4d5b76 0%, #6c7a95 100%);
+    background: -o-linear-gradient(bottom, #4d5b76, #6c7a95);
+    color: white;
+}
