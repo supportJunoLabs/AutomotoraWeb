@@ -215,9 +215,14 @@
                     settings.Properties.TextFormatString = ig.FormatoSeleccionLookup;
                 }
 
-                if (!string.IsNullOrWhiteSpace(ig.FocusedRowChangedAccion)) {
-                    string s = "function(s,e){" + ig.FocusedRowChangedAccion + "(s,e);}";
-                    settings.GridViewClientSideEvents.FocusedRowChanged = s;
+                //FocusedRowChangedAccion falla cuando hay un filtro que da una sola fila, probamos con el evento rowclick
+                //if (!string.IsNullOrWhiteSpace(ig.FocusedRowChangedAccion)) {
+                //    string s = "function(s,e){" + ig.FocusedRowChangedAccion + "(s,e);}";
+                //    settings.GridViewClientSideEvents.FocusedRowChanged = s;
+                //}
+                if (!string.IsNullOrWhiteSpace(ig.RowClickAccion)) {
+                    string s = "function(s,e){" + ig.RowClickAccion + "(s,e);}";
+                    settings.GridViewClientSideEvents.RowClick = s;
                 }
 
                 foreach (var c in og.listGridViewsColumn) {

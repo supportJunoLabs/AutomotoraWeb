@@ -28,8 +28,9 @@
     <script type="text/javascript">
 
         function vendedorSelected(s, e) {
-            var g = gridVendedores.GetGridView();  //obtener referencia a la grilla
-            var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+            //var g = gridVendedores.GetGridView();  //obtener referencia a la grilla
+            //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+            var valor = s.GetRowKey(e.visibleIndex);
             $("#codigoVendedor").val(valor);
         }
 

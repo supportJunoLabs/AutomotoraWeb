@@ -1,6 +1,7 @@
 ﻿function ventaSelected(s, e) {
-    var g = gridVentas.GetGridView();  //obtener referencia a la grilla
-    var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+    //var g = gridVentas.GetGridView();  //obtener referencia a la grilla
+    //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+    var valor = s.GetRowKey(e.visibleIndex);
     $("#codigoVenta").val(valor);
     //alert("hola");
     actualizarVenta();

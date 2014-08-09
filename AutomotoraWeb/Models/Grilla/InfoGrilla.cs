@@ -61,6 +61,7 @@ namespace AutomotoraWeb.Models {
 
         // atributos para lookupgrid
         public string FocusedRowChangedAccion { get; set; }
+        public string RowClickAccion { get; set; }
         public string FormatoSeleccionLookup { get; set; }
         public int AnchoSeleccion { get; set; }
 

@@ -37,8 +37,9 @@
     <script type="text/javascript">
 
         function clienteSelected(s, e) {
-            var g = gridClientes.GetGridView();  //obtener referencia a la grilla
-            var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+            //var g = gridClientes.GetGridView();  //obtener referencia a la grilla
+            //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+            var valor = s.GetRowKey(e.visibleIndex);
             $("#codigoCliente").val(valor);
         }
 
