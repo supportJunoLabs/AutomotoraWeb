@@ -1,5 +1,9 @@
 ﻿@model DLL_Backend.ChequeEmitido
 @using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sistema;
+@using AutomotoraWeb.Helpers;
+
 
 @{
     ViewBag.Title = ViewBag.NombreEntidad + ": Consulta";
@@ -27,6 +31,48 @@
         @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
         @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
     </div>
+    
+    <div class="espacio2"></div>
+    
+    if (Model.MovOrigen != null) {
+    <div class="block">
+        <a href="#datosMovOrigen" class="block-heading icon-play-circle" data-toggle="collapse">&nbsp;&nbsp;&nbsp;Movimiento Origen</a>
+        <div id="datosMovOrigen" class="block-body collapse in" style="padding-top: 10px; padding-bottom: 10px">
+            <div class="display-label">
+                Fecha
+            </div>
+            <div class="editor-field">
+                @Model.MovOrigen.Fecha.Date.ToString("dd/MM/yyyy")
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                 Transaccion
+            </div>
+            <div class="editor-field">
+                @Html.Bootstrap().ActionLink(Model.MovOrigen.NumeroRecibo.ToString(), "ConsultaTransaccion", TransaccionesController.CONTROLLER).RouteValues(new { id = Model.MovOrigen.NumeroRecibo })
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+               Descripcion
+            </div>
+            <div class="editor-field">
+                @Html.DisplayFor(model => model.MovOrigen.Descripcion)
+            </div>
+            <div class="clear-both"></div>
+
+            <div class="display-label">
+                Sucursal
+            </div>
+            <div class="editor-field">
+                @Html.Bootstrap().ActionLink(Model.MovOrigen.Sucursal.Nombre, BaseController.DETAILS, SucursalesController.CONTROLLER).RouteValues(new { id = Model.MovOrigen.Sucursal.Codigo })
+            </div>
+            <div class="clear-both"></div>
+        </div>
+    </div>
+       
+    }
 
 }
 
