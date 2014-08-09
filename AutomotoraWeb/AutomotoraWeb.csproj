@@ -278,6 +278,7 @@
     <Compile Include="Models\ComprobanteDocumentacionModel.cs" />
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
+    <Compile Include="Models\SituacionFinancista.cs" />
     <Compile Include="Models\Mensaje.cs" />
     <Compile Include="Models\RenovarValeModel.cs" />
     <Compile Include="Models\ListadoAcvsModel.cs" />
@@ -315,6 +316,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Consultas\DXReportConsultaVale.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Consultas\DXSituacionFinancista.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Consultas\_DXSubrepValeDescontado.cs">
@@ -1716,6 +1720,7 @@
     <Content Include="Scripts\AutomotoraWeb\RechazarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale1.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale3.js" />
+    <Content Include="Scripts\AutomotoraWeb\SitFinancista.js" />
     <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
@@ -2075,6 +2080,14 @@
     <Content Include="Views\Sistema\Mensaje.cshtml" />
     <Content Include="Views\Vales\_valePagos.cshtml" />
     <Content Include="Views\Vales\_valePagosGrilla.cshtml" />
+    <Content Include="Views\Financistas\ConsultaSituacion.cshtml" />
+    <Content Include="Views\Financistas\_situacionFinancista.cshtml" />
+    <Content Include="Views\Financistas\_sitFinancistaCheques.cshtml" />
+    <Content Include="Views\Financistas\_sitFinancistaEfectivo.cshtml" />
+    <Content Include="Views\Financistas\_sitFinancistaEfectivoGrilla.cshtml" />
+    <Content Include="Views\Financistas\_sitFinancistaChequesGrilla.cshtml" />
+    <Content Include="Views\Financistas\ReportSitFinancista.cshtml" />
+    <Content Include="Views\Financistas\_reportSitFinancista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2104,6 +2117,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Consultas\DXReportConsultaVale.resx">
       <DependentUpon>DXReportConsultaVale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Consultas\DXSituacionFinancista.resx">
+      <DependentUpon>DXSituacionFinancista.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Consultas\_DXSubrepValeDescontado.resx">
       <DependentUpon>_DXSubrepValeDescontado.cs</DependentUpon>
