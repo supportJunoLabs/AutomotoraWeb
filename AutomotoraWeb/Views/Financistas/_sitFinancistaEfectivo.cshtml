@@ -1,0 +1,20 @@
+﻿@model AutomotoraWeb.Models.SituacionFinancista
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+
+@Html.Partial("_sitFinancistaEfectivoGrilla", Model)
+
+<div class="clear-both"></div>
+<div style="padding-top: 20px">
+    <div class="floatLeft label-xlarge">
+        <div class="floatLeft display-label "> Total Efectivo y Banco: </div> 
+        <div class="floatLeft">@Html.DisplayFor(m => m.TotalEfectivo.ImporteTexto)</div>
+    </div>
+</div>
+<div class="clear-both"></div>
+

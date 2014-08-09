@@ -1,0 +1,54 @@
+﻿@model DLL_Backend.Financista
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Models;
+
+@{
+    ViewBag.Title = "Consulta Situación Financista";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm()) {
+        <div id="filtros" class="block" style="margin-right: 5px">
+        <div class="btn-toolbar botoneraListado">
+            <div class="btn-group">
+                <input type="submit" id="Submit1" title="Refresh" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
+            </div>
+            <div class="btn-group" style="margin-left: 10px">
+                <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" value="Imprimir" />
+            </div>
+        </div>
+        <div id="filtro_financista" style="padding-left: 20px; padding-top: 20px; padding-bottom: 10px">
+            <div class="display-label" style="width: 70px">
+                Financista*
+            </div>
+            <div class="editor-field editor-field-xlarge xxlarge">
+                @Html.DdlOrDisplayFor(model => model.Codigo, false, model => model.Nombre,
+                new SelectList(ViewBag.Financistas, "Codigo", "Nombre"), "--Seleccionar Financista--",
+                new { id = "ddlFinancistas", @class = "xxlarge" })
+            </div>
+            <div class="floatLeft" style="padding-left: 20px;">
+                <a href="#" id="abtn_VerFinancista">
+                    @Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Datos Financista").Id("btn_VerFinancista")
+                </a>
+            </div>
+            <div class="clear-both"></div>
+        </div>
+    </div>
+}
+
+<div id="divSituacion">
+    @{
+        SituacionFinancista sit = new SituacionFinancista();
+        sit.generarSituacion(Model);
+    }
+
+    @Html.Partial("_situacionFinancista", sit)
+</div>
+
+
+<script src="~/Scripts/AutomotoraWeb/SitFinancista.js"></script>
+
+

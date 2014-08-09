@@ -1,0 +1,43 @@
+﻿@model AutomotoraWeb.Models.SituacionFinancista
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+@using DLL_Backend;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Vehiculo", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="Vehiculo.Codigo"},
+         new ColumnaGrilla {Campo="ImporteOrig.ImporteTexto", Ancho=110, Titulo="Importe"},
+          new ColumnaGrilla {Campo="ImportePagoAnt.ImporteTexto", Ancho=110, Titulo="Pago"},
+         new ColumnaGrilla {Campo="ImportePagoActual.ImporteTexto", Ancho=110, Titulo="Saldo"},
+         new ColumnaGrilla {Campo="Cliente.Nombre", Ancho=150, Titulo="Cliente",
+                Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Cliente.Codigo"},
+         new ColumnaGrilla {Campo="Detalle", Ancho=200, Titulo="Detalle"},
+         new ColumnaGrilla {Campo="ReciboOrigen.TipoRecibo.Descripcion", Ancho=100, Titulo="Tipo Origen"},
+         new ColumnaGrilla {Campo="NumeroReciboOrigen", Ancho=100, Titulo="Trans Origen",
+             Hipervinculo=true, Haccion="ConsultaTransaccion", Hcontrolador="Transacciones", HCampoParametro="NumeroReciboOrigen"}    };
+
+
+    ig.NameGrid = "grilla_efectivo";
+    ig.Controller = FinancistasController.CONTROLLER;
+    ig.ActionCallbackRoute = "SitFinancistaEfectivoGrilla";
+    ig.KeyFieldName = "NumeroReciboOrigen"; //clave que se usa para el doble click y los botones de accion  
+    ig.TypeOfModel = typeof(DLL_Backend.FinancistaPagoEfectivo);
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ConsultaTransaccion", TransaccionesController.CONTROLLER, "boton-consultar-mf", "Consulta Transaccion"));
+
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = TransaccionesController.CONTROLLER;
+    ig.AccionDobleClick = "ConsultaTransaccion";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model.Efectivo)

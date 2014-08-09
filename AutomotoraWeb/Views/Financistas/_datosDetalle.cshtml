@@ -1,5 +1,6 @@
 ﻿@model DLL_Backend.Financista
 @using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Financing;
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Nombre)
@@ -9,6 +10,12 @@
     @Html.EditorOrDisplayFor(model => model.Nombre, (bool?)ViewBag.SoloLectura)
     @Html.ValidationMessageFor(model => model.Nombre)
 </div>
+@{ if (Model != null && Model.Codigo>0) {
+        <div class="floatLeft" style="padding-left: 20px;">
+                @(Html.Bootstrap().ActionLinkButton("Consulta Situacion", "ConsultaSituacion", FinancistasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
+        </div>
+    }
+}
 <div class="clear-both"></div>
 
 <div class="display-label ">

@@ -1,0 +1,48 @@
+﻿@model AutomotoraWeb.Models.SituacionFinancista
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Models;
+@using DLL_Backend;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+         new ColumnaGrilla {Campo="Vehiculo", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="Vehiculo.Codigo"},
+         new ColumnaGrilla {Campo="Cheque.FechaVencimiento", Ancho=100, Titulo="Vencimiento", Formato="dd/MM/yyyy"},
+         new ColumnaGrilla {Campo="Cheque.Importe.ImporteTexto", Ancho=110, Titulo="Importe"},
+         new ColumnaGrilla {Campo="Cheque.Banco", Ancho=100, Titulo="Banco"},
+         new ColumnaGrilla {Campo="Cheque.NumeroCheque", Ancho=80, Titulo="Numero",
+             Hipervinculo=true, Haccion="ConsultaCheque", Hcontrolador="Cheques", HCampoParametro="Codigo"},
+         new ColumnaGrilla {Campo="Cliente.Nombre", Ancho=150, Titulo="Cliente",
+                Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="Cliente.Codigo"},
+         new ColumnaGrilla {Campo="Cheque.Sucursal.Nombre", Ancho=120, Titulo="Sucursal",
+                    Hipervinculo=true, Haccion="details", Hcontrolador="Sucursales", HCampoParametro="Cheque.Sucursal.Codigo"},
+         new ColumnaGrilla {Campo="Detalle", Ancho=200, Titulo="Detalle"},
+         new ColumnaGrilla {Campo="Cheque.MovOrigen.Recibo.TipoRecibo.Descripcion", Ancho=100, Titulo="Tipo Origen"},
+         new ColumnaGrilla {Campo="Cheque.MovOrigen.Recibo.Numero", Ancho=100, Titulo="Trans Origen",
+             Hipervinculo=true, Haccion="ConsultaTransaccion", Hcontrolador="Transacciones", HCampoParametro="Cheque.MovOrigen.Recibo.Numero"}
+    };
+            
+        
+    ig.NameGrid = "grilla_cheques";
+    ig.Controller = FinancistasController.CONTROLLER;
+    ig.ActionCallbackRoute = "SitFinancistaChequesGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.FinancistaPagoCheque);
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("ConsultaCheque", ChequesController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
+    
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = ChequesController.CONTROLLER;
+    ig.AccionDobleClick = "ConsultaCheque";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model.Cheques)
