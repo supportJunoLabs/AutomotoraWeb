@@ -1,0 +1,26 @@
+﻿@model List<DLL_Backend.Perfil>
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sistema;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Nombre", Titulo="Perfil", Ancho=400}
+    };
+            
+    ig.NameGrid = "grilla";
+    ig.Controller = PerfilesController.CONTROLLER;
+    ig.ActionCallbackRoute = "listaGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Perfil.PerfilMD);
+    ig.BotonesMtoEstandar = true;
+
+    ViewBag.InfoGrilla = ig;
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = PerfilesController.CONTROLLER;
+    ig.AccionDobleClick = BaseController.DETAILS;
+}
+
+@Html.Partial("_generalGrid", Model)

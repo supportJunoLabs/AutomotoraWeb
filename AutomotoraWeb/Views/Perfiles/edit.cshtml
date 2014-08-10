@@ -1,0 +1,103 @@
+﻿@model AutomotoraWeb.Models.PerfilModel
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+
+<style>
+    #sortable1, #sortable2 {
+        border: 1px solid #eee;
+        width: 272px;
+        min-height: 20px;
+        list-style-type: none;
+        margin: 0;
+        padding: 5px 0 0 0;
+        float: left;
+        margin-right: 10px;
+    }
+
+        #sortable1 li, #sortable2 li {
+            margin: 0 5px 5px 5px;
+            padding: 5px;
+            font-size: 12px;
+            width: 250px;
+        }
+
+    .item {
+        cursor: move;
+    }
+</style>
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidad + ": Modificar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@{ if (ViewBag.MensajeCreacion != null) {
+    <div class="alert alert-success">@ViewBag.MensajeCreacion</div>
+   }}
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        @Html.HiddenFor(model => model.Perfil.Codigo)
+        @Html.HiddenFor(model => model.UsuariosTexto, new { id = "usuariosTexto" })
+
+        @Html.Partial("_datosDetalle", Model)
+
+    </fieldset>
+
+    <div id="divPerfiles">
+        <div class="floatLeft bloque" style="margin-right: 20px; padding-bottom: 20px">
+            <div class="cabezalBloque">Usuarios del Perfil</div>
+            <div class="cuerpoBloque">
+                <ul id="sortable1" class="connectedSortable">
+                    @{ foreach (Usuario p in Model.Perfil.Usuarios) {
+                        <li class="ui-state-default item" id="@(p.Codigo)">@(p.UserName)</li>
+                       }}
+                </ul>
+            </div>
+        </div>
+
+        <div class="floatLeft bloque" style="margin-right: 20px; padding-bottom: 20px">
+            <div class="cabezalBloque ui-state-highlight">Usuarios Disponibles</div>
+            <div class="cuerpoBloque">
+                <ul id="sortable2" class="connectedSortable">
+                    @{ foreach (Usuario p1 in Model.UsuariosDisponibles()) {
+                        <li class="ui-state-highlight item" id="@(p1.Codigo)">@(p1.UserName)</li>
+                       }}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clear-both"></div>
+    <div class="espacio"></div>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Guardar").Id("btnGuardar"))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.DETAILS).RouteValues(new { id = Model.Perfil.Codigo }).Class("btn btn-default"))
+    </div>
+    <div class="clear-both"></div>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#sortable1, #sortable2").sortable({
+            connectWith: ".connectedSortable"
+        }).disableSelection();
+    });
+
+    $("#btnGuardar").click(function () {
+        // alert("hola");
+        var items = $('#sortable1').sortable('toArray');
+        var itemStr = items.join('|');
+        //alert(itemStr);
+        $("#usuariosTexto").val(itemStr);
+        $('form#formPrincipal').submit();
+    });
+</script>

@@ -1,0 +1,24 @@
+﻿@model List<DLL_Backend.Usuario>
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="UserName", Titulo="Usuarios Asignados",Ancho=200}
+    };
+            
+    ig.NameGrid = "grillaUsuarios";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Usuario.UsuarioMD);
+    ig.Estatica = true;
+
+    ViewBag.InfoGrilla = ig;
+    ig.DobleClick = true;
+    //ig.ControladorDobleClick = PerfilesController.CONTROLLER;
+    //ig.AccionDobleClick = PerfilesController.DETAILS;
+}
+
+@Html.Partial("_generalGrid", Model)
+  

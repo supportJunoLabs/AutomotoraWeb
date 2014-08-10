@@ -1,0 +1,45 @@
+﻿@model AutomotoraWeb.Models.PerfilModel
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidad + ": Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <fieldset>
+        <legend></legend>
+        @Html.HiddenFor(model => model.Perfil.Codigo)
+
+        @Html.Partial("_datosDetalle")
+
+    </fieldset>
+    
+    <div class="block">
+    <a href="#divperfiles" class="block-heading icon-play-circle" data-toggle="collapse">&nbsp;&nbsp;&nbsp;Usuarios</a>
+    <div id="divperfiles" class="block-body collapse in" style="padding-top: 10px; padding-bottom: 10px">
+        @Html.Partial("_perfilesUsuario", Model.Perfil.Usuarios)
+    </div>
+</div>
+    
+    <div class="clear-both"></div>
+    <div class="espacio2">&nbsp;</div>
+    
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Eliminar").Data(new { id = Model.Perfil.Codigo }))
+        @(Html.Bootstrap().ActionLinkButton("Cancelar", BaseController.DETAILS).RouteValues(new {id=Model.Perfil.Codigo }).Class("btn btn-default"))
+    </div>
+
+}
+
+
+
+
+
+@section Scripts {
+}
+
