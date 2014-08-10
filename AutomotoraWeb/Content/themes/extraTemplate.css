@@ -179,11 +179,11 @@ textarea {
 }
 
 .espacio2 {
-    margin-top: 20px;
+    height: 20px;
 }
 
 .espacio {
-    margin-top: 10px;
+    height: 10px;
 }
 
 .pageContainer {
@@ -194,7 +194,7 @@ textarea {
 }
 
 #menuHeader li {
-    float: left;
+    /*float: left;*/
 }
 
 #menuHeader {

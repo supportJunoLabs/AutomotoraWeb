@@ -1,0 +1,61 @@
+﻿@model AutomotoraWeb.Models.UsuarioModel
+@using AutomotoraWeb.Helpers;
+
+@{
+    bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
+}
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Usuario.UserName)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Usuario.UserName, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Usuario.UserName)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Usuario.Habilitado)
+</div>
+<div>
+    @Html.CheckBoxOrDisplayFor(model => model.Usuario.Habilitado, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Usuario.Habilitado)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Usuario.Sucursal)
+</div>
+<div class="editor-field editor-field-large @(modoConsulta ? "" : "renglon-alto")">
+    @Html.DdlOrDisplayFor(model => model.Usuario.Sucursal.Codigo, modoConsulta,
+                model => model.Usuario.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
+    @Html.ValidationMessageFor(model => model.Usuario.Sucursal)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Usuario.MultiSucursal)
+</div>
+<div>
+    @Html.CheckBoxOrDisplayFor(model => model.Usuario.MultiSucursal, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Usuario.MultiSucursal)
+</div>
+<div class="clear-both"></div>
+
+
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Usuario.EsDBA)
+</div>
+<div>
+    @Html.CheckBoxOrDisplayFor(model => model.Usuario.EsDBA, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Usuario.EsDBA)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="espacio2"></div>
+
