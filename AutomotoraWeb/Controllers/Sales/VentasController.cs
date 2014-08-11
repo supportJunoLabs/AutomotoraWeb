@@ -35,14 +35,46 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         public ActionResult VentaVehiculo() {
+            
             Venta venta = new Venta();
             venta.Vehiculo = new Vehiculo();
             venta.Cliente = new Cliente();
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
+            venta.Pago.agregarEfectivos(new List<Importe>());
+
+            ViewData["idParametros"] = "0"; // Para grillas que necesitan id de la venta
 
             ViewBag.Sucursales = Sucursal.Sucursales;
+            ViewBag.Controller = CONTROLLER;
+
+            string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            Session[idSession] = venta;
+            ViewData["idSession"] = idSession;
+
             return View(venta);
+        }
+
+        public ActionResult VentaVehiculoX(int id) {
+            Venta venta = new Venta();
+            venta.Vehiculo = new Vehiculo();
+            venta.Vehiculo.Codigo = id;
+            venta.Vehiculo.Consultar();
+            venta.Consultar();
+            venta.Cliente = new Cliente();
+            venta.Vendedor = new Vendedor();
+            venta.Sucursal = new Sucursal();
+
+            ViewData["idParametros"] = venta.Codigo.ToString(); // Para grillas que necesitan id de la venta
+
+            ViewBag.Sucursales = Sucursal.Sucursales;
+            ViewBag.Controller = CONTROLLER;
+
+            string idSession = SessionUtils.generarIdVarSesion("VentaVehiculoX", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            Session[idSession] = venta;
+            ViewData["idSession"] = idSession;
+
+            return View("ventaVehiculo", venta);
         }
 
         private ActionResult VistaElemento(int id) {
@@ -62,6 +94,44 @@ namespace AutomotoraWeb.Controllers.Sales
             td.Consultar();
             return td;
         }
+
+        //--------------------------METODOS Pagos Efectivo  -----------------------------
+
+        #region PagosEfectivo
+
+        [HttpPost]
+        public JsonResult addPagoEfectivo(Importe importe, String idSession) {
+
+            try {
+                Venta venta = (Venta)(Session[idSession]);
+                importe.Moneda.Consultar();
+                venta.Pago.Efectivo.Add(importe);
+                
+                return createJsonResultPagoEfectivo(venta.Pago.Efectivo);
+            } catch (UsuarioException exc) {
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
+            }
+
+        }
+
+        private JsonResult createJsonResultPagoEfectivo(List<Importe> listImporte) { // Paso la lista de importes por si hay que devolver el total
+            return Json(new {
+                Result = "OK",
+            });
+        }
+
+        public ActionResult grillaPagosEfectivo(int idParametros, int idSession) {
+            return PartialView("_listGastos", _listaPagosEfectivo(idSession));
+        }
+
+        private List<Importe> _listaPagosEfectivo(int idSession) {
+            Venta venta = (Venta)(Session[idSession]);
+            return venta.Pago.Efectivo;
+        }
+
+        #endregion
 
         //--------------------------METODOS PARA LISTADOS DE Ventas  -----------------------------
 

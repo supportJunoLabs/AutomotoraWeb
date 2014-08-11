@@ -1,1 +1,90 @@
-﻿_seleccionMPEfectivo
+﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+<div id="contenedorSeleccionMPEfectivo">
+    <div>
+        @Html.Partial("_grillaPagosEfectivo", Model.Pago.Efectivo)
+    </div>
+    <div>
+        <div class="dataLine">
+            <div class="display-label-90">Moneda</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="pagoEfectivoMoneda" value="" /></div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="dataLine">
+            <div class="display-label-90">Monto</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="pagoEfectivoMonto" value="" /></div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="btn-group">
+            @if (true){
+                @(Html.Bootstrap().Button().Text("Agregar").Id("addPagoEfectivo").AppendIcon(TwitterBootstrapMVC.Icons.plus, true).Style(TwitterBootstrap2.ButtonStyle.Primary))
+            }
+        )
+        </div>
+        <div id="messageErrorAddPagoEfectivo" style="margin-left: 15px; color: red;"></div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+        $("#addPagoEfectivo").click(function () {
+
+            if (_validateImportePagoEfectivo()) {
+
+                $("#messageErrorAddPagoEfectivo").html("");
+
+                var urlAction = '@(Url.Action("addPagoEfectivo", "ventas"))'
+
+                $.ajax({
+                    url: urlAction,
+                    type: 'POST',
+                    async: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: getJsonPagoEfectivo(),
+                    success: function (data) {
+                        if (data.Result == "OK") {
+                            gridPagosEfectivo.Refresh(); // Se actualiza la grilla
+                        }
+                        else {
+                            $("#" + containerErrorMessage).html("ERROR");
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        general_showErrorAction(containerErrorMessage, textStatus, errorThrown);
+                    }
+                });
+            }
+            else {
+                $("#messageErrorAddPagoEfectivo").html("El monto debe de ser un valor numérico");
+            }
+
+        });
+
+        function _validateImportePagoEfectivo() {
+            var monto = $("#pagoEfectivoMoneda").val()
+
+            var isDecimal_re = /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;
+            return String(monto).search(isDecimal_re) != -1
+        }
+
+        function getJsonPagoEfectivo() {
+            var pagoEfectivo = {
+                Importe: {
+                    Moneda: {
+                        Codigo: $("#pagoEfectivoMoneda").val()
+                    },
+                    Monto: $("#pagoEfectivoMonto").val()
+                },
+                idSession: @ViewData["idSession"]
+            };
+
+            return JSON.stringify(pagoEfectivo);
+        }
+
+    </script>
+</div>
