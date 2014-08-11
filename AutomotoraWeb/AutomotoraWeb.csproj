@@ -2071,11 +2071,13 @@
     <Content Include="Views\Vales\_valesAnteriores.cshtml" />
     <Content Include="Views\Pedidos\_datosVehiculo.cshtml" />
     <Content Include="Views\Sistema\Mensaje.cshtml" />
+    <Content Include="Views\Shared\_grillaPagosEfectivo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
     <Folder Include="Views\Cuotas\" />
+    <Folder Include="Views\Shared\PagosEfectivo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
