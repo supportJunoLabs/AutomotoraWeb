@@ -46,7 +46,6 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult DocComprobanteVenta(int id) {
             Venta v = new Venta();
             v.Codigo = id;
-            ////v.Consultar();
             ViewData["idParametros"] = id;
             return View("ReportComprobanteVenta", v);
         }
@@ -98,7 +97,6 @@ namespace AutomotoraWeb.Controllers.Sales {
          public ActionResult DocCuponesVenta(int id) {
              Venta v = new Venta();
              v.Codigo = id;
-             ////v.Consultar();
              ViewData["idParametros"] = id;
              return View("ReportCuponesVenta", v);
         }

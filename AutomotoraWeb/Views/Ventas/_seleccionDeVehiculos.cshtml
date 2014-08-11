@@ -112,12 +112,13 @@
 <script type="text/javascript">
 
     function vehiculoSelected(s, e) {
-        alert("vehiculo elegido");
-        var g = gridVehiculos.GetGridView();  //obtener referencia a la grilla
-        var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
-        $("#codigoVehiculo").val(valor);
+        //alert("vehiculo elegido");
+        //var g = gridVehiculos.GetGridView();  //obtener referencia a la grilla
+        //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
 
-        consultarDatosVehiculo(valor)
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoVehiculo").val(valor);
+        consultarDatosVehiculo(valor);
     }
 
     function consultarDatosVehiculo(codigo) {

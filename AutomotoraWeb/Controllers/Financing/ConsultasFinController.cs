@@ -37,20 +37,32 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult ListSitCliente(int? id) {
-            Cliente c = _consultarCliente(id);
-            return View(c);
+            try {
+                Cliente c = _consultarCliente(id);
+                return View(c);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
 
         [HttpPost]
         //se invoca desde el boton actualizar e imprimir. Devuelve la pagina completa
         public ActionResult ListSitCliente(Cliente model, string btnSubmit) {
-            int? idCliente = model.Codigo;
-            Cliente c = _consultarCliente(idCliente);
-            if (btnSubmit == "Imprimir" && idCliente != null && idCliente != 0) {
-                return this.ReportSitCliente(c);
+            try {
+                int? idCliente = model.Codigo;
+                Cliente c = _consultarCliente(idCliente);
+                if (btnSubmit == "Imprimir" && idCliente != null && idCliente != 0) {
+                    return this.ReportSitCliente(c);
+                }
+                return View(c);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-             return View(c);
         }
 
         //Se invoca por json al actualizar la ddl de clientes, devuelve solo la partial de contenido.
@@ -129,30 +141,42 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult ConsultaFinanciacion(int? id) {
             ConsultaVentaModel m = new ConsultaVentaModel();
-            m.Venta = new Venta();
-            m.Cliente = new Cliente();
-            if (id!=null && id>0) {
-                m.Venta.Codigo = id??0;
-                m.Venta.Consultar();
-                m.Cliente = m.Venta.Cliente;
+            try {
+                m.Venta = new Venta();
+                m.Cliente = new Cliente();
+                if (id != null && id > 0) {
+                    m.Venta.Codigo = id ?? 0;
+                    m.Venta.Consultar();
+                    m.Cliente = m.Venta.Cliente;
+                }
+                ViewBag.SoloLectura = true;
+                ViewData["idParametros"] = m.Cliente.Codigo;
+                return View("ConsultaFinanciacion", m);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(m);
             }
-            ViewBag.SoloLectura = true;
-            ViewData["idParametros"] = m.Cliente.Codigo;
-            return View("ConsultaFinanciacion", m);
         }
 
         //El id corresponde al cliente, cuando entro con el cliente elegido
         public ActionResult ConsultaFinanciacionesCliente(int? id) {
             ConsultaVentaModel m = new ConsultaVentaModel();
-            m.Venta = new Venta();
-            m.Cliente = new Cliente();
-            if (id != null) {
-                m.Cliente.Codigo = id ?? 0;
-                m.Cliente.Consultar();
+            try {
+                m.Venta = new Venta();
+                m.Cliente = new Cliente();
+                if (id != null) {
+                    m.Cliente.Codigo = id ?? 0;
+                    m.Cliente.Consultar();
+                }
+                ViewBag.SoloLectura = true;
+                ViewData["idParametros"] = m.Cliente.Codigo;
+                return View("ConsultaFinanciacion", m);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("ConsultaFinanciacion", m);
             }
-            ViewBag.SoloLectura = true;
-            ViewData["idParametros"] = m.Cliente.Codigo;
-            return View("ConsultaFinanciacion", m);
         }
 
         //desde el javascript de cambio en ddl clientes
@@ -168,10 +192,10 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult GrillaFinanciacionesCliente(int idParametros) {
             Cliente c = new Cliente();
-            c.Codigo=idParametros;
+            c.Codigo = idParametros;
             c.Consultar();
             GridLookUpModel model = new GridLookUpModel();
-            model.Opciones= c.VentasCuotas();
+            model.Opciones = c.VentasCuotas();
             ViewData["idParametros"] = idParametros;
             return PartialView("_selectFinanciacionConsultar", model);
         }
@@ -197,7 +221,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult ReportFinanciacionPartial(int idParametros) {
             Venta model = new Venta();
-            model.Codigo=idParametros;
+            model.Codigo = idParametros;
             model.Consultar();
             XtraReport rep = new DXReportConsultaFinanciacion();
             List<Venta> ll = new List<Venta>();
@@ -229,31 +253,42 @@ namespace AutomotoraWeb.Controllers.Financing {
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult ListSitCuotas() {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
-            string s = SessionUtils.generarIdVarSesion("ListadoCaja", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            ViewData["idParametros"] = model.idParametros;
-            model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.SITUACION_CUOTAS;
-            model.obtenerListado();
-            return View(model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoCaja", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewData["idParametros"] = model.idParametros;
+                model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.SITUACION_CUOTAS;
+                model.obtenerListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
 
         }
         [HttpPost]
         //Se invoca desde el boton actualizar o imprimir.
         public ActionResult ListSitCuotas(ListadoCuotasValesModel model, string btnSubmit) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-            if (ModelState.IsValid) {
-                //if (model.Accion==ListadoCuotasValesModel.ACCIONES.IMPRIMIR){
-                if (btnSubmit == "Imprimir") {
-                    return this.ReportSitCuotas(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                if (ModelState.IsValid) {
+                    //if (model.Accion==ListadoCuotasValesModel.ACCIONES.IMPRIMIR){
+                    if (btnSubmit == "Imprimir") {
+                        return this.ReportSitCuotas(model);
+                    }
+                    model.obtenerListado();
                 }
-                model.obtenerListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            return View(model);
         }
 
         //Se invoca desde la propia grilla al paginar, filtrar etc. Devuelve solamente la grilla
@@ -296,7 +331,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
 
-    
+
 
         #endregion
 
@@ -305,30 +340,41 @@ namespace AutomotoraWeb.Controllers.Financing {
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult ListCuotasPendientes() {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
-            model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_PENDIENTES;
-            string s = SessionUtils.generarIdVarSesion("ListadoCuotasPend", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
-            return View(model);
+            try {
+                model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_PENDIENTES;
+                string s = SessionUtils.generarIdVarSesion("ListadoCuotasPend", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewData["idParametros"] = model.idParametros;
+                model.obtenerListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
         [HttpPost]
         //Se invoca desde el boton actualizar o imprimir.
         public ActionResult ListCuotasPendientes(ListadoCuotasValesModel model) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-            if (ModelState.IsValid) {
-                if (model.Accion==ListadoCuotasValesModel.ACCIONES.IMPRIMIR){
-                    return this.ReportCuotasPendientes(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                if (ModelState.IsValid) {
+                    if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
+                        return this.ReportCuotasPendientes(model);
+                    }
+                    model.obtenerListado();
+                    model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
                 }
-                model.obtenerListado();
-                model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            return View(model);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
@@ -400,30 +446,42 @@ namespace AutomotoraWeb.Controllers.Financing {
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult ListValesPendientes() {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
-            model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.VALES_PENDIENTES;
-            string s = SessionUtils.generarIdVarSesion("ListadoValesPend", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
-            return View(model);
+            try {
+                model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.VALES_PENDIENTES;
+                string s = SessionUtils.generarIdVarSesion("ListadoValesPend", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+                ViewData["idParametros"] = model.idParametros;
+                model.obtenerListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
         [HttpPost]
         //Se invoca desde el boton actualizar o imprimir.
         public ActionResult ListValesPendientes(ListadoCuotasValesModel model) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-            if (ModelState.IsValid) {
-                if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
-                    return this.ReportValesPendientes(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                if (ModelState.IsValid) {
+                    if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
+                        return this.ReportValesPendientes(model);
+                    }
+                    model.obtenerListado();
+                    model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
                 }
-                model.obtenerListado();
-                model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            return View(model);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
@@ -495,30 +553,42 @@ namespace AutomotoraWeb.Controllers.Financing {
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult ListCuotasValesPendientes() {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
-            model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_VALES_PENDIENTES;
-            string s = SessionUtils.generarIdVarSesion("ListadoCuotasValesPend", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
-            return View(model);
+            try {
+                model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_VALES_PENDIENTES;
+                string s = SessionUtils.generarIdVarSesion("ListadoCuotasValesPend", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+                ViewData["idParametros"] = model.idParametros;
+                model.obtenerListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
         [HttpPost]
         //Se invoca desde el boton actualizar o imprimir.
         public ActionResult ListCuotasValesPendientes(ListadoCuotasValesModel model) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-            if (ModelState.IsValid) {
-                if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
-                    return this.ReportCuotasValesPendientes(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                if (ModelState.IsValid) {
+                    if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
+                        return this.ReportCuotasValesPendientes(model);
+                    }
+                    model.obtenerListado();
+                    model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
                 }
-                model.obtenerListado();
-                model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            return View(model);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de vales. Devuelve la partial del tab de vales

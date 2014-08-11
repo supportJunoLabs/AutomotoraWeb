@@ -1,0 +1,17 @@
+﻿@model DLL_Backend.Vale
+@using DLL_Backend;
+
+@{ 
+    if (Model!=null && !string.IsNullOrWhiteSpace(Model.Codigo)){ 
+       List<Recibo> ll = Model.PagosRecibidos;
+       if (ll != null && ll.Count > 0) {
+           
+        <div class="block">
+            <a href="#datosValePagos" class="block-heading icon-play-circle" data-toggle="collapse">&nbsp;&nbsp;&nbsp;Pagos</a>
+            <div id="datosValePagos" class="block-body collapse in" style="padding-top: 10px; padding-bottom: 10px">
+                @Html.Partial("_valePagosGrilla", ll)
+            </div>
+        </div>
+       }
+   }
+}

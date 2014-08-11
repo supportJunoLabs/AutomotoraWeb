@@ -49,19 +49,19 @@ namespace AutomotoraWeb.Controllers.Financing {
                     m.Cliente = m.Transaccion.Vale.ClienteOrigen;
                     if (!m.Cliente.ValesPendientesOperables().Contains(m.Transaccion.Vale)) {
                         ViewBag.ErrorCode = "ERR";
-                        ViewBag.ErrorMessage = "Vale "+id+" no habilitado para renovar o inexistente";
+                        ViewBag.ErrorMessage = "Vale " + id + " no habilitado para renovar o inexistente";
                         m.Transaccion.Vale = new Vale();
-                        return View( new RenovarValeModel(_usuario()));
+                        return View(new RenovarValeModel(_usuario()));
                     }
                     m.Sugerido = m.Transaccion.Vale.CobroSugerido();
                     m.Transaccion.Importe = m.Sugerido.CobroSugerido;
                 }
                 ViewBag.SoloLectura = true;
-                return View( m);
+                return View(m);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
-                return View( new RenovarValeModel(_usuario()));
+                return View();
             }
         }
 
@@ -78,7 +78,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
-                return View("Renovar", new RenovarValeModel(_usuario()));
+                return View("Renovar");
             }
         }
 
@@ -109,7 +109,6 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         [HttpPost]
         public JsonResult FechaRenovacionModif(AuxValeRenovacion datos) {
-
             Vale v = new Vale();
             v.Codigo = datos.IdVale;
             v.Consultar();
@@ -122,7 +121,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
             result.TotalTexto = sug.CobroSugerido.ImporteTexto;
             result.InteresesTexto = sug.Intereses.ImporteTexto;
-            
+
             return this.Json(result);
         }
 
@@ -164,11 +163,17 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         public ActionResult ReciboRenovacion(int id) {
-            TRValeRenovacion tr = (TRValeRenovacion)Transaccion.ObtenerTransaccion(id);
-            ViewData["idParametros"] = id;
-            return View("ReciboRenovacion", tr);
+            try {
+                TRValeRenovacion tr = (TRValeRenovacion)Transaccion.ObtenerTransaccion(id);
+                ViewData["idParametros"] = id;
+                return View("ReciboRenovacion", tr);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
-        
+
         private XtraReport _generarReciboRenovacion(int id) {
             TRValeRenovacion tr = (TRValeRenovacion)Transaccion.ObtenerTransaccion(id);
             List<TRValeRenovacion> ll = new List<TRValeRenovacion>();
@@ -199,28 +204,40 @@ namespace AutomotoraWeb.Controllers.Financing {
         //El id Corrresonde al numero de vale
         public ActionResult ConsultaVale(string id) {
             ConsultaValeModel m = new ConsultaValeModel();
-            m.Vale = new Vale();
-            m.Cliente = new Cliente();
-            if (!string.IsNullOrWhiteSpace(id)) {
-                m.Vale.Codigo = id;
-                m.Vale.Consultar();
-                m.Cliente = m.Vale.ClienteOrigen;
+            try {
+                m.Vale = new Vale();
+                m.Cliente = new Cliente();
+                if (!string.IsNullOrWhiteSpace(id)) {
+                    m.Vale.Codigo = id;
+                    m.Vale.Consultar();
+                    m.Cliente = m.Vale.ClienteOrigen;
+                }
+                ViewBag.SoloLectura = true;
+                return View("ConsultaVale", m);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(m);
             }
-            ViewBag.SoloLectura = true;
-            return View("ConsultaVale", m);
         }
 
         //El id corresponde al cliente, cuando entro con el cliente elegido
         public ActionResult ConsultaValesCliente(int? id) {
             ConsultaValeModel m = new ConsultaValeModel();
-            m.Vale = new Vale();
-            m.Cliente = new Cliente();
-            if (id != null) {
-                m.Cliente.Codigo = id ?? 0;
-                m.Cliente.Consultar();
+            try {
+                m.Vale = new Vale();
+                m.Cliente = new Cliente();
+                if (id != null) {
+                    m.Cliente.Codigo = id ?? 0;
+                    m.Cliente.Consultar();
+                }
+                ViewBag.SoloLectura = true;
+                return View("ConsultaVale", m);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("ConsultaVale", m);
             }
-            ViewBag.SoloLectura = true;
-            return View("ConsultaVale", m);
         }
 
         //desde el javascript de cambio en ddl clientes
@@ -228,7 +245,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             ConsultaValeModel m = new ConsultaValeModel();
             if (idCliente != null && idCliente > 0) {
                 m.Cliente = new Cliente();
-                m.Cliente.Codigo = idCliente??0;
+                m.Cliente.Codigo = idCliente ?? 0;
             }
             ViewBag.SoloLectura = true;
             return PartialView("_valesCliente", m);
@@ -242,7 +259,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             if (!string.IsNullOrWhiteSpace(idVale)) {
                 v.Codigo = idVale;
                 v.Consultar();
-            } 
+            }
             return PartialView("_datosDetalleVale", v);
         }
 
@@ -264,7 +281,6 @@ namespace AutomotoraWeb.Controllers.Financing {
             }
             Vale v = new Vale();
             v.Codigo = id;
-            //v.Consultar();
             ViewData["idParametros"] = id;
             return View("ReportVale", v);
         }
@@ -298,10 +314,16 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult Descontar() {
             TRValeDescontar model = new TRValeDescontar();
-            model.Vale = new Vale();
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            model.Sucursal = usuario.Sucursal;
-            return View(model);
+            try {
+                model.Vale = new Vale();
+                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                model.Sucursal = usuario.Sucursal;
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
@@ -344,9 +366,15 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         public ActionResult ReciboDescuento(int id) {
-            TRValeDescontar tr = (TRValeDescontar)Transaccion.ObtenerTransaccion(id);
-            ViewData["idParametros"] = id;
-            return View("ReciboDescuento", tr);
+            try {
+                TRValeDescontar tr = (TRValeDescontar)Transaccion.ObtenerTransaccion(id);
+                ViewData["idParametros"] = id;
+                return View("ReciboDescuento", tr);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         private XtraReport _generarReciboDescuento(int id) {
@@ -386,17 +414,24 @@ namespace AutomotoraWeb.Controllers.Financing {
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult ListVales() {
             ListadoValesModel model = new ListadoValesModel();
+            try{
             string s = SessionUtils.generarIdVarSesion("ListadoVales", Session[SessionUtils.SESSION_USER].ToString());
             Session[s] = model;
             model.idParametros = s;
             ViewData["idParametros"] = model.idParametros;
             model.obtenerListado();
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         [HttpPost]
         //Se invoca desde el boton actualizar o imprimir.
         public ActionResult ListVales(ListadoValesModel model) {
+            try{
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
             this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
@@ -407,6 +442,11 @@ namespace AutomotoraWeb.Controllers.Financing {
                 model.obtenerListado();
             }
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
@@ -469,9 +509,15 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult Rechazar() {
             TRValeRechazar model = new TRValeRechazar();
+            try{
             model.Vale = new Vale();
             model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
             return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
@@ -510,9 +556,15 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         public ActionResult ReciboRech(int id) {
+            try{
             TRValeRechazar tr = (TRValeRechazar)Transaccion.ObtenerTransaccion(id);
             ViewData["idParametros"] = id;
             return View("ReciboRech", tr);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         private XtraReport _generarReciboRech(int id) {
@@ -541,7 +593,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #endregion
 
-    }   
+    }
 
     public class AuxValeRenovacion {
         public string IdVale { get; set; }
@@ -554,6 +606,6 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public string TotalTexto { get; set; }
         public string InteresesTexto { get; set; }
-        
+
     }
 }

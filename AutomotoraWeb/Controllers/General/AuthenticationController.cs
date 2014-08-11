@@ -77,8 +77,6 @@ namespace AutomotoraWeb.Controllers.General {
                     string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
                     SecurityService.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword, Request.UserHostAddress);
                     Mensaje msj = new Mensaje { Titulo = "Cambio de clave", Contenido=  "Se ha cambiado su clave en forma exitosa" };
-                    //Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
-                    //return RedirectToAction(dest.Accion, dest.Controlador);
                     return RedirectToAction("Mensaje", SistemaController.CONTROLLER, new {id=SistemaController.MSJ_CAMBIO_CLAVE_OK});
                 } catch (UsuarioException exc) {
                     model.ErrorCode = exc.Codigo;
@@ -110,38 +108,38 @@ namespace AutomotoraWeb.Controllers.General {
 
         //------------------------------------------------------------------------------------------------------------------------
 
-        [HttpGet]
-        public ActionResult CancelarCambioPwd() {
-            Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
-            return RedirectToAction(dest.Accion, dest.Controlador);
-        }
-
-        public ActionResult BaseUltimoModulo() {
-            Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
-            return RedirectToAction(dest.Accion, dest.Controlador);
-        }
+        //public ActionResult BaseUltimoModulo() {
+        //    Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
+        //    return RedirectToAction(dest.Accion, dest.Controlador);
+        //}
 
         public ActionResult VerPerfil() {
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (usuario == null) {
-                return RedirectToAction(AuthenticationController.CONTROLLER, AuthenticationController.LOGIN);
+            try {
+                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                if (usuario == null) {
+                    return RedirectToAction(AuthenticationController.CONTROLLER, AuthenticationController.LOGIN);
+                }
+                Usuario u = new Usuario();
+                u.Codigo = usuario.Codigo;
+                u.Consultar(Usuario.MODO_CONSULTA.AVANZADO);
+                return View("VerPerfil", u); //devuelvo otro para no guardar el usuario pesado y completo en la variable de sesion
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
             }
-            Usuario u = new Usuario();
-            u.Codigo = usuario.Codigo;
-            u.Consultar(Usuario.MODO_CONSULTA.AVANZADO);
-            return View("VerPerfil", u); //devuelvo otro para no guardar el usuario pesado y completo en la variable de sesion
         }
 
-        public ActionResult PerfilesUsuario() {
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (usuario == null) {
-                return RedirectToAction(AuthenticationController.CONTROLLER, AuthenticationController.LOGIN);
-            }
-            Usuario u = new Usuario();
-            u.Codigo = usuario.Codigo;
-            u.Consultar(Usuario.MODO_CONSULTA.AVANZADO);
-            return View("_perfilesUsuario", u.Perfiles);
+        //public ActionResult PerfilesUsuario() {
+        //    Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+        //    if (usuario == null) {
+        //        return RedirectToAction(AuthenticationController.CONTROLLER, AuthenticationController.LOGIN);
+        //    }
+        //    Usuario u = new Usuario();
+        //    u.Codigo = usuario.Codigo;
+        //    u.Consultar(Usuario.MODO_CONSULTA.AVANZADO);
+        //    return PartialView("_perfilesUsuario", u.Perfiles);
         
-        }
+        //}
     }
 }

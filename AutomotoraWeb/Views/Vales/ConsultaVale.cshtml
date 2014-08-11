@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div style="margin-left: 30px">
+    <div style="margin-left: 30px; margin-top:20px">
         <div class="display-label label-mini">
             @Html.LabelFor(model => model.Cliente)
         </div>
@@ -45,6 +45,10 @@
 
 <div id="divDetalleVale">
     @Html.Partial("_datosDetalleVale", Model.Vale)
+</div>
+
+<div id ="divPagosVale">
+    @Html.Partial("_valePagos", Model.Vale)
 </div>
 
 <div id ="divValesAnteriores">

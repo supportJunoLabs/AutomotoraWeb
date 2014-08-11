@@ -1,0 +1,16 @@
+﻿@model DLL_Backend.Financista
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Situacion Financista";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", "ConsultaSituacion").Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reportSitFinancista", Model.Codigo)

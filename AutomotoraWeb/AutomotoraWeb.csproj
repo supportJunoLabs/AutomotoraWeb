@@ -245,6 +245,8 @@
     <Compile Include="Controllers\Financing\FinancistasController.cs" />
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
     <Compile Include="Controllers\Financing\ValesController.cs" />
+    <Compile Include="Controllers\Sistema\PefilesController.cs" />
+    <Compile Include="Controllers\Sistema\UsuariosController.cs" />
     <Compile Include="Controllers\Sales\AcvsController.cs" />
     <Compile Include="Controllers\Sales\DocumentacionLegalController.cs" />
     <Compile Include="Controllers\Sales\DocumentacionController.cs" />
@@ -252,7 +254,6 @@
     <Compile Include="Controllers\Sales\ClientesController.cs" />
     <Compile Include="Controllers\Sales\TiposDocumentoController.cs" />
     <Compile Include="Controllers\Sales\VehiculosController.cs" />
-    <Compile Include="Controllers\Sales\GastosController.cs" />
     <Compile Include="Controllers\Sales\PedidosController.cs" />
     <Compile Include="Controllers\Sales\VentasController.cs" />
     <Compile Include="Controllers\Sistema\SistemaController.cs" />
@@ -279,6 +280,9 @@
     <Compile Include="Models\ComprobanteDocumentacionModel.cs" />
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
+    <Compile Include="Models\PerfilModel.cs" />
+    <Compile Include="Models\ResetPasswordModel.cs" />
+    <Compile Include="Models\SituacionFinancista.cs" />
     <Compile Include="Models\Mensaje.cs" />
     <Compile Include="Models\RenovarValeModel.cs" />
     <Compile Include="Models\ListadoAcvsModel.cs" />
@@ -307,6 +311,7 @@
     <Compile Include="Models\MenuOptionModel.cs" />
     <Compile Include="Models\MovimientosBancoModel.cs" />
     <Compile Include="Models\SituacionCliente.cs" />
+    <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\Consultas\DXReportConsultaFinanciacion.cs">
@@ -316,6 +321,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Consultas\DXReportConsultaVale.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Consultas\DXSituacionFinancista.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Consultas\_DXSubrepValeDescontado.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Listados\DXListadoAcvs.cs">
@@ -376,6 +387,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Listados\DXSituacionCliente.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Mantenimientos\DXReportPerfiles.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Mantenimientos\DXReportUsuarios.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportClientes.cs">
@@ -1695,6 +1712,7 @@
     <Content Include="Content\themes\WintertideAdmin\build\lib\jqplot\examples\syntaxhighlighter\MIT-LICENSE" />
     <Content Include="Content\themes\WintertideAdmin\Readme" />
     <Content Include="Content\Images\vssver2.scc" />
+    <Content Include="Controllers\Sistema\ResetPassword.cshtml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\ayudaFechas.js" />
@@ -1714,6 +1732,7 @@
     <Content Include="Scripts\AutomotoraWeb\RechazarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale1.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale3.js" />
+    <Content Include="Scripts\AutomotoraWeb\SitFinancista.js" />
     <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
@@ -1808,15 +1827,15 @@
     <Content Include="Views\Clientes\_reportList.cshtml" />
     <Content Include="Views\Clientes\report.cshtml" />
     <Content Include="Views\Sucursales\_datosDetalle.cshtml" />
-    <Content Include="Views\Sucursales\TiposDocumento\_datosDetalle.cshtml" />
-    <Content Include="Views\Sucursales\TiposDocumento\_listGrilla.cshtml" />
-    <Content Include="Views\Sucursales\TiposDocumento\_reportList.cshtml" />
-    <Content Include="Views\Sucursales\TiposDocumento\create.cshtml" />
-    <Content Include="Views\Sucursales\TiposDocumento\delete.cshtml" />
-    <Content Include="Views\Sucursales\TiposDocumento\details.cshtml" />
-    <Content Include="Views\Sucursales\TiposDocumento\edit.cshtml" />
-    <Content Include="Views\Sucursales\TiposDocumento\report.cshtml" />
-    <Content Include="Views\Sucursales\TiposDocumento\show.cshtml" />
+    <Content Include="Views\TiposDocumento\_datosDetalle.cshtml" />
+    <Content Include="Views\TiposDocumento\_listGrilla.cshtml" />
+    <Content Include="Views\TiposDocumento\_reportList.cshtml" />
+    <Content Include="Views\TiposDocumento\create.cshtml" />
+    <Content Include="Views\TiposDocumento\delete.cshtml" />
+    <Content Include="Views\TiposDocumento\details.cshtml" />
+    <Content Include="Views\TiposDocumento\edit.cshtml" />
+    <Content Include="Views\TiposDocumento\report.cshtml" />
+    <Content Include="Views\TiposDocumento\show.cshtml" />
     <Content Include="Views\Vehiculos\_datosDetalle.cshtml" />
     <Content Include="Views\Vehiculos\_listGrilla.cshtml" />
     <Content Include="Views\Vehiculos\_reportList.cshtml" />
@@ -2072,6 +2091,37 @@
     <Content Include="Views\Pedidos\_datosVehiculo.cshtml" />
     <Content Include="Views\Sistema\Mensaje.cshtml" />
     <Content Include="Views\Shared\_grillaPagosEfectivo.cshtml" />
+    <Content Include="Views\Vales\_valePagos.cshtml" />
+    <Content Include="Views\Vales\_valePagosGrilla.cshtml" />
+    <Content Include="Views\Financistas\ConsultaSituacion.cshtml" />
+    <Content Include="Views\Financistas\_situacionFinancista.cshtml" />
+    <Content Include="Views\Financistas\_sitFinancistaCheques.cshtml" />
+    <Content Include="Views\Financistas\_sitFinancistaEfectivo.cshtml" />
+    <Content Include="Views\Financistas\_sitFinancistaEfectivoGrilla.cshtml" />
+    <Content Include="Views\Financistas\_sitFinancistaChequesGrilla.cshtml" />
+    <Content Include="Views\Financistas\ReportSitFinancista.cshtml" />
+    <Content Include="Views\Financistas\_reportSitFinancista.cshtml" />
+    <Content Include="Views\Usuarios\_datosDetalle.cshtml" />
+    <Content Include="Views\Usuarios\_listGrilla.cshtml" />
+    <Content Include="Views\Usuarios\_reportList.cshtml" />
+    <Content Include="Views\Usuarios\create.cshtml" />
+    <Content Include="Views\Usuarios\delete.cshtml" />
+    <Content Include="Views\Usuarios\details.cshtml" />
+    <Content Include="Views\Usuarios\edit.cshtml" />
+    <Content Include="Views\Usuarios\report.cshtml" />
+    <Content Include="Views\Usuarios\show.cshtml" />
+    <Content Include="Views\Usuarios\_perfilesUsuario.cshtml" />
+    <Content Include="Views\Perfiles\_datosDetalle.cshtml" />
+    <Content Include="Views\Perfiles\_listGrilla.cshtml" />
+    <Content Include="Views\Perfiles\_perfilesUsuario.cshtml" />
+    <Content Include="Views\Perfiles\_reportList.cshtml" />
+    <Content Include="Views\Perfiles\create.cshtml" />
+    <Content Include="Views\Perfiles\delete.cshtml" />
+    <Content Include="Views\Perfiles\details.cshtml" />
+    <Content Include="Views\Perfiles\edit.cshtml" />
+    <Content Include="Views\Perfiles\report.cshtml" />
+    <Content Include="Views\Perfiles\show.cshtml" />
+    <Content Include="Views\Usuarios\resetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2102,6 +2152,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Consultas\DXReportConsultaVale.resx">
       <DependentUpon>DXReportConsultaVale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Consultas\DXSituacionFinancista.resx">
+      <DependentUpon>DXSituacionFinancista.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Consultas\_DXSubrepValeDescontado.resx">
+      <DependentUpon>_DXSubrepValeDescontado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXListadoAcvs.resx">
       <DependentUpon>DXListadoAcvs.cs</DependentUpon>
@@ -2162,6 +2218,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Listados\DXSituacionCliente.resx">
       <DependentUpon>DXSituacionCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportPerfiles.resx">
+      <DependentUpon>DXReportPerfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportUsuarios.resx">
+      <DependentUpon>DXReportUsuarios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportClientes.resx">
       <DependentUpon>DXReportClientes.cs</DependentUpon>

@@ -7,8 +7,9 @@ $(document).ready(function () {
 
 function valeSelected(s, e) {
     //alert("hola");
-    var g = gridVales.GetGridView();  //obtener referencia a la grilla
-    var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+    //var g = gridVales.GetGridView();  //obtener referencia a la grilla
+    //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+    var valor = s.GetRowKey(e.visibleIndex);
     //alert(valor);
     $("#codigoVale").val(valor);
 }

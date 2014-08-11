@@ -9,11 +9,10 @@ using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
+using AutomotoraWeb.Controllers.Sistema;
 
-namespace AutomotoraWeb.Controllers.Financing
-{
-    public class TransaccionesController : FinancingController
-    {
+namespace AutomotoraWeb.Controllers.Financing {
+    public class TransaccionesController : FinancingController {
 
         public static string CONTROLLER = "Transacciones";
 
@@ -26,13 +25,17 @@ namespace AutomotoraWeb.Controllers.Financing
             ViewBag.Financistas = Financista.FinancistasTodos;
         }
 
-        public ActionResult ConsultaTransaccion(int id)
-        {
-            Recibo recibo = new Recibo();
-            recibo.Numero = id;
-            recibo.Consultar();
-
-            return Redirect("/"+recibo.DestinoConsulta());
+        public ActionResult ConsultaTransaccion(int id) {
+            try {
+                Recibo recibo = new Recibo();
+                recibo.Numero = id;
+                recibo.Consultar();
+                return Redirect("/" + recibo.DestinoConsulta());
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return RedirectToAction("Mensaje", SistemaController.CONTROLLER, new { id = SistemaController.MSJ_ERROR });
+            }
         }
 
         #region ListadoTransacciones
@@ -41,32 +44,44 @@ namespace AutomotoraWeb.Controllers.Financing
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult List() {
             ListadoTransaccionesModel model = new ListadoTransaccionesModel();
-            string s = SessionUtils.generarIdVarSesion("ListadoTransacciones", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
-            return View(model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoTransacciones", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewData["idParametros"] = model.idParametros;
+                model.obtenerListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         [HttpPost]
         //Se invoca desde el boton actualizar o imprimir.
         public ActionResult List(ListadoTransaccionesModel model) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-            this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
-            this.eliminarValidacionesIgnorables("Filtro.Usuario", MetadataManager.IgnorablesDDL(model.Filtro.Usuario));
-            this.eliminarValidacionesIgnorables("Filtro.TipoRecibo", MetadataManager.IgnorablesDDL(model.Filtro.TipoRecibo));
-            if (ModelState.IsValid) {
-                if (model.Accion == ListadoTransaccionesModel.ACCIONES.IMPRIMIR) {
-                    return this.ReportTransacciones(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
+                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
+                this.eliminarValidacionesIgnorables("Filtro.Usuario", MetadataManager.IgnorablesDDL(model.Filtro.Usuario));
+                this.eliminarValidacionesIgnorables("Filtro.TipoRecibo", MetadataManager.IgnorablesDDL(model.Filtro.TipoRecibo));
+                if (ModelState.IsValid) {
+                    if (model.Accion == ListadoTransaccionesModel.ACCIONES.IMPRIMIR) {
+                        return this.ReportTransacciones(model);
+                    }
+                    model.obtenerListado();
                 }
-                model.obtenerListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            return View(model);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas

@@ -1,0 +1,30 @@
+﻿@model List<DLL_Backend.Usuario>
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sistema;
+@using AutomotoraWeb.Controllers.General;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="UserName", Titulo="Login", Ancho=150},
+            new ColumnaGrilla {Campo="Habilitado", Titulo="Habilitado", Ancho=100},
+            new ColumnaGrilla {Campo="Sucursal.Nombre", Titulo= "Sucursal", Ancho=150},
+            new ColumnaGrilla {Campo="MultiSucursal", Titulo ="MultiSucursal", Ancho=120},
+            new ColumnaGrilla {Campo="EsDBA", Titulo ="Administrador", Ancho=120}
+    };
+            
+    ig.NameGrid = "grilla";
+    ig.Controller = UsuariosController.CONTROLLER;
+    ig.ActionCallbackRoute = "listaGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Usuario.UsuarioMD);
+    ig.BotonesMtoEstandar = true;
+
+    ViewBag.InfoGrilla = ig;
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = UsuariosController.CONTROLLER;
+    ig.AccionDobleClick = BaseController.DETAILS;
+}
+
+@Html.Partial("_generalGrid", Model)

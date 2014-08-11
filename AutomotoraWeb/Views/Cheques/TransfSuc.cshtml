@@ -14,9 +14,7 @@
     bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
 }
 
-<div class="validation-summary-errors">
-    <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
-</div>
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
    

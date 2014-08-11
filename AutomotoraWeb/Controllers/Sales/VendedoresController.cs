@@ -445,7 +445,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region SeleccionDeVendedor
 
-        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de vendedores
         public ActionResult VendedoresGrilla(GridLookUpModel model) {
             model.Opciones = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
             return PartialView("_selectVendedor", model);

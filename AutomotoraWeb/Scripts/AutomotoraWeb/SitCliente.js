@@ -1,4 +1,11 @@
-﻿$('#ddlClientes').change(function () {
+﻿$(document).ready(function () {
+    var selectedID = $('#ddlClientes').val();
+    if (selectedID) {
+        $("#abtn_VerCliente").prop("href", "/Clientes/details/" + selectedID);
+    }
+});
+
+$('#ddlClientes').change(function () {
 
     /* Get the selected value of dropdownlist */
     var selectedID = $(this).val();

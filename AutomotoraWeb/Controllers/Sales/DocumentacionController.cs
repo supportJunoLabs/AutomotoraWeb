@@ -28,34 +28,45 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
 
-      #region Listados
+        #region Listados
 
         public ActionResult List() {
-
             ListadoDocumentacionModel model = new ListadoDocumentacionModel();
-            string s = SessionUtils.generarIdVarSesion("ListadoDocumentacion", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            ViewData["idParametros"] = model.idParametros;
-            model.EstadosPosibles = EstadoDocumento.EstadosDocumento();
-            model.Resultado = _listaElementos(model);
-            return View(model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoDocumentacion", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewData["idParametros"] = model.idParametros;
+                model.EstadosPosibles = EstadoDocumento.EstadosDocumento();
+                model.Resultado = _listaElementos(model);
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         [HttpPost]
         public ActionResult List(ListadoDocumentacionModel model, string btnSubmit) {
-            ListadoDocumentacionModel modelsesion = (ListadoDocumentacionModel) Session[model.idParametros]; 
-            var x = CheckBoxListExtension.GetSelectedValues<int>("cbl_estados"); //hay que hacer esto porque por ahora no lo guarda en model el devexpress
-            modelsesion.EstadosConsultar = x;
-            ViewData["idParametros"] = modelsesion.idParametros;
-            
-            if (ModelState.IsValid) {
-                if (btnSubmit == "Imprimir") {
-                    return this.Report(modelsesion);
+            try {
+                ListadoDocumentacionModel modelsesion = (ListadoDocumentacionModel)Session[model.idParametros];
+                var x = CheckBoxListExtension.GetSelectedValues<int>("cbl_estados"); //hay que hacer esto porque por ahora no lo guarda en model el devexpress
+                modelsesion.EstadosConsultar = x;
+                ViewData["idParametros"] = modelsesion.idParametros;
+
+                if (ModelState.IsValid) {
+                    if (btnSubmit == "Imprimir") {
+                        return this.Report(modelsesion);
+                    }
+                    modelsesion.Resultado = _listaElementos(modelsesion);
                 }
-                modelsesion.Resultado = _listaElementos(modelsesion);
+                return View(modelsesion);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            return View(modelsesion);
         }
 
         public ActionResult ReportGrilla(string idParametros) {
@@ -80,7 +91,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #endregion
 
-      #region Reportes
+        #region Reportes
         public ActionResult Report(ListadoDocumentacionModel model) {
             return View("report", model);
         }
@@ -120,28 +131,28 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult ComprobanteDocumentacion(int id) {
             ComprobanteDocumentacionModel model = new ComprobanteDocumentacionModel();
-            string s = SessionUtils.generarIdVarSesion("ComprobanteDocumentacion", Session[SessionUtils.SESSION_USER].ToString());
-            model.idParametros = s;
-            ViewData["idParametros"] = model.idParametros;
-            Vehiculo v = new Vehiculo();
-            v.Codigo = id;
-            v.Consultar();
-            Session[s] = model;
-            model.Comprobante.Vehiculo = v;
-            return View(model);
-        }
-
-        public ActionResult GrillaDocsVehiculo(string idParametros) {
             try {
-                ComprobanteDocumentacionModel model = (ComprobanteDocumentacionModel)Session[idParametros];
-                ViewData["idParametros"] = idParametros;
-                model.Comprobante.Vehiculo.Consultar();
-                return PartialView("_selectDocumentacion", model.Comprobante.Vehiculo.Documentacion);
+                string s = SessionUtils.generarIdVarSesion("ComprobanteDocumentacion", Session[SessionUtils.SESSION_USER].ToString());
+                model.idParametros = s;
+                ViewData["idParametros"] = model.idParametros;
+                Vehiculo v = new Vehiculo();
+                v.Codigo = id;
+                v.Consultar();
+                Session[s] = model;
+                model.Comprobante.Vehiculo = v;
+                return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
-                return View("ComprobanteDocumentacion");
+                return View(model);
             }
+        }
+
+        public ActionResult GrillaDocsVehiculo(string idParametros) {
+            ComprobanteDocumentacionModel model = (ComprobanteDocumentacionModel)Session[idParametros];
+            ViewData["idParametros"] = idParametros;
+            model.Comprobante.Vehiculo.Consultar();
+            return PartialView("_selectDocumentacion", model.Comprobante.Vehiculo.Documentacion);
         }
 
         [HttpPost]
@@ -191,7 +202,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             ComprobanteDocumentacionModel model = null;
             XtraReport rep = new DXComprobanteDocumentacion();
             model = (ComprobanteDocumentacionModel)Session[idParametros];
-            
+
             List<ComprobanteDocumentacion> ll = new List<DLL_Backend.ComprobanteDocumentacion>();
             ll.Add(model.Comprobante);
             rep.DataSource = ll;

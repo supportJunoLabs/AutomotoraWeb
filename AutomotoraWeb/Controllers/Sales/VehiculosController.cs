@@ -73,9 +73,15 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult Create() {
             Vehiculo v = new Vehiculo();
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            v.Sucursal = usuario.Sucursal;
-            return View(v);
+            try {
+                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                v.Sucursal = usuario.Sucursal;
+                return View(v);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(v);
+            }
         }
 
         public ActionResult Edit(int id) {
@@ -264,33 +270,45 @@ namespace AutomotoraWeb.Controllers.Sales {
         #region Listados
         public ActionResult List() {
             ListadoVehiculosModel model = new ListadoVehiculosModel();
-            string s = SessionUtils.generarIdVarSesion("ListadoVehiculos", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            model.Formato = ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO;
-            model.Filtro.Tipo = Vehiculo.VHC_TIPO_LISTADO.LIBRES;
-            model.Filtro.Categoria = VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS;
-            ViewBag.SucursalesListado = Sucursal.Sucursales;
-            ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
-            ViewData["idParametros"] = model.idParametros;
-            model.Resultado = _listaElementos(model);
-            return View(model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoVehiculos", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                model.Formato = ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO;
+                model.Filtro.Tipo = Vehiculo.VHC_TIPO_LISTADO.LIBRES;
+                model.Filtro.Categoria = VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS;
+                ViewBag.SucursalesListado = Sucursal.Sucursales;
+                ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
+                ViewData["idParametros"] = model.idParametros;
+                model.Resultado = _listaElementos(model);
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         [HttpPost]
         public ActionResult List(ListadoVehiculosModel model, string btnSubmit) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            ViewBag.SucursalesListado = Sucursal.Sucursales;
-            ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
-            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-            if (ModelState.IsValid) {
-                if (btnSubmit == "Imprimir") {
-                    return this.Report(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                ViewBag.SucursalesListado = Sucursal.Sucursales;
+                ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
+                if (ModelState.IsValid) {
+                    if (btnSubmit == "Imprimir") {
+                        return this.Report(model);
+                    }
+                    model.Resultado = _listaElementos(model);
                 }
-                model.Resultado = _listaElementos(model);
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            return View(model);
         }
 
         public ActionResult ReportGrilla(string idParametros) {
@@ -803,7 +821,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             return shortedListFotoAuto;
         }
 
-      
+
 
         //---------------------------------------------------------------------
 
@@ -921,7 +939,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         public ActionResult VerPermutaOrigen(int id) {
-            return RedirectToAction(BaseController.DETAILS, VentasController.CONTROLLER, new { id = id});
+            return RedirectToAction(BaseController.DETAILS, VentasController.CONTROLLER, new { id = id });
         }
 
         public ActionResult VerPedidoOrigen(int id) {
@@ -955,26 +973,26 @@ namespace AutomotoraWeb.Controllers.Sales {
                 vehiculo.Codigo = codigo;
                 vehiculo.Consultar();
 
-                return Json(new { 
-                                  Result = "OK", 
-                                  Vehiculo = new { 
-                                                   Ficha = vehiculo.Ficha,
-                                                   Sucursal = vehiculo.Sucursal.Nombre,
-                                                   Marca = vehiculo.Marca,
-                                                   Modelo = vehiculo.Modelo,
-                                                   Anio = vehiculo.Anio,
-                                                   Departamento = vehiculo.Departamento.Nombre,
-                                                   Color = vehiculo.Color,
-                                                   Matricula = vehiculo.Matricula,
-                                                   Padron = vehiculo.Padron,
-                                                   Motor = vehiculo.Motor,
-                                                   Chasis = vehiculo.Chasis,
-                                                   Propietario = vehiculo.Propietario,
-                                                   PrecioLista = vehiculo.PrecioVenta.ImporteTexto,
-                                                   Estado = vehiculo.Status,
-                                                   Observaciones = vehiculo.Observaciones
-                                             } 
-                            }
+                return Json(new {
+                    Result = "OK",
+                    Vehiculo = new {
+                        Ficha = vehiculo.Ficha,
+                        Sucursal = vehiculo.Sucursal.Nombre,
+                        Marca = vehiculo.Marca,
+                        Modelo = vehiculo.Modelo,
+                        Anio = vehiculo.Anio,
+                        Departamento = vehiculo.Departamento.Nombre,
+                        Color = vehiculo.Color,
+                        Matricula = vehiculo.Matricula,
+                        Padron = vehiculo.Padron,
+                        Motor = vehiculo.Motor,
+                        Chasis = vehiculo.Chasis,
+                        Propietario = vehiculo.Propietario,
+                        PrecioLista = vehiculo.PrecioVenta.ImporteTexto,
+                        Estado = vehiculo.Status,
+                        Observaciones = vehiculo.Observaciones
+                    }
+                }
                 );
             } catch (UsuarioException exc) {
                 return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });

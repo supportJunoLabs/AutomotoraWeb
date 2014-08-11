@@ -1,13 +1,16 @@
 ﻿@model DLL_Backend.ChequeEmitido
 @using AutomotoraWeb.Helpers;
 
+@{
+    bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+    }
 
 <div>
     <div class="display-label">
         @Html.LabelForRequired(model => model.Cuenta)
     </div>
     <div class="editor-field editor-field-xlarge xxlarge">
-        @Html.DdlOrDisplayFor(model => model.Cuenta.Codigo, (bool?)ViewBag.SoloLectura, model => model.Cuenta.Nombre,
+        @Html.DdlOrDisplayFor(model => model.Cuenta.Codigo, modoConsulta, model => model.Cuenta.Nombre,
                 new SelectList(ViewBag.Cuentas, "Codigo", "Nombre"), "--Seleccionar Cuenta--",
                 new { id = "ddlCuentas", @class = "xxlarge" })
         @Html.ValidationMessageFor(model => model.Cuenta.Codigo)
@@ -19,7 +22,7 @@
     @Html.LabelForRequired(model => model.Numero)
 </div>
 <div class="editor-field editor-field-medium">
-    @Html.EditorOrDisplayFor(model => model.Numero, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Numero, modoConsulta)
     @Html.ValidationMessageFor(model => model.Numero)
 </div>
 <div class="clear-both"></div>
@@ -28,7 +31,7 @@
     @Html.LabelForRequired(model => model.FechaEmision)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.TextBoxOrdisplayFor(model => model.FechaEmision, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+    @Html.TextBoxOrdisplayFor(model => model.FechaEmision, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
     @Html.ValidationMessageFor(model => model.FechaEmision)
 </div>
 <div class="clear-both"></div>
@@ -37,7 +40,7 @@
     @Html.DisplayNameFor(model => model.Importe)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.DdlOrDisplayImporteFor(model => model.Importe, (bool?)ViewBag.SoloLectura)
+    @Html.DdlOrDisplayImporteFor(model => model.Importe, modoConsulta)
     @Html.ValidationMessageFor(model => model.Importe.Monto)
 </div>
 <div class="clear-both"></div>
@@ -47,7 +50,7 @@
     @Html.LabelForRequired(model => model.FechaVencimiento)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.TextBoxOrdisplayFor(model => model.FechaVencimiento, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW", id="fechaVencimiento" })
+    @Html.TextBoxOrdisplayFor(model => model.FechaVencimiento, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW", id="fechaVencimiento" })
     @Html.ValidationMessageFor(model => model.FechaVencimiento)
 </div>
 <div class="clear-both"></div>
@@ -57,14 +60,21 @@
     @Html.LabelForRequired(model => model.Observaciones)
 </div>
 <div class="editor-field editor-field-xxlarge">
-    @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+    @Html.TextAreaOrDisplayFor(model => model.Observaciones, modoConsulta, new { style = "width: 530px; height: 60px" })
     @Html.ValidationMessageFor(model => model.Observaciones)
 </div>
 <div class="clear-both"></div>
 
-FALTA VENTA ORIGEN
 
-FALTA INFO DESCONTADO SI CORRESPONDE
+@{ if (modoConsulta) { 
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.DescripcionEstado)
+    </div>
+    <div class="editor-field">
+        @Html.DisplayFor(model => model.DescripcionEstado)
+    </div>
+    <div class="clear-both"></div>
+}}
 
 <div class="espacio2"></div>
 

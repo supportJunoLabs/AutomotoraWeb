@@ -21,19 +21,29 @@ namespace AutomotoraWeb.Controllers.Sistema {
             return BCONTROLLER;
         }
 
-        protected override void setearUltimoModulo() {
-            //para este controller que no es ningun modulo, dejo el original.
-        }
+        //protected override void setearUltimoModulo() {
+        //    //para este controller que no es ningun modulo, dejo el original.
+        //}
 
         public const int MSJ_CAMBIO_CLAVE_OK = 1;
+        public const int MSJ_ERROR = 2;
+        public const int MSJ_RESET_CLAVE_OK = 3;
 
         public ActionResult Mensaje(int id) {
             Mensaje msj = new Mensaje{Titulo="", Contenido=""};
 
-            switch (id) { 
-                case 1:
+            switch (id) {
+                case MSJ_CAMBIO_CLAVE_OK:
                     msj.Titulo = "Cambio de Clave";
                     msj.Contenido = "Ha cambiado su clave de acceso exitosamente";
+                    break;
+                case MSJ_ERROR:
+                    msj.Titulo = "Error";
+                    msj.Contenido = "Se ha producido un error";
+                    break;
+                case MSJ_RESET_CLAVE_OK:
+                    msj.Titulo = "Reset Clave Usuario";
+                    msj.Contenido = "Se ha reseteado la clave de este usuario exitosamente";
                     break;
             }
 

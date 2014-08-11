@@ -1,0 +1,17 @@
+﻿@model AutomotoraWeb.Models.PerfilModel
+@using AutomotoraWeb.Helpers;
+
+@{
+    bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
+}
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Perfil.Nombre)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Perfil.Nombre, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Perfil.Nombre)
+</div>
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+

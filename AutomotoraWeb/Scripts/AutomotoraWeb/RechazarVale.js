@@ -1,8 +1,9 @@
 ﻿function valeSelected(s, e) {
     //alert("hola");
-    var g = gridVales.GetGridView();  //obtener referencia a la grilla
-    var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+    //var g = gridVales.GetGridView();  //obtener referencia a la grilla
+    //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
     //alert(valor);
+    var valor = s.GetRowKey(e.visibleIndex);
     $("#codigoVale").val(valor);
     $("#abtn_verVale").prop("href", "/Vales/ConsultaVale/" + valor);
     g.GetRowValues(g.GetFocusedRowIndex(), 'InfoMovDescuento', MostrarDestinoAnt);

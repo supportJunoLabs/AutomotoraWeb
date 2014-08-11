@@ -26,32 +26,44 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult Show(int? id) {
             MovimientosBancoModel model = new MovimientosBancoModel();
-            if (id != null && id > 0) {
-                model.Cuenta = new CuentaBancaria();
-                model.Cuenta.Codigo = (id ?? 0);
-                model.Cuenta.Moneda = new Moneda();
-                model.Cuenta.Moneda.Codigo = 0;
+            try {
+                if (id != null && id > 0) {
+                    model.Cuenta = new CuentaBancaria();
+                    model.Cuenta.Codigo = (id ?? 0);
+                    model.Cuenta.Moneda = new Moneda();
+                    model.Cuenta.Moneda.Codigo = 0;
+                }
+                string s = SessionUtils.generarIdVarSesion("MovimientosBanco", Session[SessionUtils.SESSION_USER].ToString());
+                model.idParametros = s;
+                Session[s] = model;
+                ViewData["idParametros"] = model.idParametros;
+                model.generarListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            string s = SessionUtils.generarIdVarSesion("MovimientosBanco", Session[SessionUtils.SESSION_USER].ToString());
-            model.idParametros = s;
-            Session[s] = model;
-            ViewData["idParametros"] = model.idParametros;
-            model.generarListado();
-            return View(model);
         }
 
         [HttpPost]
         //se invoca desde el boton actualizar e imprimir. Devuelve la pagina completa
         public ActionResult Show(MovimientosBancoModel model) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(model.Cuenta));
-            if (ModelState.IsValid) {
-                model.generarListado();
-            } else {
-                model.Resultado = new List<MovBanco>();
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(model.Cuenta));
+                if (ModelState.IsValid) {
+                    model.generarListado();
+                } else {
+                    model.Resultado = new List<MovBanco>();
+                }
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
             }
-            return View(model);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. 
@@ -69,13 +81,19 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult Create(int id) {
             MovBanco mov = new MovBanco();
-            mov.Cuenta = new CuentaBancaria();
-            mov.Cuenta.Codigo = id;
-            mov.Cuenta.Consultar();
-            mov.ImporteMov = new Importe();
-            mov.ImporteMov.Moneda = mov.Cuenta.Moneda;
-            mov.FechaMov = DateTime.Now.Date;
-            return View(mov);
+            try {
+                mov.Cuenta = new CuentaBancaria();
+                mov.Cuenta.Codigo = id;
+                mov.Cuenta.Consultar();
+                mov.ImporteMov = new Importe();
+                mov.ImporteMov.Moneda = mov.Cuenta.Moneda;
+                mov.FechaMov = DateTime.Now.Date;
+                return View(mov);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(mov);
+            }
         }
 
         [HttpPost]
@@ -164,7 +182,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             return View(mov);
         }
 
-     
+
 
         [HttpPost]
         public JsonResult Conciliar(int id) {
@@ -195,10 +213,16 @@ namespace AutomotoraWeb.Controllers.Bank {
         [HttpGet]
         public ActionResult ExtornarMov(int id) {
             MovBanco mov = new MovBanco();
-            mov.Codigo = id;
-            mov.Consultar();
-            MovBanco mov1 = mov.MovimientoInverso(DateTime.Now.Date, "Extorno: " + mov.ConceptoMov);
-            return View("Create", mov1);
+            try {
+                mov.Codigo = id;
+                mov.Consultar();
+                MovBanco mov1 = mov.MovimientoInverso(DateTime.Now.Date, "Extorno: " + mov.ConceptoMov);
+                return View("Create", mov1);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("Create", mov);
+            }
         }
 
         [HttpPost]
@@ -213,31 +237,43 @@ namespace AutomotoraWeb.Controllers.Bank {
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult List(int? id) {
             EstadoCuentaModel model = new EstadoCuentaModel();
-            if (id != null && id > 0) {
-                model.EstadoCuenta.Cuenta = new CuentaBancaria();
-                model.EstadoCuenta.Cuenta.Codigo = (id ?? 0);
+            try {
+                if (id != null && id > 0) {
+                    model.EstadoCuenta.Cuenta = new CuentaBancaria();
+                    model.EstadoCuenta.Cuenta.Codigo = (id ?? 0);
+                }
+                string s = SessionUtils.generarIdVarSesion("ListadoMovsBanco", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewData["idParametros"] = model.idParametros;
+                //model.EstadoCuenta.generarListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            string s = SessionUtils.generarIdVarSesion("ListadoMovsBanco", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            ViewData["idParametros"] = model.idParametros;
-            //model.EstadoCuenta.generarListado();
-            return View(model);
         }
 
         [HttpPost]
         //Se invoca desde el boton actualizar o imprimir.
         public ActionResult List(EstadoCuentaModel model) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            this.eliminarValidacionesIgnorables("EstadoCuenta.Cuenta", MetadataManager.IgnorablesDDL(model.EstadoCuenta.Cuenta));
-            if (ModelState.IsValid) {
-                if (model.Accion == EstadoCuentaModel.ACCIONES.IMPRIMIR) {
-                   return this.Report(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                this.eliminarValidacionesIgnorables("EstadoCuenta.Cuenta", MetadataManager.IgnorablesDDL(model.EstadoCuenta.Cuenta));
+                if (ModelState.IsValid) {
+                    if (model.Accion == EstadoCuentaModel.ACCIONES.IMPRIMIR) {
+                        return this.Report(model);
+                    }
+                    model.EstadoCuenta.generarListado();
                 }
-                model.EstadoCuenta.generarListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            return View(model);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
@@ -282,24 +318,36 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult Saldos() {
             BancoSaldoModel model = new BancoSaldoModel();
-            string s = SessionUtils.generarIdVarSesion("SaldosBanco", Session[SessionUtils.SESSION_USER].ToString());
-            model.idParametros = s;
-            Session[s] = model;
-            ViewData["idParametros"] = model.idParametros;
-            model.generarListado();
-            return View(model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("SaldosBanco", Session[SessionUtils.SESSION_USER].ToString());
+                model.idParametros = s;
+                Session[s] = model;
+                ViewData["idParametros"] = model.idParametros;
+                model.generarListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
         }
 
         [HttpPost]
         //se invoca desde el boton actualizar e imprimir. Devuelve la pagina completa
         public ActionResult Saldos(BancoSaldoModel model) {
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            if (model.Accion == BancoSaldoModel.ACCIONES.IMPRIMIR) {
-                return this.ReportSaldos(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                if (model.Accion == BancoSaldoModel.ACCIONES.IMPRIMIR) {
+                    return this.ReportSaldos(model);
+                }
+                model.generarListado();
+                return View(model);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
             }
-            model.generarListado();
-            return View(model);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. 
