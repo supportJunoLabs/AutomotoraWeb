@@ -194,7 +194,8 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.DetailReportEfectivo.DataSource = this.bindingSource1;
             this.DetailReportEfectivo.Level = 0;
             this.DetailReportEfectivo.Name = "DetailReportEfectivo";
-            this.DetailReportEfectivo.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportEfectivo_BeforePrint);
+            this.DetailReportEfectivo.ReportPrintOptions.PrintOnEmptyDataSource = false;
+            //this.DetailReportEfectivo.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportEfectivo_BeforePrint);
             // 
             // det_efectivo
             // 
@@ -243,7 +244,8 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.DetailReportCheques.DataSource = this.bindingSource1;
             this.DetailReportCheques.Level = 1;
             this.DetailReportCheques.Name = "DetailReportCheques";
-            this.DetailReportCheques.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportCheques_BeforePrint);
+            this.DetailReportCheques.ReportPrintOptions.PrintOnEmptyDataSource = false;
+            //this.DetailReportCheques.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportCheques_BeforePrint);
             // 
             // Detail2
             // 
@@ -491,7 +493,8 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.DetailReportPagoBanco.DataSource = this.bindingSource1;
             this.DetailReportPagoBanco.Level = 2;
             this.DetailReportPagoBanco.Name = "DetailReportPagoBanco";
-            this.DetailReportPagoBanco.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportPagoBanco_BeforePrint);
+            this.DetailReportPagoBanco.ReportPrintOptions.PrintOnEmptyDataSource = false;
+            //this.DetailReportPagoBanco.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportPagoBanco_BeforePrint);
             // 
             // Detail3
             // 
@@ -638,7 +641,8 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.DetailReportChequesEmitidos.DataSource = this.bindingSource1;
             this.DetailReportChequesEmitidos.Level = 3;
             this.DetailReportChequesEmitidos.Name = "DetailReportChequesEmitidos";
-            this.DetailReportChequesEmitidos.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportChequesEmitidos_BeforePrint);
+            this.DetailReportChequesEmitidos.ReportPrintOptions.PrintOnEmptyDataSource = false;
+            //this.DetailReportChequesEmitidos.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportChequesEmitidos_BeforePrint);
             // 
             // Detail4
             // 
@@ -859,60 +863,61 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
 
     #endregion
 
-    private void DetailReportEfectivo_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-        Object obj = GetCurrentColumnValue("Efectivo");
-        if (obj == null) {
-            DetailReportEfectivo.Visible = false;
-            return;
-        }
-        List<Importe> ll = (List<Importe>)obj;
-        if (ll.Count > 0) {
-            DetailReportEfectivo.Visible = true;
-        } else {
-            DetailReportEfectivo.Visible = false;
-        }
+    //se hace automaticamente al setear ReportPrintOptions.PrintOnEmptyDataSource = false;
+    //private void DetailReportEfectivo_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+    //    Object obj = GetCurrentColumnValue("Efectivo");
+    //    if (obj == null) {
+    //        DetailReportEfectivo.Visible = false;
+    //        return;
+    //    }
+    //    List<Importe> ll = (List<Importe>)obj;
+    //    if (ll.Count > 0) {
+    //        DetailReportEfectivo.Visible = true;
+    //    } else {
+    //        DetailReportEfectivo.Visible = false;
+    //    }
             
-    }
+    //}
 
-    private void DetailReportCheques_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-        Object obj = GetCurrentColumnValue("Cheques");
-        if (obj == null) {
-            DetailReportCheques.Visible = false;
-            return;
-        }
-        List<Cheque> ll = (List<Cheque>)obj;
-        if (ll.Count > 0) {
-            DetailReportCheques.Visible = true;
-        } else {
-            DetailReportCheques.Visible = false;
-        }
-    }
+    //private void DetailReportCheques_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+    //    Object obj = GetCurrentColumnValue("Cheques");
+    //    if (obj == null) {
+    //        DetailReportCheques.Visible = false;
+    //        return;
+    //    }
+    //    List<Cheque> ll = (List<Cheque>)obj;
+    //    if (ll.Count > 0) {
+    //        DetailReportCheques.Visible = true;
+    //    } else {
+    //        DetailReportCheques.Visible = false;
+    //    }
+    //}
 
-    private void DetailReportPagoBanco_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-        Object obj = GetCurrentColumnValue("PagosBanco");
-        if (obj == null) {
-            DetailReportPagoBanco.Visible = false;
-            return;
-        }
-        List<MovBanco> ll = (List<MovBanco>)obj;
-        if (ll.Count > 0) {
-            DetailReportPagoBanco.Visible = true;
-        } else {
-            DetailReportPagoBanco.Visible = false;
-        }
-    }
+    //private void DetailReportPagoBanco_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+    //    Object obj = GetCurrentColumnValue("PagosBanco");
+    //    if (obj == null) {
+    //        DetailReportPagoBanco.Visible = false;
+    //        return;
+    //    }
+    //    List<MovBanco> ll = (List<MovBanco>)obj;
+    //    if (ll.Count > 0) {
+    //        DetailReportPagoBanco.Visible = true;
+    //    } else {
+    //        DetailReportPagoBanco.Visible = false;
+    //    }
+    //}
 
-    private void DetailReportChequesEmitidos_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-        Object obj = GetCurrentColumnValue("ChequesEmitidos");
-        if (obj == null) {
-            DetailReportChequesEmitidos.Visible = false;
-            return;
-        }
-        List<ChequeEmitido> ll = (List<ChequeEmitido>)obj;
-        if (ll.Count > 0) {
-            DetailReportChequesEmitidos.Visible = true;
-        } else {
-            DetailReportChequesEmitidos.Visible = false;
-        }
-    }
+    //private void DetailReportChequesEmitidos_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+    //    Object obj = GetCurrentColumnValue("ChequesEmitidos");
+    //    if (obj == null) {
+    //        DetailReportChequesEmitidos.Visible = false;
+    //        return;
+    //    }
+    //    List<ChequeEmitido> ll = (List<ChequeEmitido>)obj;
+    //    if (ll.Count > 0) {
+    //        DetailReportChequesEmitidos.Visible = true;
+    //    } else {
+    //        DetailReportChequesEmitidos.Visible = false;
+    //    }
+    //}
 }

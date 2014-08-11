@@ -419,6 +419,9 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboSenia.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Transacciones\DXReciboRenovarVale.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -447,6 +450,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Transacciones\DXComprobanteDocumentacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\_DXSubrepPromesaSenia.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Transacciones\_DXSubrepPermutaVenta.cs">
@@ -2121,6 +2127,8 @@
     <Content Include="Views\Perfiles\report.cshtml" />
     <Content Include="Views\Perfiles\show.cshtml" />
     <Content Include="Views\Usuarios\resetPassword.cshtml" />
+    <Content Include="Views\DocumentacionLegal\ReportComprobanteSenia.cshtml" />
+    <Content Include="Views\DocumentacionLegal\_reportComprobanteSenia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2247,6 +2255,9 @@
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboSenia.resx">
+      <DependentUpon>DXReciboSenia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboRenovarVale.resx">
       <DependentUpon>DXReciboRenovarVale.cs</DependentUpon>
     </EmbeddedResource>
@@ -2285,6 +2296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\_DXSubrepPermutaVenta.resx">
       <DependentUpon>_DXSubrepPermutaVenta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\_DXSubrepPromesaSenia.resx">
+      <DependentUpon>_DXSubrepPromesaSenia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\_DXSubrepVentaSenia.resx">
       <DependentUpon>_DXSubrepVentaSenia.cs</DependentUpon>
