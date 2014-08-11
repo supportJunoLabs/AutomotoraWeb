@@ -38,44 +38,44 @@ namespace AutomotoraWeb.Controllers.General {
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
-            setearUltimoModulo();
+            //setearUltimoModulo();
         }
 
-        protected virtual void setearUltimoModulo() {
-            Session[SessionUtils.ULTIMO_MODULO] = this.getParentControllerName();
-        }
+        //protected virtual void setearUltimoModulo() {
+        //    Session[SessionUtils.ULTIMO_MODULO] = this.getParentControllerName();
+        //}
 
 
-        public ActionResult IndexUltimoModulo() {
-            if (Session[SessionUtils.ULTIMO_MODULO] != null) {
-                Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO].ToString());
-                return RedirectToAction(dest.Accion, dest.Controlador);
-            }
-            return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
-        }
+        //public ActionResult IndexUltimoModulo() {
+        //    if (Session[SessionUtils.ULTIMO_MODULO] != null) {
+        //        Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO].ToString());
+        //        return RedirectToAction(dest.Accion, dest.Controlador);
+        //    }
+        //    return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
+        //}
 
-        public static Destino DestinoIndexUltimoModulo(Object sesionNomModulo) {
+        //public static Destino DestinoIndexUltimoModulo(Object sesionNomModulo) {
 
-            if (sesionNomModulo == null) {
-                return new Destino(SistemaController.INDEX, SistemaController.BCONTROLLER);
-            }
+        //    if (sesionNomModulo == null) {
+        //        return new Destino(SistemaController.INDEX, SistemaController.BCONTROLLER);
+        //    }
 
-            string nomModulo = sesionNomModulo.ToString().Trim();
-            nomModulo = nomModulo.Trim();
-            if (nomModulo == SalesController.BCONTROLLER) {
-                return new Destino(SalesController.INDEX, SalesController.BCONTROLLER);
-            }
-            if (nomModulo == BankController.BCONTROLLER) {
-                return new Destino(BankController.INDEX, BankController.BCONTROLLER);
-            }
-            if (nomModulo == FinancingController.BCONTROLLER) {
-                return new Destino(FinancingController.INDEX, FinancingController.BCONTROLLER);
-            }
-            if (nomModulo == SistemaController.BCONTROLLER) {
-                return new Destino(SistemaController.INDEX, SistemaController.BCONTROLLER);
-            }
-            return new Destino(SistemaController.INDEX, SistemaController.BCONTROLLER);
-        }
+        //    string nomModulo = sesionNomModulo.ToString().Trim();
+        //    nomModulo = nomModulo.Trim();
+        //    if (nomModulo == SalesController.BCONTROLLER) {
+        //        return new Destino(SalesController.INDEX, SalesController.BCONTROLLER);
+        //    }
+        //    if (nomModulo == BankController.BCONTROLLER) {
+        //        return new Destino(BankController.INDEX, BankController.BCONTROLLER);
+        //    }
+        //    if (nomModulo == FinancingController.BCONTROLLER) {
+        //        return new Destino(FinancingController.INDEX, FinancingController.BCONTROLLER);
+        //    }
+        //    if (nomModulo == SistemaController.BCONTROLLER) {
+        //        return new Destino(SistemaController.INDEX, SistemaController.BCONTROLLER);
+        //    }
+        //    return new Destino(SistemaController.INDEX, SistemaController.BCONTROLLER);
+        //}
 
         protected void eliminarValidacionesIgnorables(string propiedad, List<string> ignorables) {
             foreach (string prop in ignorables) {

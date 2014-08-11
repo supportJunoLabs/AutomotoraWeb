@@ -56,9 +56,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
                     //NO se hace mas desde aca, ahora lo hace el backend en su propio singleton
                     //CompanyService.actualizarDatos(empresa); //para actualizar los datos del singleton.
 
-                    //aca se cambia por la redireccion al index del ultimo modulo utilizado antes de acceder a esta opcion.
-                    //return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
-                    return IndexUltimoModulo();
+                    return RedirectToAction(BaseController.DETAILS, new { id=empresa.Codigo});
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
@@ -69,11 +67,11 @@ namespace AutomotoraWeb.Controllers.Sistema {
             return View(empresa);
         }
 
-        [HttpGet]
-        public ActionResult Cancelar() {
-            Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
-            return RedirectToAction(dest.Accion, dest.Controlador);
-        }
+        //[HttpGet]
+        //public ActionResult Cancelar() {
+        //    Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
+        //    return RedirectToAction(dest.Accion, dest.Controlador);
+        //}
 
     }
 }

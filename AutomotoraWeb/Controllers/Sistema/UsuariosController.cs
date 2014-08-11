@@ -189,5 +189,43 @@ namespace AutomotoraWeb.Controllers.Sistema {
             return View(td);
         }
         //-----------------------------------------------------------------------------------------------------
+
+        #region resetPassword
+
+        public ActionResult ResetPassword() {
+            ResetPasswordModel m = new ResetPasswordModel();
+            m.UsuarioActual=(string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+            return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPasswordModel model) {
+            string IP = HttpContext.Request.UserHostAddress;
+
+            if (ModelState.IsValid) {
+                try {
+                    Usuario u = new Usuario();
+                    u.UserName = model.UsuarioReset;
+                    u.Consultar(Usuario.MODO_CONSULTA.BASICO);
+
+                    Usuario a = new Usuario();
+                    a.UserName = model.UsuarioActual;
+                    a.Consultar(Usuario.MODO_CONSULTA.BASICO);
+                    a.Clave = model.ClaveUsuarioActual;
+
+                    u.ResetearClave(IP, a, model.ClaveUsuarioReset, model.VerificacionClaveUsuarioReset);
+
+                    return RedirectToAction("Mensaje", SistemaController.CONTROLLER, new { id = SistemaController.MSJ_RESET_CLAVE_OK });
+
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(model);
+                }
+            }
+            return View(model);
+        }
+
+        #endregion
     }
 }

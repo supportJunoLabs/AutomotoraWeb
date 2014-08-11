@@ -77,8 +77,6 @@ namespace AutomotoraWeb.Controllers.General {
                     string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
                     SecurityService.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword, Request.UserHostAddress);
                     Mensaje msj = new Mensaje { Titulo = "Cambio de clave", Contenido=  "Se ha cambiado su clave en forma exitosa" };
-                    //Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
-                    //return RedirectToAction(dest.Accion, dest.Controlador);
                     return RedirectToAction("Mensaje", SistemaController.CONTROLLER, new {id=SistemaController.MSJ_CAMBIO_CLAVE_OK});
                 } catch (UsuarioException exc) {
                     model.ErrorCode = exc.Codigo;
@@ -110,16 +108,10 @@ namespace AutomotoraWeb.Controllers.General {
 
         //------------------------------------------------------------------------------------------------------------------------
 
-        [HttpGet]
-        public ActionResult CancelarCambioPwd() {
-            Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
-            return RedirectToAction(dest.Accion, dest.Controlador);
-        }
-
-        public ActionResult BaseUltimoModulo() {
-            Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
-            return RedirectToAction(dest.Accion, dest.Controlador);
-        }
+        //public ActionResult BaseUltimoModulo() {
+        //    Destino dest = BaseController.DestinoIndexUltimoModulo(Session[SessionUtils.ULTIMO_MODULO]);
+        //    return RedirectToAction(dest.Accion, dest.Controlador);
+        //}
 
         public ActionResult VerPerfil() {
             try {

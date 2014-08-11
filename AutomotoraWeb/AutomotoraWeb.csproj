@@ -281,6 +281,7 @@
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
     <Compile Include="Models\PerfilModel.cs" />
+    <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\SituacionFinancista.cs" />
     <Compile Include="Models\Mensaje.cs" />
     <Compile Include="Models\RenovarValeModel.cs" />
@@ -1711,6 +1712,7 @@
     <Content Include="Content\themes\WintertideAdmin\build\lib\jqplot\examples\syntaxhighlighter\MIT-LICENSE" />
     <Content Include="Content\themes\WintertideAdmin\Readme" />
     <Content Include="Content\Images\vssver2.scc" />
+    <Content Include="Controllers\Sistema\ResetPassword.cshtml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\ayudaFechas.js" />
@@ -2118,6 +2120,7 @@
     <Content Include="Views\Perfiles\edit.cshtml" />
     <Content Include="Views\Perfiles\report.cshtml" />
     <Content Include="Views\Perfiles\show.cshtml" />
+    <Content Include="Views\Usuarios\resetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
