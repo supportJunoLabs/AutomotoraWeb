@@ -1,0 +1,57 @@
+﻿@model AutomotoraWeb.Models.PermisosModel
+
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@Html.DevExpress().TreeList(
+    settings => {
+        settings.Name = "treeList";
+        settings.CallbackRouteValues = new { Controller = "Permisos", Action = "ArbolPermisosPartial" };
+        settings.Width = System.Web.UI.WebControls.Unit.Pixel(200);
+
+        settings.AutoGenerateColumns = false;
+        settings.KeyFieldName = "Codigo";
+        settings.ParentFieldName = "CodigoPadre";
+        settings.RootValue = 0;
+
+        settings.Columns.Add("Nombre").Caption="Permisos";
+
+        settings.SettingsBehavior.AutoExpandAllNodes = true;
+        settings.SettingsBehavior.ExpandCollapseAction = TreeListExpandCollapseAction.NodeDblClick;
+
+        settings.SettingsCookies.Enabled = false;
+        //settings.SettingsCookies.StoreExpandedNodes = true;
+        settings.SettingsCookies.StoreSelection = true;
+
+        settings.SettingsSelection.Enabled = true;
+        settings.SettingsSelection.Recursive = true;
+        settings.SettingsSelection.AllowSelectAll = true;
+
+        //settings.ClientSideEvents.SelectionChanged = "function(s, e) { s.PerformCallback(); }";
+
+        settings.DataBound = (s, e) => {
+            MVCxTreeList treeList = (MVCxTreeList)s;
+            TreeListNodeIterator iterator = treeList.CreateNodeIterator();
+            TreeListNode node = iterator.Current;
+            while(node != null) {
+                if(node != treeList.RootNode) {
+                    node.AllowSelect = true;
+                    int id = Int32.Parse(node.GetValue("Codigo").ToString());
+                    if (Model.tienePermisos(id)){
+                        node.Selected=true;
+                    }else{
+                        node.Selected=false;
+                    }
+                    if (node.Level <= 1) {
+                        node.Expanded = true;
+                    } else {
+                        node.Expanded = false;
+                    }
+                    //node.AllowSelect = (node.Level>1);
+                }
+                //node.Selected = 
+                node = iterator.GetNext();
+            }
+        };
+    }
+).Bind(Model.ListaOpciones).GetHtml()

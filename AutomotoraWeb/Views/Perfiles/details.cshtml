@@ -24,6 +24,7 @@
     <div class="btn-toolbar">
         @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Perfil.Codigo }).Class("btn btn-primary"))
         @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Perfil.Codigo }).Class("btn btn-primary"))
+        @(Html.Bootstrap().ActionLinkButton("Permisos", BaseController.EDIT, "Permisos").RouteValues(new { id = Model.Perfil.Codigo }).Class("btn btn-primary"))
         @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
     </div>
 

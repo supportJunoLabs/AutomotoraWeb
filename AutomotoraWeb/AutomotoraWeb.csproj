@@ -246,6 +246,7 @@
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
     <Compile Include="Controllers\Financing\ValesController.cs" />
     <Compile Include="Controllers\Sistema\PefilesController.cs" />
+    <Compile Include="Controllers\Sistema\PermisosController.cs" />
     <Compile Include="Controllers\Sistema\UsuariosController.cs" />
     <Compile Include="Controllers\Sales\AcvsController.cs" />
     <Compile Include="Controllers\Sales\DocumentacionLegalController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
     <Compile Include="Models\PerfilModel.cs" />
+    <Compile Include="Models\PermisosModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\SituacionFinancista.cs" />
     <Compile Include="Models\Mensaje.cs" />
@@ -2130,6 +2132,8 @@
     <Content Include="Views\Usuarios\resetPassword.cshtml" />
     <Content Include="Views\DocumentacionLegal\ReportComprobanteSenia.cshtml" />
     <Content Include="Views\DocumentacionLegal\_reportComprobanteSenia.cshtml" />
+    <Content Include="Views\Permisos\Edit.cshtml" />
+    <Content Include="Views\Permisos\_arbolPermisos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
