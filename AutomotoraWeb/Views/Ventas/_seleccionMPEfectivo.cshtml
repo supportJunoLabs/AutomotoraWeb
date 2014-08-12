@@ -48,7 +48,7 @@
                     data: getJsonPagoEfectivo(),
                     success: function (data) {
                         if (data.Result == "OK") {
-                            gridPagosEfectivo.Refresh(); // Se actualiza la grilla
+                            grillaPagosEfectivo.Refresh(); // Se actualiza la grilla
                         }
                         else {
                             $("#" + containerErrorMessage).html("ERROR");
@@ -65,6 +65,11 @@
 
         });
 
+        function OnBeginCallback(s, e) {
+            e.customArgs["idSession"] = '@(ViewData["idSession"])';
+            e.customArgs["idParametros"] = '@ViewData["idParametros"]';
+        } 
+
         function _validateImportePagoEfectivo() {
             var monto = $("#pagoEfectivoMoneda").val()
 
@@ -73,6 +78,9 @@
         }
 
         function getJsonPagoEfectivo() {
+
+            var idSession = '@(ViewData["idSession"])';
+
             var pagoEfectivo = {
                 Importe: {
                     Moneda: {
@@ -80,7 +88,7 @@
                     },
                     Monto: $("#pagoEfectivoMonto").val()
                 },
-                idSession: @ViewData["idSession"]
+                idSession: idSession
             };
 
             return JSON.stringify(pagoEfectivo);
