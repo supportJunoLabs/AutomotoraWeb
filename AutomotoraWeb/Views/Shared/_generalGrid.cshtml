@@ -26,7 +26,12 @@
             settings => {
                 settings.Name = ig.NameGrid;
 
-                settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"], idSession = ViewData["idSession"] };
+                if (ig.OnBeginCallback != null) {
+                    settings.ClientSideEvents.BeginCallback = "function(s, e){ " + ig.OnBeginCallback + "(s, e); }";
+                    settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute };
+                } else {
+                    settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"] };
+                }
                 
                 settings.SettingsBehavior.AllowSort = !ig.Estatica;
                 settings.SettingsBehavior.AllowGroup = !ig.Estatica;

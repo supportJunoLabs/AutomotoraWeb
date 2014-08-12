@@ -74,6 +74,8 @@ namespace AutomotoraWeb.Models {
         }
         public string ClaveViewData;
 
+        public string OnBeginCallback { get; set; }
+
         #region Columnas
 
         public List<ColumnaGrilla> VisibleColumns { get; set; }

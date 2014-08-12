@@ -122,11 +122,11 @@ namespace AutomotoraWeb.Controllers.Sales
             });
         }
 
-        public ActionResult grillaPagosEfectivo(int idParametros, int idSession) {
-            return PartialView("_listGastos", _listaPagosEfectivo(idSession));
+        public ActionResult grillaPagosEfectivo(string idSession, int idParametros) {
+            return PartialView("_grillaPagosEfectivo", _listaPagosEfectivo(idSession));
         }
 
-        private List<Importe> _listaPagosEfectivo(int idSession) {
+        private List<Importe> _listaPagosEfectivo(string idSession) {
             Venta venta = (Venta)(Session[idSession]);
             return venta.Pago.Efectivo;
         }
