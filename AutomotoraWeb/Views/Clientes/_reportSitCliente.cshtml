@@ -1,11 +1,11 @@
 ﻿@using AutomotoraWeb.Controllers.General;
-@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
 @using AutomotoraWeb.Models;
 
 @{
     InfoReporte ir = new InfoReporte();
     ir.AccionReporte = "ReportSitClientePartial";
-    ir.Controlador = ConsultasFinController.CONTROLLER;
+    ir.Controlador = ClientesController.CONTROLLER;
     ir.AccionExportacion = "ReportSitClienteExport";
     ir.TieneIdParametros= true;
 

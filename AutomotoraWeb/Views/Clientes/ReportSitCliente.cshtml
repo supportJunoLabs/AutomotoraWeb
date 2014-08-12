@@ -8,9 +8,8 @@
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">
-    @(Html.Bootstrap().ActionLinkButton("Volver", "ListSitCliente").Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
+    @(Html.Bootstrap().ActionLinkButton("Volver", "SitCliente").Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
 </div>
 <div class="clear-both"></div>
-
 
 @Html.Partial("_reportSitCliente", Model.Codigo)

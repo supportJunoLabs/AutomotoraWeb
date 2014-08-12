@@ -12,7 +12,7 @@ $('#ddlClientes').change(function () {
 
     //alert(selectedID);
     $("#abtn_VerCliente").prop("href", "/Clientes/details/" + selectedID);
-    var destino = '/ConsultasFin/ListSitClientePartial/';
+    var destino = '/Clientes/SitClientePartial/';
     $.ajax({
         cache: false,
         type: "GET",
