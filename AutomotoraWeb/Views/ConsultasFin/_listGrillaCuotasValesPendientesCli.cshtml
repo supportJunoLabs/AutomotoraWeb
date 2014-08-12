@@ -5,6 +5,7 @@
 @using AutomotoraWeb.Controllers.Bank;
 @using AutomotoraWeb.Controllers.Financing;
 @using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Sales;
 @using DLL_Backend;
 
 
@@ -30,11 +31,11 @@
     ig.registrosPorPagina = 20;
 
     ig.AccionesAlComienzo = true;
-    ig.AddButton(new BotonGrilla("ListSitCliente", ConsultasFinController.CONTROLLER, "boton-consultar-mf", "Consulta Situación Cliente"));
+    ig.AddButton(new BotonGrilla("SitCliente", ClientesController.CONTROLLER, "boton-consultar-mf", "Consulta Situación Cliente"));
 
     ig.DobleClick = true;
-    ig.ControladorDobleClick = ConsultasFinController.CONTROLLER;
-    ig.AccionDobleClick = "ListSitCliente";
+    ig.ControladorDobleClick = ClientesController.CONTROLLER;
+    ig.AccionDobleClick = "SitCliente";
 
     ViewBag.InfoGrilla = ig;
 }   

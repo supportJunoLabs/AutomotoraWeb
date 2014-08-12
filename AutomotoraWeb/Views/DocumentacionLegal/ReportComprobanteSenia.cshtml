@@ -1,0 +1,16 @@
+﻿@model DLL_Backend.Senia
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Comprobante Seña";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.DETAILS, SeniasController.CONTROLLER).Class("btn btn-default").RouteValues(new {id=Model.Codigo }))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reportComprobanteSenia")

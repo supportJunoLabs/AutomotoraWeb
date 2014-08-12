@@ -1,7 +1,7 @@
 ﻿@model DLL_Backend.Cliente  
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
-@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
 
 @{
     bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
@@ -17,7 +17,7 @@
 </div>
 @{ if (Model != null && Model.Codigo>0) {
         <div class="floatLeft" style="padding-left: 20px;">
-                @(Html.Bootstrap().ActionLinkButton("Situacion Cliente", "ListSitCliente", ConsultasFinController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
+                @(Html.Bootstrap().ActionLinkButton("Situacion Cliente", "SitCliente", ClientesController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
         </div>
     }
 }

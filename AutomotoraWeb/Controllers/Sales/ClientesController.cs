@@ -25,6 +25,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.TiposOtroDoc = Cliente.TiposOtrosDocumentos();
             ViewBag.NombreEntidad = "Cliente";
             ViewBag.NombreEntidades = "Clientes";
+            ViewBag.Clientes = Cliente.Clientes();
+            ViewBag.Financistas = Financista.FinancistasTodos;
             
         }
 
@@ -74,10 +76,6 @@ namespace AutomotoraWeb.Controllers.Sales {
         //----------reporte listado de clientes  -----------------------------
 
         public ActionResult Report() {
-            // Add a report to the view data. 
-            //DXReportClientes rep = new DXReportClientes();
-            ////setParamsToReport(rep);
-            //ViewData["Report"] = rep;
             return View();
         }
 
@@ -261,5 +259,120 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         #endregion
+
+        #region ConsultaSituacionCliente
+
+        private Cliente _consultarCliente(int? idCliente) {
+            Cliente c = new Cliente();
+            c.Codigo = idCliente ?? 0;
+            if (idCliente != null && idCliente != 0) {
+                c.Consultar();
+            }
+            ViewData["idParametros"] = c.Codigo;
+            return c;
+        }
+
+
+        //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+        public ActionResult SitCliente(int? id) {
+            try {
+                Cliente c = _consultarCliente(id);
+                return View(c);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+
+        [HttpPost]
+        //se invoca desde el boton actualizar e imprimir. Devuelve la pagina completa
+        public ActionResult SitCliente(Cliente model, string btnSubmit) {
+            try {
+                int? idCliente = model.Codigo;
+                Cliente c = _consultarCliente(idCliente);
+                if (btnSubmit == "Imprimir" && idCliente != null && idCliente != 0) {
+                    return this.ReportSitCliente(c);
+                }
+                return View(c);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View(model);
+            }
+        }
+
+        //Se invoca por json al actualizar la ddl de clientes, devuelve solo la partial de contenido.
+        public ActionResult SitClientePartial(int? idCliente) {
+            Cliente c = _consultarCliente(idCliente);
+            SituacionCliente sit = new SituacionCliente();
+            sit.generarSituacion(c);
+            return PartialView("_sitCliente", sit);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+        public ActionResult GrillaCuotasCliente(int? idParametros) {
+            Cliente c = _consultarCliente(idParametros);
+            SituacionCliente sit = new SituacionCliente();
+            sit.generarSituacion(c);
+            return PartialView("_listGrillaSitClienteCuotas", sit);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de vales. Devuelve la partial del tab de vales
+        public ActionResult GrillaValesCliente(int? idParametros) {
+            Cliente c = _consultarCliente(idParametros);
+            SituacionCliente sit = new SituacionCliente();
+            sit.generarSituacion(c);
+            return PartialView("_listGrillaSitClienteVales", sit);
+        }
+
+        //Se invoca desde paginacion, ordenacion etc, de grilla de cheques. Devuelve la partial del tab de cheques
+        public ActionResult GrillaChequesCliente(int? idParametros) {
+            Cliente c = _consultarCliente(idParametros);
+            SituacionCliente sit = new SituacionCliente();
+            sit.generarSituacion(c);
+            return PartialView("_listGrillaSitClienteCheques", sit);
+        }
+
+        public ActionResult ReportSitCliente(Cliente c) {
+            return View("ReportSitCliente", c);
+        }
+
+        private SituacionCliente _obtenerDatos(Cliente c) {
+            SituacionCliente model = new SituacionCliente();
+            model.Cliente = c;
+            c.Consultar();
+            return model;
+        }
+
+        public ActionResult ReportSitClientePartial(int idParametros) {
+            Cliente c = _consultarCliente(idParametros);
+            SituacionCliente model = new SituacionCliente();
+            model.generarSituacion(c);
+            List<SituacionCliente> ll = new List<SituacionCliente>();
+            ll.Add(model);
+            XtraReport rep = new DXSituacionCliente();
+            rep.DataSource = ll;
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reportSitCliente");
+        }
+
+        public ActionResult ReportSitClienteExport(int idParametros) {
+            Cliente c = _consultarCliente(idParametros);
+            SituacionCliente model = new SituacionCliente();
+            model.generarSituacion(c);
+
+            List<SituacionCliente> ll = new List<SituacionCliente>();
+            ll.Add(model);
+
+            XtraReport rep = new DXSituacionCliente();
+            rep.DataSource = ll;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
+
     }
 }

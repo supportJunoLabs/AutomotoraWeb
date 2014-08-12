@@ -41,7 +41,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
 
-        #region comprobante
+        #region comprobanteVenta
 
         public ActionResult DocComprobanteVenta(int id) {
             Venta v = new Venta();
@@ -78,20 +78,66 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #endregion
 
+        #region comprobanteSenia
+
+        public ActionResult DocComprobanteSenia(int id) {
+            Senia s = new Senia();
+            s.Codigo = id;
+            ViewData["idParametros"] = id;
+            return View("ReportComprobanteSenia", s);
+        }
+
+        public ActionResult ReportComprobanteSeniaPartial(int idParametros) {
+            ViewData["idParametros"] = idParametros;
+            Senia s = new Senia();
+            s.Codigo = idParametros;
+            s.Consultar();
+            XtraReport rep = new DXReciboSenia();
+            List<Senia> ll = new List<Senia>();
+            ll.Add(s);
+            rep.DataSource = ll;
+            ViewData["Report"] = rep;
+            return PartialView("_reportComprobanteSenia");
+        }
+
+        public ActionResult ReportComprobanteSeniaExport(int idParametros) {
+            ViewData["idParametros"] = idParametros;
+            Senia s = new Senia();
+            s.Codigo = idParametros;
+            s.Consultar();
+            XtraReport rep = new DXReciboSenia();
+            List<Senia> ll = new List<Senia>();
+            ll.Add(s);
+            rep.DataSource = ll;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+
+        }
+
+        #endregion
+
+
+        public FileStreamResult DocCompromisoSenia(int id) {
+            return generarDocumento(0, id, "CV_SENIA", "CVS");
+        }
+
+        public FileStreamResult DocPromesaSenia(int id) {
+            return generarDocumento(0, id, "PR_SENIA", "PROM");
+        }
+
         public FileStreamResult DocCompromisoVenta(int id) {
-            return generarDocumento(id, "CV_VENTA", "CVV");
+            return generarDocumento(id, 0, "CV_VENTA", "CVV");
         }
 
          public FileStreamResult DocConformesVenta(int id) {
-            return generarDocumento(id, "CUOTA_VENTA", "CONF");
+            return generarDocumento(id, 0, "CUOTA_VENTA", "CONF");
         }
 
          public FileStreamResult DocTituloVenta(int id) {
-             return generarDocumento(id, "TITULO_VENTA", "TIT");
+             return generarDocumento(id, 0, "TITULO_VENTA", "TIT");
         }
 
          public FileStreamResult DocValesVenta(int id) {
-             return generarDocumento(id, "VALE_VENTA", "VAL");
+             return generarDocumento(id, 0, "VALE_VENTA", "VAL");
         }
 
          public ActionResult DocCuponesVenta(int id) {
@@ -158,19 +204,30 @@ namespace AutomotoraWeb.Controllers.Sales {
          }
             
 
-        private FileStreamResult generarDocumento(int idVenta, string tipoDoc, string nomDoc) {
-            Venta v = new Venta();
-            v.Codigo = idVenta;
-            v.Consultar();
+        private FileStreamResult generarDocumento(int idVenta, int idSenia, string tipoDoc, string nomDoc) {
+             DocumentoLegal doc = new DocumentoLegal();
+             doc.Codigo = tipoDoc;
+             doc.Consultar();
+            
+            string contenido ="";
+            Vehiculo vhc = null;
+            if (idVenta > 0) {
+                Venta v = new Venta();
+                v.Codigo = idVenta;
+                v.Consultar();
+                contenido = generarWord(doc.ObtenerContenido(v));
+                vhc = v.Vehiculo;
 
-            DocumentoLegal doc = new DocumentoLegal();
-            doc.Codigo = tipoDoc;
-            doc.Consultar();
-
-            string contenido = generarWord(doc.ObtenerContenido(v));
+            } else {
+                Senia s = new Senia();
+                s.Codigo = idSenia;
+                s.Consultar();
+                contenido = generarWord(doc.ObtenerContenido(s));
+                vhc = s.Vehiculo;
+            }
 
             Response.ContentType = "application/word";
-            Response.AddHeader("Content-disposition", "attachment; filename=" + nomDoc + "_" + v.Vehiculo.Codigo + ".rtf");
+            Response.AddHeader("Content-disposition", "attachment; filename=" + nomDoc + "_" + vhc.Codigo + ".rtf");
             Response.Buffer = true;
             Response.Clear();
             Response.Write(contenido);

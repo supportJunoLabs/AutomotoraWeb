@@ -25,7 +25,7 @@ CONSULTA VENTA SIN IMPLEMENTAR
            <p class="block-heading"> Documentación</p>
         </div>
         <div class="block-body">
-                @Html.Bootstrap().ActionLinkButton("Comprobante", "DocComprobanteVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+            @Html.Bootstrap().ActionLinkButton("Comprobante", "DocComprobanteVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
             @{
                 if (Model.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "CV_VENTA" })) {
                     @Html.Bootstrap().ActionLinkButton("Compromiso Compraventa", "DocCompromisoVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
