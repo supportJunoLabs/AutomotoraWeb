@@ -79,18 +79,20 @@ namespace AutomotoraWeb.Services {
             } else {
                 int firstLevel = levels[0];
                 levels.RemoveAt(0);
-                Dictionary<int, MenuOptionModel> subMenu = listOpcionMenu[firstLevel].SubMenu;
-                addMenuOption(levels, menuOptionModel, subMenu);
+                if (listOpcionMenu.ContainsKey(firstLevel)) {//agregado para evitar error cuando tiene permisos en un hijo pero le falta en el padre
+                    Dictionary<int, MenuOptionModel> subMenu = listOpcionMenu[firstLevel].SubMenu;
+                    addMenuOption(levels, menuOptionModel, subMenu);
+                }
             }
         }
 
         //------------------------------------------------------------
 
-        List<int> parseLevel(string levels){
+        List<int> parseLevel(string levels) {
             List<int> arrayLevels = new List<int>();
 
             int i = 0;
-            do{
+            do {
                 int level = int.Parse(levels.Substring(i, 2));
                 arrayLevels.Add(level);
                 i = i + 2;
@@ -107,7 +109,7 @@ namespace AutomotoraWeb.Services {
             MenuOptionModel menuOptionModel = new MenuOptionModel();
             menuOptionModel.Action = opcionMenu.Accion;
             menuOptionModel.Id = opcionMenu.Codigo;
-            menuOptionModel.Controlller = opcionMenu.Controlador;         
+            menuOptionModel.Controlller = opcionMenu.Controlador;
             menuOptionModel.OpcionName = opcionMenu.NombreOpcion;
             menuOptionModel.UserName = userName;
             menuOptionModel.IP = IP;
