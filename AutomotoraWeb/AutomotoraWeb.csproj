@@ -506,6 +506,10 @@
     <Content Include="Content\Images\fondo.png" />
     <Content Include="Content\Images\imprimir.png" />
     <Content Include="Content\Images\loading_blue_lg.gif" />
+    <Content Include="Content\Images\ppal.png" />
+    <Content Include="Content\Images\ppal1.jpg" />
+    <Content Include="Content\Images\ppal2.jpg" />
+    <Content Include="Content\Images\ppal3.jpg" />
     <Content Include="Content\Images\vendedores\_sinFoto.png" />
     <Content Include="Content\Images\_sinFoto.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
