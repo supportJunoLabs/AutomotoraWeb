@@ -421,6 +421,12 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboVentaEntrega.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboVentaAnulacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Transacciones\DXReciboSenia.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -2138,6 +2144,10 @@
     <Content Include="Views\DocumentacionLegal\_reportComprobanteSenia.cshtml" />
     <Content Include="Views\Permisos\Edit.cshtml" />
     <Content Include="Views\Permisos\_arbolPermisos.cshtml" />
+    <Content Include="Views\Ventas\_reciboAnulacion.cshtml" />
+    <Content Include="Views\Ventas\ReciboAnulacion.cshtml" />
+    <Content Include="Views\Ventas\ReciboEntrega.cshtml" />
+    <Content Include="Views\Ventas\_reciboEntrega.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2264,6 +2274,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboVentaEntrega.resx">
+      <DependentUpon>DXReciboVentaEntrega.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboVentaAnulacion.resx">
+      <DependentUpon>DXReciboVentaAnulacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboSenia.resx">
       <DependentUpon>DXReciboSenia.cs</DependentUpon>

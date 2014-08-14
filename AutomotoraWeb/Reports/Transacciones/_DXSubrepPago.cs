@@ -195,7 +195,6 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.DetailReportEfectivo.Level = 0;
             this.DetailReportEfectivo.Name = "DetailReportEfectivo";
             this.DetailReportEfectivo.ReportPrintOptions.PrintOnEmptyDataSource = false;
-            //this.DetailReportEfectivo.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportEfectivo_BeforePrint);
             // 
             // det_efectivo
             // 
@@ -245,7 +244,6 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.DetailReportCheques.Level = 1;
             this.DetailReportCheques.Name = "DetailReportCheques";
             this.DetailReportCheques.ReportPrintOptions.PrintOnEmptyDataSource = false;
-            //this.DetailReportCheques.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportCheques_BeforePrint);
             // 
             // Detail2
             // 
@@ -494,7 +492,6 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.DetailReportPagoBanco.Level = 2;
             this.DetailReportPagoBanco.Name = "DetailReportPagoBanco";
             this.DetailReportPagoBanco.ReportPrintOptions.PrintOnEmptyDataSource = false;
-            //this.DetailReportPagoBanco.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportPagoBanco_BeforePrint);
             // 
             // Detail3
             // 
@@ -642,7 +639,6 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.DetailReportChequesEmitidos.Level = 3;
             this.DetailReportChequesEmitidos.Name = "DetailReportChequesEmitidos";
             this.DetailReportChequesEmitidos.ReportPrintOptions.PrintOnEmptyDataSource = false;
-            //this.DetailReportChequesEmitidos.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.DetailReportChequesEmitidos_BeforePrint);
             // 
             // Detail4
             // 
@@ -673,7 +669,7 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             // xrLabel33
             // 
             this.xrLabel33.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "ChequesEmitidos.FechaVencimiento")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "ChequesEmitidos.FechaVencimiento", "{0:dd/MM/yyyy}")});
             this.xrLabel33.Font = new System.Drawing.Font("Times New Roman", 9F);
             this.xrLabel33.LocationFloat = new DevExpress.Utils.PointFloat(350.625F, 0F);
             this.xrLabel33.Name = "xrLabel33";
@@ -687,7 +683,7 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             // xrLabel32
             // 
             this.xrLabel32.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "ChequesEmitidos.FechaEmision")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "ChequesEmitidos.FechaEmision", "{0:dd/MM/yyyy}")});
             this.xrLabel32.Font = new System.Drawing.Font("Times New Roman", 9F);
             this.xrLabel32.LocationFloat = new DevExpress.Utils.PointFloat(289.5834F, 0F);
             this.xrLabel32.Name = "xrLabel32";
