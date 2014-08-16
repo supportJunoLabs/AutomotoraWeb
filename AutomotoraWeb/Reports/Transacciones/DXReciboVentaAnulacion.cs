@@ -991,7 +991,7 @@ public class DXReciboVentaAnulacion : DevExpress.XtraReports.UI.XtraReport {
 
     private void sr_vales_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
         Venta v = (Venta)GetCurrentColumnValue("Venta");
-        if(v.ValesOriginales==null || v.ValesOriginales.Count==0){
+        if (v.ValesOriginales == null || v.ValesOriginales.GetEnumerator().Current == null) {
             return;
         }
         sr_vales.ReportSource.DataSource = v.ValesOriginales;
@@ -999,7 +999,7 @@ public class DXReciboVentaAnulacion : DevExpress.XtraReports.UI.XtraReport {
 
     private void gf_vales_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
         Venta v = (Venta)GetCurrentColumnValue("Venta");
-        if(v.ValesOriginales==null || v.ValesOriginales.Count==0){
+        if(v.ValesOriginales==null || v.ValesOriginales.GetEnumerator().Current == null){
             gf_vales.Visible = false;
         }
     }

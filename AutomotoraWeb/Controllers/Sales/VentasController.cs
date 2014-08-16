@@ -42,7 +42,7 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Cliente = new Cliente();
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
-            venta.Pago.agregarEfectivos(new List<Importe>());
+            venta.Pago.AgregarEfectivos(new List<Efectivo>());
 
             List<Cheque> listCheque = new List<Cheque>();
             Cheque cheque = new Cheque();
@@ -107,14 +107,14 @@ namespace AutomotoraWeb.Controllers.Sales
         #region PagosEfectivo
 
         [HttpPost]
-        public JsonResult addPagoEfectivo(Importe importe, String idSession) {
+        public JsonResult addPagoEfectivo(Efectivo efectivo, String idSession) {
 
             try {
                 Venta venta = (Venta)(Session[idSession]);
-                importe.Moneda.Consultar();
-                venta.Pago.Efectivo.Add(importe);
+                efectivo.Importe.Moneda.Consultar();
+                venta.Pago.AgregarEfectivo(efectivo);
                 
-                return createJsonResultPagoEfectivo(venta.Pago.Efectivo);
+                return createJsonResultPagoEfectivo(venta.Pago.Efectivos);
             } catch (UsuarioException exc) {
                 List<String> errores1 = new List<string>();
                 errores1.Add(exc.Message);
@@ -123,7 +123,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
         }
 
-        private JsonResult createJsonResultPagoEfectivo(List<Importe> listImporte) { // Paso la lista de importes por si hay que devolver el total
+        private JsonResult createJsonResultPagoEfectivo(IEnumerable<Efectivo> listEfectivo) { // Paso la lista de importes por si hay que devolver el total
             return Json(new {
                 Result = "OK",
             });
@@ -133,9 +133,9 @@ namespace AutomotoraWeb.Controllers.Sales
             return PartialView("_grillaPagosEfectivo", _listaPagosEfectivo(idSession));
         }
 
-        private List<Importe> _listaPagosEfectivo(string idSession) {
+        private IEnumerable<Efectivo> _listaPagosEfectivo(string idSession) {
             Venta venta = (Venta)(Session[idSession]);
-            return venta.Pago.Efectivo;
+            return venta.Pago.Efectivos;
         }
 
         #endregion
@@ -170,14 +170,14 @@ namespace AutomotoraWeb.Controllers.Sales
             return PartialView("EditModesPartial", listCheque);
         }
 
-        public ActionResult grillaPagosEfectivo_CustomActionRouteValues(GridViewEditingMode editMode) {
+        public ActionResult grillaPagosCheque_CustomActionRouteValues(GridViewEditingMode editMode) {
             //GridViewEditingDemosHelper.EditMode = editMode;
             List<Cheque> listCheque = new List<Cheque>();
             return PartialView("EditModesPartial", listCheque);
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult grillaPagosEfectivo_AddNewRowRouteValues(Cheque cheque) {
+        public ActionResult grillaPagosCheque_AddNewRowRouteValues(Cheque cheque) {
 
             List<Cheque> listCheque = new List<Cheque>();
 
@@ -195,8 +195,8 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult grillaPagosEfectivo_UpdateRowRouteValues(Cheque cheque) {
-
+        public ActionResult grillaPagosCheque_UpdateRowRouteValues(Cheque cheque) {
+                            
             List<Cheque> listCheque = new List<Cheque>();
 
             if (ModelState.IsValid) {
@@ -212,7 +212,7 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult grillaPagosEfectivo_DeleteRowRouteValues(int codigo) {
+        public ActionResult grillaPagosCheque_DeleteRowRouteValues(int codigo) {
 
             List<Cheque> listCheque = new List<Cheque>();
 
