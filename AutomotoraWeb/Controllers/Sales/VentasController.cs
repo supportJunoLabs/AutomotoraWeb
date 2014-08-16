@@ -9,6 +9,7 @@ using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
+using DevExpress.Web.ASPxGridView;
 
 namespace AutomotoraWeb.Controllers.Sales
 {
@@ -41,7 +42,13 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Cliente = new Cliente();
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
-            venta.Pago.agregarEfectivos(new List<Importe>());
+            venta.Pago.AgregarEfectivos(new List<Efectivo>());
+
+            List<Cheque> listCheque = new List<Cheque>();
+            Cheque cheque = new Cheque();
+            cheque.Banco = "Banco1";
+            cheque.Codigo = 1;
+            venta.Pago.agregarCheque(cheque);
 
             ViewData["idParametros"] = "0"; // Para grillas que necesitan id de la venta
 
@@ -100,14 +107,14 @@ namespace AutomotoraWeb.Controllers.Sales
         #region PagosEfectivo
 
         [HttpPost]
-        public JsonResult addPagoEfectivo(Importe importe, String idSession) {
+        public JsonResult addPagoEfectivo(Efectivo efectivo, String idSession) {
 
             try {
                 Venta venta = (Venta)(Session[idSession]);
-                importe.Moneda.Consultar();
-                venta.Pago.Efectivo.Add(importe);
+                efectivo.Importe.Moneda.Consultar();
+                venta.Pago.AgregarEfectivo(efectivo);
                 
-                return createJsonResultPagoEfectivo(venta.Pago.Efectivo);
+                return createJsonResultPagoEfectivo(venta.Pago.Efectivos);
             } catch (UsuarioException exc) {
                 List<String> errores1 = new List<string>();
                 errores1.Add(exc.Message);
@@ -116,7 +123,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
         }
 
-        private JsonResult createJsonResultPagoEfectivo(List<Importe> listImporte) { // Paso la lista de importes por si hay que devolver el total
+        private JsonResult createJsonResultPagoEfectivo(IEnumerable<Efectivo> listEfectivo) { // Paso la lista de importes por si hay que devolver el total
             return Json(new {
                 Result = "OK",
             });
@@ -126,12 +133,104 @@ namespace AutomotoraWeb.Controllers.Sales
             return PartialView("_grillaPagosEfectivo", _listaPagosEfectivo(idSession));
         }
 
-        private List<Importe> _listaPagosEfectivo(string idSession) {
+        private IEnumerable<Efectivo> _listaPagosEfectivo(string idSession) {
             Venta venta = (Venta)(Session[idSession]);
-            return venta.Pago.Efectivo;
+            return venta.Pago.Efectivos;
         }
 
         #endregion
+
+        //----------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------
+
+        #region Cheques
+
+        public ActionResult grillaPagosCheque(string idSession, int idParametros) {
+            return PartialView("_grillaPagosCheque", _listaPagosCheque(idSession));
+        }
+
+        private List<Cheque> _listaPagosCheque(string idSession) {
+            Venta venta = (Venta)(Session[idSession]);
+
+            List<Cheque> listCheque = new List<Cheque>();
+            Cheque cheque = new Cheque();
+            cheque.Banco = "Banco1";
+            cheque.Codigo = 1;
+            listCheque.Add(cheque);
+
+            //venta.Pago.agregarCheque(cheque);
+
+            //return venta.Pago.Cheques;
+
+            return listCheque;
+        }
+
+        public ActionResult EditModesPartial() {
+            List<Cheque> listCheque = new List<Cheque>();
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        public ActionResult grillaPagosCheque_CustomActionRouteValues(GridViewEditingMode editMode) {
+            //GridViewEditingDemosHelper.EditMode = editMode;
+            List<Cheque> listCheque = new List<Cheque>();
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosCheque_AddNewRowRouteValues(Cheque cheque) {
+
+            List<Cheque> listCheque = new List<Cheque>();
+
+            if (ModelState.IsValid) {
+                try {
+                    listCheque.Add(cheque);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Please, correct all errors.";
+            }
+
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosCheque_UpdateRowRouteValues(Cheque cheque) {
+                            
+            List<Cheque> listCheque = new List<Cheque>();
+
+            if (ModelState.IsValid) {
+                try {
+                    listCheque.Add(cheque);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else
+                ViewData["EditError"] = "Please, correct all errors.";
+
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosCheque_DeleteRowRouteValues(int codigo) {
+
+            List<Cheque> listCheque = new List<Cheque>();
+
+            if (codigo >= 0) {
+                try {
+                    // TODO: Delete
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        #endregion
+
+        //----------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------
+
 
         //--------------------------METODOS PARA LISTADOS DE Ventas  -----------------------------
 

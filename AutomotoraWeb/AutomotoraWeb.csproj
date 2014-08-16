@@ -2142,6 +2142,7 @@
     <Content Include="Views\Usuarios\resetPassword.cshtml" />
     <Content Include="Views\DocumentacionLegal\ReportComprobanteSenia.cshtml" />
     <Content Include="Views\DocumentacionLegal\_reportComprobanteSenia.cshtml" />
+    <Content Include="Views\Shared\_grillaPagosCheque.cshtml" />
     <Content Include="Views\Permisos\Edit.cshtml" />
     <Content Include="Views\Permisos\_arbolPermisos.cshtml" />
     <Content Include="Views\Ventas\_reciboAnulacion.cshtml" />

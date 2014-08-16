@@ -75,6 +75,10 @@ namespace AutomotoraWeb.Models {
         public string ClaveViewData;
 
         public string OnBeginCallback { get; set; }
+        public string CustomActionRouteValues { get; set; }
+        public string AddNewRowRouteValues { get; set; }
+        public string UpdateRowRouteValues { get; set; }
+        public string DeleteRowRouteValues { get; set; }
 
         #region Columnas
 

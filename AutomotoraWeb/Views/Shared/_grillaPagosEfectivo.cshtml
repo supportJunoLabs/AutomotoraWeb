@@ -1,4 +1,4 @@
-﻿@model List<DLL_Backend.Importe>
+﻿@model IEnumerable<DLL_Backend.Efectivo>
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Bank;
 @using AutomotoraWeb.Models;
@@ -7,14 +7,14 @@
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
             new ColumnaGrilla {Campo="Moneda", Ancho=80},
-            new ColumnaGrilla {Campo="Monto", Ancho=100},
+            new ColumnaGrilla {Campo="Monto", Ancho=100}
     };
     
     ig.NameGrid = "grillaPagosEfectivo";
     ig.Controller = ViewBag.Controller;
     ig.ActionCallbackRoute = "grillaPagosEfectivo";
-    ig.KeyFieldName = "Monto";
-    ig.TypeOfModel = typeof(DLL_Backend.Importe.ImporteMD);
+    ig.KeyFieldName = "IdLinea";
+    ig.TypeOfModel = typeof(DLL_Backend.Efectivo);
     ig.DobleClick = true;
     ig.BotonesMtoEstandar = true;
     ig.AccionesAlComienzo = true;
