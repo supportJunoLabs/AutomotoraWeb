@@ -324,6 +324,94 @@ namespace AutomotoraWeb.Controllers.Sales
         }
         #endregion
 
+        #region AnulacionVenta
+
+        //----------------- Trasnsaccion Anulacion  FALTA -----------------------
+
+        //----------------- Recibo Anulacion -----------------------
+        
+        public ActionResult ReciboAnulacion(int id) {
+            try {
+                ViewData["idParametros"] = id;
+                return View("ReciboAnulacion");
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboAnulacion(int id) {
+            TRVentaAnulacion tr = (TRVentaAnulacion)Transaccion.ObtenerTransaccion(id);
+            List<TRVentaAnulacion> ll = new List<TRVentaAnulacion>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboVentaAnulacion();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboAnulacionPartial(int idParametros) {
+            XtraReport rep = _generarReciboAnulacion(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboAnulacion");
+        }
+
+        public ActionResult ReciboAnulacionExport(int idParametros) {
+            XtraReport rep = _generarReciboAnulacion(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+
+
+        #endregion
+
+
+        #region EntregaVehiculo
+
+        //----------------- Trasnsaccion Entrega FALTA  -----------------------
+
+        //----------------- Recibo Entrega  -----------------------
+
+        public ActionResult ReciboEntrega(int id) {
+            try {
+                ViewData["idParametros"] = id;
+                return View("ReciboEntrega");
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboEntrega(int id) {
+            Entrega tr = (Entrega)Transaccion.ObtenerTransaccion(id);
+            List<Entrega> ll = new List<Entrega>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboVentaEntrega();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboEntregaPartial(int idParametros) {
+            XtraReport rep = _generarReciboEntrega(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboEntrega");
+        }
+
+        public ActionResult ReciboEntregaExport(int idParametros) {
+            XtraReport rep = _generarReciboEntrega(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+
+
+        #endregion
 
     }
 }

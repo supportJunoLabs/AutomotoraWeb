@@ -12,7 +12,6 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.SystemName @ViewBag.Title</title>
 
-
     @*Los estilos van primero porque los precisa la pagina para renderizar*@
     @Styles.Render("~/Content/css")   @*Bootstrap  awesome y template propio*@
     @Styles.Render("~/Content/themes/base/css")   @*Los estilos para los controles de jquery-ui*@
@@ -27,6 +26,7 @@
     @Scripts.Render("~/bootstrap")  @*Este tambien va arriba*@
 
 
+
     @Html.DevExpress().GetScripts(
     new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
     new Script { ExtensionSuite = ExtensionSuite.HtmlEditor },
@@ -35,7 +35,9 @@
     new Script { ExtensionSuite = ExtensionSuite.Editors },
     new Script { ExtensionSuite = ExtensionSuite.Chart },
     new Script { ExtensionSuite = ExtensionSuite.Report },
-    new Script { ExtensionSuite = ExtensionSuite.Scheduler })
+    new Script { ExtensionSuite = ExtensionSuite.Scheduler },
+     new Script { ExtensionSuite = ExtensionSuite.TreeList }
+)
 
     @Html.DevExpress().GetStyleSheets(
     new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -45,7 +47,8 @@
     new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid },
     new StyleSheet { ExtensionSuite = ExtensionSuite.Chart },
     new StyleSheet { ExtensionSuite = ExtensionSuite.Report },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler }
+    new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler },
+     new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList }
     )
 
 

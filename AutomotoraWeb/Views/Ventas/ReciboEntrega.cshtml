@@ -1,0 +1,15 @@
+﻿@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.General;
+
+@{ 
+    ViewBag.Title = "Entrega Vehiculo";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", SalesController.INDEX, SalesController.BCONTROLLER).Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboEntrega")

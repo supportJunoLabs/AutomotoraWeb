@@ -246,6 +246,7 @@
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
     <Compile Include="Controllers\Financing\ValesController.cs" />
     <Compile Include="Controllers\Sistema\PefilesController.cs" />
+    <Compile Include="Controllers\Sistema\PermisosController.cs" />
     <Compile Include="Controllers\Sistema\UsuariosController.cs" />
     <Compile Include="Controllers\Sales\AcvsController.cs" />
     <Compile Include="Controllers\Sales\DocumentacionLegalController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
     <Compile Include="Models\PerfilModel.cs" />
+    <Compile Include="Models\PermisosModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\SituacionFinancista.cs" />
     <Compile Include="Models\Mensaje.cs" />
@@ -419,6 +421,12 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboVentaEntrega.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboVentaAnulacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Transacciones\DXReciboSenia.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -504,6 +512,10 @@
     <Content Include="Content\Images\fondo.png" />
     <Content Include="Content\Images\imprimir.png" />
     <Content Include="Content\Images\loading_blue_lg.gif" />
+    <Content Include="Content\Images\ppal.png" />
+    <Content Include="Content\Images\ppal1.jpg" />
+    <Content Include="Content\Images\ppal2.jpg" />
+    <Content Include="Content\Images\ppal3.jpg" />
     <Content Include="Content\Images\vendedores\_sinFoto.png" />
     <Content Include="Content\Images\_sinFoto.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -2131,6 +2143,12 @@
     <Content Include="Views\DocumentacionLegal\ReportComprobanteSenia.cshtml" />
     <Content Include="Views\DocumentacionLegal\_reportComprobanteSenia.cshtml" />
     <Content Include="Views\Shared\_grillaPagosCheque.cshtml" />
+    <Content Include="Views\Permisos\Edit.cshtml" />
+    <Content Include="Views\Permisos\_arbolPermisos.cshtml" />
+    <Content Include="Views\Ventas\_reciboAnulacion.cshtml" />
+    <Content Include="Views\Ventas\ReciboAnulacion.cshtml" />
+    <Content Include="Views\Ventas\ReciboEntrega.cshtml" />
+    <Content Include="Views\Ventas\_reciboEntrega.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2257,6 +2275,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboVentaEntrega.resx">
+      <DependentUpon>DXReciboVentaEntrega.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboVentaAnulacion.resx">
+      <DependentUpon>DXReciboVentaAnulacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboSenia.resx">
       <DependentUpon>DXReciboSenia.cs</DependentUpon>

@@ -1,0 +1,140 @@
+﻿@model AutomotoraWeb.Models.PermisosModel
+@using DLL_Backend;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Sistema;
+
+@{
+    ViewBag.Title = "Autorizaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+
+    
+    @Html.HiddenFor(m => m.OpcionesHabilitadasTexto, new { id = "permisosSeleccionados" });
+    
+    <div id="filtros" class="block" style="margin-right: 10px">
+        <div class="btn-toolbar botoneraListado">
+            <div class="btn-group">
+                <a href="#" id="abtn_Actualizar">
+                    @Html.Bootstrap().Button().Class("btn btn-primary").Text("Actualizar").Id("btnActualizar")
+                </a>
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="floatLeft">
+            <div id="filtro_perfil" style="padding-left: 20px; padding-top: 20px; padding-bottom: 10px">
+                <div class="display-label" style="width: 70px">
+                    Perfil*
+                </div>
+                <div class="editor-field editor-field-xlarge xxlarge">
+                    @Html.DdlOrDisplayFor(model => model.Perfil.Codigo, false, model => model.Perfil.Nombre,
+                new SelectList(ViewBag.Perfiles, "Codigo", "Nombre"), "--Seleccionar Perfles--",
+                new { id = "ddlPerfiles", @class = "large" })
+                </div>
+                <div class="floatLeft" style="padding-left: 5px">
+                    <a href="#" id="abtn_VerPerfil">
+                        @(Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Ver Perfil").Id("btn_VerPerfil"))
+                    </a>
+                </div>
+                <div class="clear-both"></div>
+            </div>
+            <div style="padding-left: 10px; padding-top: 10px; padding-bottom: 10px">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <div class="floatLeft" style="margin-left: 10px">
+                            @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Guardar").Id("btn_guardar"))
+                        </div>
+                        <div class="floatLeft" style="margin-left: 10px">
+                            <a href="#" id="abtn_Cancelar">
+                                @(Html.Bootstrap().Button().Class("btn btn-default").Text("Cancelar").Id("btnCancelar"))
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="floatLeft" style="margin-left: 40px; padding-top: 20px; padding-bottom: 20px">
+            <div id="divArbol">
+                @Html.Partial("_arbolPermisos", Model)
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+    </div>
+}
+
+
+
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var selectedID = $('#ddlPerfiles').val();
+        if (selectedID) {
+            $("#abtn_VerPerfil").prop("href", "/Perfiles/details/" + selectedID);
+            $("#abtn_Actualizar").prop("href", "/Permisos/edit/" + selectedID);
+            $("#abtn_Cancelar").prop("href", "/Perfiles/details/" + selectedID);
+        }
+    });
+
+    $('#btn_guardar').click(function () {
+        //alert(1);
+        treeList.GetSelectedNodeValues("Codigo", CodigosSeleccionadosCallBack);
+    });
+
+    function CodigosSeleccionadosCallBack(values) {
+        //al presionar el boton guardar
+        //alert("hola");
+        var selectedIDs;
+        selectedIDs = "";
+        for (var index = 0; index < values.length; index++) {
+            selectedIDs += values[index] + ",";
+        }
+        //alert(selectedIDs);
+        $("#permisosSeleccionados").val(selectedIDs);
+        //alert($("#permisosSeleccionados").val());
+        $('form#formPrincipal').submit();
+    }
+
+
+    $('#ddlPerfiles').change(function () {
+
+        /* Get the selected value of dropdownlist */
+        var selectedID = $(this).val();
+
+        //alert(selectedID);
+        $("#abtn_VerPerfil").prop("href", "/Perfiles/details/" + selectedID);
+        $("#abtn_Actualizar").prop("href", "/Permisos/edit/" + selectedID);
+        $("#abtn_Cancelar").prop("href", "/Perfiles/details/" + selectedID);
+        var destino = '/Permisos/JsonArbolPermisosPartial/';
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idPerfil": selectedID },
+            success: function (data) {
+                $('#divArbol').html('');
+                $('#divArbol').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+
+    });
+
+
+
+</script>
