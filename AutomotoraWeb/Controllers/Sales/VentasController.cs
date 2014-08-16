@@ -9,6 +9,7 @@ using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
+using DevExpress.Web.ASPxGridView;
 
 namespace AutomotoraWeb.Controllers.Sales
 {
@@ -42,6 +43,12 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
             venta.Pago.agregarEfectivos(new List<Importe>());
+
+            List<Cheque> listCheque = new List<Cheque>();
+            Cheque cheque = new Cheque();
+            cheque.Banco = "Banco1";
+            cheque.Codigo = 1;
+            venta.Pago.agregarCheque(cheque);
 
             ViewData["idParametros"] = "0"; // Para grillas que necesitan id de la venta
 
@@ -132,6 +139,98 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         #endregion
+
+        //----------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------
+
+        #region Cheques
+
+        public ActionResult grillaPagosCheque(string idSession, int idParametros) {
+            return PartialView("_grillaPagosCheque", _listaPagosCheque(idSession));
+        }
+
+        private List<Cheque> _listaPagosCheque(string idSession) {
+            Venta venta = (Venta)(Session[idSession]);
+
+            List<Cheque> listCheque = new List<Cheque>();
+            Cheque cheque = new Cheque();
+            cheque.Banco = "Banco1";
+            cheque.Codigo = 1;
+            listCheque.Add(cheque);
+
+            //venta.Pago.agregarCheque(cheque);
+
+            //return venta.Pago.Cheques;
+
+            return listCheque;
+        }
+
+        public ActionResult EditModesPartial() {
+            List<Cheque> listCheque = new List<Cheque>();
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        public ActionResult grillaPagosEfectivo_CustomActionRouteValues(GridViewEditingMode editMode) {
+            //GridViewEditingDemosHelper.EditMode = editMode;
+            List<Cheque> listCheque = new List<Cheque>();
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosEfectivo_AddNewRowRouteValues(Cheque cheque) {
+
+            List<Cheque> listCheque = new List<Cheque>();
+
+            if (ModelState.IsValid) {
+                try {
+                    listCheque.Add(cheque);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Please, correct all errors.";
+            }
+
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosEfectivo_UpdateRowRouteValues(Cheque cheque) {
+
+            List<Cheque> listCheque = new List<Cheque>();
+
+            if (ModelState.IsValid) {
+                try {
+                    listCheque.Add(cheque);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else
+                ViewData["EditError"] = "Please, correct all errors.";
+
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosEfectivo_DeleteRowRouteValues(int codigo) {
+
+            List<Cheque> listCheque = new List<Cheque>();
+
+            if (codigo >= 0) {
+                try {
+                    // TODO: Delete
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("EditModesPartial", listCheque);
+        }
+
+        #endregion
+
+        //----------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------
+
 
         //--------------------------METODOS PARA LISTADOS DE Ventas  -----------------------------
 

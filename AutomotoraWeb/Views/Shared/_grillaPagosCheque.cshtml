@@ -1,0 +1,41 @@
+﻿@model List<DLL_Backend.Cheque>
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoGrilla ig= new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Banco", Ancho=100},
+            new ColumnaGrilla {Campo="Cuenta", Ancho=100},
+            new ColumnaGrilla {Campo="DetalleOrigen", Ancho=100},
+            new ColumnaGrilla {Campo="FechaValor", Ancho=100},
+            new ColumnaGrilla {Campo="FechaVencimiento", Ancho=100},
+            new ColumnaGrilla {Campo="Importe", Ancho=100},
+            new ColumnaGrilla {Campo="Librador", Ancho=100},
+            new ColumnaGrilla {Campo="NumeroCheque", Ancho=100},
+            new ColumnaGrilla {Campo="Observaciones", Ancho=150}
+    };
+    
+    ig.NameGrid = "grillaPagosCheque";
+    ig.Controller = ViewBag.Controller;
+    ig.ActionCallbackRoute = "grillaPagosCheque";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Cheque.ChequeMD);
+    ig.BotonesMtoEstandar = true;
+    ig.registrosPorPagina = 4;
+    ig.OnBeginCallback = "OnBeginCallback";
+    ig.CustomActionRouteValues = "grillaPagosCheque_CustomActionRouteValues";
+    ig.AddNewRowRouteValues = "grillaPagosCheque_AddNewRowRouteValues";
+    ig.UpdateRowRouteValues = "grillaPagosCheque_UpdateRowRouteValues";
+    ig.DeleteRowRouteValues = "grillaPagosCheque_DeleteRowRouteValues";
+    ig.BotonesMtoEstandar = false;
+    //ig.AnchoSeleccion = 950;
+    
+    ViewBag.InfoGrilla = ig;
+   
+}
+
+
+@Html.Partial("_generalGrid", Model)
+
