@@ -1,0 +1,14 @@
+﻿@model DLL_Backend.TRCuotaCobro 
+@using AutomotoraWeb.Controllers.Financing;
+@{ 
+    ViewBag.Title = "Recibo Cobro Cuota/s";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Consulta Financiacion", "ConsultaFinanciacion", ConsultasFinController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Venta.Codigo}))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboCuota")
