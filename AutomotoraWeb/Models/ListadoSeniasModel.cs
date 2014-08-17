@@ -74,6 +74,15 @@ namespace AutomotoraWeb.Models {
                 this.Filtro.Cliente.Consultar(); //para completar el nombre 
             }
 
+            if (this.Filtro.Vehiculos) {
+                this.Filtro.PedidosPendientes = false;
+                this.Filtro.PedidosRecibidos = false;
+            } else {
+                if (this.Filtro.PedidosPendientes || this.Filtro.PedidosRecibidos) {
+                    this.Filtro.Vehiculos = false;
+                }
+            }
+
         }
 
 

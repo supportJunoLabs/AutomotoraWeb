@@ -29,7 +29,14 @@ $("#cb_filtrarPeriodo").change(function () {
 $("input[name='Filtro.Vehiculos']").on("change", function () {
     var verVehiculos = $("#rb_vehiculos").prop('checked');
     //alert(optionSelected);
-    _showHidePedidos(verVehiculos);
+    _showHidePedidos(verVehiculos); 
+    if (verVehiculos) {
+        $("#cb_pedidos_pendientes").prop('checked', false);
+        $("#cb_pedidos_recibidos").prop('checked', false);
+    } else {
+        $("#cb_pedidos_pendientes").prop('checked', true);
+        $("#cb_pedidos_recibidos").prop('checked', true);
+    }
 });
 
 $("#cb_filtrarSucursal").change(function () {
@@ -86,12 +93,12 @@ function _showHideVendedor(filtrar) {
 function _showHidePedidos(verVehiculos) {
     if (verVehiculos == undefined || verVehiculos == true) {
         $("#filtro_pedidos").hide();
-        $("#cb_pedidos_pendientes").prop('checked', false) ;
-        $("#cb_pedidos_recibidos").prop('checked', false) ;
+        //$("#cb_pedidos_pendientes").prop('checked', false) ;
+        //$("#cb_pedidos_recibidos").prop('checked', false) ;
     } else {
         $("#filtro_pedidos").show();
-        $("#cb_pedidos_pendientes").prop('checked', true) ;
-        $("#cb_pedidos_recibidos").prop('checked', true) ;
+        //$("#cb_pedidos_pendientes").prop('checked', true) ;
+        //$("#cb_pedidos_recibidos").prop('checked', true) ;
     }
 }
 

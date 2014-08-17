@@ -63,6 +63,19 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
     private GroupFooterBand gf_promesa;
     private XRLabel xrLabel35;
     private XRSubreport sr_promesa;
+    private GroupHeaderBand GroupHeader1;
+    private GroupFooterBand gf_senia_vehiculo;
+    private GroupFooterBand GroupFooter3;
+    private GroupFooterBand gf_senia_pedido;
+    private XRLabel xrLabel46;
+    private XRLabel xrLabel45;
+    private XRLabel xrLabel44;
+    private XRLabel xrLabel41;
+    private XRLabel xrLabel42;
+    private XRLabel xrLabel43;
+    private XRLabel xrLabel38;
+    private XRLabel xrLabel39;
+    private XRLabel xrLabel40;
     /// <summary>
     /// Required designer variable.
     /// </summary>
@@ -139,54 +152,40 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             this.xrPageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.PageFooter = new DevExpress.XtraReports.UI.PageFooterBand();
             this.gf_pago = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.sr_pago = new DevExpress.XtraReports.UI.XRSubreport();
             this.GroupFooter1 = new DevExpress.XtraReports.UI.GroupFooterBand();
             this.xrLabel37 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel36 = new DevExpress.XtraReports.UI.XRLabel();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.gf_promesa = new DevExpress.XtraReports.UI.GroupFooterBand();
-            this.xrLabel35 = new DevExpress.XtraReports.UI.XRLabel();
-            this.sr_pago = new DevExpress.XtraReports.UI.XRSubreport();
             this.sr_promesa = new DevExpress.XtraReports.UI.XRSubreport();
+            this.xrLabel35 = new DevExpress.XtraReports.UI.XRLabel();
+            this.GroupHeader1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
+            this.gf_senia_vehiculo = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.GroupFooter3 = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.gf_senia_pedido = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.xrLabel38 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel39 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel40 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel41 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel42 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel43 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel44 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel45 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel46 = new DevExpress.XtraReports.UI.XRLabel();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // Detail
             // 
-            this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-            this.xrLabel21,
-            this.xrLabel20,
-            this.xrLabel34,
-            this.xrLabel33,
-            this.xrLabel32,
-            this.xrLabel31,
-            this.xrLabel30,
-            this.xrLabel29,
-            this.xrLabel28,
-            this.xrLabel27,
-            this.xrLabel26,
-            this.xrLabel25,
-            this.xrLabel24,
-            this.xrLabel23,
-            this.xrLabel22,
-            this.xrLabel19,
-            this.xrLabel18,
-            this.xrLabel17,
-            this.xrLabel16,
-            this.xrLabel15,
-            this.xrLabel14,
-            this.xrLabel13,
-            this.xrLabel12,
-            this.xrLabel11,
-            this.xrLabel10,
-            this.xrLabel9});
-            this.Detail.HeightF = 255.2083F;
+            this.Detail.HeightF = 0F;
             this.Detail.Name = "Detail";
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
             // xrLabel21
             // 
-            this.xrLabel21.LocationFloat = new DevExpress.Utils.PointFloat(9.998608F, 228.6666F);
+            this.xrLabel21.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 22.99999F);
             this.xrLabel21.Name = "xrLabel21";
             this.xrLabel21.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel21.SizeF = new System.Drawing.SizeF(619.9997F, 23.00003F);
@@ -197,7 +196,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel20.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Observaciones")});
             this.xrLabel20.ForeColor = System.Drawing.Color.Gray;
-            this.xrLabel20.LocationFloat = new DevExpress.Utils.PointFloat(9.998608F, 205.6666F);
+            this.xrLabel20.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 0F);
             this.xrLabel20.Name = "xrLabel20";
             this.xrLabel20.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel20.SizeF = new System.Drawing.SizeF(620.0011F, 22.99998F);
@@ -208,7 +207,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrLabel34.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Chasis")});
-            this.xrLabel34.LocationFloat = new DevExpress.Utils.PointFloat(413.3331F, 136.6666F);
+            this.xrLabel34.LocationFloat = new DevExpress.Utils.PointFloat(413.3331F, 103.6666F);
             this.xrLabel34.Name = "xrLabel34";
             this.xrLabel34.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel34.SizeF = new System.Drawing.SizeF(216.6667F, 23F);
@@ -218,7 +217,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrLabel33.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Motor")});
-            this.xrLabel33.LocationFloat = new DevExpress.Utils.PointFloat(413.3331F, 113.6666F);
+            this.xrLabel33.LocationFloat = new DevExpress.Utils.PointFloat(413.3331F, 80.6666F);
             this.xrLabel33.Name = "xrLabel33";
             this.xrLabel33.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel33.SizeF = new System.Drawing.SizeF(216.6667F, 22.99999F);
@@ -228,7 +227,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrLabel32.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Padron")});
-            this.xrLabel32.LocationFloat = new DevExpress.Utils.PointFloat(413.3331F, 90.66664F);
+            this.xrLabel32.LocationFloat = new DevExpress.Utils.PointFloat(413.3331F, 57.66665F);
             this.xrLabel32.Name = "xrLabel32";
             this.xrLabel32.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel32.SizeF = new System.Drawing.SizeF(216.6667F, 23F);
@@ -238,7 +237,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrLabel31.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Color")});
-            this.xrLabel31.LocationFloat = new DevExpress.Utils.PointFloat(413.3331F, 67.66666F);
+            this.xrLabel31.LocationFloat = new DevExpress.Utils.PointFloat(413.3331F, 34.66666F);
             this.xrLabel31.Name = "xrLabel31";
             this.xrLabel31.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel31.SizeF = new System.Drawing.SizeF(216.6667F, 23F);
@@ -246,7 +245,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel30
             // 
-            this.xrLabel30.LocationFloat = new DevExpress.Utils.PointFloat(36.04166F, 67.66666F);
+            this.xrLabel30.LocationFloat = new DevExpress.Utils.PointFloat(36.04166F, 34.66666F);
             this.xrLabel30.Name = "xrLabel30";
             this.xrLabel30.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel30.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
@@ -254,7 +253,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel29
             // 
-            this.xrLabel29.LocationFloat = new DevExpress.Utils.PointFloat(36.04166F, 90.66664F);
+            this.xrLabel29.LocationFloat = new DevExpress.Utils.PointFloat(36.04166F, 57.66665F);
             this.xrLabel29.Name = "xrLabel29";
             this.xrLabel29.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel29.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
@@ -262,7 +261,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel28
             // 
-            this.xrLabel28.LocationFloat = new DevExpress.Utils.PointFloat(36.04166F, 113.6666F);
+            this.xrLabel28.LocationFloat = new DevExpress.Utils.PointFloat(36.04166F, 80.6666F);
             this.xrLabel28.Name = "xrLabel28";
             this.xrLabel28.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel28.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
@@ -270,7 +269,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel27
             // 
-            this.xrLabel27.LocationFloat = new DevExpress.Utils.PointFloat(36.04164F, 136.6666F);
+            this.xrLabel27.LocationFloat = new DevExpress.Utils.PointFloat(36.04164F, 103.6666F);
             this.xrLabel27.Name = "xrLabel27";
             this.xrLabel27.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel27.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
@@ -278,7 +277,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel26
             // 
-            this.xrLabel26.LocationFloat = new DevExpress.Utils.PointFloat(36.04164F, 159.6666F);
+            this.xrLabel26.LocationFloat = new DevExpress.Utils.PointFloat(36.04164F, 126.6666F);
             this.xrLabel26.Name = "xrLabel26";
             this.xrLabel26.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel26.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
@@ -286,7 +285,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel25
             // 
-            this.xrLabel25.LocationFloat = new DevExpress.Utils.PointFloat(342.4998F, 67.66666F);
+            this.xrLabel25.LocationFloat = new DevExpress.Utils.PointFloat(342.4998F, 34.66666F);
             this.xrLabel25.Name = "xrLabel25";
             this.xrLabel25.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel25.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
@@ -294,7 +293,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel24
             // 
-            this.xrLabel24.LocationFloat = new DevExpress.Utils.PointFloat(342.4997F, 90.66664F);
+            this.xrLabel24.LocationFloat = new DevExpress.Utils.PointFloat(342.4997F, 57.66665F);
             this.xrLabel24.Name = "xrLabel24";
             this.xrLabel24.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel24.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
@@ -302,7 +301,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel23
             // 
-            this.xrLabel23.LocationFloat = new DevExpress.Utils.PointFloat(341.6667F, 113.6666F);
+            this.xrLabel23.LocationFloat = new DevExpress.Utils.PointFloat(341.6667F, 80.6666F);
             this.xrLabel23.Name = "xrLabel23";
             this.xrLabel23.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel23.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
@@ -310,7 +309,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel22
             // 
-            this.xrLabel22.LocationFloat = new DevExpress.Utils.PointFloat(341.6667F, 136.6666F);
+            this.xrLabel22.LocationFloat = new DevExpress.Utils.PointFloat(341.6667F, 103.6666F);
             this.xrLabel22.Name = "xrLabel22";
             this.xrLabel22.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel22.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
@@ -321,7 +320,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel19.CanGrow = false;
             this.xrLabel19.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Observaciones")});
-            this.xrLabel19.LocationFloat = new DevExpress.Utils.PointFloat(36.04164F, 182.6666F);
+            this.xrLabel19.LocationFloat = new DevExpress.Utils.PointFloat(36.04164F, 149.6666F);
             this.xrLabel19.Name = "xrLabel19";
             this.xrLabel19.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel19.SizeF = new System.Drawing.SizeF(593.9581F, 23F);
@@ -331,7 +330,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrLabel18.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Anio")});
-            this.xrLabel18.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 159.6666F);
+            this.xrLabel18.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 126.6666F);
             this.xrLabel18.Name = "xrLabel18";
             this.xrLabel18.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel18.SizeF = new System.Drawing.SizeF(214.5833F, 23F);
@@ -341,7 +340,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrLabel17.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Modelo")});
-            this.xrLabel17.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 136.6666F);
+            this.xrLabel17.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 103.6666F);
             this.xrLabel17.Name = "xrLabel17";
             this.xrLabel17.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel17.SizeF = new System.Drawing.SizeF(214.5833F, 22.99998F);
@@ -351,7 +350,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrLabel16.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Marca")});
-            this.xrLabel16.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 113.6666F);
+            this.xrLabel16.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 80.6666F);
             this.xrLabel16.Name = "xrLabel16";
             this.xrLabel16.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel16.SizeF = new System.Drawing.SizeF(214.5833F, 22.99999F);
@@ -361,7 +360,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrLabel15.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Matricula")});
-            this.xrLabel15.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 90.66664F);
+            this.xrLabel15.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 57.66665F);
             this.xrLabel15.Name = "xrLabel15";
             this.xrLabel15.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel15.SizeF = new System.Drawing.SizeF(214.5833F, 23F);
@@ -371,7 +370,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             this.xrLabel14.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Vehiculo.Ficha")});
-            this.xrLabel14.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 67.66666F);
+            this.xrLabel14.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 34.66666F);
             this.xrLabel14.Name = "xrLabel14";
             this.xrLabel14.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel14.SizeF = new System.Drawing.SizeF(214.5833F, 23F);
@@ -379,7 +378,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel13
             // 
-            this.xrLabel13.LocationFloat = new DevExpress.Utils.PointFloat(249.5833F, 32.99999F);
+            this.xrLabel13.LocationFloat = new DevExpress.Utils.PointFloat(249.5833F, 0F);
             this.xrLabel13.Name = "xrLabel13";
             this.xrLabel13.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel13.SizeF = new System.Drawing.SizeF(380.4165F, 23F);
@@ -390,7 +389,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel12.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Importe.ImporteTexto")});
             this.xrLabel12.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
-            this.xrLabel12.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 32.99999F);
+            this.xrLabel12.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 0F);
             this.xrLabel12.Name = "xrLabel12";
             this.xrLabel12.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel12.SizeF = new System.Drawing.SizeF(142.7083F, 23F);
@@ -399,7 +398,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel11
             // 
-            this.xrLabel11.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 32.99999F);
+            this.xrLabel11.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 0F);
             this.xrLabel11.Name = "xrLabel11";
             this.xrLabel11.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel11.SizeF = new System.Drawing.SizeF(96.875F, 23F);
@@ -410,7 +409,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel10.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
             new DevExpress.XtraReports.UI.XRBinding("Text", null, "Cliente.Nombre")});
             this.xrLabel10.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
-            this.xrLabel10.LocationFloat = new DevExpress.Utils.PointFloat(122.5F, 10.00001F);
+            this.xrLabel10.LocationFloat = new DevExpress.Utils.PointFloat(122.5F, 0F);
             this.xrLabel10.Name = "xrLabel10";
             this.xrLabel10.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel10.SizeF = new System.Drawing.SizeF(507.4997F, 23F);
@@ -419,7 +418,7 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             // 
             // xrLabel9
             // 
-            this.xrLabel9.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 10.00001F);
+            this.xrLabel9.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 0F);
             this.xrLabel9.Name = "xrLabel9";
             this.xrLabel9.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel9.SizeF = new System.Drawing.SizeF(112.5F, 23F);
@@ -612,14 +611,23 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             this.gf_pago.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.sr_pago});
             this.gf_pago.HeightF = 45.83333F;
+            this.gf_pago.Level = 3;
             this.gf_pago.Name = "gf_pago";
+            // 
+            // sr_pago
+            // 
+            this.sr_pago.LocationFloat = new DevExpress.Utils.PointFloat(0F, 10.00001F);
+            this.sr_pago.Name = "sr_pago";
+            this.sr_pago.ReportSource = new _DXSubrepPago();
+            this.sr_pago.SizeF = new System.Drawing.SizeF(650.0002F, 23F);
+            this.sr_pago.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.sr_pago_BeforePrint);
             // 
             // GroupFooter1
             // 
             this.GroupFooter1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrLabel37,
             this.xrLabel36});
-            this.GroupFooter1.Level = 2;
+            this.GroupFooter1.Level = 5;
             this.GroupFooter1.Name = "GroupFooter1";
             // 
             // xrLabel37
@@ -660,9 +668,17 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             this.sr_promesa,
             this.xrLabel35});
             this.gf_promesa.HeightF = 96.875F;
-            this.gf_promesa.Level = 1;
+            this.gf_promesa.Level = 4;
             this.gf_promesa.Name = "gf_promesa";
             this.gf_promesa.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.gf_promesa_BeforePrint);
+            // 
+            // sr_promesa
+            // 
+            this.sr_promesa.LocationFloat = new DevExpress.Utils.PointFloat(0.0001907349F, 71.16667F);
+            this.sr_promesa.Name = "sr_promesa";
+            this.sr_promesa.ReportSource = new _DXSubrepPromesaSenia();
+            this.sr_promesa.SizeF = new System.Drawing.SizeF(650F, 23F);
+            this.sr_promesa.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.sr_promesa_BeforePrint);
             // 
             // xrLabel35
             // 
@@ -676,21 +692,150 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel35.StylePriority.UseForeColor = false;
             this.xrLabel35.Text = "DETALLES ACORDADOS PARA EL PAGO DEL SALDO";
             // 
-            // sr_pago
+            // GroupHeader1
             // 
-            this.sr_pago.LocationFloat = new DevExpress.Utils.PointFloat(0F, 10.00001F);
-            this.sr_pago.Name = "sr_pago";
-            this.sr_pago.ReportSource = new _DXSubrepPago();
-            this.sr_pago.SizeF = new System.Drawing.SizeF(650.0002F, 23F);
-            this.sr_pago.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.sr_pago_BeforePrint);
+            this.GroupHeader1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel9,
+            this.xrLabel10});
+            this.GroupHeader1.HeightF = 23.95833F;
+            this.GroupHeader1.Level = 3;
+            this.GroupHeader1.Name = "GroupHeader1";
             // 
-            // sr_promesa
+            // gf_senia_vehiculo
             // 
-            this.sr_promesa.LocationFloat = new DevExpress.Utils.PointFloat(0.0001907349F, 71.16667F);
-            this.sr_promesa.Name = "sr_promesa";
-            this.sr_promesa.ReportSource = new _DXSubrepPromesaSenia();
-            this.sr_promesa.SizeF = new System.Drawing.SizeF(650F, 23F);
-            this.sr_promesa.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.sr_promesa_BeforePrint);
+            this.gf_senia_vehiculo.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel11,
+            this.xrLabel12,
+            this.xrLabel13,
+            this.xrLabel14,
+            this.xrLabel15,
+            this.xrLabel16,
+            this.xrLabel17,
+            this.xrLabel18,
+            this.xrLabel19,
+            this.xrLabel22,
+            this.xrLabel23,
+            this.xrLabel24,
+            this.xrLabel25,
+            this.xrLabel26,
+            this.xrLabel27,
+            this.xrLabel28,
+            this.xrLabel29,
+            this.xrLabel30,
+            this.xrLabel31,
+            this.xrLabel32,
+            this.xrLabel33,
+            this.xrLabel34});
+            this.gf_senia_vehiculo.HeightF = 172.6666F;
+            this.gf_senia_vehiculo.Name = "gf_senia_vehiculo";
+            this.gf_senia_vehiculo.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.gf_senia_vehiculo_BeforePrint);
+            // 
+            // GroupFooter3
+            // 
+            this.GroupFooter3.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel20,
+            this.xrLabel21});
+            this.GroupFooter3.HeightF = 48.95833F;
+            this.GroupFooter3.Level = 2;
+            this.GroupFooter3.Name = "GroupFooter3";
+            // 
+            // gf_senia_pedido
+            // 
+            this.gf_senia_pedido.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel46,
+            this.xrLabel45,
+            this.xrLabel44,
+            this.xrLabel41,
+            this.xrLabel42,
+            this.xrLabel43,
+            this.xrLabel38,
+            this.xrLabel39,
+            this.xrLabel40});
+            this.gf_senia_pedido.Level = 1;
+            this.gf_senia_pedido.Name = "gf_senia_pedido";
+            this.gf_senia_pedido.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.gf_senia_pedido_BeforePrint);
+            // 
+            // xrLabel38
+            // 
+            this.xrLabel38.LocationFloat = new DevExpress.Utils.PointFloat(249.5833F, 0F);
+            this.xrLabel38.Name = "xrLabel38";
+            this.xrLabel38.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel38.SizeF = new System.Drawing.SizeF(380.4165F, 23F);
+            this.xrLabel38.Text = "como seña de pedido de vehículo:";
+            // 
+            // xrLabel39
+            // 
+            this.xrLabel39.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Importe.ImporteTexto")});
+            this.xrLabel39.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
+            this.xrLabel39.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 0F);
+            this.xrLabel39.Name = "xrLabel39";
+            this.xrLabel39.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel39.SizeF = new System.Drawing.SizeF(142.7083F, 23F);
+            this.xrLabel39.StylePriority.UseFont = false;
+            this.xrLabel39.Text = "xrLabel12";
+            // 
+            // xrLabel40
+            // 
+            this.xrLabel40.LocationFloat = new DevExpress.Utils.PointFloat(10.00001F, 0F);
+            this.xrLabel40.Name = "xrLabel40";
+            this.xrLabel40.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel40.SizeF = new System.Drawing.SizeF(96.875F, 23F);
+            this.xrLabel40.Text = "el equivalente  a";
+            // 
+            // xrLabel41
+            // 
+            this.xrLabel41.LocationFloat = new DevExpress.Utils.PointFloat(36.04167F, 22.99999F);
+            this.xrLabel41.Name = "xrLabel41";
+            this.xrLabel41.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel41.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
+            this.xrLabel41.Text = "Marca";
+            // 
+            // xrLabel42
+            // 
+            this.xrLabel42.LocationFloat = new DevExpress.Utils.PointFloat(36.04167F, 46F);
+            this.xrLabel42.Name = "xrLabel42";
+            this.xrLabel42.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel42.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
+            this.xrLabel42.Text = "Modelo";
+            // 
+            // xrLabel43
+            // 
+            this.xrLabel43.LocationFloat = new DevExpress.Utils.PointFloat(36.04164F, 68.99999F);
+            this.xrLabel43.Name = "xrLabel43";
+            this.xrLabel43.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel43.SizeF = new System.Drawing.SizeF(70.83334F, 23F);
+            this.xrLabel43.Text = "Color";
+            // 
+            // xrLabel44
+            // 
+            this.xrLabel44.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Pedido.Marca")});
+            this.xrLabel44.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 22.99999F);
+            this.xrLabel44.Name = "xrLabel44";
+            this.xrLabel44.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrLabel44.SizeF = new System.Drawing.SizeF(214.5833F, 23F);
+            this.xrLabel44.Text = "xrLabel44";
+            // 
+            // xrLabel45
+            // 
+            this.xrLabel45.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Pedido.Modelo")});
+            this.xrLabel45.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 45.99997F);
+            this.xrLabel45.Name = "xrLabel45";
+            this.xrLabel45.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrLabel45.SizeF = new System.Drawing.SizeF(214.5833F, 23F);
+            this.xrLabel45.Text = "xrLabel45";
+            // 
+            // xrLabel46
+            // 
+            this.xrLabel46.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Pedido.Color")});
+            this.xrLabel46.LocationFloat = new DevExpress.Utils.PointFloat(106.875F, 68.99995F);
+            this.xrLabel46.Name = "xrLabel46";
+            this.xrLabel46.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+            this.xrLabel46.SizeF = new System.Drawing.SizeF(214.5833F, 23.00001F);
+            this.xrLabel46.Text = "xrLabel46";
             // 
             // DXReciboSenia
             // 
@@ -702,7 +847,11 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
             this.PageFooter,
             this.gf_pago,
             this.GroupFooter1,
-            this.gf_promesa});
+            this.gf_promesa,
+            this.GroupHeader1,
+            this.gf_senia_vehiculo,
+            this.GroupFooter3,
+            this.gf_senia_pedido});
             this.DataSource = this.bindingSource1;
             this.Margins = new System.Drawing.Printing.Margins(100, 100, 42, 1);
             this.Version = "13.2";
@@ -736,6 +885,20 @@ public class DXReciboSenia : DevExpress.XtraReports.UI.XtraReport {
                 ll.Add(prom);
                 sr_promesa.ReportSource.DataSource = ll;
             }
+        }
+    }
+
+    private void gf_senia_vehiculo_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+        Pedido ped = (Pedido)GetCurrentColumnValue("Pedido");
+        if (ped != null && ped.Codigo > 0) {
+            gf_senia_vehiculo.Visible = false;
+        }
+    }
+
+    private void gf_senia_pedido_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+        Pedido ped = (Pedido)GetCurrentColumnValue("Pedido");
+        if (ped == null || ped.Codigo <= 0) {
+            gf_senia_pedido.Visible = false;
         }
     }
 
