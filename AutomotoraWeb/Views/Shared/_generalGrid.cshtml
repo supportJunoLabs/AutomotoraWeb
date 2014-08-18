@@ -49,6 +49,10 @@
                     settings.PreRender = (sender, e) => {
                         ((MVCxGridView)sender).StartEdit(1);
                     };
+                    settings.CellEditorInitialize = (s, e) => {
+                        ASPxEdit editor = (ASPxEdit)e.Editor;
+                        editor.ValidationSettings.Display = Display.Dynamic;
+                    };
                 }
 
                 //Ancho del combo donde se muestran las opciones elegidas

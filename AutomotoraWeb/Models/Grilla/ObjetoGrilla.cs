@@ -14,6 +14,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Mvc;
+using DevExpress.Web.ASPxEditors;
 
 
 
@@ -169,6 +170,16 @@ namespace AutomotoraWeb.Models {
                 if (GeneralUtils.isDateTime(propertyInfo, cg)) {
                     gridViewColumn.ColumnType = MVCxGridViewColumnType.DateEdit;
                     gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+                }
+
+                if (cg.ColumnType == MVCxGridViewColumnType.ComboBox) {
+                    gridViewColumn.ColumnType = MVCxGridViewColumnType.ComboBox;
+                    
+                    var comboBoxProperties = gridViewColumn.PropertiesEdit as ComboBoxProperties;
+                    comboBoxProperties.DataSource = cg.ComboBoxPropertiesDataSource;
+                    comboBoxProperties.TextField = cg.ComboBoxPropertiesTextField;
+                    comboBoxProperties.ValueField = cg.ComboBoxPropertiesValueField;
+                    comboBoxProperties.ValueType = cg.ComboBoxPropertiesValueType;
                 }
 
                 if (!string.IsNullOrWhiteSpace(cg.Formato)) {
