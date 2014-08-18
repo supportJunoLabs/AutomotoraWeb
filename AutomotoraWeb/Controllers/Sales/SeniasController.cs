@@ -160,6 +160,52 @@ namespace AutomotoraWeb.Controllers.Sales
         #endregion
 
 
+        #region DevolucionSenia
+
+        public ActionResult ReciboDev(int id) {
+            try {
+                TRSeniaDevolucion tr = new TRSeniaDevolucion();
+                tr.Senia = new Senia();
+                tr.Senia.Codigo = id;
+                tr.Consultar();
+                    
+                ViewData["idParametros"] = id;
+                return View("ReciboDev", tr.Senia);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboDev(int id) {
+            TRSeniaDevolucion tr = new TRSeniaDevolucion();
+            tr.Senia = new Senia();
+            tr.Senia.Codigo = id;
+            tr.Consultar();
+            List<TRSeniaDevolucion> ll = new List<TRSeniaDevolucion>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboSeniaDevolucion();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboDevPartial(int idParametros) {
+            XtraReport rep = _generarReciboDev(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboDev");
+        }
+
+        public ActionResult ReciboDevExport(int idParametros) {
+            XtraReport rep = _generarReciboDev(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
+
 
     }
 }

@@ -632,6 +632,46 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #endregion
 
+
+        #region TransferirVale
+
+        public ActionResult ReciboTransfVale(int id) {
+            try {
+                TRValeTransferencia tr = (TRValeTransferencia)Transaccion.ObtenerTransaccion(id);
+                ViewData["idParametros"] = id;
+                return View("ReciboTransfVale", tr.Vale);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboTransfVale(int id) {
+            TRValeTransferencia tr = (TRValeTransferencia)Transaccion.ObtenerTransaccion(id);
+            List<TRValeTransferencia> ll = new List<TRValeTransferencia>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboTransfVale();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboTransfValePartial(int idParametros) {
+            XtraReport rep = _generarReciboTransfVale(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboTransfVale");
+        }
+
+        public ActionResult ReciboTransfValeExport(int idParametros) {
+            XtraReport rep = _generarReciboTransfVale(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
+
     }
 
     public class AuxValeRenovacion {

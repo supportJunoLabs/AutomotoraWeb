@@ -422,6 +422,15 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboSeniaDevolucion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboTransfVale.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboTransfCuotas.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Transacciones\DXReciboEntradaSalidaCaja.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -2165,6 +2174,12 @@
     <Content Include="Views\Cuotas\_reciboCuota.cshtml" />
     <Content Include="Views\Vales\_reciboVale.cshtml" />
     <Content Include="Views\Vales\ReciboVale.cshtml" />
+    <Content Include="Views\Cuotas\ReciboTransfCuotas.cshtml" />
+    <Content Include="Views\Cuotas\_reciboTransfCuotas.cshtml" />
+    <Content Include="Views\Vales\ReciboTransfVale.cshtml" />
+    <Content Include="Views\Vales\_reciboTransfVale.cshtml" />
+    <Content Include="Views\Senias\_reciboDev.cshtml" />
+    <Content Include="Views\Senias\ReciboDev.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2290,6 +2305,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboSeniaDevolucion.resx">
+      <DependentUpon>DXReciboSeniaDevolucion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfVale.resx">
+      <DependentUpon>DXReciboTransfVale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfCuotas.resx">
+      <DependentUpon>DXReciboTransfCuotas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboEntradaSalidaCaja.resx">
       <DependentUpon>DXReciboEntradaSalidaCaja.cs</DependentUpon>
