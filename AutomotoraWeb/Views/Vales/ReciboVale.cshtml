@@ -1,0 +1,14 @@
+﻿@model DLL_Backend.TRValeCobro 
+@using AutomotoraWeb.Controllers.Financing;
+@{ 
+    ViewBag.Title = "Recibo Cobro Vale";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Consulta Vale", "ConsultaVale", ValesController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Vale.Codigo}))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboVale")

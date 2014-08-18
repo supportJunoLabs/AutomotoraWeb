@@ -36,6 +36,12 @@ namespace AutomotoraWeb.Controllers.Sales
         private ActionResult VistaElemento(int id) {
             try {
                 Senia td = _obtenerElemento(id);
+                if (td.EsSeniaPedido()) {
+                    ViewBag.NombreEntidad = "Seña Pedido";
+                } else {
+                    ViewBag.NombreEntidad = "Seña Vehículo";
+                }
+
                 return View(td);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;

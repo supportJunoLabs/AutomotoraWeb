@@ -190,7 +190,7 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.DetailReportEfectivo.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
             this.det_efectivo,
             this.gh_efectivo});
-            this.DetailReportEfectivo.DataMember = "Efectivo";
+            this.DetailReportEfectivo.DataMember = "Efectivos";
             this.DetailReportEfectivo.DataSource = this.bindingSource1;
             this.DetailReportEfectivo.Level = 0;
             this.DetailReportEfectivo.Name = "DetailReportEfectivo";
@@ -206,7 +206,7 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             // xrLabel1
             // 
             this.xrLabel1.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Efectivo.ImporteTexto")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Efectivos.Importe.ImporteTexto")});
             this.xrLabel1.Font = new System.Drawing.Font("Times New Roman", 9F);
             this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(12.08334F, 0F);
             this.xrLabel1.Name = "xrLabel1";
@@ -214,7 +214,6 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel1.SizeF = new System.Drawing.SizeF(130.2084F, 16F);
             this.xrLabel1.StylePriority.UseFont = false;
             this.xrLabel1.StylePriority.UseTextAlignment = false;
-            this.xrLabel1.Text = "xrLabel1";
             this.xrLabel1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
             // 
             // gh_efectivo

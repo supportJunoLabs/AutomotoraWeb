@@ -243,6 +243,7 @@
     <Compile Include="Controllers\Financing\CajaController.cs" />
     <Compile Include="Controllers\Financing\ConsultasFinController.cs" />
     <Compile Include="Controllers\Financing\FinancistasController.cs" />
+    <Compile Include="Controllers\Financing\CuotasController.cs" />
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
     <Compile Include="Controllers\Financing\ValesController.cs" />
     <Compile Include="Controllers\Sistema\PefilesController.cs" />
@@ -419,6 +420,15 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboEntradaSalidaCaja.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboCobroCuotas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboCobroVale.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Reports\Transacciones\DXReciboVentaEntrega.cs">
@@ -2043,6 +2053,8 @@
     <Content Include="Views\ChEmitidos\_chequesDebitar.cshtml" />
     <Content Include="Views\Cheques\ReportCheque.cshtml" />
     <Content Include="Views\Cheques\_reportCheque.cshtml" />
+    <Content Include="Views\Caja\ReciboCaja.cshtml" />
+    <Content Include="Views\Caja\_reciboCaja.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
@@ -2149,11 +2161,14 @@
     <Content Include="Views\Ventas\ReciboAnulacion.cshtml" />
     <Content Include="Views\Ventas\ReciboEntrega.cshtml" />
     <Content Include="Views\Ventas\_reciboEntrega.cshtml" />
+    <Content Include="Views\Cuotas\ReciboCuota.cshtml" />
+    <Content Include="Views\Cuotas\_reciboCuota.cshtml" />
+    <Content Include="Views\Vales\_reciboVale.cshtml" />
+    <Content Include="Views\Vales\ReciboVale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
-    <Folder Include="Views\Cuotas\" />
     <Folder Include="Views\Shared\PagosEfectivo\" />
   </ItemGroup>
   <ItemGroup>
@@ -2275,6 +2290,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboEntradaSalidaCaja.resx">
+      <DependentUpon>DXReciboEntradaSalidaCaja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboCobroCuotas.resx">
+      <DependentUpon>DXReciboCobroCuotas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboCobroVale.resx">
+      <DependentUpon>DXReciboCobroVale.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboVentaEntrega.resx">
       <DependentUpon>DXReciboVentaEntrega.cs</DependentUpon>

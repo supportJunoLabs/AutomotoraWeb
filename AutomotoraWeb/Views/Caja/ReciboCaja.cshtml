@@ -1,0 +1,13 @@
+﻿@using AutomotoraWeb.Controllers.Financing;
+@{ 
+    ViewBag.Title = "Recibo Entrada / Salida Caja";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Volver", FinancingController.INDEX, FinancingController.BCONTROLLER).Class("btn btn-default"))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboCaja")

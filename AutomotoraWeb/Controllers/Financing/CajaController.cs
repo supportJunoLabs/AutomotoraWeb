@@ -139,5 +139,45 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
         #endregion
 
+
+        #region EntradaSalida
+
+        public ActionResult ReciboCaja(int id) {
+            try {
+                //Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id);
+                ViewData["idParametros"] = id;
+                return View("ReciboCaja");
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboCaja(int id) {
+            Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id);
+            List<Transaccion> ll = new List<Transaccion>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboEntradaSalidaCaja();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboCajaPartial(int idParametros) {
+            XtraReport rep = _generarReciboCaja(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboCaja");
+        }
+
+        public ActionResult ReciboCajaExport(int idParametros) {
+            XtraReport rep = _generarReciboCaja(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
+
     }
 }
