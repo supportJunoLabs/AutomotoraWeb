@@ -54,6 +54,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Controller = CONTROLLER;
+            ViewBag.Monedas = Moneda.Monedas;
 
             string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
             Session[idSession] = venta;
@@ -76,6 +77,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Controller = CONTROLLER;
+            ViewBag.Monedas = Moneda.Monedas;
 
             string idSession = SessionUtils.generarIdVarSesion("VentaVehiculoX", Session[SessionUtils.SESSION_USER].ToString()) + "|";
             Session[idSession] = venta;
@@ -156,6 +158,9 @@ namespace AutomotoraWeb.Controllers.Sales
             Cheque cheque = new Cheque();
             cheque.Banco = "Banco1";
             cheque.Codigo = 1;
+            Importe importe = new Importe();
+            importe.Monto = 1;
+            cheque.Importe = importe;
             listCheque.Add(cheque);
 
             //venta.Pago.agregarCheque(cheque);
@@ -179,6 +184,8 @@ namespace AutomotoraWeb.Controllers.Sales
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosCheque_AddNewRowRouteValues(Cheque cheque) {
 
+            eliminarValidacionesIgnorablesCheque(cheque);
+
             List<Cheque> listCheque = new List<Cheque>();
 
             if (ModelState.IsValid) {
@@ -191,12 +198,14 @@ namespace AutomotoraWeb.Controllers.Sales
                 ViewData["EditError"] = "Please, correct all errors.";
             }
 
-            return PartialView("EditModesPartial", listCheque);
+            return PartialView("_grillaPagosCheque", listCheque);
         }
 
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosCheque_UpdateRowRouteValues(Cheque cheque) {
-                            
+
+            eliminarValidacionesIgnorablesCheque(cheque);
+
             List<Cheque> listCheque = new List<Cheque>();
 
             if (ModelState.IsValid) {
@@ -208,7 +217,7 @@ namespace AutomotoraWeb.Controllers.Sales
             } else
                 ViewData["EditError"] = "Please, correct all errors.";
 
-            return PartialView("EditModesPartial", listCheque);
+            return PartialView("_grillaPagosCheque", listCheque);
         }
 
         [HttpPost, ValidateInput(false)]
@@ -223,7 +232,11 @@ namespace AutomotoraWeb.Controllers.Sales
                     ViewData["EditError"] = e.Message;
                 }
             }
-            return PartialView("EditModesPartial", listCheque);
+            return PartialView("_grillaPagosCheque", listCheque);
+        }
+
+        private void eliminarValidacionesIgnorablesCheque(Cheque cheque) {
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(cheque.Importe.Moneda));
         }
 
         #endregion

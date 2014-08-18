@@ -1,4 +1,5 @@
 ﻿using DevExpress.Web.ASPxGridView;
+using DevExpress.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,15 @@ namespace AutomotoraWeb.Models {
 
         public bool TotalSuma { get; set; }
 
+        //----------------------------------------------------
+
+        public MVCxGridViewColumnType ColumnType { get; set; }
+        public object ComboBoxPropertiesDataSource  { get; set; }
+        public String ComboBoxPropertiesTextField  { get; set; }
+        public String ComboBoxPropertiesValueField  { get; set; }
+        public Type ComboBoxPropertiesValueType  { get; set; }
+
+        //----------------------------------------------------
 
 
         public ColumnaGrilla(){

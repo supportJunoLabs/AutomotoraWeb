@@ -2,18 +2,126 @@
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Bank;
 @using AutomotoraWeb.Models;
+@using System.Web.UI.WebControls;
+@using DLL_Backend;
 
 @{
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+    
+    
+    var grid = Html.DevExpress().GridView(
+        settings =>
+        {
+            settings.Name = "grillaPagosCheque";
+            settings.KeyFieldName = "IdLinea";
+            settings.CallbackRouteValues = new { Controller = ViewBag.Controller, Action = "grillaPagosCheque" };
+            settings.CustomActionRouteValues = new { Controller = ViewBag.Controller, Action = "grillaPagosCheque_CustomActionRouteValues" };
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = ViewBag.Controller, Action = "grillaPagosCheque_AddNewRowRouteValues" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = ViewBag.Controller, Action = "grillaPagosCheque_UpdateRowRouteValues" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = ViewBag.Controller, Action = "grillaPagosCheque_DeleteRowRouteValues" };
+            settings.ClientSideEvents.BeginCallback = "function(s, e){ OnBeginCallback(s, e); }";
+            settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+            settings.SettingsBehavior.ConfirmDelete = true;
+            settings.SettingsPopup.EditForm.Width = 600;
+            //settings.Width = Unit.Percentage(100);
+
+            settings.CommandColumn.Visible = true;
+            settings.CommandColumn.ShowNewButton = true;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.CommandColumn.ShowEditButton = true;
+
+            
+            settings.Columns.Add(column => {
+                column.FieldName = "Banco";
+                column.Caption = "Banco";
+                column.Width = Unit.Pixel(100);     
+                column.ColumnType = MVCxGridViewColumnType.Default;
+            });
+            
+            settings.Columns.Add(column => {
+                column.FieldName = "Librador";
+                column.Caption = "Librador";
+                column.Width = Unit.Pixel(100);     
+                column.ColumnType = MVCxGridViewColumnType.Default;
+            });
+            
+            settings.Columns.Add(column => {
+                column.FieldName = "NumeroCheque";
+                column.Caption = "Numero de Cheque";
+                column.Width = Unit.Pixel(100);     
+                column.ColumnType = MVCxGridViewColumnType.Default;
+            });
+            
+            settings.Columns.Add(column => {
+                column.FieldName = "FechaValor";
+                column.Caption = "Emisión";
+                column.Width = Unit.Pixel(100);   
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+            });
+            
+            settings.Columns.Add(column => {
+                column.FieldName = "FechaVencimiento";
+                column.Caption = "Vencimiento";
+                column.Width = Unit.Pixel(100);   
+                column.ColumnType = MVCxGridViewColumnType.DateEdit;
+            });
+
+            settings.Columns.Add(column => {
+                column.FieldName = "Importe.Moneda.Simbolo";
+                column.Caption = "Moneda";
+
+                column.ColumnType = MVCxGridViewColumnType.ComboBox;
+                var comboBoxProperties = column.PropertiesEdit as ComboBoxProperties;
+                comboBoxProperties.DataSource = ViewBag.Monedas;
+                comboBoxProperties.TextField = "Importe.Moneda.Simbolo";
+                comboBoxProperties.ValueField = "Importe.Moneda.Codigo";
+                comboBoxProperties.ValueType = typeof(int);
+            });
+
+            settings.Columns.Add(column => {
+                column.FieldName = "Importe.Monto";
+                column.Caption = "Monto";
+                column.Width = Unit.Pixel(100);
+                column.ColumnType = MVCxGridViewColumnType.Default;
+            });
+            
+            settings.Columns.Add(column => {
+                column.FieldName = "Observaciones";
+                column.Caption = "Observaciones";
+                column.Width = Unit.Pixel(100);     
+                column.ColumnType = MVCxGridViewColumnType.Default;
+            });
+            
+            settings.PreRender = (sender, e) => {
+                ((MVCxGridView)sender).StartEdit(1);
+            };
+            settings.CellEditorInitialize = (s, e) => {
+                ASPxEdit editor = (ASPxEdit)e.Editor;
+                editor.ValidationSettings.Display = Display.Dynamic;
+            };
+
+            settings.SettingsPager.PageSize = 4;
+        });
+
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+
+@grid.Bind(Model).GetHtml()
+
+@*@{
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
             new ColumnaGrilla {Campo="Banco", Ancho=100},
             new ColumnaGrilla {Campo="Cuenta", Ancho=100},
-            new ColumnaGrilla {Campo="DetalleOrigen", Ancho=100},
-            new ColumnaGrilla {Campo="FechaValor", Ancho=100},
-            new ColumnaGrilla {Campo="FechaVencimiento", Ancho=100},
-            new ColumnaGrilla {Campo="Importe", Ancho=100},
             new ColumnaGrilla {Campo="Librador", Ancho=100},
             new ColumnaGrilla {Campo="NumeroCheque", Ancho=100},
+            new ColumnaGrilla {Campo="FechaValor", Ancho=100},
+            new ColumnaGrilla {Campo="FechaVencimiento", Ancho=100},
+            new ColumnaGrilla {Campo="Importe.Moneda", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = ViewBag.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Importe.Monto", Ancho=100, Titulo="Monto"},
             new ColumnaGrilla {Campo="Observaciones", Ancho=150}
     };
     
@@ -37,5 +145,5 @@
 }
 
 
-@Html.Partial("_generalGrid", Model)
+@Html.Partial("_generalGrid", Model)*@
 
