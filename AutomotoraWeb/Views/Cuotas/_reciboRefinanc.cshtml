@@ -1,0 +1,16 @@
+﻿@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoReporte ir = new InfoReporte();
+    ir.AccionReporte = "ReciboRefinancPartial";
+    ir.Controlador = CuotasController.CONTROLLER;
+    ir.AccionExportacion = "ReciboRefinancExport";
+    ir.TieneIdParametros= true;
+
+    ViewBag.InfoReporte = ir;
+    }
+
+@Html.Partial("_generalReport")
+
+

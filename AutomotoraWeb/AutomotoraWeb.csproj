@@ -422,6 +422,12 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboFinancistaPago.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboRefinanciacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Transacciones\DXReciboSeniaDevolucion.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -2180,6 +2186,10 @@
     <Content Include="Views\Vales\_reciboTransfVale.cshtml" />
     <Content Include="Views\Senias\_reciboDev.cshtml" />
     <Content Include="Views\Senias\ReciboDev.cshtml" />
+    <Content Include="Views\Cuotas\_reciboRefinanc.cshtml" />
+    <Content Include="Views\Cuotas\ReciboRefinanc.cshtml" />
+    <Content Include="Views\Financistas\ReciboPago.cshtml" />
+    <Content Include="Views\Financistas\_reciboPago.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2305,6 +2315,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboFinancistaPago.resx">
+      <DependentUpon>DXReciboFinancistaPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboRefinanciacion.resx">
+      <DependentUpon>DXReciboRefinanciacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboSeniaDevolucion.resx">
       <DependentUpon>DXReciboSeniaDevolucion.cs</DependentUpon>
