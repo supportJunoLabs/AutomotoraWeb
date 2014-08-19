@@ -167,8 +167,7 @@ namespace AutomotoraWeb.Controllers.Sales
                 TRSeniaDevolucion tr = new TRSeniaDevolucion();
                 tr.Senia = new Senia();
                 tr.Senia.Codigo = id;
-                tr.Consultar();
-                    
+                //tr.Consultar();  solo usa elcodigo en la vista
                 ViewData["idParametros"] = id;
                 return View("ReciboDev", tr.Senia);
             } catch (UsuarioException exc) {

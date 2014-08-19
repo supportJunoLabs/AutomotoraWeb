@@ -1,0 +1,16 @@
+﻿@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+@{
+    InfoReporte ir = new InfoReporte();
+    ir.AccionReporte = "ReciboAnulacionPartial";
+    ir.Controlador = AcvsController.CONTROLLER;
+    ir.AccionExportacion = "ReciboAnulacionExport";
+    ir.TieneIdParametros= true;
+
+    ViewBag.InfoReporte = ir;
+    }
+
+@Html.Partial("_generalReport")
+
+

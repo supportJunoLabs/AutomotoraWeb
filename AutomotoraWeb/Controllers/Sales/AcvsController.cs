@@ -184,7 +184,80 @@ namespace AutomotoraWeb.Controllers.Sales
         }
         #endregion
 
+        #region Crear
 
+        public ActionResult Recibo(int id) {
+            ACuentaVenta acv = new ACuentaVenta();
+            acv.Codigo = id;
+            ViewData["idParametros"] = id;
+            return View("Recibo", acv);
+        }
+
+        private XtraReport _generarRecibo(int id) {
+            ACuentaVenta acv = new ACuentaVenta();
+            acv.Codigo = id;
+            acv.Consultar();
+            List<ACuentaVenta> ll = new List<ACuentaVenta>();
+            ll.Add(acv);
+            XtraReport rep = new DXReciboACV();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboPartial(int idParametros) {
+            XtraReport rep = _generarRecibo(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_recibo");
+        }
+
+        public ActionResult ReciboExport(int idParametros) {
+            XtraReport rep = _generarRecibo(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+
+        }
+
+        #endregion
+
+        #region Anular
+
+        public ActionResult ReciboAnulacion(int id) {
+            TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();
+            tr.Acv= new ACuentaVenta();
+            tr.Acv.Codigo = id;
+            ViewData["idParametros"] = id;
+            return View("ReciboAnulacion", tr.Acv);
+        }
+
+        private XtraReport _generarReciboAnulacion(int id) {
+            TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();
+            tr.Acv = new ACuentaVenta();
+            tr.Acv.Codigo = id;
+            tr.Consultar();
+            List<TRACuentaVentaAnulacion> ll = new List<TRACuentaVentaAnulacion>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboACVAnulacion();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboAnulacionPartial(int idParametros) {
+            XtraReport rep = _generarReciboAnulacion(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboAnulacion");
+        }
+
+        public ActionResult ReciboAnulacionExport(int idParametros) {
+            XtraReport rep = _generarReciboAnulacion(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
 
     }
 }

@@ -422,6 +422,12 @@
     <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboACVAnulacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Transacciones\DXReciboACV.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Transacciones\DXReciboFinancistaPago.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -2070,6 +2076,10 @@
     <Content Include="Views\Cheques\_reportCheque.cshtml" />
     <Content Include="Views\Caja\ReciboCaja.cshtml" />
     <Content Include="Views\Caja\_reciboCaja.cshtml" />
+    <Content Include="Views\Acvs\_recibo.cshtml" />
+    <Content Include="Views\Acvs\Recibo.cshtml" />
+    <Content Include="Views\Acvs\_reciboAnulacion.cshtml" />
+    <Content Include="Views\Acvs\ReciboAnulacion.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
@@ -2315,6 +2325,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboACVAnulacion.resx">
+      <DependentUpon>DXReciboACVAnulacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboACV.resx">
+      <DependentUpon>DXReciboACV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Transacciones\DXReciboFinancistaPago.resx">
       <DependentUpon>DXReciboFinancistaPago.cs</DependentUpon>
