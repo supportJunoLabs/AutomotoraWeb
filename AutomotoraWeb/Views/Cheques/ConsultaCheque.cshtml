@@ -142,7 +142,7 @@
 }
 
 
-
+@{ if (Model.VehiculoOrigen!=null){
 <div class="display-label">
     @Html.LabelForRequired(model => model.VehiculoOrigen)
 </div>
@@ -152,8 +152,9 @@
        }   }
 </div>
 <div class="clear-both"></div>
+}}
 
-
+@{ if (Model.Sucursal!=null){
 <div class="display-label">
     @Html.LabelForRequired(model => model.Sucursal)
 </div>
@@ -161,7 +162,7 @@
     @Html.Bootstrap().ActionLink(Model.Sucursal.Nombre, BaseController.DETAILS, SucursalesController.CONTROLLER).RouteValues(new { id = Model.Sucursal.Codigo })
 </div>
 <div class="clear-both"></div>
-
+}}
 
 <div class="espacio2"></div>
 

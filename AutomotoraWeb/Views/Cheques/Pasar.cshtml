@@ -11,7 +11,7 @@
     bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
 }
 
-FALTA MODO DE PAGO DE IMPORTE RECIBIDO (IDEM A PASAR VALE) Y AJUSTAR EL BACKEND PARA ESTO QUE QUEDO DESHABILTIADO
+FALTA MODO DE PAGO DE IMPORTE RECIBIDO (IDEM A PASAR VALE) 
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
@@ -27,22 +27,22 @@ FALTA MODO DE PAGO DE IMPORTE RECIBIDO (IDEM A PASAR VALE) Y AJUSTAR EL BACKEND 
     </div>
     <div class="renglon-alto editor-field-xlarge">
         <div class="floatLeft">
-            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Cheque.ChequesTransferibles(), GridLookUpCodigo=Model.Cheque.Codigo  };}
-            @Html.Partial("_selectChequePasar", gmodel )
+            @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Cheque.ChequesTransferibles(), GridLookUpCodigo = Model.Cheque.Codigo };}
+            @Html.Partial("_selectChequePasar", gmodel)
         </div>
         <div class="floatLeft" style="margin-left: 5px">
             @Html.ValidationMessageFor(model => model.Cheque.Codigo)
         </div>
         <div class="floatLeft" style="padding-left: 20px;">
             <a href="#" id="abtn_verCheque">
-                  @Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Consulta Cheque").Id("btn_verCheque")
+                @Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Consulta Cheque").Id("btn_verCheque")
             </a>
         </div>
         @Html.HiddenFor(model => model.Cheque.Codigo, new { id = "codigoCheque" })
 
     </div>
     <div class="clear-both"></div>
-    <div class="block" style="height:80px; padding-top:10px; padding-left:10px; margin-right:10px">
+    <div class="block" style="height: 80px; padding-top: 10px; padding-left: 10px; margin-right: 10px">
         <div>
             <div class="renglon-alto display-label">
                 @Html.RadioButtonFor(model => model.TipoDestino, TRChequePasar.TIPO_DESTINO.FINANCISTA, new { id = "rb_financista" })  Financista
@@ -62,15 +62,24 @@ FALTA MODO DE PAGO DE IMPORTE RECIBIDO (IDEM A PASAR VALE) Y AJUSTAR EL BACKEND 
             </div>
         </div>
     </div>
-    
     <div class="clear-both"></div>
+    
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Importe) *
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayImporteFor(model => model.Importe, modoConsulta)
+        @Html.ValidationMessageFor(model => model.Importe.Monto)
+    </div>
+    <div class="clear-both"></div>    
+    
         
     <div>
         <div class="display-label">
             @Html.LabelForRequired(model => model.Sucursal)
         </div>
-        <div class="editor-field editor-field-xlarge xxlarge  @(modoConsulta?"":"renglon-alto")">
-            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta||!cambiarSucursal, model => model.Sucursal.Nombre,
+        <div class="editor-field editor-field-xlarge xxlarge  @(modoConsulta ? "" : "renglon-alto")">
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta || !cambiarSucursal, model => model.Sucursal.Nombre,
                 new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
                 new { id = "ddlSucursales", @class = "large" })
             @Html.ValidationMessageFor(model => model.Sucursal)
