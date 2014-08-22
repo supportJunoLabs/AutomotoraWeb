@@ -18,10 +18,10 @@
 <div id="filtros" class="block">
     <div class="btn-toolbar botoneraListado">
         <div class="floatLeft" style="padding-left: 20px;">
-            @Html.Bootstrap().ActionLinkButton("Actualizar", "ConsultaCheque").Class("btn-primary ").RouteValues(new { id=Model.Codigo})
+            @Html.Bootstrap().ActionLinkButton("Actualizar", "ConsultaCheque").Class("btn-primary ").RouteValues(new { id = Model.Codigo })
         </div>
         <div class="btn-group" style="margin-left: 10px">
-            @Html.Bootstrap().ActionLinkButton("Imprimir", "ReportCheque").Class("btn-primary2-mf").Id("btn_imprimir").RouteValues(new{id=Model.Codigo})
+            @Html.Bootstrap().ActionLinkButton("Imprimir", "ReportCheque").Class("btn-primary2-mf").Id("btn_imprimir").RouteValues(new { id = Model.Codigo })
         </div>
     </div>
 </div>
@@ -88,8 +88,8 @@
 </div>
 <div class="editor-field ">
     <strong>
-    <div>@Html.DisplayFor(model => model.DescripcionEstado)</div>
-        </strong>
+        <div>@Html.DisplayFor(model => model.DescripcionEstado)</div>
+    </strong>
     <div>@Html.DisplayFor(model => model.DescripcionAdicionalDestino)</div>
 </div>
 <div class="clear-both"></div>
@@ -117,32 +117,44 @@
 </div>
 <div class="editor-field">
     @Html.DisplayFor(model => model.DetalleOrigen)
-    
+
 </div>
 <div class="clear-both"></div>
 
 
-<div class="display-label">
-    @Html.LabelForRequired(model => model.ClienteOrigen)
-</div>
-<div class="editor-field">
-    @{ if (Model.ClienteOrigen!=null){
-        @Html.Bootstrap().ActionLink(Model.ClienteOrigen.Nombre, BaseController.DETAILS, ClientesController.CONTROLLER).RouteValues(new { id = Model.ClienteOrigen.Codigo })
-    }}
-</div>
-<div class="clear-both"></div>
+@{ if (!string.IsNullOrEmpty(Model.OriginadorNombre)) {
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.OriginadorNombre)
+    </div>
+    <div class="editor-field">
+        @{if (Model.ClienteOrigen!=null){
+                @Html.Bootstrap().ActionLink(Model.ClienteOrigen.Nombre, BaseController.DETAILS, ClientesController.CONTROLLER).RouteValues(new { id = Model.ClienteOrigen.Codigo })
+        }
+       if (Model.FinancistaOrigen!=null){
+            <span>
+                @Html.Bootstrap().ActionLink(Model.FinancistaOrigen.Nombre, BaseController.DETAILS, FinancistasController.CONTROLLER).RouteValues(new { id = Model.FinancistaOrigen.Codigo })
+            </span>
+        }
+        }
+    </div>
+    <div class="clear-both"></div>
+   }
+}
 
+
+@{ if (Model.VehiculoOrigen!=null){
 <div class="display-label">
     @Html.LabelForRequired(model => model.VehiculoOrigen)
 </div>
 <div class="editor-field">
-    @{ if (Model.VehiculoOrigen!=null){
-     @Html.Bootstrap().ActionLink(Model.VehiculoOrigen.Ficha, BaseController.DETAILS, VehiculosController.CONTROLLER).RouteValues(new { id = Model.VehiculoOrigen.Codigo })
-    }   }
+    @{ if (Model.VehiculoOrigen != null) {
+        @Html.Bootstrap().ActionLink(Model.VehiculoOrigen.Ficha, BaseController.DETAILS, VehiculosController.CONTROLLER).RouteValues(new { id = Model.VehiculoOrigen.Codigo })
+       }   }
 </div>
 <div class="clear-both"></div>
+}}
 
-
+@{ if (Model.Sucursal!=null){
 <div class="display-label">
     @Html.LabelForRequired(model => model.Sucursal)
 </div>
@@ -150,7 +162,7 @@
     @Html.Bootstrap().ActionLink(Model.Sucursal.Nombre, BaseController.DETAILS, SucursalesController.CONTROLLER).RouteValues(new { id = Model.Sucursal.Codigo })
 </div>
 <div class="clear-both"></div>
-
+}}
 
 <div class="espacio2"></div>
 

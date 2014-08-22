@@ -63,5 +63,83 @@ namespace AutomotoraWeb.Controllers.Financing
 
         #endregion
 
+
+        #region TransferirCuotas
+
+        public ActionResult ReciboTransfCuotas(int id) {
+            try {
+                TRCuotaTransferencia tr = (TRCuotaTransferencia)Transaccion.ObtenerTransaccion(id);
+                ViewData["idParametros"] = id;
+                return View("ReciboTransfCuotas", tr.NroOperacion);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboTransfCuotas(int id) {
+            TRCuotaTransferencia tr = (TRCuotaTransferencia)Transaccion.ObtenerTransaccion(id);
+            List<TRCuotaTransferencia> ll = new List<TRCuotaTransferencia>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboTransfCuotas();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboTransfCuotasPartial(int idParametros) {
+            XtraReport rep = _generarReciboTransfCuotas(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboTransfCuotas");
+        }
+
+        public ActionResult ReciboTransfCuotasExport(int idParametros) {
+            XtraReport rep = _generarReciboTransfCuotas(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
+
+        #region RefinanciarCuotas
+
+        public ActionResult ReciboRefinanc(int id) {
+            try {
+                TRRefinanciacion tr = (TRRefinanciacion)Transaccion.ObtenerTransaccion(id);
+                ViewData["idParametros"] = id;
+                return View("ReciboRefinanc", tr.Venta);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboRefinanc(int id) {
+            TRRefinanciacion tr = (TRRefinanciacion)Transaccion.ObtenerTransaccion(id);
+            List<TRRefinanciacion> ll = new List<TRRefinanciacion>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboRefinanciacion();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboRefinancPartial(int idParametros) {
+            XtraReport rep = _generarReciboRefinanc(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboRefinanc");
+        }
+
+        public ActionResult ReciboRefinancExport(int idParametros) {
+            XtraReport rep = _generarReciboRefinanc(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
     }
 }

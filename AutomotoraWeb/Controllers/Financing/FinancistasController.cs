@@ -262,5 +262,44 @@ namespace AutomotoraWeb.Controllers.Financing
 
         #endregion
 
+        #region PagoFinancista
+
+        public ActionResult ReciboPago(int id) {
+            try {
+                TRFinancistaPago tr = (TRFinancistaPago)Transaccion.ObtenerTransaccion(id);
+                ViewData["idParametros"] = id;
+                return View("ReciboPago", tr.Financista);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboPago(int id) {
+            TRFinancistaPago tr = (TRFinancistaPago)Transaccion.ObtenerTransaccion(id);
+            List<TRFinancistaPago> ll = new List<TRFinancistaPago>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboFinancistaPago();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboPagoPartial(int idParametros) {
+            XtraReport rep = _generarReciboPago(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboPago");
+        }
+
+        public ActionResult ReciboPagoExport(int idParametros) {
+            XtraReport rep = _generarReciboPago(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
+
     }
 }

@@ -642,6 +642,42 @@ namespace AutomotoraWeb.Controllers.Bank {
             model.Opciones = Cheque.ChequesRechazados();
             return PartialView("_selectChequeCanjear", model);
         }
+
+        public ActionResult ReciboCanje(int id) {
+            try {
+                ViewData["idParametros"] = id;
+                TRChequeRechazadoCanje tr = (TRChequeRechazadoCanje)Transaccion.ObtenerTransaccion(id);
+                return View("ReciboCanje", tr);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboCanje(int id) {
+            TRChequeRechazadoCanje tr = (TRChequeRechazadoCanje)Transaccion.ObtenerTransaccion(id);
+            List<TRChequeRechazadoCanje> ll = new List<TRChequeRechazadoCanje>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboCanjeCheque();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboCanjePartial(int idParametros) {
+            XtraReport rep = _generarReciboCanje(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboCanje");
+        }
+
+        public ActionResult ReciboCanjeExport(int idParametros) {
+            XtraReport rep = _generarReciboCanje(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
         #endregion
 
     }

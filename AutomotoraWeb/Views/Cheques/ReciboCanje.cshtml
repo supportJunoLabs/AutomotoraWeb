@@ -1,0 +1,16 @@
+﻿@model DLL_Backend.TRChequeRechazadoCanje
+@using AutomotoraWeb.Controllers.Bank;
+
+@{ 
+    ViewBag.Title = "Canje Cheque Rechazado";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Consulta Cheque", "ConsultaCheque", ChequesController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Cheque.Codigo}))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboCanje")

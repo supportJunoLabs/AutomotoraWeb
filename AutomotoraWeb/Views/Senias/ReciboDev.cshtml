@@ -1,0 +1,14 @@
+﻿@model DLL_Backend.Senia 
+@using AutomotoraWeb.Controllers.Sales;
+@{ 
+    ViewBag.Title = "Recibo Devolucion Seña";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="btn-toolbar">
+    @(Html.Bootstrap().ActionLinkButton("Consulta Seña", "details", SeniasController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboDev")

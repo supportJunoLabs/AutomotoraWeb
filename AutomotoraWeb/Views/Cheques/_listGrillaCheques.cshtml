@@ -10,8 +10,7 @@
 @{
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-        new ColumnaGrilla {Campo="ClienteOrigen.Nombre", Ancho=200, Titulo="Cliente", LargoMax=40,
-                    Hipervinculo=true, Haccion="details", Hcontrolador="Clientes", HCampoParametro="ClienteOrigen.Codigo"},
+        new ColumnaGrilla {Campo="OriginadorNombre", Ancho=200, Titulo="Origen", LargoMax=40},
         new ColumnaGrilla {Campo="VehiculoOrigen", Ancho=70, Titulo = "Ficha", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
                 Hipervinculo=true, Haccion="details", Hcontrolador="Vehiculos", HCampoParametro="VehiculoOrigen.Codigo"},
         new ColumnaGrilla {Campo="FechaVencimiento", Ancho=100, Titulo="Vencimiento"},

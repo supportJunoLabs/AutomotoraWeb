@@ -1,0 +1,14 @@
+﻿@model DLL_Backend.Financista
+@using AutomotoraWeb.Controllers.Financing;
+@{ 
+    ViewBag.Title = "Recibo Pago Financista";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<div class="btn-toolbar">
+     @(Html.Bootstrap().ActionLinkButton("Consulta Situacion", "ConsultaSituacion", FinancistasController.CONTROLLER).RouteValues(new { id = Model.Codigo }))
+</div>
+<div class="clear-both"></div>
+
+
+@Html.Partial("_reciboPago")

@@ -851,12 +851,17 @@ public class _DXSubrepPago : DevExpress.XtraReports.UI.XtraReport {
             this.Font = new System.Drawing.Font("Times New Roman", 9F);
             this.Margins = new System.Drawing.Printing.Margins(100, 100, 0, 2);
             this.Version = "13.2";
+            this.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this._DXSubrepPago_BeforePrint);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
     }
 
     #endregion
+
+    private void _DXSubrepPago_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+
+    }
 
     //se hace automaticamente al setear ReportPrintOptions.PrintOnEmptyDataSource = false;
     //private void DetailReportEfectivo_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
