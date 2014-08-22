@@ -167,6 +167,8 @@ namespace AutomotoraWeb.Controllers.Sales
 
             //return venta.Pago.Cheques;
 
+            ViewBag.Monedas = Moneda.Monedas;
+
             return listCheque;
         }
 
