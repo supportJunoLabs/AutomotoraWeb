@@ -246,6 +246,7 @@
     <Compile Include="Controllers\Financing\CuotasController.cs" />
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
     <Compile Include="Controllers\Financing\ValesController.cs" />
+    <Compile Include="Controllers\General\MetodosDePagoController.cs" />
     <Compile Include="Controllers\Sistema\PefilesController.cs" />
     <Compile Include="Controllers\Sistema\PermisosController.cs" />
     <Compile Include="Controllers\Sistema\UsuariosController.cs" />

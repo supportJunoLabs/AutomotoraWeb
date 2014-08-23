@@ -10,6 +10,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
+using DevExpress.Web.ASPxGridView;
 
 namespace AutomotoraWeb.Controllers.Bank {
     public class ChequesController : BankController {
@@ -123,7 +124,6 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         #endregion
-
 
         #region ConsultaCheque
 
@@ -621,7 +621,6 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #endregion
 
-
         #region CanjearChequeRechazado
 
         public ActionResult CanjeRechazado() {
@@ -679,6 +678,8 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         #endregion
+
+       
 
     }
 }
