@@ -46,6 +46,8 @@ namespace AutomotoraWeb.Controllers.General
 
             if (ModelState.IsValid) {
                 try {
+                    int maxIdLinea = listCheque.Count > 0 ? listCheque.Max(c => c.IdLinea) : 0;
+                    cheque.IdLinea = maxIdLinea + 1;
                     listCheque.Add(cheque);
                 } catch (Exception e) {
                     ViewData["EditError"] = e.Message;
