@@ -16,6 +16,9 @@ namespace AutomotoraWeb.Utils {
         //public static string ULTIMO_MODULO = "ultimoModulo";
         public static string CODIGO_VEHICULO= "codigoVehiculo";
 
+        public static string VENTA = "venta";
+        public static string CHEQUES = "cheques";
+
         public static string generarIdVarSesion(string nomFuncion, string nomUsuario) {
             string s = nomFuncion+"|" +
                  nomUsuario + "|" +

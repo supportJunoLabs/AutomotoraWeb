@@ -44,12 +44,6 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Sucursal = new Sucursal();
             venta.Pago.AgregarEfectivos(new List<Efectivo>());
 
-            List<Cheque> listCheque = new List<Cheque>();
-            Cheque cheque = new Cheque();
-            cheque.Banco = "Banco1";
-            cheque.Codigo = 1;
-            venta.Pago.agregarCheque(cheque);
-
             ViewData["idParametros"] = "0"; // Para grillas que necesitan id de la venta
 
             ViewBag.Sucursales = Sucursal.Sucursales;
@@ -59,6 +53,8 @@ namespace AutomotoraWeb.Controllers.Sales
             string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
             Session[idSession] = venta;
             ViewData["idSession"] = idSession;
+
+            Session[idSession + SessionUtils.CHEQUES] = venta.Pago.Cheques;
 
             return View(venta);
         }
