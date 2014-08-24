@@ -26,10 +26,10 @@ namespace AutomotoraWeb.Controllers.General
 
         }
 
-        public ActionResult EditModesPartial() {
-            List<Cheque> listCheque = new List<Cheque>();
-            return PartialView("EditModesPartial", listCheque);
-        }
+        //public ActionResult EditModesPartial() {
+        //    List<Cheque> listCheque = new List<Cheque>();
+        //    return PartialView("EditModesPartial", listCheque);
+        //}
 
         public ActionResult grillaPagosCheque_CustomActionRouteValues(GridViewEditingMode editMode) {
             //GridViewEditingDemosHelper.EditMode = editMode;
@@ -122,6 +122,113 @@ namespace AutomotoraWeb.Controllers.General
         }
 
         #endregion
+
+        //===============================================================================================================
+
+        #region Efectivo
+
+        public ActionResult grillaPagosEfectivo(string idSession) {
+            return PartialView("_grillaPagosEfectivo", _listaPagosEfectivo(idSession));
+        }
+
+        private List<Efectivo> _listaPagosEfectivo(string idSession) {
+
+            List<Efectivo> listPagosEfectivo = (List<Efectivo>)(Session[idSession + SessionUtils.EFECTIVO]);
+            ViewBag.Monedas = Moneda.Monedas;
+            return listPagosEfectivo;
+
+        }
+
+        //public ActionResult EditModesPartial() {
+        //    List<Efectivo> listEfectivo = new List<Efectivo>();
+        //    return PartialView("EditModesPartial", listEfectivo);
+        //}
+
+        public ActionResult grillaPagosEfectivo_CustomActionRouteValues(GridViewEditingMode editMode) {
+            //GridViewEditingDemosHelper.EditMode = editMode;
+            List<Efectivo> listEfectivo = new List<Efectivo>();
+            return PartialView("EditModesPartial", listEfectivo);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosEfectivo_AddNewRowRouteValues(Efectivo efectivo, string idSession) {
+
+            eliminarValidacionesIgnorablesEfectivo(efectivo);
+
+            List<Efectivo> listEfectivo = _listaPagosEfectivo(idSession);
+
+            if (ModelState.IsValid) {
+                try {
+                    int maxIdLinea = listEfectivo.Count > 0 ? listEfectivo.Max(c => c.IdLinea) : 0;
+                    efectivo.IdLinea = maxIdLinea + 1;
+                    listEfectivo.Add(efectivo);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Please, correct all errors.";
+            }
+
+            return PartialView("_grillaPagosEfectivo", listEfectivo);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosEfectivo_UpdateRowRouteValues(Efectivo efectivo, string idSession) {
+
+            eliminarValidacionesIgnorablesEfectivo(efectivo);
+
+            List<Efectivo> listEfectivo = _listaPagosEfectivo(idSession);
+
+            if (ModelState.IsValid) {
+                try {
+
+                    Moneda monedaElejida =
+                        (from m in Moneda.Monedas
+                         where (m.Codigo == efectivo.Importe.Moneda.Codigo)
+                         select m).First<Moneda>();
+
+                    Efectivo efectivoEditado =
+                        (from c in listEfectivo
+                         where (c.IdLinea == efectivo.IdLinea)
+                         select c).First<Efectivo>();
+
+                    efectivoEditado.Importe.Monto = efectivo.Importe.Monto;
+                    efectivoEditado.Importe.Moneda = monedaElejida;
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else
+                ViewData["EditError"] = "Please, correct all errors.";
+
+            return PartialView("_grillaPagosEfectivo", listEfectivo);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosEfectivo_DeleteRowRouteValues(int IdLinea, string idSession) {
+
+            List<Efectivo> listEfectivo = _listaPagosEfectivo(idSession);
+
+            if (IdLinea >= 0) {
+                try {
+                    Efectivo efectivoEliminado =
+                        (from c in listEfectivo
+                         where (c.IdLinea == IdLinea)
+                         select c).First<Efectivo>();
+                    listEfectivo.Remove(efectivoEliminado);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("_grillaPagosEfectivo", listEfectivo);
+        }
+
+        private void eliminarValidacionesIgnorablesEfectivo(Efectivo efectivo) {
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(efectivo.Importe.Moneda));
+        }
+
+        #endregion
+
+        //===============================================================================================================
 
         public override string getParentControllerName() {
             return "BaseController";

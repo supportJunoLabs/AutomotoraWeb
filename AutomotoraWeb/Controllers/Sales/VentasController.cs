@@ -55,6 +55,7 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewData["idSession"] = idSession;
 
             Session[idSession + SessionUtils.CHEQUES] = venta.Pago.Cheques;
+            Session[idSession + SessionUtils.EFECTIVO] = venta.Pago.Efectivos;
 
             return View(venta);
         }
@@ -79,6 +80,9 @@ namespace AutomotoraWeb.Controllers.Sales
             Session[idSession] = venta;
             ViewData["idSession"] = idSession;
 
+            Session[idSession + SessionUtils.CHEQUES] = venta.Pago.Cheques;
+            Session[idSession + SessionUtils.EFECTIVO] = venta.Pago.Efectivos;
+
             return View("ventaVehiculo", venta);
         }
 
@@ -99,149 +103,6 @@ namespace AutomotoraWeb.Controllers.Sales
             td.Consultar();
             return td;
         }
-
-        //--------------------------METODOS Pagos Efectivo  -----------------------------
-
-        #region PagosEfectivo
-
-        [HttpPost]
-        public JsonResult addPagoEfectivo(Efectivo efectivo, String idSession) {
-
-            try {
-                Venta venta = (Venta)(Session[idSession]);
-                efectivo.Importe.Moneda.Consultar();
-                venta.Pago.AgregarEfectivo(efectivo);
-                
-                return createJsonResultPagoEfectivo(venta.Pago.Efectivos);
-            } catch (UsuarioException exc) {
-                List<String> errores1 = new List<string>();
-                errores1.Add(exc.Message);
-                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
-            }
-
-        }
-
-        private JsonResult createJsonResultPagoEfectivo(IEnumerable<Efectivo> listEfectivo) { // Paso la lista de importes por si hay que devolver el total
-            return Json(new {
-                Result = "OK",
-            });
-        }
-
-        public ActionResult grillaPagosEfectivo(string idSession, int idParametros) {
-            return PartialView("_grillaPagosEfectivo", _listaPagosEfectivo(idSession));
-        }
-
-        private IEnumerable<Efectivo> _listaPagosEfectivo(string idSession) {
-            Venta venta = (Venta)(Session[idSession]);
-            return venta.Pago.Efectivos;
-        }
-
-        #endregion
-
-        //----------------------------------------------------------------------------------------
-        //----------------------------------------------------------------------------------------
-
-        //#region Cheques
-
-        //public ActionResult grillaPagosCheque(string idSession, int idParametros) {
-        //    return PartialView("_grillaPagosCheque", _listaPagosCheque(idSession));
-        //}
-
-        //private List<Cheque> _listaPagosCheque(string idSession) {
-        //    Venta venta = (Venta)(Session[idSession]);
-
-        //    List<Cheque> listCheque = new List<Cheque>();
-        //    Cheque cheque = new Cheque();
-        //    cheque.Banco = "Banco1";
-        //    cheque.Codigo = 1;
-        //    Importe importe = new Importe();
-        //    importe.Monto = 1;
-        //    cheque.Importe = importe;
-        //    listCheque.Add(cheque);
-
-        //    //venta.Pago.agregarCheque(cheque);
-
-        //    //return venta.Pago.Cheques;
-
-        //    ViewBag.Monedas = Moneda.Monedas;
-
-        //    return listCheque;
-        //}
-
-        //public ActionResult EditModesPartial() {
-        //    List<Cheque> listCheque = new List<Cheque>();
-        //    return PartialView("EditModesPartial", listCheque);
-        //}
-
-        //public ActionResult grillaPagosCheque_CustomActionRouteValues(GridViewEditingMode editMode) {
-        //    //GridViewEditingDemosHelper.EditMode = editMode;
-        //    List<Cheque> listCheque = new List<Cheque>();
-        //    return PartialView("EditModesPartial", listCheque);
-        //}
-
-        //[HttpPost, ValidateInput(false)]
-        //public ActionResult grillaPagosCheque_AddNewRowRouteValues(Cheque cheque) {
-
-        //    eliminarValidacionesIgnorablesCheque(cheque);
-
-        //    List<Cheque> listCheque = new List<Cheque>();
-
-        //    if (ModelState.IsValid) {
-        //        try {
-        //            listCheque.Add(cheque);
-        //        } catch (Exception e) {
-        //            ViewData["EditError"] = e.Message;
-        //        }
-        //    } else {
-        //        ViewData["EditError"] = "Please, correct all errors.";
-        //    }
-
-        //    return PartialView("_grillaPagosCheque", listCheque);
-        //}
-
-        //[HttpPost, ValidateInput(false)]
-        //public ActionResult grillaPagosCheque_UpdateRowRouteValues(Cheque cheque) {
-
-        //    eliminarValidacionesIgnorablesCheque(cheque);
-
-        //    List<Cheque> listCheque = new List<Cheque>();
-
-        //    if (ModelState.IsValid) {
-        //        try {
-        //            listCheque.Add(cheque);
-        //        } catch (Exception e) {
-        //            ViewData["EditError"] = e.Message;
-        //        }
-        //    } else
-        //        ViewData["EditError"] = "Please, correct all errors.";
-
-        //    return PartialView("_grillaPagosCheque", listCheque);
-        //}
-
-        //[HttpPost, ValidateInput(false)]
-        //public ActionResult grillaPagosCheque_DeleteRowRouteValues(int codigo) {
-
-        //    List<Cheque> listCheque = new List<Cheque>();
-
-        //    if (codigo >= 0) {
-        //        try {
-        //            // TODO: Delete
-        //        } catch (Exception e) {
-        //            ViewData["EditError"] = e.Message;
-        //        }
-        //    }
-        //    return PartialView("_grillaPagosCheque", listCheque);
-        //}
-
-        //private void eliminarValidacionesIgnorablesCheque(Cheque cheque) {
-        //    this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(cheque.Importe.Moneda));
-        //}
-
-        //#endregion
-
-        //----------------------------------------------------------------------------------------
-        //----------------------------------------------------------------------------------------
-
 
         //--------------------------METODOS PARA LISTADOS DE Ventas  -----------------------------
 

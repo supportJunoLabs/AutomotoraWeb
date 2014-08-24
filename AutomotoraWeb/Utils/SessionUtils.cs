@@ -18,6 +18,8 @@ namespace AutomotoraWeb.Utils {
 
         public static string VENTA = "venta";
         public static string CHEQUES = "cheques";
+        public static string EFECTIVO = "efectivo";
+
 
         public static string generarIdVarSesion(string nomFuncion, string nomUsuario) {
             string s = nomFuncion+"|" +

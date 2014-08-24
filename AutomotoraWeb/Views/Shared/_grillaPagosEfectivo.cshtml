@@ -1,25 +1,31 @@
-﻿@model IEnumerable<DLL_Backend.Efectivo>
+﻿@model List<Efectivo>
 @using AutomotoraWeb.Helpers;
 @using AutomotoraWeb.Controllers.Bank;
 @using AutomotoraWeb.Models;
+@using System.Web.UI.WebControls;
+@using DLL_Backend;
+
 
 @{
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-            new ColumnaGrilla {Campo="Moneda", Ancho=80},
-            new ColumnaGrilla {Campo="Monto", Ancho=100}
+            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = ViewBag.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Importe.Monto", Ancho=100, Titulo="Monto"},
     };
     
     ig.NameGrid = "grillaPagosEfectivo";
-    ig.Controller = ViewBag.Controller;
+    ig.Controller = "MetodosDePago";
     ig.ActionCallbackRoute = "grillaPagosEfectivo";
     ig.KeyFieldName = "IdLinea";
-    ig.TypeOfModel = typeof(DLL_Backend.Efectivo);
-    ig.DobleClick = true;
+    ig.TypeOfModel = typeof(Efectivo.EfectivoMD);
     ig.BotonesMtoEstandar = true;
-    ig.AccionesAlComienzo = true;
     ig.registrosPorPagina = 4;
     ig.OnBeginCallback = "OnBeginCallback";
+    ig.CustomActionRouteValues = "grillaPagosEfectivo_CustomActionRouteValues";
+    ig.AddNewRowRouteValues = "grillaPagosEfectivo_AddNewRowRouteValues";
+    ig.UpdateRowRouteValues = "grillaPagosEfectivo_UpdateRowRouteValues";
+    ig.DeleteRowRouteValues = "grillaPagosEfectivo_DeleteRowRouteValues";
+    ig.BotonesMtoEstandar = false;
     
     ViewBag.InfoGrilla = ig;
 }
