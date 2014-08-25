@@ -2206,6 +2206,7 @@
     <Content Include="Views\Cuotas\ReciboRefinanc.cshtml" />
     <Content Include="Views\Financistas\ReciboPago.cshtml" />
     <Content Include="Views\Financistas\_reciboPago.cshtml" />
+    <Content Include="Views\Shared\_grillaPagosMovBanco.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

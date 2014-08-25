@@ -1,0 +1,38 @@
+﻿@model List<MovBanco>
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Models;
+@using System.Web.UI.WebControls;
+@using DLL_Backend;
+
+
+@{
+    InfoGrilla ig= new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Cuenta.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = CuentaBancaria.CuentasBancarias, ComboBoxPropertiesTextField = "Banco", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="ImporteMov.Monto", Ancho=100, Titulo="Monto"},
+            new ColumnaGrilla {Campo="ImporteMov.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="FechaMov", Ancho=100},
+            new ColumnaGrilla {Campo="ConceptoMov", Ancho=100},
+            new ColumnaGrilla {Campo="DescripcionMov", Ancho=100}
+    };
+    
+    
+    ig.NameGrid = "grillaPagosMovBanco";
+    ig.Controller = "MetodosDePago";
+    ig.ActionCallbackRoute = "grillaPagosMovBanco";
+    ig.KeyFieldName = "IdLinea";
+    ig.TypeOfModel = typeof(MovBanco.MovBancoMD);
+    ig.BotonesMtoEstandar = true;
+    ig.registrosPorPagina = 4;
+    ig.OnBeginCallback = "OnBeginCallback";
+    ig.CustomActionRouteValues = "grillaPagosMovBanco_CustomActionRouteValues";
+    ig.AddNewRowRouteValues = "grillaPagosMovBanco_AddNewRowRouteValues";
+    ig.UpdateRowRouteValues = "grillaPagosMovBanco_UpdateRowRouteValues";
+    ig.DeleteRowRouteValues = "grillaPagosMovBanco_DeleteRowRouteValues";
+    ig.BotonesMtoEstandar = false;
+    
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)

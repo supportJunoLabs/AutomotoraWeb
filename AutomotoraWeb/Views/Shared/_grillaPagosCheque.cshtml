@@ -15,7 +15,7 @@
             new ColumnaGrilla {Campo="NumeroCheque", Ancho=100},
             new ColumnaGrilla {Campo="FechaValor", Ancho=100},
             new ColumnaGrilla {Campo="FechaVencimiento", Ancho=100},
-            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = ViewBag.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
             new ColumnaGrilla {Campo="Importe.Monto", Ancho=100, Titulo="Monto"},
             new ColumnaGrilla {Campo="Observaciones", Ancho=150}
     };

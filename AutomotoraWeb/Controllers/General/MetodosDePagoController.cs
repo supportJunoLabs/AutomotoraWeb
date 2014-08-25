@@ -21,7 +21,6 @@ namespace AutomotoraWeb.Controllers.General
         private List<Cheque> _listaPagosCheque(string idSession) {
 
             List<Cheque> listPagosCheques = (List<Cheque>)(Session[idSession + SessionUtils.CHEQUES]);
-            ViewBag.Monedas = Moneda.Monedas;
             return listPagosCheques;
 
         }
@@ -134,7 +133,6 @@ namespace AutomotoraWeb.Controllers.General
         private List<Efectivo> _listaPagosEfectivo(string idSession) {
 
             List<Efectivo> listPagosEfectivo = (List<Efectivo>)(Session[idSession + SessionUtils.EFECTIVO]);
-            ViewBag.Monedas = Moneda.Monedas;
             return listPagosEfectivo;
 
         }
@@ -224,6 +222,116 @@ namespace AutomotoraWeb.Controllers.General
 
         private void eliminarValidacionesIgnorablesEfectivo(Efectivo efectivo) {
             this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(efectivo.Importe.Moneda));
+        }
+
+        #endregion
+
+        //===============================================================================================================
+
+        #region Movimientos Bancarios
+
+        public ActionResult grillaPagosMovBanco(string idSession) {
+            return PartialView("_grillaPagosMovBanco", _listaPagosMovBanco(idSession));
+        }
+
+        private List<MovBanco> _listaPagosMovBanco(string idSession) {
+
+            List<MovBanco> listPagosMovBanco = (List<MovBanco>)(Session[idSession + SessionUtils.MOV_BANCARIO]);
+            return listPagosMovBanco;
+
+        }
+
+        //public ActionResult EditModesPartial() {
+        //    List<MovBanco> listMovBanco = new List<MovBanco>();
+        //    return PartialView("EditModesPartial", listMovBanco);
+        //}
+
+        public ActionResult grillaPagosMovBanco_CustomActionRouteValues(GridViewEditingMode editMode) {
+            //GridViewEditingDemosHelper.EditMode = editMode;
+            List<MovBanco> listMovBanco = new List<MovBanco>();
+            return PartialView("EditModesPartial", listMovBanco);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosMovBanco_AddNewRowRouteValues(MovBanco movBanco, string idSession) {
+
+            eliminarValidacionesIgnorablesMovBanco(movBanco);
+
+            List<MovBanco> listMovBanco = _listaPagosMovBanco(idSession);
+
+            if (ModelState.IsValid) {
+                try {
+                    int maxIdLinea = listMovBanco.Count > 0 ? listMovBanco.Max(c => c.IdLinea) : 0;
+                    movBanco.IdLinea = maxIdLinea + 1;
+
+                    movBanco.Cuenta.Consultar();
+                    movBanco.ImporteMov.Moneda = movBanco.Cuenta.Moneda;
+
+                    listMovBanco.Add(movBanco);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Please, correct all errors.";
+            }
+
+            return PartialView("_grillaPagosMovBanco", listMovBanco);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosMovBanco_UpdateRowRouteValues(MovBanco movBanco, string idSession) {
+
+            eliminarValidacionesIgnorablesMovBanco(movBanco);
+
+            List<MovBanco> listMovBanco = _listaPagosMovBanco(idSession);
+
+            if (ModelState.IsValid) {
+                try {
+
+                    MovBanco movBancoEditado =
+                        (from c in listMovBanco
+                         where (c.IdLinea == movBanco.IdLinea)
+                         select c).First<MovBanco>();
+
+                    movBancoEditado.Cuenta.Consultar();
+                    movBancoEditado.ImporteMov.Moneda = movBanco.Cuenta.Moneda;
+                    movBancoEditado.ImporteMov.Monto = movBanco.ImporteMov.Monto;
+                    movBancoEditado.FechaMov = movBanco.FechaMov;
+                    movBancoEditado.ConceptoMov = movBanco.ConceptoMov;
+                    movBancoEditado.DescripcionMov = movBanco.DescripcionMov;
+
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else
+                ViewData["EditError"] = "Please, correct all errors.";
+
+            return PartialView("_grillaPagosMovBanco", listMovBanco);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosMovBanco_DeleteRowRouteValues(int IdLinea, string idSession) {
+
+            List<MovBanco> listMovBanco = _listaPagosMovBanco(idSession);
+
+            if (IdLinea >= 0) {
+                try {
+                    MovBanco MovBancoEliminado =
+                        (from c in listMovBanco
+                         where (c.IdLinea == IdLinea)
+                         select c).First<MovBanco>();
+                    listMovBanco.Remove(MovBancoEliminado);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("_grillaPagosMovBanco", listMovBanco);
+        }
+
+        private void eliminarValidacionesIgnorablesMovBanco(MovBanco movBanco) {
+            this.eliminarValidacionesIgnorables("ImporteMov.Moneda", MetadataManager.IgnorablesDDL(movBanco.ImporteMov.Moneda));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(movBanco.Cuenta));
+            this.eliminarValidacionesIgnorables("TipoMov", MetadataManager.IgnorablesDDL(movBanco.TipoMov));
         }
 
         #endregion

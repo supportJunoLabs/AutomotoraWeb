@@ -9,8 +9,8 @@
 @{
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = ViewBag.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
-            new ColumnaGrilla {Campo="Importe.Monto", Ancho=100, Titulo="Monto"},
+            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Importe.Monto", Ancho=100, Titulo="Monto"}
     };
     
     ig.NameGrid = "grillaPagosEfectivo";

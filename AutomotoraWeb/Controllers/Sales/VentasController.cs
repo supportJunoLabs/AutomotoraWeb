@@ -44,18 +44,7 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Sucursal = new Sucursal();
             venta.Pago.AgregarEfectivos(new List<Efectivo>());
 
-            ViewData["idParametros"] = "0"; // Para grillas que necesitan id de la venta
-
-            ViewBag.Sucursales = Sucursal.Sucursales;
-            ViewBag.Controller = CONTROLLER;
-            ViewBag.Monedas = Moneda.Monedas;
-
-            string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
-            Session[idSession] = venta;
-            ViewData["idSession"] = idSession;
-
-            Session[idSession + SessionUtils.CHEQUES] = venta.Pago.Cheques;
-            Session[idSession + SessionUtils.EFECTIVO] = venta.Pago.Efectivos;
+            prepararSession(venta); 
 
             return View(venta);
         }
@@ -70,20 +59,23 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
 
-            ViewData["idParametros"] = venta.Codigo.ToString(); // Para grillas que necesitan id de la venta
+            prepararSession(venta); 
 
+            return View("ventaVehiculo", venta);
+        }
+
+        private void prepararSession(Venta venta) {
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Controller = CONTROLLER;
-            ViewBag.Monedas = Moneda.Monedas;
 
-            string idSession = SessionUtils.generarIdVarSesion("VentaVehiculoX", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
             Session[idSession] = venta;
             ViewData["idSession"] = idSession;
+            ViewData["idParametros"] = venta.Codigo; // Para grillas que necesitan id de la venta
 
             Session[idSession + SessionUtils.CHEQUES] = venta.Pago.Cheques;
             Session[idSession + SessionUtils.EFECTIVO] = venta.Pago.Efectivos;
-
-            return View("ventaVehiculo", venta);
+            Session[idSession + SessionUtils.MOV_BANCARIO] = venta.Pago.PagosBanco;
         }
 
         private ActionResult VistaElemento(int id) {
