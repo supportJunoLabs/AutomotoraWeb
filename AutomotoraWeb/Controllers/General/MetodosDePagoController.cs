@@ -179,7 +179,6 @@ namespace AutomotoraWeb.Controllers.General
 
             if (ModelState.IsValid) {
                 try {
-
                     Moneda monedaElejida =
                         (from m in Moneda.Monedas
                          where (m.Codigo == efectivo.Importe.Moneda.Codigo)
@@ -332,6 +331,113 @@ namespace AutomotoraWeb.Controllers.General
             this.eliminarValidacionesIgnorables("ImporteMov.Moneda", MetadataManager.IgnorablesDDL(movBanco.ImporteMov.Moneda));
             this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(movBanco.Cuenta));
             this.eliminarValidacionesIgnorables("TipoMov", MetadataManager.IgnorablesDDL(movBanco.TipoMov));
+        }
+
+        #endregion
+
+        //===============================================================================================================
+
+        #region Vales
+
+        public ActionResult grillaPagosVale(string idSession) {
+            return PartialView("_grillaPagosVale", _listaPagosVale(idSession));
+        }
+
+        private List<Vale> _listaPagosVale(string idSession) {
+
+            List<Vale> listPagosVale = (List<Vale>)(Session[idSession + SessionUtils.VALES]);
+            return listPagosVale;
+
+        }
+
+        //public ActionResult EditModesPartial() {
+        //    List<Vale> listVale = new List<Vale>();
+        //    return PartialView("EditModesPartial", listVale);
+        //}
+
+        public ActionResult grillaPagosVale_CustomActionRouteValues(GridViewEditingMode editMode) {
+            //GridViewEditingDemosHelper.EditMode = editMode;
+            List<Vale> listVale = new List<Vale>();
+            return PartialView("EditModesPartial", listVale);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosVale_AddNewRowRouteValues(Vale vale, string idSession) {
+
+            eliminarValidacionesIgnorablesVale(vale);
+
+            List<Vale> listVale = _listaPagosVale(idSession);
+
+            if (ModelState.IsValid) {
+                try {
+                    int maxIdLinea = listVale.Count > 0 ? listVale.Max(c => c.IdLinea) : 0;
+                    vale.IdLinea = maxIdLinea + 1;
+                    listVale.Add(vale);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Please, correct all errors.";
+            }
+
+            return PartialView("_grillaPagosVale", listVale);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosVale_UpdateRowRouteValues(Vale vale, string idSession) {
+
+            eliminarValidacionesIgnorablesVale(vale);
+
+            List<Vale> listVale = _listaPagosVale(idSession);
+
+            if (ModelState.IsValid) {
+                try {
+
+                    Moneda monedaElejida =
+                        (from m in Moneda.Monedas
+                         where (m.Codigo == vale.Importe.Moneda.Codigo)
+                         select m).First<Moneda>();
+
+                    Vale valeEditado =
+                        (from c in listVale
+                         where (c.IdLinea == vale.IdLinea)
+                         select c).First<Vale>();
+
+                    valeEditado.Vencimiento = vale.Vencimiento;
+                    valeEditado.Importe.Monto = vale.Importe.Monto;
+                    valeEditado.Importe.Moneda = monedaElejida;
+                    valeEditado.Observaciones = vale.Observaciones;
+
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else
+                ViewData["EditError"] = "Please, correct all errors.";
+
+            return PartialView("_grillaPagosVale", listVale);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosVale_DeleteRowRouteValues(int IdLinea, string idSession) {
+
+            List<Vale> listVale = _listaPagosVale(idSession);
+
+            if (IdLinea >= 0) {
+                try {
+                    Vale ValeEliminado =
+                        (from c in listVale
+                         where (c.IdLinea == IdLinea)
+                         select c).First<Vale>();
+                    listVale.Remove(ValeEliminado);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("_grillaPagosVale", listVale);
+        }
+
+        private void eliminarValidacionesIgnorablesVale(Vale vale) {
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(vale.Importe.Moneda));
         }
 
         #endregion

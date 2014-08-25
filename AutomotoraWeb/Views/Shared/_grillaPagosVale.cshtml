@@ -1,0 +1,35 @@
+﻿@model List<Vale>
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Models;
+@using System.Web.UI.WebControls;
+@using DLL_Backend;
+
+
+@{
+    InfoGrilla ig= new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Importe.Monto", Ancho=100, Titulo="Monto"},
+            new ColumnaGrilla {Campo="Vencimiento", Ancho=100, Titulo="Vencimiento"},
+            new ColumnaGrilla {Campo="Observaciones", Ancho=100, Titulo="Observaciones"}
+    };
+    
+    ig.NameGrid = "grillaPagosVale";
+    ig.Controller = "MetodosDePago";
+    ig.ActionCallbackRoute = "grillaPagosVale";
+    ig.KeyFieldName = "IdLinea";
+    ig.TypeOfModel = typeof(Vale.ValeMD);
+    ig.BotonesMtoEstandar = true;
+    ig.registrosPorPagina = 4;
+    ig.OnBeginCallback = "OnBeginCallback";
+    ig.CustomActionRouteValues = "grillaPagosVale_CustomActionRouteValues";
+    ig.AddNewRowRouteValues = "grillaPagosVale_AddNewRowRouteValues";
+    ig.UpdateRowRouteValues = "grillaPagosVale_UpdateRowRouteValues";
+    ig.DeleteRowRouteValues = "grillaPagosVale_DeleteRowRouteValues";
+    ig.BotonesMtoEstandar = false;
+    
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)

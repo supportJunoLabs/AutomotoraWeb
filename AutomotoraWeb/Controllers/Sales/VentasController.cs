@@ -73,9 +73,21 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewData["idSession"] = idSession;
             ViewData["idParametros"] = venta.Codigo; // Para grillas que necesitan id de la venta
 
+            List<Vale> listVale = null;
+
+            if (venta.Vehiculo.Codigo != 0) {
+                PrecondicionesVenta precondicionesVenta = venta.Vehiculo.ObtenerPrecondicionesVenta();
+                listVale = precondicionesVenta.Vales;
+            } else {
+                listVale = new List<Vale>();
+            }
+            
             Session[idSession + SessionUtils.CHEQUES] = venta.Pago.Cheques;
             Session[idSession + SessionUtils.EFECTIVO] = venta.Pago.Efectivos;
             Session[idSession + SessionUtils.MOV_BANCARIO] = venta.Pago.PagosBanco;
+            Session[idSession + SessionUtils.VALES] = listVale;
+
+            ViewBag.Vales = listVale;
         }
 
         private ActionResult VistaElemento(int id) {

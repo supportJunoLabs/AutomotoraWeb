@@ -1,1 +1,17 @@
-﻿_seleccionMPVales
+﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+<div id="contenedorSeleccionMPVales">
+    <div>
+        @Html.Partial("_grillaPagosVale", (List<Vale>)(ViewBag.Vales))
+    </div>
+
+    <script type="text/javascript">
+        function OnBeginCallback(s, e) {
+            e.customArgs["idSession"] = '@ViewData["idSession"]';
+            e.customArgs["idParametros"] = '@ViewData["idParametros"]';
+        }
+    </script>
+</div>
