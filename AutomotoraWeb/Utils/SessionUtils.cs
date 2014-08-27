@@ -21,6 +21,7 @@ namespace AutomotoraWeb.Utils {
         public static string EFECTIVO = "efectivo";
         public static string MOV_BANCARIO = "movBanco";
         public static string VALES = "vales";
+        public static string CUOTAS = "cuota";
 
 
         public static string generarIdVarSesion(string nomFuncion, string nomUsuario) {

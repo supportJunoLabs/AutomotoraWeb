@@ -35,16 +35,31 @@
 
                 if (ig.CustomActionRouteValues != null) {
                     settings.CustomActionRouteValues = new { Controller = ig.Controller, Action = ig.CustomActionRouteValues };
-                    settings.SettingsEditing.AddNewRowRouteValues = new { Controller = ig.Controller, Action = ig.AddNewRowRouteValues };
-                    settings.SettingsEditing.UpdateRowRouteValues = new { Controller = ig.Controller, Action = ig.UpdateRowRouteValues };
-                    settings.SettingsEditing.DeleteRowRouteValues = new { Controller = ig.Controller, Action = ig.DeleteRowRouteValues };
+
+                    if (ig.AddNewRowRouteValues != null) {
+                        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = ig.Controller, Action = ig.AddNewRowRouteValues };
+                    }
+                    if (ig.UpdateRowRouteValues != null) {
+                        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = ig.Controller, Action = ig.UpdateRowRouteValues };
+                    }
+                    if (ig.DeleteRowRouteValues != null) {
+                        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = ig.Controller, Action = ig.DeleteRowRouteValues };
+                    }
+                    
                     settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
                     settings.SettingsBehavior.ConfirmDelete = true;
                     settings.Width = Unit.Percentage(100);
                     settings.CommandColumn.Visible = true;
-                    settings.CommandColumn.ShowNewButton = true;
-                    settings.CommandColumn.ShowDeleteButton = true;
-                    settings.CommandColumn.ShowEditButton = true;
+                    
+                    if (ig.AddNewRowRouteValues != null) {
+                        settings.CommandColumn.ShowNewButton = true;
+                    }
+                    if (ig.UpdateRowRouteValues != null){
+                        settings.CommandColumn.ShowEditButton = true;
+                    }
+                    if (ig.DeleteRowRouteValues != null) {
+                        settings.CommandColumn.ShowDeleteButton = true;
+                    }
 
                     settings.PreRender = (sender, e) => {
                         ((MVCxGridView)sender).StartEdit(1);

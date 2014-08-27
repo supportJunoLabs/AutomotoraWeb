@@ -81,13 +81,17 @@ namespace AutomotoraWeb.Controllers.Sales
             } else {
                 listVale = new List<Vale>();
             }
-            
+
+            List<Cuota> listCuota = new List<Cuota>();
+
             Session[idSession + SessionUtils.CHEQUES] = venta.Pago.Cheques;
             Session[idSession + SessionUtils.EFECTIVO] = venta.Pago.Efectivos;
             Session[idSession + SessionUtils.MOV_BANCARIO] = venta.Pago.PagosBanco;
             Session[idSession + SessionUtils.VALES] = listVale;
+            Session[idSession + SessionUtils.CUOTAS] = listCuota;
 
             ViewBag.Vales = listVale;
+            ViewBag.Cuotas = listCuota;
         }
 
         private ActionResult VistaElemento(int id) {
@@ -107,6 +111,66 @@ namespace AutomotoraWeb.Controllers.Sales
             td.Consultar();
             return td;
         }
+
+        //----------------------------------------------------------------------------------------
+
+        
+        [HttpPost]
+        public JsonResult cambiarFinanciacion(int cantCuotas, double tasa, Importe importe, string idSession) {
+            //List<Cuota> listCuota = (List<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
+
+            //validacion del controller
+            List<String> errors = this.validateAtributesFinanciacion(cantCuotas, tasa, importe);
+            if (errors.Count > 0) {
+                return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+            }
+
+            //envio al backend
+            try {
+                //listCuota.Add(cuota);
+
+                Financiacion f = new Financiacion(importe, cantCuotas, tasa, "");
+                f.generarCuotasVenta(DateTime.Now);
+                List<Cuota> listCuota = new List<Cuota>();
+                foreach (Cuota cuota in f.CuotasOriginales) {
+                    listCuota.Add(cuota);
+                }
+                Session[idSession + SessionUtils.CUOTAS] = listCuota;
+
+                return Json(new { Result = "OK"  });
+            } catch (UsuarioException exc) {
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
+            }
+
+        }
+
+
+        private List<String> validateAtributesFinanciacion(int cantCuotas, double tasa, Importe importe) {
+
+            List<String> errors = new List<String>();
+
+            if (tasa == null) {
+                errors.Add("El campo Tasa es obligatorio");
+            }
+
+            if (cantCuotas <= 0) {
+                errors.Add("El campo Número es obligatorio, y debe ser mayor a 0");
+            }
+
+            if ((importe == null) || (importe.Monto <= 0)) {
+                errors.Add("El campo Monto es obligatorio, y debe ser mayor a 0");
+            }
+
+            if ((importe == null) || (importe.Moneda == null) || (importe.Moneda.Codigo == 0)) {
+                errors.Add("El campo Moneda es obligatorio");
+            }
+
+            return errors;
+        }
+
+        //----------------------------------------------------------------------------------------
 
         //--------------------------METODOS PARA LISTADOS DE Ventas  -----------------------------
 
