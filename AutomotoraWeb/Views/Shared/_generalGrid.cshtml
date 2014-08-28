@@ -19,6 +19,8 @@
 
     ObjetoGrilla og = new ObjetoGrilla();
     og.inicializarObjetoGrilla(ig, ViewContext, @Html, @Url);
+    
+    int accionesEdicion=0;
 
     if (ig.TipoControl == InfoGrilla.TIPO_CONTROL.GRILLA) {
 
@@ -38,12 +40,19 @@
 
                     if (ig.AddNewRowRouteValues != null) {
                         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = ig.Controller, Action = ig.AddNewRowRouteValues };
+                        settings.CommandColumn.ShowNewButton = true;
+                        accionesEdicion++;
                     }
                     if (ig.UpdateRowRouteValues != null) {
                         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = ig.Controller, Action = ig.UpdateRowRouteValues };
+
+                        settings.CommandColumn.ShowEditButton = true;
+                        accionesEdicion++;
                     }
                     if (ig.DeleteRowRouteValues != null) {
                         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = ig.Controller, Action = ig.DeleteRowRouteValues };
+                        settings.CommandColumn.ShowDeleteButton = true;
+                        accionesEdicion++;
                     }
                     
                     settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
@@ -51,15 +60,15 @@
                     settings.Width = Unit.Percentage(100);
                     settings.CommandColumn.Visible = true;
                     
-                    if (ig.AddNewRowRouteValues != null) {
-                        settings.CommandColumn.ShowNewButton = true;
-                    }
-                    if (ig.UpdateRowRouteValues != null){
-                        settings.CommandColumn.ShowEditButton = true;
-                    }
-                    if (ig.DeleteRowRouteValues != null) {
-                        settings.CommandColumn.ShowDeleteButton = true;
-                    }
+                    //if (ig.AddNewRowRouteValues != null) {
+                        
+                    //}
+                    //if (ig.UpdateRowRouteValues != null){
+                        
+                    //}
+                    //if (ig.DeleteRowRouteValues != null) {
+                        
+                    //}
 
                     settings.PreRender = (sender, e) => {
                         ((MVCxGridView)sender).StartEdit(1);
@@ -78,7 +87,7 @@
                 
                 settings.SettingsBehavior.AllowSort = !ig.Estatica;
                 settings.SettingsBehavior.AllowGroup = !ig.Estatica;
-                settings.Settings.ShowGroupPanel = !ig.Estatica;
+                settings.Settings.ShowGroupPanel = ig.Estatica;
                 settings.SettingsBehavior.AllowDragDrop = !ig.Estatica;
                 
                 settings.KeyFieldName = ig.KeyFieldName;
@@ -176,13 +185,13 @@
                         coef = 15;
                     }
 
-                    settings.Width = Unit.Pixel(sumaAnchos + (coef * settings.Columns.Count));
+                    settings.Width = Unit.Pixel(sumaAnchos + (coef * settings.Columns.Count) + accionesEdicion * 35);
                 }
-                if (!ig.Estatica) {
+                //if (!ig.Estatica) {
                     settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
-                } else {
-                    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Disabled;
-                }
+                //} else {
+                //    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Disabled;
+                //}
                 
                 if (ig.FuncionHtmlRowPrepared != null) {
                     settings.HtmlRowPrepared = new ASPxGridViewTableRowEventHandler(ig.FuncionHtmlRowPrepared);

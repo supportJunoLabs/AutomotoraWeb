@@ -9,7 +9,7 @@
 @{
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-            new ColumnaGrilla {Campo="Cuenta.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = CuentaBancaria.CuentasBancarias, ComboBoxPropertiesTextField = "Banco", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Cuenta.Codigo", Ancho=250, Titulo="Cuenta", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = CuentaBancaria.CuentasBancarias, ComboBoxPropertiesTextField = "Nombre", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
             new ColumnaGrilla {Campo="ImporteMov.Monto", Ancho=100, Titulo="Monto"},
             new ColumnaGrilla {Campo="ImporteMov.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
             new ColumnaGrilla {Campo="FechaMov", Ancho=100},
@@ -31,6 +31,7 @@
     ig.UpdateRowRouteValues = "grillaPagosMovBanco_UpdateRowRouteValues";
     ig.DeleteRowRouteValues = "grillaPagosMovBanco_DeleteRowRouteValues";
     ig.BotonesMtoEstandar = false;
+    ig.Estatica = true;
     
     ViewBag.InfoGrilla = ig;
 }
