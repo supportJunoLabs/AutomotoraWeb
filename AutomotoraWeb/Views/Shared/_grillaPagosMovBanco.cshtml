@@ -9,12 +9,12 @@
 @{
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-            new ColumnaGrilla {Campo="Cuenta.Codigo", Ancho=250, Titulo="Cuenta", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = CuentaBancaria.CuentasBancarias, ComboBoxPropertiesTextField = "Nombre", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
-            new ColumnaGrilla {Campo="ImporteMov.Monto", Ancho=100, Titulo="Monto"},
-            new ColumnaGrilla {Campo="ImporteMov.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
-            new ColumnaGrilla {Campo="FechaMov", Ancho=100},
-            new ColumnaGrilla {Campo="ConceptoMov", Ancho=100},
-            new ColumnaGrilla {Campo="DescripcionMov", Ancho=100}
+            new ColumnaGrilla {Campo="Cuenta.Codigo", Ancho=250,  EdicionColSpan=2, Titulo="Cuenta", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = CuentaBancaria.CuentasBancarias, ComboBoxPropertiesTextField = "Nombre", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="ImporteMov.Moneda.Codigo",  Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="ImporteMov.Monto",  Ancho=100, Titulo="Monto"},
+            new ColumnaGrilla {Campo="FechaMov", Ancho=100, },
+            new ColumnaGrilla {Campo="ConceptoMov", MostrarSoloEdicion=true, EdicionColSpan=2, Ancho=1},
+            new ColumnaGrilla {Campo="DescripcionMov", MostrarSoloEdicion=true, EdicionColSpan=2, Ancho=1}
     };
     
     

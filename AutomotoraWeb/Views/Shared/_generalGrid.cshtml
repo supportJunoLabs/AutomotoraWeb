@@ -54,8 +54,26 @@
                         settings.CommandColumn.ShowDeleteButton = true;
                         accionesEdicion++;
                     }
+
+                    switch (ig.TipoEdicion) { 
+                        case InfoGrilla.TIPO_EDICION.INLINE:
+                            settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+                            break;
+                        case InfoGrilla.TIPO_EDICION.FORM:
+                            settings.SettingsEditing.Mode = GridViewEditingMode.EditForm;
+                            break;
+                        case InfoGrilla.TIPO_EDICION.ROWFORM:
+                            settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+                            break;
+                        case InfoGrilla.TIPO_EDICION.POPUP:
+                            settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+                            break;
+                         default:
+                            settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+                            break;
+                    }
                     
-                    settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
+                    settings.SettingsPopup.EditForm.Width = 600;
                     settings.SettingsBehavior.ConfirmDelete = true;
                     settings.Width = Unit.Percentage(100);
                     settings.CommandColumn.Visible = true;

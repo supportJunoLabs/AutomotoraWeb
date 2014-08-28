@@ -37,6 +37,9 @@ namespace AutomotoraWeb.Models {
 
         public bool TotalSuma { get; set; }
 
+        public bool MostrarSoloEdicion { get;set;}
+        public int EdicionColSpan { get; set; }
+
         //----------------------------------------------------
 
         public MVCxGridViewColumnType ColumnType { get; set; }
@@ -58,6 +61,8 @@ namespace AutomotoraWeb.Models {
             EsFecha = false;
             EsImporte = false;
             TotalSuma = false;
+            MostrarSoloEdicion = false;
+            EdicionColSpan =0 ;
         }
 
         public override bool Equals(object obj) {

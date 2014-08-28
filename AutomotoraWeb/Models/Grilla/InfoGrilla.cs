@@ -10,6 +10,7 @@ namespace AutomotoraWeb.Models {
         //clase donde se definen las caracteristicas que quiero que tenga la grilla
 
         public enum TIPO_CONTROL { GRILLA, GRIDLOOKUP }
+        public enum TIPO_EDICION { INLINE, POPUP, FORM, ROWFORM }
 
         public string NameGrid { get; set; }
         public string Controller { get; set; }
@@ -20,6 +21,12 @@ namespace AutomotoraWeb.Models {
         public TIPO_CONTROL TipoControl {
             get { return _tipoControl; }
             set { _tipoControl = value; }
+        }
+
+        private TIPO_EDICION _tipoEdicion = TIPO_EDICION.POPUP;
+        public TIPO_EDICION TipoEdicion {
+            get { return _tipoEdicion; }
+            set { _tipoEdicion = value; }
         }
 
         public int registrosPorPagina { get; set; }

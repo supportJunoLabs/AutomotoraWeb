@@ -75,11 +75,13 @@ namespace AutomotoraWeb.Models {
         private void generarColumnasContenido() {
             defineAnchos = ig.anchosDefinidos();
             System.Reflection.PropertyInfo[] propertiesinfo = ig.TypeOfModel.GetProperties();
+            int col=0;
             foreach (ColumnaGrilla cg in ig.VisibleColumns) {
                 //Ver que no haya venido como oculta
                 if (ig.HiddenColumns != null && ig.HiddenColumns.Contains(cg.Campo)) {
                     continue; //seguir con la proxima porque esta no va
                 }
+                col++;
                 //Buscar la propiedad asociada para obtener sus datos:
                 DisplayAttribute displayAttribute = null;
                 PropertyInfo propertyInfo = null;
@@ -156,6 +158,16 @@ namespace AutomotoraWeb.Models {
                     if (GeneralUtils.isImporte(propertyInfo, cg) || GeneralUtils.isInteger(propertyInfo, cg)) {
                         gridViewColumn.CellStyle.HorizontalAlign = HorizontalAlign.Right;
                     }
+                }
+
+                //mostrar solo en edicion
+                if (cg.MostrarSoloEdicion) {
+                    gridViewColumn.Visible = false;
+                    gridViewColumn.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
+                }
+                gridViewColumn.EditFormSettings.VisibleIndex = col;
+                if (cg.EdicionColSpan > 0) {
+                    gridViewColumn.EditFormSettings.ColumnSpan = cg.EdicionColSpan;
                 }
 
                 //booleano              1
