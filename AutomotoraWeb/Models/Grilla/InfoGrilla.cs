@@ -1,4 +1,5 @@
 ﻿using DevExpress.Web.ASPxGridView;
+using DevExpress.Web.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace AutomotoraWeb.Models {
         public string Controller { get; set; }
         public string ActionCallbackRoute { get; set; }
         public string KeyFieldName { get; set; }
+        public int AnchoTotal{get;set;}
 
         private TIPO_CONTROL _tipoControl = TIPO_CONTROL.GRILLA;
         public TIPO_CONTROL TipoControl {
@@ -73,6 +75,7 @@ namespace AutomotoraWeb.Models {
         public int AnchoSeleccion { get; set; }
 
         public Action<object, ASPxGridViewTableRowEventArgs> FuncionHtmlRowPrepared;
+        public Action<object, ASPxDataInitNewRowEventArgs> FuncionInitNewRow;
 
         private bool _usarViewData = false;
         public bool UsarViewData {

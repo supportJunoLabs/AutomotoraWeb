@@ -13,6 +13,7 @@ namespace AutomotoraWeb.Models {
     public class ColumnaGrilla {
 
         public enum ALINEACIONES {DEFAULT, IZQUIERDA, DERECHA, CENTRO, JUSTIFICADO}
+        public enum VALIDACIONES {NINGUNA, ENTERO, IMPORTE}
         
         public string Campo {get; set;}
         public string Titulo {get; set;}
@@ -37,8 +38,10 @@ namespace AutomotoraWeb.Models {
 
         public bool TotalSuma { get; set; }
 
+        public bool MostrarSoloGrilla { get; set; }
         public bool MostrarSoloEdicion { get;set;}
         public int EdicionColSpan { get; set; }
+        public VALIDACIONES Validacion{ get; set; }
 
         //----------------------------------------------------
 
@@ -63,6 +66,7 @@ namespace AutomotoraWeb.Models {
             TotalSuma = false;
             MostrarSoloEdicion = false;
             EdicionColSpan =0 ;
+            Validacion = VALIDACIONES.NINGUNA;
         }
 
         public override bool Equals(object obj) {

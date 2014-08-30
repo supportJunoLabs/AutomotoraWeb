@@ -10,7 +10,7 @@
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
             new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
-            new ColumnaGrilla {Campo="Importe.Monto", Ancho=150, Titulo="Monto", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA}
+            new ColumnaGrilla {Campo="Importe.Monto", Ancho=150, Titulo="Monto", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE}
     };
     
     ig.NameGrid = "grillaPagosEfectivo";
@@ -28,6 +28,10 @@
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
     ig.TipoEdicion = InfoGrilla.TIPO_EDICION.INLINE;
+
+    ig.FuncionInitNewRow = (s, e) => {
+        e.NewValues["Importe.Moneda.Codigo"] = Moneda.MonedaDefault.Codigo;
+    };
     
     ViewBag.InfoGrilla = ig;
 }

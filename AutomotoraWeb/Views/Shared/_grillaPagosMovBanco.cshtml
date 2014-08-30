@@ -8,13 +8,16 @@
 
 @{
     InfoGrilla ig= new InfoGrilla();
+    ig.AnchoTotal = 950;
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-            new ColumnaGrilla {Campo="Cuenta.Codigo", Ancho=250,  EdicionColSpan=2, Titulo="Cuenta", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = CuentaBancaria.CuentasBancarias, ComboBoxPropertiesTextField = "Nombre", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
-            new ColumnaGrilla {Campo="ImporteMov.Moneda.Codigo",  Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
-            new ColumnaGrilla {Campo="ImporteMov.Monto",  Ancho=100, Titulo="Monto"},
-            new ColumnaGrilla {Campo="FechaMov", Ancho=100, },
-            new ColumnaGrilla {Campo="ConceptoMov", MostrarSoloEdicion=true, EdicionColSpan=2, Ancho=1},
-            new ColumnaGrilla {Campo="DescripcionMov", MostrarSoloEdicion=true, EdicionColSpan=2, Ancho=1}
+            new ColumnaGrilla {Campo="Cuenta.Codigo", Ancho=230, EdicionColSpan=2, Titulo="Cuenta", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = CuentaBancaria.CuentasBancarias, ComboBoxPropertiesTextField = "Nombre", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="ImporteMov.ImporteTexto",  Titulo="Importe", MostrarSoloGrilla=true, Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+            //Se toma la moneda de la cuenta, no se ingresa
+            //new ColumnaGrilla {Campo="ImporteMov.Moneda.Codigo",  Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="ImporteMov.Monto",  Titulo="Monto", MostrarSoloEdicion=true, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE},
+            new ColumnaGrilla {Campo="FechaMov"},
+            //new ColumnaGrilla {Campo="ConceptoMov", MostrarSoloEdicion=true, EdicionColSpan=2, Ancho=1}, no se pide el concepto, lo completa la transaccion
+            new ColumnaGrilla {Campo="DescripcionMov", EdicionColSpan=2, Ancho=300}
     };
     
     
@@ -32,6 +35,10 @@
     ig.DeleteRowRouteValues = "grillaPagosMovBanco_DeleteRowRouteValues";
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
+
+    ig.FuncionInitNewRow = (s, e) => {
+        e.NewValues["FechaMov"] = DateTime.Now.Date;
+    };
     
     ViewBag.InfoGrilla = ig;
 }

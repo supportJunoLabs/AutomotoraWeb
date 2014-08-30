@@ -8,11 +8,13 @@
 
 @{
     InfoGrilla ig= new InfoGrilla();
+    ig.AnchoTotal = 820;
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
-            new ColumnaGrilla {Campo="Importe.Monto", Ancho=100, Titulo="Monto"},
-            new ColumnaGrilla {Campo="Vencimiento", Ancho=100, Titulo="Vencimiento"},
-            new ColumnaGrilla {Campo="Observaciones", Ancho=100, Titulo="Observaciones"}
+            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", MostrarSoloEdicion=true, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Importe.Monto", MostrarSoloEdicion=true, Titulo="Monto", Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE},
+            new ColumnaGrilla {Campo="Importe.ImporteTexto", Ancho=150, MostrarSoloGrilla=true,  Titulo="Importe", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+            new ColumnaGrilla {Campo="Vencimiento",  Ancho=100, Titulo="Vencimiento"},
+            new ColumnaGrilla {Campo="Observaciones", Ancho=400, Titulo="Observaciones", EdicionColSpan=2}
     };
     
     ig.NameGrid = "grillaPagosVale";
@@ -29,6 +31,11 @@
     ig.DeleteRowRouteValues = "grillaPagosVale_DeleteRowRouteValues";
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
+
+    ig.FuncionInitNewRow = (s, e) => {
+        e.NewValues["Importe.Moneda.Codigo"] = Moneda.MonedaDefault.Codigo;
+        e.NewValues["Vencimiento"] = DateTime.Now.Date.AddMonths(1);
+    };
     
     ViewBag.InfoGrilla = ig;
 }

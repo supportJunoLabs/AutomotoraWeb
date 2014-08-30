@@ -165,6 +165,11 @@ namespace AutomotoraWeb.Models {
                     gridViewColumn.Visible = false;
                     gridViewColumn.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.True;
                 }
+                if (cg.MostrarSoloGrilla) {
+                    gridViewColumn.Visible = true;
+                    gridViewColumn.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+                }
+
                 gridViewColumn.EditFormSettings.VisibleIndex = col;
                 if (cg.EdicionColSpan > 0) {
                     gridViewColumn.EditFormSettings.ColumnSpan = cg.EdicionColSpan;
@@ -182,6 +187,30 @@ namespace AutomotoraWeb.Models {
                 if (GeneralUtils.isDateTime(propertyInfo, cg)) {
                     gridViewColumn.ColumnType = MVCxGridViewColumnType.DateEdit;
                     gridViewColumn.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+                    var pcol = gridViewColumn.PropertiesEdit as DateEditProperties;
+                    //pcol.NullText = "dd/MM/yyyy";
+                    pcol.UseMaskBehavior=true;
+                    pcol.EditFormat = EditFormat.Custom;
+                }
+
+                if (cg.Validacion == ColumnaGrilla.VALIDACIONES.IMPORTE) {
+                    gridViewColumn.ColumnType = MVCxGridViewColumnType.SpinEdit;
+                    var pcol = gridViewColumn.PropertiesEdit as SpinEditProperties;
+                    pcol.NumberType = SpinEditNumberType.Float;
+                    pcol.DecimalPlaces = 2;
+                    pcol.NumberFormat = SpinEditNumberFormat.Custom;
+                    pcol.DisplayFormatString = "F";
+                    pcol.DisplayFormatInEditMode = true;
+                    pcol.SpinButtons.ShowIncrementButtons = false;
+                    pcol.SpinButtons.ShowLargeIncrementButtons = false;
+                }
+
+                if (cg.Validacion == ColumnaGrilla.VALIDACIONES.ENTERO) {
+                    gridViewColumn.ColumnType = MVCxGridViewColumnType.SpinEdit;
+                    var pcol = gridViewColumn.PropertiesEdit as SpinEditProperties;
+                    pcol.NumberType = SpinEditNumberType.Integer;
+                    pcol.SpinButtons.ShowIncrementButtons = true;
+                    pcol.SpinButtons.ShowLargeIncrementButtons = false;
                 }
 
                 if (cg.ColumnType == MVCxGridViewColumnType.ComboBox) {

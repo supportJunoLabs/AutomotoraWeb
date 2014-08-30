@@ -36,13 +36,32 @@ namespace AutomotoraWeb.Controllers.General
             return PartialView("EditModesPartial", listCheque);
         }
 
+        private void _validarCheque(Cheque cheque){
+            eliminarValidacionesIgnorablesCheque(cheque);
+
+            //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
+            ModelState.Remove("Importe.Moneda.Codigo");
+            if (cheque.Importe.Moneda == null || cheque.Importe.Moneda.Codigo <= 0) {
+                ModelState.AddModelError("Importe.Moneda.Codigo", "La moneda es requerida");
+            }
+
+            //validar el importe
+            if (cheque.Importe.Monto <= 0) {
+                ModelState.AddModelError("Importe.Monto", "El monto debe ser un valor positivo");
+            }
+
+            if (cheque.FechaVencimiento < cheque.FechaValor) {
+                ModelState.AddModelError("FechaVencimiento", "El vencimiento no puede ser anterior a la emision");
+            }
+
+        }
+
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosCheque_AddNewRowRouteValues(Cheque cheque, string idSession) {
 
-            eliminarValidacionesIgnorablesCheque(cheque);
-
             List<Cheque> listCheque = _listaPagosCheque(idSession);
 
+            _validarCheque(cheque);
             if (ModelState.IsValid) {
                 try {
                     int maxIdLinea = listCheque.Count > 0 ? listCheque.Max(c => c.IdLinea) : 0;
@@ -61,10 +80,9 @@ namespace AutomotoraWeb.Controllers.General
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosCheque_UpdateRowRouteValues(Cheque cheque, string idSession) {
 
-            eliminarValidacionesIgnorablesCheque(cheque);
-
             List<Cheque> listCheque = _listaPagosCheque(idSession);
 
+            _validarCheque(cheque);
             if (ModelState.IsValid) {
                 try {
                     
@@ -148,13 +166,28 @@ namespace AutomotoraWeb.Controllers.General
             return PartialView("EditModesPartial", listEfectivo);
         }
 
+        private void _validarEfectivo(Efectivo efectivo){
+            
+            eliminarValidacionesIgnorablesEfectivo(efectivo);
+
+            //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
+            ModelState.Remove("Importe.Moneda.Codigo");
+            if (efectivo.Importe.Moneda == null || efectivo.Importe.Moneda.Codigo <= 0) {
+                ModelState.AddModelError("Importe.Moneda.Codigo", "La moneda es requerida");
+            }
+
+            //validar el importe
+            if (efectivo.Importe.Monto <= 0 ) {
+                ModelState.AddModelError("Importe.Monto", "El monto debe ser un valor positivo");
+            }
+        }
+
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosEfectivo_AddNewRowRouteValues(Efectivo efectivo, string idSession) {
 
-            eliminarValidacionesIgnorablesEfectivo(efectivo);
-
             List<Efectivo> listEfectivo = _listaPagosEfectivo(idSession);
 
+            _validarEfectivo(efectivo);
             if (ModelState.IsValid) {
                 try {
                     int maxIdLinea = listEfectivo.Count > 0 ? listEfectivo.Max(c => c.IdLinea) : 0;
@@ -173,10 +206,9 @@ namespace AutomotoraWeb.Controllers.General
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosEfectivo_UpdateRowRouteValues(Efectivo efectivo, string idSession) {
 
-            eliminarValidacionesIgnorablesEfectivo(efectivo);
-
             List<Efectivo> listEfectivo = _listaPagosEfectivo(idSession);
 
+            _validarEfectivo(efectivo);
             if (ModelState.IsValid) {
                 try {
                     Moneda monedaElejida =
@@ -251,13 +283,30 @@ namespace AutomotoraWeb.Controllers.General
             return PartialView("EditModesPartial", listMovBanco);
         }
 
-        [HttpPost, ValidateInput(false)]
-        public ActionResult grillaPagosMovBanco_AddNewRowRouteValues(MovBanco movBanco, string idSession) {
-
+        private void _validarMovBanco(MovBanco movBanco){
             eliminarValidacionesIgnorablesMovBanco(movBanco);
 
+            //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
+            ModelState.Remove("Cuenta.Codigo");
+            if (movBanco.Cuenta== null || movBanco.Cuenta.Codigo <= 0) {
+                ModelState.AddModelError("Cuenta.Codigo", "La cuenta es requerida");
+            }
+
+            //Eliminar la validacion de la moneda, se tomara a partir de la moneda de la cuenta elegida
+            ModelState.Remove("ImporteMov.Moneda");
+
+            //validar el importe
+            if (movBanco.ImporteMov.Monto <= 0) {
+                ModelState.AddModelError("ImporteMov.Monto", "El monto debe ser un valor positivo");
+            }
+
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosMovBanco_AddNewRowRouteValues(MovBanco movBanco, string idSession) {
             List<MovBanco> listMovBanco = _listaPagosMovBanco(idSession);
 
+            _validarMovBanco(movBanco);
             if (ModelState.IsValid) {
                 try {
                     int maxIdLinea = listMovBanco.Count > 0 ? listMovBanco.Max(c => c.IdLinea) : 0;
@@ -280,10 +329,9 @@ namespace AutomotoraWeb.Controllers.General
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosMovBanco_UpdateRowRouteValues(MovBanco movBanco, string idSession) {
 
-            eliminarValidacionesIgnorablesMovBanco(movBanco);
-
             List<MovBanco> listMovBanco = _listaPagosMovBanco(idSession);
 
+            _validarMovBanco(movBanco);
             if (ModelState.IsValid) {
                 try {
 
@@ -292,6 +340,7 @@ namespace AutomotoraWeb.Controllers.General
                          where (c.IdLinea == movBanco.IdLinea)
                          select c).First<MovBanco>();
 
+                    movBancoEditado.Cuenta = movBanco.Cuenta;
                     movBancoEditado.Cuenta.Consultar();
                     movBancoEditado.ImporteMov.Moneda = movBanco.Cuenta.Moneda;
                     movBancoEditado.ImporteMov.Monto = movBanco.ImporteMov.Monto;
@@ -328,9 +377,12 @@ namespace AutomotoraWeb.Controllers.General
         }
 
         private void eliminarValidacionesIgnorablesMovBanco(MovBanco movBanco) {
-            this.eliminarValidacionesIgnorables("ImporteMov.Moneda", MetadataManager.IgnorablesDDL(movBanco.ImporteMov.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(movBanco.Cuenta));
-            this.eliminarValidacionesIgnorables("TipoMov", MetadataManager.IgnorablesDDL(movBanco.TipoMov));
+            if (movBanco.Cuenta != null) {
+                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(movBanco.Cuenta));
+            }
+
+            //this.eliminarValidacionesIgnorables("ImporteMov.Moneda", MetadataManager.IgnorablesDDL(movBanco.ImporteMov.Moneda));
+            //this.eliminarValidacionesIgnorables("TipoMov", MetadataManager.IgnorablesDDL(movBanco.TipoMov));
         }
 
         #endregion
@@ -355,6 +407,23 @@ namespace AutomotoraWeb.Controllers.General
         //    return PartialView("EditModesPartial", listVale);
         //}
 
+
+        private void _validarVale(Vale vale) {
+            eliminarValidacionesIgnorablesVale(vale);
+
+            //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
+            ModelState.Remove("Importe.Moneda.Codigo");
+            if (vale.Importe.Moneda == null || vale.Importe.Moneda.Codigo <= 0) {
+                ModelState.AddModelError("Importe.Moneda.Codigo", "La moneda es requerida");
+            }
+
+            //validar el importe
+            if (vale.Importe.Monto <= 0) {
+                ModelState.AddModelError("Importe.Monto", "El monto debe ser un valor positivo");
+            }
+
+        }
+
         public ActionResult grillaPagosVale_CustomActionRouteValues(GridViewEditingMode editMode) {
             //GridViewEditingDemosHelper.EditMode = editMode;
             List<Vale> listVale = new List<Vale>();
@@ -364,10 +433,9 @@ namespace AutomotoraWeb.Controllers.General
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosVale_AddNewRowRouteValues(Vale vale, string idSession) {
 
-            eliminarValidacionesIgnorablesVale(vale);
-
             List<Vale> listVale = _listaPagosVale(idSession);
 
+            _validarVale(vale);
             if (ModelState.IsValid) {
                 try {
                     int maxIdLinea = listVale.Count > 0 ? listVale.Max(c => c.IdLinea) : 0;
@@ -386,10 +454,9 @@ namespace AutomotoraWeb.Controllers.General
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosVale_UpdateRowRouteValues(Vale vale, string idSession) {
 
-            eliminarValidacionesIgnorablesVale(vale);
-
             List<Vale> listVale = _listaPagosVale(idSession);
 
+            _validarVale(vale);
             if (ModelState.IsValid) {
                 try {
 

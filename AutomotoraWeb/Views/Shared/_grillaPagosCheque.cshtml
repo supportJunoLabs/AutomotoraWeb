@@ -15,11 +15,13 @@
             new ColumnaGrilla {Campo="NumeroCheque"},
             new ColumnaGrilla {Campo="FechaValor"},
             new ColumnaGrilla {Campo="FechaVencimiento"},
-            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
-            new ColumnaGrilla {Campo="Importe.Monto", Titulo="Monto"},
-            new ColumnaGrilla {Campo="Observaciones", MostrarSoloEdicion=true, EdicionColSpan=2}
+            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Titulo="Moneda", MostrarSoloEdicion=true, ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Importe.Monto", Titulo="Monto", MostrarSoloEdicion=true, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE},
+            new ColumnaGrilla {Campo="Importe.ImporteTexto", Titulo="Importe", MostrarSoloGrilla=true, Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+            new ColumnaGrilla {Campo="Observaciones",  EdicionColSpan=2}
     };
-    
+
+    ig.AnchoTotal = 900;
     ig.NameGrid = "grillaPagosCheque";
     ig.Controller = "MetodosDePago";
     ig.ActionCallbackRoute = "grillaPagosCheque";
@@ -34,6 +36,12 @@
     ig.DeleteRowRouteValues = "grillaPagosCheque_DeleteRowRouteValues";
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
+
+    ig.FuncionInitNewRow = (s, e) => {
+        e.NewValues["FechaValor"] = DateTime.Now.Date;
+        e.NewValues["FechaVencimiento"] = DateTime.Now.Date;
+        e.NewValues["Importe.Moneda.Codigo"] = Moneda.MonedaDefault.Codigo;
+    };
     
     ViewBag.InfoGrilla = ig;
 }

@@ -6,6 +6,7 @@
 @using AutomotoraWeb.Utils;
 @using System.ComponentModel.DataAnnotations;
 @using System.Reflection;
+@using  DevExpress.Web.Data;
 
 @{
 
@@ -185,25 +186,30 @@
                     settings.Columns.Add(og.listGridViewsBotones);
                 }
 
-                if (!ig.anchosDefinidos()) { //si no vienen definidos los anchos de ninguna columna, ocupa todo el espacio
+                if (ig.AnchoTotal > 0) {
                     settings.Settings.UseFixedTableLayout = false;
-                    settings.Width = Unit.Percentage(100); 
+                    settings.Width = Unit.Pixel(ig.AnchoTotal);
                 } else {
-                    //si vienen los anchos calculo el ancho en funcion de la suma de las columnas
-                    settings.Settings.UseFixedTableLayout = true;
-                    
-                    //igual requiere que le ponga un ancho, porque si no, lo extiende hasta el 100% cuando es mas chica que el espacio disponible
-                    int sumaAnchos = 0;
-                    foreach (MVCxGridViewColumn col in settings.Columns) {
-                        sumaAnchos += (int)col.Width.Value;
-                    }
+                    if (!ig.anchosDefinidos()) { //si no vienen definidos los anchos de ninguna columna, ocupa todo el espacio
+                        settings.Settings.UseFixedTableLayout = false;
+                        settings.Width = Unit.Percentage(100);
+                    } else {
+                        //si vienen los anchos calculo el ancho en funcion de la suma de las columnas
+                        settings.Settings.UseFixedTableLayout = true;
 
-                    int coef = 1;
-                    if (ig.CustomActionRouteValues != null) {
-                        coef = 15;
-                    }
+                        //igual requiere que le ponga un ancho, porque si no, lo extiende hasta el 100% cuando es mas chica que el espacio disponible
+                        int sumaAnchos = 0;
+                        foreach (MVCxGridViewColumn col in settings.Columns) {
+                            sumaAnchos += (int)col.Width.Value;
+                        }
 
-                    settings.Width = Unit.Pixel(sumaAnchos + (coef * settings.Columns.Count) + accionesEdicion * 35);
+                        int coef = 1;
+                        if (ig.CustomActionRouteValues != null) {
+                            coef = 15;
+                        }
+
+                        settings.Width = Unit.Pixel(sumaAnchos + (coef * settings.Columns.Count) + accionesEdicion * 35);
+                    }
                 }
                 //if (!ig.Estatica) {
                     settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
@@ -214,6 +220,11 @@
                 if (ig.FuncionHtmlRowPrepared != null) {
                     settings.HtmlRowPrepared = new ASPxGridViewTableRowEventHandler(ig.FuncionHtmlRowPrepared);
                 }
+
+                if (ig.FuncionInitNewRow != null) {
+                    settings.InitNewRow = new ASPxDataInitNewRowEventHandler(ig.FuncionInitNewRow);
+                }
+                
 
                 //totales suma
                 foreach (string s in og.totalesSuma) {
