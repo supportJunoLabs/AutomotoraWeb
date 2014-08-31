@@ -1,0 +1,86 @@
+﻿@model DLL_Backend.Vehiculo
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+<style type="text/css">
+    .estiloInput {
+         border-radius:4px;
+         height:30px;
+    }
+
+</style>
+
+<div>
+    <div class="floatLeft" style="margin-right: 110px;">
+        <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.Ficha)</div>
+            <div class="editor-field editor-field-large renglon-alto">
+                <input id="vehiculoFicha" value= '@Model.Ficha' disabled="disabled"  /></div>
+           
+            <div class="clear-both"></div>
+        </div>
+        <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.Marca)</div>
+            <div class="editor-field editor-field-large renglon-alto">
+                <input id="vehiculoMarca" value='@Model.Marca' disabled="disabled" /></div>
+            <div class="clear-both"></div>
+        </div>
+          <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.Modelo)</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoModelo" value='@Model.Modelo' disabled="disabled" /></div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.Anio)</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoAnio" value='@Model.Anio' disabled="disabled" /></div>
+            <div class="clear-both"></div>
+        </div>
+         
+         <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.DescripcionEstado)</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoStatus" value='@Model.DescripcionEstado' disabled="disabled" /></div>
+            <div class="clear-both"></div>
+        </div>
+      
+       
+    </div>
+
+    <div class="floatLeft">
+        <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.Sucursal)</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoSucursal" value='@Model.Sucursal' disabled="disabled" /></div>
+            <div class="clear-both"></div>
+        </div>
+         <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.PrecioVenta)</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoPrecioVenta" value='@Model.PrecioVenta' disabled="disabled" /></div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.Color)</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoColor" value='@Model.Color' disabled="disabled" /></div>
+            <div class="clear-both"></div>
+        </div>
+          <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.Matricula)</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoMatricula" value='@Model.Matricula'  disabled="disabled" /></div>
+            <div class="clear-both"></div>
+        </div>
+              <div class="dataLine">
+            <div class="display-label-90">@Html.LabelFor(model => model.Propietario)</div>
+            <div class="editor-field editor-field-large renglon-alto"><input id="vehiculoPropietario" value='@Model.Propietario' disabled="disabled" /></div>
+            <div class="clear-both"></div>
+        </div>
+    </div>
+
+    <div class="clear-both"></div>
+
+    <div>
+        <div class="dataLine">
+            <div class="display-label-90 ">@Html.LabelFor(model => model.Observaciones)</div>
+            <div class="editor-field editor-field-xxlarge">
+                <textarea id="vehiculoObservaciones" style="width: 725px; height: 60px"  disabled="disabled">@Model.Observaciones</textarea></div>
+            <div class="clear-both"></div>
+        </div>
+    </div>
+</div>

@@ -29,12 +29,6 @@ namespace AutomotoraWeb.Controllers.Sales
             return View();
         }
 
-
-        public ActionResult Details(int id) {
-            ViewBag.SoloLectura = true;
-            return VistaElemento(id);
-        }
-
         public ActionResult VentaVehiculo() {
             
             Venta venta = new Venta();
@@ -92,6 +86,22 @@ namespace AutomotoraWeb.Controllers.Sales
 
             ViewBag.Vales = listVale;
             ViewBag.Cuotas = listCuota;
+        }
+
+
+        //----------------- Seleccion vehiculo ----------------------------------------------------
+        public ActionResult VehiculoElegido(int id) {
+            Vehiculo v = new Vehiculo();
+            v.Codigo = id;
+            v.Consultar();
+            return PartialView("_seleccionDeVehiculosDetalle", v);
+        }
+
+        //--------------------- Consulta venta -----------------------------------------------------
+
+        public ActionResult Details(int id) {
+            ViewBag.SoloLectura = true;
+            return VistaElemento(id);
         }
 
         private ActionResult VistaElemento(int id) {
