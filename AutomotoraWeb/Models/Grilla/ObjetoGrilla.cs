@@ -183,6 +183,10 @@ namespace AutomotoraWeb.Models {
                     gridViewColumn.ColumnType = MVCxGridViewColumnType.Default;
                 }
 
+                if (cg.ReadOnly) {
+                    gridViewColumn.ReadOnly = true;
+                }
+
                 // si es fecha
                 if (GeneralUtils.isDateTime(propertyInfo, cg)) {
                     gridViewColumn.ColumnType = MVCxGridViewColumnType.DateEdit;

@@ -159,8 +159,7 @@
                     settings.CommandColumn.Width = Unit.Pixel(30);
                 }
 
-
-                settings.Settings.ShowFooter = !ig.Estatica;
+                settings.Settings.ShowFooter = ig.MostrarTotales && ig.hayTotales();
 
                 if (ig.DobleClick) {
                     settings.ClientSideEvents.RowDblClick = "function(s, e){ window.open('" + @Url.Action(ig.AccionDobleClick, ig.ControladorDobleClick) + "/' + s.GetRowKey(e.visibleIndex), '_self'); }";

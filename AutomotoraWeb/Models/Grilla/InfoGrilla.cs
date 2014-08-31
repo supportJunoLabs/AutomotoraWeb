@@ -18,55 +18,22 @@ namespace AutomotoraWeb.Models {
         public string ActionCallbackRoute { get; set; }
         public string KeyFieldName { get; set; }
         public int AnchoTotal{get;set;}
-
-        private TIPO_CONTROL _tipoControl = TIPO_CONTROL.GRILLA;
-        public TIPO_CONTROL TipoControl {
-            get { return _tipoControl; }
-            set { _tipoControl = value; }
-        }
-
-        private TIPO_EDICION _tipoEdicion = TIPO_EDICION.POPUP;
-        public TIPO_EDICION TipoEdicion {
-            get { return _tipoEdicion; }
-            set { _tipoEdicion = value; }
-        }
-
+        public TIPO_CONTROL TipoControl { get; set; }
+        public TIPO_EDICION TipoEdicion { get; set; }
         public int registrosPorPagina { get; set; }
-
-        private bool registrosPorPaginaVisible = true;
-        public bool RegistrosPorPaginaVisible {
-            get { return registrosPorPaginaVisible; }
-            set { registrosPorPaginaVisible = value; }
-        }
-
-        private bool dobleClick = false;
-        public bool DobleClick {
-            get { return dobleClick; }
-            set { dobleClick = value; }
-        }
+        public bool RegistrosPorPaginaVisible { get; set; }
+        public bool DobleClick { get; set; }
         public string ControladorDobleClick { get; set; }
         public string AccionDobleClick { get; set; }
-
-        private bool _estatica = false;
-        public bool Estatica {
-            get { return _estatica; }
-            set { _estatica=value;}
-        }
-
-        //para endless mode
-        private bool _endlessMode = false;
-        public bool EndlessMode {
-            get { return _endlessMode; }
-            set { _endlessMode = value; }
-        }
-
-        //para multiseleccion con checkbox
-        private bool _checksSeleccion = false;
-        public bool ChecksSeleccion {
-            get { return _checksSeleccion; }
-            set { _checksSeleccion = value; }
-        }
+        public bool Estatica { get; set; }
+        public bool EndlessMode { get; set; }
+        public bool ChecksSeleccion { get; set; }  //para multiseleccion con checkbox
         public string AccionSeleccion { get; set; }
+        public bool UsarViewData { get; set; }
+        public string ClaveViewData;
+        public Type TypeOfModel { get; set; } //Se usar para encontrar las columnas por reflection o para traer las propiedades de metadata de los objetos
+        public bool MostrarTotales { get; set; }
+
 
         // atributos para lookupgrid
         public string FocusedRowChangedAccion { get; set; }
@@ -74,29 +41,37 @@ namespace AutomotoraWeb.Models {
         public string FormatoSeleccionLookup { get; set; }
         public int AnchoSeleccion { get; set; }
 
+        //punteros a funciones
         public Action<object, ASPxGridViewTableRowEventArgs> FuncionHtmlRowPrepared;
         public Action<object, ASPxDataInitNewRowEventArgs> FuncionInitNewRow;
 
-        private bool _usarViewData = false;
-        public bool UsarViewData {
-            get { return _usarViewData; }
-            set { _usarViewData = value; }
-        }
-        public string ClaveViewData;
-
+        //para edicion
         public string OnBeginCallback { get; set; }
         public string CustomActionRouteValues { get; set; }
         public string AddNewRowRouteValues { get; set; }
         public string UpdateRowRouteValues { get; set; }
         public string DeleteRowRouteValues { get; set; }
 
+        //Constructor
+        public InfoGrilla(){
+            TipoControl = TIPO_CONTROL.GRILLA;
+            TipoEdicion = TIPO_EDICION.POPUP;
+            RegistrosPorPaginaVisible = true;
+            DobleClick = false;
+            Estatica = false;
+            EndlessMode=false;
+            ChecksSeleccion = false;
+            UsarViewData = false;
+            MostrarTotales = true;
+        }
+
+
         #region Columnas
 
         public List<ColumnaGrilla> VisibleColumns { get; set; }
+        
         //Si es nulo, o esta vacia, muestra todas las columnas de tipo simple del objeto por reflection
         //Si hay columnas, muestra esta en el orden en que estan aqui.
-
-        public Type TypeOfModel { get; set; } //Se usar para encontrar las columnas por reflection o para traer las propiedades de metadata de los objetos
         public List<string> HiddenColumns { get; set; } //columnas que no hay que mostrar, ya sea porque las encontre por reflection o porque vienen cargadas manualmente pero no las quiero poner por algun motivo
 
         public void AddVisibleColumn(string campo, string titulo = null, int ancho = 0, int largoMax = 0, ColumnaGrilla.ALINEACIONES alin = ColumnaGrilla.ALINEACIONES.DEFAULT) {
@@ -138,6 +113,16 @@ namespace AutomotoraWeb.Models {
                 tot += cg.Ancho;
             }
             return tot;
+        }
+
+        public bool hayTotales() {
+            if (VisibleColumns == null) return false;
+            foreach(ColumnaGrilla cg in VisibleColumns){
+                if (cg.TotalSuma) {
+                    return true;
+                }
+            }
+            return false;
         }
 
 

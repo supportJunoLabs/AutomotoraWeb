@@ -42,6 +42,7 @@ namespace AutomotoraWeb.Models {
         public bool MostrarSoloEdicion { get;set;}
         public int EdicionColSpan { get; set; }
         public VALIDACIONES Validacion{ get; set; }
+        public bool ReadOnly { get; set; }
 
         //----------------------------------------------------
 
@@ -67,6 +68,7 @@ namespace AutomotoraWeb.Models {
             MostrarSoloEdicion = false;
             EdicionColSpan =0 ;
             Validacion = VALIDACIONES.NINGUNA;
+            ReadOnly = false;
         }
 
         public override bool Equals(object obj) {

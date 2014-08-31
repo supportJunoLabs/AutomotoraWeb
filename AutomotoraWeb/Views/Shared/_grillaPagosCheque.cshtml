@@ -18,10 +18,11 @@
             new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Titulo="Moneda", MostrarSoloEdicion=true, ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
             new ColumnaGrilla {Campo="Importe.Monto", Titulo="Monto", MostrarSoloEdicion=true, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE},
             new ColumnaGrilla {Campo="Importe.ImporteTexto", Titulo="Importe", MostrarSoloGrilla=true, Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+            new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, MostrarSoloGrilla=true},
             new ColumnaGrilla {Campo="Observaciones",  EdicionColSpan=2}
     };
 
-    ig.AnchoTotal = 900;
+    ig.AnchoTotal = 950;
     ig.NameGrid = "grillaPagosCheque";
     ig.Controller = "MetodosDePago";
     ig.ActionCallbackRoute = "grillaPagosCheque";
