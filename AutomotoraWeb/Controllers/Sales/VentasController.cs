@@ -22,6 +22,8 @@ namespace AutomotoraWeb.Controllers.Sales
             base.OnActionExecuting(filterContext);
             ViewBag.NombreEntidad = "Venta";
             ViewBag.NombreEntidades = "Ventas";
+            ViewBag.Clientes = Cliente.Clientes();
+            ViewBag.VendedoresHabilitados = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
             
         }
 

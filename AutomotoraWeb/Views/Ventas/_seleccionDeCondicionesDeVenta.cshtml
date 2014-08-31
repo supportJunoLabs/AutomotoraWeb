@@ -4,12 +4,25 @@
 @using AutomotoraWeb.Models;
 
 <div>
-    <div>
-        @Html.Partial("_seleccionDeCliente", Model)
+    <div class="display-label-90">
+        @Html.LabelForRequired(model => model.Cliente)
     </div>
-    <div style="margin-top:8px;">
-        @Html.Partial("_seleccionDeVendedor", Model)
+    <div class="editor-field editor-field-xlarge xxlarge">
+        @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, false, model => model.Cliente.Nombre,
+            new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), "--Seleccionar Cliente--",
+            new { id = "ddlClientes", @class = "xxlarge" })
     </div>
+    <div class="clear-both"></div>
+
+    <div class="display-label-90">
+        @Html.LabelForRequired(model => model.Vendedor)
+    </div>
+    <div class="editor-field editor-field-xlarge xxlarge">
+        @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, false, model => model.Vendedor.Nombre,
+            new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), "--Seleccionar Vendedor--",
+            new { id = "ddlVendedores", @class = "xxlarge" })
+    </div>
+    <div class="clear-both"></div>
 
     <div>
         <!-- Fecha
@@ -22,7 +35,7 @@
 
     <div>
         <div class="dataLine">
-            <div class="display-label-90 editor-date-field"> @Html.LabelForRequired(model => model.Fecha)</div>
+            <div class="display-label-90 editor-date-field">@Html.LabelForRequired(model => model.Fecha)</div>
             <div class="editor-field editor-field-small">
                 @Html.TextBoxOrdisplayFor(model => model.Fecha, false, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
                 @Html.ValidationMessageFor(model => model.Fecha)
@@ -31,16 +44,16 @@
         </div>
         <div class="dataLine">
             <div class="display-label-90">
-                @Html.LabelForRequired(model => model.Vehiculo.PrecioVenta)
+                @Html.LabelForRequired(model => model.Importe)
             </div>
             <div class="editor-field editor-field-small">
-                @Html.DdlOrDisplayImporteFor(model => model.Vehiculo.PrecioVenta, false)
-                @Html.ValidationMessageFor(model => model.Vehiculo.PrecioVenta.Monto)
+                @Html.DdlOrDisplayImporteFor(model => model.Importe, false)
+                @Html.ValidationMessageFor(model => model.Importe.Monto)
             </div>
             <div class="clear-both"></div>
         </div>
         <div class="dataLine">
-            <div class="display-label-90">
+            <div class="display-label-90">  
                 @Html.LabelForRequired(model => model.Sucursal)
             </div>
             <div class="editor-field editor-field-large">
@@ -55,17 +68,16 @@
             <div class="display-label">
                 @Html.LabelForRequired(model => model.Entregado)
             </div>
-            <div class="editor-field editor-field-large">
+            <div class="floatLeft">
                 @Html.CheckBoxOrDisplayFor(model => model.Entregado, false, new { id = "checkBoxVentaVehiculoEntregado" })
                 @Html.ValidationMessageFor(model => model.Entregado)
             </div>
-            <div class="clear-both"></div>
-        </div>
-        <div class="dataLine">
-            <div class="display-label-90 editor-date-field"> @Html.LabelForRequired(model => model.FechaEntrega)</div>
-            <div class="editor-field editor-field-small">
-                @Html.TextBoxOrdisplayFor(model => model.FechaEntrega, false, "{0:dd/MM/yyyy}", new { id = "datePikerVentaVehiculoFechaEntrega", @class = "calendarAW" })
-                @Html.ValidationMessageFor(model => model.FechaEntrega)
+            <div class="floatLeft">
+                <div style="margin-left:30px" class="display-label-90 editor-date-field">@Html.LabelForRequired(model => model.FechaEntrega)</div>
+                <div class="editor-field editor-field-small">
+                    @Html.TextBoxOrdisplayFor(model => model.FechaEntrega, false, "{0:dd/MM/yyyy}", new { id = "datePikerVentaVehiculoFechaEntrega", @class = "calendarAW" })
+                    @Html.ValidationMessageFor(model => model.FechaEntrega)
+                </div>
             </div>
             <div class="clear-both"></div>
         </div>
@@ -81,7 +93,7 @@
         </div>
     </div>
 
-    
+
     <script type="text/javascript">
 
         $("#checkBoxVentaVehiculoEntregado").change(function () {
