@@ -318,199 +318,199 @@
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Models\VendedorModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\Reports\Consultas\DXReportConsultaFinanciacion.cs">
+    <Compile Include="Reports\Consultas\DXReportConsultaFinanciacion.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Consultas\DXReportConsultaCheque.cs">
+    <Compile Include="Reports\Consultas\DXReportConsultaCheque.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Consultas\DXReportConsultaVale.cs">
+    <Compile Include="Reports\Consultas\DXReportConsultaVale.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Consultas\DXSituacionFinancista.cs">
+    <Compile Include="Reports\Consultas\DXSituacionFinancista.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Consultas\_DXSubrepValeDescontado.cs">
+    <Compile Include="Reports\Consultas\_DXSubrepValeDescontado.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoAcvs.cs">
+    <Compile Include="Reports\Listados\DXListadoAcvs.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoVales.cs">
+    <Compile Include="Reports\Listados\DXListadoVales.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoChequesEmitidos.cs">
+    <Compile Include="Reports\Listados\DXListadoChequesEmitidos.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXSaldosBanco.cs">
+    <Compile Include="Reports\Listados\DXSaldosBanco.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXEstadoCuenta.cs">
+    <Compile Include="Reports\Listados\DXEstadoCuenta.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoTransacciones.cs">
+    <Compile Include="Reports\Listados\DXListadoTransacciones.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoCheques.cs">
+    <Compile Include="Reports\Listados\DXListadoCheques.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoValesFin.cs">
+    <Compile Include="Reports\Listados\DXListadoValesFin.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoCuotasValesMes.cs">
+    <Compile Include="Reports\Listados\DXListadoCuotasValesMes.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoCuotasValesCli.cs">
+    <Compile Include="Reports\Listados\DXListadoCuotasValesCli.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoCuotas.cs">
+    <Compile Include="Reports\Listados\DXListadoCuotas.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoMovsCajaCheques.cs">
+    <Compile Include="Reports\Listados\DXListadoMovsCajaCheques.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoMovsCajaEfectivo.cs">
+    <Compile Include="Reports\Listados\DXListadoMovsCajaEfectivo.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoVentas.cs">
+    <Compile Include="Reports\Listados\DXListadoVentas.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoSenias.cs">
+    <Compile Include="Reports\Listados\DXListadoSenias.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoPedidos.cs">
+    <Compile Include="Reports\Listados\DXListadoPedidos.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoVehiculosCompleto.cs">
+    <Compile Include="Reports\Listados\DXListadoVehiculosCompleto.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoVehiculosAbreviado.cs">
+    <Compile Include="Reports\Listados\DXListadoVehiculosAbreviado.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXListadoDocumentacion.cs">
+    <Compile Include="Reports\Listados\DXListadoDocumentacion.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Listados\DXSituacionCliente.cs">
+    <Compile Include="Reports\Listados\DXSituacionCliente.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportPerfiles.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportPerfiles.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportUsuarios.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportUsuarios.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportClientes.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportClientes.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportCuentasBancarias.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportCuentasBancarias.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportFichaCliente.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportFichaCliente.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportFichaVehiculo.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportFichaVehiculo.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportFinancistas.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportFinancistas.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportSucursales.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportSucursales.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportVendedores.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportVendedores.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Mantenimientos\DXReportTiposDocumento.cs">
+    <Compile Include="Reports\Mantenimientos\DXReportTiposDocumento.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboCanjeCheque.cs">
+    <Compile Include="Reports\Transacciones\DXReciboCanjeCheque.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboACVAnulacion.cs">
+    <Compile Include="Reports\Transacciones\DXReciboACVAnulacion.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboACV.cs">
+    <Compile Include="Reports\Transacciones\DXReciboACV.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboFinancistaPago.cs">
+    <Compile Include="Reports\Transacciones\DXReciboFinancistaPago.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboRefinanciacion.cs">
+    <Compile Include="Reports\Transacciones\DXReciboRefinanciacion.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboSeniaDevolucion.cs">
+    <Compile Include="Reports\Transacciones\DXReciboSeniaDevolucion.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboTransfVale.cs">
+    <Compile Include="Reports\Transacciones\DXReciboTransfVale.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboTransfCuotas.cs">
+    <Compile Include="Reports\Transacciones\DXReciboTransfCuotas.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboEntradaSalidaCaja.cs">
+    <Compile Include="Reports\Transacciones\DXReciboEntradaSalidaCaja.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboCobroCuotas.cs">
+    <Compile Include="Reports\Transacciones\DXReciboCobroCuotas.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboCobroVale.cs">
+    <Compile Include="Reports\Transacciones\DXReciboCobroVale.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboVentaEntrega.cs">
+    <Compile Include="Reports\Transacciones\DXReciboVentaEntrega.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboVentaAnulacion.cs">
+    <Compile Include="Reports\Transacciones\DXReciboVentaAnulacion.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboSenia.cs">
+    <Compile Include="Reports\Transacciones\DXReciboSenia.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboRenovarVale.cs">
+    <Compile Include="Reports\Transacciones\DXReciboRenovarVale.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXCuponesVenta.cs">
+    <Compile Include="Reports\Transacciones\DXCuponesVenta.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboVenta.cs">
+    <Compile Include="Reports\Transacciones\DXReciboVenta.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboRechazarVale.cs">
+    <Compile Include="Reports\Transacciones\DXReciboRechazarVale.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboDescontarVale.cs">
+    <Compile Include="Reports\Transacciones\DXReciboDescontarVale.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboRechazarCheque.cs">
+    <Compile Include="Reports\Transacciones\DXReciboRechazarCheque.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboTransfSucCheque.cs">
+    <Compile Include="Reports\Transacciones\DXReciboTransfSucCheque.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboTransfCheque.cs">
+    <Compile Include="Reports\Transacciones\DXReciboTransfCheque.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXReciboDepositarCheque.cs">
+    <Compile Include="Reports\Transacciones\DXReciboDepositarCheque.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\DXComprobanteDocumentacion.cs">
+    <Compile Include="Reports\Transacciones\DXComprobanteDocumentacion.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\_DXSubrepPromesaSenia.cs">
+    <Compile Include="Reports\Transacciones\_DXSubrepPromesaSenia.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\_DXSubrepPermutaVenta.cs">
+    <Compile Include="Reports\Transacciones\_DXSubrepPermutaVenta.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\_DXValesVenta.cs">
+    <Compile Include="Reports\Transacciones\_DXValesVenta.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\_DXCuotasVenta.cs">
+    <Compile Include="Reports\Transacciones\_DXCuotasVenta.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\_DXSubrepPago.cs">
+    <Compile Include="Reports\Transacciones\_DXSubrepPago.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Scripts\Reports\Transacciones\_DXSubrepVentaSenia.cs">
+    <Compile Include="Reports\Transacciones\_DXSubrepVentaSenia.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Services\CompanyService.cs" />
@@ -2231,199 +2231,199 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="Scripts\Reports\Consultas\DXReportConsultaFinanciacion.resx">
+    <EmbeddedResource Include="Reports\Consultas\DXReportConsultaFinanciacion.resx">
       <DependentUpon>DXReportConsultaFinanciacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Consultas\DXReportConsultaCheque.resx">
+    <EmbeddedResource Include="Reports\Consultas\DXReportConsultaCheque.resx">
       <DependentUpon>DXReportConsultaCheque.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Consultas\DXReportConsultaVale.resx">
+    <EmbeddedResource Include="Reports\Consultas\DXReportConsultaVale.resx">
       <DependentUpon>DXReportConsultaVale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Consultas\DXSituacionFinancista.resx">
+    <EmbeddedResource Include="Reports\Consultas\DXSituacionFinancista.resx">
       <DependentUpon>DXSituacionFinancista.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Consultas\_DXSubrepValeDescontado.resx">
+    <EmbeddedResource Include="Reports\Consultas\_DXSubrepValeDescontado.resx">
       <DependentUpon>_DXSubrepValeDescontado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoAcvs.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoAcvs.resx">
       <DependentUpon>DXListadoAcvs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoVales.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoVales.resx">
       <DependentUpon>DXListadoVales.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoChequesEmitidos.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoChequesEmitidos.resx">
       <DependentUpon>DXListadoChequesEmitidos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXSaldosBanco.resx">
+    <EmbeddedResource Include="Reports\Listados\DXSaldosBanco.resx">
       <DependentUpon>DXSaldosBanco.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXEstadoCuenta.resx">
+    <EmbeddedResource Include="Reports\Listados\DXEstadoCuenta.resx">
       <DependentUpon>DXEstadoCuenta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoTransacciones.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoTransacciones.resx">
       <DependentUpon>DXListadoTransacciones.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoCheques.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoCheques.resx">
       <DependentUpon>DXListadoCheques.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoValesFin.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoValesFin.resx">
       <DependentUpon>DXListadoValesFin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoCuotasValesMes.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoCuotasValesMes.resx">
       <DependentUpon>DXListadoCuotasValesMes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoCuotasValesCli.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoCuotasValesCli.resx">
       <DependentUpon>DXListadoCuotasValesCli.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoCuotas.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoCuotas.resx">
       <DependentUpon>DXListadoCuotas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoMovsCajaCheques.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoMovsCajaCheques.resx">
       <DependentUpon>DXListadoMovsCajaCheques.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoMovsCajaEfectivo.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoMovsCajaEfectivo.resx">
       <DependentUpon>DXListadoMovsCajaEfectivo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoVentas.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoVentas.resx">
       <DependentUpon>DXListadoVentas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoSenias.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoSenias.resx">
       <DependentUpon>DXListadoSenias.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoPedidos.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoPedidos.resx">
       <DependentUpon>DXListadoPedidos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoVehiculosCompleto.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoVehiculosCompleto.resx">
       <DependentUpon>DXListadoVehiculosCompleto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoVehiculosAbreviado.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoVehiculosAbreviado.resx">
       <DependentUpon>DXListadoVehiculosAbreviado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXListadoDocumentacion.resx">
+    <EmbeddedResource Include="Reports\Listados\DXListadoDocumentacion.resx">
       <DependentUpon>DXListadoDocumentacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Listados\DXSituacionCliente.resx">
+    <EmbeddedResource Include="Reports\Listados\DXSituacionCliente.resx">
       <DependentUpon>DXSituacionCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportPerfiles.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportPerfiles.resx">
       <DependentUpon>DXReportPerfiles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportUsuarios.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportUsuarios.resx">
       <DependentUpon>DXReportUsuarios.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportClientes.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportClientes.resx">
       <DependentUpon>DXReportClientes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportCuentasBancarias.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportCuentasBancarias.resx">
       <DependentUpon>DXReportCuentasBancarias.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportFichaCliente.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportFichaCliente.resx">
       <DependentUpon>DXReportFichaCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportFichaVehiculo.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportFichaVehiculo.resx">
       <DependentUpon>DXReportFichaVehiculo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportFinancistas.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportFinancistas.resx">
       <DependentUpon>DXReportFinancistas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportSucursales.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportSucursales.resx">
       <DependentUpon>DXReportSucursales.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportTiposDocumento.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportTiposDocumento.resx">
       <DependentUpon>DXReportTiposDocumento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Mantenimientos\DXReportVendedores.resx">
+    <EmbeddedResource Include="Reports\Mantenimientos\DXReportVendedores.resx">
       <DependentUpon>DXReportVendedores.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboCanjeCheque.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboCanjeCheque.resx">
       <DependentUpon>DXReciboCanjeCheque.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboACVAnulacion.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboACVAnulacion.resx">
       <DependentUpon>DXReciboACVAnulacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboACV.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboACV.resx">
       <DependentUpon>DXReciboACV.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboFinancistaPago.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboFinancistaPago.resx">
       <DependentUpon>DXReciboFinancistaPago.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboRefinanciacion.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboRefinanciacion.resx">
       <DependentUpon>DXReciboRefinanciacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboSeniaDevolucion.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboSeniaDevolucion.resx">
       <DependentUpon>DXReciboSeniaDevolucion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboTransfVale.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfVale.resx">
       <DependentUpon>DXReciboTransfVale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboTransfCuotas.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfCuotas.resx">
       <DependentUpon>DXReciboTransfCuotas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboEntradaSalidaCaja.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboEntradaSalidaCaja.resx">
       <DependentUpon>DXReciboEntradaSalidaCaja.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboCobroCuotas.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboCobroCuotas.resx">
       <DependentUpon>DXReciboCobroCuotas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboCobroVale.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboCobroVale.resx">
       <DependentUpon>DXReciboCobroVale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboVentaEntrega.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboVentaEntrega.resx">
       <DependentUpon>DXReciboVentaEntrega.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboVentaAnulacion.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboVentaAnulacion.resx">
       <DependentUpon>DXReciboVentaAnulacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboSenia.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboSenia.resx">
       <DependentUpon>DXReciboSenia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboRenovarVale.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboRenovarVale.resx">
       <DependentUpon>DXReciboRenovarVale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXCuponesVenta.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXCuponesVenta.resx">
       <DependentUpon>DXCuponesVenta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboVenta.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboVenta.resx">
       <DependentUpon>DXReciboVenta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboRechazarVale.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboRechazarVale.resx">
       <DependentUpon>DXReciboRechazarVale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboDescontarVale.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboDescontarVale.resx">
       <DependentUpon>DXReciboDescontarVale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboRechazarCheque.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboRechazarCheque.resx">
       <DependentUpon>DXReciboRechazarCheque.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboTransfSucCheque.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfSucCheque.resx">
       <DependentUpon>DXReciboTransfSucCheque.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboTransfCheque.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboTransfCheque.resx">
       <DependentUpon>DXReciboTransfCheque.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXReciboDepositarCheque.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXReciboDepositarCheque.resx">
       <DependentUpon>DXReciboDepositarCheque.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\DXComprobanteDocumentacion.resx">
+    <EmbeddedResource Include="Reports\Transacciones\DXComprobanteDocumentacion.resx">
       <DependentUpon>DXComprobanteDocumentacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\_DXCuotasVenta.resx">
+    <EmbeddedResource Include="Reports\Transacciones\_DXCuotasVenta.resx">
       <DependentUpon>_DXCuotasVenta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\_DXSubrepPago.resx">
+    <EmbeddedResource Include="Reports\Transacciones\_DXSubrepPago.resx">
       <DependentUpon>_DXSubrepPago.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\_DXSubrepPermutaVenta.resx">
+    <EmbeddedResource Include="Reports\Transacciones\_DXSubrepPermutaVenta.resx">
       <DependentUpon>_DXSubrepPermutaVenta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\_DXSubrepPromesaSenia.resx">
+    <EmbeddedResource Include="Reports\Transacciones\_DXSubrepPromesaSenia.resx">
       <DependentUpon>_DXSubrepPromesaSenia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\_DXSubrepVentaSenia.resx">
+    <EmbeddedResource Include="Reports\Transacciones\_DXSubrepVentaSenia.resx">
       <DependentUpon>_DXSubrepVentaSenia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Scripts\Reports\Transacciones\_DXValesVenta.resx">
+    <EmbeddedResource Include="Reports\Transacciones\_DXValesVenta.resx">
       <DependentUpon>_DXValesVenta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
