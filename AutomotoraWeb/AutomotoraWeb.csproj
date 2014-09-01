@@ -2210,11 +2210,11 @@
     <Content Include="Views\Shared\_grillaPagosVale.cshtml" />
     <Content Include="Views\Shared\_grillaPagosCuota.cshtml" />
     <Content Include="Views\Shared\_seleccionDeVehiculosDetalle.cshtml" />
+    <Content Include="Views\Shared\_pagoEstandar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
-    <Folder Include="Views\Shared\PagosEfectivo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
