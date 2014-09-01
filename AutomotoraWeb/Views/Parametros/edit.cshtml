@@ -1,15 +1,14 @@
-﻿@model List<DLL_Backend.Moneda>
+﻿@model List<AutomotoraWeb.Models.ParametroModel>
 
 @{
-    ViewBag.Title = "Cotizaciones";
+    ViewBag.Title = "Parametros Generales";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="row-fluid">
        <div id="divGrilla">
-        @Html.Partial("_grillaCotizaciones", Model)
+        @Html.Partial("_grillaParametros", Model)
     </div>
 </div>
-
 

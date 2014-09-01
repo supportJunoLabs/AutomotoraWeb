@@ -14,15 +14,15 @@
 <body class="http-error">
     <div class="row-fluid">
         <div class="http-error">
-            <h1>
-                Oops!</h1>
+            <h1>Oops!</h1>
             <p class="info">
-                Ha sucedido algo que no esperabamos.</p>
+                Ha sucedido algo que no esperabamos.
+            </p>
             <p>
                 <i class="icon-home"></i>
             </p>
             <p>
-            @(Html.Bootstrap().ActionLinkButton("Volver al inicio",SistemaController.INDEX, SistemaController.BCONTROLLER).Class("btn btn-default"))
+                @(Html.Bootstrap().ActionLinkButton("Volver al inicio", SistemaController.INDEX, SistemaController.BCONTROLLER).Class("btn btn-default"))
         </div>
         <div class="espacio" />
         <div class="espacio" />
@@ -30,20 +30,20 @@
         <div class="espacio" />
         <div>
             @{ if (Request.IsLocal) { 
-                   if (@Model!=null && @Model.Exception !=null){
-                        <h3>La excepcion es: @Model.Exception.Message</h3>
-                        if (@Model.Exception.InnerException !=null){
-                             <h3> @Model.Exception.InnerException.Message</h3>
-                                if (@Model.Exception.InnerException.InnerException !=null){
-                                    <h3> @Model.Exception.InnerException.InnerException.Message</h3>
-                                }
-                        }
-                        
-                        <h5>Stack trace: @Model.Exception.StackTrace</h5>
-                   } else {
-                        <h3>No hay más información sobre esta excepción</h3>
-                   }
-            }}
+                <h3>@ViewData["DXCallbackErrorMessage"]</h3>
+                   
+                   if (@Model != null && @Model.Exception != null) {
+                        <h3>Informacion adicional: @Model.Exception.Message</h3>
+                       if (@Model.Exception.InnerException != null) {
+                            <h3>@Model.Exception.InnerException.Message</h3>
+                           if (@Model.Exception.InnerException.InnerException != null) {
+                                <h3>@Model.Exception.InnerException.InnerException.Message</h3>
+                           }
+                       }
+                       <h5>Stack trace: @Model.Exception.StackTrace</h5>
+                   } 
+                   
+               }}
         </div>
     </div>
 </body>

@@ -247,6 +247,7 @@
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
     <Compile Include="Controllers\Financing\ValesController.cs" />
     <Compile Include="Controllers\General\MetodosDePagoController.cs" />
+    <Compile Include="Controllers\Sistema\ParametrosController.cs" />
     <Compile Include="Controllers\Sistema\CotizacionController.cs" />
     <Compile Include="Controllers\Sistema\PefilesController.cs" />
     <Compile Include="Controllers\Sistema\PermisosController.cs" />
@@ -284,6 +285,7 @@
     <Compile Include="Models\ComprobanteDocumentacionModel.cs" />
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
+    <Compile Include="Models\ParametroModel.cs" />
     <Compile Include="Models\PerfilModel.cs" />
     <Compile Include="Models\PermisosModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
@@ -2214,6 +2216,8 @@
     <Content Include="Views\Shared\_pagoEstandar.cshtml" />
     <Content Include="Views\Cotizacion\edit.cshtml" />
     <Content Include="Views\Cotizacion\_grillaCotizaciones.cshtml" />
+    <Content Include="Views\Parametros\_grillaParametros.cshtml" />
+    <Content Include="Views\Parametros\edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -81,9 +81,9 @@
                     settings.Width = Unit.Percentage(100);
                     settings.CommandColumn.Visible = true;
                     
-                    settings.PreRender = (sender, e) => {
-                        ((MVCxGridView)sender).StartEdit(1);
-                    };
+                    //settings.PreRender = (sender, e) => {
+                    //    ((MVCxGridView)sender).StartEdit(1);
+                    //};
                     settings.CellEditorInitialize = (s, e) => {
                         ASPxEdit editor = (ASPxEdit)e.Editor;
                         editor.ValidationSettings.Display = Display.Dynamic;
@@ -92,7 +92,7 @@
                 
                 settings.SettingsBehavior.AllowSort = !ig.Estatica;
                 settings.SettingsBehavior.AllowGroup = !ig.Estatica;
-                settings.Settings.ShowGroupPanel = ig.Estatica;
+                settings.Settings.ShowGroupPanel = !ig.Estatica;
                 settings.SettingsBehavior.AllowDragDrop = !ig.Estatica;
                 
                 settings.KeyFieldName = ig.KeyFieldName;
@@ -215,7 +215,19 @@
                 foreach (string s in og.totalesSuma) {
                     settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, s);
                 }
+
+                if (ViewData["DeleteError"] != null) {
+                    settings.Settings.ShowFooter = true;
+                    settings.SetFooterRowTemplateContent(c => {
+                        Html.ViewContext.Writer.Write(ViewData["DeleteError"]);
+                    });
+                }        
+                
             });
+
+        if (ViewData["EditError"] != null) {
+            grillaSettings.SetEditErrorText((string)ViewData["EditError"]);
+        }
 
         if (ig.UsarViewData) {
             @grillaSettings.Bind(ViewData[ig.ClaveViewData]).GetHtml()

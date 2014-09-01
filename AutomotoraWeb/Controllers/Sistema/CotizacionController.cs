@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DLL_Backend;
+using AutomotoraWeb.Utils;
 
 namespace AutomotoraWeb.Controllers.Sistema
 {
@@ -27,14 +28,17 @@ namespace AutomotoraWeb.Controllers.Sistema
         public ActionResult grillaCotizaciones_UpdateRow(Moneda model) {
             if (ModelState.IsValid) {
                 try {
+                    string nomUsuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                    string origen = HttpContext.Request.UserHostAddress;
+                    model.setearAuditoria(nomUsuario, origen);
                     model.ModificarCotizacion();
                 } catch (Exception e) {
                     ViewData["EditError"] = e.Message;
                 }
             } else {
-                ViewData["EditError"] = "Please, correct all errors.";
+                ViewData["EditError"] = "Corrija los valores incorrectos";
             }
-
+            //throw new Exception("excepcion de prueba");
             return PartialView("_grillaCotizaciones", Moneda.MonedasCotizacion());
         }
 

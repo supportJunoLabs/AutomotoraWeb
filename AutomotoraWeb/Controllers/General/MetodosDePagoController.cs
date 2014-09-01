@@ -71,7 +71,7 @@ namespace AutomotoraWeb.Controllers.General
                     ViewData["EditError"] = e.Message;
                 }
             } else {
-                ViewData["EditError"] = "Please, correct all errors.";
+                ViewData["EditError"] = "Corrija los valores incorrectos";
             }
 
             return PartialView("_grillaPagosCheque", listCheque);
@@ -85,7 +85,7 @@ namespace AutomotoraWeb.Controllers.General
             _validarCheque(cheque);
             if (ModelState.IsValid) {
                 try {
-                    
+
                     Moneda monedaElejida =
                         (from m in Moneda.Monedas
                          where (m.Codigo == cheque.Importe.Moneda.Codigo)
@@ -97,7 +97,7 @@ namespace AutomotoraWeb.Controllers.General
                          select c).First<Cheque>();
 
                     chequeEditado.Banco = cheque.Banco;
-                    chequeEditado.Cuenta  = cheque.Cuenta;
+                    chequeEditado.Cuenta = cheque.Cuenta;
                     chequeEditado.Librador = cheque.Librador;
                     chequeEditado.NumeroCheque = cheque.NumeroCheque;
                     chequeEditado.FechaValor = cheque.FechaValor;
@@ -109,8 +109,9 @@ namespace AutomotoraWeb.Controllers.General
                 } catch (Exception e) {
                     ViewData["EditError"] = e.Message;
                 }
-            } else
-                ViewData["EditError"] = "Please, correct all errors.";
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
 
             return PartialView("_grillaPagosCheque", listCheque);
         }
@@ -199,7 +200,7 @@ namespace AutomotoraWeb.Controllers.General
                     ViewData["EditError"] = e.Message;
                 }
             } else {
-                ViewData["EditError"] = "Please, correct all errors.";
+                ViewData["EditError"] = "Corrija los valores incorrectos";
             }
 
             return PartialView("_grillaPagosEfectivo", listEfectivo);
@@ -228,11 +229,16 @@ namespace AutomotoraWeb.Controllers.General
                 } catch (Exception e) {
                     ViewData["EditError"] = e.Message;
                 }
-            } else
-                ViewData["EditError"] = "Please, correct all errors.";
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
 
             return PartialView("_grillaPagosEfectivo", listEfectivo);
         }
+
+        //private void pruebaError(){
+        //    throw new Exception("Error de prueba a proposito para probar excepciones");
+        //}
 
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosEfectivo_DeleteRowRouteValues(int IdLinea, string idSession) {
@@ -241,13 +247,14 @@ namespace AutomotoraWeb.Controllers.General
 
             if (IdLinea >= 0) {
                 try {
+                    //pruebaError();
                     Efectivo efectivoEliminado =
                         (from c in listEfectivo
                          where (c.IdLinea == IdLinea)
                          select c).First<Efectivo>();
                     listEfectivo.Remove(efectivoEliminado);
                 } catch (Exception e) {
-                    ViewData["EditError"] = e.Message;
+                    ViewData["DeleteError"] = e.Message;
                 }
             }
             return PartialView("_grillaPagosEfectivo", listEfectivo);
@@ -322,7 +329,7 @@ namespace AutomotoraWeb.Controllers.General
                     ViewData["EditError"] = e.Message;
                 }
             } else {
-                ViewData["EditError"] = "Please, correct all errors.";
+                ViewData["EditError"] = "Corrija los valores incorrectos";
             }
 
             return PartialView("_grillaPagosMovBanco", listMovBanco);
@@ -353,8 +360,9 @@ namespace AutomotoraWeb.Controllers.General
                 } catch (Exception e) {
                     ViewData["EditError"] = e.Message;
                 }
-            } else
-                ViewData["EditError"] = "Please, correct all errors.";
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
 
             return PartialView("_grillaPagosMovBanco", listMovBanco);
         }
@@ -447,7 +455,7 @@ namespace AutomotoraWeb.Controllers.General
                     ViewData["EditError"] = e.Message;
                 }
             } else {
-                ViewData["EditError"] = "Please, correct all errors.";
+                ViewData["EditError"] = "Corrija los valores incorrectos";
             }
 
             return PartialView("_grillaPagosVale", listVale);
@@ -480,8 +488,9 @@ namespace AutomotoraWeb.Controllers.General
                 } catch (Exception e) {
                     ViewData["EditError"] = e.Message;
                 }
-            } else
-                ViewData["EditError"] = "Please, correct all errors.";
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
 
             return PartialView("_grillaPagosVale", listVale);
         }

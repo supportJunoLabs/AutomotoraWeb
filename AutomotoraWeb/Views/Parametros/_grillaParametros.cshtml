@@ -1,0 +1,32 @@
+﻿@model List<AutomotoraWeb.Models.ParametroModel>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sistema;
+@using DLL_Backend;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Descripcion", Ancho=500, ReadOnly=true},    
+        new ColumnaGrilla {Campo="Valor",  Ancho=100}
+    };
+            
+    ig.NameGrid = "grilla";
+    ig.Controller = ParametrosController.CONTROLLER;
+    ig.ActionCallbackRoute = "grillaParametros";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Parametro.ParametroMD);
+    ig.AnchoTotal = 720;
+    ig.UpdateRowRouteValues = "grillaParametros_UpdateRow";
+    ig.Estatica = true;
+    ig.TipoEdicion = InfoGrilla.TIPO_EDICION.INLINE;
+    ig.Edicion = true;
+
+
+    ViewBag.InfoGrilla = ig;
+    
+}
+
+@Html.Partial("_generalGrid", Model)
