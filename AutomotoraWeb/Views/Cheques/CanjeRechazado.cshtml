@@ -18,6 +18,8 @@
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
 
+    <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/>
+
     <div class="display-label">
         @Html.LabelForRequired(model => model.Cheque)
     </div>
@@ -38,7 +40,16 @@
 
     </div>
     <div class="clear-both"></div>
-          
+         
+      <div class="display-label">
+        @Html.DisplayNameFor(model => model.Importe) Recibido *
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayImporteFor(model => model.Importe, modoConsulta)
+        @Html.ValidationMessageFor(model => model.Importe.Monto)
+    </div>
+    <div class="clear-both"></div>    
+    
     <div>
         <div class="display-label">
             @Html.LabelForRequired(model => model.Sucursal)
@@ -63,13 +74,11 @@
     <div class="clear-both"></div>   
     
     <div>
-            FALTA CHEQUES, EFECTIVO Y MOVBANCO, QUE HAY QUE COPIARLO DE LA TRANSACCION VENTA (LEANDRO)
-
+           @Html.Partial("_pagoEstandar", Model)
     </div>
     
     <div class="clear-both"></div>   
     
-    <div class="espacio2"></div>
     <div class="btn-toolbar">
         @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Canjear Cheque"))
     </div>     

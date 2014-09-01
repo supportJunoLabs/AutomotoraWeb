@@ -11,8 +11,6 @@
     bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
 }
 
-FALTA MODO DE PAGO DE IMPORTE RECIBIDO (IDEM A PASAR VALE) 
-
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
@@ -20,7 +18,7 @@ FALTA MODO DE PAGO DE IMPORTE RECIBIDO (IDEM A PASAR VALE)
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")
 
-    
+    <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/>
 
     <div class="display-label">
         @Html.LabelForRequired(model => model.Cheque)
@@ -97,7 +95,8 @@ FALTA MODO DE PAGO DE IMPORTE RECIBIDO (IDEM A PASAR VALE)
     </div>
     <div class="clear-both"></div>   
     
-    <div class="espacio2"></div>
+    @Html.Partial("_pagoEstandar", Model)
+
     <div class="btn-toolbar">
         @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Transferir Cheque"))
     </div>     

@@ -205,6 +205,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult Pasar() {
             TRChequePasar model = new TRChequePasar();
+            prepararSession(model); 
             try {
                 model.TipoDestino = TRChequePasar.TIPO_DESTINO.FINANCISTA;
                 model.Cheque = new Cheque();
@@ -217,6 +218,15 @@ namespace AutomotoraWeb.Controllers.Bank {
             }
         }
 
+        private void prepararSession(Transaccion tr) {
+            string idSession = SessionUtils.generarIdVarSesion("ChequeEmitido", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            Session[idSession] = tr;
+            ViewData["idSession"] = idSession;
+            Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
+            Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
+            Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
+        }
+
         //Se invoca para cargar opciones de la gridlookup 
         public ActionResult ChequesTransferiblesGrilla(GridLookUpModel model) {
             model.Opciones = Cheque.ChequesTransferibles();
@@ -224,10 +234,14 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         [HttpPost]
-        public ActionResult Pasar(TRChequePasar tr) {
+        public ActionResult Pasar(TRChequePasar tr, string idSession) {
+
+            ViewData["idSession"] = idSession;
+
             this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
             this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
             this.eliminarValidacionesIgnorables("Financista", MetadataManager.IgnorablesDDL(tr.Financista));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
 
             //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Cheque.Codigo");
@@ -246,6 +260,10 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             if (ModelState.IsValid) {
                 try {
+                    tr.Pago.AgregarCheques( (IEnumerable<Cheque>)  Session[idSession + SessionUtils.CHEQUES]);
+                    tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
                     tr.Ejecutar();
                     return RedirectToAction("ReciboTransf", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
                 } catch (UsuarioException exc) {
@@ -625,6 +643,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult CanjeRechazado() {
             TRChequeRechazadoCanje model = new TRChequeRechazadoCanje();
+            prepararSession(model); 
             try {
                 model.Cheque = new Cheque();
                 model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
@@ -634,6 +653,39 @@ namespace AutomotoraWeb.Controllers.Bank {
                 ViewBag.ErrorMessage = exc.Message;
                 return View(model);
             }
+        }
+
+        [HttpPost]
+        public ActionResult CanjeRechazado(TRChequeRechazadoCanje tr, string idSession) {
+
+            ViewData["idSession"] = idSession;
+
+            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
+
+            //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
+            ModelState.Remove("Cheque.Codigo");
+
+            if (tr.Cheque == null || tr.Cheque.Codigo <= 0) {
+                ModelState.AddModelError("Cheque.Codigo", "El Cheque es requerido");
+            }
+
+            if (ModelState.IsValid) {
+                try {
+                    tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+                    tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboCanje", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(tr);
+                }
+            }
+            return View(tr);
         }
 
         //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
