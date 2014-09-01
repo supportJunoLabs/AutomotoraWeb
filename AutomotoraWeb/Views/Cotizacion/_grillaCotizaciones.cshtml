@@ -1,0 +1,41 @@
+﻿@model List<DLL_Backend.Moneda>
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sistema;
+@using DLL_Backend;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Nombre", ReadOnly=true, Ancho=150},
+            new ColumnaGrilla {Campo="Simbolo", ReadOnly=true, Ancho=50},
+            new ColumnaGrilla {Campo="Cotizacion", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE, Ancho=100},
+            new ColumnaGrilla {Campo="Aclaracion", ReadOnly=true, Ancho=200},
+    };
+            
+    ig.NameGrid = "grilla";
+    ig.Controller = CotizacionController.CONTROLLER;
+    ig.ActionCallbackRoute = "grillaCotizaciones";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Moneda.MonedaMD);
+    ig.AnchoTotal = 620;
+    
+    //ig.OnBeginCallback = "OnBeginCallback";
+    ig.UpdateRowRouteValues = "grillaCotizaciones_UpdateRow";
+    ig.Estatica = true;
+    ig.TipoEdicion = InfoGrilla.TIPO_EDICION.INLINE;
+    ig.Edicion = true;
+
+    //ig.ActionCallbackRoute = "grillaCotizaciones";
+
+ 
+    
+
+    ViewBag.InfoGrilla = ig;
+    
+}
+
+@Html.Partial("_generalGrid", Model)
+  

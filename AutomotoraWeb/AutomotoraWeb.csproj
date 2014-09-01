@@ -247,6 +247,7 @@
     <Compile Include="Controllers\Financing\TransaccionesController.cs" />
     <Compile Include="Controllers\Financing\ValesController.cs" />
     <Compile Include="Controllers\General\MetodosDePagoController.cs" />
+    <Compile Include="Controllers\Sistema\CotizacionController.cs" />
     <Compile Include="Controllers\Sistema\PefilesController.cs" />
     <Compile Include="Controllers\Sistema\PermisosController.cs" />
     <Compile Include="Controllers\Sistema\UsuariosController.cs" />
@@ -2211,6 +2212,8 @@
     <Content Include="Views\Shared\_grillaPagosCuota.cshtml" />
     <Content Include="Views\Shared\_seleccionDeVehiculosDetalle.cshtml" />
     <Content Include="Views\Shared\_pagoEstandar.cshtml" />
+    <Content Include="Views\Cotizacion\edit.cshtml" />
+    <Content Include="Views\Cotizacion\_grillaCotizaciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
