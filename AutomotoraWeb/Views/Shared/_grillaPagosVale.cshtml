@@ -26,12 +26,13 @@
     ig.BotonesMtoEstandar = true;
     ig.registrosPorPagina = 4;
     ig.OnBeginCallback = "OnBeginCallback";
-    ig.CustomActionRouteValues = "grillaPagosVale_CustomActionRouteValues";
+    //ig.CustomActionRouteValues = "grillaPagosVale_CustomActionRouteValues";
     ig.AddNewRowRouteValues = "grillaPagosVale_AddNewRowRouteValues";
     ig.UpdateRowRouteValues = "grillaPagosVale_UpdateRowRouteValues";
     ig.DeleteRowRouteValues = "grillaPagosVale_DeleteRowRouteValues";
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
+    ig.Edicion = true;
 
     ig.FuncionInitNewRow = (s, e) => {
         e.NewValues["Importe.Moneda.Codigo"] = Moneda.MonedaDefault.Codigo;

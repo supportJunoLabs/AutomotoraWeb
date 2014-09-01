@@ -11,7 +11,7 @@
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
             new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
             new ColumnaGrilla {Campo="Importe.Monto", Ancho=150, Titulo="Monto", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE},
-            new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Ancho=150, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, MostrarSoloGrilla=true}
+            new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Ancho=150, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, MostrarSoloGrilla=true, ReadOnly=true}
     };
     
     ig.NameGrid = "grillaPagosEfectivo";
@@ -19,16 +19,15 @@
     ig.ActionCallbackRoute = "grillaPagosEfectivo";
     ig.KeyFieldName = "IdLinea";
     ig.TypeOfModel = typeof(Efectivo.EfectivoMD);
-    ig.BotonesMtoEstandar = true;
-    ig.registrosPorPagina = 4;
     ig.OnBeginCallback = "OnBeginCallback";
-    ig.CustomActionRouteValues = "grillaPagosEfectivo_CustomActionRouteValues";
+    //ig.CustomActionRouteValues = "grillaPagosEfectivo_CustomActionRouteValues";
     ig.AddNewRowRouteValues = "grillaPagosEfectivo_AddNewRowRouteValues";
     ig.UpdateRowRouteValues = "grillaPagosEfectivo_UpdateRowRouteValues";
     ig.DeleteRowRouteValues = "grillaPagosEfectivo_DeleteRowRouteValues";
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
-    ig.TipoEdicion = InfoGrilla.TIPO_EDICION.POPUP;
+    ig.TipoEdicion = InfoGrilla.TIPO_EDICION.INLINE;
+    ig.Edicion = true;
 
     ig.FuncionInitNewRow = (s, e) => {
         e.NewValues["Importe.Moneda.Codigo"] = Moneda.MonedaDefault.Codigo;

@@ -33,6 +33,7 @@ namespace AutomotoraWeb.Models {
         public string ClaveViewData;
         public Type TypeOfModel { get; set; } //Se usar para encontrar las columnas por reflection o para traer las propiedades de metadata de los objetos
         public bool MostrarTotales { get; set; }
+        public bool Edicion { get; set; }
 
 
         // atributos para lookupgrid
@@ -63,6 +64,7 @@ namespace AutomotoraWeb.Models {
             ChecksSeleccion = false;
             UsarViewData = false;
             MostrarTotales = true;
+            Edicion = false;
         }
 
 

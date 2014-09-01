@@ -36,8 +36,10 @@
                     settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"] };
                 }
 
-                if (ig.CustomActionRouteValues != null) {
-                    settings.CustomActionRouteValues = new { Controller = ig.Controller, Action = ig.CustomActionRouteValues };
+                if (ig.Edicion){
+                    if (ig.CustomActionRouteValues != null) {
+                        settings.CustomActionRouteValues = new { Controller = ig.Controller, Action = ig.CustomActionRouteValues };
+                    }
 
                     if (ig.AddNewRowRouteValues != null) {
                         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = ig.Controller, Action = ig.AddNewRowRouteValues };
@@ -79,16 +81,6 @@
                     settings.Width = Unit.Percentage(100);
                     settings.CommandColumn.Visible = true;
                     
-                    //if (ig.AddNewRowRouteValues != null) {
-                        
-                    //}
-                    //if (ig.UpdateRowRouteValues != null){
-                        
-                    //}
-                    //if (ig.DeleteRowRouteValues != null) {
-                        
-                    //}
-
                     settings.PreRender = (sender, e) => {
                         ((MVCxGridView)sender).StartEdit(1);
                     };
@@ -97,12 +89,6 @@
                         editor.ValidationSettings.Display = Display.Dynamic;
                     };
                 }
-
-                //Ancho del combo donde se muestran las opciones elegidas
-                //if (ig.AnchoSeleccion > 0) {
-                //    settings.Width = Unit.Pixel(ig.AnchoSeleccion);
-                //}
-                
                 
                 settings.SettingsBehavior.AllowSort = !ig.Estatica;
                 settings.SettingsBehavior.AllowGroup = !ig.Estatica;

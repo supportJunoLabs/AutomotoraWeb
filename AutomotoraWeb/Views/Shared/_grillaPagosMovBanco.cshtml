@@ -31,12 +31,13 @@
     ig.BotonesMtoEstandar = true;
     ig.registrosPorPagina = 4;
     ig.OnBeginCallback = "OnBeginCallback";
-    ig.CustomActionRouteValues = "grillaPagosMovBanco_CustomActionRouteValues";
+    //ig.CustomActionRouteValues = "grillaPagosMovBanco_CustomActionRouteValues";
     ig.AddNewRowRouteValues = "grillaPagosMovBanco_AddNewRowRouteValues";
     ig.UpdateRowRouteValues = "grillaPagosMovBanco_UpdateRowRouteValues";
     ig.DeleteRowRouteValues = "grillaPagosMovBanco_DeleteRowRouteValues";
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
+    ig.Edicion = true;
 
     ig.FuncionInitNewRow = (s, e) => {
         e.NewValues["FechaMov"] = DateTime.Now.Date;

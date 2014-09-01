@@ -30,11 +30,11 @@ namespace AutomotoraWeb.Controllers.General
         //    return PartialView("EditModesPartial", listCheque);
         //}
 
-        public ActionResult grillaPagosCheque_CustomActionRouteValues(GridViewEditingMode editMode) {
-            //GridViewEditingDemosHelper.EditMode = editMode;
-            List<Cheque> listCheque = new List<Cheque>();
-            return PartialView("EditModesPartial", listCheque);
-        }
+        //public ActionResult grillaPagosCheque_CustomActionRouteValues(GridViewEditingMode editMode) {
+        //    //GridViewEditingDemosHelper.EditMode = editMode;
+        //    List<Cheque> listCheque = new List<Cheque>();
+        //    return PartialView("EditModesPartial", listCheque);
+        //}
 
         private void _validarCheque(Cheque cheque){
             eliminarValidacionesIgnorablesCheque(cheque);
@@ -160,15 +160,17 @@ namespace AutomotoraWeb.Controllers.General
         //    return PartialView("EditModesPartial", listEfectivo);
         //}
 
-        public ActionResult grillaPagosEfectivo_CustomActionRouteValues(GridViewEditingMode editMode) {
-            //GridViewEditingDemosHelper.EditMode = editMode;
-            List<Efectivo> listEfectivo = new List<Efectivo>();
-            return PartialView("EditModesPartial", listEfectivo);
-        }
+        //public ActionResult grillaPagosEfectivo_CustomActionRouteValues(GridViewEditingMode editMode) {
+        //    //GridViewEditingDemosHelper.EditMode = editMode;
+        //    List<Efectivo> listEfectivo = new List<Efectivo>();
+        //    return PartialView("EditModesPartial", listEfectivo);
+        //}
 
         private void _validarEfectivo(Efectivo efectivo){
             
             eliminarValidacionesIgnorablesEfectivo(efectivo);
+
+            ModelState.Remove("Importe.ImporteEnMonedaDefault.Monto");
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
             ModelState.Remove("Importe.Moneda.Codigo");
@@ -277,11 +279,11 @@ namespace AutomotoraWeb.Controllers.General
         //    return PartialView("EditModesPartial", listMovBanco);
         //}
 
-        public ActionResult grillaPagosMovBanco_CustomActionRouteValues(GridViewEditingMode editMode) {
-            //GridViewEditingDemosHelper.EditMode = editMode;
-            List<MovBanco> listMovBanco = new List<MovBanco>();
-            return PartialView("EditModesPartial", listMovBanco);
-        }
+        //public ActionResult grillaPagosMovBanco_CustomActionRouteValues(GridViewEditingMode editMode) {
+        //    //GridViewEditingDemosHelper.EditMode = editMode;
+        //    List<MovBanco> listMovBanco = new List<MovBanco>();
+        //    return PartialView("EditModesPartial", listMovBanco);
+        //}
 
         private void _validarMovBanco(MovBanco movBanco){
             eliminarValidacionesIgnorablesMovBanco(movBanco);
@@ -424,11 +426,11 @@ namespace AutomotoraWeb.Controllers.General
 
         }
 
-        public ActionResult grillaPagosVale_CustomActionRouteValues(GridViewEditingMode editMode) {
-            //GridViewEditingDemosHelper.EditMode = editMode;
-            List<Vale> listVale = new List<Vale>();
-            return PartialView("EditModesPartial", listVale);
-        }
+        //public ActionResult grillaPagosVale_CustomActionRouteValues(GridViewEditingMode editMode) {
+        //    //GridViewEditingDemosHelper.EditMode = editMode;
+        //    List<Vale> listVale = new List<Vale>();
+        //    return PartialView("EditModesPartial", listVale);
+        //}
 
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosVale_AddNewRowRouteValues(Vale vale, string idSession) {
