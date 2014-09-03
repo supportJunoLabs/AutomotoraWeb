@@ -218,6 +218,7 @@
 
                 if (ViewData["DeleteError"] != null) {
                     settings.Settings.ShowFooter = true;
+                    settings.Styles.Footer.CssClass = "grillaErrorFooter";
                     settings.SetFooterRowTemplateContent(c => {
                         Html.ViewContext.Writer.Write(ViewData["DeleteError"]);
                     });

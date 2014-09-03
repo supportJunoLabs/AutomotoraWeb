@@ -209,6 +209,7 @@ namespace AutomotoraWeb.Controllers.General
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosEfectivo_UpdateRowRouteValues(Efectivo efectivo, string idSession) {
 
+            //pruebaError();
             List<Efectivo> listEfectivo = _listaPagosEfectivo(idSession);
 
             _validarEfectivo(efectivo);
@@ -236,9 +237,9 @@ namespace AutomotoraWeb.Controllers.General
             return PartialView("_grillaPagosEfectivo", listEfectivo);
         }
 
-        //private void pruebaError(){
-        //    throw new Exception("Error de prueba a proposito para probar excepciones");
-        //}
+        private void pruebaError() {
+            throw new Exception("Error de prueba a proposito para probar excepciones");
+        }
 
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosEfectivo_DeleteRowRouteValues(int IdLinea, string idSession) {
@@ -247,16 +248,17 @@ namespace AutomotoraWeb.Controllers.General
 
             if (IdLinea >= 0) {
                 try {
-                    //pruebaError();
                     Efectivo efectivoEliminado =
                         (from c in listEfectivo
                          where (c.IdLinea == IdLinea)
                          select c).First<Efectivo>();
                     listEfectivo.Remove(efectivoEliminado);
+                    
                 } catch (Exception e) {
                     ViewData["DeleteError"] = e.Message;
                 }
             }
+            //ViewData["DeleteError"] = "Testing error message style";
             return PartialView("_grillaPagosEfectivo", listEfectivo);
         }
 
