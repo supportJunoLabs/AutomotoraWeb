@@ -15,6 +15,10 @@ namespace AutomotoraWeb.Controllers.General
         }
 
         public ActionResult ErrorDX() {
+
+            var server = HttpContext.Server;
+            Exception exception = server.GetLastError();
+
             HttpContext.Response.StatusCode = 500;
             return View();
         }

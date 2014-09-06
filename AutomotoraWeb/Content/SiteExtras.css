@@ -234,3 +234,8 @@ textarea {
     background: -o-linear-gradient(bottom, #4d5b76, #6c7a95);
     color: white;
 }
+
+.grillaErrorFooter {
+    background-color: #F3D6D6 !important;
+    color: #BA1717;
+}
