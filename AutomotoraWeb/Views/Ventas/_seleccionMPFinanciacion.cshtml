@@ -18,7 +18,7 @@
             @Html.LabelForRequired(model => model.Financiacion.CantCuotas)
         </div>
         <div class="editor-field editor-field-small">
-            @Html.EditorOrDisplayFor(model => model.Financiacion.CantCuotas, false, new { id = "inputFinanciacionCuotaCantCuotas" })
+            @Html.EditorOrDisplayFor(model => model.Financiacion.CantCuotas, false)
             @Html.ValidationMessageFor(model => model.Financiacion.CantCuotas)
         </div>
         <div class="clear-both"></div>
@@ -27,7 +27,7 @@
             @Html.LabelForRequired(model => model.Financiacion.Tasa)
         </div>
         <div class="editor-field editor-field-small">
-            @Html.EditorOrDisplayFor(model => model.Financiacion.Tasa, false, new { id = "inputFinanciacionCuotaTasa" })
+            @Html.EditorOrDisplayFor(model => model.Financiacion.Tasa, false)
             @Html.ValidationMessageFor(model => model.Financiacion.Tasa)
         </div>
         <div class="clear-both"></div>
@@ -58,7 +58,7 @@
 
                 $("#messageErrorCambiarFinanciacion").html("");
 
-                var urlAction = '@(Url.Action("cambiarFinanciacion", "ventas"))'
+                var urlAction = '@(Url.Action("cambiarFinanciacion", "metodosDePago"))'
 
                 $.ajax({
                     url: urlAction,
@@ -72,11 +72,15 @@
                             grillaPagosCuota.Refresh(); // Se actualiza la grilla
                         }
                         else {
-                            $("#" + containerErrorMessage).html("ERROR");
+                            var htmlError = "";
+                            for (var i = 0; i < data.ErrorMessage.length; i++) {
+                                htmlError = htmlError + "<div>" + data.ErrorMessage[i] + "</div>";
+                            }
+                            $("#messageErrorCambiarFinanciacion").html(htmlError);
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        general_showErrorAction(containerErrorMessage, textStatus, errorThrown);
+                        general_showErrorAction("messageErrorCambiarFinanciacion", textStatus, errorThrown);
                     }
                 });
             }
@@ -97,19 +101,27 @@
 
             var idSession = '@(ViewData["idSession"])';
 
-            var pagoFinanciacion = {
-                cantCuotas :$("#inputFinanciacionCuotaCantCuotas").val(),
-                tasa : $("#inputFinanciacionCuotaTasa").val(), 
+            /*var financiacion = {
+                cantCuotas: parseInt($("#Financiacion_CantCuotas").val()),
+                tasa: parseFloat($("#Financiacion_Tasa").val()),
                 importe: {
                     Moneda: {
-                        Codigo: $("#ddlMontoFinanciadoMoneda").val()
+                        Codigo: parseInt($("#ddlMontoFinanciadoMoneda").val())
                     },
-                    Monto: $("#txMontoFinanciadoMonto").val()
+                    Monto: parseFloat($("#txMontoFinanciadoMonto").val())
                 },
+                idSession: idSession
+            };*/
+
+            var financiacion = {
+                cantCuotas: parseInt($("#Financiacion_CantCuotas").val()),
+                tasa: parseFloat($("#Financiacion_Tasa").val()),
+                codigoMonedaImporte : parseInt($("#ddlMontoFinanciadoMoneda").val()),
+                montoImporte: parseFloat($("#txMontoFinanciadoMonto").val()),
                 idSession: idSession
             };
 
-            return JSON.stringify(pagoFinanciacion);
+            return JSON.stringify(financiacion);
         }
 
     </script>
