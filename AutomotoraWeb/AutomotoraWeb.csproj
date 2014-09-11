@@ -2224,6 +2224,9 @@
     <Content Include="Views\Cuotas\_seleccionVentaGridLookup.cshtml" />
     <Content Include="Views\Cuotas\_detalleCobroCuota.cshtml" />
     <Content Include="Views\Cuotas\_grillacuotasVigentes.cshtml" />
+    <Content Include="Views\Vales\Cobrar.cshtml" />
+    <Content Include="Views\Vales\_seleccionValeCobrar.cshtml" />
+    <Content Include="Views\Vales\_detalleCobroVale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

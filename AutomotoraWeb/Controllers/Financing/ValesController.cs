@@ -595,6 +595,109 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region CobrarVale
 
+        private void prepararSessionCobranza(Transaccion tr, string sop) {
+            string idSession = SessionUtils.generarIdVarSesion(sop, Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            Session[idSession] = tr;
+            ViewData["idSession"] = idSession;
+            Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
+            Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
+            Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
+        }
+
+        public TRValeCobro iniCobro() {
+            TRValeCobro tr = new TRValeCobro();
+            tr.ClienteOp = new Cliente();
+            tr.ClienteOp.Codigo = 0;
+            tr.Vale = new Vale();
+            tr.Fecha = DateTime.Now;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
+            prepararSessionCobranza(tr, "CobroVale");
+            return tr;
+        }
+
+        public ActionResult Cobrar() {
+            //cobrar una cuota
+            TRValeCobro tr = iniCobro();
+            tr.Tipo = TRValeCobro.TIPO.VALE;
+            return View("Cobrar", tr);
+        }
+
+        public ActionResult CobrarAC() {
+            //cobrar a cuenta de cuota
+            TRValeCobro tr = iniCobro();
+            tr.Tipo = TRValeCobro.TIPO.PARCIAL;
+            return View("Cobrar", tr);
+        }
+
+        //cuando se selecciona un cliente de la ddl de clientes
+        public ActionResult ValesCobrarCliente(int idCliente, string idSession) {
+            TRValeCobro tr = (TRValeCobro)Session[idSession];
+            tr.ClienteOp = new Cliente();
+            tr.ClienteOp.Codigo = idCliente;
+            tr.Vale = new Vale();
+            return PartialView("_seleccionValeCobrar", tr);
+        }
+
+        //se invoca al seleccionar el vale a cobrar
+        public ActionResult DetallesCobro(string idVale, string idSession) {
+            TRValeCobro tr = (TRValeCobro)Session[idSession];
+            tr.Vale = new Vale();
+            tr.Vale.Codigo = idVale;
+            tr.Vale.Consultar();
+
+            if (tr.Tipo == TRValeCobro.TIPO.VALE) {
+                ValeCobroSugerido sug = tr.Vale.CobroSugerido();
+                tr.Importe = new Importe(sug.CobroSugerido);
+            }
+            return PartialView("_detalleCobroVale", tr);
+        }
+
+        //Al confirmar el cobro de un vale
+        [HttpPost]
+        public ActionResult Cobrar(TRValeCobro tr, string idSession) {
+            ViewData["idSession"] = idSession;
+
+            TRValeCobro tr0 = (TRValeCobro)Session[idSession];
+
+            tr.Vale = tr0.Vale;
+            tr.ClienteOp = tr0.ClienteOp;
+            tr.Tipo = tr0.Tipo;
+            tr.Fecha = DateTime.Now.Date;
+
+            Session[idSession] = tr;
+
+            tr.Importe.Moneda = tr0.Vale.Importe.Moneda;
+
+            ModelState.Remove("Importe.Moneda");
+
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
+            this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(tr.ClienteOp));
+
+            if (ModelState.IsValid) {
+                try {
+                    tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+                    tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboVale", ValesController.CONTROLLER, new { id = tr.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View("Cobrar", tr);
+                }
+            }
+            return View("Cobrar", tr);
+        }
+
+        [HttpPost]
+        public ActionResult CobrarAC(TRValeCobro tr, string idSession) {
+            return Cobrar(tr, idSession);
+        }
+
         public ActionResult ReciboVale(int id) {
             try {
                 TRValeCobro tr = (TRValeCobro)Transaccion.ObtenerTransaccion(id);

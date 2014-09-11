@@ -1,0 +1,63 @@
+﻿@model DLL_Backend.TRValeCobro
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+
+<div class="display-label label-mini">
+    @Html.LabelFor(model => model.Vale)
+</div>
+<div class="editor-field editor-field-xlarge xxlarge floatLeft">
+    @Html.DdlOrDisplayFor(model => model.Vale.Codigo, false, model => model.Vale.Descripcion,
+                new SelectList(Model.ClienteOp.ValesPendientesOperables(), "Codigo", "Descripcion"), "--Seleccionar Vale--",
+                new { id = "ddlVales", @class = "xxlarge" })
+</div>
+<div class="floatLeft" style="padding-left: 20px;">
+    <a href="#" id="abtn_verVale">
+        @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Vale").Id("btn_verVale")
+    </a>
+</div>
+
+<div class="clear-both"></div>
+
+<script type="text/javascript">
+
+    $('#ddlVales').change(function () {
+        var selectedVale = $(this).val();
+        actualizarVale(selectedVale);
+    });
+
+    function actualizarVale(selectedVale) {
+        if (selectedVale) {
+            $("#abtn_verVale").prop("href", "/Vales/ConsultaVale/" + selectedVale);
+        } else {
+            $("#abtn_verVale").prop("href", "#");
+        }
+
+        //alert(selectedVenta);
+        $('#divDetalleCobro').html('');
+        var destino = '/Vales/DetallesCobro/'
+        var idSession = $('#idSession').val();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idVale": selectedVale, "idSession": idSession },
+            success: function (data) {
+                $('#divDetalleCobro').html(data);
+                //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
+                $('form').removeData('validator');
+                $('form').removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse('form');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                //alert('Error al traer los datos.');
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+
+</script>
