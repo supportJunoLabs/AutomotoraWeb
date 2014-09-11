@@ -49,6 +49,8 @@ namespace AutomotoraWeb.Controllers.Financing
             tr.Venta = new Venta();
             tr.Venta.Codigo = 0; //aca deberia cargar el codigo la gridlookup
             tr.Fecha = DateTime.Now;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
 
             prepararSessionCobranza(tr, "CobroCuota");
             return tr;

@@ -18,15 +18,16 @@
      <div class="floatLeft" style="margin-left:5px">
         <img src="~/Content/Images/refresh.png" id="btn_refrescar_ventas" style="height:30px" />
      </div>
+    <div class="floatLeft" style="padding-left: 8px;">
+            <a href="#" id="abtn_verFinanciacion">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Financiacion").Id("btn_verFinanciacion")
+            </a>
+        </div>
      @Html.HiddenFor(model => model.Venta.Codigo, new { id = "codigoVenta" })
 
 </div>
 
 <div class="clear-both"></div>
-
-
-
-
 
 <script type="text/javascript">
     function OnBeginCallbackVentas(s, e) {
@@ -50,6 +51,12 @@
 
     function actualizarVenta() {
         var selectedVenta = $("#codigoVenta").val();
+        if (selectedVenta) {
+            $("#abtn_verFinanciacion").prop("href", "/ConsultasFin/ConsultaFinanciacion/" + selectedVenta);
+        } else {
+            $("#abtn_verFinanciacion").prop("href", "#");
+        }
+
         //alert(selectedVenta);
         $('#divDetalleCobro').html('');
         var destino = '/Cuotas/DetallesCobro/'

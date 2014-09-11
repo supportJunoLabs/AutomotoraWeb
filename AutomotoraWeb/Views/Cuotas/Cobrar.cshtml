@@ -29,6 +29,11 @@
           new SelectList(Financiacion.ClientesCuotasPendientes(), "Codigo", "Nombre"), "--Seleccionar Cliente--",
           new { id = "ddlClientes", @class = "xxlarge" })
         </div>
+        <div class="floatLeft" style="padding-left: 20px;">
+            <a href="#" id="abtn_verCliente">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Datos Cliente").Id("btn_verCliente")
+            </a>
+        </div>
         <div class="clear-both"></div>
     </div>
     <div>
@@ -68,10 +73,17 @@
     $('#ddlClientes').change(function () {
         /* Get the selected value of dropdownlist */
         var selectedCli = $(this).val();
-        ClienteElegido(selectedCli);
+        
+            ClienteElegido(selectedCli);
+        
     });
 
     function ClienteElegido(selectedCli) {
+        if (selectedCli) {
+            $("#abtn_verCliente").prop("href", "/Clientes/details/" + selectedCli);
+        } else {
+            $("#abtn_verCliente").prop("href", "#");
+        }
         var idSession = $('#idSession').val();
         $('#divSeleccionVenta').html('');
         $('#divDetalleCobro').html('');
