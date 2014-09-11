@@ -41,6 +41,7 @@ namespace AutomotoraWeb.Models {
         public string RowClickAccion { get; set; }
         public string FormatoSeleccionLookup { get; set; }
         public int AnchoSeleccion { get; set; }
+        public bool Paginado { get; set; }
 
         //punteros a funciones
         public Action<object, ASPxGridViewTableRowEventArgs> FuncionHtmlRowPrepared;
@@ -65,6 +66,7 @@ namespace AutomotoraWeb.Models {
             UsarViewData = false;
             MostrarTotales = true;
             Edicion = false;
+            Paginado = true;
         }
 
 
