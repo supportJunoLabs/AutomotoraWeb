@@ -60,12 +60,51 @@ namespace AutomotoraWeb.Controllers.Sales
             return View("ventaVehiculo", venta);
         }
 
+        [HttpPost]
+        public JsonResult finalizarVenta(string idSession) {
+
+            try {
+                Venta venta = (Venta)(Session[idSession + SessionUtils.VENTA]);
+
+                IEnumerable<Cheque> listPagosCheque = (IEnumerable<Cheque>)(Session[idSession + SessionUtils.CHEQUES]);
+                IEnumerable<Efectivo> listPagosEfectivo = (IEnumerable<Efectivo>)(Session[idSession + SessionUtils.EFECTIVO]);
+                IEnumerable<MovBanco> listPagosBanco = (IEnumerable<MovBanco>)(Session[idSession + SessionUtils.MOV_BANCARIO]);
+                IEnumerable<Vale> listPagosVale = (IEnumerable<Vale>)(Session[idSession + SessionUtils.VALES]);
+                IEnumerable<Cuota> listPagosCuota = (IEnumerable<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
+
+
+                venta.Pago.AgregarCheques(listPagosCheque);
+                venta.Pago.AgregarEfectivos(listPagosEfectivo);
+                venta.Pago.AgregarMovsBanco(listPagosBanco);
+                foreach (Vale vale in listPagosVale) {
+                    venta.AgregarValeOriginal(vale);
+                }
+                foreach (Cuota cuota in listPagosCuota) {
+                    venta.Financiacion.AgregarCuotaVenta(cuota);
+                }
+
+                // TODO: Falta verificar que se cubra total a pagar
+
+                venta.Ejecutar();
+
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                List<String> errores = new List<string>();
+                errores.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores.ToArray() });
+            } catch (Exception exc) {
+                List<String> errores = new List<string>();
+                errores.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = "0", ErrorMessage = errores.ToArray() });
+            }
+        }
+
         private void prepararSession(Venta venta) {
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Controller = CONTROLLER;
 
             string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
-            Session[idSession] = venta;
+            Session[idSession + SessionUtils.VENTA] = venta;
             ViewData["idSession"] = idSession;
             ViewData["idParametros"] = venta.Codigo; // Para grillas que necesitan id de la venta
 

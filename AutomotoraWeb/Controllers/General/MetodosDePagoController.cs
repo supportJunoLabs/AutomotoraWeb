@@ -408,10 +408,8 @@ namespace AutomotoraWeb.Controllers.General
         }
 
         private List<Vale> _listaPagosVale(string idSession) {
-
             List<Vale> listPagosVale = (List<Vale>)(Session[idSession + SessionUtils.VALES]);
             return listPagosVale;
-
         }
 
         //public ActionResult EditModesPartial() {
@@ -522,6 +520,73 @@ namespace AutomotoraWeb.Controllers.General
 
         #endregion
 
+        //===============================================================================================================
+
+        #region Vales
+
+
+        public ActionResult grillaPagosCuota(string idSession) {
+            return PartialView("_grillaPagosCuota", _listaPagosCuota(idSession));
+        }
+
+        private List<Cuota> _listaPagosCuota(string idSession) {
+            List<Cuota> listPagosCuota = (List<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
+            return listPagosCuota;
+        }
+
+
+        [HttpPost]
+        public JsonResult cambiarFinanciacion(int cantCuotas, double tasa, int codigoMonedaImporte, double montoImporte, string idSession) {
+
+            Moneda moneda = new Moneda();
+            moneda.Codigo = codigoMonedaImporte;
+            moneda.Consultar();
+
+            Importe importe = new Importe(moneda, montoImporte);
+
+            Financiacion financiacion = new Financiacion(importe, cantCuotas, tasa);
+
+            //validacion del controller
+            List<String> errors = this.validateAtributesFinanciacion(financiacion);
+            if (errors.Count > 0) {
+                return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+            }
+
+            //envio al backend
+            try {
+                financiacion.generarCuotasVenta(DateTime.Now);
+
+                Session[idSession + SessionUtils.CUOTAS] = financiacion.CuotasOriginales;
+
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
+            }
+
+        }
+
+        //-------------------------------
+
+        private List<String> validateAtributesFinanciacion(Financiacion financiacion) {
+
+            List<String> errors = new List<String>();
+
+            if (financiacion.MontoFinanciado.Monto <= 0) {
+                errors.Add("El monto financiado debe ser mayor a 0");
+            }
+
+            if (financiacion.CantCuotas <= 0) {
+                errors.Add("La cantidad de cuotas debe ser mayor a 0");
+            }
+
+            return errors;
+        }
+
+        //-------------------------------
+
+        #endregion
         //===============================================================================================================
 
         public override string getParentControllerName() {
