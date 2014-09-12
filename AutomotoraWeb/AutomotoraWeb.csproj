@@ -2090,6 +2090,7 @@
     <Content Include="Views\Acvs\ReciboAnulacion.cshtml" />
     <Content Include="Views\Cheques\ReciboCanje.cshtml" />
     <Content Include="Views\Cheques\_reciboCanje.cshtml" />
+    <Content Include="Views\Caja\Entrada.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
@@ -2227,6 +2228,8 @@
     <Content Include="Views\Vales\Cobrar.cshtml" />
     <Content Include="Views\Vales\_seleccionValeCobrar.cshtml" />
     <Content Include="Views\Vales\_detalleCobroVale.cshtml" />
+    <Content Include="Views\Vales\Pasar.cshtml" />
+    <Content Include="Views\Vales\_detalleTransfVale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,6 +8,7 @@ using AutomotoraWeb.Models;
 using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.Parameters;
+using AutomotoraWeb.Controllers.General;
 
 namespace AutomotoraWeb.Controllers.Financing {
     public class CajaController : FinancingController {
@@ -18,6 +19,12 @@ namespace AutomotoraWeb.Controllers.Financing {
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Monedas = Moneda.Monedas;
             ViewBag.Financistas = Financista.FinancistasTodos;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (usuario == null) {
+                filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
+                return;
+            }
+            ViewBag.MultiSucursal = usuario.MultiSucursal;
         }
 
         #region Listados
@@ -141,6 +148,43 @@ namespace AutomotoraWeb.Controllers.Financing {
 
 
         #region EntradaSalida
+
+        public ActionResult Entrada() {
+            TRCajaEntrada tr = new TRCajaEntrada();
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
+            tr.Fecha = DateTime.Now.Date;
+
+            string idSession = SessionUtils.generarIdVarSesion("EntradaCaja", Session[SessionUtils.SESSION_USER].ToString())+"|";
+            ViewData["idSession"] = idSession;
+            Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
+            Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
+
+            return View("Entrada", tr);
+        }
+
+       
+        [HttpPost]
+        public ActionResult Entrada(TRCajaEntrada tr, string idSession) {
+            ViewData["idSession"] = idSession;
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            
+            if (ModelState.IsValid) {
+                try {
+                    tr.Fecha = DateTime.Now;
+                    tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboCaja", CajaController.CONTROLLER, new { id = tr.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View("Entrada", tr);
+                }
+            }
+            return View("Entrada", tr);
+        }
 
         public ActionResult ReciboCaja(int id) {
             try {
