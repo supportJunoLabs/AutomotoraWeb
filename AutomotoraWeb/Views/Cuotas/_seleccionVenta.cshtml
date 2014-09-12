@@ -19,7 +19,8 @@
         <img src="~/Content/Images/refresh.png" id="btn_refrescar_ventas" style="height:30px" />
      </div>
     <div class="floatLeft" style="padding-left: 8px;">
-            <a href="#" id="abtn_verFinanciacion">
+            @{ string dest = ((Model.Venta != null && Model.Venta.Codigo > 0) ? "/ConsultasFin/ConsultaFinanciacion/" + Model.Venta.Codigo : "#");}
+            <a href="@dest" id="abtn_verFinanciacion">
                 @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Financiacion").Id("btn_verFinanciacion")
             </a>
         </div>

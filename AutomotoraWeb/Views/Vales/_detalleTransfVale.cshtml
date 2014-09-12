@@ -1,0 +1,148 @@
+﻿@model DLL_Backend.TRValeTransferencia
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+
+@{ ValeCobroSugerido sug = Model.Vale.CobroSugerido();
+   bool cambiarSucursal = ViewBag.Multisucursal;
+}
+<div id="divVale">
+    <div class="floatLeft">
+        <div class="dataLine">
+            <div class="display-label renglon-alto">
+                <span>Vale</span>
+            </div>
+            <div class="editor-field editor-field-mini renglon-alto">
+                <input id="cuota" value= '@Model.Vale.Codigo' disabled="disabled"  />
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="dataLine">
+            <div class="display-label">
+                <span>Importe Vale</span>
+            </div>
+            <div class="editor-field editor-field-medium renglon-alto">
+                <input id="importeorig" value= '@Model.Vale.Importe.ImporteTexto' disabled="disabled"  />
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="dataLine">
+            <div class="display-label">
+                <span>Vencimiento</span>
+            </div>
+            <div class="editor-field editor-field-medium renglon-alto">
+                <input id="vto" value= '@Model.Vale.Vencimiento.ToString("dd/MM/yyyy")' disabled="disabled"  />
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        
+
+    </div>
+    <div class="floatLeft" style="margin-left: 30px">
+        <div class="dataLine">
+            <div class="display-label">
+                Pagos a Cuenta
+            </div>
+            <div class="editor-field editor-field-medium renglon-alto">
+                <input id="acuenta" value= '@Model.Vale.ImporteCobrado.ImporteTexto' disabled="disabled"  />
+                @{if (Model.Vale.FechaCobro != null) {
+                    <input id="facuenta" value= '@((Model.Vale.FechaCobro ?? (DateTime.Now)).ToString("dd/MM/yyyy"))' disabled="disabled"  />
+                  }}
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+         <div class="dataLine">
+            <div class="display-label">
+                Financista Actual
+            </div>
+            <div class="editor-field editor-field-medium">
+                <input id="financista" value= '@Model.Vale.Financista.Nombre' disabled="disabled"  />
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div class="dataLine">
+            <div class="display-label">
+                Fecha Transferencia
+            </div>
+            <div class="editor-field editor-field-medium">
+                @{ if (Automotora.AdmiteOtrasFechas()) {
+                    @Html.TextBoxFor(model => model.Fecha, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+                    @Html.ValidationMessageFor(model => model.Fecha)
+                   } else {
+                    <input id="fcobro" value= '@((Model.Fecha).ToString("dd/MM/yyyy"))' disabled="disabled"  />
+                   }}
+            </div>
+        </div>
+        <div class="clear-both"></div>
+    </div>
+    <div class="clear-both"></div>
+    <div class="dataLine">
+        <div class="display-label renglon-alto">
+            <span>Cliente</span>
+        </div>
+        <div class="editor-field editor-field-xxlarge renglon-alto">
+            <input id="cliente" value= '@Model.Vale.ClienteOrigen.Nombre' disabled="disabled"  />
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Sucursal)
+        </div>
+        <div class="editor-field editor-field-medium medium renglon-alto">
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, !cambiarSucursal, model => model.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "medium" })
+            @Html.ValidationMessageFor(model => model.Sucursal)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label">
+            Financista Destino
+        </div>
+        <div>
+            @Html.DropDownListFor(model => model.Destinatario.Codigo, new SelectList(ViewBag.Financistas, "Codigo", "Nombre"), new { @class = "large" })
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+     <div class="dataLine">
+    <div class="display-label">
+        Importe Recibido
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayImporteFor(model => model.Importe, false)
+        @Html.ValidationMessageFor(model => model.Importe.Monto)
+    </div>
+         </div>
+    <div class="clear-both"></div>    
+
+    <div class="dataLine">
+        <div class="display-label ">
+            @Html.LabelForRequired(model => model.Observaciones)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.TextBoxFor(model => model.Observaciones)
+            @Html.ValidationMessageFor(model => model.Observaciones)
+
+        </div>
+    </div>
+    <div class="clear-both"></div>
+    <div class="btn-toolbar">
+        <div class="floatRight">
+            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Registrar Transferencia"))
+        </div>
+    </div>
+    <div class="clear-both"></div>
+</div>
+
+

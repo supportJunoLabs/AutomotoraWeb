@@ -31,7 +31,8 @@
                 new { id = "ddlClientes", @class = "xxlarge" })
         </div>
         <div class="floatLeft" style="padding-left: 20px;">
-            <a href="/ConsultaVale/#" id="abtn_verCliente">
+            @{ string dest = ((Model.Cliente != null && Model.Cliente.Codigo > 0) ? "/Clientes/details/" + Model.Cliente.Codigo : "#");}
+            <a href="@dest" id="abtn_verCliente">
                 @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Datos Cliente").Id("btn_verCliente")
             </a>
         </div>

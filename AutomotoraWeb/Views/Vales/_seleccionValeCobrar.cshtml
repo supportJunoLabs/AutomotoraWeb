@@ -13,7 +13,8 @@
                 new { id = "ddlVales", @class = "xxlarge" })
 </div>
 <div class="floatLeft" style="padding-left: 20px;">
-    <a href="#" id="abtn_verVale">
+    @{ string dest = (Model.Vale != null && !string.IsNullOrWhiteSpace(Model.Vale.Codigo) ? "/Vales/ConsultaVale/" + Model.Vale.Codigo : "#");}
+    <a href="@dest" id="abtn_verVale">
         @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Vale").Id("btn_verVale")
     </a>
 </div>

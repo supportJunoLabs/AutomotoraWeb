@@ -1,13 +1,9 @@
-﻿@model DLL_Backend.TRValeCobro
+﻿@model DLL_Backend.TRValeTransferencia
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 
 @{
-    if (Model.Tipo == TRValeCobro.TIPO.PARCIAL) {
-        ViewBag.Title = "Cobrar a Cuenta de Vale";
-    }else{
-        ViewBag.Title = "Cobrar Vale";
-    }
+    ViewBag.Title = "Pasar Vale";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
@@ -18,30 +14,25 @@
     @Html.ValidationSummary("Se han producido errores:")
 
     <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/>      
-    <div id="divCliente">
+    <div id="divVale">
         <div class="display-label label-mini">
-            Cliente
+            @Html.LabelFor(model => model.Vale)
         </div>
-        <div class="editor-field editor-field-xlarge xxlarge">
-            @Html.DdlOrDisplayFor(model => model.ClienteOp.Codigo, false, model => model.ClienteOp.Nombre,
-          new SelectList(Vale.ClientesValesCobrables(), "Codigo", "Nombre"), "--Seleccionar Cliente--",
-          new { id = "ddlClientes", @class = "xxlarge" })
+        <div class="editor-field editor-field-xlarge xxlarge floatLeft">
+            @Html.DdlOrDisplayFor(model => model.Vale.Codigo, false, model => model.Vale.Descripcion,
+                new SelectList(Vale.ValesTransferibles(), "Codigo", "Descripcion"), "--Seleccionar Vale--",
+                new { id = "ddlVales", @class = "xxlarge" })
         </div>
         <div class="floatLeft" style="padding-left: 20px;">
-            @{ string dest = ((Model.ClienteOp != null && Model.ClienteOp.Codigo > 0) ? "/Clientes/details/" + Model.ClienteOp.Codigo : "#");}
-            <a href="@dest" id="abtn_verCliente">
-                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Datos Cliente").Id("btn_verCliente")
+            @{ string dest = (Model.Vale != null && !string.IsNullOrWhiteSpace(Model.Vale.Codigo) ? "/Vales/ConsultaVale/" + Model.Vale.Codigo : "#");}
+            <a href="@dest" id="abtn_verVale">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Vale").Id("btn_verVale")
             </a>
         </div>
         <div class="clear-both"></div>
     </div>
-    <div>
-        <div id="divSeleccionVale">
-            @Html.Partial("_seleccionValeCobrar", Model)
-        </div>
-        <div class="clear-both"></div>
-    </div>
-    
+
+        
     <div id="divOperacion">
         <div class="well" style="margin-top: 10px; width: 1000px; height: 810px;">
             <ul class="nav nav-tabs">
@@ -50,10 +41,10 @@
             </ul>
             <div id="tabContent" class="tab-content">
                 <div class="tab-pane active in" id="vale_tab">
-                    <div id="divDetalleCobro">
+                    <div id="divDetalleOperacion">
                         @{if (Model.Vale != null && !string.IsNullOrWhiteSpace(Model.Vale.Codigo)) {
-                              @Html.Partial("_detalleCobroVale", Model);
-                         }}
+                            @Html.Partial("_detalleTransfVale", Model);
+                          }}
 
                     </div>
                 </div>
@@ -69,36 +60,40 @@
 
 <script type="text/javascript">
 
-    $('#ddlClientes').change(function () {
-        /* Get the selected value of dropdownlist */
-        var selectedCli = $(this).val();
-            ClienteElegido(selectedCli);
+    $('#ddlVales').change(function () {
+        var selectedVale = $(this).val();
+        actualizarVale(selectedVale);
     });
 
-    function ClienteElegido(selectedCli) {
-        if (selectedCli) {
-            $("#abtn_verCliente").prop("href", "/Clientes/details/" + selectedCli);
+    function actualizarVale(selectedVale) {
+        if (selectedVale) {
+            $("#abtn_verVale").prop("href", "/Vales/ConsultaVale/" + selectedVale);
         } else {
-            $("#abtn_verCliente").prop("href", "#");
+            $("#abtn_verVale").prop("href", "#");
         }
+
+        //alert(selectedVenta);
+        $('#divDetalleOperacion').html('');
+        var destino = '/Vales/DetallesTransferencia/'
         var idSession = $('#idSession').val();
-        $('#divSeleccionVale').html('');
-        $('#divDetalleCobro').html('');
-        var destino = '/Vales/ValesCobrarCliente/';
         $.ajax({
             cache: false,
             type: "GET",
             url: destino,
-            data: { "idCliente": selectedCli, "idSession": idSession },
+            data: { "idVale": selectedVale, "idSession": idSession },
             success: function (data) {
-                $('#divSeleccionVale').html(data);
+                $('#divDetalleOperacion').html(data);
+                //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
+                $('form').removeData('validator');
+                $('form').removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse('form');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                //alert('Error al traer los datos.');
             },
             beforeSend: showLoading,
             complete: hideLoading
         });
     }
-
 </script>

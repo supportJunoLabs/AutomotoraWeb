@@ -32,7 +32,8 @@
             @Html.ValidationMessageFor(model => model.Cheque.Codigo)
         </div>
         <div class="floatLeft" style="padding-left: 20px;">
-            <a href="#" id="abtn_verCheque">
+            @{ string dest = ((Model.Cheque != null && Model.Cheque.Codigo > 0) ? "/Cheques/ConsultaCheque/" + Model.Cheque.Codigo : "#");}
+            <a href="@dest" id="abtn_verCheque">
                 @Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Consulta Cheque").Id("btn_verCheque")
             </a>
         </div>

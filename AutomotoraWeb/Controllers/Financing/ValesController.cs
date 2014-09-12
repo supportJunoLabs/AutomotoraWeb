@@ -738,6 +738,60 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region TransferirVale
 
+        public ActionResult Pasar() {
+            //pasar vale
+            TRValeTransferencia tr = new TRValeTransferencia();
+            tr.Vale = new Vale();
+            tr.Fecha = DateTime.Now;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
+            prepararSessionCobranza(tr, "PasarVale");
+            return View("Pasar", tr);
+        }
+
+        //se invoca al seleccionar el vale a cobrar
+        public ActionResult DetallesTransferencia(string idVale, string idSession) {
+            TRValeTransferencia tr = (TRValeTransferencia)Session[idSession];
+            tr.Vale = new Vale();
+            tr.Vale.Codigo = idVale;
+            tr.Vale.Consultar();
+            return PartialView("_detalleTransfVale", tr);
+        }
+
+
+        //Al confirmar el cobro de un vale
+        [HttpPost]
+        public ActionResult Pasar(TRValeTransferencia tr, string idSession) {
+            ViewData["idSession"] = idSession;
+
+            TRValeTransferencia tr0 = (TRValeTransferencia)Session[idSession];
+
+            tr.Vale = tr0.Vale;
+            tr.Fecha = DateTime.Now.Date;
+
+            Session[idSession] = tr;
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
+            this.eliminarValidacionesIgnorables("Destinatario", MetadataManager.IgnorablesDDL(tr.Destinatario));
+
+            if (ModelState.IsValid) {
+                try {
+                    tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+                    tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboTransfVale", ValesController.CONTROLLER, new { id = tr.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View("Pasar", tr);
+                }
+            }
+            return View("Pasar", tr);
+        }
+
         public ActionResult ReciboTransfVale(int id) {
             try {
                 TRValeTransferencia tr = (TRValeTransferencia)Transaccion.ObtenerTransaccion(id);
