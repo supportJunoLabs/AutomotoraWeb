@@ -1,0 +1,87 @@
+﻿@model DLL_Backend.TRCuotaCobro
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+
+ @{  Cliente cl = Model.ClienteOp;
+         GridLookUpModel gmodel = new GridLookUpModel { Opciones = cl.VentasCuotasPendientes(), 
+                            GridLookUpCodigo=Model.Venta.Codigo};}
+
+<div class="display-label">
+    Financiacion
+</div>
+<div class="editor-field editor-field-xlarge xxlarge floatLeft">
+    <div class="floatLeft">
+         @Html.Partial("_seleccionVentaGridLookup", gmodel )
+    </div>
+     <div class="floatLeft" style="margin-left:5px">
+        <img src="~/Content/Images/refresh.png" id="btn_refrescar_ventas" style="height:30px" />
+     </div>
+    <div class="floatLeft" style="padding-left: 8px;">
+            <a href="#" id="abtn_verFinanciacion">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Financiacion").Id("btn_verFinanciacion")
+            </a>
+        </div>
+     @Html.HiddenFor(model => model.Venta.Codigo, new { id = "codigoVenta" })
+
+</div>
+
+<div class="clear-both"></div>
+
+<script type="text/javascript">
+    function OnBeginCallbackVentas(s, e) {
+        e.customArgs["idSession"] = $('#idSession').val();
+    }
+</script>
+
+
+<script type="text/javascript" >
+
+    $('#btn_refrescar_ventas').click(function () {
+        var selectedCli = $('#ddlClientes').val();
+        ClienteElegido(selectedCli);
+    });
+
+    function ventaSelected(s, e) {
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoVenta").val(valor);
+        actualizarVenta();
+    }
+
+    function actualizarVenta() {
+        var selectedVenta = $("#codigoVenta").val();
+        if (selectedVenta) {
+            $("#abtn_verFinanciacion").prop("href", "/ConsultasFin/ConsultaFinanciacion/" + selectedVenta);
+        } else {
+            $("#abtn_verFinanciacion").prop("href", "#");
+        }
+
+        //alert(selectedVenta);
+        $('#divDetalleCobro').html('');
+        var destino = '/Cuotas/DetallesCobro/'
+        var idSession = $('#idSession').val();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idVenta": selectedVenta, "idSession": idSession },
+            success: function (data) {
+                $('#divDetalleCobro').html(data);
+                //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
+                $('form').removeData('validator');
+                $('form').removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse('form');
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                //alert('Error al traer los datos.');
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+
+</script>

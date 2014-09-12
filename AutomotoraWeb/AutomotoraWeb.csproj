@@ -555,6 +555,7 @@
     <Content Include="Content\Images\ppal2.jpg" />
     <Content Include="Content\Images\ppal3.jpg" />
     <Content Include="Content\Images\vendedores\_sinFoto.png" />
+    <Content Include="Content\Images\refresh.png" />
     <Content Include="Content\Images\_sinFoto.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -2218,6 +2219,14 @@
     <Content Include="Views\Cotizacion\_grillaCotizaciones.cshtml" />
     <Content Include="Views\Parametros\_grillaParametros.cshtml" />
     <Content Include="Views\Parametros\edit.cshtml" />
+    <Content Include="Views\Cuotas\Cobrar.cshtml" />
+    <Content Include="Views\Cuotas\_seleccionVenta.cshtml" />
+    <Content Include="Views\Cuotas\_seleccionVentaGridLookup.cshtml" />
+    <Content Include="Views\Cuotas\_detalleCobroCuota.cshtml" />
+    <Content Include="Views\Cuotas\_grillacuotasVigentes.cshtml" />
+    <Content Include="Views\Vales\Cobrar.cshtml" />
+    <Content Include="Views\Vales\_seleccionValeCobrar.cshtml" />
+    <Content Include="Views\Vales\_detalleCobroVale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

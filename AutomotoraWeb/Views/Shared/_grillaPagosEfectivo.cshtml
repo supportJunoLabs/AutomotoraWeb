@@ -29,6 +29,7 @@
     ig.TipoEdicion = InfoGrilla.TIPO_EDICION.INLINE;
     ig.Edicion = true;
     ig.AnchoTotal = 500;
+    ig.Paginado = false;
 
     ig.FuncionInitNewRow = (s, e) => {
         e.NewValues["Importe.Moneda.Codigo"] = Moneda.MonedaDefault.Codigo;

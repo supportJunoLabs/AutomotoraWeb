@@ -13,21 +13,22 @@
             new ColumnaGrilla {Campo="Vencimiento", Titulo="Vencimiento", Ancho=100},
             new ColumnaGrilla {Campo="ImporteCobrado.ImporteTexto", Titulo="Pago", Ancho=120, Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
             new ColumnaGrilla {Campo="FechaCobro", Titulo="Fecha",Ancho=100},
-            new ColumnaGrilla {Campo="DescripcionEstado", Titulo="Estado", Ancho=100},
-             new ColumnaGrilla {Campo="Financista.Nombre", Ancho=100, Titulo="Financista",
-                Hipervinculo=true, Haccion="details", Hcontrolador="Financistas", HCampoParametro="Financista.Codigo"},
-            new ColumnaGrilla {Campo="CodigoExterno", Titulo="Cod.Financista", Ancho=150}
+            new ColumnaGrilla {Campo="DescripcionEstado", Titulo="Estado", Ancho=100}
 
      };
     
     ig.NameGrid = "grillaCuotasVigentes";
     ig.Controller = CuotasController.CONTROLLER;
-    //ig.ActionCallbackRoute = "CuotasVigentesVenta";
+    ig.ActionCallbackRoute = "CuotasVigentesVenta";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Cuota.CuotaMD);
     ig.DobleClick = false;
     ig.BotonesMtoEstandar = false;
     ig.Estatica=true;
+    ig.registrosPorPagina = 12;
+    ig.Paginado = true;
+
+    ig.OnBeginCallback = "OnBeginCallbackCuotas";
     
     ViewBag.InfoGrilla = ig;
 }

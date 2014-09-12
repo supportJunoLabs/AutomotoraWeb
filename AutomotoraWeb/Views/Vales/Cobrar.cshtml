@@ -1,0 +1,103 @@
+﻿@model DLL_Backend.TRValeCobro
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    if (Model.Tipo == TRValeCobro.TIPO.PARCIAL) {
+        ViewBag.Title = "Cobrar a Cuenta de Vale";
+    }else{
+        ViewBag.Title = "Cobrar Vale";
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+   
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/>      
+    <div id="divCliente">
+        <div class="display-label label-mini">
+            Cliente
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.ClienteOp.Codigo, false, model => model.ClienteOp.Nombre,
+          new SelectList(Vale.ClientesValesCobrables(), "Codigo", "Nombre"), "--Seleccionar Cliente--",
+          new { id = "ddlClientes", @class = "xxlarge" })
+        </div>
+        <div class="floatLeft" style="padding-left: 20px;">
+            <a href="#" id="abtn_verCliente">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Datos Cliente").Id("btn_verCliente")
+            </a>
+        </div>
+        <div class="clear-both"></div>
+    </div>
+    <div>
+        <div id="divSeleccionVale">
+            @Html.Partial("_seleccionValeCobrar", Model)
+        </div>
+        <div class="clear-both"></div>
+    </div>
+    
+    <div id="divOperacion">
+        <div class="well" style="margin-top: 10px; width: 1000px; height: 810px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#vale_tab" data-toggle="tab">Vale</a></li>
+                <li><a href="#pago_tab" data-toggle="tab">Pago</a></li>
+            </ul>
+            <div id="tabContent" class="tab-content">
+                <div class="tab-pane active in" id="vale_tab">
+                    <div id="divDetalleCobro">
+                        @{if (Model.Vale != null && !string.IsNullOrWhiteSpace(Model.Vale.Codigo)) {
+                              @Html.Partial("_detalleCobroVale", Model);
+                         }}
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pago_tab">
+                    @Html.Partial("_pagoEstandar", Model);
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+}
+
+<script type="text/javascript">
+
+    $('#ddlClientes').change(function () {
+        /* Get the selected value of dropdownlist */
+        var selectedCli = $(this).val();
+            ClienteElegido(selectedCli);
+    });
+
+    function ClienteElegido(selectedCli) {
+        if (selectedCli) {
+            $("#abtn_verCliente").prop("href", "/Clientes/details/" + selectedCli);
+        } else {
+            $("#abtn_verCliente").prop("href", "#");
+        }
+        var idSession = $('#idSession').val();
+        $('#divSeleccionVale').html('');
+        $('#divDetalleCobro').html('');
+        var destino = '/Vales/ValesCobrarCliente/';
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idCliente": selectedCli, "idSession": idSession },
+            success: function (data) {
+                $('#divSeleccionVale').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+</script>
