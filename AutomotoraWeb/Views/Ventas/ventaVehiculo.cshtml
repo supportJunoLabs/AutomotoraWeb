@@ -108,7 +108,7 @@
         function _confirmarVenta() {
             var idSession = '@ViewData["idSession"]';
 
-            var urlAction = '@(Url.Action("finalizarVenta", "metodosDePago"))';
+            var urlAction = '@(Url.Action("finalizarVenta", "ventas"))';
 
             $("#loadingContainer").show();
 
@@ -147,7 +147,7 @@
 
             var venta = {
                 idSession: idSession,
-                codigoVehiculo: $("#gridVehiculos_I").val(),
+                codigoVehiculo: $("#codigoVehiculo").val(),
                 condVentaCodigoCliente: $("#ddlClientes").val(),
                 condVentaCodigoVendedor: $("#ddlVendedores").val(),
                 condVentaFecha: $("#Fecha").val(),

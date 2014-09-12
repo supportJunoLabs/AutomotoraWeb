@@ -61,7 +61,9 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         [HttpPost]
-        public JsonResult finalizarVenta(string idSession) {
+        public JsonResult finalizarVenta(string idSession, int codigoVehiculo, int condVentaCodigoCliente, int condVentaCodigoVendedor, 
+                                         DateTime condVentaFecha, int condVentaCodigoMoneda, double condVentaMonto, int condVentaCodigoSucursal, 
+                                         bool condVentaVehiculoEntregado, DateTime condVentaFechaEntrega, String condVentaObservaciones) {
 
             try {
                 Venta venta = (Venta)(Session[idSession + SessionUtils.VENTA]);
@@ -73,9 +75,9 @@ namespace AutomotoraWeb.Controllers.Sales
                 IEnumerable<Cuota> listPagosCuota = (IEnumerable<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
 
 
-                venta.Pago.AgregarCheques(listPagosCheque);
-                venta.Pago.AgregarEfectivos(listPagosEfectivo);
-                venta.Pago.AgregarMovsBanco(listPagosBanco);
+                //venta.Pago.agregarCheque(cheque);
+                //venta.Pago.AgregarEfectivos(listPagosEfectivo);
+                //venta.Pago.AgregarMovsBanco(listPagosBanco);
                 foreach (Vale vale in listPagosVale) {
                     venta.AgregarValeOriginal(vale);
                 }
