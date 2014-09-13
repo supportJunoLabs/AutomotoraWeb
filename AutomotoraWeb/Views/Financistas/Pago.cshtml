@@ -19,8 +19,8 @@
     @Html.ValidationSummary("Se han producido errores:")
 
     <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/> 
-    <input type="hidden" name="chequesIds" id="chequesIds" /> 
-    <input type="hidden" name="efectivosIds" id="efectivosIds" /> 
+    @Html.HiddenFor( model => model.chequesIds, new { id = "chequesIds"})
+    @Html.HiddenFor( model => model.efectivosIds, new { id = "efectivosIds" })
     <input type="hidden" name="ultimoComando" id="ultimoComando" /> 
 
     <div class="dataLine">

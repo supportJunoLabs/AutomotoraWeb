@@ -19,8 +19,8 @@ function OnBeginCallbackCheques(s, e) {
 }
 
 function OnEndCallbackEfectivo(s, e) {
+    //alert($("#ultimoComando").val());
     if ($("#ultimoComando").val() == 'UPDATEEDIT') {
-        //alert($("#ultimoComando").val());
         s.GetSelectedFieldValues("ImportePagoActual.ImporteTexto", RefrescarListaEfectivoCallback);
     }
 }

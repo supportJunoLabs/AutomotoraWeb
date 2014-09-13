@@ -370,7 +370,80 @@ namespace AutomotoraWeb.Controllers.Financing {
             return PartialView("_selectEfectivoPago", lista);
         }
 
+        [HttpPost]
+        public ActionResult Pago(PagoFinancistaModel model, string idSession ) {
 
+            ViewData["idSession"] = idSession;
+            model.listaCheques =(List<FinancistaPagoCheque>)  Session[idSession + SessionUtils.CHEQUES];
+            model.listaEfectivo = (List<FinancistaPagoEfectivo>) Session[idSession + SessionUtils.EFECTIVO];
+
+            string scheques = model.chequesIds??"";
+            string sefectivo = model.efectivosIds??"";
+
+            //Por ahora para que coincida con que no vuelve nada seleccionado. Esperar caso de devexpress
+            model.chequesIds = "";
+            model.efectivosIds = "";
+
+            this.eliminarValidacionesIgnorables("Transaccion.Financista", MetadataManager.IgnorablesDDL(model.Transaccion.Financista));
+            this.eliminarValidacionesIgnorables("Transaccion.Sucursal", MetadataManager.IgnorablesDDL(model.Transaccion.Sucursal));
+
+            if (ModelState.IsValid) {
+                try {
+
+                    //Como no estoy usando una Transaccion del backend (que lo setea el filter) sino del modelo tengo que setear estos dos atributos a mano:
+                    string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
+                    string origen = HttpContext.Request.UserHostAddress;
+                    model.Transaccion.setearAuditoria(nomUsuario, origen);
+
+                    List<FinancistaPagoEfectivo> lef = (List<FinancistaPagoEfectivo>) Session[idSession + SessionUtils.EFECTIVO];
+                    List<FinancistaPagoCheque> lch = (List<FinancistaPagoCheque>) Session[idSession + SessionUtils.CHEQUES];
+
+                    string[] ach = scheques.Split(new Char[] { ',' });
+                    foreach (string s in ach) {
+                        if (!string.IsNullOrWhiteSpace(s)) {
+                            FinancistaPagoCheque och = new FinancistaPagoCheque();
+                            och.Codigo = Int32.Parse(s);
+                            int i = lch.IndexOf(och);
+                            if (i < 0) { 
+                                ViewBag.ErrorCode = och.Codigo.ToString();
+                                ViewBag.ErrorMessage = "No se encontro uno de los cheques seleccionados. Operacion cancelada";
+                                return View("Pago", model);
+                            }
+                            model.Transaccion.ChequesEntregados.Add(lch[i]);
+                        }
+                    }
+                    string[] ech = sefectivo.Split(new Char[] { ',' });
+                    foreach (string s in ech) {
+                        if (!string.IsNullOrWhiteSpace(s)) {
+                            FinancistaPagoEfectivo och = new FinancistaPagoEfectivo();
+                            och.Codigo = Int32.Parse(s);
+                            int i = lef.IndexOf(och);
+                            if (i < 0) {
+                                ViewBag.ErrorCode = och.Codigo.ToString();
+                                ViewBag.ErrorMessage = "No se encontro uno de los pagos en efectivo seleccionados. Operacion cancelada";
+                                return View("Pago", model);
+                            }
+                            model.Transaccion.EfectivoEntregado.Add(lef[i]);
+                        }
+                    }
+
+                    if ((model.Transaccion.EfectivoEntregado.Count + model.Transaccion.ChequesEntregados.Count) == 0) {
+                        ViewBag.ErrorCode = "100";
+                        ViewBag.ErrorMessage = "No hay pagos seleccionados. Operacion cancelada";
+                        return View("Pago", model);
+                    }
+
+                    model.Transaccion.Ejecutar();
+                    return RedirectToAction("ReciboPago", FinancistasController.CONTROLLER, new { id = model.Transaccion.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View("Pago", model);
+                }
+            }
+            return View("Pago", model);
+
+        }
 
         public ActionResult ReciboPago(int id) {
             try {

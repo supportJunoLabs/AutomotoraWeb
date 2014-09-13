@@ -9,6 +9,7 @@
 @{
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        //new ColumnaGrilla {Campo="Codigo"},
         new ColumnaGrilla {Campo="FechaMov", Titulo="Vencimiento", Formato="dd/MM/yyyy", MostrarSoloGrilla=true, ReadOnly=true},
         new ColumnaGrilla {Campo="ImporteOrig.ImporteTexto", Titulo="Importe Orig", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, ReadOnly=true},
         new ColumnaGrilla {Campo="ImportePagoAnt.ImporteTexto", Titulo="Pago Ant", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, ReadOnly=true},
