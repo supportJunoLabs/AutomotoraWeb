@@ -186,6 +186,66 @@ namespace AutomotoraWeb.Controllers.Financing {
             return View("Entrada", tr);
         }
 
+        public ActionResult Salida() {
+            TRCajaSalida tr = new TRCajaSalida();
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
+            tr.Fecha = DateTime.Now.Date;
+
+            string idSession = SessionUtils.generarIdVarSesion("SalidaCaja", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            ViewData["idSession"] = idSession;
+            Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
+
+            return View("Salida", tr);
+        }
+
+
+       public ActionResult ChequesRetirablesSucGrilla(int idSucursal) {
+            Sucursal suc = new Sucursal();
+            suc.Codigo = idSucursal;
+            var cheques = Cheque.ChequesRetirablesSucursal(suc);
+            return PartialView("_selectChequeSalida", cheques);
+        }
+
+
+        public ActionResult SucursalSalidaChanged(int? idSucursal) {
+            Sucursal suc = new Sucursal();
+            suc.Codigo = idSucursal ?? 0;
+            var cheques = Cheque.ChequesRetirablesSucursal(suc);
+            return PartialView("_selectChequeSalida", cheques);
+        }
+
+        [HttpPost]
+        public ActionResult Salida(TRCajaSalida tr, string idSession, string chequesIds) {
+            ViewData["idSession"] = idSession;
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+
+            if (ModelState.IsValid) {
+                try {
+                    tr.Fecha = DateTime.Now;
+                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
+                    string[] ach = chequesIds.Split(new Char[] { ',' });
+                    foreach (string s in ach) {
+                        if (!string.IsNullOrWhiteSpace(s)) {
+                            Cheque och = new Cheque();
+                            och.Codigo = Int32.Parse(s);
+                            och.Consultar();
+                            tr.Pago.AgregarCheque(och);
+                        }
+                    }
+
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboCaja", CajaController.CONTROLLER, new { id = tr.NroRecibo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View("Entrada", tr);
+                }
+            }
+            return View("Entrada", tr);
+        }
+
         public ActionResult ReciboCaja(int id) {
             try {
                 //Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id);
