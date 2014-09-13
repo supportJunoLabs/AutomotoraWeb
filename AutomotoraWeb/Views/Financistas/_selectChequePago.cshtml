@@ -1,0 +1,43 @@
+﻿@model List<DLL_Backend.FinancistaPagoCheque>
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.Financing;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Cheque.FechaVencimiento", Ancho=90, Titulo="Vencimiento", Formato="dd/MM/yyyy"},
+        new ColumnaGrilla {Campo="Cheque.ImporteTexto", Ancho=100, Titulo="Importe", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+        new ColumnaGrilla {Campo="Cheque.Banco", Ancho=100, Titulo="Banco"},
+        new ColumnaGrilla {Campo="Cheque.NumeroCheque", Ancho=100, Titulo="Numero"},
+        new ColumnaGrilla {Campo="Cheque.Sucursal.Nombre", Ancho=100, Titulo="Sucursal"},
+        new ColumnaGrilla {Campo="Detalle", Ancho=200, Titulo="Detalle", LargoMax=25},
+        new ColumnaGrilla {Campo="Cliente.Nombre", Ancho=150, Titulo="Cliente", LargoMax=18},
+        new ColumnaGrilla {Campo="Vehiculo.Ficha", Ancho=80, Titulo="Ficha"},
+        new ColumnaGrilla {Campo="Cheque.Observaciones", Ancho=200, Titulo="Observaciones", LargoMax=25}
+        
+    };
+
+    ig.ChecksSeleccion = true;
+    ig.AccionSeleccion = "SelectionChequeChanged";
+    ig.NameGrid = "gridCheques";
+    ig.Controller = FinancistasController.CONTROLLER;
+    ig.ActionCallbackRoute = "ChequesPagoFinGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.FinancistaPagoCheque);
+    ig.registrosPorPagina = 15;
+    ig.OnBeginCallback = "OnBeginCallbackCheques";
+    ig.Estatica = true;
+    
+
+    ig.AddButton(new BotonGrilla("ConsultaCheque", ChequesController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
+    
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+
+

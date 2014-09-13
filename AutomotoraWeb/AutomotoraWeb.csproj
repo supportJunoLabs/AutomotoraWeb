@@ -285,6 +285,7 @@
     <Compile Include="Models\ComprobanteDocumentacionModel.cs" />
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
+    <Compile Include="Models\PagoFinancistaModel.cs" />
     <Compile Include="Models\ParametroModel.cs" />
     <Compile Include="Models\PerfilModel.cs" />
     <Compile Include="Models\PermisosModel.cs" />
@@ -1784,11 +1785,13 @@
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale2.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaFinanciacion1.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaFinanciacion2.js" />
+    <Content Include="Scripts\AutomotoraWeb\PagoFinancista.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale2.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale1.js" />
     <Content Include="Scripts\AutomotoraWeb\RechazarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale1.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale3.js" />
+    <Content Include="Scripts\AutomotoraWeb\SalidaCaja.js" />
     <Content Include="Scripts\AutomotoraWeb\SitFinancista.js" />
     <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
@@ -2091,6 +2094,8 @@
     <Content Include="Views\Cheques\ReciboCanje.cshtml" />
     <Content Include="Views\Cheques\_reciboCanje.cshtml" />
     <Content Include="Views\Caja\Entrada.cshtml" />
+    <Content Include="Views\Caja\Salida.cshtml" />
+    <Content Include="Views\Caja\_selectChequeSalida.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
@@ -2230,6 +2235,10 @@
     <Content Include="Views\Vales\_detalleCobroVale.cshtml" />
     <Content Include="Views\Vales\Pasar.cshtml" />
     <Content Include="Views\Vales\_detalleTransfVale.cshtml" />
+    <Content Include="Views\Financistas\Pago.cshtml" />
+    <Content Include="Views\Financistas\_selectChequePago.cshtml" />
+    <Content Include="Views\Financistas\_selectEfectivoPago.cshtml" />
+    <Content Include="Views\Financistas\_detallePago.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

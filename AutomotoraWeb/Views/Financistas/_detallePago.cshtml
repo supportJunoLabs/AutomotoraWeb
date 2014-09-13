@@ -1,0 +1,76 @@
+﻿@model AutomotoraWeb.Models.PagoFinancistaModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+ <div class="well" style="margin-top: 10px; width: 1350px;">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#MPEfectivo_tab" data-toggle="tab">Efectivo</a></li>
+            <li><a href="#MPCheques_tab" data-toggle="tab">Cheques</a></li>
+        </ul>
+        <div id="tabContentMetodoDePago" class="tab-content">
+            <div class="tab-pane active in" id="MPEfectivo_tab">
+               <div class="selection_form">
+                    <div class="floatLeft" style="margin-right: 10px">
+                        <div class="text">
+                            Seleccionados:
+                        </div>
+                        <div>
+                            @Html.DevExpress().ListBox(
+            settings => {
+                settings.Name = "SelectedRowsEfectivo";
+                settings.Width = 120;
+                settings.Height = 300;
+                settings.Properties.EnableClientSideAPI = true;
+            }).GetHtml()
+                        </div>
+                        <div class="text">
+                            Cantidad:&nbsp;<strong id="cantEfectivo">0</strong>
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="floatLeft">
+                        <div style="margin-bottom:8px">
+                            <button id="selectAllEfectivo" type="button" class="btn btn-mini btn-info">Marcar Todo</button>
+                            <button id="unSelectAllEfectivo" type="button" class="btn btn-mini btn-info">Des-Marcar Todo</button>
+
+                        </div>
+                        <div id="divGrillaEfectivo">
+                            @Html.Partial("_selectEfectivoPago",  Model.listaEfectivo)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="MPCheques_tab">
+                <div class="selection_form">
+                    <div class="floatLeft" style="margin-right: 10px">
+                        <div class="text">
+                            Seleccionados:
+                        </div>
+                        <div>
+                            @Html.DevExpress().ListBox(
+            settings => {
+                settings.Name = "SelectedRowsCheques";
+                settings.Width = 120;
+                settings.Height = 300;
+                settings.Properties.EnableClientSideAPI = true;
+            }).GetHtml()
+                        </div>
+                        <div class="text">
+                            Cantidad:&nbsp;<strong id="cantCheques">0</strong>
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="floatLeft">
+                        <div style="margin-bottom:8px">
+                            <button id="selectAllCheques" type="button" class="btn btn-mini btn-info">Marcar Todo</button>
+                            <button id="unSelectAllCheques" type="button" class="btn btn-mini btn-info">Des-Marcar Todo</button>
+
+                        </div>
+                        <div id="divGrillaCheques" style="width:1000px">
+                            @Html.Partial("_selectChequePago",  Model.listaCheques)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
