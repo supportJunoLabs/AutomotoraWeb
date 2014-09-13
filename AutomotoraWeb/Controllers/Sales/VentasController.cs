@@ -74,10 +74,45 @@ namespace AutomotoraWeb.Controllers.Sales
                 IEnumerable<Vale> listPagosVale = (IEnumerable<Vale>)(Session[idSession + SessionUtils.VALES]);
                 IEnumerable<Cuota> listPagosCuota = (IEnumerable<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
 
+                venta.Vehiculo = new Vehiculo();
+                venta.Vehiculo.Codigo = codigoVehiculo;
 
-                //venta.Pago.agregarCheque(cheque);
-                //venta.Pago.AgregarEfectivos(listPagosEfectivo);
-                //venta.Pago.AgregarMovsBanco(listPagosBanco);
+                venta.Sucursal = new Sucursal();
+                venta.Sucursal.Codigo = condVentaCodigoSucursal;
+
+                venta.Cliente = new Cliente();
+                venta.Cliente.Codigo = condVentaCodigoCliente;
+
+                venta.Vendedor = new Vendedor();
+                venta.Vendedor.Codigo = condVentaCodigoVendedor;
+
+                string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
+                string origen = HttpContext.Request.UserHostAddress;
+                venta.setearAuditoria(nomUsuario, origen);
+
+                venta.Fecha = condVentaFecha;
+                Moneda moneda = new Moneda();
+                moneda.Codigo = condVentaCodigoMoneda;
+                Importe importe = new Importe(moneda, condVentaMonto);
+                venta.Importe = importe;
+                venta.Entregado = condVentaVehiculoEntregado;
+                if (!condVentaVehiculoEntregado) {
+                    venta.FechaEntrega = condVentaFechaEntrega;
+                }
+                venta.Observaciones = condVentaObservaciones;
+
+                //--------------------------------------------------
+
+                //foreach (Cheque cheque in listPagosCheque) {
+                //    venta.Pago.agregarCheque(cheque);
+                //}
+                //foreach (Efectivo efectivo in listPagosEfectivo) {
+                //    venta.Pago.AgregarEfectivo(efectivo);
+                //}
+                //foreach (MovBanco movBanco in listPagosBanco) {
+                //    venta.Pago.AgregarMovBanco(movBanco);
+                //}
+
                 foreach (Vale vale in listPagosVale) {
                     venta.AgregarValeOriginal(vale);
                 }
