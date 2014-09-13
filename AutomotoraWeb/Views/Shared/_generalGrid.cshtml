@@ -29,11 +29,14 @@
             settings => {
                 settings.Name = ig.NameGrid;
 
-                if (ig.OnBeginCallback != null) {
+                if (!string.IsNullOrWhiteSpace(ig.OnBeginCallback)) {
                     settings.ClientSideEvents.BeginCallback = "function(s, e){ " + ig.OnBeginCallback + "(s, e); }";
                     settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute };
                 } else {
                     settings.CallbackRouteValues = new { Controller = ig.Controller, Action = ig.ActionCallbackRoute, idParametros = ViewData["idParametros"] };
+                }
+                if (!string.IsNullOrWhiteSpace(ig.OnEndCallback)) {
+                    settings.ClientSideEvents.EndCallback = "function(s, e){ " + ig.OnEndCallback + "(s, e); }";
                 }
 
                 if (ig.Edicion){
@@ -78,7 +81,7 @@
                     
                     settings.SettingsPopup.EditForm.Width = 600;
                     settings.SettingsBehavior.ConfirmDelete = true;
-                    settings.Width = Unit.Percentage(100);
+                    //settings.Width = Unit.Percentage(100); // el ancho se maneja mas abajo con mas opciones
                     settings.CommandColumn.Visible = true;
                     
                     //settings.PreRender = (sender, e) => {
@@ -142,7 +145,9 @@
                 if (ig.ChecksSeleccion) {
                     settings.CommandColumn.Visible = true;
                     settings.CommandColumn.ShowSelectCheckbox = true;
-                    settings.ClientSideEvents.SelectionChanged = ig.AccionSeleccion;
+                    if (!string.IsNullOrWhiteSpace(ig.AccionSeleccion)) {
+                        settings.ClientSideEvents.SelectionChanged = ig.AccionSeleccion;
+                    }
                     settings.CommandColumn.Width = Unit.Pixel(30);
                 }
 
@@ -172,13 +177,15 @@
                     settings.Columns.Add(og.listGridViewsBotones);
                 }
 
+                settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
                 if (ig.AnchoTotal > 0) {
-                    settings.Settings.UseFixedTableLayout = false;
+                    settings.Settings.UseFixedTableLayout = true;
                     settings.Width = Unit.Pixel(ig.AnchoTotal);
                 } else {
-                    if (!ig.anchosDefinidos()) { //si no vienen definidos los anchos de ninguna columna, ocupa todo el espacio
-                        settings.Settings.UseFixedTableLayout = false;
-                        settings.Width = Unit.Percentage(100);
+                    if (!ig.anchosDefinidos()) { //si no vienen definidos los anchos de ninguna columna, se acomoda al contenido y no permite cambiarlo (si se habilita anda mal)
+                        //settings.Settings.UseFixedTableLayout = false;
+                        //settings.Width = Unit.Percentage(100);
+                        settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Disabled; 
                     } else {
                         //si vienen los anchos calculo el ancho en funcion de la suma de las columnas
                         settings.Settings.UseFixedTableLayout = true;
@@ -193,12 +200,17 @@
                         if (ig.CustomActionRouteValues != null) {
                             coef = 15;
                         }
+                        int asel = 0;
+                        if (ig.ChecksSeleccion) {
+                            asel = 20;
+                        }
+                        
 
-                        settings.Width = Unit.Pixel(sumaAnchos + (coef * settings.Columns.Count) + accionesEdicion * 35);
+                        settings.Width = Unit.Pixel(sumaAnchos + (coef * settings.Columns.Count) + accionesEdicion * 35 + asel);
                     }
                 }
                 //if (!ig.Estatica) {
-                    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+                    
                 //} else {
                 //    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Disabled;
                 //}

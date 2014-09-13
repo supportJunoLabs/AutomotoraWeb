@@ -1,0 +1,44 @@
+﻿@model List<DLL_Backend.FinancistaPagoEfectivo>
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Controllers.Financing;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="FechaMov", Titulo="Vencimiento", Formato="dd/MM/yyyy", MostrarSoloGrilla=true, ReadOnly=true},
+        new ColumnaGrilla {Campo="ImporteOrig.ImporteTexto", Titulo="Importe Orig", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, ReadOnly=true},
+        new ColumnaGrilla {Campo="ImportePagoAnt.ImporteTexto", Titulo="Pago Ant", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, ReadOnly=true},
+        new ColumnaGrilla {Campo="ImporteSaldo.ImporteTexto",  Titulo="Pago Ant", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, MostrarSoloEdicion=true, ReadOnly=true},
+        new ColumnaGrilla {Campo="ImportePagoActual.ImporteTexto",  Titulo="Pago Actual", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, MostrarSoloGrilla=true, ReadOnly=true},
+        new ColumnaGrilla {Campo="ImportePagoActual.Monto",  Titulo="Pago Actual", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE, MostrarSoloEdicion=true, ReadOnly=false},
+        new ColumnaGrilla {Campo="Detalle",  Titulo="Detalle", LargoMax=25, MostrarSoloGrilla=true, ReadOnly=true},
+        new ColumnaGrilla {Campo="Cliente.Nombre",  Titulo="Cliente", LargoMax=18, MostrarSoloGrilla=true, ReadOnly=true},
+        new ColumnaGrilla {Campo="Vehiculo.Ficha",  Titulo="Ficha", MostrarSoloGrilla=true, ReadOnly=true}
+    };
+
+    ig.ChecksSeleccion = true;
+    ig.AccionSeleccion = "SelectionEfectivoChanged";
+    ig.NameGrid = "gridEfectivo";
+    ig.Controller = FinancistasController.CONTROLLER;
+    ig.ActionCallbackRoute = "EfectivoPagoFinGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.FinancistaPagoEfectivo);
+    ig.registrosPorPagina = 15;
+    ig.Estatica = true;
+    ig.Edicion = true;
+    ig.Paginado = true;
+    ig.OnBeginCallback = "OnBeginCallbackEfectivo";
+    ig.UpdateRowRouteValues = "GrillaEfectivoEdit";
+    ig.OnEndCallback = "OnEndCallbackEfectivo";
+    //ig.AnchoTotal = 950;
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+
+

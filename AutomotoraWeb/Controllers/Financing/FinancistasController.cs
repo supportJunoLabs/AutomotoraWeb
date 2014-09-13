@@ -13,8 +13,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 
-namespace AutomotoraWeb.Controllers.Financing
-{
+namespace AutomotoraWeb.Controllers.Financing {
     public class FinancistasController : FinancingController, IMaintenance {
 
         public static string CONTROLLER = "Financistas";
@@ -24,6 +23,14 @@ namespace AutomotoraWeb.Controllers.Financing
             ViewBag.NombreEntidad = "Financista";
             ViewBag.NombreEntidades = "Financistas";
             ViewBag.Financistas = Financista.FinancistasTodos;
+            ViewBag.FinancistasPago = Financista.FinancistasActivosSinDefault;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (usuario == null) {
+                filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
+                return;
+            }
+            ViewBag.MultiSucursal = usuario.MultiSucursal;
+            ViewBag.Sucursales = Sucursal.Sucursales;
         }
 
         #region Mantenimiento
@@ -56,7 +63,7 @@ namespace AutomotoraWeb.Controllers.Financing
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
-       //--------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
@@ -263,6 +270,107 @@ namespace AutomotoraWeb.Controllers.Financing
         #endregion
 
         #region PagoFinancista
+
+        public ActionResult Pago() {
+            TRFinancistaPago tr = new TRFinancistaPago();
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
+            tr.Fecha = DateTime.Now.Date;
+            if (Financista.FinancistasActivosSinDefault != null && Financista.FinancistasActivosSinDefault.Count > 0) {
+                tr.Financista = Financista.FinancistasActivosSinDefault.First();
+            }
+
+            string idSession = SessionUtils.generarIdVarSesion("PagoFin", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            ViewData["idSession"] = idSession;
+            PagoFinancistaModel model = new PagoFinancistaModel();
+            model.Transaccion = tr;
+            model.listaCheques = tr.Financista.PagosChequesPendientes();
+            model.listaEfectivo = tr.Financista.PagosEfectivoPendientes();
+            Session[idSession + SessionUtils.EFECTIVO] = model.listaEfectivo;
+            Session[idSession + SessionUtils.CHEQUES] = model.listaCheques;
+
+            return View("Pago", model);
+        }
+
+        //para actualizar la grilla de pagos cuando cambia el financista elegido
+        public ActionResult FinancistaPagoChanged(int? idFinancista, string idSession) {
+            Financista fin = new Financista();
+            fin.Codigo = idFinancista ?? 0;
+            PagoFinancistaModel model = new PagoFinancistaModel();
+            model.Transaccion = new TRFinancistaPago();
+            model.Transaccion.Financista = fin;
+            model.listaCheques = model.Transaccion.Financista.PagosChequesPendientes();
+            model.listaEfectivo = model.Transaccion.Financista.PagosEfectivoPendientes();
+            Session[idSession + SessionUtils.EFECTIVO] = model.listaEfectivo;
+            Session[idSession + SessionUtils.CHEQUES] = model.listaCheques;
+            return PartialView("_detallePago", model);
+        }
+
+
+
+        //para actualizar la grilla cheques desde el postback de la grilla
+        public ActionResult ChequesPagoFinGrilla(int idFinancista, string idSession) {
+            Financista fin = new Financista();
+            fin.Codigo = idFinancista;
+            var cheques = fin.PagosChequesPendientes();
+            return PartialView("_selectChequePago", Session[idSession + SessionUtils.CHEQUES]);
+        }
+
+        //para actualizar la grilla cheques desde el postback de la grilla
+        public ActionResult EfectivoPagoFinGrilla(int idFinancista, string idSession) {
+            return PartialView("_selectEfectivoPago", Session[idSession + SessionUtils.EFECTIVO]);
+        }
+
+        private void _validarEfectivo(FinancistaPagoEfectivo pef, FinancistaPagoEfectivo orig) {
+
+            //eliminarValidacionesIgnorablesEfectivo(efectivo);
+
+            //ModelState.Remove("Importe.ImporteEnMonedaDefault.Monto");
+
+            ModelState.Remove("ImporteOrig.Moneda");
+            ModelState.Remove("ImportePagoAnt.Moneda");
+            ModelState.Remove("ImportePagoActual.Moneda");
+            ModelState.Remove("ImporteSaldo.Moneda");
+
+            ////Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
+            //ModelState.Remove("Importe.Moneda.Codigo");
+            //if (efectivo.Importe.Moneda == null || efectivo.Importe.Moneda.Codigo <= 0) {
+            //    ModelState.AddModelError("Importe.Moneda.Codigo", "La moneda es requerida");
+            //}
+
+            //validar el importe
+            pef.ImportePagoActual.Moneda = orig.ImporteOrig.Moneda;
+            if (pef.ImportePagoActual.Monto < 0) {
+                ModelState.AddModelError("ImportePagoActual.Monto", "El monto debe ser un valor positivo o cero");
+            }
+            if (pef.ImportePagoActual.Monto > orig.ImporteSaldo.Monto) {
+                ModelState.AddModelError("ImportePagoActual.Monto", "El monto ("+pef.ImportePagoActual+") no puede superar al saldo ("+orig.ImporteSaldo+")");
+            }
+        }
+
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult GrillaEfectivoEdit(FinancistaPagoEfectivo pef, string idSession) {
+            List<FinancistaPagoEfectivo> lista = (List<FinancistaPagoEfectivo>)Session[idSession + SessionUtils.EFECTIVO];
+            try {
+                FinancistaPagoEfectivo efectivoEditado =
+                            (from c in lista
+                             where (c.Codigo == pef.Codigo)
+                             select c).First<FinancistaPagoEfectivo>();
+
+                _validarEfectivo(pef, efectivoEditado);
+                if (ModelState.IsValid) {
+                    efectivoEditado.ImportePagoActual.Monto = pef.ImportePagoActual.Monto;
+                } else {
+                    ViewData["EditError"] = "Corrija los valores incorrectos";
+                }
+            } catch (Exception e) {
+                ViewData["EditError"] = e.Message;
+            }
+            return PartialView("_selectEfectivoPago", lista);
+        }
+
+
 
         public ActionResult ReciboPago(int id) {
             try {

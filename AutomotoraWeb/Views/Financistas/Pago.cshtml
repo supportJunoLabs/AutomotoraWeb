@@ -1,0 +1,78 @@
+﻿@model AutomotoraWeb.Models.PagoFinancistaModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+
+
+@*Tiene que estar arriba o no funciona la grilla devexpress*@
+<script src="~/Scripts/AutomotoraWeb/PagoFinancista.js"></script>
+
+@{
+    ViewBag.Title = "Pago Financista";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool cambiarSucursal = ViewBag.Multisucursal;
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+   
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/> 
+    <input type="hidden" name="chequesIds" id="chequesIds" /> 
+    <input type="hidden" name="efectivosIds" id="efectivosIds" /> 
+    <input type="hidden" name="ultimoComando" id="ultimoComando" /> 
+
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Transaccion.Financista)
+        </div>
+        <div class="editor-field editor-field-medium medium renglon-alto">
+            @Html.DdlOrDisplayFor(model => model.Transaccion.Financista.Codigo, !cambiarSucursal, model => model.Transaccion.Financista.Nombre,
+                new SelectList(ViewBag.FinancistasPago, "Codigo", "Nombre"), null,
+                new { id = "ddlFinancistas", @class = "large" })
+            @Html.ValidationMessageFor(model => model.Transaccion.Financista)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+     
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Transaccion.Sucursal)
+        </div>
+        <div class="editor-field editor-field-medium medium renglon-alto">
+            @Html.DdlOrDisplayFor(model => model.Transaccion.Sucursal.Codigo, !cambiarSucursal, model => model.Transaccion.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "large" })
+            @Html.ValidationMessageFor(model => model.Transaccion.Sucursal)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+    
+    <div class="dataLine">
+        <div class="display-label ">
+            @Html.LabelForRequired(model => model.Transaccion.Observaciones)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.TextBoxFor(model => model.Transaccion.Observaciones)
+            @Html.ValidationMessageFor(model => model.Transaccion.Observaciones)
+
+        </div>
+    </div>
+    <div class="clear-both"></div>
+    
+    <div id="divDetallePago">
+        @Html.Partial("_detallePago", Model)
+    </div>
+    <div class="clear-both"></div>
+    
+     
+    <div class="btn-toolbar">
+        <div class="floatLeft">
+            @(Html.Bootstrap().Button().Id("btn_confirmar").Class("btn btn-primary icon-save").Text(" Confirmar"))
+        </div>
+    </div>
+    <div class="clear-both"></div>
+    
+}
+

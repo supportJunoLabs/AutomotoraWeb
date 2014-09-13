@@ -53,6 +53,7 @@ namespace AutomotoraWeb.Models {
         public string AddNewRowRouteValues { get; set; }
         public string UpdateRowRouteValues { get; set; }
         public string DeleteRowRouteValues { get; set; }
+        public string OnEndCallback { get; set; }
 
         //Constructor
         public InfoGrilla(){
