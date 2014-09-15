@@ -1,0 +1,117 @@
+﻿@model DLL_Backend.TRRefinanciacion
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    ViewBag.Title = "Modificar Financiacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+   
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/>      
+    <div id="divCliente">
+        <div class="display-label">
+            Cliente
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge">
+            @Html.DdlOrDisplayFor(model => model.ClienteOp.Codigo, false, model => model.ClienteOp.Nombre,
+          new SelectList(Financiacion.ClientesCuotasPendientes(), "Codigo", "Nombre"), "--Seleccionar Cliente--",
+          new { id = "ddlClientes", @class = "xxlarge" })
+        </div>
+        <div class="floatLeft" style="padding-left: 20px;">
+            @{ string dest = ( (Model.ClienteOp != null && Model.ClienteOp.Codigo>0) ? "/Clientes/details/" + Model.ClienteOp.Codigo : "#");}
+            <a href="@dest" id="abtn_verCliente">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Datos Cliente").Id("btn_verCliente")
+            </a>
+        </div>
+        <div class="clear-both"></div>
+    </div>
+    <div>
+        <div id="divSeleccionVenta">
+            @Html.Partial("_seleccionVentaModificar", Model);
+        </div>
+        <div class="clear-both"></div>
+    </div>
+    <div id="divDetalleModificacion">
+         @{ if (Model.Venta!=null && Model.Venta.Codigo>0){
+                @Html.Partial("_detalleModifCuotas", Model);
+            }}
+    </div>
+    
+}
+
+<script type="text/javascript">
+
+    $('#ddlClientes').change(function () {
+        /* Get the selected value of dropdownlist */
+        var selectedCli = $(this).val();
+        ClienteElegido(selectedCli);
+    });
+
+    function ClienteElegido(selectedCli) {
+        if (selectedCli) {
+            $("#abtn_verCliente").prop("href", "/Clientes/details/" + selectedCli);
+        } else {
+            $("#abtn_verCliente").prop("href", "#");
+        }
+        var idSession = $('#idSession').val();
+        $('#divSeleccionVenta').html('');
+        $('#divDetalleModificacion').html('');
+        var destino = '/Cuotas/VentasRefinanciarCliente/';
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idCliente": selectedCli, "idSession": idSession },
+            success: function (data) {
+                $('#divSeleccionVenta').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function actualizarVenta() {
+        var selectedVenta = $("#codigoVenta").val();
+        if (selectedVenta) {
+            $("#abtn_verFinanciacion").prop("href", "/ConsultasFin/ConsultaFinanciacion/" + selectedVenta);
+        } else {
+            $("#abtn_verFinanciacion").prop("href", "#");
+        }
+
+        //alert(selectedVenta);
+        $('#divDetalleModificacion').html('');
+        var destino = '/Cuotas/DetallesModificacion/'
+        var idSession = $('#idSession').val();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idVenta": selectedVenta, "idSession": idSession },
+            success: function (data) {
+                $('#divDetalleModificacion').html(data);
+                //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
+                $('form').removeData('validator');
+                $('form').removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse('form');
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                //alert('Error al traer los datos.');
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+</script>

@@ -1,0 +1,56 @@
+﻿@model DLL_Backend.TRRefinanciacion
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+
+ @{  Cliente cl = Model.ClienteOp;
+         GridLookUpModel gmodel = new GridLookUpModel { Opciones = cl.VentasCuotasPendientes(), 
+                            GridLookUpCodigo=Model.Venta.Codigo};}
+
+<div class="display-label">
+    Financiacion
+</div>
+<div class="editor-field editor-field-xlarge xxlarge floatLeft">
+    <div class="floatLeft">
+         @Html.Partial("_seleccionVentaGridLookup", gmodel )
+    </div>
+     <div class="floatLeft" style="margin-left:5px">
+        <img src="~/Content/Images/refresh.png" id="btn_refrescar_ventas" style="height:30px" />
+     </div>
+    <div class="floatLeft" style="padding-left: 8px;">
+            @{ string dest = ((Model.Venta != null && Model.Venta.Codigo > 0) ? "/ConsultasFin/ConsultaFinanciacion/" + Model.Venta.Codigo : "#");}
+            <a href="@dest" id="abtn_verFinanciacion">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Financiacion").Id("btn_verFinanciacion")
+            </a>
+        </div>
+     @Html.HiddenFor(model => model.Venta.Codigo, new { id = "codigoVenta" })
+
+</div>
+
+<div class="clear-both"></div>
+
+<script type="text/javascript">
+    function OnBeginCallbackVentas(s, e) {
+        e.customArgs["idSession"] = $('#idSession').val();
+    }
+</script>
+
+
+<script type="text/javascript" >
+
+    $('#btn_refrescar_ventas').click(function () {
+        var selectedCli = $('#ddlClientes').val();
+        ClienteElegido(selectedCli);
+    });
+
+    function ventaSelected(s, e) {
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoVenta").val(valor);
+        actualizarVenta();
+    }
+
+
+
+
+</script>

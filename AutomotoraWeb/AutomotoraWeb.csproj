@@ -2226,7 +2226,7 @@
     <Content Include="Views\Parametros\_grillaParametros.cshtml" />
     <Content Include="Views\Parametros\edit.cshtml" />
     <Content Include="Views\Cuotas\Cobrar.cshtml" />
-    <Content Include="Views\Cuotas\_seleccionVenta.cshtml" />
+    <Content Include="Views\Cuotas\_seleccionVentaModificar.cshtml" />
     <Content Include="Views\Cuotas\_seleccionVentaGridLookup.cshtml" />
     <Content Include="Views\Cuotas\_detalleCobroCuota.cshtml" />
     <Content Include="Views\Cuotas\_grillacuotasVigentes.cshtml" />
@@ -2239,6 +2239,13 @@
     <Content Include="Views\Financistas\_selectChequePago.cshtml" />
     <Content Include="Views\Financistas\_selectEfectivoPago.cshtml" />
     <Content Include="Views\Financistas\_detallePago.cshtml" />
+    <Content Include="Views\Cuotas\Modificar.cshtml" />
+    <Content Include="Views\Cuotas\_detalleModifCuotas.cshtml" />
+    <Content Include="Views\Cuotas\Pasar.cshtml" />
+    <Content Include="Views\Cuotas\_seleccionVentaPasarGridLookup.cshtml" />
+    <Content Include="Views\Cuotas\_detalleTransf.cshtml" />
+    <Content Include="Views\Cuotas\_grillacuotasTransf.cshtml" />
+    <Content Include="Views\Cuotas\_seleccionVentaCobrar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
