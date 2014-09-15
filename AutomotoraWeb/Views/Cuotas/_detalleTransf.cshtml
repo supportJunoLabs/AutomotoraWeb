@@ -1,0 +1,340 @@
+﻿@model DLL_Backend.TRCuotaTransferencia
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{ bool cambiarSucursal = ViewBag.Multisucursal;}
+@Html.HiddenFor(model => model.SubFinanciacion.Financista.Interno, new { id = "finInterno" })
+
+<div id="datosVenta">
+
+    <div>
+        <div class="display-label-90">
+            Cliente
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Model.SubFinanciacion.Venta.Cliente.Nombre
+
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="floatLeft" style="margin-right: 110px;">
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.SubFinanciacion.Venta.Vehiculo.Ficha)
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.SubFinanciacion.Venta.Vehiculo.Ficha
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.SubFinanciacion.Venta.Vehiculo.Marca)
+            </div>
+            <div class="editor-field editor-field-medium">
+                @Model.SubFinanciacion.Venta.Vehiculo.Marca
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.SubFinanciacion.Venta.Vehiculo.Modelo)
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.SubFinanciacion.Venta.Vehiculo.Modelo
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.SubFinanciacion.Venta.Vehiculo.Anio)
+            </div>
+            <div class="editor-field editor-field-mini ">
+                @Model.SubFinanciacion.Venta.Vehiculo.Anio
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+    </div>
+
+    <div class="floatLeft">
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.SubFinanciacion.Venta.Fecha)
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.SubFinanciacion.Venta.Fecha.ToString("dd/MM/yyyy")
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.SubFinanciacion.Venta.Importe)
+            </div>
+            <div class="editor-field editor-field-medium">
+                @Model.SubFinanciacion.Venta.Importe.ImporteTexto
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+
+    </div>
+
+    <div class="clear-both"></div>
+
+    <div>
+        <div class="display-label-90">
+            @Html.LabelFor(model => model.SubFinanciacion.Venta.Observaciones)
+        </div>
+        <div class="editor-field editor-field-xxlarge ">
+            @Model.SubFinanciacion.Venta.Observaciones
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="espacio2"></div>
+
+    <div class="cabezalBloque">Pago Venta</div>
+    <div class="clear-both"></div>
+
+    <div class="floatLeft" style="margin-right: 110px;">
+
+        <div>
+            <div class="display-label-90">
+                Seña
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.SubFinanciacion.Venta.TotalSeniaMonedaDefault.ImporteTexto
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                Efectivo
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @((Model.SubFinanciacion.Venta.TotalEfectivoMonedaDefault + Model.SubFinanciacion.Venta.TotalBancoMonedaDefault).ImporteTexto)
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                Cheques
+            </div>
+            <div class="editor-field editor-field-medium">
+                @Model.SubFinanciacion.Venta.TotalChequesMonedaDefault.ImporteTexto
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+    </div>
+    <div class="floatLeft">
+        <div>
+            <div class="display-label-90">
+                Financiacion
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.SubFinanciacion.Venta.TotalFinanciadoMonedaDefault.ImporteTexto
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                Vales
+            </div>
+            <div class="editor-field editor-field-medium">
+                @Model.SubFinanciacion.Venta.TotalValesMonedaDefault.ImporteTexto
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                Permuta
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.SubFinanciacion.Venta.TotalPermutaMonedaDefault.ImporteTexto
+            </div>
+        </div>
+        <div class="clear-both"></div>
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="espacio2"></div>
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Transferencia</div>
+<div class="clear-both"></div>
+
+<div id="datosTransf">
+    <div class="floatLeft" style="margin-right: 110px;">
+        <div>
+            <div class="display-label-90">
+                Financista
+            </div>
+            <div class="editor-field editor-field-xlarge">
+                @Model.SubFinanciacion.Financista.Nombre
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                Tipo
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @(Model.SubFinanciacion.Financista.Interno ? "Interno" : "Externo")
+            </div>
+        </div>
+        <div class="clear-both"></div>
+    </div>
+    <div class="floatLeft">
+        <div>
+            <div class="display-label-90">
+                Cuotas
+            </div>
+            <div class="editor-field editor-field-mini ">
+                @Model.SubFinanciacion.CantCuotasPendientes().ToString()
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                Importe
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.SubFinanciacion.SumaCuotasPendientes().ImporteTexto
+            </div>
+        </div>
+        <div class="clear-both"></div>
+    </div>
+
+    <div class="clear-both"></div>
+
+    <div class="espacio2"></div>
+
+
+
+    @Html.Partial("_grillaCuotasTransf", Model.SubFinanciacion.CuotasPendientes())
+    <div class="clear-both"></div>
+    <div>
+        <button id="selectAllCuotas" type="button" class="btn btn-mini btn-info">Marcar Todo</button>
+        <button id="unSelectAllCuotas" type="button" class="btn btn-mini btn-info">Des-Marcar Todo</button>
+        <span>FALTA MOSTRAR CANTIDAD E IMPORTE DE CUOTAS SELECCIONADAS</span>
+    </div>
+
+    <div class="espacio2"></div>
+
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Sucursal)
+        </div>
+        <div class="editor-field editor-field-medium medium renglon-alto">
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, !cambiarSucursal, model => model.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "large" })
+            @Html.ValidationMessageFor(model => model.Sucursal)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Destinatario)
+        </div>
+        <div class="editor-field editor-field-medium medium renglon-alto">
+            @Html.DdlOrDisplayFor(model => model.Destinatario.Codigo, false, model => model.Destinatario.Nombre,
+                new SelectList(ViewBag.FinancistasActivos, "Codigo", "Nombre"), null,
+                new { id = "ddlFinancistas", @class = "large" })
+            @Html.ValidationMessageFor(model => model.Destinatario)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    @{ if (Model.SubFinanciacion.Financista.Interno) {
+        <div class="display-label">
+            Importe Recibido *
+        </div>
+        <div class="editor-field editor-field-small">
+            @Html.DdlOrDisplayImporteFor(model => model.Importe, false)
+            @Html.ValidationMessageFor(model => model.Importe.Monto)
+        </div>
+        <div class="clear-both"></div>
+       }}
+
+    <div class="dataLine">
+        <div class="display-label ">
+            @Html.LabelForRequired(model => model.CodigoExterno)
+        </div>
+        <div class="editor-field editor-field-small">
+            @Html.TextBoxFor(model => model.CodigoExterno)
+            @Html.ValidationMessageFor(model => model.CodigoExterno)
+
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label ">
+            @Html.LabelForRequired(model => model.Observaciones)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.TextBoxFor(model => model.Observaciones)
+            @Html.ValidationMessageFor(model => model.Observaciones)
+
+        </div>
+    </div>
+    <div class="clear-both"></div>
+</div>
+
+<div class="clear-both"></div>
+<div class="btn-toolbar">
+    <div class="floatLeft">
+        @(Html.Bootstrap().Button().Id("btn_confirmar").Class("btn btn-primary icon-save").Text(" Confirmar"))
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<script type="text/javascript">
+    function OnBeginCallbackCuotas(s, e) {
+        e.customArgs["idSession"] = $('#idSession').val();
+    }
+
+    $(document).ready(function () {
+        $("#selectAllCuotas").live('click', function () {
+            gridCuotasTransf.SelectRows();
+        });
+
+        $("#unSelectAllCuotas").live('click', function () {
+            gridCuotasTransf.UnselectRows();
+        });
+
+        $("#btn_confirmar").click(function () {
+            gridCuotasTransf.GetSelectedFieldValues("Codigo", ObtenerCodigosConfirmarCallBack);
+        });
+    });
+
+    function ObtenerCodigosConfirmarCallBack(values) {
+        //alert(values);
+        //al presionar el boton confirmar
+        var selectedIDs;
+        selectedIDs = "";
+        for (var index = 0; index < values.length; index++) {
+            selectedIDs += values[index] + ",";
+        }
+        //alert(selectedIDs);
+        $("#cuotasIds").val(selectedIDs);
+        $('form#formPrincipal').submit();
+    }
+
+</script>
