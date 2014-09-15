@@ -47,6 +47,9 @@
             </div>
         </div>
     </div>
+    <div id="messageErrorVenta" style="color: red; margin-top: 15px;">
+        ERROR jojojo
+    </div>
 </div>
 
 <div id="dialog-confirm-venta" style="display:none;">
@@ -60,9 +63,6 @@
                 loading...
             </div>
         </div>
-    </div>
-    <div id="messageErrorVenta" style="color: red;">
-
     </div>
 </div>
 
@@ -94,6 +94,7 @@
                 modal: true,
                 buttons: {
                     "Confirmar Venta": function () {
+                        $("#messageErrorVenta").hide();
                         $(this).dialog("close");
                         _confirmarVenta();
                     },
@@ -120,7 +121,7 @@
                 contentType: 'application/json; charset=utf-8',
                 data: getJsonVenta(),
                 success: function (data) {
-                    $("#loadingContainer").close();
+                    $("#loadingContainer").hide();
                     if (data.Result == "OK") {
                         // redirect a listado de ventas
                         window.location.href = '@(Url.Action("list", "ventas"))';
@@ -131,12 +132,14 @@
                             htmlError = htmlError + "<div>" + data.ErrorMessage[i] + "</div>";
                         }
                         $("#messageErrorVenta").html(htmlError);
+                        $("#messageErrorVenta").show();
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    $("#loadingContainer").close();
+                    $("#loadingContainer").hide();
                     var htmlError = textStatus + " - " + errorThrown;
                     $("#messageErrorVenta").html(htmlError);
+                    $("#messageErrorVenta").show();
                 }
             });
         }
