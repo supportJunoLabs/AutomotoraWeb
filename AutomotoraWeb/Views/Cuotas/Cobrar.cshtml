@@ -1,6 +1,7 @@
 ﻿@model DLL_Backend.TRCuotaCobro
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
+@using AutomotoraWeb.Models;
 
 @{
     if (Model.Tipo==TRCuotaCobro.TIPO.PARCIAL){
@@ -39,7 +40,7 @@
     </div>
     <div>
         <div id="divSeleccionVenta">
-            @Html.Partial("_seleccionVenta", Model)
+            @Html.Partial("_seleccionVentaCobrar", Model);
         </div>
         <div class="clear-both"></div>
     </div>
@@ -54,7 +55,7 @@
                 <div class="tab-pane active in" id="cuota_tab">
                     <div id="divDetalleCobro">
                         @{if (Model.Venta != null && Model.Venta.Codigo > 0) {
-                              @Html.Partial("_detalleCobroCuota", Model);
+                              @Html.Partial("_detalleCobroCuota", Model)
                          }}
 
                     </div>
@@ -74,9 +75,7 @@
     $('#ddlClientes').change(function () {
         /* Get the selected value of dropdownlist */
         var selectedCli = $(this).val();
-        
-            ClienteElegido(selectedCli);
-        
+        ClienteElegido(selectedCli);
     });
 
     function ClienteElegido(selectedCli) {
@@ -99,6 +98,40 @@
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function actualizarVenta() {
+        var selectedVenta = $("#codigoVenta").val();
+        if (selectedVenta) {
+            $("#abtn_verFinanciacion").prop("href", "/ConsultasFin/ConsultaFinanciacion/" + selectedVenta);
+        } else {
+            $("#abtn_verFinanciacion").prop("href", "#");
+        }
+
+        //alert(selectedVenta);
+        $('#divDetalleCobro').html('');
+        var destino = '/Cuotas/DetallesCobro/'
+        var idSession = $('#idSession').val();
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idVenta": selectedVenta, "idSession": idSession },
+            success: function (data) {
+                $('#divDetalleCobro').html(data);
+                //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
+                $('form').removeData('validator');
+                $('form').removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse('form');
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+                //alert('Error al traer los datos.');
             },
             beforeSend: showLoading,
             complete: hideLoading
