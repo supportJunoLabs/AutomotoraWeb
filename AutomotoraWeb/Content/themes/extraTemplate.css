@@ -234,8 +234,8 @@ textarea {
 
 /*Standard Elements*/
 body {
-    background: #eee;
-    background-image: url(/Content/Images/fondo.png);
+    background: white !important;
+    background-image: none !important;
     background-position: initial initial;
     background-repeat: repeat;
     margin: 0px;
@@ -542,6 +542,10 @@ footer {
     border-top: none;
     border-left: none;
     margin: 0em;
+
+    background-image:url(/Content/Images/fondo.png); 
+    height:3000px; 
+    border-right:3px solid #999999;
 }
 
     .sidebar-nav .nav-header {
