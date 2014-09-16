@@ -1,3 +1,21 @@
 ﻿@model DLL_Backend.Venta
 
-Señas y ACVs
+<div id="divSenia">
+    @{ if (Model.Vehiculo != null && Model.Vehiculo.Codigo > 0 && Model.Vehiculo.TieneSeniaActiva()) { 
+    <div class="cabezalBloque" style="margin-bottom: 8px">Seña</div>
+    <div class="clear-both"></div>
+        <span>ACA  VA LA PARTIAL VIEW DE CONSULTA DE LA SENIA.</span>
+    }}
+</div>
+<div class="clear-both"></div>
+
+<span>FALTA MOSTRAR DATOS DE LA SENIA VIGENTE SI LA HAY.</span>
+
+<div id="divAcvs">
+    @{ if (Model.Vehiculo != null &&  Model.Vehiculo.Codigo>0 &&  Model.Vehiculo.TieneACV()) { 
+        <div class="cabezalBloque" style="margin-bottom: 8px">Anticipos</div>
+        <div class="clear-both"></div>
+        @Html.Partial("/acvs/_grillaAcvVigentes", Model.Vehiculo.obtenerACVs())
+        
+    }}
+</div>
