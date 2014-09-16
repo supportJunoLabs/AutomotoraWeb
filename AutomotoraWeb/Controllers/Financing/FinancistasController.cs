@@ -381,8 +381,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             string sefectivo = model.efectivosIds??"";
 
             //Por ahora para que coincida con que no vuelve nada seleccionado. Esperar caso de devexpress
-            model.chequesIds = "";
-            model.efectivosIds = "";
+            //model.chequesIds = "";
+            //model.efectivosIds = "";
 
             this.eliminarValidacionesIgnorables("Transaccion.Financista", MetadataManager.IgnorablesDDL(model.Transaccion.Financista));
             this.eliminarValidacionesIgnorables("Transaccion.Sucursal", MetadataManager.IgnorablesDDL(model.Transaccion.Sucursal));

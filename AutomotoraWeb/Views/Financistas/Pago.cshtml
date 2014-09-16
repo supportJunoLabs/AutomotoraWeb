@@ -21,7 +21,7 @@
     <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/> 
     @Html.HiddenFor( model => model.chequesIds, new { id = "chequesIds"})
     @Html.HiddenFor( model => model.efectivosIds, new { id = "efectivosIds" })
-    <input type="hidden" name="ultimoComando" id="ultimoComando" /> 
+    @*<input type="hidden" name="ultimoComando" id="ultimoComando" />--se cambia por variable de javascript  efectivoUltimoComando *@
 
     <div class="dataLine">
         <div class="display-label">

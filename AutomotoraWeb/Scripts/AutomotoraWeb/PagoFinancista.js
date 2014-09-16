@@ -1,15 +1,17 @@
 ﻿
 function SelectionChequeChanged(s, e) {
     //al hacer click en la grilla
-    s.GetSelectedFieldValues("Cheque.ImporteTexto", RefrescarListaChequesCallback);
+    s.GetSelectedFieldValues("Cheque.ImporteTexto", SelectionChangedChequesCallback);
     //alert("hola");
 }
 
 function SelectionEfectivoChanged(s, e) {
     //al hacer click en la grilla
-    s.GetSelectedFieldValues("ImportePagoActual.ImporteTexto", RefrescarListaEfectivoCallback);
+    s.GetSelectedFieldValues("ImportePagoActual.ImporteTexto", SelectionChangedEfectivoCallback);
     //alert("hola");
 }
+
+
 
 function OnBeginCallbackCheques(s, e) {
     //alert($(ddlSucursales).val());
@@ -18,21 +20,48 @@ function OnBeginCallbackCheques(s, e) {
    
 }
 
+
+var efectivoUltimoComando;
+function OnBeginCallbackEfectivo(s, e) {
+    e.customArgs["idFinancista"] = $(ddlFinancistas).val();
+    e.customArgs["idSession"] = $(idSession).val();
+    //$("#ultimoComando").val(e.command); --lo hacia usando un hidden, pero ahora lo cambie por variable de javascript que se referencia desde el endcallback
+    if (e.command == 'UPDATEEDIT') {
+        efectivoUltimoComando = e.command
+        //alert(e.command);
+    } else {
+        efectivoUltimoComando = "";
+    }
+
+}
+
 function OnEndCallbackEfectivo(s, e) {
-    //alert($("#ultimoComando").val());
-    if ($("#ultimoComando").val() == 'UPDATEEDIT') {
+    //alert(efectivoUltimoComando);
+    //if ($("#ultimoComando").val() == 'UPDATEEDIT') {
+    if (efectivoUltimoComando == 'UPDATEEDIT') {
         s.GetSelectedFieldValues("ImportePagoActual.ImporteTexto", RefrescarListaEfectivoCallback);
     }
 }
 
-function OnBeginCallbackEfectivo(s, e) {
-    //alert($(ddlSucursales).val());
-    e.customArgs["idFinancista"] = $(ddlFinancistas).val();
-    e.customArgs["idSession"] = $(idSession).val();
-    $("#ultimoComando").val(e.command);
+
+function EfectivoInit() {
+    if ($("#efectivosIds").val()) {
+        //alert($("#efectivosIds").val());
+        var clavesef = $("#efectivosIds").val().split(",");
+        gridEfectivo.SelectRowsByKey(clavesef);
+    }
+}
+
+function ChequesInit() {
+    if ($("#chequesIds").val()) {
+        //alert($("#chequesIds").val());
+        var clavesch = $("#chequesIds").val().split(",");
+        gridCheques.SelectRowsByKey(clavesch);
+    }
 }
 
 $(document).ready(function () {
+
     $("#btn_confirmar").click(function () {
         gridCheques.GetSelectedFieldValues("Codigo", ObtenerCodigosConfirmarCallBack);
     });
@@ -66,16 +95,8 @@ $(document).ready(function () {
 
 function cambiarFinancista() {
     $('#divDetallePago').html('');
-
-    //vaciar la lista de cheques elegidos
-    //SelectedRowsCheques.ClearItems();
-    //SelectedRowsEfectivo.ClearItems();
-    //$("#cantCheques").html(0);
-    //$("#cantEfectivo").html(0);
-    //refrescar la grilla de cheques de la sucursal
     var selectedID = $(ddlFinancistas).val();
     var idSession = $('#idSession').val();
-    //alert(selectedID);
     var destino = '/Financistas/FinancistaPagoChanged/';
     $.ajax({
         cache: false,
@@ -83,7 +104,6 @@ function cambiarFinancista() {
         url: destino,
         data: { "idFinancista": selectedID, "idSession": idSession },
         success: function (data) {
-            //alert("regreso");
             $('#divDetallePago').html(data);
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -95,60 +115,58 @@ function cambiarFinancista() {
  }
 
 function ObtenerCodigosConfirmarCallBack(values) {
-    //al presionar el boton transferir
-    //alert("hola");
+    //al presionar el boton transferir, para pasar los ids de cheques seleccionados
     var selectedIDs;
     selectedIDs = "";
     for (var index = 0; index < values.length; index++) {
         selectedIDs += values[index] + ",";
     }
-    //alert(selectedIDs);
     $("#chequesIds").val(selectedIDs);
-    //alert($("#chequesIds").val());
-
     gridEfectivo.GetSelectedFieldValues("Codigo", ObtenerCodigosConfirmar2CallBack);
 }
 
 function ObtenerCodigosConfirmar2CallBack(values) {
-    //al presionar el boton transferir
-    //alert("hola");
+    //al presionar el boton transferir, para pasar los ids de efectivos seleccionados
     var selectedIDs;
     selectedIDs = "";
     for (var index = 0; index < values.length; index++) {
         selectedIDs += values[index] + ",";
     }
-    //alert(selectedIDs);
     $("#efectivosIds").val(selectedIDs);
-    //alert($("#chequesIds").val());
 
     $('form#formPrincipal').submit();
 }
 
 
-function RefrescarListaChequesCallback(values) {
+function SelectionChangedChequesCallback(values) {
     SelectedRowsCheques.BeginUpdate();
+    var cant = 0;
     try {
         SelectedRowsCheques.ClearItems();
         for (var i = 0; i < values.length; i++) {
             SelectedRowsCheques.AddItem(values[i]);
+            cant++;
         }
     } finally {
         SelectedRowsCheques.EndUpdate();
     }
-    $("#cantCheques").html(gridCheques.GetSelectedRowCount());
+    $("#cantCheques").html(cant);
 
 }
 
-function RefrescarListaEfectivoCallback(values) {
-    SelectedRowsEfectivo.BeginUpdate();
+function SelectionChangedEfectivoCallback(values) {
+    //SelectedRowsEfectivo.BeginUpdate();
+    var cant = 0;
     try {
         SelectedRowsEfectivo.ClearItems();
         for (var i = 0; i < values.length; i++) {
             SelectedRowsEfectivo.AddItem(values[i]);
+            cant++;
         }
     } finally {
-        SelectedRowsEfectivo.EndUpdate();
+        //SelectedRowsEfectivo.EndUpdate();
     }
-    $("#cantEfectivo").html(gridEfectivo.GetSelectedRowCount());
+    //$("#cantEfectivo").html(gridEfectivo.GetSelectedRowCount());
+    $("#cantEfectivo").html(cant);
 
 }
