@@ -223,6 +223,10 @@
                     settings.InitNewRow = new ASPxDataInitNewRowEventHandler(ig.FuncionInitNewRow);
                 }
                 
+                if (ig.OnInit !=null){
+                    settings.ClientSideEvents.Init = ig.OnInit;
+                }
+                
 
                 //totales suma
                 foreach (string s in og.totalesSuma) {
