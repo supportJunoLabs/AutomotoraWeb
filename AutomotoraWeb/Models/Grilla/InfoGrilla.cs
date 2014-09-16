@@ -55,6 +55,9 @@ namespace AutomotoraWeb.Models {
         public string DeleteRowRouteValues { get; set; }
         public string OnEndCallback { get; set; }
 
+        //eventos cliente
+        public string OnInit { get; set; }
+
         //Constructor
         public InfoGrilla(){
             TipoControl = TIPO_CONTROL.GRILLA;
