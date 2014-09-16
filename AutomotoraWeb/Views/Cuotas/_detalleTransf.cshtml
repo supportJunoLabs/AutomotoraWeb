@@ -228,10 +228,20 @@
     @Html.Partial("_grillaCuotasTransf", Model.SubFinanciacion.CuotasPendientes())
     <div class="clear-both"></div>
     <div>
-        <button id="selectAllCuotas" type="button" class="btn btn-mini btn-info">Marcar Todo</button>
-        <button id="unSelectAllCuotas" type="button" class="btn btn-mini btn-info">Des-Marcar Todo</button>
-        <span>FALTA MOSTRAR CANTIDAD E IMPORTE DE CUOTAS SELECCIONADAS</span>
+        <div class="floatLeft">
+            <button id="selectAllCuotas" type="button" class="btn btn-mini btn-info">Marcar Todo</button>
+            <button id="unSelectAllCuotas" type="button" class="btn btn-mini btn-info">Des-Marcar Todo</button>
+        </div>
+        <div style="margin-left: 240px;" class="floatLeft">
+            <span class="display-label-90">Importe @Model.SubFinanciacion.SumaCuotasPendientes().Moneda.Simbolo  </span>
+            <span id="spanTotalImporte"></span>
+        </div>
+        <div style="margin-left: 80px;" class="floatLeft">
+            <span class="display-label-mini">Cuotas  </span>
+            <span id="spanTotalCantidad"></span>
+        </div>
     </div>
+    <div class="clear-both"></div>
 
     <div class="espacio2"></div>
 
@@ -308,6 +318,22 @@
 <script type="text/javascript">
     function OnBeginCallbackCuotas(s, e) {
         e.customArgs["idSession"] = $('#idSession').val();
+    }
+
+    function SelectionChangedCuotas(s, e) {
+        s.GetSelectedFieldValues("Saldo.Monto", SelectionChangedCuotasCallback);
+    }
+
+    function SelectionChangedCuotasCallback(values) {
+        var cant = 0;
+        var total = 0;
+        for (var i = 0; i < values.length; i++) {
+            total += values[i];
+            cant++;
+        }
+        $("#spanTotalCantidad").text(cant);
+        $("#spanTotalImporte").text(total);
+
     }
 
     $(document).ready(function () {

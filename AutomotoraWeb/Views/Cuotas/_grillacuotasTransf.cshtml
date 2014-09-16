@@ -13,8 +13,10 @@
             new ColumnaGrilla {Campo="Vencimiento", Titulo="Vencimiento", Ancho=100},
             new ColumnaGrilla {Campo="ImporteCobrado.ImporteTexto", Titulo="Pago", Ancho=120, Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
             new ColumnaGrilla {Campo="FechaCobro", Titulo="Fecha",Ancho=100},
+            new ColumnaGrilla {Campo="Saldo.ImporteTexto", Titulo="Saldo",Ancho=100},
             new ColumnaGrilla {Campo="DescripcionEstado", Titulo="Estado", Ancho=100},
             new ColumnaGrilla {Campo="CodigoExterno", Titulo="Codigo Externo", Ancho=100},
+            new ColumnaGrilla {Campo="Saldo.Monto", Titulo="Monto", Ancho=1}
      };
     
     ig.NameGrid = "gridCuotasTransf";
@@ -28,7 +30,7 @@
     ig.registrosPorPagina = 12;
     ig.Paginado = true;
     ig.ChecksSeleccion = true;
-    //ig.AccionSeleccion = "SelectionChanged";
+    ig.AccionSeleccion = "SelectionChangedCuotas";
     ig.OnBeginCallback = "OnBeginCallbackCuotas";
     
     ViewBag.InfoGrilla = ig;

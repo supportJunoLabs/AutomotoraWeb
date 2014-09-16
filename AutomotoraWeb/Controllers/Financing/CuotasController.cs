@@ -188,12 +188,13 @@ namespace AutomotoraWeb.Controllers.Financing {
             this.eliminarValidacionesIgnorables("Venta", MetadataManager.IgnorablesDDL(tr.Venta));
             this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(tr.ClienteOp));
 
+            //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
+            tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+            tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+            tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
             if (ModelState.IsValid) {
                 try {
-                    tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
-                    tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
-                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
-
                     tr.Ejecutar();
                     return RedirectToAction("ReciboCuota", CuotasController.CONTROLLER, new { id = tr.NroRecibo });
                 } catch (UsuarioException exc) {
@@ -328,7 +329,7 @@ namespace AutomotoraWeb.Controllers.Financing {
                 this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(model.Importe.Moneda));
             }
 
-            //Lo hago aca al principio para que si hay error se inicialicen los medios de pago con los valores anteriores.
+            //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
             //Si es externo esta vacio, porque no se ve la opcion pagos.
             model.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
             model.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
