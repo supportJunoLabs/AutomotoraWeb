@@ -238,6 +238,11 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             ViewData["idSession"] = idSession;
 
+            //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
+            tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+            tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+            tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
             this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
             this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
             this.eliminarValidacionesIgnorables("Financista", MetadataManager.IgnorablesDDL(tr.Financista));
@@ -260,10 +265,6 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             if (ModelState.IsValid) {
                 try {
-                    tr.Pago.AgregarCheques( (IEnumerable<Cheque>)  Session[idSession + SessionUtils.CHEQUES]);
-                    tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
-                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
-
                     tr.Ejecutar();
                     return RedirectToAction("ReciboTransf", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
                 } catch (UsuarioException exc) {
@@ -660,6 +661,11 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             ViewData["idSession"] = idSession;
 
+            //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
+            tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+            tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+            tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
             this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
             this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
             this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
@@ -673,10 +679,6 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             if (ModelState.IsValid) {
                 try {
-                    tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
-                    tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
-                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
-
                     tr.Ejecutar();
                     return RedirectToAction("ReciboCanje", ChequesController.CONTROLLER, new { id = tr.NroRecibo });
                 } catch (UsuarioException exc) {

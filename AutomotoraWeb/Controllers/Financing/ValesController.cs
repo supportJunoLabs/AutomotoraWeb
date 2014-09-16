@@ -402,7 +402,6 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #endregion
 
-
         #region ListadoVales
 
         //Se invoca desde el menu de financiaciones,en lugar de banco.
@@ -676,12 +675,13 @@ namespace AutomotoraWeb.Controllers.Financing {
             this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
             this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(tr.ClienteOp));
 
+            //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
+            tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+            tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+            tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
             if (ModelState.IsValid) {
                 try {
-                    tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
-                    tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
-                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
-
                     tr.Ejecutar();
                     return RedirectToAction("ReciboVale", ValesController.CONTROLLER, new { id = tr.NroRecibo });
                 } catch (UsuarioException exc) {
@@ -735,7 +735,6 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #endregion
 
-
         #region TransferirVale
 
         public ActionResult Pasar() {
@@ -775,12 +774,13 @@ namespace AutomotoraWeb.Controllers.Financing {
             this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
             this.eliminarValidacionesIgnorables("Destinatario", MetadataManager.IgnorablesDDL(tr.Destinatario));
 
+            //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
+            tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+            tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+            tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
             if (ModelState.IsValid) {
                 try {
-                    tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
-                    tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
-                    tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
-
                     tr.Ejecutar();
                     return RedirectToAction("ReciboTransfVale", ValesController.CONTROLLER, new { id = tr.NroRecibo });
                 } catch (UsuarioException exc) {
