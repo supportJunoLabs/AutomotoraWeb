@@ -28,7 +28,7 @@ namespace AutomotoraWeb.Controllers.General {
         //------------------------------------------------------------------------------------------------------------------------
 
         [HttpPost]
-        public ActionResult Login(LoginModel model, string returnUrl) {
+        public ActionResult Login(LoginModel model) {
             if (ModelState.IsValid) {
                 try {
                     String IP = Request.UserHostAddress;
@@ -45,8 +45,14 @@ namespace AutomotoraWeb.Controllers.General {
                         // Se obtienen opciones del menu
                         Session[SessionUtils.SESSION_MENU_OPTIONS] = MenuService.Instance.getMenuOptions(model.UserName, IP);
 
-                        if (!String.IsNullOrEmpty(returnUrl)) {
-                            return Redirect(returnUrl);
+                        Uri url = (Uri)(Session[SessionUtils.PAGINA_ORIGINAL_SOLICITADA]);
+
+                        if (url != null){
+                            String returnUrl = url.ToString();
+                            if (!String.IsNullOrEmpty(returnUrl)) {
+                                Session[SessionUtils.PAGINA_ORIGINAL_SOLICITADA] = null;
+                                return Redirect(returnUrl);
+                            }
                         } else {
                             return RedirectToAction(SistemaController.INDEX, SistemaController.BCONTROLLER);
                         }

@@ -13,6 +13,7 @@ namespace AutomotoraWeb.Utils {
         public static string APPLICATION_COMPANY_NAME = "applicationCompanyName";
         public static string APPLICATION_SYSTEM_NAME = "applicationSystemName";
         public static string APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS = "applicationPermisiblesActionController";
+        public static string PAGINA_ORIGINAL_SOLICITADA = "paginaOriginalSolicitada";
         //public static string ULTIMO_MODULO = "ultimoModulo";
         public static string CODIGO_VEHICULO= "codigoVehiculo";
 

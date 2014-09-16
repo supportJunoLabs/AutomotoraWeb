@@ -34,6 +34,11 @@ namespace AutomotoraWeb {
                     if (filterContext.HttpContext.Request.IsAjaxRequest()) {
                         filterContext.HttpContext.Response.StatusCode = 302;
                     } else {
+                        if (filterContext.HttpContext.Request.HttpMethod.ToLower() == System.Net.Http.HttpMethod.Get.ToString().ToLower()) {
+                            filterContext.HttpContext.Session[SessionUtils.PAGINA_ORIGINAL_SOLICITADA] = filterContext.HttpContext.Request.Url;
+                        } else {
+                            filterContext.HttpContext.Session[SessionUtils.PAGINA_ORIGINAL_SOLICITADA] = null;
+                        }
                         filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                     }
                 } else {
