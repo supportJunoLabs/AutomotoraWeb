@@ -21,6 +21,7 @@
    
     <script type="text/javascript">
         function OnBeginCallback(s, e) {
+            //Si la voy a traer en una partial view, hay que poner esto en la madre, porque la partial viene sin viewdata.
             e.customArgs["idSession"] = '@ViewData["idSession"]';
             e.customArgs["idParametros"] = '@ViewData["idParametros"]';
         }

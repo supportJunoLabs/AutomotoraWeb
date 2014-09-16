@@ -1,0 +1,38 @@
+﻿@model GridLookUpModel
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.TipoControl = InfoGrilla.TIPO_CONTROL.GRIDLOOKUP;
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Financista.Nombre", Ancho=150, Titulo="Financista", LargoMax=20},
+        new ColumnaGrilla {Campo="Venta.Codigo", Ancho=50, Titulo="Op"},
+        new ColumnaGrilla {Campo="Venta.Vehiculo.Ficha", Ancho=100, Titulo="Ficha"},
+        new ColumnaGrilla {Campo="Venta.Vehiculo.Marca", Ancho=100, Titulo="Marca"},
+        new ColumnaGrilla {Campo="Venta.Vehiculo.Modelo", Ancho=100, Titulo="Modelo"},
+        new ColumnaGrilla {Campo="Venta.Vehiculo.Anio", Ancho=60, Titulo="Año"},
+        new ColumnaGrilla {Campo="Venta.Fecha", Ancho=100, Titulo="Fecha", Formato="dd/MM/yyyy"},
+        new ColumnaGrilla {Campo="Venta.Cliente.Nombre", Ancho=180, Titulo="Cliente", LargoMax=22}
+    };
+
+    ig.NameGrid = "gridVentas";
+    ig.Controller = CuotasController.CONTROLLER;
+    ig.ActionCallbackRoute = "GrillaVentasTransferibles";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Venta);
+    ig.FormatoSeleccionLookup = "Fin:{0}, Op:{1} Ficha:{2}, {3}, {4}, {7}";
+    ig.registrosPorPagina = 10;
+    ig.AnchoSeleccion = 600;
+    ig.OnBeginCallback = "OnBeginCallbackVentas";
+
+    ig.RowClickAccion = "ventaSelected";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)

@@ -1,0 +1,127 @@
+﻿@model DLL_Backend.TRCuotaTransferencia
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    ViewBag.Title = "Transferir Financiacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    GridLookUpModel gmodel = new GridLookUpModel {Opciones = Financiacion.FinanciacionesTransferibles()};
+    if (Model.SubFinanciacion!=null){
+        gmodel.GridLookUpCodigo = Model.SubFinanciacion.Codigo;
+    }
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+   
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/>  
+    <input type="hidden" id="cuotasIds" name="cuotasIds" />
+    
+
+    
+   <div class="display-label">
+    Financiacion
+</div>
+<div class="editor-field editor-field-xlarge xxlarge floatLeft">
+    <div class="floatLeft">
+         @Html.Partial("_seleccionVentaPasarGridLookup", gmodel)
+    </div>
+    <div class="floatLeft" style="padding-left: 8px;">
+            @{ string dest = ((Model.SubFinanciacion != null && Model.SubFinanciacion.Venta != null && Model.SubFinanciacion.Venta.Codigo > 0) ? "/ConsultasFin/ConsultaFinanciacion/" + Model.SubFinanciacion.Venta.Codigo : "#");}
+            <a href="@dest" id="abtn_verFinanciacion">
+                @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Financiacion").Id("btn_verFinanciacion")
+            </a>
+        </div>
+     @Html.HiddenFor(model => model.SubFinanciacion.Codigo, new { id = "codigoSubfin" })
+
+</div>
+    <div class="clear-both"></div>
+    
+       <div id="divOperacion">
+        <div class="well" style="margin-top: 10px; width: 1000px; height: 1300px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#operacion_tab" data-toggle="tab">Transferencia</a></li>
+                <li id="liPago"><a href="#pago_tab" data-toggle="tab">Pago</a></li>
+            </ul>
+            <div id="tabContent" class="tab-content">
+                <div class="tab-pane active in" id="operacion_tab">
+                    @{if (Model.SubFinanciacion != null && Model.SubFinanciacion.Venta != null && Model.SubFinanciacion.Venta.Codigo > 0) {
+                        @Html.Partial("_detalleTransf", Model)
+                      }}
+                </div>
+                <div class="tab-pane fade" id="pago_tab">
+                    @Html.Partial("_pagoEstandar", Model);
+                </div>
+            </div>
+        </div>
+    </div>
+
+ }
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var interno = $("#finInterno").val();
+        if (interno == "True") {
+            $("#liPago").show();
+            //$("#pago_tab").show();
+        } else {
+            $("#liPago").hide();
+            //$("#pago_tab").hide();
+        }
+    });
+
+
+    function OnBeginCallbackVentas(s, e) {
+        e.customArgs["idSession"] = $('#idSession').val();
+    }
+
+    function ventaSelected(s, e) {
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoSubfin").val(valor);
+        //alert($("#codigoSubfin").val());
+        
+        var idVenta="";
+        if (valor) {
+             idVenta = (valor.split("-"))[0];
+            $("#abtn_verFinanciacion").prop("href", "/ConsultasFin/ConsultaFinanciacion/" + idVenta);
+        } else {
+            $("#abtn_verFinanciacion").prop("href", "#");
+        }
+
+        $('#operacion_tab').html('');
+
+        var destino = '/Cuotas/DetalleVentaPasar/';
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idSubfin": valor, "idSession": $('#idSession').val() },
+            success: function (data) {
+                $('#operacion_tab').html(data);
+                var interno = $("#finInterno").val();
+                //alert(interno)
+                if (interno == "True") {
+                    $("#liPago").show();
+                    $("#pago_tab").show();
+                } else {
+                    $("#liPago").hide();
+                    $("#pago_tab").hide();
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+ 
+ </script>
