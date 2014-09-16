@@ -1,0 +1,195 @@
+﻿@model DLL_Backend.ACuentaVenta
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{ bool cambiarSucursal = ViewBag.Multisucursal;
+   PrecondicionesOperacion cond = Model.Vehiculo.ObtenerPrecondicionesACV();
+   string action = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("action").ToLower();
+   bool modoConsulta = ((bool?)ViewBag.SoloLectura)??false;
+}
+
+<div id="datosVehiculo">
+
+    <div class="floatLeft" style="margin-right: 110px;">
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.Vehiculo.Ficha)
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.Vehiculo.Ficha
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.Vehiculo.Marca)
+            </div>
+            <div class="editor-field editor-field-medium">
+                @Model.Vehiculo.Marca
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.Vehiculo.Modelo)
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.Vehiculo.Modelo
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.Vehiculo.Anio)
+            </div>
+            <div class="editor-field editor-field-mini ">
+                @Model.Vehiculo.Anio
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+    </div>
+
+    <div class="floatLeft">
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.Vehiculo.Matricula)
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.Vehiculo.Matricula
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.Vehiculo.Sucursal)
+            </div>
+            <div class="editor-field editor-field-medium">
+                @Model.Vehiculo.Sucursal.Nombre
+            </div>
+        </div>
+        <div class="clear-both"></div>
+
+        <div>
+            <div class="display-label-90">
+                @Html.LabelFor(model => model.Vehiculo.Status)
+            </div>
+            <div class="editor-field editor-field-medium">
+                @Model.Vehiculo.DescripcionEstado
+            </div>
+            @{ if (Model.Vehiculo != null && Model.Vehiculo.Codigo > 0 && Model.Vehiculo.TieneSeniaActiva()) {
+                <div class="floatLeft " style="padding-left: 20px;">
+                    @(Html.Bootstrap().ActionLinkButton("Ver Seña", "Details", "Senias").RouteValues(new { id = Model.Vehiculo.ObtenerSenia().Codigo }).Class("btn-info  btn-small"))
+                </div>
+               }}
+        </div>
+        <div class="clear-both"></div>
+
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="display-label-90">
+        @Html.LabelFor(model => model.Vehiculo.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Model.Vehiculo.Observaciones
+    </div>
+    <div class="clear-both"></div>
+
+</div>
+<div class="clear-both"></div>
+
+@{ if (action == "acventa") {
+    <div class="espacio2"></div>
+    <div class="cabezalBloque" style="margin-bottom: 8px">Anticipos Anteriores</div>
+    <div class="clear-both"></div>
+      if (Model.Vehiculo != null && Model.Vehiculo.TieneACV()) {
+        @Html.Partial("_grillaAcvVigentes", Model.Vehiculo.obtenerACVs())
+        <div class="clear-both"></div>
+        }
+    <div class="clear-both"></div>
+}}
+
+<div class="espacio2"></div>
+<div class="cabezalBloque" style="margin-bottom: 8px">Anticipo</div>
+<div class="clear-both"></div>
+
+<div id="datosAcv">
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Cliente)
+        </div>
+        <div class="editor-field editor-field-medium medium renglon-alto">
+            @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, cond.ClienteObligatorio||modoConsulta, model => model.Cliente.Nombre,
+                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null,
+                new { id = "ddlClientes", @class = "large" })
+            @Html.ValidationMessageFor(model => model.Cliente)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Vendedor)
+        </div>
+        <div class="editor-field editor-field-medium medium renglon-alto">
+            @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, cond.VendedorObligatorio ||modoConsulta, model => model.Cliente.Nombre,
+                new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
+                new { id = "ddlVendedores", @class = "large" })
+            @Html.ValidationMessageFor(model => model.Vendedor)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Importe)
+        </div>
+        <div class="editor-field editor-field-small">
+            @Html.DdlOrDisplayImporteFor(model => model.Importe, modoConsulta)
+            @Html.ValidationMessageFor(model => model.Importe.Monto)
+        </div>
+        <div class="clear-both"></div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Sucursal)
+        </div>
+        <div class="editor-field editor-field-medium medium renglon-alto">
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, !cambiarSucursal||modoConsulta, model => model.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "large" })
+            @Html.ValidationMessageFor(model => model.Sucursal)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label ">
+            @Html.LabelForRequired(model => model.Observaciones)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.EditorOrDisplayFor(model => model.Observaciones, modoConsulta)
+            @Html.ValidationMessageFor(model => model.Observaciones)
+
+        </div>
+    </div>
+    <div class="clear-both"></div>
+</div>
+<div class="clear-both"></div>
+
+@{ if (action == "acventa") {
+    <div class="btn-toolbar">
+        <div class="floatRight">
+            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Registrar Anticipo"))
+        </div>
+    </div>
+    <div class="clear-both"></div>
+}}

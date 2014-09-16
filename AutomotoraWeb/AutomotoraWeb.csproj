@@ -2096,6 +2096,10 @@
     <Content Include="Views\Caja\Entrada.cshtml" />
     <Content Include="Views\Caja\Salida.cshtml" />
     <Content Include="Views\Caja\_selectChequeSalida.cshtml" />
+    <Content Include="Views\Acvs\ACVenta.cshtml" />
+    <Content Include="Views\Acvs\_detalleAcv.cshtml" />
+    <Content Include="Views\Acvs\_grillaAcvVigentes.cshtml" />
+    <Content Include="Views\Acvs\Anular.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
@@ -2246,6 +2250,7 @@
     <Content Include="Views\Cuotas\_detalleTransf.cshtml" />
     <Content Include="Views\Cuotas\_grillacuotasTransf.cshtml" />
     <Content Include="Views\Cuotas\_seleccionVentaCobrar.cshtml" />
+    <Content Include="Views\Shared\_pagoEstandarConsulta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

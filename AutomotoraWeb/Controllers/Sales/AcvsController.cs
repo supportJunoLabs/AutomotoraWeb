@@ -9,11 +9,10 @@ using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
+using AutomotoraWeb.Controllers.General;
 
-namespace AutomotoraWeb.Controllers.Sales
-{
-    public class AcvsController : SalesController
-    {
+namespace AutomotoraWeb.Controllers.Sales {
+    public class AcvsController : SalesController {
 
         public static string CONTROLLER = "Acvs";
 
@@ -21,8 +20,18 @@ namespace AutomotoraWeb.Controllers.Sales
             base.OnActionExecuting(filterContext);
             ViewBag.NombreEntidad = "A cuenta de venta futura";
             ViewBag.NombreEntidades = "A cuenta de venta futura";
-            
+            ViewBag.Sucursales = Sucursal.Sucursales;
+            ViewBag.Clientes = Cliente.Clientes();
+            ViewBag.VendedoresHabilitados = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (usuario == null) {
+                filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
+                return;
+            }
+            ViewBag.MultiSucursal = usuario.MultiSucursal;
         }
+
+        #region Consulta
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
@@ -47,22 +56,23 @@ namespace AutomotoraWeb.Controllers.Sales
             return td;
         }
 
+        #endregion
 
         #region Listados
 
         public ActionResult List() {
 
             ListadoAcvsModel model = new ListadoAcvsModel();
-            try{
-            string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            ViewBag.SucursalesListado = Sucursal.Sucursales;
-            ViewBag.ClientesListado = Cliente.Clientes();
-            ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-            ViewData["idParametros"] = model.idParametros;
-            model.Resultado = _listaElementos(model);
-            return View(model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewBag.SucursalesListado = Sucursal.Sucursales;
+                ViewBag.ClientesListado = Cliente.Clientes();
+                ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
+                ViewData["idParametros"] = model.idParametros;
+                model.Resultado = _listaElementos(model);
+                return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -72,17 +82,17 @@ namespace AutomotoraWeb.Controllers.Sales
 
         public ActionResult ListActivosVehiculo(int id) {
             ListadoAcvsModel model = new ListadoAcvsModel();
-            try{
-            string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            ViewBag.SucursalesListado = Sucursal.Sucursales;
-            ViewBag.ClientesListado = Cliente.Clientes();
-            ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-            ViewData["idParametros"] = model.idParametros;
-            model.AcomodarFiltroActivosVehiculo(id);
-            model.Resultado = _listaElementos(model);
-            return View("List", model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewBag.SucursalesListado = Sucursal.Sucursales;
+                ViewBag.ClientesListado = Cliente.Clientes();
+                ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
+                ViewData["idParametros"] = model.idParametros;
+                model.AcomodarFiltroActivosVehiculo(id);
+                model.Resultado = _listaElementos(model);
+                return View("List", model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -93,38 +103,38 @@ namespace AutomotoraWeb.Controllers.Sales
 
         [HttpPost]
         public ActionResult List(ListadoAcvsModel model, string btnSubmit) {
-            try{
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            ViewBag.SucursalesListado = Sucursal.Sucursales;
-            ViewBag.ClientesListado = Cliente.Clientes();
-            ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-            this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
-            this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(model.Filtro.Vendedor));
-            
-            //Revisar el codigo de vehiculo ingresado manualmente:
-            if (string.IsNullOrEmpty(model.CodigoVhc)) {
-                model.Filtro.Vehiculo = null;
-            } else {
-                if (model.CodigoVhc.Trim() == "0") {
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                ViewBag.SucursalesListado = Sucursal.Sucursales;
+                ViewBag.ClientesListado = Cliente.Clientes();
+                ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
+                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
+                this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(model.Filtro.Vendedor));
+
+                //Revisar el codigo de vehiculo ingresado manualmente:
+                if (string.IsNullOrEmpty(model.CodigoVhc)) {
                     model.Filtro.Vehiculo = null;
                 } else {
-                    try {
-                        model.Filtro.Vehiculo = new Vehiculo();
-                        model.Filtro.Vehiculo.Codigo = Int32.Parse(model.CodigoVhc);
-                    } catch (FormatException) {
-                        this.ModelState.AddModelError("CodigoVhc", "El codigo de vehiculo debe ser un numero entero positivo");
+                    if (model.CodigoVhc.Trim() == "0") {
+                        model.Filtro.Vehiculo = null;
+                    } else {
+                        try {
+                            model.Filtro.Vehiculo = new Vehiculo();
+                            model.Filtro.Vehiculo.Codigo = Int32.Parse(model.CodigoVhc);
+                        } catch (FormatException) {
+                            this.ModelState.AddModelError("CodigoVhc", "El codigo de vehiculo debe ser un numero entero positivo");
+                        }
                     }
                 }
-            }
-            if (ModelState.IsValid) {
-                if (btnSubmit == "Imprimir") {
-                    return this.Report(model);
+                if (ModelState.IsValid) {
+                    if (btnSubmit == "Imprimir") {
+                        return this.Report(model);
+                    }
+                    model.Resultado = _listaElementos(model);
                 }
-                model.Resultado = _listaElementos(model);
-            }
-            return View(model);
+                return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -141,7 +151,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
         private List<ACuentaVenta> _listaElementos(ListadoAcvsModel model) {
             model.AcomodarFiltro();
-            return ACuentaVenta.ACuentaVentas(model.Filtro);
+            return  ACuentaVenta.ACuentaVentas(model.Filtro);
         }
 
         #endregion
@@ -186,6 +196,90 @@ namespace AutomotoraWeb.Controllers.Sales
 
         #region Crear
 
+        public ActionResult ACVenta(int? id) {
+            ACuentaVenta tr = new ACuentaVenta();
+
+            string idSession = SessionUtils.generarIdVarSesion("acv", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            //Session[idSession] = tr;
+            ViewData["idSession"] = idSession;
+            Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
+            Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
+            Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
+
+            tr.Fecha = DateTime.Now;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
+
+            if (id != null && id > 0) {
+                tr.Vehiculo = new Vehiculo();
+                tr.Vehiculo.Codigo = id ?? 0;
+                tr.Vehiculo.Consultar();
+
+                PrecondicionesOperacion cond = tr.Vehiculo.ObtenerPrecondicionesACV();
+                tr.Cliente = cond.Cliente;
+                tr.Vendedor = cond.Vendedor;
+            }
+
+            return View("ACVenta", tr);
+        }
+
+        //se invoca al seleccionar una venta de la gridlookup, por ajax
+        public ActionResult DetalleACV(int idVehiculo, string idSession) {
+
+            ACuentaVenta tr = new ACuentaVenta();
+            tr.Vehiculo = new Vehiculo();
+            tr.Vehiculo.Codigo = idVehiculo;
+            tr.Vehiculo.Consultar();
+
+            tr.Fecha = DateTime.Now;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
+
+            PrecondicionesOperacion cond = tr.Vehiculo.ObtenerPrecondicionesACV();
+            tr.Cliente = cond.Cliente;
+            tr.Vendedor = cond.Vendedor;
+
+            //Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
+            //Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
+            //Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
+            
+            return PartialView("_detalleAcv", tr);
+        }
+
+        [HttpPost]
+        public ActionResult ACVenta(ACuentaVenta model, string idSession) {
+
+            ViewData["idSession"] = idSession;
+            ACuentaVenta tr = (ACuentaVenta)Session[idSession];
+            Session[idSession] = model;
+            model.Fecha = DateTime.Now.Date;
+
+            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(model.Cliente));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(model.Sucursal));
+            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(model.Vendedor));
+            this.eliminarValidacionesIgnorables("Vehiculo", MetadataManager.IgnorablesDDL(model.Vehiculo));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(model.Importe.Moneda));
+
+            //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
+            //Si es externo esta vacio, porque no se ve la opcion pagos.
+            model.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
+            model.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
+            model.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
+
+            if (ModelState.IsValid) {
+                try {
+                    model.Ejecutar();
+                    return RedirectToAction("Recibo", AcvsController.CONTROLLER, new { id = model.Codigo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View("ACVenta", model);
+                }
+            }
+            return View("ACVenta", model);
+
+        }
+
         public ActionResult Recibo(int id) {
             ACuentaVenta acv = new ACuentaVenta();
             acv.Codigo = id;
@@ -225,7 +319,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
         public ActionResult ReciboAnulacion(int id) {
             TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();
-            tr.Acv= new ACuentaVenta();
+            tr.Acv = new ACuentaVenta();
             tr.Acv.Codigo = id;
             ViewData["idParametros"] = id;
             return View("ReciboAnulacion", tr.Acv);

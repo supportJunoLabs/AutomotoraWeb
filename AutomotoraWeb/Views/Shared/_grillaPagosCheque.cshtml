@@ -7,6 +7,8 @@
 
 
 @{
+    bool chequesReadOnly = ((bool?)ViewBag.PagosSoloConsulta) ?? false;
+    
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
             new ColumnaGrilla {Campo="Banco"},
@@ -35,7 +37,7 @@
     ig.DeleteRowRouteValues = "grillaPagosCheque_DeleteRowRouteValues";
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
-    ig.Edicion = true;
+    ig.Edicion = !chequesReadOnly;
     ig.Paginado = false;
     
     ig.FuncionInitNewRow = (s, e) => {

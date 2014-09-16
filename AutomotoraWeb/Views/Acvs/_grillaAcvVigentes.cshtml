@@ -1,0 +1,37 @@
+﻿@model List<DLL_Backend.ACuentaVenta>
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sales;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+           new ColumnaGrilla {Campo="Codigo", Ancho=70, Titulo = "Operacion", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA,
+                Hipervinculo=true, Haccion="details", Hcontrolador="acvs", HCampoParametro="Codigo"},
+           new ColumnaGrilla {Campo="Fecha", Titulo="Fecha", Ancho=100},
+           new ColumnaGrilla {Campo="Importe.ImporteTexto", Titulo="Importe", Ancho=120, Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+           new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00",  Ancho=110, Titulo="Saldo "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true}, 
+     };
+    
+    ig.NameGrid = "grillaAcvVigentes";
+    ig.Controller = AcvsController.CONTROLLER;
+    ig.ActionCallbackRoute = "AcvsVigentes";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.ACuentaVenta.ACuentaVentaMD);
+    ig.BotonesMtoEstandar = false;
+    ig.Estatica=true;
+    ig.registrosPorPagina = 12;
+    ig.Paginado = false;
+
+    ig.AccionesAlComienzo = true;
+    ig.AddButton(new BotonGrilla("details", AcvsController.CONTROLLER, "boton-consultar-mf", "Consulta Operacion"));
+
+    ig.DobleClick = true;
+    ig.ControladorDobleClick = AcvsController.CONTROLLER;
+    ig.AccionDobleClick = "details";
+    
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)

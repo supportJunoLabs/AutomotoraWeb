@@ -5,8 +5,10 @@
 @using System.Web.UI.WebControls;
 @using DLL_Backend;
 
-
 @{
+    
+    bool movBancoReadOnly = ((bool?)ViewBag.PagosSoloConsulta) ?? false;
+    
     InfoGrilla ig= new InfoGrilla();
     ig.AnchoTotal = 950;
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
@@ -37,7 +39,7 @@
     ig.DeleteRowRouteValues = "grillaPagosMovBanco_DeleteRowRouteValues";
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
-    ig.Edicion = true;
+    ig.Edicion = !movBancoReadOnly;
     ig.Paginado = false;
 
     ig.FuncionInitNewRow = (s, e) => {

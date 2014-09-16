@@ -7,6 +7,8 @@
 
 
 @{
+    bool efectivoReadOnly = ((bool?)ViewBag.PagosSoloConsulta) ?? false;
+    
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
             new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=70, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
@@ -27,7 +29,7 @@
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;
     ig.TipoEdicion = InfoGrilla.TIPO_EDICION.INLINE;
-    ig.Edicion = true;
+    ig.Edicion = !efectivoReadOnly;
     ig.AnchoTotal = 500;
     ig.Paginado = false;
 
