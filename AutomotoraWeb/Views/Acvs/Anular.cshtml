@@ -1,1 +1,97 @@
-﻿
+﻿@model DLL_Backend.TRACuentaVentaAnulacion
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    ViewBag.Title = "Anular Anticipo Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = ACuentaVenta.ACuentaVentas(ACuentaVenta.ACV_TIPO_LISTADO.ANULABLES) };
+    if (Model != null && Model.Acv != null && Model.Acv.Codigo > 0) {
+        gmodel.GridLookUpCodigo = Model.Acv.Codigo;
+    }
+}
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+   
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+    
+    <div id="divSeleccion">
+        <div class="display-label">
+            Anticipo
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge floatLeft">
+            <div class="floatLeft">
+                @Html.Partial("_seleccionAcvAnularGridLookup", gmodel)
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.Acv.Codigo, new { id = "idAcv" })
+    </div>
+    <div class="clear-both"></div>
+    
+    <div id="divDetalleAcv">
+        @{if (Model != null && Model.Acv != null && Model.Acv.Codigo > 0) {
+            @Html.Partial("_consultaAcv", Model.Acv)
+          }}
+    </div>
+    
+    <div id="divAnulacion">
+        <div class="display-label">
+           Observaciones Anulacion
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+           @Html.TextBoxFor(model => model.Observaciones)
+        </div>
+        <div class="clear-both"></div>
+        
+        <div class="btn-toolbar">
+            <div class="floatRight">
+                @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Anular Anticipo").Id("btnAnular"))
+            </div>
+        </div>
+        <div class="clear-both"></div>         
+    </div>    
+    
+    <div class="clear-both"></div>           
+
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //alert($("#idAcv").val());
+        if ($("#idAcv").val() && $("#idAcv").val()!="0") {
+            $("#divAnulacion").show()
+        } else {
+            $("#divAnulacion").hide()
+        }
+    });
+
+    function acvSelected(s, e) {
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#idAcv").val(valor);
+        var destino = '/Acvs/DetalleAcvAnular/';
+        $("#divDetalleAcv").html('');
+        $("#divAnulacion").hide()
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idAcv": valor },
+            success: function (data) {
+                $('#divDetalleAcv').html(data);
+                $("#divAnulacion").show()
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+</script>
+

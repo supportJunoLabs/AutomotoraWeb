@@ -1,0 +1,37 @@
+﻿@model GridLookUpModel
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Financing;
+@using AutomotoraWeb.Controllers.Sales;
+
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.TipoControl = InfoGrilla.TIPO_CONTROL.GRIDLOOKUP;
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Codigo", Ancho=50, Titulo="Op"},
+        new ColumnaGrilla {Campo="Fecha", Ancho=100, Titulo="Fecha", Formato="dd/MM/yyyy"},
+        new ColumnaGrilla {Campo="Vehiculo.Ficha", Ancho=100, Titulo="Ficha"},
+        new ColumnaGrilla {Campo="Vehiculo.Marca", Ancho=100, Titulo="Marca"},
+        new ColumnaGrilla {Campo="Vehiculo.Modelo", Ancho=100, Titulo="Modelo"},
+        new ColumnaGrilla {Campo="Vehiculo.Anio", Ancho=60, Titulo="Año"},
+        new ColumnaGrilla {Campo="Cliente.Nombre", Ancho=180, Titulo="Cliente", LargoMax=22}
+    };
+
+    ig.NameGrid = "gridAcvs";
+    ig.Controller = AcvsController.CONTROLLER;
+    ig.ActionCallbackRoute = "GrillaAcvsAnulables";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.ACuentaVenta);
+    ig.FormatoSeleccionLookup = "Op:{0} {1:dd/MM/yyyy} Ficha:{2}, {3}, {4}, {6}";
+    ig.registrosPorPagina = 10;
+    ig.AnchoSeleccion = 600;
+    //ig.OnBeginCallback = "OnBeginCallbackAcvs";
+
+    ig.RowClickAccion = "acvSelected";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)

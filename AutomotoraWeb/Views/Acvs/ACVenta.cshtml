@@ -4,7 +4,7 @@
 @using AutomotoraWeb.Models;
 
 @{
-    ViewBag.Title = "A Cuenta de Venta";
+    ViewBag.Title = "Anticipo de Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES) };
@@ -43,7 +43,7 @@
     <div id="divOperacion">
         <div class="well" style="margin-top: 10px; width: 1000px;">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#operacion_tab" data-toggle="tab">A Cuenta Venta</a></li>
+                <li class="active"><a href="#operacion_tab" data-toggle="tab">Anticipo</a></li>
                 <li id="liPago"><a href="#pago_tab" data-toggle="tab">Pago</a></li>
             </ul>
             <div id="tabContent" class="tab-content">

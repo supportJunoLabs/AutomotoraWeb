@@ -226,7 +226,7 @@
 
     if (Model != null && Model.Codigo > 0 && Model.TieneACV()) {
     <div class="floatLeft" style="padding-left: 20px;">
-        @(Html.Bootstrap().ActionLinkButton("Pagos a cuenta venta", "VerAcvsVigentes").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
+        @(Html.Bootstrap().ActionLinkButton("Ver Anticipos", "VerAcvsVigentes").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
     </div>
    }
 }

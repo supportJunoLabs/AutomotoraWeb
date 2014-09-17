@@ -36,7 +36,7 @@
                        @(Html.Bootstrap().ActionLinkButton("Vender", "VentaVehiculo", VentasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
                 }}
                 @{ if (Model!=null && Model.RecibeAcvs()){
-                       @(Html.Bootstrap().ActionLinkButton("A cuenta Venta", "ACVenta", AcvsController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+                       @(Html.Bootstrap().ActionLinkButton("Anticipo", "ACVenta", AcvsController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
                 }}
                  @{ if (Model!=null && Model.Entregable()){
                        @(Html.Bootstrap().ActionLinkButton("Entregar", "Entregar", VentasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))

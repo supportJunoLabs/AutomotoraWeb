@@ -430,7 +430,7 @@ public class DXReciboACVAnulacion : DevExpress.XtraReports.UI.XtraReport {
             // xrLabel1
             // 
             this.xrLabel1.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Codigo")});
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Acv.Codigo")});
             this.xrLabel1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold);
             this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(529.9998F, 33.00002F);
             this.xrLabel1.Name = "xrLabel1";
@@ -438,7 +438,6 @@ public class DXReciboACVAnulacion : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel1.SizeF = new System.Drawing.SizeF(100F, 23F);
             this.xrLabel1.StylePriority.UseFont = false;
             this.xrLabel1.StylePriority.UseTextAlignment = false;
-            this.xrLabel1.Text = "xrLabel1";
             this.xrLabel1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
             // 
             // xrLabel7
@@ -614,7 +613,7 @@ public class DXReciboACVAnulacion : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel47.Name = "xrLabel47";
             this.xrLabel47.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel47.SizeF = new System.Drawing.SizeF(619.9996F, 23F);
-            this.xrLabel47.Text = "Anulacion de  ingreso a cuenta de venta futura:";
+            this.xrLabel47.Text = "Anulacion de anticipo de venta:";
             // 
             // gf_vehiculo
             // 

@@ -6,10 +6,14 @@
 @{ bool cambiarSucursal = ViewBag.Multisucursal;
    PrecondicionesOperacion cond = Model.Vehiculo.ObtenerPrecondicionesACV();
    string action = System.Web.HttpContext.Current.Request.RequestContext.RouteData.GetRequiredString("action").ToLower();
-   bool modoConsulta = ((bool?)ViewBag.SoloLectura)??false;
+   bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
 }
 
 <div id="datosVehiculo">
+
+    <div class="espacio2"></div>
+    <div class="cabezalBloque" style="margin-bottom: 8px">Vehiculo</div>
+    <div class="clear-both"></div>
 
     <div class="floatLeft" style="margin-right: 110px;">
         <div>
@@ -108,15 +112,15 @@
     <div class="espacio2"></div>
     <div class="cabezalBloque" style="margin-bottom: 8px">Anticipos Anteriores</div>
     <div class="clear-both"></div>
-      if (Model.Vehiculo != null && Model.Vehiculo.TieneACV()) {
-        @Html.Partial("_grillaAcvVigentes", Model.Vehiculo.obtenerACVs())
-        <div class="clear-both"></div>
-        }
+       if (Model.Vehiculo != null && Model.Vehiculo.TieneACV()) {
+    @Html.Partial("_grillaAcvVigentes", Model.Vehiculo.obtenerACVs())
     <div class="clear-both"></div>
-}}
+       }
+    <div class="clear-both"></div>
+   }}
 
 <div class="espacio2"></div>
-<div class="cabezalBloque" style="margin-bottom: 8px">Anticipo</div>
+<div class="cabezalBloque" style="margin-bottom: 8px">Detalles Anticipo</div>
 <div class="clear-both"></div>
 
 <div id="datosAcv">
@@ -125,7 +129,7 @@
             @Html.LabelForRequired(model => model.Cliente)
         </div>
         <div class="editor-field editor-field-medium medium renglon-alto">
-            @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, cond.ClienteObligatorio||modoConsulta, model => model.Cliente.Nombre,
+            @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, cond.ClienteObligatorio || modoConsulta, model => model.Cliente.Nombre,
                 new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null,
                 new { id = "ddlClientes", @class = "large" })
             @Html.ValidationMessageFor(model => model.Cliente)
@@ -138,7 +142,7 @@
             @Html.LabelForRequired(model => model.Vendedor)
         </div>
         <div class="editor-field editor-field-medium medium renglon-alto">
-            @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, cond.VendedorObligatorio ||modoConsulta, model => model.Cliente.Nombre,
+            @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, cond.VendedorObligatorio || modoConsulta, model => model.Cliente.Nombre,
                 new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
                 new { id = "ddlVendedores", @class = "large" })
             @Html.ValidationMessageFor(model => model.Vendedor)
@@ -163,7 +167,7 @@
             @Html.LabelForRequired(model => model.Sucursal)
         </div>
         <div class="editor-field editor-field-medium medium renglon-alto">
-            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, !cambiarSucursal||modoConsulta, model => model.Sucursal.Nombre,
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, !cambiarSucursal || modoConsulta, model => model.Sucursal.Nombre,
                 new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
                 new { id = "ddlSucursales", @class = "large" })
             @Html.ValidationMessageFor(model => model.Sucursal)
@@ -192,4 +196,4 @@
         </div>
     </div>
     <div class="clear-both"></div>
-}}
+   }}

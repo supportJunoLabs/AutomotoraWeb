@@ -18,8 +18,8 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
-            ViewBag.NombreEntidad = "A cuenta de venta futura";
-            ViewBag.NombreEntidades = "A cuenta de venta futura";
+            ViewBag.NombreEntidad = "Anticipo de Venta";
+            ViewBag.NombreEntidades = "Anticipos de Ventas";
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Clientes = Cliente.Clientes();
             ViewBag.VendedoresHabilitados = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
@@ -151,7 +151,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private List<ACuentaVenta> _listaElementos(ListadoAcvsModel model) {
             model.AcomodarFiltro();
-            return  ACuentaVenta.ACuentaVentas(model.Filtro);
+            return ACuentaVenta.ACuentaVentas(model.Filtro);
         }
 
         #endregion
@@ -242,7 +242,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             //Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
             //Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
             //Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
-            
+
             return PartialView("_detalleAcv", tr);
         }
 
@@ -315,7 +315,69 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #endregion
 
-        #region Anular
+        #region Anular()
+
+        public ActionResult Anular(int? id) {
+            ViewBag.SoloLectura = true;
+            TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();
+            tr.Acv = new ACuentaVenta();
+            if (id != null) {
+                tr.Acv.Codigo = id ?? 0;
+                tr.Acv.Consultar();
+            }
+            tr.Fecha = DateTime.Now;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
+
+            return View("Anular", tr);
+        }
+
+        public ActionResult GrillaAcvsAnulables() {
+            GridLookUpModel gm = new GridLookUpModel();
+            gm.Opciones = ACuentaVenta.ACuentaVentas(ACuentaVenta.ACV_TIPO_LISTADO.ANULABLES);
+            return PartialView("_seleccionAcvAnularGridLookup", gm);
+        }
+
+        public ActionResult DetalleAcvAnular(int idAcv) {
+            ViewBag.SoloLectura = true;
+            TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();
+            tr.Acv = new ACuentaVenta();
+            tr.Acv.Codigo = idAcv;
+            tr.Acv.Consultar();
+            tr.Fecha = DateTime.Now;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Sucursal = usuario.Sucursal;
+            return PartialView("_consultaAcv", tr.Acv);
+        }
+
+        [HttpPost]
+        public ActionResult Anular(TRACuentaVentaAnulacion model) {
+            ViewBag.SoloLectura = true;
+            model.Fecha = DateTime.Now.Date;
+
+            //this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(model.Cliente));
+            //this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(model.Sucursal));
+            //this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(model.Vendedor));
+            //this.eliminarValidacionesIgnorables("Vehiculo", MetadataManager.IgnorablesDDL(model.Vehiculo));
+            //this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(model.Importe.Moneda));
+
+            //if (ModelState.IsValid) { -- solo necesito el codigo
+            ModelState.Clear();
+            if (model.Acv != null && model.Acv.Codigo > 0) {
+                try {
+                    model.Ejecutar();
+                    return RedirectToAction("ReciboAnulacion", AcvsController.CONTROLLER, new { id = model.Acv.Codigo });
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View("Anular", model);
+                }
+            } else {
+                ModelState.AddModelError("Acv.Codigo", "Debe especificar la operacion a anular");
+            }
+            return View("Anular", model);
+
+        }
 
         public ActionResult ReciboAnulacion(int id) {
             TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();

@@ -8,24 +8,7 @@
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-<div id="divOperacion">
-        <div class="well" style="margin-top: 10px; width: 1000px;">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#operacion_tab" data-toggle="tab">A Cuenta Venta</a></li>
-                <li id="liPago"><a href="#pago_tab" data-toggle="tab">Pago</a></li>
-            </ul>
-            <div id="tabContent" class="tab-content">
-                <div class="tab-pane active in" id="operacion_tab">
-                    @Html.Partial("_detalleAcv", Model)
-                </div>
-                <div class="tab-pane fade" id="pago_tab">
-                    @Html.Partial("_pagoEstandarConsulta", Model)
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="clear-both"></div>
-<div class="espacio2"></div>
+@Html.Partial("_consultaAcv", Model)
 
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Comprobante", "Recibo", AcvsController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
