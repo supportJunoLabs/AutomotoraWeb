@@ -316,6 +316,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult Pasar(TRCuotaTransferencia model, string idSession, string cuotasIds) {
 
             ViewData["idSession"] = idSession;
+            ViewData["cuotasIds"] = cuotasIds;
             TRCuotaTransferencia tr = (TRCuotaTransferencia)Session[idSession];
             model.SubFinanciacion = tr.SubFinanciacion;
             model.Cuotas = new List<Cuota>();

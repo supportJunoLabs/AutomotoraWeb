@@ -1785,6 +1785,7 @@
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale2.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaFinanciacion1.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaFinanciacion2.js" />
+    <Content Include="Scripts\AutomotoraWeb\CuotasPasar.js" />
     <Content Include="Scripts\AutomotoraWeb\PagoFinancista.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale2.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale1.js" />
@@ -2100,6 +2101,8 @@
     <Content Include="Views\Acvs\_detalleAcv.cshtml" />
     <Content Include="Views\Acvs\_grillaAcvVigentes.cshtml" />
     <Content Include="Views\Acvs\Anular.cshtml" />
+    <Content Include="Views\Acvs\_seleccionAcvAnularGridLookup.cshtml" />
+    <Content Include="Views\Acvs\_consultaAcv.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />

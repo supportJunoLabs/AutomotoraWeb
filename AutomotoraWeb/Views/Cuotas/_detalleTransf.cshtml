@@ -3,6 +3,8 @@
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
 
+
+
 @{ bool cambiarSucursal = ViewBag.Multisucursal;}
 @Html.HiddenFor(model => model.SubFinanciacion.Financista.Interno, new { id = "finInterno" })
 
@@ -315,51 +317,14 @@
 <div class="clear-both"></div>
 
 <script type="text/javascript">
-    function OnBeginCallbackCuotas(s, e) {
-        e.customArgs["idSession"] = $('#idSession').val();
-    }
-
-    function SelectionChangedCuotas(s, e) {
-        s.GetSelectedFieldValues("Saldo.Monto", SelectionChangedCuotasCallback);
-    }
-
-    function SelectionChangedCuotasCallback(values) {
-        var cant = 0;
-        var total = 0;
-        for (var i = 0; i < values.length; i++) {
-            total += values[i];
-            cant++;
-        }
-        $("#spanTotalCantidad").text(cant);
-        $("#spanTotalImporte").text(total);
-
-    }
-
     $(document).ready(function () {
-        $("#selectAllCuotas").live('click', function () {
-            gridCuotasTransf.SelectRows();
-        });
-
-        $("#unSelectAllCuotas").live('click', function () {
-            gridCuotasTransf.UnselectRows();
-        });
-
-        $("#btn_confirmar").click(function () {
-            gridCuotasTransf.GetSelectedFieldValues("Codigo", ObtenerCodigosConfirmarCallBack);
-        });
-    });
-
-    function ObtenerCodigosConfirmarCallBack(values) {
-        //alert(values);
-        //al presionar el boton confirmar
-        var selectedIDs;
-        selectedIDs = "";
-        for (var index = 0; index < values.length; index++) {
-            selectedIDs += values[index] + ",";
+        var interno = $("#finInterno").val();
+        if (interno == "True") {
+            $("#liPago").show();
+            //$("#pago_tab").show();
+        } else {
+            $("#liPago").hide();
+            //$("#pago_tab").hide();
         }
-        //alert(selectedIDs);
-        $("#cuotasIds").val(selectedIDs);
-        $('form#formPrincipal').submit();
-    }
-
+    });
 </script>
