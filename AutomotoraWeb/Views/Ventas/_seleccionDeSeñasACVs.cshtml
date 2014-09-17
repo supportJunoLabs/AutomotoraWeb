@@ -1,5 +1,7 @@
 ﻿@model DLL_Backend.Venta
 
+FALTA HACER FUCIONAR ESTO.
+
 <div id="divSenia">
     @{ if (Model.Vehiculo != null && Model.Vehiculo.Codigo > 0 && Model.Vehiculo.TieneSeniaActiva()) { 
     <div class="cabezalBloque" style="margin-bottom: 8px">Seña</div>
@@ -9,13 +11,22 @@
 </div>
 <div class="clear-both"></div>
 
-<span>FALTA MOSTRAR DATOS DE LA SENIA VIGENTE SI LA HAY.</span>
-
 <div id="divAcvs">
     @{ if (Model.Vehiculo != null &&  Model.Vehiculo.Codigo>0 &&  Model.Vehiculo.TieneACV()) { 
         <div class="cabezalBloque" style="margin-bottom: 8px">Anticipos</div>
         <div class="clear-both"></div>
         @Html.Partial("/acvs/_grillaAcvVigentes", Model.Vehiculo.obtenerACVs())
+        <div class="clear-both"></div>
+        
+        <div>
+            <div class="display-label-90">
+                Total
+            </div>
+            <div class="editor-field editor-field-medium ">
+                @Model.Vehiculo.SumaACVs().ImporteTexto;
+            </div>
+        </div>
+        <div class="clear-both"></div>
         
     }}
 </div>
