@@ -234,6 +234,8 @@ textarea {
 
 /*Standard Elements*/
 body {
+    /*background: #eee;
+    background-image: url(/Content/Images/fondo.png);*/
     background: white !important;
     background-image: none !important;
     background-position: initial initial;
