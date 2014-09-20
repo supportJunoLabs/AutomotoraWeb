@@ -1,0 +1,9 @@
+﻿@model DLL_Backend.Pedido
+
+@{ //ViewBag.SoloLectura=true; 
+   
+}
+
+@Html.Action("SubconsultaDetalle", "Pedidos", new {id = Model.Codigo})
+
+@* @Html.Partial("~/Views/pedidos/_datosDetalle.cshtml", Model)*@

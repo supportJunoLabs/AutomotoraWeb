@@ -54,6 +54,12 @@ namespace AutomotoraWeb.Controllers.Sales {
             return VistaElemento(id);
         }
 
+        public ActionResult SubconsultaDetalle(int id) {
+            ViewBag.SoloLectura = true;
+            Pedido td = _obtenerElemento(id);
+            return PartialView("_datosDetalle", td);
+        }
+
         public ActionResult Create() {
             Pedido ped = new Pedido();
             //ped.Cliente = new Cliente();

@@ -1,0 +1,118 @@
+﻿@model AutomotoraWeb.Models.SeniaModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Helpers;
+
+@{ bool cambiarSucursal = ViewBag.Multisucursal;
+   PrecondicionesOperacion cond = Model.Precondicion;
+   bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+}
+
+<div class="dataLine">
+    <div class="display-label">
+        Fecha
+    </div>
+    <div class="editor-field editor-field-medium">
+        @{ if (Automotora.AdmiteOtrasFechas()) {
+            @Html.TextBoxFor(model => model.Senia.Fecha, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+            @Html.ValidationMessageFor(model => model.Senia.Fecha)
+           } else {
+            @Html.TextBoxFor(model => model.Senia.Fecha, "{0:dd/MM/yyyy}", new { disabled = "disabled" })    
+           }}
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Senia.Cliente)
+    </div>
+    <div class="editor-field editor-field-medium medium renglon-alto">
+        @Html.DdlOrDisplayFor(model => model.Senia.Cliente.Codigo, cond.ClienteObligatorio || modoConsulta, model => model.Senia.Cliente.Nombre,
+                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null,
+                new { id = "ddlClientes", @class = "large" })
+        @Html.ValidationMessageFor(model => model.Senia.Cliente)
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Senia.Vendedor)
+    </div>
+    <div class="editor-field editor-field-medium medium renglon-alto">
+        @Html.DdlOrDisplayFor(model => model.Senia.Vendedor.Codigo, cond.VendedorObligatorio || modoConsulta, model => model.Senia.Cliente.Nombre,
+                new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
+                new { id = "ddlVendedores", @class = "large" })
+        @Html.ValidationMessageFor(model => model.Senia.Vendedor)
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label">
+        Importe Seña
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayImporteFor(model => model.Senia.Importe, "Senia.Importe", modoConsulta)
+        @Html.ValidationMessageFor(model => model.Senia.Importe.Monto)
+    </div>
+    <div class="clear-both"></div>
+</div>
+<div class="clear-both"></div>
+
+
+<div class="dataLine">
+    <div class="display-label">
+        Precio Venta
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayImporteFor(model => model.Senia.PrecioVenta, "Senia.PrecioVenta", modoConsulta)
+        @Html.ValidationMessageFor(model => model.Senia.PrecioVenta.Monto)
+    </div>
+    <div class="clear-both"></div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Senia.Sucursal)
+    </div>
+    <div class="editor-field editor-field-medium medium renglon-alto">
+        @Html.DdlOrDisplayFor(model => model.Senia.Sucursal.Codigo, !cambiarSucursal || modoConsulta, model => model.Senia.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "large" })
+        @Html.ValidationMessageFor(model => model.Senia.Sucursal)
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.Senia.asumeGastos)
+    </div>
+    <div>
+        <div class="floatLeft">
+            @Html.RadioButtonFor(model => model.Senia.asumeGastos, "Comprador", new { id = "rb_comprador" })  Comprador 
+        </div>
+        <div class="floatLeft" style="margin-left:20px">
+            @Html.RadioButtonFor(model => model.Senia.asumeGastos, "Vendedor", new { id = "rb_vendedor" })  Vendedor
+        </div>
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.Senia.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.TextAreaOrDisplayFor(model => model.Senia.Observaciones, modoConsulta, new { style = "width: 530px; height: 60px" })
+        @Html.ValidationMessageFor(model => model.Senia.Observaciones)
+
+    </div>
+</div>
+<div class="clear-both"></div>
+
+

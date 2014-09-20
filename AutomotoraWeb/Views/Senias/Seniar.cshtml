@@ -1,0 +1,153 @@
+﻿@model AutomotoraWeb.Models.SeniaModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    ViewBag.Title = "Seña Vehículo / Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.SENIABLES) };
+    if (Model.Senia.Vehiculo != null) {
+        gmodel.GridLookUpCodigo = Model.Senia.Vehiculo.Codigo;
+    }
+
+    GridLookUpModel gmodel1 = new GridLookUpModel { Opciones = Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.SENIABLES) };
+    if (Model.Senia.Pedido != null) {
+        gmodel1.GridLookUpCodigo = Model.Senia.Pedido.Codigo;
+    }
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+   
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")
+
+    <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/> 
+    
+    <div>
+        <div class="display-label">
+            @Html.RadioButtonFor(model => model.PedidoVehiculo, 1, new { id = "rb_vehiculo" })  Vehiculo
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge floatLeft" id="divVehiculo">
+            <div class="floatLeft">
+                @Html.Partial("_selectVehiculo", gmodel)
+            </div>
+            <div class="floatLeft" style="padding-left: 8px;">
+                @{ string dest = ((Model.Senia.Vehiculo != null && Model.Senia.Vehiculo.Codigo > 0) ? "/vehiculos/details/" + Model.Senia.Vehiculo.Codigo : "#");}
+                <a href="@dest" id="abtn_verFinanciacion">
+                    @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Vehiculo").Id("btn_verVehiculo")
+                </a>
+            </div>
+            @Html.HiddenFor(model => model.Senia.Vehiculo.Codigo, new { id = "codigoVehiculo" })
+        </div>
+    </div>
+    <div class="clear-both"></div>
+    
+    <div class="espacio"></div>
+    
+    <div>
+        <div class="display-label">
+            @Html.RadioButtonFor(model => model.PedidoVehiculo, 2, new { id = "rb_pedido" })  Pedido
+        </div>
+        <div class="editor-field editor-field-xlarge xxlarge floatLeft" id="divPedido">
+            <div class="floatLeft">
+                @Html.Partial("_selectPedido", gmodel1)
+            </div>
+            <div class="floatLeft" style="padding-left: 8px;">
+                @{ string dest1 = ((Model.Senia.Pedido!= null && Model.Senia.Pedido.Codigo > 0) ? "/pedidos/details/" + Model.Senia.Pedido.Codigo : "#");}
+                <a href="@dest" id="abtn_verPedido">
+                    @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Pedido").Id("btn_verPedido")
+                </a>
+            </div>
+            @Html.HiddenFor(model => model.Senia.Pedido.Codigo, new { id = "codigoPedido" })
+        </div>
+    </div>
+    
+    <div class="clear-both"></div>
+
+    <div id="divDetalleSenia">
+        @{ if  ( (Model.Senia.Vehiculo != null && Model.Senia.Vehiculo.Codigo > 0) ||
+                  (Model.Senia.Pedido != null && Model.Senia.Pedido.Codigo > 0)) {
+            @Html.Partial("_detallesSenia", Model);
+       }}
+    </div>
+    
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var verVehiculos = $("#rb_vehiculo").prop('checked')
+        _showHideVehiculosPedidos(verVehiculos);
+    });
+
+    $("input[name='PedidoVehiculo']").on("change", function () {
+        var verVehiculos = $("#rb_vehiculo").prop('checked');
+        _showHideVehiculosPedidos(verVehiculos);
+    });
+
+    function _showHideVehiculosPedidos(verVehiculos) {
+        if (verVehiculos) {
+            $("#divVehiculo").show();
+            $("#divPedido").hide();
+            
+        } else {
+            $("#divVehiculo").hide();
+             $("#divPedido").show();
+            
+        }
+            
+    }
+
+    function vehiculoSelected(s, e) {
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoVehiculo").val(valor);
+        if (valor) {
+            $("#abtn_VerVehiculo").prop("href", "/vehiculos/details/" + valor);
+        }
+        $('#divDetalleSenia').html('');
+        var destino = '/senias/DetalleSeniaVehiculo/';
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idVehiculo": valor, "idSession": $('#idSession').val() },
+            success: function (data) {
+                $('#divDetalleSenia').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+
+    function pedidoSelected(s, e) {
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoPedido").val(valor);
+        if (valor) {
+            $("#abtn_VerPedido").prop("href", "/pedidos/details/" + valor);
+        }
+        $('#divDetalleSenia').html('');
+        var destino = '/senias/DetalleSeniaPedido/';
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idPedido": valor, "idSession": $('#idSession').val() },
+            success: function (data) {
+                $('#divDetalleSenia').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+</script>

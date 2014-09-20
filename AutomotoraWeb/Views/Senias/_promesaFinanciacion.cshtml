@@ -1,0 +1,50 @@
+﻿@model AutomotoraWeb.Models.SeniaModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Helpers;
+
+
+<div class="dataLine">
+    <div class="display-label">
+        Precio Venta
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayImporteFor(model => model.Senia.Promesa.Financiacion.MontoFinanciado, "Senia.Promesa.Financiacion.MontoFinanciado", false)
+        @Html.ValidationMessageFor(model => model.Senia.Promesa.Financiacion.MontoFinanciado.Monto)
+    </div>
+    <div class="clear-both"></div>
+</div>
+
+<div class="dataLine">
+    <div class="display-label">
+        Cant. Cuotas
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.TextBoxOrdisplayFor(model => model.Senia.Promesa.Financiacion.CantCuotas, false, new { @class="alinearDerecha"})
+        @Html.ValidationMessageFor(model => model.Senia.Promesa.Financiacion.CantCuotas)
+    </div>
+    <div class="clear-both"></div>
+</div>
+
+<div class="dataLine">
+    <div class="display-label">
+        Tasa
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.TextBoxOrdisplayFor(model => model.Senia.Promesa.Financiacion.Tasa, false, new { @class="alinearDerecha"})
+        @Html.ValidationMessageFor(model => model.Senia.Promesa.Financiacion.Tasa)
+    </div>
+    <div class="clear-both"></div>
+</div>
+
+<div class="dataLine">
+    <div class="display-label">
+        Entidad
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Financiacion.EntidadFinanciera, false)
+        @Html.ValidationMessageFor(model => model.Senia.Promesa.Financiacion.EntidadFinanciera)
+    </div>
+    <div class="clear-both"></div>
+</div>

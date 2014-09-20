@@ -290,6 +290,7 @@
     <Compile Include="Models\PerfilModel.cs" />
     <Compile Include="Models\PermisosModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
+    <Compile Include="Models\SeniaModel.cs" />
     <Compile Include="Models\SituacionFinancista.cs" />
     <Compile Include="Models\Mensaje.cs" />
     <Compile Include="Models\RenovarValeModel.cs" />
@@ -2254,6 +2255,16 @@
     <Content Include="Views\Cuotas\_grillacuotasTransf.cshtml" />
     <Content Include="Views\Cuotas\_seleccionVentaCobrar.cshtml" />
     <Content Include="Views\Shared\_pagoEstandarConsulta.cshtml" />
+    <Content Include="Views\Senias\Seniar.cshtml" />
+    <Content Include="Views\Senias\_detallesSenia.cshtml" />
+    <Content Include="Views\Senias\_condicionesSenia.cshtml" />
+    <Content Include="Views\Senias\_selectPedido.cshtml" />
+    <Content Include="Views\Senias\_seleccionDePedidosDetalle.cshtml" />
+    <Content Include="Views\Senias\_promesaSenia.cshtml" />
+    <Content Include="Views\Senias\_grillaPromesaEfectivo.cshtml" />
+    <Content Include="Views\Senias\_promesaFinanciacion.cshtml" />
+    <Content Include="Views\Senias\_grillaPromesaCheques.cshtml" />
+    <Content Include="Views\Senias\_grillaPromesaVales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

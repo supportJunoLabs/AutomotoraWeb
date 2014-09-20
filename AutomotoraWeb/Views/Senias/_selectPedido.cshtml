@@ -1,0 +1,37 @@
+﻿@model GridLookUpModel
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sales;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.TipoControl = InfoGrilla.TIPO_CONTROL.GRIDLOOKUP;
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Codigo", Ancho=60, Titulo="Codigo"}, 
+        new ColumnaGrilla {Campo="Marca", Ancho=100, Titulo="Marca"},
+        new ColumnaGrilla {Campo="Modelo", Ancho=100, Titulo="Modelo"},
+        new ColumnaGrilla {Campo="Modelo", Ancho=100, Titulo="Fecha"},
+        new ColumnaGrilla {Campo="FechaPedido", Ancho=100, Titulo="Fecha"},
+        new ColumnaGrilla {Campo="Cliente.Nombre", Ancho=180, Titulo="Cliente", LargoMax=20},
+        new ColumnaGrilla {Campo="DescripcionEstado", Ancho=100, Titulo="Estado"},
+        new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=100, Titulo="Sucursal"}
+    };
+
+    ig.NameGrid = "gridPedidos";
+    ig.Controller = SeniasController.CONTROLLER;
+    ig.ActionCallbackRoute = "PedidosSeniablesGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Pedido);
+    ig.FormatoSeleccionLookup = "{0}, {1}, {2}, {3}";
+    ig.registrosPorPagina = 10;
+    ig.AnchoSeleccion = 530;
+
+    ig.RowClickAccion = "pedidoSelected";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+
+

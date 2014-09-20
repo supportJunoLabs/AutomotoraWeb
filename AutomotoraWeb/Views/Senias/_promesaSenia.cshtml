@@ -1,0 +1,42 @@
+﻿@model AutomotoraWeb.Models.SeniaModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Efectivo</div>
+<div class="clear-both"></div>
+@Html.Partial("_grillaPromesaEfectivo", Model.Senia.Promesa.Efectivos)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Financiacion</div>
+<div class="clear-both"></div>
+@Html.Partial("_promesaFinanciacion", Model)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Cheques</div>
+<div class="clear-both"></div>
+@Html.Partial("_grillaPromesaCheques", Model.Senia.Promesa.Cheques)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Vales</div>
+<div class="clear-both"></div>
+@Html.Partial("_grillaPromesaVales", Model.Senia.Promesa.Vales)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+
+
+<script type="text/javascript">
+    function OnBeginCallback(s, e) {
+        //Si la voy a traer en una partial view, hay que poner esto en la madre, porque la partial viene sin viewdata.
+        e.customArgs["idSession"] = '@ViewData["idSession"]';
+    }
+</script>

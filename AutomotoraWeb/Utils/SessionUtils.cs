@@ -24,6 +24,10 @@ namespace AutomotoraWeb.Utils {
         public static string VALES = "vales";
         public static string CUOTAS = "cuota";
 
+        public static string EFECTIVO_PROMESA = "efectivoPromesa";
+        public static string CHEQUES_PROMESA = "chequesPromesa";
+        public static string VALES_PROMESA = "valesPromesa";
+
 
         public static string generarIdVarSesion(string nomFuncion, string nomUsuario) {
             string s = nomFuncion+"|" +

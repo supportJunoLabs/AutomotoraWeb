@@ -1,0 +1,53 @@
+﻿@model AutomotoraWeb.Models.SeniaModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+<div class="well" style="margin-top: 10px; width: 1000px;">
+    <ul class="nav nav-tabs">
+        @{if (Model.PedidoVehiculo == 1) {
+            <li class="active"><a href="#vehiculo_tab" data-toggle="tab">Vehiculo</a></li>
+          } else {
+            <li class="active"><a href="#pedido_tab" data-toggle="tab">Pedido</a></li>
+          }}
+        <li><a href="#senia_tab" data-toggle="tab">Seña</a></li>
+        <li><a href="#pago_tab" data-toggle="tab">Pago</a></li>
+         @{if (Automotora.GestionarPromesas()){
+            <li><a href="#promesa_tab" data-toggle="tab">Condiciones Venta</a></li>
+         }}
+    </ul>
+    <div id="tabContent" class="tab-content">
+        @{if (Model.PedidoVehiculo == 1) {
+            <div class="tab-pane active in" id="vehiculo_tab">
+                @{if (Model.Senia.Vehiculo != null && Model.Senia.Vehiculo.Codigo > 0) {
+                    @Html.Partial("_seleccionDeVehiculosDetalle", Model.Senia.Vehiculo)
+                  }}
+            </div>
+          } else {
+            <div class="tab-pane active in" id="pedido_tab">
+                @{if (Model.Senia.Pedido != null && Model.Senia.Pedido.Codigo > 0) {
+                    @Html.Partial("_seleccionDePedidosDetalle", Model.Senia.Pedido)
+                  }}
+            </div>
+          }}
+        <div class="tab-pane fade" id="senia_tab">
+            @Html.Partial("_condicionesSenia", Model)
+        </div>
+        <div class="tab-pane fade" id="pago_tab">
+            @Html.Partial("_pagoEstandar", Model.Senia)
+        </div>
+        @{if (Automotora.GestionarPromesas()){
+             <div class="tab-pane fade" id="promesa_tab">
+                @Html.Partial("_promesaSenia", Model)
+            </div>
+        }}
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="btn-toolbar">
+    <div class="floatRight">
+        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Registrar Seña"))
+    </div>
+</div>
+<div class="clear-both"></div>

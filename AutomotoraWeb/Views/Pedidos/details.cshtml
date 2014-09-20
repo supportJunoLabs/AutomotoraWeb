@@ -23,10 +23,12 @@
     <div class="espacio2"></div>
     
     <div class="btn-toolbar">
-        @if (Model.EstadoRecibible) { 
-        @(Html.Bootstrap().ActionLinkButton("Recibir", PedidosController.RECIBIR).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
-        
-        }
+        @{ if (Model.EstadoRecibible) { 
+            @(Html.Bootstrap().ActionLinkButton("Recibir", PedidosController.RECIBIR).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        }}
+        @{if (Model.EstadoSeniable) {
+             @(Html.Bootstrap().ActionLinkButton("Señar", "SeniarPedido", SeniasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+        }}
         @(Html.Bootstrap().ActionLinkButton("Modificar", BaseController.EDIT).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
         @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
         @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))

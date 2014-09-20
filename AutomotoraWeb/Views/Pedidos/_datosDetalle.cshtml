@@ -8,13 +8,13 @@
 }
 
 
-@Html.Hidden("hd_soloLectura", ((bool?)ViewBag.SoloLectura) ?? false)
+@Html.Hidden("hd_soloLectura", modoConsulta)
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Marca)
 </div>
 <div class="editor-field editor-field-xxlarge">
-    @Html.EditorOrDisplayFor(model => model.Marca, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Marca, modoConsulta)
     @Html.ValidationMessageFor(model => model.Marca)
 </div>
 <div class="clear-both"></div>
@@ -23,7 +23,7 @@
     @Html.LabelForRequired(model => model.Modelo)
 </div>
 <div class="editor-field editor-field-xxlarge">
-    @Html.EditorOrDisplayFor(model => model.Modelo, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Modelo, modoConsulta)
     @Html.ValidationMessageFor(model => model.Modelo)
 </div>
 <div class="clear-both"></div>
@@ -32,7 +32,7 @@
     @Html.LabelForRequired(model => model.Color)
 </div>
 <div class="editor-field editor-field-xxlarge">
-    @Html.EditorOrDisplayFor(model => model.Color, (bool?)ViewBag.SoloLectura)
+    @Html.EditorOrDisplayFor(model => model.Color, modoConsulta)
     @Html.ValidationMessageFor(model => model.Color)
 </div>
 <div class="clear-both"></div>
@@ -41,7 +41,7 @@
     @Html.LabelForRequired(model => model.FechaPedido)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.TextBoxOrdisplayFor(model => model.FechaPedido, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+    @Html.TextBoxOrdisplayFor(model => model.FechaPedido, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
     @Html.ValidationMessageFor(model => model.FechaPedido)
 </div>
 <div class="clear-both"></div>
@@ -50,7 +50,7 @@
     @Html.LabelForRequired(model => model.FechaEsperado)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.TextBoxOrdisplayFor(model => model.FechaEsperado, (bool?)ViewBag.SoloLectura, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+    @Html.TextBoxOrdisplayFor(model => model.FechaEsperado, modoConsulta, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
     @Html.ValidationMessageFor(model => model.FechaEsperado)
 </div>
 <div class="clear-both"></div>
@@ -70,7 +70,7 @@
     @Html.DisplayNameFor(model => model.Costo)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.DdlOrDisplayImporteFor(model=>model.Costo, (bool?)ViewBag.SoloLectura)
+    @Html.DdlOrDisplayImporteFor(model=>model.Costo, modoConsulta)
     @Html.ValidationMessageFor(model => model.Costo.Monto)
 </div>
 <div class="clear-both"></div>
@@ -98,7 +98,7 @@
         @Html.DisplayNameFor(model => model.Reservado)
     </div>
     <div class="@((((bool?)ViewBag.SoloLectura)??false)?"":"renglon-alto")" >
-        @Html.CheckBoxOrDisplayFor(model => model.Reservado, (bool?)ViewBag.SoloLectura??false||Model.Seniado, new { id="cb_reservado"})
+        @Html.CheckBoxOrDisplayFor(model => model.Reservado, modoConsulta||Model.Seniado, new { id="cb_reservado"})
     </div>
     <div class="clear-both"></div>
 
@@ -154,7 +154,7 @@
     @Html.LabelForRequired(model => model.Observaciones)
 </div>
 <div class="editor-field editor-field-xxlarge">
-    @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+    @Html.TextAreaOrDisplayFor(model => model.Observaciones, modoConsulta, new { style = "width: 530px; height: 60px" })
     @Html.ValidationMessageFor(model => model.Observaciones)
 </div>
 <div class="clear-both"></div>
