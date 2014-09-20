@@ -111,17 +111,17 @@
         <ul class="nav nav-pills breadcrumb">
             @{
                 if (ViewBag.parentControllerName == SalesController.BCONTROLLER) { 
-                    <li class="active"><a href="#">Ventas</a></li>
+                    <li class="active">@Html.ActionLink("Ventas", SalesController.INDEX, SalesController.BCONTROLLER)</li>
                     <li>@Html.ActionLink("Financiaciones", FinancingController.INDEX, FinancingController.BCONTROLLER)</li>
                     <li>@Html.ActionLink("Banco", BankController.INDEX, BankController.BCONTROLLER)</li>
                 } else if (ViewBag.parentControllerName == FinancingController.BCONTROLLER) {
                     <li>@Html.ActionLink("Ventas", SalesController.INDEX, SalesController.BCONTROLLER)</li>
-                    <li class="active"><a href="#">Financiaciones</a></li>
+                    <li class="active">@Html.ActionLink("Financiaciones", FinancingController.INDEX, FinancingController.BCONTROLLER)</li>
                     <li>@Html.ActionLink("Banco", BankController.INDEX, BankController.BCONTROLLER)</li>
                 } else if (ViewBag.parentControllerName == BankController.BCONTROLLER) {
                     <li>@Html.ActionLink("Ventas", SalesController.INDEX, SalesController.BCONTROLLER)</li>
                     <li>@Html.ActionLink("Financiaciones", FinancingController.INDEX, FinancingController.BCONTROLLER)</li>
-                    <li class="active"><a href="#">Banco</a></li>
+                    <li class="active">@Html.ActionLink("Banco", BankController.INDEX, BankController.BCONTROLLER)</li>
                 } else{
                     @*
                     No muestro nada porque estoy en sistema y por lo tanto se ve en el menu izquierdo para no repetir.
