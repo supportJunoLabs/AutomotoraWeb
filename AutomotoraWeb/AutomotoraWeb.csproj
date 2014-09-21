@@ -2265,6 +2265,8 @@
     <Content Include="Views\Senias\_promesaFinanciacion.cshtml" />
     <Content Include="Views\Senias\_grillaPromesaCheques.cshtml" />
     <Content Include="Views\Senias\_grillaPromesaVales.cshtml" />
+    <Content Include="Views\Senias\_promesaPermuta.cshtml" />
+    <Content Include="Views\Senias\_selectVehiculoSeniar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

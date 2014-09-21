@@ -9,10 +9,12 @@ namespace AutomotoraWeb.Models {
         public int PedidoVehiculo { get; set; } //1=vehiculo, 2=pedido
         public Senia Senia { get; set; }
         public PrecondicionesOperacion Precondicion { get; set; }
-        
+        public bool TienePermuta { get; set; }
+            
         public SeniaModel() {
             Senia = new Senia();
             PedidoVehiculo = 1;
+            TienePermuta = false;
         }
 
         public void asignarPrecondicion(bool esPostback) {

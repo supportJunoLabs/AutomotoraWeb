@@ -1,0 +1,40 @@
+﻿@model GridLookUpModel
+@using DLL_Backend;
+@using System.Web.UI.WebControls;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sales;
+
+@{
+    InfoGrilla ig = new InfoGrilla();
+    ig.TipoControl = InfoGrilla.TIPO_CONTROL.GRIDLOOKUP;
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+        new ColumnaGrilla {Campo="Ficha", Ancho=60, Titulo="Ficha"}, 
+        new ColumnaGrilla {Campo="Anio", Ancho=60, Titulo="Año"},
+        new ColumnaGrilla {Campo="Marca", Ancho=100, Titulo="Marca"},
+        new ColumnaGrilla {Campo="Modelo", Ancho=100, Titulo="Modelo"},
+        new ColumnaGrilla {Campo="Matricula", Ancho=85, Titulo="Matricula"},
+        new ColumnaGrilla {Campo="Sucursal.Nombre", Ancho=100, Titulo="Sucursal"},
+        new ColumnaGrilla {Campo="PrecioVenta.ImporteTexto", Ancho=100, Titulo="Precio", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+        new ColumnaGrilla {Campo="TipoCombustible.Descripcion", Ancho=100, Titulo="Combustible"},
+        new ColumnaGrilla {Campo="Kilometros", Ancho=60, Titulo="Kms"},
+        new ColumnaGrilla {Campo="DescripcionEstado", Ancho=120, Titulo="Estado"},
+        new ColumnaGrilla {Campo="Observaciones", Ancho=250, LargoMax=30}
+    };
+
+    ig.NameGrid = "gridVehiculos";
+    ig.Controller = SeniasController.CONTROLLER;
+    ig.ActionCallbackRoute = "VehiculosSeniablesGrilla";
+    ig.KeyFieldName = "Codigo";
+    ig.TypeOfModel = typeof(DLL_Backend.Vehiculo);
+    ig.FormatoSeleccionLookup = "{0}, {1}, {2}, {3}";
+    ig.registrosPorPagina = 10;
+    ig.AnchoSeleccion = 530;
+
+    ig.RowClickAccion = "vehiculoSelected";
+
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+
+

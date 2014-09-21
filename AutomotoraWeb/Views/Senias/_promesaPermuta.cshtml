@@ -1,0 +1,163 @@
+﻿@model AutomotoraWeb.Models.SeniaModel
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+
+@{
+    bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
+}
+
+<div class="display-label">
+    Valor Permuta
+</div>
+<div class="editor-field editor-field-small">
+    @Html.DdlOrDisplayImporteFor(model => model.Senia.Promesa.Permuta.Costo, "Senia.Promesa.Permuta.Costo", modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Costo.Monto)
+</div>
+<div class="clear-both"></div>
+
+
+@{ if (Model.Senia.Promesa.Permuta!=null && Model.Senia.Promesa.Permuta.Codigo>0){
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Ficha)
+</div>
+<div class="editor-field editor-field-large renglon-alto">
+    <strong>
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Ficha, true)
+    </strong>
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Ficha)
+</div>
+<div class="clear-both"></div>
+}}
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Marca)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Marca, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Marca)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Modelo)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Modelo, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Modelo)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Anio)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Anio, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Anio)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Matricula)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Matricula, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Matricula)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Departamento)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.DdlOrDisplayFor(model => model.Senia.Promesa.Permuta.Departamento.Codigo, modoConsulta,
+                model => model.Senia.Promesa.Permuta.Departamento.Nombre,
+                new SelectList(ViewBag.Departamentos, "Codigo", "Nombre"), null, new { id = "ddlDepartamento" })
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Departamento)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Color)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Color, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Color)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Padron)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Padron, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Padron)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Motor)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Motor, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Motor)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Chasis)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Chasis, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Chasis)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Kilometros)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Kilometros, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Kilometros)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.TipoCombustible)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.DdlOrDisplayFor(model => model.Senia.Promesa.Permuta.TipoCombustible.Codigo, modoConsulta,
+                model => model.Senia.Promesa.Permuta.TipoCombustible.Descripcion,
+                new SelectList(ViewBag.TiposCombustible, "Codigo", "Descripcion"), null, new { id = "ddlTipoCombustible" })
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.TipoCombustible)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Propietario)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.EditorOrDisplayFor(model => model.Senia.Promesa.Permuta.Propietario, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Propietario)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.PrecioVenta)
+</div>
+<div class="editor-field editor-field-small">
+    @Html.DdlOrDisplayImporteFor(model => model.Senia.Promesa.Permuta.PrecioVenta, "Senia.Promesa.Permuta.PrecioVenta", modoConsulta)
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.PrecioVenta.Monto)
+</div>
+<div class="clear-both"></div>
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Senia.Promesa.Permuta.Observaciones)
+</div>
+<div class="editor-field editor-field-xxlarge">
+    @Html.TextAreaOrDisplayFor(model => model.Senia.Promesa.Permuta.Observaciones, modoConsulta, new { style = "width: 530px; height: 60px" })
+    @Html.ValidationMessageFor(model => model.Senia.Promesa.Permuta.Observaciones)
+</div>
+<div class="clear-both"></div>
+
+<div class="espacio2"></div>

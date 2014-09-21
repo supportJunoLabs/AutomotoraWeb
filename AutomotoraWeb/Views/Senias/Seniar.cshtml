@@ -26,6 +26,7 @@
     @Html.ValidationSummary("Se han producido errores:")
 
     <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/> 
+    <input type="hidden" name="idOperacion" id="idOperacion" value='@ViewData["idOperacion"]'/> 
     
     <div>
         <div class="display-label">
@@ -33,11 +34,11 @@
         </div>
         <div class="editor-field editor-field-xlarge xxlarge floatLeft" id="divVehiculo">
             <div class="floatLeft">
-                @Html.Partial("_selectVehiculo", gmodel)
+                @Html.Partial("_selectVehiculoSeniar", gmodel)
             </div>
             <div class="floatLeft" style="padding-left: 8px;">
                 @{ string dest = ((Model.Senia.Vehiculo != null && Model.Senia.Vehiculo.Codigo > 0) ? "/vehiculos/details/" + Model.Senia.Vehiculo.Codigo : "#");}
-                <a href="@dest" id="abtn_verFinanciacion">
+                <a href="@dest" id="abtn_VerVehiculo">
                     @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Vehiculo").Id("btn_verVehiculo")
                 </a>
             </div>
@@ -58,7 +59,7 @@
             </div>
             <div class="floatLeft" style="padding-left: 8px;">
                 @{ string dest1 = ((Model.Senia.Pedido!= null && Model.Senia.Pedido.Codigo > 0) ? "/pedidos/details/" + Model.Senia.Pedido.Codigo : "#");}
-                <a href="@dest" id="abtn_verPedido">
+                <a href="@dest" id="abtn_VerPedido">
                     @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Pedido").Id("btn_verPedido")
                 </a>
             </div>
@@ -99,7 +100,6 @@
              $("#divPedido").show();
             
         }
-            
     }
 
     function vehiculoSelected(s, e) {
@@ -114,9 +114,13 @@
             cache: false,
             type: "GET",
             url: destino,
-            data: { "idVehiculo": valor, "idSession": $('#idSession').val() },
+            data: { "idVehiculo": valor, "idSession": $('#idSession').val(), "idOperacion": $('#idOperacion').val() },
             success: function (data) {
                 $('#divDetalleSenia').html(data);
+                //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
+                $('form').removeData('validator');
+                $('form').removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse('form');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
@@ -139,9 +143,13 @@
             cache: false,
             type: "GET",
             url: destino,
-            data: { "idPedido": valor, "idSession": $('#idSession').val() },
+            data: { "idPedido": valor, "idSession": $('#idSession').val(), "idOperacion": $('#idOperacion').val() },
             success: function (data) {
                 $('#divDetalleSenia').html(data);
+                //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
+                $('form').removeData('validator');
+                $('form').removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse('form');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);

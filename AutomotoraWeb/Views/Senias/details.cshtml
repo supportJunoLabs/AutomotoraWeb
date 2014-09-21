@@ -1,7 +1,8 @@
-﻿@model DLL_Backend.Senia
+﻿@model AutomotoraWeb.Models.SeniaModel
 @using AutomotoraWeb.Controllers.General;
 @using DLL_Backend;
 @using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
 
 @{
     ViewBag.Title = ViewBag.NombreEntidad + ": Consulta";
@@ -18,28 +19,33 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-CONSULTA SENIA SIN IMPLEMENTAR
-
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
     
-    
+    <input type="hidden" name="idOperacion" id="idOperacion" value='@ViewData["idOperacion"]'/> 
     
     <div class="block">
         <div >
            <p class="block-heading"> Documentación</p>
         </div>
         <div class="block-body">
-            @Html.Bootstrap().ActionLinkButton("Comprobante", "DocComprobanteSenia", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+            @Html.Bootstrap().ActionLinkButton("Comprobante", "DocComprobanteSenia", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Senia.Codigo }).Class("btn btn-default botonDocumento")
             @{
-                if (Model.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "CV_SENIA" })) {
-                    @Html.Bootstrap().ActionLinkButton("Compromiso Compraventa", "DocCompromisoSenia", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+                if (Model.Senia.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "CV_SENIA" })) {
+                    @Html.Bootstrap().ActionLinkButton("Compromiso Compraventa", "DocCompromisoSenia", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Senia.Codigo }).Class("btn btn-default botonDocumento")
                 }
-                if (Model.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "PR_SENIA" })) {
-                    @Html.Bootstrap().ActionLinkButton("Promesa", "DocPromesaSenia", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+                if (Model.Senia.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "PR_SENIA" })) {
+                    @Html.Bootstrap().ActionLinkButton("Promesa", "DocPromesaSenia", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Senia.Codigo }).Class("btn btn-default botonDocumento")
                 }
             }
         </div>
     </div>
 
 }
+
+ <div id="divDetalleSenia">
+        @{ if  ( (Model.Senia.Vehiculo != null && Model.Senia.Vehiculo.Codigo > 0) ||
+                  (Model.Senia.Pedido != null && Model.Senia.Pedido.Codigo > 0)) {
+            @Html.Partial("_detallesSenia", Model);
+       }}
+    </div>

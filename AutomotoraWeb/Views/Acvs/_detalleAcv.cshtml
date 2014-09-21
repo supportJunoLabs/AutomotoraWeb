@@ -142,7 +142,7 @@
             @Html.LabelForRequired(model => model.Vendedor)
         </div>
         <div class="editor-field editor-field-medium medium renglon-alto">
-            @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, cond.VendedorObligatorio || modoConsulta, model => model.Cliente.Nombre,
+            @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, cond.VendedorObligatorio || modoConsulta, model => model.Vendedor.Nombre,
                 new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
                 new { id = "ddlVendedores", @class = "large" })
             @Html.ValidationMessageFor(model => model.Vendedor)
@@ -189,7 +189,7 @@
 </div>
 <div class="clear-both"></div>
 
-@{ if (action == "acventa") {
+@{ if (!modoConsulta) {
     <div class="btn-toolbar">
         <div class="floatRight">
             @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Registrar Anticipo"))

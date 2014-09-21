@@ -3,6 +3,11 @@
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
 
+@{ 
+    bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+    ViewBag.PromesaSoloConsulta = modoConsulta;
+}
+
 <div class="cabezalBloque" style="margin-bottom: 8px">Efectivo</div>
 <div class="clear-both"></div>
 @Html.Partial("_grillaPromesaEfectivo", Model.Senia.Promesa.Efectivos)
@@ -32,6 +37,29 @@
 <div class="espacio2"></div>
 <div class="clear-both"></div>
 
+<div class="cabezalBloque" style="margin-bottom: 8px">
+    Permuta   
+    <span style="margin-left: 20px; margin-top: 8px">
+        @{ 
+            object htmlAttribtes = new { id = "cb_tienePermuta" };
+            if (modoConsulta){
+                htmlAttribtes = new { id = "cb_tienePermuta" , disabled="disabled"};
+            }
+        }
+
+        @Html.CheckBoxFor(model => model.TienePermuta, htmlAttribtes )
+        @Html.HiddenFor(model => model.TienePermuta)
+    </span>
+</div>
+<div class="clear-both"></div>
+
+<div id="divPermuta">
+    @Html.Partial("_promesaPermuta", Model)
+</div>
+
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
 
 
 <script type="text/javascript">
@@ -39,4 +67,24 @@
         //Si la voy a traer en una partial view, hay que poner esto en la madre, porque la partial viene sin viewdata.
         e.customArgs["idSession"] = '@ViewData["idSession"]';
     }
+
+    $(document).ready(function () {
+        var hayPermuta = $("#cb_tienePermuta").prop('checked')
+        _showHidePermuta(hayPermuta);
+    });
+
+    $("#cb_tienePermuta").change(function () {
+        var hayPermuta = $(this).prop('checked')
+        _showHidePermuta(hayPermuta);
+    });
+
+    function _showHidePermuta(hayPermuta) {
+        if (hayPermuta) {
+            $("#divPermuta").show()
+        } else {
+            $("#divPermuta").hide()
+        }
+    }
 </script>
+
+

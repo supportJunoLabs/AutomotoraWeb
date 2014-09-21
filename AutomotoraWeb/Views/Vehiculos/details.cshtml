@@ -29,7 +29,7 @@
                 @(Html.Bootstrap().ActionLinkButton("Eliminar", BaseController.DELETE).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
 
                 @{ if (Model!=null && Model.Seniable()){
-                       @(Html.Bootstrap().ActionLinkButton("Señar", "SeniaVehiculo", SeniasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
+                       @(Html.Bootstrap().ActionLinkButton("Señar", "SeniarVehiculo", SeniasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary"))
                 }}
 
                 @{ if (Model!=null && Model.Vendible()){
