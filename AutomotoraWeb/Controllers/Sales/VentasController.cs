@@ -24,7 +24,7 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewBag.NombreEntidades = "Ventas";
             ViewBag.Clientes = Cliente.Clientes();
             ViewBag.VendedoresHabilitados = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
-            
+            ViewBag.VehiculoSeniado = Boolean.Parse("false");
         }
 
         public ActionResult Index(){
@@ -168,11 +168,52 @@ namespace AutomotoraWeb.Controllers.Sales
 
 
         //----------------- Seleccion vehiculo ----------------------------------------------------
+        
         public ActionResult VehiculoElegido(int id) {
             Vehiculo v = new Vehiculo();
             v.Codigo = id;
             v.Consultar();
+
+            ViewBag.VehiculoSeniado = v.TieneSeniaActiva().ToString();
+            
             return PartialView("_seleccionDeVehiculosDetalle", v);
+        }
+
+        public ActionResult CondicionesDeVentaVehiculo(int id) {
+
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = id;
+
+            PrecondicionesVenta cond = vehiculo.ObtenerPrecondicionesVenta();
+
+            List<Cliente> clientes = new List<Cliente>();
+            clientes.Add(cond.Cliente);
+
+            List<Vendedor> vendedores = new List<Vendedor>();
+            vendedores.Add(cond.Vendedor);
+
+            ViewBag.Clientes = clientes;
+            ViewBag.VendedoresHabilitados = vendedores;
+            ViewBag.Sucursales = Sucursal.Sucursales;
+
+            Venta venta = new Venta();
+
+            venta.Cliente = cond.Cliente;
+            venta.Vendedor = cond.Vendedor;
+            venta.Sucursal = new Sucursal();
+
+            return PartialView("_seleccionDeCondicionesDeVenta", venta);
+        }
+
+
+        public ActionResult ResetCondicionesDeVenta() {
+
+            ViewBag.Sucursales = Sucursal.Sucursales;
+
+            Venta venta = new Venta();
+            venta.Sucursal = new Sucursal();
+
+            return PartialView("_seleccionDeCondicionesDeVenta", venta);
         }
 
         //--------------------- Consulta venta -----------------------------------------------------

@@ -55,6 +55,48 @@
             success: function (data) {
                 $('#divDetalleVehiculo').html('');
                 $('#divDetalleVehiculo').html(data);
+                if ($("#vehiculoSeniado").val() == 'True') {
+                    _actualizarCondicionesDeVenta(codigo);
+                } else {
+                    _resetCondicionesDeVenta();
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function _actualizarCondicionesDeVenta(codigo) {
+        var destino = '@(Url.Action("CondicionesDeVentaVehiculo", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'id=' + codigo,
+            success: function (data) {
+                $('#containerCondicionesDeVenta').html('');
+                $('#containerCondicionesDeVenta').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function _resetCondicionesDeVenta() {
+        var destino = '@(Url.Action("ResetCondicionesDeVenta", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            success: function (data) {
+                $('#containerCondicionesDeVenta').html('');
+                $('#containerCondicionesDeVenta').html(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
