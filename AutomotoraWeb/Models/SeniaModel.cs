@@ -10,6 +10,8 @@ namespace AutomotoraWeb.Models {
         public Senia Senia { get; set; }
         public PrecondicionesOperacion Precondicion { get; set; }
         public bool TienePermuta { get; set; }
+        public TRSeniaDevolucion SeniaDev { get; set; } //se usa en la devolucion solamente
+        public string ChequesDevolver { get; set; }
             
         public SeniaModel() {
             Senia = new Senia();

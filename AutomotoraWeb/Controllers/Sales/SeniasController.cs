@@ -164,52 +164,6 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
         #endregion
 
-
-        #region DevolucionSenia
-
-        public ActionResult ReciboDev(int id) {
-            try {
-                TRSeniaDevolucion tr = new TRSeniaDevolucion();
-                tr.Senia = new Senia();
-                tr.Senia.Codigo = id;
-                //tr.Consultar();  solo usa elcodigo en la vista
-                ViewData["idParametros"] = id;
-                return View("ReciboDev", tr.Senia);
-            } catch (UsuarioException exc) {
-                ViewBag.ErrorCode = exc.Codigo;
-                ViewBag.ErrorMessage = exc.Message;
-                return View();
-            }
-        }
-
-        private XtraReport _generarReciboDev(int id) {
-            TRSeniaDevolucion tr = new TRSeniaDevolucion();
-            tr.Senia = new Senia();
-            tr.Senia.Codigo = id;
-            tr.Consultar();
-            List<TRSeniaDevolucion> ll = new List<TRSeniaDevolucion>();
-            ll.Add(tr);
-            XtraReport rep = new DXReciboSeniaDevolucion();
-            rep.DataSource = ll;
-            return rep;
-        }
-
-        public ActionResult ReciboDevPartial(int idParametros) {
-            XtraReport rep = _generarReciboDev(idParametros);
-            ViewData["idParametros"] = idParametros;
-            ViewData["Report"] = rep;
-            return PartialView("_reciboDev");
-        }
-
-        public ActionResult ReciboDevExport(int idParametros) {
-            XtraReport rep = _generarReciboDev(idParametros);
-            ViewData["idParametros"] = idParametros;
-            ViewData["Report"] = rep;
-            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
-        }
-
-        #endregion
-
         #region Seniar
 
         public void iniSenia(SeniaModel tr, string idSession) {
@@ -266,12 +220,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             return PartialView("_selectVehiculoSeniar", gmodel);
         }
 
-
-        //FALTA OPCION PARA SENIAR PEDIDO Y VER DONDE IRIAN LOS LINKS EN GESTION DE PEDIDOS O CONSULTA PEDIDO.
-
         private SeniaModel _seniarVehiculo(int? id) {
             SeniaModel tr = new SeniaModel();
-            string idSession = SessionUtils.generarIdVarSesion("acv", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("seniar", Session[SessionUtils.SESSION_USER].ToString()) + "|";
             ViewData["idSession"] = idSession;
             ViewData["idOperacion"] = "seniar";
             iniSenia(tr, idSession);
@@ -290,7 +241,6 @@ namespace AutomotoraWeb.Controllers.Sales {
             SeniaModel tr = _seniarVehiculo(id);
             return View("Seniar", tr);
         }
-
 
         public ActionResult SeniarVehiculo(int? id) {
             SeniaModel tr = _seniarVehiculo(id);
@@ -382,17 +332,18 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             if (!model.TienePermuta) {
                 string sacar = "Senia.Promesa.Permuta";
-                List<string> lsacar = new List<string>();
-                foreach (var k in ModelState.Keys) { 
-                    if (k.Length>=sacar.Length && k.Substring(0, sacar.Length).ToUpper().Equals(sacar.ToUpper())){
-                        lsacar.Add(k);
-                    }
-                }
-                foreach (var k in lsacar) {
-                    ModelState.Remove(k);
-                }
-            }
+                GeneralUtils.ModelStateRemoveAllStarting(ModelState, sacar);
 
+                //List<string> lsacar = new List<string>();
+                //foreach (var k in ModelState.Keys) { 
+                //    if (k.Length>=sacar.Length && k.Substring(0, sacar.Length).ToUpper().Equals(sacar.ToUpper())){
+                //        lsacar.Add(k);
+                //    }
+                //}
+                //foreach (var k in lsacar) {
+                //    ModelState.Remove(k);
+                //}
+            }
 
             if (ModelState.IsValid) {
                 try {
@@ -414,7 +365,6 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         }
 
-
         #endregion
 
         #region PromesaEfectivo
@@ -423,7 +373,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             return PartialView("_grillaPromesaEfectivo", Session[idSession + SessionUtils.EFECTIVO_PROMESA]);
         }
 
-        private void _validarEfectivoPromesa(Efectivo ef) {
+        private void _validarEfectivoGrilla(Efectivo ef) {
 
             this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(ef.Importe.Moneda));
             ModelState.Remove("Importe.ImporteEnMonedaDefault.Monto");
@@ -445,7 +395,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPromesaEfectivo_Add(Efectivo efectivo, string idSession) {
             var lista = (List<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_PROMESA];
-            _validarEfectivoPromesa(efectivo);
+            _validarEfectivoGrilla(efectivo);
             if (ModelState.IsValid) {
                 try {
                     int maxIdLinea = lista.Count > 0 ? lista.Max(c => c.IdLinea) : 0;
@@ -467,7 +417,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             //pruebaError();
             var lista = (List<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_PROMESA];
 
-            _validarEfectivoPromesa(efectivo);
+            _validarEfectivoGrilla(efectivo);
             if (ModelState.IsValid) {
                 try {
                     Efectivo efectivoEditado =
@@ -673,6 +623,251 @@ namespace AutomotoraWeb.Controllers.Sales {
                 }
             }
             return PartialView("_grillaPromesaVales", lista);
+        }
+
+        #endregion
+
+
+        #region Devolver
+
+        public ActionResult Devolver(int? id) {
+            string idSession = SessionUtils.generarIdVarSesion("devsenia", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            ViewData["idSession"] = idSession;
+            ViewData["idOperacion"] = "devolver";
+            ViewBag.SoloLectura = true;
+
+            if (id == null) {
+                return View("Devolver", new SeniaModel());
+            }
+            SeniaModel tr = _iniDevolucion(id??0, idSession);
+            return View("Devolver", tr);
+        }
+
+        private string _sacarComasFinal(string scheques) {
+            bool seguir = true;
+            while (seguir) {
+                scheques = scheques.Trim();
+                if (scheques[scheques.Length - 1] == ',') {
+                    scheques = scheques.Substring(0, scheques.Length - 1);
+                } else {
+                    seguir = false;
+                }
+            }
+            return scheques;        
+        }
+
+        private SeniaModel _iniDevolucion(int id, string idSession) {
+            SeniaModel tr = new SeniaModel();
+            tr.Senia = new Senia();
+            tr.Senia.Codigo = id;
+            tr.Senia.Consultar();
+            if (tr.Senia.EsSeniaPedido()) {
+                tr.PedidoVehiculo = 2;
+            } else {
+                tr.PedidoVehiculo = 1;
+            }
+            tr.TienePermuta = false;
+            if (tr.Senia.Promesa != null && tr.Senia.Promesa.Permuta != null && tr.Senia.Promesa.Permuta.Codigo > 0) {
+                tr.TienePermuta = true;
+            }
+            Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION] = tr.Senia.PagoDevolucionSugerida().Efectivos;
+            Session[idSession + SessionUtils.CHEQUES_DEVOLUCION] = tr.Senia.PagoDevolucionSugerida().Cheques;
+            Session[idSession + SessionUtils.CHEQUES_EMITIDOS] = new List<ChequeEmitido>();
+            tr.ChequesDevolver = "";
+            foreach (Cheque ch in (List<Cheque>)Session[idSession + SessionUtils.CHEQUES_DEVOLUCION]) {
+                tr.ChequesDevolver += ch.Codigo.ToString() + ",";
+            }
+            tr.ChequesDevolver = _sacarComasFinal(tr.ChequesDevolver);
+
+            tr.SeniaDev = new TRSeniaDevolucion();
+            tr.SeniaDev.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
+            tr.SeniaDev.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES_DEVOLUCION]);
+            tr.SeniaDev.Fecha = DateTime.Now.Date;
+            tr.SeniaDev.Importe = tr.Senia.Importe;
+            tr.SeniaDev.Sucursal = tr.Senia.Sucursal;
+
+            return tr;
+        }
+
+        public ActionResult SeniasDevolviblesGrilla() {
+            //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
+            GridLookUpModel gmodel = new GridLookUpModel { Opciones = Senia.Senias(Senia.TIPO_LISTADO_SENIA.DEVOLVIBLES) };
+            return PartialView("_selectSeniaAnular", gmodel);
+        }
+
+
+        public ActionResult DetalleSeniaDevolver(int idSenia, string idSession, string idOperacion) {
+            ViewData["idSession"] = idSession;
+            ViewData["idOperacion"] = idOperacion;
+            ViewBag.SoloLectura = true;
+            SeniaModel tr = _iniDevolucion(idSenia, idSession);
+            return PartialView("_seniaDevolucion", tr);
+        }
+
+        [HttpPost]
+        public ActionResult Devolver(SeniaModel model, string idSession) {
+            ViewData["idSession"] = idSession;
+            ViewData["idOperacion"] = "devolver";
+            ViewBag.SoloLectura = true;
+
+            model.Senia.Consultar();//por si hubo error mostrar los datos correctamente al volver. si no hay codigo de senia, dara error y no se sigue.
+            model.SeniaDev.Pago.Reset();
+            model.SeniaDev.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
+            model.SeniaDev.Pago.AgregarChequesEmitidos((IEnumerable<ChequeEmitido>)Session[idSession + SessionUtils.CHEQUES_EMITIDOS]);
+
+            GeneralUtils.ModelStateRemoveAllStarting(ModelState, "Senia");
+
+
+            model.ChequesDevolver = _sacarComasFinal(model.ChequesDevolver);
+
+            if (ModelState.IsValid) {
+                try {
+                    string usuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                    string IP = HttpContext.Request.UserHostAddress;
+                    model.SeniaDev.setearAuditoria(usuario, IP);
+                    model.SeniaDev.Senia = model.Senia;
+                    
+                    //cheques devolver
+                    string[] ach = model.ChequesDevolver.Split(new Char[] { ',' });
+                    List<Cheque> lista = (List<Cheque>)Session[idSession + SessionUtils.CHEQUES_DEVOLUCION];
+                    foreach (string s in ach) {
+                        Cheque ch = new Cheque { Codigo = Int32.Parse(s) };
+                        int i = lista.IndexOf(ch);
+                        model.SeniaDev.Pago.AgregarCheque(lista[i]);
+                    }
+                    model.SeniaDev.Ejecutar();
+                    return RedirectToAction("ReciboDev", SeniasController.CONTROLLER, new { id = model.SeniaDev.Senia.Codigo});
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View("Devolver", model);
+                }
+            }
+            return View("Devolver", model);
+        }
+
+
+        public ActionResult ReciboDev(int id) {
+            try {
+                TRSeniaDevolucion tr = new TRSeniaDevolucion();
+                tr.Senia = new Senia();
+                tr.Senia.Codigo = id;
+                //tr.Consultar();  solo usa elcodigo en la vista
+                ViewData["idParametros"] = id;
+                return View("ReciboDev", tr.Senia);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
+        }
+
+        private XtraReport _generarReciboDev(int id) {
+            TRSeniaDevolucion tr = new TRSeniaDevolucion();
+            tr.Senia = new Senia();
+            tr.Senia.Codigo = id;
+            tr.Consultar();
+            List<TRSeniaDevolucion> ll = new List<TRSeniaDevolucion>();
+            ll.Add(tr);
+            XtraReport rep = new DXReciboSeniaDevolucion();
+            rep.DataSource = ll;
+            return rep;
+        }
+
+        public ActionResult ReciboDevPartial(int idParametros) {
+            XtraReport rep = _generarReciboDev(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return PartialView("_reciboDev");
+        }
+
+        public ActionResult ReciboDevExport(int idParametros) {
+            XtraReport rep = _generarReciboDev(idParametros);
+            ViewData["idParametros"] = idParametros;
+            ViewData["Report"] = rep;
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+        }
+
+        #endregion
+
+        #region DevolucionEfectivo
+
+        public ActionResult grillaDevolucionEfectivo(string idSession) {
+            return PartialView("_grillaDevolucionEfectivo", Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
+        }
+
+        
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaDevolucionEfectivo_Add(Efectivo efectivo, string idSession) {
+            var lista = (List<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION];
+            _validarEfectivoGrilla(efectivo);
+            if (ModelState.IsValid) {
+                try {
+                    int maxIdLinea = lista.Count > 0 ? lista.Max(c => c.IdLinea) : 0;
+                    efectivo.IdLinea = maxIdLinea + 1;
+                    lista.Add(efectivo);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
+
+            return PartialView("_grillaDevolucionEfectivo", lista);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaDevolucionEfectivo_Update(Efectivo efectivo, string idSession) {
+
+            //pruebaError();
+            var lista = (List<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION];
+
+            _validarEfectivoGrilla(efectivo);
+            if (ModelState.IsValid) {
+                try {
+                    Efectivo efectivoEditado =
+                        (from c in lista
+                         where (c.IdLinea == efectivo.IdLinea)
+                         select c).First<Efectivo>();
+                    efectivoEditado.Importe.Monto = efectivo.Importe.Monto;
+                    efectivoEditado.Importe.Moneda = efectivo.Importe.Moneda;
+                    efectivoEditado.Importe.Moneda.Consultar();
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
+
+            return PartialView("_grillaDevolucionEfectivo", lista);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaDevolucionEfectivo_Delete(int IdLinea, string idSession) {
+
+            var lista = (List<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION];
+            if (IdLinea >= 0) {
+                try {
+                    Efectivo efectivoEliminado =
+                        (from c in lista
+                         where (c.IdLinea == IdLinea)
+                         select c).First<Efectivo>();
+                    lista.Remove(efectivoEliminado);
+                } catch (Exception e) {
+                    ViewData["DeleteError"] = e.Message;
+                }
+            }
+            //ViewData["DeleteError"] = "Testing error message style";
+            return PartialView("_grillaDevolucionEfectivo", lista);
+        }
+
+
+        #endregion
+
+        #region DevolucionCheques
+
+         public ActionResult GrillaChequesDevolucion(string idSession) {
+            return PartialView("_grillaChequesDevolucion", Session[idSession + SessionUtils.CHEQUES_DEVOLUCION]);
         }
 
         #endregion
