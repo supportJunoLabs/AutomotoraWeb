@@ -46,8 +46,10 @@ namespace AutomotoraWeb.Controllers.Sales {
                 model.Senia = s;
                 if (s.EsSeniaPedido()) {
                     ViewBag.NombreEntidad = "Seña Pedido";
+                    model.PedidoVehiculo = 2;
                 } else {
                     ViewBag.NombreEntidad = "Seña Vehículo";
+                    model.PedidoVehiculo = 1;
                 }
                 if (s.Promesa != null && s.Promesa.Permuta != null && s.Promesa.Permuta.Codigo > 0) {
                     model.TienePermuta = true;
@@ -61,8 +63,6 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         #endregion
-
-        //--------------------------METODOS PARA LISTADOS DE senias  -----------------------------
 
         #region Listados
 
@@ -123,10 +123,6 @@ namespace AutomotoraWeb.Controllers.Sales {
             return Senia.Senias(model.Filtro);
         }
 
-        #endregion
-        //---------- METODOS PARA REPORTES DE LISTADOS DE Senias  -----------------------------
-
-        #region Reportes
         public ActionResult Report(ListadoSeniasModel model) {
             return View("report", model);
         }
@@ -186,16 +182,16 @@ namespace AutomotoraWeb.Controllers.Sales {
                 tr.Senia.Pedido.Consultar();
             }
             tr.asignarPrecondicion(esPostback);
+            tr.Senia.Fecha = DateTime.Now;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+
             if (!esPostback && Automotora.GestionarPromesas()) {
                 tr.Senia.Promesa.Financiacion = new Financiacion();
                 tr.Senia.Promesa.Financiacion.MontoFinanciado = new Importe(Moneda.MonedaDefault, 0);
                 tr.Senia.Promesa.Financiacion.Tasa = 0;
                 tr.Senia.Promesa.Financiacion.CantCuotas = 0;
+                tr.Senia.Sucursal = usuario.Sucursal;
             }
-            
-            tr.Senia.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            tr.Senia.Sucursal = usuario.Sucursal;
 
             tr.Senia.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
             tr.Senia.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
@@ -626,7 +622,6 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         #endregion
-
 
         #region Devolver
 

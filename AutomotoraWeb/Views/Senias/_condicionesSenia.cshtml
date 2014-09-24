@@ -29,7 +29,7 @@
         @Html.LabelForRequired(model => model.Senia.Cliente)
     </div>
     <div class="editor-field editor-field-medium medium renglon-alto">
-        @Html.DdlOrDisplayFor(model => model.Senia.Cliente.Codigo, modoConsulta|| cond.ClienteObligatorio , model => model.Senia.Cliente.Nombre,
+        @Html.DdlOrDisplayFor(model => model.Senia.Cliente.Codigo, modoConsulta || cond.ClienteObligatorio, model => model.Senia.Cliente.Nombre,
                 new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null,
                 new { id = "ddlClientes", @class = "large" })
         @Html.ValidationMessageFor(model => model.Senia.Cliente)
@@ -42,7 +42,7 @@
         @Html.LabelForRequired(model => model.Senia.Vendedor)
     </div>
     <div class="editor-field editor-field-medium medium renglon-alto">
-        @Html.DdlOrDisplayFor(model => model.Senia.Vendedor.Codigo, modoConsulta || cond.VendedorObligatorio , model => model.Senia.Vendedor.Nombre,
+        @Html.DdlOrDisplayFor(model => model.Senia.Vendedor.Codigo, modoConsulta || cond.VendedorObligatorio, model => model.Senia.Vendedor.Nombre,
                 new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
                 new { id = "ddlVendedores", @class = "large" })
         @Html.ValidationMessageFor(model => model.Senia.Vendedor)
@@ -94,17 +94,27 @@
     </div>
     <div>
         @{ if (!modoConsulta) {
-        <div class="floatLeft">
-            @Html.RadioButtonFor(model => model.Senia.asumeGastos, "Comprador", new { id = "rb_comprador" })  Comprador 
-        </div>
-        <div class="floatLeft" style="margin-left:20px">
-            @Html.RadioButtonFor(model => model.Senia.asumeGastos, "Vendedor", new { id = "rb_vendedor" })  Vendedor
-        </div>
-        }else {
+            <div class="floatLeft">
+                @Html.RadioButtonFor(model => model.Senia.asumeGastos, "Comprador", new { id = "rb_comprador" })  Comprador 
+            </div>
+            <div class="floatLeft" style="margin-left: 20px">
+                @Html.RadioButtonFor(model => model.Senia.asumeGastos, "Vendedor", new { id = "rb_vendedor" })  Vendedor
+            </div>
+           } else {
             <div class="floatLeft">
                 @(Model.Senia.asumeGastos)
             </div>
-        }}
+           }}
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label ">
+        Estado
+    </div>
+    <div class="editor-field editor-field-medium">
+        @Model.Senia.DescripcionEstado
     </div>
 </div>
 <div class="clear-both"></div>

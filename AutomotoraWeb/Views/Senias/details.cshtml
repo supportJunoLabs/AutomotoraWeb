@@ -37,6 +37,10 @@
                 if (Model.Senia.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "PR_SENIA" })) {
                     @Html.Bootstrap().ActionLinkButton("Promesa", "DocPromesaSenia", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Senia.Codigo }).Class("btn btn-default botonDocumento")
                 }
+                
+                if (Model.Senia.Devolvible()){
+                       @(Html.Bootstrap().ActionLinkButton("Devolver", "Devolver", SeniasController.CONTROLLER).RouteValues(new { id = Model.Senia.Codigo }).Class("btn btn-primary"))
+                }                
             }
         </div>
     </div>

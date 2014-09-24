@@ -2106,6 +2106,7 @@
     <Content Include="Views\Acvs\_seleccionAcvAnularGridLookup.cshtml" />
     <Content Include="Views\Acvs\_consultaAcv.cshtml" />
     <Content Include="Views\Caja\Entrada_TABS.cshtml" />
+    <Content Include="Views\Acvs\_grillaAcvNoAnulados.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />

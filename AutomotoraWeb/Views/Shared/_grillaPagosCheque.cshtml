@@ -40,6 +40,12 @@
     ig.Edicion = !chequesReadOnly;
     ig.Paginado = false;
     
+    if (!ig.Edicion){
+        ig.KeyFieldName = "Codigo";
+        ig.AccionesAlComienzo = true;
+        ig.AddButton(new BotonGrilla("ConsultaCheque", ChequesController.CONTROLLER, "boton-consultar-mf", "Consulta Cheque"));
+    }
+    
     ig.FuncionInitNewRow = (s, e) => {
         e.NewValues["FechaValor"] = DateTime.Now.Date;
         e.NewValues["FechaVencimiento"] = DateTime.Now.Date;

@@ -12,10 +12,10 @@ FALTA HACER FUCIONAR ESTO.
 <div class="clear-both"></div>
 
 <div id="divAcvs">
-    @{ if (Model.Vehiculo != null &&  Model.Vehiculo.Codigo>0 &&  Model.Vehiculo.TieneACV()) { 
+    @{ if (Model.Vehiculo != null &&  Model.Vehiculo.Codigo>0 &&  Model.Vehiculo.TieneACVNoanulados()) { 
         <div class="cabezalBloque" style="margin-bottom: 8px">Anticipos</div>
         <div class="clear-both"></div>
-        @Html.Partial("/acvs/_grillaAcvVigentes", Model.Vehiculo.obtenerACVs())
+        @Html.Partial("/acvs/_grillaAcvNoAnulados", Model.Vehiculo.obtenerACVsNoanulados())
         <div class="clear-both"></div>
         
         <div>
@@ -23,7 +23,7 @@ FALTA HACER FUCIONAR ESTO.
                 Total
             </div>
             <div class="editor-field editor-field-medium ">
-                @Model.Vehiculo.SumaACVs().ImporteTexto;
+                @Model.Vehiculo.SumaACVsNoanulados().ImporteTexto;
             </div>
         </div>
         <div class="clear-both"></div>
