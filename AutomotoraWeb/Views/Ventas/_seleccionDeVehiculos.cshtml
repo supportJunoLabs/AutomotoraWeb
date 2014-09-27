@@ -57,8 +57,12 @@
                 $('#divDetalleVehiculo').html(data);
                 if ($("#vehiculoSeniado").val() == 'True') {
                     _actualizarCondicionesDeVenta(codigo);
+                    _actualizarSenia(codigo);
+                    _actualizarACVs(codigo);
                 } else {
                     _resetCondicionesDeVenta();
+                    _resetSenia();
+                    _resetACVs();
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -68,6 +72,8 @@
             complete: hideLoading
         });
     }
+
+    //===========================================================================
 
     function _actualizarCondicionesDeVenta(codigo) {
         var destino = '@(Url.Action("CondicionesDeVentaVehiculo", "Ventas"))'
@@ -104,6 +110,56 @@
             beforeSend: showLoading,
             complete: hideLoading
         });
+    }
+
+    //===========================================================================
+
+    function _actualizarSenia(codigo) {
+        var destino = '@(Url.Action("SeniaVehiculo", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'id=' + codigo,
+            success: function (data) {
+                $('#containerSenias').html('');
+                $('#containerSenias').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function _resetSenia() {
+        $('#containerSenias').html('');
+    }
+
+    //===========================================================================
+
+    function _actualizarACVs(codigo) {
+        var destino = '@(Url.Action("ACVsVehiculo", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'id=' + codigo,
+            success: function (data) {
+                $('#containerACVs').html('');
+                $('#containerACVs').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function _resetACVs() {
+        $('#containerACVs').html('');
     }
 
     //function refreshDatosVehiculo(data) {

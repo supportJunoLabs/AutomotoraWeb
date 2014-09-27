@@ -216,6 +216,56 @@ namespace AutomotoraWeb.Controllers.Sales
             return PartialView("_seleccionDeCondicionesDeVenta", venta);
         }
 
+        //------------------------------------------------------------------------------------------
+
+        public ActionResult SeniaVehiculo(int id) {
+
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = id;
+
+            Senia senia = vehiculo.ObtenerSenia();
+
+            ViewBag.SoloLectura = true;
+            ViewBag.Multisucursal = false;
+            ViewBag.Sucursales = Sucursal.Sucursales;
+
+            SeniaModel seniaModel = new SeniaModel();
+            seniaModel.Senia = senia;
+
+            return PartialView("~/views/senias/_condicionesSenia.cshtml", seniaModel);
+        }
+
+        //------------------------------------------------------------------------------------------
+
+        public ActionResult ACVsVehiculo(int id) {
+
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = id;
+
+            List<ACuentaVenta> listACuentaVenta = vehiculo.obtenerACVs();
+
+            ViewBag.SoloLectura = true;
+            ViewBag.Multisucursal = false;
+            ViewBag.Sucursales = Sucursal.Sucursales;          
+
+            return PartialView("~/views/Acvs/_grillaAcvVigentes.cshtml", listACuentaVenta);
+        }
+
+
+        /*public ActionResult ResetSeniaVehiculo() {
+
+            Senia senia = new Senia();
+
+            ViewBag.SoloLectura = true;
+            ViewBag.Multisucursal = false;
+
+            SeniaModel seniaModel = new SeniaModel();
+            seniaModel.Senia = senia;
+            ViewBag.Sucursales = Sucursal.Sucursales;
+
+            return PartialView("~/views/senias/_condicionesSenia.cshtml", seniaModel);
+        }*/
+
         //--------------------- Consulta venta -----------------------------------------------------
 
         public ActionResult Details(int id) {
