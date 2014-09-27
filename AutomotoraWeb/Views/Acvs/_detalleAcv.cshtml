@@ -112,8 +112,8 @@
     <div class="espacio2"></div>
     <div class="cabezalBloque" style="margin-bottom: 8px">Anticipos Anteriores</div>
     <div class="clear-both"></div>
-       if (Model.Vehiculo != null && Model.Vehiculo.TieneACV()) {
-    @Html.Partial("_grillaAcvVigentes", Model.Vehiculo.obtenerACVs())
+       if (Model.Vehiculo != null && Model.Vehiculo.TieneACVNoanulados()) {
+    @Html.Partial("_grillaAcvNoAnulados", Model.Vehiculo.obtenerACVsNoanulados())
     <div class="clear-both"></div>
        }
     <div class="clear-both"></div>

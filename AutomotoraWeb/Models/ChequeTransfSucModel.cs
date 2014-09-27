@@ -19,6 +19,6 @@ namespace AutomotoraWeb.Models {
 
         [Display(Name = "Observaciones")]
         [StringLength(150, ErrorMessage = "Observaciones: Largo maximo 150 caracteres")]
-        public Cheque Observaciones { get; set; }
+        public string Observaciones { get; set; } //es 150 porque se agrega comentario automatico.
     }
 }

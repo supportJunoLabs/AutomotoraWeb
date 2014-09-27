@@ -19,6 +19,7 @@ namespace AutomotoraWeb.Utils {
 
         public static string VENTA = "venta";
         public static string CHEQUES = "cheques";
+        public static string CHEQUES_EMITIDOS = "chequesEmitidos";
         public static string EFECTIVO = "efectivo";
         public static string MOV_BANCARIO = "movBanco";
         public static string VALES = "vales";
@@ -28,6 +29,8 @@ namespace AutomotoraWeb.Utils {
         public static string CHEQUES_PROMESA = "chequesPromesa";
         public static string VALES_PROMESA = "valesPromesa";
 
+        public static string EFECTIVO_DEVOLUCION = "efectivoDevolucion";
+        public static string CHEQUES_DEVOLUCION = "chequesDevolucion";
 
         public static string generarIdVarSesion(string nomFuncion, string nomUsuario) {
             string s = nomFuncion+"|" +

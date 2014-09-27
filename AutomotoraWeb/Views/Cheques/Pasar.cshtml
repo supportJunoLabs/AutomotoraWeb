@@ -41,66 +41,78 @@
 
     </div>
     <div class="clear-both"></div>
-    <div class="block" style="height: 80px; padding-top: 10px; padding-left: 10px; margin-right: 10px">
-        <div>
-            <div class="renglon-alto display-label">
-                @Html.RadioButtonFor(model => model.TipoDestino, TRChequePasar.TIPO_DESTINO.FINANCISTA, new { id = "rb_financista" })  Financista
-            </div>
-            <div id="financistas">
-                @Html.DropDownListFor(model => model.Financista.Codigo, new SelectList(ViewBag.Financistas, "Codigo", "Nombre"), new { @class = "large" })
-            </div>
-        </div>
-        <div class="clear-both"></div>
-        <div>
-            <div class=" renglon-alto display-label">
-                @Html.RadioButtonFor(model => model.TipoDestino, TRChequePasar.TIPO_DESTINO.TERCERO, new { id = "rb_tercero" })  Tercero
-            </div>
-            <div class="editor-field editor-field-large" id="tercero">
-                @Html.TextBoxFor(model => model.Tercero)
-                @Html.ValidationMessageFor(model => model.Tercero)
-            </div>
-        </div>
-    </div>
-    <div class="clear-both"></div>
     
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Importe) *
-    </div>
-    <div class="editor-field editor-field-small">
-        @Html.DdlOrDisplayImporteFor(model => model.Importe, modoConsulta)
-        @Html.ValidationMessageFor(model => model.Importe.Monto)
-    </div>
-    <div class="clear-both"></div>    
-    
-        
-    <div>
-        <div class="display-label">
-            @Html.LabelForRequired(model => model.Sucursal)
-        </div>
-        <div class="editor-field editor-field-xlarge xxlarge  @(modoConsulta ? "" : "renglon-alto")">
-            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta || !cambiarSucursal, model => model.Sucursal.Nombre,
+    <div class="well" style="margin-top: 10px; width: 1000px;">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#pasar_tab" data-toggle="tab">Pasar</a></li>
+            <li><a href="#pago_tab" data-toggle="tab">Pago</a></li>
+        </ul>
+        <div id="tabContent" class="tab-content">
+            <div class="tab-pane active in" id="pasar_tab">
+                <div class="block" style="height: 80px; padding-top: 10px; padding-left: 10px; margin-right: 10px">
+                    <div>
+                        <div class="renglon-alto display-label">
+                            @Html.RadioButtonFor(model => model.TipoDestino, TRChequePasar.TIPO_DESTINO.FINANCISTA, new { id = "rb_financista" })  Financista
+                        </div>
+                        <div id="financistas">
+                            @Html.DropDownListFor(model => model.Financista.Codigo, new SelectList(ViewBag.Financistas, "Codigo", "Nombre"), new { @class = "large" })
+                        </div>
+                    </div>
+                    <div class="clear-both"></div>
+                    <div>
+                        <div class=" renglon-alto display-label">
+                            @Html.RadioButtonFor(model => model.TipoDestino, TRChequePasar.TIPO_DESTINO.TERCERO, new { id = "rb_tercero" })  Tercero
+                        </div>
+                        <div class="editor-field editor-field-large" id="tercero">
+                            @Html.TextBoxFor(model => model.Tercero)
+                            @Html.ValidationMessageFor(model => model.Tercero)
+                        </div>
+                    </div>
+                </div>
+                <div class="clear-both"></div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Importe) *
+                </div>
+                <div class="editor-field editor-field-small">
+                    @Html.DdlOrDisplayImporteFor(model => model.Importe, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Importe.Monto)
+                </div>
+                <div class="clear-both"></div>
+
+
+                <div>
+                    <div class="display-label">
+                        @Html.LabelForRequired(model => model.Sucursal)
+                    </div>
+                    <div class="editor-field editor-field-xlarge xxlarge  @(modoConsulta ? "" : "renglon-alto")">
+                        @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta || !cambiarSucursal, model => model.Sucursal.Nombre,
                 new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
                 new { id = "ddlSucursales", @class = "large" })
-            @Html.ValidationMessageFor(model => model.Sucursal)
+                        @Html.ValidationMessageFor(model => model.Sucursal)
+                    </div>
+                </div>
+                <div class="clear-both"></div>
+
+                <div class="display-label ">
+                    @Html.LabelForRequired(model => model.Observaciones)
+                </div>
+                <div class="editor-field editor-field-xxlarge">
+                    @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
+                    @Html.ValidationMessageFor(model => model.Observaciones)
+
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div class="tab-pane fade" id="pago_tab">
+                @Html.Partial("_pagoEstandar", Model)
+            </div>
         </div>
     </div>
-    <div class="clear-both"></div>   
-        
-    <div class="display-label ">
-        @Html.LabelForRequired(model => model.Observaciones)
-    </div>
-    <div class="editor-field editor-field-xxlarge">
-        @Html.TextAreaOrDisplayFor(model => model.Observaciones, (bool?)ViewBag.SoloLectura, new { style = "width: 530px; height: 60px" })
-        @Html.ValidationMessageFor(model => model.Observaciones)
-
-    </div>
-    <div class="clear-both"></div>   
-    
-    @Html.Partial("_pagoEstandar", Model)
-
     <div class="btn-toolbar">
         @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Transferir Cheque"))
-    </div>     
+    </div>
 
 }
 

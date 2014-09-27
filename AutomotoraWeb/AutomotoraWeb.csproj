@@ -1794,6 +1794,7 @@
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale1.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale3.js" />
     <Content Include="Scripts\AutomotoraWeb\SalidaCaja.js" />
+    <Content Include="Scripts\AutomotoraWeb\SeniaDevolucion.js" />
     <Content Include="Scripts\AutomotoraWeb\SitFinancista.js" />
     <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
@@ -2104,6 +2105,8 @@
     <Content Include="Views\Acvs\Anular.cshtml" />
     <Content Include="Views\Acvs\_seleccionAcvAnularGridLookup.cshtml" />
     <Content Include="Views\Acvs\_consultaAcv.cshtml" />
+    <Content Include="Views\Caja\Entrada_TABS.cshtml" />
+    <Content Include="Views\Acvs\_grillaAcvNoAnulados.cshtml" />
     <None Include="Views\Cheques\_selectChequeCanjear.cshtml" />
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
@@ -2267,6 +2270,15 @@
     <Content Include="Views\Senias\_grillaPromesaVales.cshtml" />
     <Content Include="Views\Senias\_promesaPermuta.cshtml" />
     <Content Include="Views\Senias\_selectVehiculoSeniar.cshtml" />
+    <Content Include="Views\Senias\_selectSeniaAnular.cshtml" />
+    <Content Include="Views\Senias\Devolver.cshtml" />
+    <Content Include="Views\Senias\_seniaDevolucion.cshtml" />
+    <Content Include="Views\Senias\_detalleDevolucion.cshtml" />
+    <Content Include="Views\Senias\_grillaDevolucionEfectivo.cshtml" />
+    <Content Include="Views\Shared\_pagoEstandar_TABS.cshtml" />
+    <Content Include="Views\Shared\_grillaPagosChequesEmitidos.cshtml" />
+    <Content Include="Views\Senias\_devolucionCheques.cshtml" />
+    <Content Include="Views\Senias\_grillaChequesDevolucion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

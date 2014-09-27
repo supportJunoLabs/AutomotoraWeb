@@ -946,9 +946,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             return RedirectToAction(BaseController.DETAILS, PedidosController.CONTROLLER, new { id = id });
         }
 
-        public ActionResult VerAcvsVigentes(int id) {
-            return RedirectToAction("ListActivosVehiculo", AcvsController.CONTROLLER, new { id = id });
-        }
+        //public ActionResult VerAcvsVigentes(int id) {
+        //    return RedirectToAction("ListActivosVehiculo", AcvsController.CONTROLLER, new { id = id });
+        //}
 
         #endregion
 

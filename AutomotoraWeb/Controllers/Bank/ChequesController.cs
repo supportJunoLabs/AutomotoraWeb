@@ -480,6 +480,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                     TRChequeTransfSucursal tr = new TRChequeTransfSucursal();
                     tr.SucursalOrigen = model.SucursalOrigen;
                     tr.SucursalDestino = model.SucursalDestino;
+                    tr.Observaciones = model.Observaciones;
 
                     string scheques = model.ChequesIds;
 

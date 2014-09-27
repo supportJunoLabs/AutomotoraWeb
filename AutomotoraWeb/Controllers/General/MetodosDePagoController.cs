@@ -25,19 +25,8 @@ namespace AutomotoraWeb.Controllers.General
 
         }
 
-        //public ActionResult EditModesPartial() {
-        //    List<Cheque> listCheque = new List<Cheque>();
-        //    return PartialView("EditModesPartial", listCheque);
-        //}
-
-        //public ActionResult grillaPagosCheque_CustomActionRouteValues(GridViewEditingMode editMode) {
-        //    //GridViewEditingDemosHelper.EditMode = editMode;
-        //    List<Cheque> listCheque = new List<Cheque>();
-        //    return PartialView("EditModesPartial", listCheque);
-        //}
-
         private void _validarCheque(Cheque cheque){
-            eliminarValidacionesIgnorablesCheque(cheque);
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(cheque.Importe.Moneda));
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
             ModelState.Remove("Importe.Moneda.Codigo");
@@ -64,6 +53,7 @@ namespace AutomotoraWeb.Controllers.General
             _validarCheque(cheque);
             if (ModelState.IsValid) {
                 try {
+                    cheque.Importe.Moneda.Consultar();
                     int maxIdLinea = listCheque.Count > 0 ? listCheque.Max(c => c.IdLinea) : 0;
                     cheque.IdLinea = maxIdLinea + 1;
                     listCheque.Add(cheque);
@@ -86,11 +76,7 @@ namespace AutomotoraWeb.Controllers.General
             if (ModelState.IsValid) {
                 try {
 
-                    Moneda monedaElejida =
-                        (from m in Moneda.Monedas
-                         where (m.Codigo == cheque.Importe.Moneda.Codigo)
-                         select m).First<Moneda>();
-
+                    cheque.Importe.Moneda.Consultar();
                     Cheque chequeEditado =
                         (from c in listCheque
                          where (c.IdLinea == cheque.IdLinea)
@@ -104,8 +90,8 @@ namespace AutomotoraWeb.Controllers.General
                     chequeEditado.FechaVencimiento = cheque.FechaVencimiento;
                     chequeEditado.Observaciones = cheque.Observaciones;
                     chequeEditado.Banco = cheque.Banco;
-                    chequeEditado.Importe.Monto = cheque.Importe.Monto;
-                    chequeEditado.Importe.Moneda = monedaElejida;
+                    chequeEditado.Importe = cheque.Importe;
+
                 } catch (Exception e) {
                     ViewData["EditError"] = e.Message;
                 }
@@ -136,7 +122,7 @@ namespace AutomotoraWeb.Controllers.General
         }
 
         private void eliminarValidacionesIgnorablesCheque(Cheque cheque) {
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(cheque.Importe.Moneda));
+            
         }
 
         #endregion
@@ -156,20 +142,9 @@ namespace AutomotoraWeb.Controllers.General
 
         }
 
-        //public ActionResult EditModesPartial() {
-        //    List<Efectivo> listEfectivo = new List<Efectivo>();
-        //    return PartialView("EditModesPartial", listEfectivo);
-        //}
-
-        //public ActionResult grillaPagosEfectivo_CustomActionRouteValues(GridViewEditingMode editMode) {
-        //    //GridViewEditingDemosHelper.EditMode = editMode;
-        //    List<Efectivo> listEfectivo = new List<Efectivo>();
-        //    return PartialView("EditModesPartial", listEfectivo);
-        //}
-
         private void _validarEfectivo(Efectivo efectivo){
-            
-            eliminarValidacionesIgnorablesEfectivo(efectivo);
+
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(efectivo.Importe.Moneda));
 
             ModelState.Remove("Importe.ImporteEnMonedaDefault.Monto");
 
@@ -193,6 +168,7 @@ namespace AutomotoraWeb.Controllers.General
             _validarEfectivo(efectivo);
             if (ModelState.IsValid) {
                 try {
+                    efectivo.Importe.Moneda.Consultar();
                     int maxIdLinea = listEfectivo.Count > 0 ? listEfectivo.Max(c => c.IdLinea) : 0;
                     efectivo.IdLinea = maxIdLinea + 1;
                     listEfectivo.Add(efectivo);
@@ -215,18 +191,13 @@ namespace AutomotoraWeb.Controllers.General
             _validarEfectivo(efectivo);
             if (ModelState.IsValid) {
                 try {
-                    Moneda monedaElejida =
-                        (from m in Moneda.Monedas
-                         where (m.Codigo == efectivo.Importe.Moneda.Codigo)
-                         select m).First<Moneda>();
 
+                    efectivo.Importe.Moneda.Consultar();
                     Efectivo efectivoEditado =
                         (from c in listEfectivo
                          where (c.IdLinea == efectivo.IdLinea)
                          select c).First<Efectivo>();
-
-                    efectivoEditado.Importe.Monto = efectivo.Importe.Monto;
-                    efectivoEditado.Importe.Moneda = monedaElejida;
+                    efectivoEditado.Importe = efectivo.Importe;
                 } catch (Exception e) {
                     ViewData["EditError"] = e.Message;
                 }
@@ -262,9 +233,7 @@ namespace AutomotoraWeb.Controllers.General
             return PartialView("_grillaPagosEfectivo", listEfectivo);
         }
 
-        private void eliminarValidacionesIgnorablesEfectivo(Efectivo efectivo) {
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(efectivo.Importe.Moneda));
-        }
+
 
         #endregion
 
@@ -283,19 +252,11 @@ namespace AutomotoraWeb.Controllers.General
 
         }
 
-        //public ActionResult EditModesPartial() {
-        //    List<MovBanco> listMovBanco = new List<MovBanco>();
-        //    return PartialView("EditModesPartial", listMovBanco);
-        //}
-
-        //public ActionResult grillaPagosMovBanco_CustomActionRouteValues(GridViewEditingMode editMode) {
-        //    //GridViewEditingDemosHelper.EditMode = editMode;
-        //    List<MovBanco> listMovBanco = new List<MovBanco>();
-        //    return PartialView("EditModesPartial", listMovBanco);
-        //}
 
         private void _validarMovBanco(MovBanco movBanco){
-            eliminarValidacionesIgnorablesMovBanco(movBanco);
+            if (movBanco.Cuenta != null) {
+                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(movBanco.Cuenta));
+            }
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
             ModelState.Remove("Cuenta.Codigo");
@@ -346,13 +307,13 @@ namespace AutomotoraWeb.Controllers.General
             if (ModelState.IsValid) {
                 try {
 
+                    movBanco.Cuenta.Consultar();
                     MovBanco movBancoEditado =
                         (from c in listMovBanco
                          where (c.IdLinea == movBanco.IdLinea)
                          select c).First<MovBanco>();
 
                     movBancoEditado.Cuenta = movBanco.Cuenta;
-                    movBancoEditado.Cuenta.Consultar();
                     movBancoEditado.ImporteMov.Moneda = movBanco.Cuenta.Moneda;
                     movBancoEditado.ImporteMov.Monto = movBanco.ImporteMov.Monto;
                     movBancoEditado.FechaMov = movBanco.FechaMov;
@@ -388,14 +349,6 @@ namespace AutomotoraWeb.Controllers.General
             return PartialView("_grillaPagosMovBanco", listMovBanco);
         }
 
-        private void eliminarValidacionesIgnorablesMovBanco(MovBanco movBanco) {
-            if (movBanco.Cuenta != null) {
-                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(movBanco.Cuenta));
-            }
-
-            //this.eliminarValidacionesIgnorables("ImporteMov.Moneda", MetadataManager.IgnorablesDDL(movBanco.ImporteMov.Moneda));
-            //this.eliminarValidacionesIgnorables("TipoMov", MetadataManager.IgnorablesDDL(movBanco.TipoMov));
-        }
 
         #endregion
 
@@ -412,14 +365,9 @@ namespace AutomotoraWeb.Controllers.General
             return listPagosVale;
         }
 
-        //public ActionResult EditModesPartial() {
-        //    List<Vale> listVale = new List<Vale>();
-        //    return PartialView("EditModesPartial", listVale);
-        //}
-
-
         private void _validarVale(Vale vale) {
-            eliminarValidacionesIgnorablesVale(vale);
+
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(vale.Importe.Moneda));
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
             ModelState.Remove("Importe.Moneda.Codigo");
@@ -433,12 +381,6 @@ namespace AutomotoraWeb.Controllers.General
             }
 
         }
-
-        //public ActionResult grillaPagosVale_CustomActionRouteValues(GridViewEditingMode editMode) {
-        //    //GridViewEditingDemosHelper.EditMode = editMode;
-        //    List<Vale> listVale = new List<Vale>();
-        //    return PartialView("EditModesPartial", listVale);
-        //}
 
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaPagosVale_AddNewRowRouteValues(Vale vale, string idSession) {
@@ -514,15 +456,11 @@ namespace AutomotoraWeb.Controllers.General
             return PartialView("_grillaPagosVale", listVale);
         }
 
-        private void eliminarValidacionesIgnorablesVale(Vale vale) {
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(vale.Importe.Moneda));
-        }
-
         #endregion
 
         //===============================================================================================================
 
-        #region Vales
+        #region Cuotas
 
 
         public ActionResult grillaPagosCuota(string idSession) {
@@ -589,8 +527,123 @@ namespace AutomotoraWeb.Controllers.General
         #endregion
         //===============================================================================================================
 
+
+        #region ChequesEmitidos
+
+        public ActionResult grillaPagosChequesEmitidos(string idSession) {
+            return PartialView("_grillaPagosChequesEmitidos", _listaPagosChequesEmitidos(idSession));
+        }
+
+        private List<ChequeEmitido> _listaPagosChequesEmitidos(string idSession) {
+
+            List<ChequeEmitido> listPagosCheques = (List<ChequeEmitido>)(Session[idSession + SessionUtils.CHEQUES_EMITIDOS]);
+            return listPagosCheques;
+
+        }
+
+        private void _validarChequeEmitido(ChequeEmitido cheque) {
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(cheque.Cuenta));
+
+            ModelState.Remove("Importe.Moneda");//porque se va a tomar la moneda de la cuenta elegida
+
+            //Sacar la validacion de cuenta no nula porque da mensaje feo, hacerla manualmente
+            ModelState.Remove("Cuenta.Codigo");
+            if (cheque.Cuenta == null || cheque.Cuenta.Codigo <= 0) {
+                ModelState.AddModelError("Cuenta.Codigo", "La cuenta bancaria es requerida");
+            }
+
+            //validar el importe
+            if (cheque.Importe.Monto <= 0) {
+                ModelState.AddModelError("Importe.Monto", "El monto debe ser un valor positivo");
+            }
+
+            if (cheque.FechaVencimiento < cheque.FechaEmision) {
+                ModelState.AddModelError("FechaVencimiento", "El vencimiento no puede ser anterior a la emision");
+            }
+
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosChequesEmi_Add(ChequeEmitido cheque, string idSession) {
+
+            List<ChequeEmitido> listCheque = _listaPagosChequesEmitidos(idSession);
+
+            _validarChequeEmitido(cheque);
+            if (ModelState.IsValid) {
+                try {
+                    cheque.Cuenta.Consultar();
+                    cheque.Importe.Moneda = cheque.Cuenta.Moneda;
+                    int maxIdLinea = listCheque.Count > 0 ? listCheque.Max(c => c.IdLinea) : 0;
+                    cheque.IdLinea = maxIdLinea + 1;
+                    listCheque.Add(cheque);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
+
+            return PartialView("_grillaPagosChequesEmitidos", listCheque);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosChequesEmi_Update(ChequeEmitido cheque, string idSession) {
+
+            List<ChequeEmitido> listCheque = _listaPagosChequesEmitidos(idSession);
+
+            _validarChequeEmitido(cheque);
+            if (ModelState.IsValid) {
+                try {
+
+                    cheque.Cuenta.Consultar();
+
+                    ChequeEmitido chequeEditado =
+                       (from c in listCheque
+                        where (c.IdLinea == cheque.IdLinea)
+                        select c).First<ChequeEmitido>();
+
+                    chequeEditado.Cuenta = cheque.Cuenta;
+                    chequeEditado.Importe.Moneda = cheque.Cuenta.Moneda;
+                    chequeEditado.Importe.Monto = cheque.Importe.Monto;
+                    chequeEditado.FechaEmision = cheque.FechaEmision;
+                    chequeEditado.FechaVencimiento = cheque.FechaVencimiento;
+                    chequeEditado.Numero = cheque.Numero;
+                    chequeEditado.Observaciones = cheque.Observaciones;
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
+
+            return PartialView("_grillaPagosChequesEmitidos", listCheque);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosChequesEmi_Delete(int IdLinea, string idSession) {
+
+            List<ChequeEmitido> listCheque = _listaPagosChequesEmitidos(idSession);
+
+            if (IdLinea >= 0) {
+                try {
+                    ChequeEmitido chequeEliminado =
+                        (from c in listCheque
+                         where (c.IdLinea == IdLinea)
+                         select c).First<ChequeEmitido>();
+                    listCheque.Remove(chequeEliminado);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("_grillaPagosChequesEmitidos", listCheque);
+        }
+
+        #endregion
+
         public override string getParentControllerName() {
             return "BaseController";
         }
+
+        
     }
 }

@@ -168,25 +168,35 @@
 
 
         $(document).ready(function () {
+            ajustarControles();
+        });
 
-         jQuery.validator.addMethod(
-          'date',
-          function (value, element, params) {
-              if (this.optional(element)) {
-                  return true;
-              };
-              var result = false;
-              try {
-                  $.datepicker.parseDate('dd/mm/yy', value);
-                  result = true;
-              } catch (err) {
-                  result = false;
-              }
-              return result;
-              },
-              ''
-          );
+        function showLoading() {
+            $("#loadingContainer").show();
+        }
 
+        function hideLoading() {
+            $("#loadingContainer").hide();
+        }
+
+        function ajustarControles() {
+            jQuery.validator.addMethod(
+             'date',
+             function (value, element, params) {
+                 if (this.optional(element)) {
+                     return true;
+                 };
+                 var result = false;
+                 try {
+                     $.datepicker.parseDate('dd/mm/yy', value);
+                     result = true;
+                 } catch (err) {
+                     result = false;
+                 }
+                 return result;
+             },
+                 ''
+            );
 
             $("input[data-val-length-max], textarea[data-val-length-max]").each(function () {
                 var $this = $(this);
@@ -201,14 +211,6 @@
                 showAnim: 'slideDown',
                 yearRange: '1900:2100'
             });
-        });
-
-        function showLoading() {
-            $("#loadingContainer").show();
-        }
-
-        function hideLoading() {
-            $("#loadingContainer").hide();
         }
 
     </script>

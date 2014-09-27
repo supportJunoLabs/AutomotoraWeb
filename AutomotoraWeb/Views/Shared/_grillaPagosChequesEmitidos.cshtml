@@ -1,0 +1,52 @@
+﻿@model List<ChequeEmitido>
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Models;
+@using System.Web.UI.WebControls;
+@using DLL_Backend;
+
+
+@{
+    bool chequesEmitidosReadOnly = ((bool?)ViewBag.PagosSoloConsulta) ?? false;
+    
+    InfoGrilla ig= new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Cuenta.Codigo", Titulo="Cuenta", MostrarSoloEdicion=true, EdicionColSpan=2,
+                    ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = CuentaBancaria.CuentasBancarias, ComboBoxPropertiesTextField = "Nombre", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Cuenta.Banco", Titulo="Banco", MostrarSoloGrilla=true},
+            new ColumnaGrilla {Campo="Cuenta.Numero", Titulo="Cuenta", MostrarSoloGrilla=true},
+            new ColumnaGrilla {Campo="Numero"},
+            new ColumnaGrilla {Campo="FechaEmision", Titulo="Emision"},
+            new ColumnaGrilla {Campo="FechaVencimiento", Titulo="Vencimiento"},
+            new ColumnaGrilla {Campo="Importe.Monto", Titulo="Monto", MostrarSoloEdicion=true, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE},
+            new ColumnaGrilla {Campo="Importe.ImporteTexto", Titulo="Importe", MostrarSoloGrilla=true, Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA},
+            new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, MostrarSoloGrilla=true},
+            new ColumnaGrilla {Campo="Observaciones",  EdicionColSpan=2, MostrarSoloEdicion=true}
+    };
+
+    ig.AnchoTotal = 1000;
+    ig.NameGrid = "grillaPagosChequesEmitidos";
+    ig.Controller = "MetodosDePago";
+    ig.ActionCallbackRoute = "grillaPagosChequesEmitidos";
+    ig.KeyFieldName = "IdLinea";
+    ig.TypeOfModel = typeof(ChequeEmitido.ChequeEmitidoMD);
+    ig.OnBeginCallback = "OnBeginCallback";
+    //ig.CustomActionRouteValues = "grillaPagosCheque_CustomActionRouteValues";
+    ig.AddNewRowRouteValues = "grillaPagosChequesEmi_Add";
+    ig.UpdateRowRouteValues = "grillaPagosChequesEmi_Update";
+    ig.DeleteRowRouteValues = "grillaPagosChequesEmi_Delete";
+    ig.BotonesMtoEstandar = false;
+    ig.Estatica = true;
+    ig.Edicion = !chequesEmitidosReadOnly;
+    ig.Paginado = false;
+    
+    ig.FuncionInitNewRow = (s, e) => {
+        e.NewValues["FechaEmision"] = DateTime.Now.Date;
+        e.NewValues["FechaVencimiento"] = DateTime.Now.Date;
+    };
+    
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)
+

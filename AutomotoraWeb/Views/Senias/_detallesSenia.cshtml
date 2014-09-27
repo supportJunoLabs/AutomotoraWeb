@@ -4,7 +4,7 @@
 @using AutomotoraWeb.Models;
 
 @{ 
-   bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+    bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
 }
 
 
@@ -17,15 +17,23 @@
           }}
         <li><a href="#senia_tab" data-toggle="tab">Seña</a></li>
         <li><a href="#pago_tab" data-toggle="tab">Pago</a></li>
-         @{if (Automotora.GestionarPromesas()){
+        @{if (Automotora.GestionarPromesas()) {
             <li><a href="#promesa_tab" data-toggle="tab">Condiciones Venta</a></li>
-         }}
+          }}
     </ul>
     <div id="tabContent" class="tab-content">
         @{if (Model.PedidoVehiculo == 1) {
             <div class="tab-pane active in" id="vehiculo_tab">
                 @{if (Model.Senia.Vehiculo != null && Model.Senia.Vehiculo.Codigo > 0) {
                     @Html.Partial("_seleccionDeVehiculosDetalle", Model.Senia.Vehiculo)
+                       
+                      if (Model.Senia.Vehiculo.TieneACVVigentes()) { 
+                        <div class="clear-both"></div>
+                        <div class="espacio2"></div>
+                        <div class="cabezalBloque" style="margin-bottom: 8px">Anticipos</div>
+                        <div class="clear-both"></div>
+                        @Html.Partial("~/Views/acvs/_grillaACvVigentes.cshtml", Model.Senia.Vehiculo.obtenerACVsVigentes())
+                      }
                   }}
             </div>
           } else {
@@ -39,26 +47,26 @@
             @Html.Partial("_condicionesSenia", Model)
         </div>
         <div class="tab-pane fade" id="pago_tab">
-            @{ if (!modoConsulta){
+            @{ if (!modoConsulta) {
                 @Html.Partial("_pagoEstandar", Model.Senia)
-            }else{
+               } else {
                 @Html.Partial("_pagoEstandarConsulta", Model.Senia)
-            }}
+               }}
         </div>
-        @{if (Automotora.GestionarPromesas()){
-             <div class="tab-pane fade" id="promesa_tab">
+        @{if (Automotora.GestionarPromesas()) {
+            <div class="tab-pane fade" id="promesa_tab">
                 @Html.Partial("_promesaSenia", Model)
             </div>
-        }}
+          }}
     </div>
 </div>
 <div class="clear-both"></div>
 
 <div class="btn-toolbar">
     <div class="floatRight">
-        @{ if( ViewData["idOperacion"].Equals("seniar")) {
-                @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Registrar Seña"))
-        }}
+        @{ if (ViewData["idOperacion"].Equals("seniar")) {
+            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Registrar Seña"))
+           }}
     </div>
 </div>
 <div class="clear-both"></div>

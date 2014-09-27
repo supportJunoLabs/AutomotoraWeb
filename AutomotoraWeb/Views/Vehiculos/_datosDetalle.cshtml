@@ -224,9 +224,9 @@
     </div>
    }
 
-    if (Model != null && Model.Codigo > 0 && Model.TieneACV()) {
+    if (Model != null && Model.Codigo > 0 && (Model.Vendible() || Model.Seniable()) && Model.TieneACVNoanulados()) {
     <div class="floatLeft" style="padding-left: 20px;">
-        @(Html.Bootstrap().ActionLinkButton("Ver Anticipos", "VerAcvsVigentes").RouteValues(new { id = Model.Codigo }).Class("btn-info  btn-small"))
+        (Tiene Anticipos)
     </div>
    }
 }

@@ -1,0 +1,89 @@
+﻿@model AutomotoraWeb.Models.SeniaModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Helpers;
+
+@{ bool cambiarSucursal = ViewBag.Multisucursal;}
+
+<div class="dataLine">
+    <div class="display-label">
+        Fecha
+    </div>
+    <div class="editor-field editor-field-medium">
+        @{ if (Automotora.AdmiteOtrasFechas()) {
+            @Html.TextBoxFor(model => model.SeniaDev.Fecha, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+            @Html.ValidationMessageFor(model => model.SeniaDev.Fecha)
+           } else {
+            @Html.TextBoxFor(model => model.SeniaDev.Fecha, "{0:dd/MM/yyyy}", new { disabled = "disabled" })    
+           }}
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label">
+        Importe Seña
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayImporteFor(model => model.SeniaDev.Importe, "SeniaDev.Importe", false)
+        @Html.ValidationMessageFor(model => model.SeniaDev.Importe.Monto)
+    </div>
+    <div class="clear-both"></div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.SeniaDev.Sucursal)
+    </div>
+    <div class="editor-field editor-field-medium medium renglon-alto">
+        @Html.DdlOrDisplayFor(model => model.SeniaDev.Sucursal.Codigo, !cambiarSucursal, model => model.SeniaDev.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "large" })
+        @Html.ValidationMessageFor(model => model.SeniaDev.Sucursal)
+    </div>
+</div>
+<div class="clear-both"></div>
+
+
+<div class="dataLine">
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.SeniaDev.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.TextAreaOrDisplayFor(model => model.SeniaDev.Observaciones, false, new { style = "width: 530px; height: 60px" })
+        @Html.ValidationMessageFor(model => model.SeniaDev.Observaciones)
+
+    </div>
+</div>
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Devolucion en Efectivo</div>
+<div class="clear-both"></div>
+ @Html.Partial("_grillaDevolucionEfectivo", Model.SeniaDev.Pago.Efectivos)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Devolucion Cheques Recibidos</div>
+<div class="clear-both"></div>
+@Html.Partial("_devolucionCheques", Model)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Devolucion mediante Cheques Emitidos</div>
+<div class="clear-both"></div>
+    @Html.Partial("_grillaPagosChequesEmitidos", Model.SeniaDev.Pago.ChequesEmitidos)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+
+<div class="clear-both"></div>
