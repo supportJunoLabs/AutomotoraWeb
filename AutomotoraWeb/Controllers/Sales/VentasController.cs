@@ -242,13 +242,13 @@ namespace AutomotoraWeb.Controllers.Sales
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = id;
 
-            List<ACuentaVenta> listACuentaVenta = vehiculo.obtenerACVs();
+            List<ACuentaVenta> listACuentaVenta = vehiculo.obtenerACVsNoanulados();
 
             ViewBag.SoloLectura = true;
             ViewBag.Multisucursal = false;
-            ViewBag.Sucursales = Sucursal.Sucursales;          
+            ViewBag.Sucursales = Sucursal.Sucursales;
 
-            return PartialView("~/views/Acvs/_grillaAcvVigentes.cshtml", listACuentaVenta);
+            return PartialView("~/views/Acvs/_grillaAcvNoAnulados.cshtml", listACuentaVenta);
         }
 
 
