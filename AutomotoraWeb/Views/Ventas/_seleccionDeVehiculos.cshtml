@@ -48,14 +48,15 @@
 
         var valor = s.GetRowKey(e.visibleIndex);
         $("#codigoVehiculo").val(valor);
-        consultarDatosVehiculo(valor);
+        var idSession = $("#idSession").val();
+        consultarDatosVehiculo(valor, idSession);
 
         if (valor) {
             $("#abtn_VerVehiculo").prop("href", "/vehiculos/details/" + valor);
         }
     }
 
-    function consultarDatosVehiculo(codigo) {
+    function consultarDatosVehiculo(codigo, idSession) {
         var destino = '@(Url.Action("VehiculoElegido", "Ventas"))'
         $.ajax({
             url: destino,
@@ -69,10 +70,12 @@
                     _actualizarCondicionesDeVenta(codigo);
                     _actualizarSenia(codigo);
                     _actualizarACVs(codigo);
+                    _actualizarMetodosDePago(codigo, idSession);
                 } else {
                     _resetCondicionesDeVenta();
                     _resetSenia();
                     _resetACVs();
+                    _resetMetodosDePago(idSession);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -83,6 +86,48 @@
         });
     }
 
+    //===========================================================================
+    //===========================================================================
+
+    function _actualizarMetodosDePago(codigo, idSession) {
+        var destino = '@(Url.Action("MetodosDePago", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'id=' + codigo + '&idSession=' + idSession,
+            success: function (data) {
+                $('#containerMetodosDePago').html('');
+                $('#containerMetodosDePago').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function _resetMetodosDePago(idSession) {
+        var destino = '@(Url.Action("MetodosDePago", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'idSession=' + idSession,
+            success: function (data) {
+                $('#containerMetodosDePago').html('');
+                $('#containerMetodosDePago').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    //===========================================================================
     //===========================================================================
 
     function _actualizarCondicionesDeVenta(codigo) {
@@ -171,6 +216,8 @@
     function _resetACVs() {
         $('#containerACVs').html('');
     }
+
+    //===========================================================================
 
     //function refreshDatosVehiculo(data) {
     //    if (data.Result == "OK") {

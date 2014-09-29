@@ -137,28 +137,50 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         private void prepararSession(Venta venta) {
+            string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            prepararSession(venta, idSession);
+        }
+
+        private void prepararSession(Venta venta, string idSession) {
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Controller = CONTROLLER;
 
-            string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
             Session[idSession + SessionUtils.VENTA] = venta;
             ViewData["idSession"] = idSession;
             ViewData["idParametros"] = venta.Codigo; // Para grillas que necesitan id de la venta
 
             List<Vale> listVale = null;
+            List<Cuota> listCuota = new List<Cuota>();
 
             if (venta.Vehiculo.Codigo != 0) {
-                PrecondicionesVenta precondicionesVenta = venta.Vehiculo.ObtenerPrecondicionesVenta();
-                listVale = precondicionesVenta.Vales;
                 List<Vehiculo> listVehiculo = new List<Vehiculo>();
                 listVehiculo.Add(venta.Vehiculo);
                 ViewBag.VehiculosVendibles = listVehiculo;
+
+                PrecondicionesVenta precondicionesVenta = venta.Vehiculo.ObtenerPrecondicionesVenta();
+                
+                // VALES
+                listVale = precondicionesVenta.Vales;
+
+                // FINANCIACION
+                precondicionesVenta.Financiacion.generarCuotasVenta(DateTime.Now);
+                listCuota = precondicionesVenta.Financiacion.CuotasOriginales;
+
+                // EFECTIVO
+                List<Efectivo> listEfectivo = precondicionesVenta.efectivoOperacion;
+                venta.Pago.AgregarEfectivos(listEfectivo);
+
+                // CHEQUE
+                List<Cheque> listCheque = precondicionesVenta.Cheques;
+                venta.Pago.AgregarCheques(listCheque);
+
             } else {
                 listVale = new List<Vale>();
+                listCuota = new List<Cuota>();
                 ViewBag.VehiculosVendibles = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES);
             }
 
-            List<Cuota> listCuota = new List<Cuota>();
+            
 
             Session[idSession + SessionUtils.CHEQUES] = venta.Pago.Cheques;
             Session[idSession + SessionUtils.EFECTIVO] = venta.Pago.Efectivos;
@@ -187,6 +209,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = id;
+            vehiculo.Consultar();
 
             PrecondicionesVenta cond = vehiculo.ObtenerPrecondicionesVenta();
 
@@ -202,9 +225,10 @@ namespace AutomotoraWeb.Controllers.Sales
 
             Venta venta = new Venta();
 
+            venta.Importe = cond.PrecioVenta;
             venta.Cliente = cond.Cliente;
             venta.Vendedor = cond.Vendedor;
-            venta.Sucursal = new Sucursal();
+            venta.Sucursal = vehiculo.Sucursal;
 
             return PartialView("_seleccionDeCondicionesDeVenta", venta);
         }
@@ -245,6 +269,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = id;
+            vehiculo.Consultar();
 
             List<ACuentaVenta> listACuentaVenta = vehiculo.obtenerACVsNoanulados();
 
@@ -255,21 +280,32 @@ namespace AutomotoraWeb.Controllers.Sales
             return PartialView("~/views/Acvs/_grillaAcvNoAnulados.cshtml", listACuentaVenta);
         }
 
+        //------------------------------------------------------------------------------------------
 
-        /*public ActionResult ResetSeniaVehiculo() {
+        public ActionResult MetodosDePago(int id, string idSession) {
 
-            Senia senia = new Senia();
+            Venta venta = new Venta();
+            venta.Vehiculo = new Vehiculo();
+            venta.Vehiculo.Codigo = id;
+            venta.Vehiculo.Consultar();
+            prepararSession(venta, idSession);
 
-            ViewBag.SoloLectura = true;
-            ViewBag.Multisucursal = false;
+            return PartialView("_seleccionDeMetodosDePago", venta);
+        }
 
-            SeniaModel seniaModel = new SeniaModel();
-            seniaModel.Senia = senia;
-            ViewBag.Sucursales = Sucursal.Sucursales;
 
-            return PartialView("~/views/senias/_condicionesSenia.cshtml", seniaModel);
-        }*/
+        public ActionResult ResetMetodosDePago(string idSession) {
 
+            Venta venta = new Venta();
+            venta.Vehiculo = new Vehiculo();
+            venta.Vehiculo.Codigo = 0;
+            venta.Vehiculo.Consultar();
+            prepararSession(venta, idSession);
+
+            return PartialView("_seleccionDeMetodosDePago", venta);
+        }
+
+        //------------------------------------------------------------------------------------------
         //--------------------- Consulta venta -----------------------------------------------------
 
         public ActionResult Details(int id) {

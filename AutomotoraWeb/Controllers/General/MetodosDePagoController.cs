@@ -472,6 +472,32 @@ namespace AutomotoraWeb.Controllers.General
             return listPagosCuota;
         }
 
+        
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaPagosCuota_UpdateRowRouteValues(Cuota cuota, string idSession) {
+
+            List<Cuota> listCuota = new List<Cuota>();
+
+            //_validarCheque(cheque);
+            if (ModelState.IsValid) {
+                try {
+                    IEnumerable<Cuota> pagosCuota = (IEnumerable<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
+                    List<Cuota> listPagosCuota = pagosCuota.ToList();
+                    listPagosCuota.Remove(listPagosCuota.First(x => x.Codigo == cuota.Codigo));
+                    listPagosCuota.Add(cuota);
+                    var sortedProducts = listPagosCuota.OrderBy(x => x.Codigo);
+
+                    Session[idSession + SessionUtils.CUOTAS] = sortedProducts;
+
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
+
+            return PartialView("_grillaPagosCheque", listCuota);
+        }
 
         [HttpPost]
         public JsonResult cambiarFinanciacion(int cantCuotas, double tasa, int codigoMonedaImporte, double montoImporte, string idSession) {
