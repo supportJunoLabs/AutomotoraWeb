@@ -50,7 +50,7 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Vehiculo = new Vehiculo();
             venta.Vehiculo.Codigo = id;
             venta.Vehiculo.Consultar();
-            venta.Consultar();
+
             venta.Cliente = new Cliente();
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
@@ -150,8 +150,12 @@ namespace AutomotoraWeb.Controllers.Sales
             if (venta.Vehiculo.Codigo != 0) {
                 PrecondicionesVenta precondicionesVenta = venta.Vehiculo.ObtenerPrecondicionesVenta();
                 listVale = precondicionesVenta.Vales;
+                List<Vehiculo> listVehiculo = new List<Vehiculo>();
+                listVehiculo.Add(venta.Vehiculo);
+                ViewBag.VehiculosVendibles = listVehiculo;
             } else {
                 listVale = new List<Vale>();
+                ViewBag.VehiculosVendibles = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES);
             }
 
             List<Cuota> listCuota = new List<Cuota>();
