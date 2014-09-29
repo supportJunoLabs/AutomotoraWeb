@@ -179,6 +179,15 @@
             $("#loadingContainer").hide();
         }
 
+        function reajustarControles() {
+            ajustarControles();
+
+            //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
+            $('form').removeData('validator');
+            $('form').removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse('form');
+        }
+
         function ajustarControles() {
             jQuery.validator.addMethod(
              'date',

@@ -91,6 +91,7 @@ function ventaSelected(s, e) {
                 $("#liPago").hide();
                 $("#pago_tab").hide();
             }
+            reajustarControles();
         },
         error: function (xhr, ajaxOptions, thrownError) {
             general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);

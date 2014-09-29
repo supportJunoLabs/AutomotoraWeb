@@ -642,7 +642,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             bool seguir = true;
             while (seguir) {
                 scheques = scheques.Trim();
-                if (scheques[scheques.Length - 1] == ',') {
+                if (scheques.Length>0 && scheques[scheques.Length - 1] == ',') {
                     scheques = scheques.Substring(0, scheques.Length - 1);
                 } else {
                     seguir = false;

@@ -83,7 +83,8 @@
             data: { "idAcv": valor },
             success: function (data) {
                 $('#divDetalleAcv').html(data);
-                $("#divAnulacion").show()
+                $("#divAnulacion").show();
+                reajustarControles();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);

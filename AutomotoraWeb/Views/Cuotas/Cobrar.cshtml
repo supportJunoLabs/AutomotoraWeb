@@ -123,10 +123,7 @@
             data: { "idVenta": selectedVenta, "idSession": idSession },
             success: function (data) {
                 $('#divDetalleCobro').html(data);
-                //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
-                $('form').removeData('validator');
-                $('form').removeData('unobtrusiveValidation');
-                $.validator.unobtrusive.parse('form');
+                reajustarControles();
 
             },
             error: function (xhr, ajaxOptions, thrownError) {
