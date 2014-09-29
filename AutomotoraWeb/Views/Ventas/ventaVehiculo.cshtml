@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="well" style="margin-top: 10px; width: 1000px; height: 630px;">
+<div class="well" style="margin-top: 10px; width: 1024px; height: 630px;">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#vehiculos_tab" data-toggle="tab">Vehiculo</a></li>
         <li><a href="#condiciones_de_venta_tab" data-toggle="tab">Condiciones de Venta</a></li>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="metodos_de_pago_tab">
-            <div style="width:950px; height: 535px;">
+            <div style="width:950px; height: 535px;"  id="containerMetodosDePago">
                 @Html.Partial("_seleccionDeMetodosDePago", Model)
             </div>
             <div style="float: right;">
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="tab-pane fade" id="senias_y_ACVs_tab">
-            <div style="height: 545px;">
+            <div style="height: 545px;" id="containerSeniasACVs">
                 @Html.Partial("_seleccionDeSeñasACVs", Model)
             </div>
             <div style="float: right;">
@@ -65,6 +65,8 @@
         </div>
     </div>
 </div>
+
+<input type="hidden" id="idSession" value="@(ViewData["idSession"])" />
 
 @section Scripts {
     <script type="text/javascript">

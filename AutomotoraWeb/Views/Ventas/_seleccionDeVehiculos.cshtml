@@ -9,7 +9,7 @@
     </div>
     <div class="renglon-alto editor-field-xlarge">
         <div class="floatLeft">
-            @{GridLookUpModel gmodelVehiculo = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES), GridLookUpCodigo=Model.Vehiculo.Codigo };}
+            @{GridLookUpModel gmodelVehiculo = new GridLookUpModel { Opciones = ViewBag.VehiculosVendibles, GridLookUpCodigo = Model.Vehiculo.Codigo };}
             @Html.Partial("_selectVehiculo", gmodelVehiculo )
         </div>
         <div class="floatLeft" style="margin-left: 5px">
@@ -31,6 +31,16 @@
 
 <script type="text/javascript">
 
+    
+    $(document).ready(function () {
+        var codigoVehiculo = $("#codigoVehiculo").val();
+        if (codigoVehiculo != "" && codigoVehiculo != "0") {
+            _actualizarCondicionesDeVenta(codigoVehiculo);
+            _actualizarSenia(codigoVehiculo);
+            _actualizarACVs(codigoVehiculo);
+        }
+    });
+
     function vehiculoSelected(s, e) {
         //alert("vehiculo elegido");
         //var g = gridVehiculos.GetGridView();  //obtener referencia a la grilla
@@ -38,14 +48,15 @@
 
         var valor = s.GetRowKey(e.visibleIndex);
         $("#codigoVehiculo").val(valor);
-        consultarDatosVehiculo(valor);
+        var idSession = $("#idSession").val();
+        consultarDatosVehiculo(valor, idSession);
 
         if (valor) {
             $("#abtn_VerVehiculo").prop("href", "/vehiculos/details/" + valor);
         }
     }
 
-    function consultarDatosVehiculo(codigo) {
+    function consultarDatosVehiculo(codigo, idSession) {
         var destino = '@(Url.Action("VehiculoElegido", "Ventas"))'
         $.ajax({
             url: destino,
@@ -57,8 +68,14 @@
                 $('#divDetalleVehiculo').html(data);
                 if ($("#vehiculoSeniado").val() == 'True') {
                     _actualizarCondicionesDeVenta(codigo);
+                    _actualizarSenia(codigo);
+                    _actualizarACVs(codigo);
+                    _actualizarMetodosDePago(codigo, idSession);
                 } else {
                     _resetCondicionesDeVenta();
+                    _resetSenia();
+                    _resetACVs();
+                    _resetMetodosDePago(idSession);
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -68,6 +85,50 @@
             complete: hideLoading
         });
     }
+
+    //===========================================================================
+    //===========================================================================
+
+    function _actualizarMetodosDePago(codigo, idSession) {
+        var destino = '@(Url.Action("MetodosDePago", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'id=' + codigo + '&idSession=' + idSession,
+            success: function (data) {
+                $('#containerMetodosDePago').html('');
+                $('#containerMetodosDePago').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function _resetMetodosDePago(idSession) {
+        var destino = '@(Url.Action("MetodosDePago", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'idSession=' + idSession,
+            success: function (data) {
+                $('#containerMetodosDePago').html('');
+                $('#containerMetodosDePago').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    //===========================================================================
+    //===========================================================================
 
     function _actualizarCondicionesDeVenta(codigo) {
         var destino = '@(Url.Action("CondicionesDeVentaVehiculo", "Ventas"))'
@@ -105,6 +166,58 @@
             complete: hideLoading
         });
     }
+
+    //===========================================================================
+
+    function _actualizarSenia(codigo) {
+        var destino = '@(Url.Action("SeniaVehiculo", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'id=' + codigo,
+            success: function (data) {
+                $('#containerSenias').html('');
+                $('#containerSenias').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function _resetSenia() {
+        $('#containerSenias').html('');
+    }
+
+    //===========================================================================
+
+    function _actualizarACVs(codigo) {
+        var destino = '@(Url.Action("ACVsVehiculo", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'id=' + codigo,
+            success: function (data) {
+                $('#containerACVs').html('');
+                $('#containerACVs').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function _resetACVs() {
+        $('#containerACVs').html('');
+    }
+
+    //===========================================================================
 
     //function refreshDatosVehiculo(data) {
     //    if (data.Result == "OK") {
