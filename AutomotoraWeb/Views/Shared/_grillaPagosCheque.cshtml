@@ -8,6 +8,16 @@
 
 @{
     bool chequesReadOnly = ((bool?)ViewBag.PagosSoloConsulta) ?? false;
+
+    var isReadOnly = ViewData["isReadOnly"];
+    chequesReadOnly = chequesReadOnly || ((isReadOnly != null) && ((bool)isReadOnly));
+
+    var nameGrid = "grillaPagosCheque";
+    var sufixId = ViewData["sufixId"];
+    if (sufixId != null) {
+        nameGrid = nameGrid + "_" + (string)sufixId;
+    }
+    
     
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
@@ -25,7 +35,7 @@
     };
 
     ig.AnchoTotal = 950;
-    ig.NameGrid = "grillaPagosCheque";
+    ig.NameGrid = nameGrid;
     ig.Controller = "MetodosDePago";
     ig.ActionCallbackRoute = "grillaPagosCheque";
     ig.KeyFieldName = "IdLinea";
