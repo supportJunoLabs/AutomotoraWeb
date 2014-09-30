@@ -62,12 +62,7 @@
             data: { "idSenia": valor, "idSession": $('#idSession').val(), "idOperacion": $('#idOperacion').val() },
             success: function (data) {
                 $('#divDetalleSenia').html(data);
-                //estos renglones que siguen son para que funcione la validacion en los campos que vienen en la partial view
-                $('form').removeData('validator');
-                $('form').removeData('unobtrusiveValidation');
-                $.validator.unobtrusive.parse('form');
-                //alert("hola");
-                ajustarControles();
+                reajustarControles();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);

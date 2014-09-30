@@ -13,6 +13,7 @@ $('#ddlVales').change(function () {
         data: { "idVale": selectedVal },
         success: function (data) {
             $('#divValeRenovacion').html(data);
+            reajustarControles();
         },
         error: function (xhr, ajaxOptions, thrownError) {
             general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);

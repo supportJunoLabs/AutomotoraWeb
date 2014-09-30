@@ -82,6 +82,7 @@
             data: { "idVehiculo": valor, "idSession": $('#idSession').val() },
             success: function (data) {
                 $('#operacion_tab').html(data);
+                reajustarControles();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
