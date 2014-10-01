@@ -70,11 +70,13 @@
                     _actualizarCondicionesDeVenta(codigo);
                     _actualizarSenia(codigo);
                     _actualizarACVs(codigo);
+                    _actualizarDetallesPagoSeniaACVs(codigo);
                     _actualizarMetodosDePago(codigo, idSession);
                 } else {
                     _resetCondicionesDeVenta();
                     _resetSenia();
                     _resetACVs();
+                    _resetDetallesPagoSeniaACVs();
                     _resetMetodosDePago(idSession);
                 }
             },
@@ -215,6 +217,45 @@
 
     function _resetACVs() {
         $('#containerACVs').html('');
+    }
+
+    //===========================================================================
+
+    function _actualizarDetallesPagoSeniaACVs(codigo) {
+        var destino = '@(Url.Action("DetallesPagoSeniaACVs", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            data: 'id=' + codigo,
+            success: function (data) {
+                $('#pagosSeniaACVsAcordionItemContainer').html('');
+                $('#pagosSeniaACVsAcordionItemContainer').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+    function _resetDetallesPagoSeniaACVs() {
+        var destino = '@(Url.Action("ResetDetallesPagoSeniaACVs", "Ventas"))'
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            success: function (data) {
+                $('#pagosSeniaACVsAcordionItemContainer').html('');
+                $('#pagosSeniaACVsAcordionItemContainer').html(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
     }
 
     //===========================================================================

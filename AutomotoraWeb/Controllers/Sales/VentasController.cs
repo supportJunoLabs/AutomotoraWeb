@@ -247,6 +247,7 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
 
         public ActionResult SeniaVehiculo(int id) {
 
@@ -283,6 +284,29 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
+
+        public ActionResult DetallesPagoSeniaACVs(int id) {
+
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = id;
+            vehiculo.Consultar();
+            PagoTransaccion pago = vehiculo.pagosTransaccionesPreventa();
+
+            return PartialView("_pagosSeniaACVs", pago);
+        }
+
+        //------------------------------------------------------------------------------------------
+
+        public ActionResult ResetDetallesPagoSeniaACVs() {
+
+            PagoTransaccion pago = new PagoTransaccion();
+
+            return PartialView("_pagosSeniaACVs", pago);
+        }
+
+        //------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------
 
         public ActionResult MetodosDePago(int id, string idSession) {
 
@@ -306,6 +330,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
             return PartialView("_seleccionDeMetodosDePago", venta);
         }
+
 
         //------------------------------------------------------------------------------------------
         //--------------------- Consulta venta -----------------------------------------------------

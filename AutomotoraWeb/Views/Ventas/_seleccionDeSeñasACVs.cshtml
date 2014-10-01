@@ -1,5 +1,5 @@
 ﻿@model DLL_Backend.Venta
-
+@using DLL_Backend;
 
 <div class="accordion" id="accordion2">
   <div class="accordion-group">
@@ -44,7 +44,11 @@
       <div class="accordion-inner">
         <div class="panel-body">
             <div id="pagosSeniaACVsAcordionItemContainer">
-                @Html.Partial("_pagosSeniaACVs", Model.Senia)
+                @if (Model.Vehiculo.Codigo != 0) {
+                    @Html.Partial("_pagosSeniaACVs", Model.Vehiculo.pagosTransaccionesPreventa())
+                } else { 
+                    @Html.Partial("_pagosSeniaACVs", new PagoTransaccion())
+                } 
             </div>
         </div>
       </div>
