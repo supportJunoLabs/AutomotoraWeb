@@ -26,6 +26,9 @@
             <div style="height: 545px;" id="containerCondicionesDeVenta">
                 @Html.Partial("_seleccionDeCondicionesDeVenta", Model)
             </div>
+            <div style="float: left;">
+                <button class="btn-primary  btn" id="btnBeforeCondicionesDeVenta" type="button">Anterior</button>
+            </div>
             <div style="float: right;">
                 <button class="btn-primary  btn" id="btnNextCondicionesDeVenta" type="button">Siguiente</button>
             </div>
@@ -34,6 +37,9 @@
             <div style="width:950px; height: 535px;"  id="containerMetodosDePago">
                 @Html.Partial("_seleccionDeMetodosDePago", Model)
             </div>
+            <div style="float: left;">
+                <button class="btn-primary  btn" id="btnBeforeMetodosDePago" type="button">Anterior</button>
+            </div>
             <div style="float: right;">
                 <button class="btn-primary  btn" id="btnNextMetodosDePago" type="button">Siguiente</button>
             </div>
@@ -41,6 +47,9 @@
         <div class="tab-pane fade" id="senias_y_ACVs_tab">
             <div style="height: 545px;" id="containerSeniasACVs">
                 @Html.Partial("_seleccionDeSeñasACVs", Model)
+            </div>
+            <div style="float: left;">
+                <button class="btn-primary  btn" id="btnBeforeContainerSeniasACVs" type="button">Anterior</button>
             </div>
             <div style="float: right;">
                 <button class="btn-primary  btn" id="btnFinalizarVenta" type="button">Finalizar Venta</button>
@@ -52,8 +61,7 @@
     </div>
 </div>
 
-<div id="dialog-confirm-venta" style="display:none;">
-    <div>Confirme la venta</div>
+<div id="dialog-confirm-venta" style="display:none;" title="Confirme la venta">
     <div id="loadingContainer" style="display: none; position: absolute; top: 500px; right: 0; bottom: 0; left: 0; z-index: 13;">
         <div style="margin: 0 auto; width: 80px; height: 80px; border: solid 1px black; background-color: white; text-align: center; padding: 8px;">
             <div>
@@ -70,17 +78,36 @@
 
 @section Scripts {
     <script type="text/javascript">
-        $(document).ready(function () {
-            
-        });
 
-        $("#metodos_de_pago_tab").click(function () {
-            //activaTab('MPEfectivo_tab');
-        });
+        //------------------------------------------------------
 
         $("#btnNextVehiculo").click(function () {
             activaTab('condiciones_de_venta_tab');
         });
+
+        $("#btnNextCondicionesDeVenta").click(function () {
+            activaTab('metodos_de_pago_tab');
+        });
+
+        $("#btnNextMetodosDePago").click(function () {
+            activaTab('senias_y_ACVs_tab');
+        });
+
+        //------------------------------------------------------
+
+        $("#btnBeforeCondicionesDeVenta").click(function () {
+            activaTab('vehiculos_tab');
+        });
+
+        $("#btnBeforeMetodosDePago").click(function () {
+            activaTab('condiciones_de_venta_tab');
+        });
+
+        $("#btnBeforeContainerSeniasACVs").click(function () {
+            activaTab('metodos_de_pago_tab');
+        });
+
+        //------------------------------------------------------
 
         function activaTab(tab) {
             $('.nav-tabs a[href="#' + tab + '"]').tab('show');
@@ -92,7 +119,7 @@
 
             $("#dialog-confirm-venta").dialog({
                 resizable: false,
-                height: 140,
+                height: 10,
                 modal: true,
                 buttons: {
                     "Confirmar Venta": function () {
@@ -166,37 +193,6 @@
 
             return JSON.stringify(venta);
         }
-
-       /* function general_showPopup(data, idContainer, valueHeight, valueWidth) {
-            $("#" + idContainer + "Form").html(data);
-            $("#" + idContainer).dialog({
-                height: valueHeight,
-                width: valueWidth,
-                modal: true
-            });
-
-            $('.calendarAW').datepicker({
-                changeMonth: true,
-                dateFormat: "dd/mm/yy",
-                changeYear: true,
-                showAnim: 'slideDown',
-                yearRange: '1900:2100'
-            });
-        }
-
-        function general_closePopup(idContainer) {
-            $("#" + idContainer).dialog("close");
-            $("#" + idContainer + "Form").html("");
-        }
-
-        //Se comenta este. La idea es usuar el siguiente, al que hay indicarle de donde viene el error para tener mas informacion
-        //function general_showErrorPopup(jqXHR, textStatus, errorThrown) {
-        //    alert("Se ha producido un error: " + textStatus + " | " + errorThrown);
-        //}
-
-        function general_showErrorPopup(jqXHR, textStatus, errorThrown, metodoInvocado) {
-            alert("Se ha producido un error: " + textStatus + " | " + errorThrown + " | " + metodoInvocado);
-        }*/
         
     </script>
 }

@@ -27,10 +27,6 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewBag.VehiculoSeniado = Boolean.Parse("false");
         }
 
-        public ActionResult Index(){
-            return View();
-        }
-
         public ActionResult VentaVehiculo() {
             
             Venta venta = new Venta();
