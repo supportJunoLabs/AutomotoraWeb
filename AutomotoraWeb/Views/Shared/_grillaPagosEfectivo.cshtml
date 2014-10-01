@@ -7,7 +7,17 @@
 
 
 @{
+    
     bool efectivoReadOnly = ((bool?)ViewBag.PagosSoloConsulta) ?? false;
+    
+    var isReadOnly = ViewData["isReadOnly"];
+    efectivoReadOnly = efectivoReadOnly || ((isReadOnly != null) && ((bool)isReadOnly));
+
+    var nameGrid = "grillaPagosEfectivo";
+    var sufixId = ViewData["sufixId"];
+    if (sufixId != null){
+        nameGrid = nameGrid + "_" + (string)sufixId;
+    }
     
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
@@ -15,8 +25,8 @@
             new ColumnaGrilla {Campo="Importe.Monto", Ancho=150, Titulo="Monto", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE},
             new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Ancho=150, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, MostrarSoloGrilla=true, ReadOnly=true}
     };
-    
-    ig.NameGrid = "grillaPagosEfectivo";
+
+    ig.NameGrid = nameGrid;
     ig.Controller = "MetodosDePago";
     ig.ActionCallbackRoute = "grillaPagosEfectivo";
     ig.KeyFieldName = "IdLinea";

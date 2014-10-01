@@ -2285,6 +2285,7 @@
     <Content Include="Views\Shared\_grillaPagosChequesEmitidos.cshtml" />
     <Content Include="Views\Senias\_devolucionCheques.cshtml" />
     <Content Include="Views\Senias\_grillaChequesDevolucion.cshtml" />
+    <Content Include="Views\Ventas\_pagosSeniaACVs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

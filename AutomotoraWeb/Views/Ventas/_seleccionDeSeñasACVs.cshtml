@@ -1,22 +1,54 @@
 ﻿@model DLL_Backend.Venta
 
 
-<div id="divSenia" class="floatLeft" style="width: 375px; margin-left: 15px;">
-    <div style="font-size: 20px;">
-        Seña
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+        Seña y ACVs
+      </a>
     </div>
-    <div id="containerSenias">
+    <div id="collapseOne" class="accordion-body collapse in">
+      <div class="accordion-inner">
+        <div id="seniaACVsAcordionItemContainer">
+            <div id="divSenia" class="floatLeft" style="width: 375px; margin-left: 15px;">
+                <div style="font-size: 20px;">
+                    Seña
+                </div>
+                <div id="containerSenias">
 
+                </div>
+            </div>
+
+            <div id="divAcvs" class="floatLeft" style="width: 400px; margin-left: 15px;">
+                <div style="font-size: 20px;">
+                    ACVs
+                </div>
+                <div id="containerACVs">
+
+                </div>
+            </div>
+
+            <div class="clear-both"></div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+        Detalles de Pagos de Seña y ACVs
+      </a>
+    </div>
+    <div id="collapseTwo" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <div class="panel-body">
+            <div id="pagosSeniaACVsAcordionItemContainer">
+                @Html.Partial("_pagosSeniaACVs", Model.Senia)
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div id="divAcvs" class="floatLeft" style="width: 400px; margin-left: 15px;">
-    <div style="font-size: 20px;">
-        ACVs
-    </div>
-    <div id="containerACVs">
-
-    </div>
-</div>
-
-<div class="clear-both"></div>

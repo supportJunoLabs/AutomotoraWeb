@@ -39,6 +39,7 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
             venta.Pago.AgregarEfectivos(new List<Efectivo>());
+            venta.Senia = new Senia();
 
             prepararSession(venta); 
 
@@ -54,6 +55,7 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Cliente = new Cliente();
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
+            venta.Senia = venta.Vehiculo.ObtenerSenia();
 
             prepararSession(venta); 
 

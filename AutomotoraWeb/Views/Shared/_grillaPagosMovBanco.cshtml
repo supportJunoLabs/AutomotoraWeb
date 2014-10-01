@@ -8,6 +8,15 @@
 @{
     
     bool movBancoReadOnly = ((bool?)ViewBag.PagosSoloConsulta) ?? false;
+
+    var isReadOnly = ViewData["isReadOnly"];
+    movBancoReadOnly = movBancoReadOnly || ((isReadOnly != null) && ((bool)isReadOnly));
+
+    var nameGrid = "grillaPagosMovBanco";
+    var sufixId = ViewData["sufixId"];
+    if (sufixId != null) {
+        nameGrid = nameGrid + "_" + (string)sufixId;
+    }
     
     InfoGrilla ig= new InfoGrilla();
     ig.AnchoTotal = 950;
@@ -23,9 +32,9 @@
             new ColumnaGrilla {Campo="ImporteMov.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, MostrarSoloGrilla=true},
             new ColumnaGrilla {Campo="DescripcionMov", EdicionColSpan=2, Ancho=300}
     };
-    
-    
-    ig.NameGrid = "grillaPagosMovBanco";
+
+
+    ig.NameGrid = nameGrid;
     ig.Controller = "MetodosDePago";
     ig.ActionCallbackRoute = "grillaPagosMovBanco";
     ig.KeyFieldName = "IdLinea";
