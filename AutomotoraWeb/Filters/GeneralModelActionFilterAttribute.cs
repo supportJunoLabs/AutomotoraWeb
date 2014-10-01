@@ -23,8 +23,12 @@ namespace AutomotoraWeb.Filters {
                 var baseController = filterContext.Controller as BaseController;
 
                 if (baseController == null) {
-                    throw new InvalidOperationException("It is not YourController !!!");
+                    string controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName.ToLower();
+                    if (!controllerName.Equals(SessionUtils.ELMAH_CONTROLLER.ToLower())){
+                        throw new InvalidOperationException("It is not YourController !!!");
+                    }
                 } else {
+                    //se usa en _layout para segun el padre del controller mostrar el menu correspondiente al modulo
                     filterContext.Controller.ViewBag.parentControllerName = baseController.getParentControllerName();
                 }
             }
