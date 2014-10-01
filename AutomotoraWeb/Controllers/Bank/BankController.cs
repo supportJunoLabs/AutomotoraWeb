@@ -12,6 +12,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public static string INDEX = "index";
 
         public ActionResult Index() {
+            throw new Exception("Prueba error intencional");
             return View();
         }
 
