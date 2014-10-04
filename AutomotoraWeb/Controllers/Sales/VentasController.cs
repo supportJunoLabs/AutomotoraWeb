@@ -34,7 +34,9 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Cliente = new Cliente();
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
+            venta.Permuta = new Vehiculo();
             venta.Pago.AgregarEfectivos(new List<Efectivo>());
+            venta.Financiacion = new Financiacion();
             venta.Senia = new Senia();
 
             prepararSession(venta); 
@@ -51,6 +53,8 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Cliente = new Cliente();
             venta.Vendedor = new Vendedor();
             venta.Sucursal = new Sucursal();
+            venta.Permuta = new Vehiculo();
+            venta.Financiacion = new Financiacion();
             venta.Senia = venta.Vehiculo.ObtenerSenia();
 
             prepararSession(venta); 
@@ -60,8 +64,8 @@ namespace AutomotoraWeb.Controllers.Sales
 
         [HttpPost]
         public JsonResult finalizarVenta(string idSession, int codigoVehiculo, int condVentaCodigoCliente, int condVentaCodigoVendedor, 
-                                         DateTime condVentaFecha, int condVentaCodigoMoneda, double condVentaMonto, int condVentaCodigoSucursal, 
-                                         bool condVentaVehiculoEntregado, DateTime condVentaFechaEntrega, String condVentaObservaciones) {
+                                         DateTime condVentaFecha, int condVentaCodigoMoneda, double condVentaMonto, int condVentaCodigoSucursal,
+                                         bool condVentaVehiculoEntregado, DateTime condVentaFechaEntrega, String condVentaObservaciones, Financiacion financiacion) {
 
             try {
                 Venta venta = (Venta)(Session[idSession + SessionUtils.VENTA]);
@@ -99,6 +103,8 @@ namespace AutomotoraWeb.Controllers.Sales
                 }
                 venta.Observaciones = condVentaObservaciones;
 
+                venta.Financiacion = financiacion;
+
                 //--------------------------------------------------
 
                 //foreach (Cheque cheque in listPagosCheque) {
@@ -122,7 +128,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
                 venta.Ejecutar();
 
-                return Json(new { Result = "OK" });
+                return Json(new { Result = "OK", CodigoVenta = venta.Codigo });
             } catch (UsuarioException exc) {
                 List<String> errores = new List<string>();
                 errores.Add(exc.Message);
@@ -141,7 +147,12 @@ namespace AutomotoraWeb.Controllers.Sales
 
         private void prepararSession(Venta venta, string idSession) {
             ViewBag.Sucursales = Sucursal.Sucursales;
+            ViewBag.Departamentos = Departamento.Departamentos();
+            ViewBag.TiposCombustible = TipoCombustible.TiposCombustible();
             ViewBag.Controller = CONTROLLER;
+
+            ViewBag.Multisucursal = true;
+            ViewBag.SoloLectura = false;
 
             Session[idSession + SessionUtils.VENTA] = venta;
             ViewData["idSession"] = idSession;
@@ -163,6 +174,7 @@ namespace AutomotoraWeb.Controllers.Sales
                 // FINANCIACION
                 precondicionesVenta.Financiacion.generarCuotasVenta(DateTime.Now);
                 listCuota = precondicionesVenta.Financiacion.CuotasOriginales;
+                venta.Financiacion = venta.Vehiculo.ObtenerPrecondicionesVenta().Financiacion;
 
                 // EFECTIVO
                 List<Efectivo> listEfectivo = precondicionesVenta.efectivoOperacion;
@@ -172,13 +184,12 @@ namespace AutomotoraWeb.Controllers.Sales
                 List<Cheque> listCheque = precondicionesVenta.Cheques;
                 venta.Pago.AgregarCheques(listCheque);
 
+                venta.Permuta = venta.Vehiculo.ObtenerPrecondicionesVenta().Permuta;
             } else {
                 listVale = new List<Vale>();
                 listCuota = new List<Cuota>();
                 ViewBag.VehiculosVendibles = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES);
             }
-
-            
 
             Session[idSession + SessionUtils.CHEQUES] = venta.Pago.Cheques;
             Session[idSession + SessionUtils.EFECTIVO] = venta.Pago.Efectivos;
@@ -228,6 +239,8 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Vendedor = cond.Vendedor;
             venta.Sucursal = vehiculo.Sucursal;
 
+            venta.FechaEntrega = DateTime.Now;
+
             return PartialView("_seleccionDeCondicionesDeVenta", venta);
         }
 
@@ -251,7 +264,6 @@ namespace AutomotoraWeb.Controllers.Sales
             vehiculo.Codigo = id;
 
             Senia senia = vehiculo.ObtenerSenia();
-
             ViewBag.SoloLectura = true;
             ViewBag.Multisucursal = false;
             ViewBag.Sucursales = Sucursal.Sucursales;
@@ -371,13 +383,14 @@ namespace AutomotoraWeb.Controllers.Sales
             try {
                 //listCuota.Add(cuota);
 
-                Financiacion f = new Financiacion(importe, cantCuotas, tasa, "");
-                f.generarCuotasVenta(DateTime.Now);
+                Financiacion financiacion = new Financiacion(importe, cantCuotas, tasa, "");
+                financiacion.generarCuotasVenta(DateTime.Now);
                 List<Cuota> listCuota = new List<Cuota>();
-                foreach (Cuota cuota in f.CuotasOriginales) {
+                foreach (Cuota cuota in financiacion.CuotasOriginales) {
                     listCuota.Add(cuota);
                 }
                 Session[idSession + SessionUtils.CUOTAS] = listCuota;
+                Session[idSession + SessionUtils.FINANCIACION] = financiacion;
 
                 return Json(new { Result = "OK"  });
             } catch (UsuarioException exc) {
@@ -392,10 +405,6 @@ namespace AutomotoraWeb.Controllers.Sales
         private List<String> validateAtributesFinanciacion(int cantCuotas, double tasa, Importe importe) {
 
             List<String> errors = new List<String>();
-
-            if (tasa == null) {
-                errors.Add("El campo Tasa es obligatorio");
-            }
 
             if (cantCuotas <= 0) {
                 errors.Add("El campo Número es obligatorio, y debe ser mayor a 0");

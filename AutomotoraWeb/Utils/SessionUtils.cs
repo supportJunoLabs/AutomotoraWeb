@@ -24,7 +24,8 @@ namespace AutomotoraWeb.Utils {
         public static string EFECTIVO = "efectivo";
         public static string MOV_BANCARIO = "movBanco";
         public static string VALES = "vales";
-        public static string CUOTAS = "cuota";
+        public static string CUOTAS = "cuotas";
+        public static string FINANCIACION = "financiacion";
 
         public static string EFECTIVO_PROMESA = "efectivoPromesa";
         public static string CHEQUES_PROMESA = "chequesPromesa";
