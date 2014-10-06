@@ -181,14 +181,14 @@
             var venta = {
                 idSession: idSession,
                 codigoVehiculo: $("#codigoVehiculo").val(),
-                condVentaCodigoCliente: $("#ddlClientes").val(),
-                condVentaCodigoVendedor: $("#ddlVendedores").val(),
+                condVentaCodigoCliente: $("#ddlClientes").val() != "" ? $("#ddlClientes").val() : "0",
+                condVentaCodigoVendedor: $("#ddlVendedores").val() != "" ? $("#ddlVendedores").val() : "0",
                 condVentaFecha: $("#Fecha").val(),
                 condVentaCodigoMoneda: $("#ddlImporteMoneda").val(),
                 condVentaMonto: $("#txImporteMonto").val(),
                 condVentaCodigoSucursal: $("#ddlSucursal").val(),
                 condVentaVehiculoEntregado: $("#checkBoxVentaVehiculoEntregado").val(),
-                condVentaFechaEntrega: $("#datePikerVentaVehiculoFechaEntrega").val(),
+                condVentaFechaEntrega: $("#datePikerVentaVehiculoFechaEntrega").val() != "" ? $("#datePikerVentaVehiculoFechaEntrega").val() : "01/01/1900",
                 condVentaObservaciones: $("#Observaciones").val(),
                 financiacion: {
                     CantCuotas: $("#Financiacion_CantCuotas").val(),
@@ -197,6 +197,44 @@
                         Monto: $("#txMontoFinanciadoMonto").val(),
                         Moneda: {
                             Codigo: $("#ddlMontoFinanciadoMoneda").val()
+                        }
+                    }
+                },
+                //existePermuta: $("#existePermutaCheckBox").val() == "on" ? "true" : "false",
+                existePermuta: $("#existePermutaCheckBox").is(':checked') ? "true" : "false",
+                permuta: {
+                    Codigo: $("#Permuta_Codigo").val(),
+                    Anio: $("#Permuta_Anio").val(),
+                    Chasis: $("#Permuta_Chasis").val(),
+                    Color: $("#Permuta_Color").val(),
+                    Costo: {
+                            Monto: $("#txCostoMonto").val(),
+                            Moneda: {
+                                Codigo: $("#ddlCostoMoneda").val()
+                            }
+                    },
+                    Departamento: { Codigo: $("#ddlDepartamento").val() },
+                    FechaAdquirido: $("#Permuta_FechaAdquirido").val(),
+                    Kilometros: $("#Permuta_Kilometros").val(),
+                    Marca: $("#Permuta_Marca").val(),
+                    Matricula: $("#Permuta_Matricula").val(),
+                    Modelo: $("#Permuta_Modelo").val(),
+                    Motor: $("#Permuta_Motor").val(),
+                    Observaciones: $("#Permuta_Observaciones").val(),
+                    Padron: $("#Permuta_Padron").val(),
+                    PrecioVenta: {
+                        Monto: $("#txPrecioVentaMonto").val(),
+                        Moneda: {
+                            Codigo: $("#ddlPrecioVentaMoneda").val()
+                        }
+                    },
+                    Propietario: $("#Permuta_Propietario").val(),
+                    Sucursal: $("#ddlSucursal").val(),
+                    TipoCombustible: $("#ddlTipoCombustible").val(),
+                    TotalGastos: {
+                        Monto: $("#txTotalGastosMonto").val(),
+                        Moneda: {
+                            Codigo: $("#ddlTotalGastosMoneda").val()
                         }
                     }
                 }

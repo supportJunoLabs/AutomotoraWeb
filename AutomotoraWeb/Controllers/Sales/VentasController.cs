@@ -65,7 +65,7 @@ namespace AutomotoraWeb.Controllers.Sales
         [HttpPost]
         public JsonResult finalizarVenta(string idSession, int codigoVehiculo, int condVentaCodigoCliente, int condVentaCodigoVendedor, 
                                          DateTime condVentaFecha, int condVentaCodigoMoneda, double condVentaMonto, int condVentaCodigoSucursal,
-                                         bool condVentaVehiculoEntregado, DateTime condVentaFechaEntrega, String condVentaObservaciones, Financiacion financiacion) {
+                                         bool condVentaVehiculoEntregado, DateTime condVentaFechaEntrega, String condVentaObservaciones, Financiacion financiacion, bool existePermuta, Vehiculo permuta) {
 
             try {
                 Venta venta = (Venta)(Session[idSession + SessionUtils.VENTA]);
@@ -104,6 +104,9 @@ namespace AutomotoraWeb.Controllers.Sales
                 venta.Observaciones = condVentaObservaciones;
 
                 venta.Financiacion = financiacion;
+                if (existePermuta) {
+                    venta.Permuta = permuta;
+                }
 
                 //--------------------------------------------------
 
