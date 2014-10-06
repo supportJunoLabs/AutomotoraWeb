@@ -67,6 +67,25 @@ namespace AutomotoraWeb.Controllers.Sales
                                          DateTime condVentaFecha, int condVentaCodigoMoneda, double condVentaMonto, int condVentaCodigoSucursal,
                                          bool condVentaVehiculoEntregado, DateTime condVentaFechaEntrega, String condVentaObservaciones, Financiacion financiacion, bool existePermuta, Vehiculo permuta) {
 
+            List<string> listError = new List<string>();
+
+            if (codigoVehiculo == 0) {
+                listError.Add("Debe seleccionar un Vehiculo para la venta");                       
+            }
+            if (condVentaCodigoCliente == 0) {
+                listError.Add("Debe seleccionar un Cliente para la venta");  
+            } 
+            if (condVentaCodigoVendedor == 0) {
+                listError.Add("Debe seleccionar un Vendedor para la venta");  
+            }
+            if (condVentaMonto == 0) {
+                listError.Add("El monto de la venta debe ser mayor a 0");  
+            }
+
+            if (listError.Count > 0) {
+                return Json(new { Result = "ERROR", ErrorCode = "", ErrorMessage = listError }); 
+            }
+
             try {
                 Venta venta = (Venta)(Session[idSession + SessionUtils.VENTA]);
 

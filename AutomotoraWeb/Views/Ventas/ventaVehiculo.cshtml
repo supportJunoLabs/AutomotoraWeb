@@ -229,8 +229,12 @@
                         }
                     },
                     Propietario: $("#Permuta_Propietario").val(),
-                    Sucursal: $("#ddlSucursal").val(),
-                    TipoCombustible: $("#ddlTipoCombustible").val(),
+                    Sucursal: {
+                        Codigo: $("#ddlSucursal").val()
+                    },
+                    TipoCombustible: {
+                        Codigo: $("#ddlTipoCombustible").val()
+                    },
                     TotalGastos: {
                         Monto: $("#txTotalGastosMonto").val(),
                         Moneda: {
