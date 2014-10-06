@@ -69,8 +69,9 @@ namespace AutomotoraWeb.Controllers.Sales
 
             List<string> listError = new List<string>();
 
+            // Chequeos generales
             if (codigoVehiculo == 0) {
-                listError.Add("Debe seleccionar un Vehiculo para la venta");                       
+                listError.Add("Debe seleccionar un Vehículo para la venta");                       
             }
             if (condVentaCodigoCliente == 0) {
                 listError.Add("Debe seleccionar un Cliente para la venta");  
@@ -82,10 +83,28 @@ namespace AutomotoraWeb.Controllers.Sales
                 listError.Add("El monto de la venta debe ser mayor a 0");  
             }
 
+            // Chequeo de campos obligatorios en Permuta
+            if (existePermuta && permuta.Sucursal.Codigo == 0) {
+                listError.Add("[Permuta] Debe seleccionar una Sucursal para el vehículo en Permuta"); 
+            }
+            if (existePermuta && (permuta.Marca == null) || (permuta.Marca == "")) {
+                listError.Add("[Permuta] Debe seleccionar una Marca para el vehículo en Permuta");
+            }
+            if (existePermuta && (permuta.Modelo == null) || (permuta.Modelo == "")) {
+                listError.Add("[Permuta] Debe seleccionar una Modelo para el vehículo en Permuta");
+            }
+            if (existePermuta && permuta.Anio == 0) {
+                listError.Add("[Permuta] Debe seleccionar una Año para el vehículo en Permuta");
+            }
+            if (existePermuta && (permuta.Matricula == null) || (permuta.Modelo == "")) {
+                listError.Add("[Permuta] Debe seleccionar una Matricula para el vehículo en Permuta");
+            }
+
             if (listError.Count > 0) {
                 return Json(new { Result = "ERROR", ErrorCode = "", ErrorMessage = listError }); 
             }
 
+            // Se procesa la venta
             try {
                 Venta venta = (Venta)(Session[idSession + SessionUtils.VENTA]);
 
