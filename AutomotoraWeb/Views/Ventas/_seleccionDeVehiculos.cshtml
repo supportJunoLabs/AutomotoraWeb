@@ -31,6 +31,8 @@
 
 <script type="text/javascript">
 
+    var countLoading = 0;
+
     $(document).ready(function () {
         var codigoVehiculo = $("#codigoVehiculo").val();
         if (codigoVehiculo != "" && codigoVehiculo != "0") {
@@ -41,10 +43,6 @@
     });
 
     function vehiculoSelected(s, e) {
-        //alert("vehiculo elegido");
-        //var g = gridVehiculos.GetGridView();  //obtener referencia a la grilla
-        //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
-
         var valor = s.GetRowKey(e.visibleIndex);
         $("#codigoVehiculo").val(valor);
         var idSession = $("#idSession").val();
@@ -56,7 +54,7 @@
     }
 
     function consultarDatosVehiculo(codigo, idSession) {
-        var destino = '@(Url.Action("VehiculoElegido", "Ventas"))'
+        var destino = '@(Url.Action("VehiculoElegido", "Ventas"))';
         $.ajax({
             url: destino,
             type: 'POST',
@@ -82,8 +80,8 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
-            beforeSend: showLoading,
-            complete: hideLoading
+            beforeSend: showLoadingVenta,
+            complete: hideLoadingVenta
         });
     }
 
@@ -91,7 +89,7 @@
     //===========================================================================
 
     function _actualizarMetodosDePago(codigo, idSession) {
-        var destino = '@(Url.Action("MetodosDePago", "Ventas"))'
+        var destino = '@(Url.Action("MetodosDePago", "Ventas"))';
         $.ajax({
             url: destino,
             type: 'POST',
@@ -105,13 +103,13 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
-            beforeSend: showLoading,
-            complete: hideLoading
+            beforeSend: showLoadingVenta,
+            complete: hideLoadingVenta
         });
     }
 
     function _resetMetodosDePago(idSession) {
-        var destino = '@(Url.Action("MetodosDePago", "Ventas"))'
+        var destino = '@(Url.Action("MetodosDePago", "Ventas"))';
         $.ajax({
             url: destino,
             type: 'POST',
@@ -125,8 +123,8 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
-            beforeSend: showLoading,
-            complete: hideLoading
+            beforeSend: showLoadingVenta,
+            complete: hideLoadingVenta
         });
     }
 
@@ -134,7 +132,7 @@
     //===========================================================================
 
     function _actualizarCondicionesDeVenta(codigo) {
-        var destino = '@(Url.Action("CondicionesDeVentaVehiculo", "Ventas"))'
+        var destino = '@(Url.Action("CondicionesDeVentaVehiculo", "Ventas"))';
         $.ajax({
             url: destino,
             type: 'POST',
@@ -148,13 +146,13 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
-            beforeSend: showLoading,
-            complete: hideLoading
+            beforeSend: showLoadingVenta,
+            complete: hideLoadingVenta
         });
     }
 
     function _resetCondicionesDeVenta() {
-        var destino = '@(Url.Action("ResetCondicionesDeVenta", "Ventas"))'
+        var destino = '@(Url.Action("ResetCondicionesDeVenta", "Ventas"))';
         $.ajax({
             url: destino,
             type: 'POST',
@@ -167,15 +165,15 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
-            beforeSend: showLoading,
-            complete: hideLoading
+            beforeSend: showLoadingVenta,
+            complete: hideLoadingVenta
         });
     }
 
     //===========================================================================
 
     function _actualizarSenia(codigo) {
-        var destino = '@(Url.Action("SeniaVehiculo", "Ventas"))'
+        var destino = '@(Url.Action("SeniaVehiculo", "Ventas"))';
         $.ajax({
             url: destino,
             type: 'POST',
@@ -189,8 +187,8 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
-            beforeSend: showLoading,
-            complete: hideLoading
+            beforeSend: showLoadingVenta,
+            complete: hideLoadingVenta
         });
     }
 
@@ -201,7 +199,7 @@
     //===========================================================================
 
     function _actualizarACVs(codigo) {
-        var destino = '@(Url.Action("ACVsVehiculo", "Ventas"))'
+        var destino = '@(Url.Action("ACVsVehiculo", "Ventas"))';
         $.ajax({
             url: destino,
             type: 'POST',
@@ -215,8 +213,8 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
-            beforeSend: showLoading,
-            complete: hideLoading
+            beforeSend: showLoadingVenta,
+            complete: hideLoadingVenta
         });
     }
 
@@ -227,7 +225,7 @@
     //===========================================================================
 
     function _actualizarDetallesPagoSeniaACVs(codigo) {
-        var destino = '@(Url.Action("DetallesPagoSeniaACVs", "Ventas"))'
+        var destino = '@(Url.Action("DetallesPagoSeniaACVs", "Ventas"))';
         $.ajax({
             url: destino,
             type: 'POST',
@@ -241,13 +239,15 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
-            beforeSend: showLoading,
-            complete: hideLoading
+            beforeSend: showLoadingVenta,
+            complete: hideLoadingVenta
         });
     }
 
+    //===========================================================================
+
     function _resetDetallesPagoSeniaACVs() {
-        var destino = '@(Url.Action("ResetDetallesPagoSeniaACVs", "Ventas"))'
+        var destino = '@(Url.Action("ResetDetallesPagoSeniaACVs", "Ventas"))';
         $.ajax({
             url: destino,
             type: 'POST',
@@ -260,35 +260,24 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
             },
-            beforeSend: showLoading,
-            complete: hideLoading
+            beforeSend: showLoadingVenta,
+            complete: hideLoadingVenta
         });
     }
 
     //===========================================================================
 
-    //function refreshDatosVehiculo(data) {
-    //    if (data.Result == "OK") {
-    //        $("#vehiculoFicha").val(data.Vehiculo.Ficha);
-    //        $("#vehiculoSucursal").val(data.Vehiculo.Sucursal);
-    //        $("#vehiculoMarca").val(data.Vehiculo.Marca);
-    //        $("#vehiculoModelo").val(data.Vehiculo.Modelo);
-    //        $("#vehiculoAnio").val(data.Vehiculo.Anio);
-    //        $("#vehiculoDepartamento").val(data.Vehiculo.Departamento);
-    //        $("#vehiculoMatricula").val(data.Vehiculo.Matricula);
-    //        $("#vehiculoPadron").val(data.Vehiculo.Padron);
-    //        $("#vehiculoMotor").val(data.Vehiculo.Motor);
-    //        $("#vehiculoChasis").val(data.Vehiculo.Chasis);
-    //        $("#vehiculoPropietario").val(data.Vehiculo.Propietario);
-    //        $("#vehiculoPrecioVenta").val(data.Vehiculo.PrecioVenta);
-    //        $("#vehiculoColor").val(data.Vehiculo.Color);
-    //        $("#vehiculoStatus").val(data.Vehiculo.DescripcionEstado);
-    //        $("#vehiculoObservaciones").val(data.Vehiculo.Observaciones); 
-    //    }
-    //    else {
-    //        general_showAvisoPopup("Error al obtener los datos del vehiculo: " + data.Codigo + " | " + data.ErrorMessage);
-    //    }
-        
-    //}
+    function showLoadingVenta() {
+        countLoading++;
+        showLoading();
+    }
+
+    function hideLoadingVenta() {
+        countLoading--;
+        if (countLoading <= 0) {
+            hideLoading();
+            countLoading = 0;
+        }
+    }
 
 </script>
