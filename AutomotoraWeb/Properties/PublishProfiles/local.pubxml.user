@@ -19,154 +19,169 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>03/10/2014 19:49:15</publishTime>
     </File>
     <File Include="bin/AutomotoraWeb.dll">
-      <publishTime>04/19/2014 02:39:47</publishTime>
+      <publishTime>10/11/2014 17:02:13</publishTime>
     </File>
     <File Include="bin/AutomotoraWeb.pdb">
-      <publishTime>04/19/2014 02:39:47</publishTime>
+      <publishTime>10/11/2014 17:02:13</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Data.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:12</publishTime>
+      <publishTime>05/07/2014 22:22:06</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Office.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:18</publishTime>
     </File>
     <File Include="bin/de/DevExpress.PivotGrid.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Printing.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:19</publishTime>
     </File>
     <File Include="bin/de/DevExpress.RichEdit.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:31</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Sparkline.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:18</publishTime>
+      <publishTime>05/07/2014 22:22:22</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Utils.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:18</publishTime>
+      <publishTime>05/07/2014 22:22:23</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Web.ASPxHtmlEditor.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:58</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Web.ASPxScheduler.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:59</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Web.ASPxSpellChecker.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:22:00</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Web.ASPxTreeList.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:11</publishTime>
+      <publishTime>05/07/2014 22:22:03</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Web.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:59</publishTime>
     </File>
     <File Include="bin/de/DevExpress.XtraCharts.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:27</publishTime>
     </File>
     <File Include="bin/de/DevExpress.XtraGauges.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/de/DevExpress.XtraGauges.v13.2.Presets.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/de/DevExpress.XtraPivotGrid.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
+    </File>
+    <File Include="bin/de/DevExpress.XtraPrinting.v13.2.resources.dll">
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/de/DevExpress.XtraReports.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/de/DevExpress.XtraReports.v13.2.Web.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:31</publishTime>
     </File>
     <File Include="bin/de/DevExpress.XtraScheduler.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:22</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/de/DevExpress.XtraScheduler.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/DevExpress.Charts.v13.2.Core.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:27</publishTime>
     </File>
     <File Include="bin/DevExpress.Data.v13.2.dll">
-      <publishTime>02/12/2014 23:53:12</publishTime>
+      <publishTime>05/07/2014 22:22:06</publishTime>
     </File>
     <File Include="bin/DevExpress.Office.v13.2.Core.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:18</publishTime>
     </File>
     <File Include="bin/DevExpress.PivotGrid.v13.2.Core.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/DevExpress.Printing.v13.2.Core.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:19</publishTime>
     </File>
     <File Include="bin/DevExpress.RichEdit.v13.2.Core.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/DevExpress.Sparkline.v13.2.Core.dll">
-      <publishTime>02/12/2014 23:53:18</publishTime>
+      <publishTime>05/07/2014 22:22:22</publishTime>
     </File>
     <File Include="bin/DevExpress.SpellChecker.v13.2.Core.dll">
-      <publishTime>02/12/2014 23:53:18</publishTime>
+      <publishTime>05/07/2014 22:22:22</publishTime>
     </File>
     <File Include="bin/DevExpress.Utils.v13.2.dll">
-      <publishTime>02/12/2014 23:53:18</publishTime>
+      <publishTime>05/07/2014 22:22:23</publishTime>
     </File>
     <File Include="bin/DevExpress.Web.ASPxGauges.v13.2.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:58</publishTime>
     </File>
     <File Include="bin/DevExpress.Web.ASPxHtmlEditor.v13.2.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:58</publishTime>
     </File>
     <File Include="bin/DevExpress.Web.ASPxPivotGrid.v13.2.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:59</publishTime>
     </File>
     <File Include="bin/DevExpress.Web.ASPxScheduler.v13.2.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:22:00</publishTime>
     </File>
     <File Include="bin/DevExpress.Web.ASPxSpellChecker.v13.2.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:22:00</publishTime>
     </File>
     <File Include="bin/DevExpress.Web.ASPxThemes.v13.2.dll">
-      <publishTime>02/12/2014 23:53:10</publishTime>
+      <publishTime>05/07/2014 22:22:01</publishTime>
     </File>
     <File Include="bin/DevExpress.Web.ASPxTreeList.v13.2.dll">
-      <publishTime>02/12/2014 23:53:11</publishTime>
+      <publishTime>05/07/2014 22:22:03</publishTime>
     </File>
     <File Include="bin/DevExpress.Web.Mvc.v13.2.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:18</publishTime>
     </File>
     <File Include="bin/DevExpress.Web.v13.2.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:59</publishTime>
     </File>
     <File Include="bin/DevExpress.XtraCharts.v13.2.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:27</publishTime>
     </File>
     <File Include="bin/DevExpress.XtraCharts.v13.2.Web.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:58</publishTime>
     </File>
     <File Include="bin/DevExpress.XtraGauges.v13.2.Core.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/DevExpress.XtraGauges.v13.2.Presets.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/DevExpress.XtraPivotGrid.v13.2.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
+    </File>
+    <File Include="bin/DevExpress.XtraPrinting.v13.2.dll">
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/DevExpress.XtraReports.v13.2.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/DevExpress.XtraReports.v13.2.Web.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:31</publishTime>
     </File>
     <File Include="bin/DevExpress.XtraScheduler.v13.2.Core.dll">
-      <publishTime>02/12/2014 23:53:22</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/DevExpress.XtraScheduler.v13.2.dll">
-      <publishTime>02/12/2014 23:53:22</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
+    </File>
+    <File Include="bin/DevExpress.XtraScheduler.v13.2.Reporting.Extensions.dll">
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/DLL_Backend.dll">
-      <publishTime>04/17/2014 01:34:03</publishTime>
+      <publishTime>09/24/2014 14:09:34</publishTime>
+    </File>
+    <File Include="bin/Elmah.dll">
+      <publishTime>10/01/2014 00:57:45</publishTime>
+    </File>
+    <File Include="bin/Elmah.Mvc.dll">
+      <publishTime>10/01/2014 00:57:45</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/10/2014 19:49:15</publishTime>
@@ -175,61 +190,67 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>03/10/2014 19:49:15</publishTime>
     </File>
     <File Include="bin/es/DevExpress.Data.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:12</publishTime>
+      <publishTime>05/07/2014 22:22:06</publishTime>
     </File>
     <File Include="bin/es/DevExpress.Office.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:18</publishTime>
     </File>
     <File Include="bin/es/DevExpress.PivotGrid.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/es/DevExpress.Printing.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:19</publishTime>
     </File>
     <File Include="bin/es/DevExpress.RichEdit.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
+    </File>
+    <File Include="bin/es/DevExpress.Sparkline.v13.2.Core.resources.dll">
+      <publishTime>05/07/2014 22:22:22</publishTime>
     </File>
     <File Include="bin/es/DevExpress.Utils.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:18</publishTime>
+      <publishTime>05/07/2014 22:22:23</publishTime>
     </File>
     <File Include="bin/es/DevExpress.Web.ASPxHtmlEditor.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:58</publishTime>
     </File>
     <File Include="bin/es/DevExpress.Web.ASPxScheduler.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:22:00</publishTime>
     </File>
     <File Include="bin/es/DevExpress.Web.ASPxSpellChecker.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:22:00</publishTime>
     </File>
     <File Include="bin/es/DevExpress.Web.ASPxTreeList.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:11</publishTime>
+      <publishTime>05/07/2014 22:22:03</publishTime>
     </File>
     <File Include="bin/es/DevExpress.Web.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:59</publishTime>
     </File>
     <File Include="bin/es/DevExpress.XtraCharts.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:27</publishTime>
     </File>
     <File Include="bin/es/DevExpress.XtraGauges.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/es/DevExpress.XtraGauges.v13.2.Presets.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/es/DevExpress.XtraPivotGrid.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
+    </File>
+    <File Include="bin/es/DevExpress.XtraPrinting.v13.2.resources.dll">
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/es/DevExpress.XtraReports.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/es/DevExpress.XtraReports.v13.2.Web.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:31</publishTime>
     </File>
     <File Include="bin/es/DevExpress.XtraScheduler.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:22</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/es/DevExpress.XtraScheduler.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:22</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/es/EntityFramework.resources.dll">
       <publishTime>03/10/2014 19:49:17</publishTime>
@@ -268,61 +289,67 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/18/2014 00:09:53</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.Data.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:12</publishTime>
+      <publishTime>05/07/2014 22:22:06</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.Office.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:18</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.PivotGrid.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.Printing.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:19</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.RichEdit.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
+    </File>
+    <File Include="bin/ja/DevExpress.Sparkline.v13.2.Core.resources.dll">
+      <publishTime>05/07/2014 22:22:22</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.Utils.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:18</publishTime>
+      <publishTime>05/07/2014 22:22:23</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.Web.ASPxHtmlEditor.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:58</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.Web.ASPxScheduler.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:22:00</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.Web.ASPxSpellChecker.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:22:00</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.Web.ASPxTreeList.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:11</publishTime>
+      <publishTime>05/07/2014 22:22:03</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.Web.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:59</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.XtraCharts.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:27</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.XtraGauges.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.XtraGauges.v13.2.Presets.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.XtraPivotGrid.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
+    </File>
+    <File Include="bin/ja/DevExpress.XtraPrinting.v13.2.resources.dll">
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.XtraReports.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.XtraReports.v13.2.Web.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:31</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.XtraScheduler.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:22</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/ja/DevExpress.XtraScheduler.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:22</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/LinqKit.dll">
       <publishTime>03/10/2014 19:56:23</publishTime>
@@ -331,70 +358,73 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>03/10/2014 19:49:15</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>03/10/2014 19:49:15</publishTime>
+      <publishTime>08/07/2014 23:23:57</publishTime>
     </File>
     <File Include="bin/Portable.Licensing.dll">
       <publishTime>03/10/2014 19:49:15</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Data.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:12</publishTime>
+      <publishTime>05/07/2014 22:22:06</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Office.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:18</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.PivotGrid.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Printing.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:16</publishTime>
+      <publishTime>05/07/2014 22:22:19</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.RichEdit.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Sparkline.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:18</publishTime>
+      <publishTime>05/07/2014 22:22:22</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Utils.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:18</publishTime>
+      <publishTime>05/07/2014 22:22:23</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Web.ASPxHtmlEditor.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:58</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Web.ASPxScheduler.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:22:00</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Web.ASPxSpellChecker.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:22:00</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Web.ASPxTreeList.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:11</publishTime>
+      <publishTime>05/07/2014 22:22:03</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.Web.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:09</publishTime>
+      <publishTime>05/07/2014 22:21:59</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.XtraCharts.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:27</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.XtraGauges.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.XtraGauges.v13.2.Presets.resources.dll">
-      <publishTime>02/12/2014 23:53:20</publishTime>
+      <publishTime>05/07/2014 22:22:28</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.XtraPivotGrid.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
+    </File>
+    <File Include="bin/ru/DevExpress.XtraPrinting.v13.2.resources.dll">
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.XtraReports.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:30</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.XtraReports.v13.2.Web.resources.dll">
-      <publishTime>02/12/2014 23:53:21</publishTime>
+      <publishTime>05/07/2014 22:22:31</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.XtraScheduler.v13.2.Core.resources.dll">
-      <publishTime>02/12/2014 23:53:22</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/ru/DevExpress.XtraScheduler.v13.2.resources.dll">
-      <publishTime>02/12/2014 23:53:22</publishTime>
+      <publishTime>05/07/2014 22:22:32</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>03/10/2014 19:49:15</publishTime>
@@ -459,6 +489,33 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Content/Images/agregar2.png">
       <publishTime>03/13/2014 00:48:28</publishTime>
     </File>
+    <File Include="Content/Images/autos/345-95-0001.jpg">
+      <publishTime>07/12/2014 22:10:41</publishTime>
+    </File>
+    <File Include="Content/Images/autos/345-95-0002.jpg">
+      <publishTime>07/12/2014 22:10:41</publishTime>
+    </File>
+    <File Include="Content/Images/autos/345-95-0003.jpg">
+      <publishTime>07/12/2014 22:10:41</publishTime>
+    </File>
+    <File Include="Content/Images/autos/345-95-0004.jpg">
+      <publishTime>07/12/2014 22:10:41</publishTime>
+    </File>
+    <File Include="Content/Images/autos/345-95-0005.jpg">
+      <publishTime>07/12/2014 22:10:41</publishTime>
+    </File>
+    <File Include="Content/Images/autos/345-95-0006.jpg">
+      <publishTime>07/12/2014 22:10:41</publishTime>
+    </File>
+    <File Include="Content/Images/autos/345-95-0007.jpg">
+      <publishTime>07/12/2014 22:10:41</publishTime>
+    </File>
+    <File Include="Content/Images/autos/345-95-0008.jpg">
+      <publishTime>07/12/2014 22:10:41</publishTime>
+    </File>
+    <File Include="Content/Images/autos/345-95-0009.jpg">
+      <publishTime>07/19/2014 17:16:10</publishTime>
+    </File>
     <File Include="Content/Images/consultar.png">
       <publishTime>03/13/2014 00:48:28</publishTime>
     </File>
@@ -471,6 +528,9 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Content/Images/error.png">
       <publishTime>03/13/2014 00:48:28</publishTime>
     </File>
+    <File Include="Content/Images/ExampleImage.png">
+      <publishTime>05/02/2014 23:58:21</publishTime>
+    </File>
     <File Include="Content/Images/Excel.png">
       <publishTime>03/13/2014 00:48:28</publishTime>
     </File>
@@ -480,11 +540,38 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Content/Images/imprimir.png">
       <publishTime>03/13/2014 00:48:28</publishTime>
     </File>
+    <File Include="Content/Images/loading_blue_lg.gif">
+      <publishTime>07/04/2014 12:37:00</publishTime>
+    </File>
+    <File Include="Content/Images/ppal1.jpg">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Content/Images/ppal2.jpg">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Content/Images/ppal3.jpg">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Content/Images/refresh.png">
+      <publishTime>09/11/2014 22:04:50</publishTime>
+    </File>
+    <File Include="Content/Images/vendedores/_sinFoto.png">
+      <publishTime>05/17/2014 02:05:45</publishTime>
+    </File>
     <File Include="Content/Images/vssver2.scc">
       <publishTime>03/13/2014 00:48:28</publishTime>
     </File>
+    <File Include="Content/Images/_sinFoto.png">
+      <publishTime>05/17/2014 02:05:45</publishTime>
+    </File>
     <File Include="Content/Site.css">
       <publishTime>02/18/2014 00:09:47</publishTime>
+    </File>
+    <File Include="Content/SiteExtras.css">
+      <publishTime>09/06/2014 15:25:25</publishTime>
+    </File>
+    <File Include="Content/SiteExtras.js">
+      <publishTime>08/07/2014 23:23:56</publishTime>
     </File>
     <File Include="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png">
       <publishTime>02/18/2014 00:09:51</publishTime>
@@ -2428,10 +2515,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/20/2014 23:55:02</publishTime>
     </File>
     <File Include="Content/themes/BlueNileAdmin/build/stylesheets/theme.css">
-      <publishTime>02/20/2014 23:55:02</publishTime>
+      <publishTime>05/24/2014 12:03:05</publishTime>
     </File>
     <File Include="Content/themes/BlueNileAdmin/build/terms-and-conditions.html">
-      <publishTime>02/20/2014 23:55:02</publishTime>
+      <publishTime>05/05/2014 09:57:58</publishTime>
     </File>
     <File Include="Content/themes/BlueNileAdmin/build/user.html">
       <publishTime>02/20/2014 23:55:02</publishTime>
@@ -2443,7 +2530,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/20/2014 23:55:02</publishTime>
     </File>
     <File Include="Content/themes/extraTemplate.css">
-      <publishTime>04/18/2014 18:38:19</publishTime>
+      <publishTime>09/20/2014 19:18:40</publishTime>
     </File>
     <File Include="Content/themes/WintertideAdmin/build/403.html">
       <publishTime>02/21/2014 00:01:50</publishTime>
@@ -4096,7 +4183,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/21/2014 00:01:57</publishTime>
     </File>
     <File Include="Content/themes/WintertideAdmin/build/stylesheets/theme.css">
-      <publishTime>02/21/2014 00:01:57</publishTime>
+      <publishTime>05/24/2014 12:03:05</publishTime>
     </File>
     <File Include="Content/themes/WintertideAdmin/build/terms-and-conditions.html">
       <publishTime>02/21/2014 00:01:57</publishTime>
@@ -4110,6 +4197,9 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Content/themes/WintertideAdmin/Readme">
       <publishTime>02/21/2014 00:01:57</publishTime>
     </File>
+    <File Include="Controllers/Sistema/ResetPassword.cshtml">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
     <File Include="DataSetAutomotoraWeb.xsc">
       <publishTime>04/19/2014 02:05:03</publishTime>
     </File>
@@ -4120,7 +4210,136 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/18/2014 00:09:47</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>03/30/2014 17:22:46</publishTime>
+      <publishTime>10/01/2014 00:57:45</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/AcvsListado.js">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ayudaFechas.js">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/CajaListado.js">
+      <publishTime>07/12/2014 15:05:30</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/CanjearCheque.js">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ChEmitido.js">
+      <publishTime>07/16/2014 20:42:55</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ChEmitidoCreateModif.js">
+      <publishTime>07/16/2014 20:42:55</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ChequesEmitidosListado.js">
+      <publishTime>07/18/2014 14:02:14</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ChequesEmitidosShow.js">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ChequesListado.js">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ClienteMantenimiento.js">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ComprobanteDocumentacion.js">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ConsultaFinanciacion1.js">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ConsultaFinanciacion2.js">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ConsultaVale1.js">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ConsultaVale2.js">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/CuotasPasar.js">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/CuotasValesListado.js">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/DepositarDescontarCheque.js">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/DescontarVale.js">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ManejoFechas.js">
+      <publishTime>07/16/2014 20:42:55</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/MovsBancoGestion.js">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/MovsBancoListado.js">
+      <publishTime>07/07/2014 22:14:15</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/PagoFinancista.js">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/PasarCheque.js">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/PedidosGestion.js">
+      <publishTime>06/23/2014 10:10:24</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/PedidosListado.js">
+      <publishTime>05/19/2014 21:24:27</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/RechazarCheque.js">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/RechazarVale.js">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/RenovarVale1.js">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/RenovarVale2.js">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/RenovarVale3.js">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/SaldosBanco.js">
+      <publishTime>07/10/2014 22:10:54</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/SalidaCaja.js">
+      <publishTime>09/13/2014 18:30:06</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/SeniaDevolucion.js">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/SeniasListado.js">
+      <publishTime>08/18/2014 01:41:09</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/SitCliente.js">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/SitFinancista.js">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/TransaccionesListado.js">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/TransfChequesSuc.js">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/ValesListado.js">
+      <publishTime>07/19/2014 17:19:24</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/VehiculosListado.js">
+      <publishTime>05/17/2014 02:05:45</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/VendedorMantenimiento.js">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Scripts/AutomotoraWeb/VentasListado.js">
+      <publishTime>05/24/2014 12:03:05</publishTime>
     </File>
     <File Include="Scripts/jquery-1.7.1.js">
       <publishTime>02/18/2014 00:09:50</publishTime>
@@ -4167,17 +4386,518 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Scripts/_references.js">
       <publishTime>02/18/2014 00:09:51</publishTime>
     </File>
+    <File Include="Views/Acvs/ACVenta.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Acvs/Anular.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Acvs/details.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Acvs/list.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Acvs/Recibo.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Acvs/ReciboAnulacion.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Acvs/report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Acvs/_consultaAcv.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Acvs/_detalleAcv.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Acvs/_grillaAcvNoAnulados.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Acvs/_grillaAcvVigentes.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Acvs/_recibo.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Acvs/_reciboAnulacion.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Acvs/_reportGrilla.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Acvs/_reportList.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/Acvs/_seleccionAcvAnularGridLookup.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
     <File Include="Views/Authentication/changePassword.cshtml">
-      <publishTime>03/04/2014 23:14:16</publishTime>
+      <publishTime>08/11/2014 01:49:52</publishTime>
     </File>
     <File Include="Views/Authentication/forgetPassword.cshtml">
       <publishTime>02/18/2014 00:19:43</publishTime>
     </File>
     <File Include="Views/Authentication/login.cshtml">
-      <publishTime>03/30/2014 17:40:58</publishTime>
+      <publishTime>05/01/2014 13:19:26</publishTime>
+    </File>
+    <File Include="Views/Authentication/verPerfil.cshtml">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Views/Authentication/_perfilesUsuario.cshtml">
+      <publishTime>08/11/2014 01:49:52</publishTime>
     </File>
     <File Include="Views/Bank/Index.cshtml">
-      <publishTime>03/03/2014 17:43:35</publishTime>
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Caja/Entrada.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Caja/Entrada_TABS.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Caja/list.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Caja/ReciboCaja.cshtml">
+      <publishTime>08/18/2014 01:41:09</publishTime>
+    </File>
+    <File Include="Views/Caja/Report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Caja/Salida.cshtml">
+      <publishTime>09/13/2014 18:30:06</publishTime>
+    </File>
+    <File Include="Views/Caja/_listCheques.cshtml">
+      <publishTime>07/16/2014 20:42:55</publishTime>
+    </File>
+    <File Include="Views/Caja/_listEfectivo.cshtml">
+      <publishTime>07/16/2014 20:42:55</publishTime>
+    </File>
+    <File Include="Views/Caja/_listGrillaCheques.cshtml">
+      <publishTime>07/19/2014 17:19:24</publishTime>
+    </File>
+    <File Include="Views/Caja/_listGrillaEfectivo.cshtml">
+      <publishTime>07/18/2014 14:02:14</publishTime>
+    </File>
+    <File Include="Views/Caja/_reciboCaja.cshtml">
+      <publishTime>08/18/2014 01:41:09</publishTime>
+    </File>
+    <File Include="Views/Caja/_report.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/Caja/_selectChequeSalida.cshtml">
+      <publishTime>09/13/2014 18:30:06</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/create.cshtml">
+      <publishTime>07/16/2014 20:42:55</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/Debitar.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/delete.cshtml">
+      <publishTime>07/23/2014 22:22:10</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/details.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/edit.cshtml">
+      <publishTime>07/23/2014 22:22:10</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/List.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/Report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/show.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/_chequesDebitar.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/_datosDetalle.cshtml">
+      <publishTime>08/11/2014 01:49:52</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/_listCheques.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/_listGrilla.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/ChEmitidos/_report.cshtml">
+      <publishTime>07/16/2014 20:42:55</publishTime>
+    </File>
+    <File Include="Views/Cheques/CanjeRechazado.cshtml">
+      <publishTime>09/01/2014 21:18:25</publishTime>
+    </File>
+    <File Include="Views/Cheques/ConsultaCheque.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Cheques/Depositar.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Cheques/Descontar.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/ListCheques.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/Pasar.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Cheques/Rechazar.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Cheques/ReciboCanje.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Cheques/ReciboDeposito.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/ReciboRech.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/ReciboTransf.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/ReciboTransfSuc.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/ReportCheque.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/ReportCheques.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/TransfSuc.cshtml">
+      <publishTime>09/13/2014 18:30:06</publishTime>
+    </File>
+    <File Include="Views/Cheques/_depositarDescontar.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Cheques/_listCheques.cshtml">
+      <publishTime>07/12/2014 15:05:30</publishTime>
+    </File>
+    <File Include="Views/Cheques/_listGrillaCheques.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Cheques/_movimientosCheque.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/_reciboCanje.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Cheques/_reciboDeposito.cshtml">
+      <publishTime>07/12/2014 15:05:30</publishTime>
+    </File>
+    <File Include="Views/Cheques/_reciboRech.cshtml">
+      <publishTime>07/14/2014 01:44:41</publishTime>
+    </File>
+    <File Include="Views/Cheques/_reciboTransf.cshtml">
+      <publishTime>07/13/2014 11:58:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/_reciboTransfSuc.cshtml">
+      <publishTime>07/13/2014 11:58:56</publishTime>
+    </File>
+    <File Include="Views/Cheques/_reportCheque.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Cheques/_reportCheques.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/Cheques/_selectCheque.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Cheques/_selectChequeDesc.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Cheques/_selectChequePasar.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Cheques/_selectChequeRechazar.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Cheques/_selectChequeTransfSuc.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Clientes/create.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Clientes/delete.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Clientes/details.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Clientes/edit.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Clientes/report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Clientes/report2.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Clientes/ReportSitCliente.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/show.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Clientes/SitCliente.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_datosDetalle.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_listGrilla.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Clientes/_listGrillaSitClienteCheques.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_listGrillaSitClienteCuotas.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_listGrillaSitClienteVales.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_reportDetalle.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Clientes/_reportList.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Clientes/_reportSitCliente.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_sitCliente.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_sitClienteCheques.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_sitClienteCuotas.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_sitClienteVales.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Clientes/_ventasCliente.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ConsultaFinanciacion.cshtml">
+      <publishTime>09/11/2014 22:04:50</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ListCuotasPendientes.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ListCuotasValesPendientes.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ListSitCuotas.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ListValesPendientes.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ReportCuotasPendientes.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ReportCuotasValesPendientes.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ReportFinanciacion.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ReportSitCuotas.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/ReportValesPendientes.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_cuotasHistoricoFinanciacion.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_cuotasVigentesFinanciacion.cshtml">
+      <publishTime>09/11/2014 22:04:50</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_datosDetalleFinanciacion.cshtml">
+      <publishTime>08/02/2014 20:21:06</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_financiacionesCliente.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listCuotasPendientes.cshtml">
+      <publishTime>07/16/2014 20:42:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listCuotasPendientesCli.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listCuotasPendientesDet.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listCuotasPendientesMes.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listCuotasValesPendientes.cshtml">
+      <publishTime>07/16/2014 20:42:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listCuotasValesPendientesCli.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listCuotasValesPendientesMes.cshtml">
+      <publishTime>07/16/2014 20:42:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listGrillaCuotasPendientesCli.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listGrillaCuotasPendientesDet.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listGrillaCuotasPendientesMes.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listGrillaCuotasValesPendientesCli.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listGrillaCuotasValesPendientesMes.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listGrillaSitCuotas.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listGrillaValesPendientesCli.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listGrillaValesPendientesDet.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listGrillaValesPendientesMes.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listSitCuotas.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listValesPendientes.cshtml">
+      <publishTime>07/16/2014 20:42:56</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listValesPendientesCli.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listValesPendientesDet.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_listValesPendientesMes.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_reportCuotasPendientes.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_reportCuotasValesPendientes.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_reportFinanciacion.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_reportSitCuotas.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_reportValesPendientes.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/ConsultasFin/_selectFinanciacionConsultar.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Cotizacion/edit.cshtml">
+      <publishTime>09/01/2014 21:18:26</publishTime>
+    </File>
+    <File Include="Views/Cotizacion/_grillaCotizaciones.cshtml">
+      <publishTime>09/01/2014 21:18:26</publishTime>
+    </File>
+    <File Include="Views/CuentasBancarias/create.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/CuentasBancarias/delete.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/CuentasBancarias/details.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/CuentasBancarias/edit.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/CuentasBancarias/report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/CuentasBancarias/show.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/CuentasBancarias/_datosDetalle.cshtml">
+      <publishTime>05/11/2014 23:46:33</publishTime>
+    </File>
+    <File Include="Views/CuentasBancarias/_listGrilla.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/CuentasBancarias/_reportList.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Cuotas/Cobrar.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Cuotas/Modificar.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Cuotas/Pasar.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Cuotas/ReciboCuota.cshtml">
+      <publishTime>08/18/2014 01:41:09</publishTime>
+    </File>
+    <File Include="Views/Cuotas/ReciboRefinanc.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Cuotas/ReciboTransfCuotas.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_detalleCobroCuota.cshtml">
+      <publishTime>09/15/2014 21:12:15</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_detalleModifCuotas.cshtml">
+      <publishTime>09/15/2014 21:12:15</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_detalleTransf.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_grillacuotasTransf.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_grillacuotasVigentes.cshtml">
+      <publishTime>09/11/2014 22:04:50</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_reciboCuota.cshtml">
+      <publishTime>08/18/2014 01:41:09</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_reciboRefinanc.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_reciboTransfCuotas.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_seleccionVentaCobrar.cshtml">
+      <publishTime>09/15/2014 21:12:15</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_seleccionVentaGridLookup.cshtml">
+      <publishTime>09/15/2014 21:12:15</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_seleccionVentaModificar.cshtml">
+      <publishTime>09/15/2014 21:12:15</publishTime>
+    </File>
+    <File Include="Views/Cuotas/_seleccionVentaPasarGridLookup.cshtml">
+      <publishTime>09/15/2014 21:12:15</publishTime>
     </File>
     <File Include="Views/Customers/create.cshtml">
       <publishTime>04/14/2014 00:14:18</publishTime>
@@ -4197,6 +4917,57 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Views/Customers/_listCustomers.cshtml">
       <publishTime>04/13/2014 00:16:31</publishTime>
     </File>
+    <File Include="Views/Documentacion/ComprobanteDocumentacion.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Documentacion/list.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Documentacion/report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Documentacion/ReportComprobante.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Documentacion/_reportComprobante.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Documentacion/_reportGrilla.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Documentacion/_reportList.cshtml">
+      <publishTime>05/24/2014 12:03:05</publishTime>
+    </File>
+    <File Include="Views/Documentacion/_selectDocumentacion.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/DocumentacionLegal/ReportComprobanteSenia.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/DocumentacionLegal/ReportComprobanteVenta.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/DocumentacionLegal/ReportCuponesVenta.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/DocumentacionLegal/_reportComprobanteSenia.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/DocumentacionLegal/_reportComprobanteVenta.cshtml">
+      <publishTime>07/31/2014 01:06:09</publishTime>
+    </File>
+    <File Include="Views/DocumentacionLegal/_reportCuponesVenta.cshtml">
+      <publishTime>08/02/2014 20:21:06</publishTime>
+    </File>
+    <File Include="Views/Empresa/details.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Empresa/edit.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Empresa/_datosDetalle.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
     <File Include="Views/Error/error403.cshtml">
       <publishTime>04/06/2014 18:55:36</publishTime>
     </File>
@@ -4207,10 +4978,211 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>04/06/2014 18:30:03</publishTime>
     </File>
     <File Include="Views/Financing/Index.cshtml">
-      <publishTime>03/03/2014 17:43:43</publishTime>
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Financistas/ConsultaSituacion.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Financistas/create.cshtml">
+      <publishTime>05/10/2014 03:43:42</publishTime>
+    </File>
+    <File Include="Views/Financistas/delete.cshtml">
+      <publishTime>07/23/2014 22:22:10</publishTime>
+    </File>
+    <File Include="Views/Financistas/details.cshtml">
+      <publishTime>05/10/2014 03:43:42</publishTime>
+    </File>
+    <File Include="Views/Financistas/edit.cshtml">
+      <publishTime>07/23/2014 22:22:10</publishTime>
+    </File>
+    <File Include="Views/Financistas/Pago.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Financistas/ReciboPago.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Financistas/report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Financistas/ReportSitFinancista.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Financistas/show.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Financistas/_datosDetalle.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Financistas/_detallePago.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Financistas/_listGrilla.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Financistas/_reciboPago.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Financistas/_reportList.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Financistas/_reportSitFinancista.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Financistas/_selectChequePago.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Financistas/_selectEfectivoPago.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Financistas/_sitFinancistaCheques.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Financistas/_sitFinancistaChequesGrilla.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Financistas/_sitFinancistaEfectivo.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Financistas/_sitFinancistaEfectivoGrilla.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Financistas/_situacionFinancista.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Movimientos/create.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Movimientos/delete.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Movimientos/details.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Movimientos/edit.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Movimientos/List.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Movimientos/Report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Movimientos/ReportSaldos.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Movimientos/Saldos.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Movimientos/Show.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Movimientos/_datosDetalle.cshtml">
+      <publishTime>07/07/2014 22:14:15</publishTime>
+    </File>
+    <File Include="Views/Movimientos/_listGrillaMovimientos.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/Movimientos/_listGrillaMovimientosRep.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/Movimientos/_listMovimientos.cshtml">
+      <publishTime>07/18/2014 14:02:14</publishTime>
+    </File>
+    <File Include="Views/Movimientos/_listMovimientosRep.cshtml">
+      <publishTime>07/07/2014 22:14:15</publishTime>
+    </File>
+    <File Include="Views/Movimientos/_report.cshtml">
+      <publishTime>07/07/2014 22:14:15</publishTime>
+    </File>
+    <File Include="Views/Movimientos/_reportSaldos.cshtml">
+      <publishTime>07/10/2014 22:10:54</publishTime>
+    </File>
+    <File Include="Views/Movimientos/_saldosGrilla.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Parametros/edit.cshtml">
+      <publishTime>09/01/2014 21:18:26</publishTime>
+    </File>
+    <File Include="Views/Parametros/_grillaParametros.cshtml">
+      <publishTime>09/01/2014 21:18:26</publishTime>
+    </File>
+    <File Include="Views/Pedidos/create.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Pedidos/delete.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Pedidos/details.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Pedidos/edit.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Pedidos/list.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Pedidos/recibir.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Pedidos/report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Pedidos/show.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Pedidos/_datosDetalle.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Pedidos/_datosVehiculo.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Pedidos/_listGrilla.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Pedidos/_reportGrilla.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Pedidos/_reportList.cshtml">
+      <publishTime>05/19/2014 21:24:27</publishTime>
+    </File>
+    <File Include="Views/Perfiles/create.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Perfiles/delete.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Perfiles/details.cshtml">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Views/Perfiles/edit.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Perfiles/report.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Perfiles/show.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Perfiles/_datosDetalle.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Perfiles/_listGrilla.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Perfiles/_perfilesUsuario.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Perfiles/_reportList.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Permisos/Edit.cshtml">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Views/Permisos/_arbolPermisos.cshtml">
+      <publishTime>08/16/2014 15:11:56</publishTime>
     </File>
     <File Include="Views/Sales/Index.cshtml">
-      <publishTime>03/03/2014 17:42:41</publishTime>
+      <publishTime>08/07/2014 23:23:56</publishTime>
     </File>
     <File Include="Views/Sellers/create.cshtml">
       <publishTime>04/14/2014 20:21:35</publishTime>
@@ -4230,77 +5202,557 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     <File Include="Views/Sellers/_listSellers.cshtml">
       <publishTime>04/12/2014 13:53:31</publishTime>
     </File>
+    <File Include="Views/Senias/details.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Senias/Devolver.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Senias/list.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Senias/ReciboDev.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Senias/report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Senias/Seniar.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Senias/_condicionesSenia.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Senias/_detalleDevolucion.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Senias/_detallesSenia.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Senias/_devolucionCheques.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Senias/_grillaChequesDevolucion.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Senias/_grillaDevolucionEfectivo.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Senias/_grillaPromesaCheques.cshtml">
+      <publishTime>09/23/2014 20:27:45</publishTime>
+    </File>
+    <File Include="Views/Senias/_grillaPromesaEfectivo.cshtml">
+      <publishTime>09/23/2014 20:27:45</publishTime>
+    </File>
+    <File Include="Views/Senias/_grillaPromesaVales.cshtml">
+      <publishTime>09/23/2014 20:27:45</publishTime>
+    </File>
+    <File Include="Views/Senias/_promesaFinanciacion.cshtml">
+      <publishTime>09/23/2014 20:27:45</publishTime>
+    </File>
+    <File Include="Views/Senias/_promesaPermuta.cshtml">
+      <publishTime>09/23/2014 20:27:45</publishTime>
+    </File>
+    <File Include="Views/Senias/_promesaSenia.cshtml">
+      <publishTime>09/23/2014 20:27:45</publishTime>
+    </File>
+    <File Include="Views/Senias/_reciboDev.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Senias/_reportGrilla.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Senias/_reportList.cshtml">
+      <publishTime>05/21/2014 00:27:35</publishTime>
+    </File>
+    <File Include="Views/Senias/_seleccionDePedidosDetalle.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Senias/_selectPedido.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Senias/_selectSeniaAnular.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Senias/_selectVehiculoSeniar.cshtml">
+      <publishTime>09/23/2014 20:27:45</publishTime>
+    </File>
+    <File Include="Views/Senias/_seniaDevolucion.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
     <File Include="Views/Shared/Error.cshtml">
-      <publishTime>04/06/2014 16:56:09</publishTime>
+      <publishTime>04/30/2014 22:01:41</publishTime>
+    </File>
+    <File Include="Views/Shared/error403.cshtml">
+      <publishTime>07/19/2014 17:19:24</publishTime>
+    </File>
+    <File Include="Views/Shared/error404.cshtml">
+      <publishTime>04/30/2014 22:01:41</publishTime>
+    </File>
+    <File Include="Views/Shared/ErrorDX.cshtml">
+      <publishTime>09/01/2014 21:18:26</publishTime>
+    </File>
+    <File Include="Views/Shared/index.cshtml.cshtml">
+      <publishTime>10/11/2014 17:02:08</publishTime>
+    </File>
+    <File Include="Views/Shared/_alertas.cshtml">
+      <publishTime>07/23/2014 22:22:10</publishTime>
     </File>
     <File Include="Views/Shared/_generalGrid.cshtml">
-      <publishTime>04/15/2014 00:38:30</publishTime>
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Shared/_generalReport.cshtml">
+      <publishTime>05/17/2014 02:05:45</publishTime>
+    </File>
+    <File Include="Views/Shared/_grillaPagosCheque.cshtml">
+      <publishTime>09/30/2014 02:00:04</publishTime>
+    </File>
+    <File Include="Views/Shared/_grillaPagosChequesEmitidos.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Shared/_grillaPagosCuota.cshtml">
+      <publishTime>09/11/2014 22:04:50</publishTime>
+    </File>
+    <File Include="Views/Shared/_grillaPagosEfectivo.cshtml">
+      <publishTime>09/30/2014 01:59:53</publishTime>
+    </File>
+    <File Include="Views/Shared/_grillaPagosMovBanco.cshtml">
+      <publishTime>09/30/2014 02:00:18</publishTime>
+    </File>
+    <File Include="Views/Shared/_grillaPagosVale.cshtml">
+      <publishTime>09/11/2014 22:04:50</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>04/16/2014 23:01:29</publishTime>
+      <publishTime>10/06/2014 22:51:13</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAuthorization.cshtml">
-      <publishTime>03/05/2014 23:14:06</publishTime>
+      <publishTime>07/16/2014 20:42:56</publishTime>
     </File>
     <File Include="Views/Shared/_Menu.cshtml">
       <publishTime>02/23/2014 22:18:10</publishTime>
     </File>
     <File Include="Views/Shared/_menuConfiguration.cshtml">
-      <publishTime>04/16/2014 22:36:41</publishTime>
+      <publishTime>08/11/2014 01:49:53</publishTime>
     </File>
     <File Include="Views/Shared/_menuUser.cshtml">
-      <publishTime>04/16/2014 22:20:42</publishTime>
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Shared/_modalConfirmation.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/Shared/_pagoEstandar.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Shared/_pagoEstandarConsulta.cshtml">
+      <publishTime>09/20/2014 19:18:40</publishTime>
+    </File>
+    <File Include="Views/Shared/_pagoEstandar_TABS.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Shared/_seleccionDeVehiculosDetalle.cshtml">
+      <publishTime>09/27/2014 20:59:08</publishTime>
+    </File>
+    <File Include="Views/Shared/_selectCliente.cshtml">
+      <publishTime>07/31/2014 23:42:23</publishTime>
+    </File>
+    <File Include="Views/Shared/_selectVehiculo.cshtml">
+      <publishTime>09/11/2014 20:29:57</publishTime>
+    </File>
+    <File Include="Views/Shared/_selectVendedor.cshtml">
+      <publishTime>07/31/2014 23:42:35</publishTime>
     </File>
     <File Include="Views/Shared/_sidebarBank.cshtml">
-      <publishTime>03/23/2014 18:52:57</publishTime>
+      <publishTime>05/05/2014 09:57:58</publishTime>
     </File>
     <File Include="Views/Shared/_sidebarFinancing.cshtml">
-      <publishTime>03/23/2014 18:48:22</publishTime>
+      <publishTime>05/05/2014 09:57:58</publishTime>
     </File>
     <File Include="Views/Shared/_sidebarSales.cshtml">
-      <publishTime>03/23/2014 19:10:15</publishTime>
+      <publishTime>05/04/2014 21:19:00</publishTime>
+    </File>
+    <File Include="Views/Shared/_sidebarSistema.cshtml">
+      <publishTime>05/02/2014 22:30:20</publishTime>
+    </File>
+    <File Include="Views/Sistema/Index.cshtml">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Views/Sistema/Mensaje.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
     </File>
     <File Include="Views/Sucursales/create.cshtml">
-      <publishTime>04/15/2014 01:00:11</publishTime>
+      <publishTime>05/10/2014 03:43:42</publishTime>
     </File>
     <File Include="Views/Sucursales/delete.cshtml">
-      <publishTime>04/16/2014 20:48:40</publishTime>
+      <publishTime>07/23/2014 22:22:10</publishTime>
     </File>
     <File Include="Views/Sucursales/details.cshtml">
-      <publishTime>04/15/2014 01:00:46</publishTime>
+      <publishTime>05/10/2014 03:43:42</publishTime>
     </File>
     <File Include="Views/Sucursales/edit.cshtml">
-      <publishTime>04/16/2014 20:48:56</publishTime>
+      <publishTime>07/23/2014 22:22:10</publishTime>
+    </File>
+    <File Include="Views/Sucursales/report.cshtml">
+      <publishTime>05/10/2014 03:43:42</publishTime>
     </File>
     <File Include="Views/Sucursales/show.cshtml">
-      <publishTime>04/18/2014 18:45:27</publishTime>
+      <publishTime>07/23/2014 22:22:10</publishTime>
+    </File>
+    <File Include="Views/Sucursales/_datosDetalle.cshtml">
+      <publishTime>05/11/2014 23:46:33</publishTime>
+    </File>
+    <File Include="Views/Sucursales/_listGrilla.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
     </File>
     <File Include="Views/Sucursales/_listSucursales.cshtml">
       <publishTime>04/15/2014 00:39:24</publishTime>
     </File>
+    <File Include="Views/Sucursales/_reportList.cshtml">
+      <publishTime>05/14/2014 22:46:01</publishTime>
+    </File>
+    <File Include="Views/TiposDocumento/create.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/TiposDocumento/delete.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/TiposDocumento/details.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/TiposDocumento/edit.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/TiposDocumento/report.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/TiposDocumento/show.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/TiposDocumento/_datosDetalle.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/TiposDocumento/_listGrilla.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/TiposDocumento/_reportList.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Transacciones/List.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Transacciones/ReportTransacciones.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Transacciones/_listGrillaTransacciones.cshtml">
+      <publishTime>07/19/2014 17:19:24</publishTime>
+    </File>
+    <File Include="Views/Transacciones/_listTransacciones.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/Transacciones/_reportTransacciones.cshtml">
+      <publishTime>07/04/2014 11:01:20</publishTime>
+    </File>
+    <File Include="Views/Usuarios/create.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/delete.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/details.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/edit.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/report.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/resetPassword.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/show.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/_datosDetalle.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/_listGrilla.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/_perfilesUsuario.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Usuarios/_reportList.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Vales/Cobrar.cshtml">
+      <publishTime>09/11/2014 22:28:46</publishTime>
+    </File>
+    <File Include="Views/Vales/ConsultaVale.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Vales/Descontar.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/ListVales.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/Pasar.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Vales/Rechazar.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/ReciboDescuento.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/ReciboRech.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/ReciboRenovacion.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/ReciboTransfVale.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Vales/ReciboVale.cshtml">
+      <publishTime>08/18/2014 01:41:09</publishTime>
+    </File>
+    <File Include="Views/Vales/Renovar.cshtml">
+      <publishTime>09/11/2014 22:28:46</publishTime>
+    </File>
+    <File Include="Views/Vales/ReportVale.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/ReportVales.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/_datosDetalleVale.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/_descontar.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/Vales/_detalleCobroVale.cshtml">
+      <publishTime>09/11/2014 22:04:50</publishTime>
+    </File>
+    <File Include="Views/Vales/_detalleTransfVale.cshtml">
+      <publishTime>09/11/2014 22:28:46</publishTime>
+    </File>
+    <File Include="Views/Vales/_listGrillaVales.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Vales/_listVales.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Vales/_reciboDescuento.cshtml">
+      <publishTime>07/19/2014 17:19:24</publishTime>
+    </File>
+    <File Include="Views/Vales/_reciboRech.cshtml">
+      <publishTime>07/19/2014 17:19:24</publishTime>
+    </File>
+    <File Include="Views/Vales/_reciboRenovacion.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/_reciboTransfVale.cshtml">
+      <publishTime>08/21/2014 22:50:03</publishTime>
+    </File>
+    <File Include="Views/Vales/_reciboVale.cshtml">
+      <publishTime>08/18/2014 01:41:09</publishTime>
+    </File>
+    <File Include="Views/Vales/_reportVale.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Vales/_reportVales.cshtml">
+      <publishTime>07/19/2014 17:19:24</publishTime>
+    </File>
+    <File Include="Views/Vales/_seleccionValeCobrar.cshtml">
+      <publishTime>09/30/2014 02:11:40</publishTime>
+    </File>
+    <File Include="Views/Vales/_selectValeDesc.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Vales/_selectValeRechazar.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Vales/_valePagos.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Vales/_valePagosGrilla.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Vales/_valeRenovacion.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/_valesAnteriores.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Vales/_valesAnterioresGrilla.cshtml">
+      <publishTime>08/11/2014 01:49:53</publishTime>
+    </File>
+    <File Include="Views/Vales/_valesCliente.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vales/_valesRenovarCliente.cshtml">
+      <publishTime>09/11/2014 22:28:46</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/create.cshtml">
+      <publishTime>06/07/2014 22:02:53</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/delete.cshtml">
+      <publishTime>07/23/2014 22:22:10</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/details.cshtml">
+      <publishTime>09/23/2014 20:27:45</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/edit.cshtml">
+      <publishTime>09/01/2014 21:18:26</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/list.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/report2.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/show.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_datosAsociados.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_datosDetalle.cshtml">
+      <publishTime>09/27/2014 15:17:49</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_datosDocumentacion.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_datosFotos.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_datosGastos.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_listDocumentos.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_listGastos.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_listGrilla.cshtml">
+      <publishTime>09/01/2014 21:18:26</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_popupDocumentacion.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_popupGastos.cshtml">
+      <publishTime>07/22/2014 21:04:51</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_reportDetalle.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_reportGrilla.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Vehiculos/_reportList.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
     <File Include="Views/Vendedores/create.cshtml">
-      <publishTime>04/18/2014 15:42:19</publishTime>
+      <publishTime>05/17/2014 02:05:45</publishTime>
     </File>
     <File Include="Views/Vendedores/delete.cshtml">
-      <publishTime>04/18/2014 17:55:22</publishTime>
+      <publishTime>07/23/2014 22:22:10</publishTime>
     </File>
     <File Include="Views/Vendedores/details.cshtml">
-      <publishTime>04/18/2014 15:46:51</publishTime>
+      <publishTime>05/14/2014 22:46:01</publishTime>
     </File>
     <File Include="Views/Vendedores/edit.cshtml">
-      <publishTime>04/18/2014 18:08:20</publishTime>
+      <publishTime>07/23/2014 22:22:10</publishTime>
     </File>
     <File Include="Views/Vendedores/report.cshtml">
-      <publishTime>04/18/2014 21:28:40</publishTime>
+      <publishTime>08/07/2014 23:23:56</publishTime>
     </File>
     <File Include="Views/Vendedores/show.cshtml">
-      <publishTime>04/18/2014 21:19:52</publishTime>
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Vendedores/_datosDetalle.cshtml">
+      <publishTime>07/28/2014 00:35:50</publishTime>
     </File>
     <File Include="Views/Vendedores/_listVendedores.cshtml">
-      <publishTime>04/18/2014 17:51:38</publishTime>
+      <publishTime>07/28/2014 00:35:50</publishTime>
     </File>
     <File Include="Views/Vendedores/_reportList.cshtml">
-      <publishTime>04/18/2014 21:40:53</publishTime>
+      <publishTime>07/28/2014 00:35:50</publishTime>
+    </File>
+    <File Include="Views/Ventas/details.cshtml">
+      <publishTime>08/12/2014 00:01:20</publishTime>
+    </File>
+    <File Include="Views/Ventas/list.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Ventas/ReciboAnulacion.cshtml">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Views/Ventas/ReciboEntrega.cshtml">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Views/Ventas/report.cshtml">
+      <publishTime>08/07/2014 23:23:56</publishTime>
+    </File>
+    <File Include="Views/Ventas/ventaVehiculo.cshtml">
+      <publishTime>10/06/2014 22:24:46</publishTime>
+    </File>
+    <File Include="Views/Ventas/_pagosSeniaACVs.cshtml">
+      <publishTime>10/01/2014 00:55:28</publishTime>
+    </File>
+    <File Include="Views/Ventas/_reciboAnulacion.cshtml">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Views/Ventas/_reciboEntrega.cshtml">
+      <publishTime>08/16/2014 15:11:56</publishTime>
+    </File>
+    <File Include="Views/Ventas/_reportGrilla.cshtml">
+      <publishTime>07/25/2014 01:18:06</publishTime>
+    </File>
+    <File Include="Views/Ventas/_reportList.cshtml">
+      <publishTime>05/24/2014 12:03:05</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionDeCliente.cshtml">
+      <publishTime>08/21/2014 22:41:09</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionDeCondicionesDeVenta.cshtml">
+      <publishTime>09/16/2014 23:37:56</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionDeMetodosDePago.cshtml">
+      <publishTime>10/01/2014 01:22:57</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionDeSeñasACVs.cshtml">
+      <publishTime>10/06/2014 01:03:45</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionDeVehiculos.cshtml">
+      <publishTime>10/06/2014 23:14:03</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionDeVendedor.cshtml">
+      <publishTime>08/21/2014 22:41:09</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionMPBanco.cshtml">
+      <publishTime>08/24/2014 22:07:20</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionMPCheques.cshtml">
+      <publishTime>08/26/2014 21:13:17</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionMPEfectivo.cshtml">
+      <publishTime>08/24/2014 13:27:41</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionMPFinanciacion.cshtml">
+      <publishTime>09/07/2014 19:58:32</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionMPPermuta.cshtml">
+      <publishTime>10/05/2014 21:57:38</publishTime>
+    </File>
+    <File Include="Views/Ventas/_seleccionMPVales.cshtml">
+      <publishTime>08/25/2014 16:12:57</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>03/30/2014 17:22:46</publishTime>
@@ -4309,7 +5761,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/18/2014 00:09:47</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/19/2014 02:39:52</publishTime>
+      <publishTime>10/01/2014 00:58:58</publishTime>
     </File>
   </ItemGroup>
 </Project>
