@@ -7,6 +7,13 @@
 @{ bool cambiarSucursal = ViewBag.Multisucursal;
    PrecondicionesOperacion cond = Model.Precondicion;
    bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+   bool botonConsulta = ((bool?)ViewBag.LinkConsulta) ?? false;
+   bool clienteObligatorio = false;
+   bool vendedorObligatorio = false;
+   if (cond!=null){
+       clienteObligatorio = cond.ClienteObligatorio;
+       vendedorObligatorio = cond.VendedorObligatorio;
+   }
 }
 
 <div class="dataLine">
@@ -14,12 +21,17 @@
         Fecha
     </div>
     <div class="editor-field editor-field-medium">
-        @{ if (Automotora.AdmiteOtrasFechas()) {
+        @{ if (!modoConsulta) {
+               if (Automotora.AdmiteOtrasFechas()) {
             @Html.TextBoxFor(model => model.Senia.Fecha, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
             @Html.ValidationMessageFor(model => model.Senia.Fecha)
-           } else {
+               } else {
             @Html.TextBoxFor(model => model.Senia.Fecha, "{0:dd/MM/yyyy}", new { disabled = "disabled" })    
-           }}
+               }
+           } else {
+            @Html.DisplayFor(model => model.Senia.Fecha, "{0:dd/MM/yyyy}")
+           }
+        }
     </div>
 </div>
 <div class="clear-both"></div>
@@ -29,8 +41,8 @@
         @Html.LabelForRequired(model => model.Senia.Cliente)
     </div>
     <div class="editor-field editor-field-medium medium renglon-alto">
-        @Html.DdlOrDisplayFor(model => model.Senia.Cliente.Codigo, modoConsulta || cond.ClienteObligatorio, model => model.Senia.Cliente.Nombre,
-                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null,
+        @Html.DdlOrDisplayFor(model => model.Senia.Cliente.Codigo, modoConsulta || clienteObligatorio, model => model.Senia.Cliente.Nombre,
+                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), "--Seleccionar Cliente--",
                 new { id = "ddlClientes", @class = "large" })
         @Html.ValidationMessageFor(model => model.Senia.Cliente)
     </div>
@@ -42,8 +54,8 @@
         @Html.LabelForRequired(model => model.Senia.Vendedor)
     </div>
     <div class="editor-field editor-field-medium medium renglon-alto">
-        @Html.DdlOrDisplayFor(model => model.Senia.Vendedor.Codigo, modoConsulta || cond.VendedorObligatorio, model => model.Senia.Vendedor.Nombre,
-                new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
+        @Html.DdlOrDisplayFor(model => model.Senia.Vendedor.Codigo, modoConsulta || vendedorObligatorio, model => model.Senia.Vendedor.Nombre,
+                new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), "--Seleccionar Vendedor--",
                 new { id = "ddlVendedores", @class = "large" })
         @Html.ValidationMessageFor(model => model.Senia.Vendedor)
     </div>
@@ -114,7 +126,14 @@
         Estado
     </div>
     <div class="editor-field editor-field-medium">
-        @Model.Senia.DescripcionEstado
+        <div class="floatLeft">
+            @Model.Senia.DescripcionEstado
+        </div>
+        @{ if (botonConsulta && Model.Senia != null && Model.Senia.Codigo > 0) {
+            <div style="margin-left: 12px" class="floatLeft">
+                @(Html.Bootstrap().ActionLinkButton("Ver Seña", "Details", "Senias").RouteValues(new { id = Model.Senia.Codigo }).Class("btn-info  btn-small"))
+            </div>
+           }}
     </div>
 </div>
 <div class="clear-both"></div>

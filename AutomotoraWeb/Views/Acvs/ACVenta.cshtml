@@ -28,11 +28,11 @@
     </div>
     <div class="editor-field editor-field-xlarge xxlarge floatLeft">
         <div class="floatLeft">
-            @Html.Partial("_selectVehiculo", gmodel)
+            @Html.Partial("_selectVehiculoACV", gmodel)
         </div>
         <div class="floatLeft" style="padding-left: 8px;">
             @{ string dest = ((Model.Vehiculo != null && Model.Vehiculo.Codigo > 0) ? "/vehiculos/details/" + Model.Vehiculo.Codigo : "#");}
-            <a href="@dest" id="abtn_verFinanciacion">
+            <a href="@dest" id="abtn_VerVehiculo">
                 @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Vehiculo").Id("btn_verVehiculo")
             </a>
         </div>
@@ -53,7 +53,7 @@
                       }}
                 </div>
                 <div class="tab-pane fade" id="pago_tab">
-                    @Html.Partial("_pagoEstandar", Model)
+                    @Html.Partial("_pagoEstandar", Model.Pago)
                 </div>
             </div>
         </div>

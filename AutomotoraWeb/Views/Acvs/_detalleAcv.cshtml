@@ -2,6 +2,7 @@
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sales;
 
 @{ bool cambiarSucursal = ViewBag.Multisucursal;
    PrecondicionesOperacion cond = Model.Vehiculo.ObtenerPrecondicionesACV();
@@ -23,6 +24,11 @@
             <div class="editor-field editor-field-medium ">
                 @Model.Vehiculo.Ficha
             </div>
+            @{if (modoConsulta) {
+                <div style="margin-left: 30px" class="floatLeft">
+                    @Html.Bootstrap().ActionLinkButton("Consulta Vehiculo", "Details", VehiculosController.CONTROLLER).RouteValues(new { id = Model.Vehiculo.Codigo }).Class("btn btn-info btn-small")
+                </div>
+              }}
         </div>
         <div class="clear-both"></div>
 
@@ -129,10 +135,14 @@
             @Html.LabelForRequired(model => model.Cliente)
         </div>
         <div class="editor-field editor-field-medium medium renglon-alto">
-            @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, cond.ClienteObligatorio || modoConsulta, model => model.Cliente.Nombre,
+            @{ if (!modoConsulta) {
+                @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, cond.ClienteObligatorio || modoConsulta, model => model.Cliente.Nombre,
                 new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null,
                 new { id = "ddlClientes", @class = "large" })
-            @Html.ValidationMessageFor(model => model.Cliente)
+                @Html.ValidationMessageFor(model => model.Cliente)
+               } else {
+                @Html.Bootstrap().ActionLink(Model.Cliente.Nombre, "Details", ClientesController.CONTROLLER).RouteValues(new { id = Model.Cliente.Codigo })
+               }}
         </div>
     </div>
     <div class="clear-both"></div>
@@ -142,10 +152,14 @@
             @Html.LabelForRequired(model => model.Vendedor)
         </div>
         <div class="editor-field editor-field-medium medium renglon-alto">
-            @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, cond.VendedorObligatorio || modoConsulta, model => model.Vendedor.Nombre,
-                new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
-                new { id = "ddlVendedores", @class = "large" })
-            @Html.ValidationMessageFor(model => model.Vendedor)
+            @{ if (!modoConsulta) {
+                    @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, cond.VendedorObligatorio || modoConsulta, model => model.Vendedor.Nombre,
+                            new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
+                            new { id = "ddlVendedores", @class = "large" })
+                    @Html.ValidationMessageFor(model => model.Vendedor)
+               } else {
+                     @Html.Bootstrap().ActionLink(Model.Vendedor.Nombre, "Details", VendedoresController.CONTROLLER).RouteValues(new { id = Model.Vendedor.Codigo })
+               }}
         </div>
     </div>
     <div class="clear-both"></div>

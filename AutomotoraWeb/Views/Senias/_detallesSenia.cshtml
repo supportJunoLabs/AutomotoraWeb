@@ -5,6 +5,7 @@
 
 @{ 
     bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+   
 }
 
 
@@ -43,14 +44,14 @@
                   }}
             </div>
           }}
-        <div class="tab-pane fade" id="senia_tab">
+        <div class="tab-pane fade" id="senia_tab" style="height:600px">
             @Html.Partial("_condicionesSenia", Model)
         </div>
         <div class="tab-pane fade" id="pago_tab">
             @{ if (!modoConsulta) {
-                @Html.Partial("_pagoEstandar", Model.Senia)
+                @Html.Partial("_pagoEstandar", Model.Senia.Pago)
                } else {
-                @Html.Partial("_pagoEstandarConsulta", Model.Senia)
+                @Html.Partial("_pagoEstandarConsulta", Model.Senia.Pago)
                }}
         </div>
         @{if (Automotora.GestionarPromesas()) {

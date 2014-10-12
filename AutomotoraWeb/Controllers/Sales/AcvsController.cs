@@ -196,6 +196,11 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Crear
 
+        public ActionResult VehiculosAnticipablesGrilla(GridLookUpModel model) {
+            model.Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES);
+            return PartialView("_selectVehiculoACV", model);
+        }
+
         public ActionResult ACVenta(int? id) {
             ACuentaVenta tr = new ACuentaVenta();
 

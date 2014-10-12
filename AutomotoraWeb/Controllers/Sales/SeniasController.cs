@@ -171,6 +171,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             Session[idSession + SessionUtils.CHEQUES_PROMESA] = new List<SeniaPromesa_ChequeVale>();
             Session[idSession + SessionUtils.VALES_PROMESA] = new List<SeniaPromesa_ChequeVale>();
             tr.Precondicion = new PrecondicionesOperacion();
+
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            tr.Senia.Sucursal = usuario.Sucursal;
         }
 
         private void iniSeniado(SeniaModel tr, string idSession, bool esPostback) {
@@ -183,16 +186,18 @@ namespace AutomotoraWeb.Controllers.Sales {
             }
             tr.asignarPrecondicion(esPostback);
             tr.Senia.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!esPostback) {
+                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                tr.Senia.Sucursal = usuario.Sucursal;
+            }
 
             if (!esPostback && Automotora.GestionarPromesas()) {
                 tr.Senia.Promesa.Financiacion = new Financiacion();
                 tr.Senia.Promesa.Financiacion.MontoFinanciado = new Importe(Moneda.MonedaDefault, 0);
                 tr.Senia.Promesa.Financiacion.Tasa = 0;
                 tr.Senia.Promesa.Financiacion.CantCuotas = 0;
-                tr.Senia.Sucursal = usuario.Sucursal;
+                
             }
-
             tr.Senia.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
             tr.Senia.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
             tr.Senia.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);

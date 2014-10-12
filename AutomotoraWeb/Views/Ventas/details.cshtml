@@ -16,8 +16,6 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-CONSULTA VENTA SIN IMPLEMENTAR
-
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
 
     <div class="block">
@@ -44,7 +42,14 @@ CONSULTA VENTA SIN IMPLEMENTAR
 
                 }
             }
+            @Html.Bootstrap().ActionLinkButton("Consulta Vehiculo", "Details", VehiculosController.CONTROLLER).RouteValues(new { id = Model.Vehiculo.Codigo }).Class("btn btn-info botonDocumento")
         </div>
+    </div>
+    
+     <div id="divDetalleVenta">
+        @{ if  ( Model.Codigo != null && Model.Codigo > 0)  {
+            @Html.Partial("_detallesVenta", Model);
+       }}
     </div>
 
 }
