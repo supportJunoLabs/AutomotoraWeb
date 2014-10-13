@@ -1,0 +1,275 @@
+﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sales;
+
+<div>
+    <div>
+        @{
+            string checkedValue = "";
+            string displayDatosPermutaContainer = "none";
+            if (Model.Permuta != null) {
+                checkedValue = "checked=\"checked\"";
+                displayDatosPermutaContainer = "block";
+            }
+            bool cambiarSucursal = ViewBag.Multisucursal;
+            bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+            string ro = "";
+            if (modoConsulta){
+                ro = "disabled='disabled'";
+            }
+        }
+        <input type="checkbox" id="existePermutaCheckBox" @(checkedValue) @(ro) style="margin-right:12px"/>
+        
+        <span>Permuta</span>
+    </div>
+
+    <div id="datosPermutaContainer" style="display: @(displayDatosPermutaContainer); height: 400px;">
+        <div>
+            @Html.HiddenFor(model => model.Permuta.Codigo, new {id="Permuta_Codigo"})
+            <div class="clear-both"></div>
+            <div class="espacio2"></div>
+
+            <div class="display-label ">
+                Valor Permuta
+            </div>
+            <div class="editor-field editor-field-small">
+                @Html.DdlOrDisplayImporteFor(model => model.Permuta.Costo, "Permuta.Costo", modoConsulta)
+                @Html.ValidationMessageFor(model => model.Permuta.Costo.Monto)
+            </div>
+            <div class="clear-both"></div>
+
+            @{ 
+                if ((Model != null) && (Model.Permuta != null) && (Model.Permuta.Codigo != 0)) {
+                    <div class="display-label renglon-alto">
+                        @Html.LabelForRequired(model => model.Permuta.Ficha)
+                    </div>
+                    <div class="editor-field editor-field-large">
+                        @Html.EditorOrDisplayFor(model => model.Permuta.Ficha, true)
+                    </div>
+                    if (modoConsulta){
+                        <div style="margin-left:30px" class="floatLeft">
+                                @Html.Bootstrap().ActionLinkButton("Consulta Vehiculo", "Details", VehiculosController.CONTROLLER).RouteValues(new { id = Model.Permuta.Codigo }).Class("btn btn-info btn-small")
+                        </div>
+                    }
+                    <div class="clear-both"></div>
+                }
+            }
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Sucursal)
+                </div>
+                <div class="editor-field editor-field-large renglon-alto">
+                    @*No controlo multisucursal porque como la permuta viene nula, inicialmente viene vacia la sucursal*@
+                    @Html.DdlOrDisplayFor(model => model.Permuta.Sucursal.Codigo, modoConsulta,
+                                model => model.Permuta.Sucursal.Nombre,
+                                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
+                    @Html.ValidationMessageFor(model => model.Permuta.Sucursal)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Marca)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Marca, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Marca)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Modelo)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Modelo, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Modelo)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Anio)
+                </div>
+                <div class="editor-field editor-field-small">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Anio, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Anio)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Matricula)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Matricula, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Matricula)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label ">
+                    @Html.LabelForRequired(model => model.Permuta.Departamento)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.DdlOrDisplayFor(model => model.Permuta.Departamento.Codigo, modoConsulta,
+                                model => model.Permuta.Departamento.Nombre,
+                                new SelectList(ViewBag.Departamentos, "Codigo", "Nombre"), null, new { id = "ddlDepartamento" })
+                    @Html.ValidationMessageFor(model => model.Permuta.Departamento)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Color)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Color, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Color)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Padron)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Padron, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Padron)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Motor)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Motor, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Motor)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Chasis)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Chasis, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Chasis)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Kilometros)
+                </div>
+                <div class="editor-field editor-field-small">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Kilometros, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Kilometros)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label ">
+                    @Html.LabelForRequired(model => model.Permuta.TipoCombustible)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.DdlOrDisplayFor(model => model.Permuta.TipoCombustible.Codigo, modoConsulta,
+                                model => model.Permuta.TipoCombustible.Descripcion,
+                                new SelectList(ViewBag.TiposCombustible, "Codigo", "Descripcion"), null, new { id = "ddlTipoCombustible" })
+                    @Html.ValidationMessageFor(model => model.Permuta.TipoCombustible)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            @*  <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.FechaAdquirido)
+                </div>
+                <div class="editor-field editor-field-small">
+                    @Html.TextBoxOrdisplayFor(model => model.Permuta.FechaAdquirido, false, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+                    @Html.ValidationMessageFor(model => model.Permuta.FechaAdquirido)
+                </div>
+                <div class="clear-both"></div>
+            </div>*@
+
+            @*  <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Costo)
+                </div>
+                <div class="editor-field editor-field-small">
+                    @Html.DdlOrDisplayImporteFor(model => model.Permuta.Costo, false)
+                    @Html.ValidationMessageFor(model => model.Permuta.Costo.Monto)
+                </div>
+                <div class="clear-both"></div>
+            </div>*@
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.Propietario)
+                </div>
+                <div class="editor-field editor-field-large">
+                    @Html.EditorOrDisplayFor(model => model.Permuta.Propietario, modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.Propietario)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            @* <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.TotalGastos)
+                </div>
+                <div  class="renglon-alto">
+                    @Html.DdlOrDisplayImporteFor(model => model.Permuta.TotalGastos, false)
+                    @Html.ValidationMessageFor(model => model.Permuta.TotalGastos)
+                </div>
+                <div class="clear-both"></div>
+            </div>*@
+
+            <div>
+                <div class="display-label">
+                    @Html.LabelForRequired(model => model.Permuta.PrecioVenta)
+                </div>
+                <div class="editor-field editor-field-small">
+                    @Html.DdlOrDisplayImporteFor(model => model.Permuta.PrecioVenta, "Permuta.PrecioVenta", modoConsulta)
+                    @Html.ValidationMessageFor(model => model.Permuta.PrecioVenta.Monto)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+            <div>
+                <div class="display-label ">
+                    @Html.LabelForRequired(model => model.Observaciones)
+                </div>
+                <div class="editor-field editor-field-xxlarge">
+                    @Html.TextAreaOrDisplayFor(model => model.Observaciones, modoConsulta, new { id = "Permuta_Observaciones", style = "width: 530px; height: 60px" })
+                    @Html.ValidationMessageFor(model => model.Observaciones)
+                </div>
+                <div class="clear-both"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $("#existePermutaCheckBox").change(function () {
+            $("#datosPermutaContainer").toggle();
+        });
+    </script>
+
+</div>

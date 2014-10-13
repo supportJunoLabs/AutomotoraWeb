@@ -130,10 +130,10 @@ namespace AutomotoraWeb.Controllers.Financing {
 
             ViewBag.SoloLectura = true;
 
-            this.eliminarValidacionesIgnorables("Transaccion.Vale", MetadataManager.IgnorablesDDL(m.Transaccion.Vale));
-            this.eliminarValidacionesIgnorables("Transaccion.Sucursal", MetadataManager.IgnorablesDDL(m.Transaccion.Sucursal));
-            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(m.Cliente));
-            this.eliminarValidacionesIgnorables("Transaccion.Importe.Moneda", MetadataManager.IgnorablesDDL(m.Transaccion.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Transaccion.Vale", MetadataManager.IgnorablesDDL(new Vale()));
+            this.eliminarValidacionesIgnorables("Transaccion.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Transaccion.Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             //Sacar la validacion del Vale porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Transaccion.Vale.Codigo");
@@ -335,10 +335,10 @@ namespace AutomotoraWeb.Controllers.Financing {
         [HttpPost]
         public ActionResult Descontar(TRValeDescontar tr) {
 
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(tr.Cuenta));
-            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(new Vale()));
 
 
             //Sacar la validacion del vale porque sale con texto feo y hacerla manualmente
@@ -433,7 +433,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             try{
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
             if (ModelState.IsValid) {
                 if (model.Accion == ListadoValesModel.ACCIONES.IMPRIMIR) {
                     return this.ReportVales(model);
@@ -527,8 +527,8 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         [HttpPost]
         public ActionResult Rechazar(TRValeRechazar tr) {
-            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(new Vale()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
             //Sacar la validacion del Vale porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Vale.Codigo");
@@ -670,10 +670,10 @@ namespace AutomotoraWeb.Controllers.Financing {
 
             ModelState.Remove("Importe.Moneda");
 
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
-            this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(tr.ClienteOp));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(new Vale()));
+            this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(new Cliente()));
 
             //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
             tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
@@ -769,10 +769,10 @@ namespace AutomotoraWeb.Controllers.Financing {
             tr.Fecha = DateTime.Now.Date;
 
             Session[idSession] = tr;
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
-            this.eliminarValidacionesIgnorables("Destinatario", MetadataManager.IgnorablesDDL(tr.Destinatario));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(new Vale()));
+            this.eliminarValidacionesIgnorables("Destinatario", MetadataManager.IgnorablesDDL(new Financista()));
 
             //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
             tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);

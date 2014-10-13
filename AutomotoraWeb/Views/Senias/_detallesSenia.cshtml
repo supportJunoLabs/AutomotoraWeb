@@ -66,8 +66,23 @@
 <div class="btn-toolbar">
     <div class="floatRight">
         @{ if (ViewData["idOperacion"].Equals("seniar")) {
-            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Registrar Seña"))
+            @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Registrar Seña").Id("btnConfirmarSenia"))
            }}
     </div>
 </div>
 <div class="clear-both"></div>
+        
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma la seña?", "Aceptar", "Cancelar");
+
+        $("#btnConfirmarSenia").click(function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+ </script>

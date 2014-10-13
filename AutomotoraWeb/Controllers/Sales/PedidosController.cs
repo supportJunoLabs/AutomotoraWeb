@@ -120,19 +120,20 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         [HttpPost]
         public ActionResult Recibir(Pedido ped) {
-            this.eliminarValidacionesIgnorables("Vehiculo.Departamento", MetadataManager.IgnorablesDDL(ped.Vehiculo.Departamento));
-            this.eliminarValidacionesIgnorables("Vehiculo.TipoCombustible", MetadataManager.IgnorablesDDL(ped.Vehiculo.TipoCombustible));
-            this.eliminarValidacionesIgnorables("Vehiculo.Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Vehiculo.Costo.Moneda));
-            this.eliminarValidacionesIgnorables("Vehiculo.PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(ped.Vehiculo.PrecioVenta.Moneda));
+            this.eliminarValidacionesIgnorables("Vehiculo.Departamento", MetadataManager.IgnorablesDDL(new Departamento()));
+            this.eliminarValidacionesIgnorables("Vehiculo.TipoCombustible", MetadataManager.IgnorablesDDL(new TipoCombustible()));
+            this.eliminarValidacionesIgnorables("Vehiculo.Costo.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Vehiculo.PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Vehiculo.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
-            this.eliminarValidacionesIgnorables("Cliente",  MetadataManager.IgnorablesDDL(ped.Cliente));
-            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(ped.Vendedor));
-            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Costo.Moneda));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(ped.Sucursal));
+            this.eliminarValidacionesIgnorables("Cliente",  MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
+            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
 
-            ModelState.Remove("Vehiculo.Sucursal"); //se toma del vehiculo
-            ModelState.Remove("Cliente.Codigo"); //uede no estar reservado, no tiene cliente ni vendedor
+            ModelState.Remove("Sucursal"); //se toma del vehiculo
+            ModelState.Remove("Cliente.Codigo"); //puede no estar reservado, no tiene cliente ni vendedor
             ModelState.Remove("Vendedor.Codigo");
 
             if (ModelState.IsValid) {
@@ -240,29 +241,31 @@ namespace AutomotoraWeb.Controllers.Sales {
         [HttpPost]
         public ActionResult Delete(Pedido td) {
 
-            this.eliminarValidacionesIgnorables(td);
+            //this.eliminarValidacionesIgnorables(td);
             ViewBag.SoloLectura = true;
-            if (ModelState.IsValid) {
+            //if (ModelState.IsValid) {
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
                     string IP = HttpContext.Request.UserHostAddress;
                     td.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
+                    td.Consultar(); //para traer lo datos a mostrar
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
+                    ModelState.Clear();
                     return View(td);
                 }
-            }
+            //}
 
-            return View(td);
+            //return View(td);
         }
 
         private void eliminarValidacionesIgnorables(Pedido ped) {
-            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Costo.Moneda));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(ped.Sucursal));
-            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(ped.Cliente));
-            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(ped.Vendedor));
+            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
 
             if (!ped.Reservado) {
                 //Lo tengo que sacar porque las ddls siempre el ponen un valor aunque no corresponda
@@ -310,9 +313,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.SucursalesListado = Sucursal.Sucursales;
             ViewBag.ClientesListado = Cliente.Clientes();
             ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-            this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
-            this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(model.Filtro.Vendedor));
+            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
             if (ModelState.IsValid) {
                 if (btnSubmit == "Imprimir") {
                     return this.Report(model);

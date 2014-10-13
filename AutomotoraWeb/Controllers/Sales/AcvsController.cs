@@ -109,9 +109,9 @@ namespace AutomotoraWeb.Controllers.Sales {
                 ViewBag.SucursalesListado = Sucursal.Sucursales;
                 ViewBag.ClientesListado = Cliente.Clientes();
                 ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
-                this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(model.Filtro.Vendedor));
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+                this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
 
                 //Revisar el codigo de vehiculo ingresado manualmente:
                 if (string.IsNullOrEmpty(model.CodigoVhc)) {
@@ -259,11 +259,11 @@ namespace AutomotoraWeb.Controllers.Sales {
             Session[idSession] = model;
             model.Fecha = DateTime.Now.Date;
 
-            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(model.Cliente));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(model.Sucursal));
-            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(model.Vendedor));
-            this.eliminarValidacionesIgnorables("Vehiculo", MetadataManager.IgnorablesDDL(model.Vehiculo));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(model.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
+            this.eliminarValidacionesIgnorables("Vehiculo", MetadataManager.IgnorablesDDL(new Vehiculo()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
             //Si es externo esta vacio, porque no se ve la opcion pagos.
@@ -360,11 +360,11 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.SoloLectura = true;
             model.Fecha = DateTime.Now.Date;
 
-            //this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(model.Cliente));
-            //this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(model.Sucursal));
-            //this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(model.Vendedor));
-            //this.eliminarValidacionesIgnorables("Vehiculo", MetadataManager.IgnorablesDDL(model.Vehiculo));
-            //this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(model.Importe.Moneda));
+            //this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(new Cliente));
+            //this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal));
+            //this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(new Vendedor));
+            //this.eliminarValidacionesIgnorables("Vehiculo", MetadataManager.IgnorablesDDL(new Vehiculo));
+            //this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda));
 
             //if (ModelState.IsValid) { -- solo necesito el codigo
             ModelState.Clear();

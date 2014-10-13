@@ -66,6 +66,18 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma el anticipo?", "Aceptar", "Cancelar");
+        $("#btnConfirmarAnticipo").live("click", function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+    
+
     function vehiculoSelected(s, e) {
         var valor = s.GetRowKey(e.visibleIndex);
         $("#codigoVehiculo").val(valor);

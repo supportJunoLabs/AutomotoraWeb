@@ -1,0 +1,32 @@
+﻿@model DLL_Backend.TRCuotaTransferencia
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    bool hayPagos = false;
+    if (Model.SubFinanciacion!=null && Model.SubFinanciacion.Financista!=null && Model.SubFinanciacion.Financista.Interno){
+        hayPagos = true;
+    }
+}
+
+    @{if (Model.SubFinanciacion != null && Model.SubFinanciacion.Venta != null && Model.SubFinanciacion.Venta.Codigo > 0) {
+        <div class="well" style="margin-top: 10px; width: 1000px; height: 1300px;">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#operacion_tab" data-toggle="tab">Transferencia</a></li>
+                @{ if (hayPagos) {
+                    <li id="liPago"><a href="#pago_tab" data-toggle="tab">Pago</a></li>
+                }}
+            </ul>
+            <div id="tabContent" class="tab-content">
+                <div class="tab-pane active in" id="operacion_tab">
+                        @Html.Partial("_detalleTransf", Model)
+                </div>
+                @{ if (hayPagos) {
+                    <div class="tab-pane fade" id="pago_tab">
+                        @Html.Partial("_pagoEstandar", Model.Pago)
+                    </div>
+                }}
+            </div>
+        </div>
+    }}

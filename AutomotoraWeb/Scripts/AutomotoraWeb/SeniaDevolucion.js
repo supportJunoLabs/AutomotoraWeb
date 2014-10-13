@@ -1,11 +1,14 @@
 ﻿$(document).ready(function () {
-     $("#btn_confirmar").live('click', function () {
+
+    inicializarModal("Confirmacion", "Confirma la devolucion de la seña?", "Aceptar", "Cancelar");
+    $("#btn_confirmar").live('click', function () {
          gridChequesDevolver.GetSelectedFieldValues("Codigo", ObtenerCodigosConfirmarCallBack);
-    });    
+     });
+     
 });
 
 function ObtenerCodigosConfirmarCallBack(values) {
-    //alert(values);
+    //alert("hola");
     //al presionar el boton confirmar
     var selectedIDs;
     selectedIDs = "";
@@ -14,6 +17,11 @@ function ObtenerCodigosConfirmarCallBack(values) {
     }
     //alert(selectedIDs);
     $("#chequesDevolverIds").val(selectedIDs);
+    $('#myModal').modal('show');
+    //$('form#formPrincipal').submit();
+}
+
+function callBackAceptar() {
     $('form#formPrincipal').submit();
 }
 

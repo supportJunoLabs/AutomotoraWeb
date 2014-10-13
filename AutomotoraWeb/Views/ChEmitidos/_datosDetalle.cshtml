@@ -68,10 +68,12 @@
 
 @{ if (modoConsulta) { 
     <div class="display-label ">
-        @Html.LabelForRequired(model => model.DescripcionEstado)
+        Estado
     </div>
     <div class="editor-field">
+        <strong>
         @Html.DisplayFor(model => model.DescripcionEstado)
+            </strong>
     </div>
     <div class="clear-both"></div>
 }}

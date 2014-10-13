@@ -84,12 +84,14 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.LabelForRequired(model => model.DescripcionEstado)
+   Estado
 </div>
 <div class="editor-field ">
+    <div>
     <strong>
-        <div>@Html.DisplayFor(model => model.DescripcionEstado)</div>
+        @Html.DisplayFor(model => model.DescripcionEstado)
     </strong>
+        </div>
     <div>@Html.DisplayFor(model => model.DescripcionAdicionalDestino)</div>
 </div>
 <div class="clear-both"></div>

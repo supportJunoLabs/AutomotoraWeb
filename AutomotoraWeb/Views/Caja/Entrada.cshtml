@@ -57,7 +57,7 @@
     
     <div class="btn-toolbar">
         <div class="floatLeft">
-            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Confirmar"))
+            @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Confirmar").Id("btnAceptar"))
         </div>
     </div>
     <div class="clear-both"></div>
@@ -67,6 +67,20 @@
 <script type="text/javascript">
     function OnBeginCallback(s, e) {
         e.customArgs["idSession"] = '@ViewData["idSession"]';
-            e.customArgs["idParametros"] = '@ViewData["idParametros"]';
-        }
+        e.customArgs["idParametros"] = '@ViewData["idParametros"]';
+    }
+
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma entrada de caja?", "Aceptar", "Cancelar");
+        $("#btnAceptar").live('click', function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+
+
+
 </script>

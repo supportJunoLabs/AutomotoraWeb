@@ -1,0 +1,20 @@
+﻿@model DLL_Backend.PagoTransaccion
+
+<div class="well" style="margin-top: 10px; width: 950px; height: 350px;">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#MPEfectivoSeniasACVs_tab" data-toggle="tab">Efectivo</a></li>
+        <li><a href="#MPChequesSeniasACVs_tab" data-toggle="tab">Cheques</a></li>
+        <li><a href="#MPBancoSeniasACVs_tab" data-toggle="tab">Banco</a></li>
+    </ul>
+    <div id="tabContentMetodoDePago" class="tab-content">
+        <div class="tab-pane active in" id="MPEfectivoSeniasACVs_tab">
+            @Html.Partial("_grillaPagosEfectivo", Model.Efectivos, new ViewDataDictionary {{ "isReadOnly", true }, { "sufixId", "PagoSenia" }})
+        </div>
+        <div class="tab-pane fade" id="MPChequesSeniasACVs_tab">
+            @Html.Partial("_grillaPagosCheque", Model.Cheques, new ViewDataDictionary {{ "isReadOnly", true }, { "sufixId", "PagoSenia" }})
+        </div>
+        <div class="tab-pane fade" id="MPBancoSeniasACVs_tab">
+            @Html.Partial("_grillaPagosMovBanco", Model.PagosBanco, new ViewDataDictionary {{ "isReadOnly", true }, { "sufixId", "PagoSenia" }})
+        </div>
+    </div>
+</div>

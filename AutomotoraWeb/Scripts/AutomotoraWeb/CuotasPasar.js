@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+
+    inicializarModal("Confirmacion", "Confirma transferir estas cuotas?", "Aceptar", "Cancelar");
+
     $("#selectAllCuotas").live('click', function () {
         gridCuotasTransf.SelectRows();
     });
@@ -51,6 +54,11 @@ function ObtenerCodigosConfirmarCallBack(values) {
     }
     //alert(selectedIDs);
     $("#cuotasIds").val(selectedIDs);
+    $('#myModal').modal('show');
+    //$('form#formPrincipal').submit();
+}
+
+function callBackAceptar() {
     $('form#formPrincipal').submit();
 }
 
@@ -62,8 +70,6 @@ function ventaSelected(s, e) {
     var valor = s.GetRowKey(e.visibleIndex);
     $("#codigoSubfin").val(valor);
     $("#cuotasIds").val("");
-    //alert($("#codigoSubfin").val());
-
     var idVenta = "";
     if (valor) {
         idVenta = (valor.split("-"))[0];
@@ -72,8 +78,7 @@ function ventaSelected(s, e) {
         $("#abtn_verFinanciacion").prop("href", "#");
     }
 
-    $('#operacion_tab').html('');
-
+    $('#divOperacion').html('');
     var destino = '/Cuotas/DetalleVentaPasar/';
     $.ajax({
         cache: false,
@@ -81,16 +86,15 @@ function ventaSelected(s, e) {
         url: destino,
         data: { "idSubfin": valor, "idSession": $('#idSession').val() },
         success: function (data) {
-            $('#operacion_tab').html(data);
-            var interno = $("#finInterno").val();
-            //alert(interno)
-            if (interno == "True") {
-                $("#liPago").show();
-                $("#pago_tab").show();
-            } else {
-                $("#liPago").hide();
-                $("#pago_tab").hide();
-            }
+            $('#divOperacion').html(data);
+            //var interno = $("#finInterno").val();
+            //if (interno == "True") {
+            //    $("#liPago").show();
+            //    $("#pago_tab").show();
+            //} else {
+            //    $("#liPago").hide();
+            //    $("#pago_tab").hide();
+            //}
             reajustarControles();
         },
         error: function (xhr, ajaxOptions, thrownError) {

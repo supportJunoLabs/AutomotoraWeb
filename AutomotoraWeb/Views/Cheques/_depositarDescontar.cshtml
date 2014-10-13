@@ -108,13 +108,29 @@
     <div class="espacio2"></div>
     <div class="btn-toolbar">
         @{ if (Model.TipoDestino == TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR) {
-            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Depositar Cheque"))
+            @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Depositar Cheque").Id("btnDepositar"))
            } else {
-            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Descontar Cheque"))
+            @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Descontar Cheque").Id("btnDescontar"))
            }
         }
     </div>
-    
 }
 
+<script type="text/javascript">
 
+    $(document).ready(function () {
+        $("#btnDepositar").live('click', function () {
+            inicializarModal("Confirmacion", "Confirma depositar cheque?", "Aceptar", "Cancelar");
+            $('#myModal').modal('show');
+        });
+        $("#btnDescontar").live('click', function () {
+            inicializarModal("Confirmacion", "Confirma descontar cheque?", "Aceptar", "Cancelar");
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+
+</script>

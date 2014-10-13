@@ -183,10 +183,10 @@ namespace AutomotoraWeb.Controllers.Financing {
             ModelState.Remove("Venta.Vehiculo");
             ModelState.Remove("Venta.Cliente");
 
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Venta", MetadataManager.IgnorablesDDL(tr.Venta));
-            this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(tr.ClienteOp));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Venta", MetadataManager.IgnorablesDDL(new Venta()));
+            this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(new Cliente()));
 
             //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
             tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
@@ -285,8 +285,10 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult DetalleVentaPasar(string idSubfin, string idSession) {
 
             var datos = idSubfin.Split('-');
+            ViewData["idSession"] = idSession;
 
-            TRCuotaTransferencia tr = (TRCuotaTransferencia)Session[idSession];
+            TRCuotaTransferencia tr = new TRCuotaTransferencia();
+            Session[idSession] = tr;
             tr.SubFinanciacion = new SubFinanciacion();
             tr.SubFinanciacion.Venta = new Venta();
             tr.SubFinanciacion.Venta.Codigo = Int32.Parse(datos[0]);
@@ -296,14 +298,11 @@ namespace AutomotoraWeb.Controllers.Financing {
 
             tr.SubFinanciacion.Consultar();
 
-            //Si el financista es externo no lleva medios de pago
-            if (!tr.SubFinanciacion.Financista.Interno) {
-                tr.Pago.Reset();
-                Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
-                Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
-                Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
-            }
-            return PartialView("_detalleTransf", tr);
+            Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
+            Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
+            Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
+
+            return PartialView("_pasar", tr);
         }
 
         //se invoca automaticamente desde la grilla de cuotas
@@ -323,11 +322,11 @@ namespace AutomotoraWeb.Controllers.Financing {
             Session[idSession] = model;
             model.Fecha = DateTime.Now.Date;
 
-            this.eliminarValidacionesIgnorables("Destinatario", MetadataManager.IgnorablesDDL(model.Destinatario));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(model.Sucursal));
-            this.eliminarValidacionesIgnorables("SubFinanciacion.Financista", MetadataManager.IgnorablesDDL(model.SubFinanciacion.Financista));
+            this.eliminarValidacionesIgnorables("Destinatario", MetadataManager.IgnorablesDDL(new Financista()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("SubFinanciacion.Financista", MetadataManager.IgnorablesDDL(new Financista()));
             if (model.Importe != null) {
-                this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(model.Importe.Moneda));
+                this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             }
 
             //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
@@ -470,9 +469,9 @@ namespace AutomotoraWeb.Controllers.Financing {
             ModelState.Remove("Venta.Vehiculo");
             ModelState.Remove("Venta.Cliente");
 
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Venta", MetadataManager.IgnorablesDDL(tr.Venta));
-            this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(tr.ClienteOp));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Venta", MetadataManager.IgnorablesDDL(new Venta()));
+            this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(new Cliente()));
 
             if (ModelState.IsValid) {
                 try {

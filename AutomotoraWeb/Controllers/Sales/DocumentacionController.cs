@@ -160,7 +160,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            this.eliminarValidacionesIgnorables("Comprobante.Vehiculo", MetadataManager.IgnorablesDDL(model.Comprobante.Vehiculo));
+            this.eliminarValidacionesIgnorables("Comprobante.Vehiculo", MetadataManager.IgnorablesDDL(new Vehiculo()));
 
             if (ModelState.IsValid) {
                 try {

@@ -65,11 +65,11 @@ namespace AutomotoraWeb.Controllers.Financing {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
                 //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
-                this.eliminarValidacionesIgnorables("Filtro.Usuario", MetadataManager.IgnorablesDDL(model.Filtro.Usuario));
-                this.eliminarValidacionesIgnorables("Filtro.TipoRecibo", MetadataManager.IgnorablesDDL(model.Filtro.TipoRecibo));
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+                this.eliminarValidacionesIgnorables("Filtro.Usuario", MetadataManager.IgnorablesDDL(new Usuario()));
+                this.eliminarValidacionesIgnorables("Filtro.TipoRecibo", MetadataManager.IgnorablesDDL(new TipoRecibo()));
                 if (ModelState.IsValid) {
                     if (model.Accion == ListadoTransaccionesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportTransacciones(model);

@@ -52,7 +52,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             try {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
-                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(model.Cuenta));
+                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
                 if (ModelState.IsValid) {
                     model.generarListado();
                 } else {
@@ -70,7 +70,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult GrillaMovimientos(string idParametros) {
             MovimientosBancoModel model = (MovimientosBancoModel)Session[idParametros];
             ViewData["idParametros"] = model;
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(model.Cuenta));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             if (ModelState.IsValid) {
                 model.generarListado();
             } else {
@@ -167,8 +167,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         //Se invoca desde crear y extornar
         private ActionResult agregarMovimiento(MovBanco mov) {
-            this.eliminarValidacionesIgnorables("ImporteMov.Moneda", MetadataManager.IgnorablesDDL(mov.ImporteMov.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(mov.Cuenta));
+            this.eliminarValidacionesIgnorables("ImporteMov.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             if (ModelState.IsValid) {
                 try {
                     mov.Agregar();
@@ -261,7 +261,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             try {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
-                this.eliminarValidacionesIgnorables("EstadoCuenta.Cuenta", MetadataManager.IgnorablesDDL(model.EstadoCuenta.Cuenta));
+                this.eliminarValidacionesIgnorables("EstadoCuenta.Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
                 if (ModelState.IsValid) {
                     if (model.Accion == EstadoCuentaModel.ACCIONES.IMPRIMIR) {
                         return this.Report(model);

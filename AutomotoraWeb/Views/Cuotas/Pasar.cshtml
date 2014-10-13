@@ -10,10 +10,11 @@
     ViewBag.Title = "Transferir Financiacion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    GridLookUpModel gmodel = new GridLookUpModel {Opciones = Financiacion.FinanciacionesTransferibles()};
-    if (Model.SubFinanciacion!=null){
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Financiacion.FinanciacionesTransferibles() };
+    if (Model.SubFinanciacion != null) {
         gmodel.GridLookUpCodigo = Model.SubFinanciacion.Codigo;
     }
+   
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
@@ -25,43 +26,27 @@
     <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/>  
     <input type="hidden" id="cuotasIds" name="cuotasIds" value='@ViewData["cuotasIds"]'/>
        
-   <div class="display-label">
-    Financiacion
-</div>
-<div class="editor-field editor-field-xlarge xxlarge floatLeft">
-    <div class="floatLeft">
-         @Html.Partial("_seleccionVentaPasarGridLookup", gmodel)
+    <div class="display-label">
+        Financiacion
     </div>
-    <div class="floatLeft" style="padding-left: 8px;">
+    <div class="editor-field editor-field-xlarge xxlarge floatLeft">
+        <div class="floatLeft">
+            @Html.Partial("_seleccionVentaPasarGridLookup", gmodel)
+        </div>
+        <div class="floatLeft" style="padding-left: 8px;">
             @{ string dest = ((Model.SubFinanciacion != null && Model.SubFinanciacion.Venta != null && Model.SubFinanciacion.Venta.Codigo > 0) ? "/ConsultasFin/ConsultaFinanciacion/" + Model.SubFinanciacion.Venta.Codigo : "#");}
             <a href="@dest" id="abtn_verFinanciacion">
                 @Html.Bootstrap().Button().Class("btn-info btn-small").Text("Consultar Financiacion").Id("btn_verFinanciacion")
             </a>
         </div>
-     @Html.HiddenFor(model => model.SubFinanciacion.Codigo, new { id = "codigoSubfin" })
+        @Html.HiddenFor(model => model.SubFinanciacion.Codigo, new { id = "codigoSubfin" })
 
-</div>
-    <div class="clear-both"></div>
-    
-       <div id="divOperacion">
-        <div class="well" style="margin-top: 10px; width: 1000px; height: 1300px;">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#operacion_tab" data-toggle="tab">Transferencia</a></li>
-                <li id="liPago"><a href="#pago_tab" data-toggle="tab">Pago</a></li>
-            </ul>
-            <div id="tabContent" class="tab-content">
-                <div class="tab-pane active in" id="operacion_tab">
-                    @{if (Model.SubFinanciacion != null && Model.SubFinanciacion.Venta != null && Model.SubFinanciacion.Venta.Codigo > 0) {
-                        @Html.Partial("_detalleTransf", Model)
-                      }}
-                </div>
-                <div class="tab-pane fade" id="pago_tab">
-                    @Html.Partial("_pagoEstandar", Model.Pago);
-                </div>
-            </div>
-        </div>
     </div>
-
- }
+    <div class="clear-both"></div>
+       
+    <div id="divOperacion">
+         @Html.Partial("_pasar", Model)
+    </div>
+}
 
 

@@ -150,8 +150,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         [HttpPost]
         public ActionResult Create(ChequeEmitido ch) {
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(ch.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(ch.Cuenta));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             if (ModelState.IsValid) {
                 try {
                     ch.Agregar();
@@ -167,8 +167,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         [HttpPost]
         public ActionResult Edit(ChequeEmitido ch) {
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(ch.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(ch.Cuenta));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
 
             if (ModelState.IsValid) {
                 try {
@@ -186,8 +186,8 @@ namespace AutomotoraWeb.Controllers.Bank {
         [HttpPost]
         public ActionResult Delete(ChequeEmitido ch) {
             ViewBag.SoloLectura = true;
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(ch.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(ch.Cuenta));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
 
             if (ModelState.IsValid) {
                 try {
@@ -232,8 +232,8 @@ namespace AutomotoraWeb.Controllers.Bank {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
             //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Cuenta", MetadataManager.IgnorablesDDL(model.Filtro.Cuenta));
-            this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(model.Filtro.Moneda));
+            this.eliminarValidacionesIgnorables("Filtro.Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
+            this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             if (ModelState.IsValid) {
                 if (model.Accion == ListadoChequesEmitidosModel.ACCIONES.IMPRIMIR) {
                     return this.Report(model);

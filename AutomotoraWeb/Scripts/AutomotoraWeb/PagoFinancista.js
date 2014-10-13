@@ -62,6 +62,8 @@ function ChequesInit() {
 
 $(document).ready(function () {
 
+    inicializarModal("Confirmacion", "Confirma el pago?", "Aceptar", "Cancelar");
+
     $("#btn_confirmar").click(function () {
         gridCheques.GetSelectedFieldValues("Codigo", ObtenerCodigosConfirmarCallBack);
     });
@@ -133,10 +135,13 @@ function ObtenerCodigosConfirmar2CallBack(values) {
         selectedIDs += values[index] + ",";
     }
     $("#efectivosIds").val(selectedIDs);
-
-    $('form#formPrincipal').submit();
+    $('#myModal').modal('show');
+    //$('form#formPrincipal').submit();
 }
 
+function callBackAceptar() {
+    $('form#formPrincipal').submit();
+}
 
 function SelectionChangedChequesCallback(values) {
     SelectedRowsCheques.BeginUpdate();

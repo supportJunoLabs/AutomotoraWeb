@@ -104,7 +104,7 @@ namespace AutomotoraWeb.Controllers.Bank
         [HttpPost]
         public ActionResult Create(CuentaBancaria td) {
 
-            this.eliminarValidacionesIgnorables("Moneda", MetadataManager.IgnorablesDDL(td.Moneda));
+            this.eliminarValidacionesIgnorables("Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             if (ModelState.IsValid) {
                 try {
@@ -126,7 +126,7 @@ namespace AutomotoraWeb.Controllers.Bank
         [HttpPost]
         public ActionResult Edit(CuentaBancaria td) {
 
-            this.eliminarValidacionesIgnorables("Moneda", MetadataManager.IgnorablesDDL(td.Moneda));
+            this.eliminarValidacionesIgnorables("Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             if (ModelState.IsValid) {
                 try {
@@ -148,7 +148,7 @@ namespace AutomotoraWeb.Controllers.Bank
         [HttpPost]
         public ActionResult Delete(CuentaBancaria td) {
             ViewBag.SoloLectura = true;
-            this.eliminarValidacionesIgnorables("Moneda", MetadataManager.IgnorablesDDL(td.Moneda));
+            this.eliminarValidacionesIgnorables("Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             if (ModelState.IsValid) {
                 try {

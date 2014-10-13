@@ -3,6 +3,9 @@
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
 
+
+
+
 @{
     ViewBag.Title = "Registrar Vale Impago";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -72,9 +75,41 @@
     
     <div class="espacio2"></div>
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Vale Impago"))
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Vale Impago").Id("btn_Rechazar"))
     </div>     
 
 }
 
-<script src="~/Scripts/AutomotoraWeb/RechazarVale.js"></script>
+
+<script type="text/javascript">
+
+    function valeSelected(s, e) {
+        //alert("hola");
+        var g = gridVales.GetGridView();  //obtener referencia a la grilla
+        //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+        //alert(valor);
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoVale").val(valor);
+        $("#abtn_verVale").prop("href", "/Vales/ConsultaVale/" + valor);
+        g.GetRowValues(g.GetFocusedRowIndex(), 'InfoMovDescuento', MostrarDestinoAnt);
+    }
+
+    function MostrarDestinoAnt(value) {
+        //alert(value);
+        $("#destinoAnt").html(value);
+    }
+
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma registrar vale como impago?", "Aceptar", "Cancelar");
+        $("#btn_Rechazar").live("click", function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+
+    
+
+</script>

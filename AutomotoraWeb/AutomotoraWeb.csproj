@@ -1797,20 +1797,16 @@
     <Content Include="Scripts\AutomotoraWeb\PagoFinancista.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale2.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale1.js" />
-    <Content Include="Scripts\AutomotoraWeb\RechazarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\ConsultaVale1.js" />
     <Content Include="Scripts\AutomotoraWeb\RenovarVale3.js" />
     <Content Include="Scripts\AutomotoraWeb\SalidaCaja.js" />
     <Content Include="Scripts\AutomotoraWeb\SeniaDevolucion.js" />
     <Content Include="Scripts\AutomotoraWeb\SitFinancista.js" />
     <Content Include="Scripts\AutomotoraWeb\ValesListado.js" />
-    <Content Include="Scripts\AutomotoraWeb\DescontarVale.js" />
     <Content Include="Scripts\AutomotoraWeb\PasarCheque.js" />
-    <Content Include="Scripts\AutomotoraWeb\RechazarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\DepositarDescontarCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\MovsBancoGestion.js" />
     <Content Include="Scripts\AutomotoraWeb\MovsBancoListado.js" />
-    <Content Include="Scripts\AutomotoraWeb\CanjearCheque.js" />
     <Content Include="Scripts\AutomotoraWeb\SaldosBanco.js" />
     <Content Include="Scripts\AutomotoraWeb\TransaccionesListado.js" />
     <Content Include="Scripts\AutomotoraWeb\CuotasValesListado.js" />
@@ -2120,7 +2116,6 @@
     <Content Include="Views\ChEmitidos\show.cshtml" />
     <Content Include="Views\Shared\_modalConfirmation.cshtml" />
     <Content Include="Views\Vales\Descontar.cshtml" />
-    <Content Include="Views\Vales\_descontar.cshtml" />
     <Content Include="Views\Vales\_selectValeDesc.cshtml" />
     <Content Include="Views\Vales\ReciboDescuento.cshtml" />
     <Content Include="Views\Vales\_reciboDescuento.cshtml" />
@@ -2309,6 +2304,7 @@
     <Content Include="Views\Ventas Leandro\report.cshtml" />
     <Content Include="Views\Ventas Leandro\ventaVehiculo.cshtml" />
     <Content Include="Views\Ventas\_detallesVenta.cshtml" />
+    <Content Include="Views\Cuotas\_pasar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

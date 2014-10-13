@@ -94,9 +94,9 @@ namespace AutomotoraWeb.Controllers.Sales {
                 ViewBag.SucursalesListado = Sucursal.Sucursales;
                 ViewBag.ClientesListado = Cliente.Clientes();
                 ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
-                this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(model.Filtro.Vendedor));
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+                this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
                 if (ModelState.IsValid) {
                     if (btnSubmit == "Imprimir") {
                         return this.Report(model);
@@ -196,7 +196,7 @@ namespace AutomotoraWeb.Controllers.Sales {
                 tr.Senia.Promesa.Financiacion.MontoFinanciado = new Importe(Moneda.MonedaDefault, 0);
                 tr.Senia.Promesa.Financiacion.Tasa = 0;
                 tr.Senia.Promesa.Financiacion.CantCuotas = 0;
-                
+
             }
             tr.Senia.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
             tr.Senia.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
@@ -297,11 +297,11 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             iniSeniado(model, idSession, true);//Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
 
-            this.eliminarValidacionesIgnorables("Senia.Cliente", MetadataManager.IgnorablesDDL(model.Senia.Cliente));
-            this.eliminarValidacionesIgnorables("Senia.Sucursal", MetadataManager.IgnorablesDDL(model.Senia.Sucursal));
-            this.eliminarValidacionesIgnorables("Senia.Vendedor", MetadataManager.IgnorablesDDL(model.Senia.Vendedor));
+            this.eliminarValidacionesIgnorables("Senia.Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Senia.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Senia.Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
             this.eliminarValidacionesIgnorables("Senia.Vehiculo", MetadataManager.IgnorablesDDL(new Vehiculo()));
-           this.eliminarValidacionesIgnorables("Senia.Pedido", MetadataManager.IgnorablesDDL(new Pedido()));
+            this.eliminarValidacionesIgnorables("Senia.Pedido", MetadataManager.IgnorablesDDL(new Pedido()));
             if (model.PedidoVehiculo == 1) {
                 ModelState.Remove("Senia.Pedido.Codigo");
                 model.Senia.Pedido = null;
@@ -309,9 +309,19 @@ namespace AutomotoraWeb.Controllers.Sales {
                 ModelState.Remove("Senia.Vehiculo.Codigo");
                 model.Senia.Vehiculo = null;
             }
-            this.eliminarValidacionesIgnorables("Senia.Importe.Moneda", MetadataManager.IgnorablesDDL(model.Senia.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Senia.PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(model.Senia.PrecioVenta.Moneda));
+            this.eliminarValidacionesIgnorables("Senia.Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Senia.PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             this.eliminarValidacionesIgnorables("Senia.Promesa.Financiacion.MontoFinanciado.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+
+            ModelState.Remove("Senia.Vendedor.Codigo");
+            if (model.Senia.Vendedor == null || model.Senia.Vendedor.Codigo <= 0) {
+                ModelState.AddModelError("Senia.Vendedor.Codigo", "Debe especificar el vendedor");
+            }
+
+            ModelState.Remove("Senia.Cliente.Codigo");
+            if (model.Senia.Cliente == null || model.Senia.Cliente.Codigo <= 0) {
+                ModelState.AddModelError("Senia.Cliente.Codigo", "Debe especificar el cliente");
+            }
 
             if (Automotora.GestionarPromesas()) {
                 if (model.Senia.Promesa.Financiacion.MontoFinanciado.Monto != 0) {
@@ -327,7 +337,7 @@ namespace AutomotoraWeb.Controllers.Sales {
                 }
             }
 
-            ModelState.Remove("Senia.Promesa.Permuta.Sucursal"); 
+            ModelState.Remove("Senia.Promesa.Permuta.Sucursal");
             eliminarValidacionesIgnorables("Senia.Promesa.Permuta.Costo.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             eliminarValidacionesIgnorables("Senia.Promesa.Permuta.PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
@@ -351,7 +361,7 @@ namespace AutomotoraWeb.Controllers.Sales {
                     string usuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
                     string IP = HttpContext.Request.UserHostAddress;
                     model.Senia.setearAuditoria(usuario, IP);
-                    if( Automotora.GestionarPromesas() && !model.TienePermuta) {
+                    if (Automotora.GestionarPromesas() && !model.TienePermuta) {
                         model.Senia.Promesa.Permuta = null;
                     }
                     model.Senia.Ejecutar();
@@ -376,7 +386,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private void _validarEfectivoGrilla(Efectivo ef) {
 
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(ef.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             ModelState.Remove("Importe.ImporteEnMonedaDefault.Monto");
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
@@ -390,7 +400,7 @@ namespace AutomotoraWeb.Controllers.Sales {
                 ModelState.AddModelError("Importe.Monto", "El monto debe ser un valor positivo");
             }
 
-   
+
         }
 
         [HttpPost, ValidateInput(false)]
@@ -457,7 +467,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             return PartialView("_grillaPromesaEfectivo", lista);
         }
 
-    
+
         #endregion
 
         #region PromesaCheques
@@ -468,7 +478,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private void _validarChequesValesPromesa(SeniaPromesa_ChequeVale cv) {
 
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(cv.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             ModelState.Remove("Importe.ImporteEnMonedaDefault.Monto");
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
@@ -639,7 +649,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             if (id == null) {
                 return View("Devolver", new SeniaModel());
             }
-            SeniaModel tr = _iniDevolucion(id??0, idSession);
+            SeniaModel tr = _iniDevolucion(id ?? 0, idSession);
             return View("Devolver", tr);
         }
 
@@ -647,13 +657,13 @@ namespace AutomotoraWeb.Controllers.Sales {
             bool seguir = true;
             while (seguir) {
                 scheques = scheques.Trim();
-                if (scheques.Length>0 && scheques[scheques.Length - 1] == ',') {
+                if (scheques.Length > 0 && scheques[scheques.Length - 1] == ',') {
                     scheques = scheques.Substring(0, scheques.Length - 1);
                 } else {
                     seguir = false;
                 }
             }
-            return scheques;        
+            return scheques;
         }
 
         private SeniaModel _iniDevolucion(int id, string idSession) {
@@ -717,8 +727,11 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             GeneralUtils.ModelStateRemoveAllStarting(ModelState, "Senia");
 
-
-            model.ChequesDevolver = _sacarComasFinal(model.ChequesDevolver);
+            if (model.ChequesDevolver != null) {
+                model.ChequesDevolver = _sacarComasFinal(model.ChequesDevolver);
+            } else {
+                model.ChequesDevolver = ""; //para que no se caiga por null reference
+            }
 
             if (ModelState.IsValid) {
                 try {
@@ -726,17 +739,19 @@ namespace AutomotoraWeb.Controllers.Sales {
                     string IP = HttpContext.Request.UserHostAddress;
                     model.SeniaDev.setearAuditoria(usuario, IP);
                     model.SeniaDev.Senia = model.Senia;
-                    
+
                     //cheques devolver
-                    string[] ach = model.ChequesDevolver.Split(new Char[] { ',' });
-                    List<Cheque> lista = (List<Cheque>)Session[idSession + SessionUtils.CHEQUES_DEVOLUCION];
-                    foreach (string s in ach) {
-                        Cheque ch = new Cheque { Codigo = Int32.Parse(s) };
-                        int i = lista.IndexOf(ch);
-                        model.SeniaDev.Pago.AgregarCheque(lista[i]);
+                    if (!string.IsNullOrWhiteSpace(model.ChequesDevolver)) {
+                        string[] ach = model.ChequesDevolver.Split(new Char[] { ',' });
+                        List<Cheque> lista = (List<Cheque>)Session[idSession + SessionUtils.CHEQUES_DEVOLUCION];
+                        foreach (string s in ach) {
+                            Cheque ch = new Cheque { Codigo = Int32.Parse(s) };
+                            int i = lista.IndexOf(ch);
+                            model.SeniaDev.Pago.AgregarCheque(lista[i]);
+                        }
                     }
                     model.SeniaDev.Ejecutar();
-                    return RedirectToAction("ReciboDev", SeniasController.CONTROLLER, new { id = model.SeniaDev.Senia.Codigo});
+                    return RedirectToAction("ReciboDev", SeniasController.CONTROLLER, new { id = model.SeniaDev.Senia.Codigo });
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
@@ -796,7 +811,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             return PartialView("_grillaDevolucionEfectivo", Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
         }
 
-        
+
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaDevolucionEfectivo_Add(Efectivo efectivo, string idSession) {
             var lista = (List<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION];
@@ -866,7 +881,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region DevolucionCheques
 
-         public ActionResult GrillaChequesDevolucion(string idSession) {
+        public ActionResult GrillaChequesDevolucion(string idSession) {
             return PartialView("_grillaChequesDevolucion", Session[idSession + SessionUtils.CHEQUES_DEVOLUCION]);
         }
 

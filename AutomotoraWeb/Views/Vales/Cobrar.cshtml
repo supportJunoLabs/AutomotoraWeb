@@ -69,6 +69,17 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma el pago?", "Aceptar", "Cancelar");
+        $("#btnConfirmarPago").live("click", function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+
     $('#ddlClientes').change(function () {
         /* Get the selected value of dropdownlist */
         var selectedCli = $(this).val();

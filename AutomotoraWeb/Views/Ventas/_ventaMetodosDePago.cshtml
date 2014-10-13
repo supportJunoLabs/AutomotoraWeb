@@ -1,0 +1,59 @@
+﻿@model DLL_Backend.Venta
+
+@{ 
+    bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+}
+
+
+<div class="well" style="margin-top: 10px; width: 975px; height: 830px">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#MPEfectivo_tab" data-toggle="tab">Contado y Cheques</a></li>
+        <li><a href="#MPFinanciacion_tab" data-toggle="tab">Financiado</a></li>
+        <li><a href="#MPPermuta_tab" data-toggle="tab">Permuta</a></li>
+    </ul>
+    <div id="tabContentMetodoDePago" class="tab-content">
+        <div class="tab-pane active in" id="MPEfectivo_tab">
+
+            <div class="cabezalBloque" style="margin-bottom: 8px">Efectivo</div>
+            @{ if (!modoConsulta || Model.Pago.Efectivos.Count() > 0) {
+                <div style="margin-bottom: 30px">
+                    @Html.Partial("_ventaMPEfectivo", Model)
+                </div>
+               }}
+
+
+            <div class="cabezalBloque" style="margin-bottom: 8px">Cheques</div>
+            @{ if (!modoConsulta || Model.Pago.Cheques.Count() > 0) {
+                <div style="margin-bottom: 30px">
+                    @Html.Partial("_ventaMPCheques", Model)
+                </div>
+               }}
+
+
+            <div class="cabezalBloque" style="margin-bottom: 8px">Banco</div>
+            @{ if (!modoConsulta || Model.Pago.PagosBanco.Count() > 0) {
+                <div style="margin-bottom: 30px">
+                    @Html.Partial("_ventaMPBanco", Model)
+                </div>
+               }}
+
+        </div>
+        <div class="tab-pane fade" id="MPFinanciacion_tab">
+            <div class="cabezalBloque" style="margin-bottom: 8px">Financiacion</div>
+             @{ if (!modoConsulta || (Model.Financiacion!=null && Model.Financiacion.MontoFinanciado.Monto>0)  ) {
+            <div style="margin-bottom: 30px">
+                @Html.Partial("_ventaMPFinanciacion", Model)
+            </div>
+             }}
+            <div class="cabezalBloque" style="margin-bottom: 8px">Vales</div>
+            @{ if (!modoConsulta || Model.ValesOriginales.Count() > 0) {
+                <div style="margin-bottom: 30px">
+                    @Html.Partial("_ventaMPVales", Model)
+                </div>
+               }}
+        </div>
+        <div class="tab-pane fade" id="MPPermuta_tab" style="height: 770px">
+            @Html.Partial("_ventaMPPermuta", Model)
+        </div>
+    </div>
+</div>

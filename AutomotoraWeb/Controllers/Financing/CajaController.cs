@@ -51,9 +51,9 @@ namespace AutomotoraWeb.Controllers.Financing {
             try{
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-            this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(model.Filtro.Moneda));
+            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
+            this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             if (ModelState.IsValid) {
                 if (model.Accion == ListadoCajasModel.ACCION.IMPRIMIR) {
                     return this.Report(model);
@@ -167,7 +167,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         [HttpPost]
         public ActionResult Entrada(TRCajaEntrada tr, string idSession) {
             ViewData["idSession"] = idSession;
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL( new Sucursal()));
             
             if (ModelState.IsValid) {
                 try {
@@ -218,7 +218,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         [HttpPost]
         public ActionResult Salida(TRCajaSalida tr, string idSession, string chequesIds) {
             ViewData["idSession"] = idSession;
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
             if (ModelState.IsValid) {
                 try {

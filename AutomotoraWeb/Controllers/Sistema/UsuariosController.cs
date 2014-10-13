@@ -107,7 +107,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
         [HttpPost]
         public ActionResult Create(UsuarioModel td) {
-            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(td.Usuario.Sucursal));
+            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
             if (ModelState.IsValid) {
                 try {
@@ -135,7 +135,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
         [HttpPost]
         public ActionResult Edit(UsuarioModel td) {
-            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(td.Usuario.Sucursal));
+            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
             if (ModelState.IsValid) {
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
@@ -171,7 +171,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
         [HttpPost]
         public ActionResult Delete(UsuarioModel td) {
             ViewBag.SoloLectura = true;
-            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(td.Usuario.Sucursal));
+            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
             if (ModelState.IsValid) {
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];

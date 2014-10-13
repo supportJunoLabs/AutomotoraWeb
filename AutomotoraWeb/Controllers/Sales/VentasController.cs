@@ -114,11 +114,11 @@ namespace AutomotoraWeb.Controllers.Sales
                 return View("VentaVehiculo", venta);
             }
 
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(venta.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Vehiculo", MetadataManager.IgnorablesDDL(venta.Vehiculo));
-            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(venta.Cliente));
-            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(venta.Vendedor));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(venta.Sucursal));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Vehiculo", MetadataManager.IgnorablesDDL(new Vehiculo()));
+            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
             this.eliminarValidacionesIgnorables("Financiacion.MontoFinanciado.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             if (hayPermuta == 0) {
@@ -196,7 +196,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
         private void _validarVale(Vale vale) {
 
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(vale.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
             ModelState.Remove("Importe.Moneda.Codigo");
@@ -307,7 +307,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
             List<Cuota> listCuota = (List<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
 
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(cuota.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             if (cuota.Importe.Monto <= 0) {
                 ModelState.AddModelError("Importe.Monto", "El monto debe ser un valor positivo");
             }
@@ -452,9 +452,9 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewBag.ClientesListado = Cliente.Clientes();
             ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
             ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
-            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-            this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
-            this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(model.Filtro.Vendedor));
+            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
             if (ModelState.IsValid) {
                 if (btnSubmit == "Imprimir") {
                     return this.Report(model);

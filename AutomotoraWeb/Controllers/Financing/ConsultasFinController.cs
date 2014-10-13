@@ -160,7 +160,7 @@ namespace AutomotoraWeb.Controllers.Financing {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
                 //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
                 if (ModelState.IsValid) {
                     //if (model.Accion==ListadoCuotasValesModel.ACCIONES.IMPRIMIR){
                     if (btnSubmit == "Imprimir") {
@@ -246,7 +246,7 @@ namespace AutomotoraWeb.Controllers.Financing {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
                 //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
                 if (ModelState.IsValid) {
                     if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportCuotasPendientes(model);
@@ -353,7 +353,7 @@ namespace AutomotoraWeb.Controllers.Financing {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
                 //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
                 if (ModelState.IsValid) {
                     if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportValesPendientes(model);
@@ -460,7 +460,7 @@ namespace AutomotoraWeb.Controllers.Financing {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
                 //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
                 if (ModelState.IsValid) {
                     if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportCuotasValesPendientes(model);

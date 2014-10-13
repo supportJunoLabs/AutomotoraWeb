@@ -14,12 +14,25 @@
 
 @using (Html.BeginForm("EjecutarDebitar", null, FormMethod.Post,new { id="formPrincipal" })) {
     @Html.ValidationSummary(true)
-    @Html.ValidationSummary("Se han producido errores:")    
-    
-    
+    @Html.ValidationSummary("Se han producido errores:")       
+   
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-cogs").Text(" Debitar Cheques Vencidos"))
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-cogs").Text(" Debitar Cheques Vencidos").Id("btnDebitar"))
     </div>
     <div class="clear-both"></div>  
-
 }
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma ejecucion del proceso?", "Aceptar", "Cancelar");
+        $("#btnDebitar").click(function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+    </script>
+

@@ -205,11 +205,11 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         private void eliminarValidacionesIgnorables(Vehiculo vehiculo) {
-            this.eliminarValidacionesIgnorables("Departamento", MetadataManager.IgnorablesDDL(vehiculo.Departamento));
-            this.eliminarValidacionesIgnorables("TipoCombustible", MetadataManager.IgnorablesDDL(vehiculo.TipoCombustible));
-            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(vehiculo.Costo.Moneda));
-            this.eliminarValidacionesIgnorables("PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(vehiculo.PrecioVenta.Moneda));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(vehiculo.Sucursal));
+            this.eliminarValidacionesIgnorables("Departamento", MetadataManager.IgnorablesDDL(new Departamento()));
+            this.eliminarValidacionesIgnorables("TipoCombustible", MetadataManager.IgnorablesDDL(new TipoCombustible()));
+            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
         }
 
         //-----------------------------------------------------------------------------------------------------
@@ -243,9 +243,9 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult Delete(Vehiculo vehiculo) {
             ViewBag.SoloLectura = true;
 
-            this.eliminarValidacionesIgnorables(vehiculo); //aca tambien se necesita porque  se llama al model.isvalid
+            //this.eliminarValidacionesIgnorables(vehiculo); 
 
-            if (ModelState.IsValid) {
+            //if (ModelState.IsValid) {
 
                 try {
                     string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
@@ -260,8 +260,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                     ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
                     return View(vehiculo);
                 }
-            }
-            return View(vehiculo);
+            //}
+            //return View(vehiculo);
 
         }
 
@@ -296,7 +296,7 @@ namespace AutomotoraWeb.Controllers.Sales {
                 ViewData["idParametros"] = model.idParametros;
                 ViewBag.SucursalesListado = Sucursal.Sucursales;
                 ViewBag.TiposComubstiblesListado = TipoCombustible.TiposCombustible();
-                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
                 if (ModelState.IsValid) {
                     if (btnSubmit == "Imprimir") {
                         return this.Report(model);

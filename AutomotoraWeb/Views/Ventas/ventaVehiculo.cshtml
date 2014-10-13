@@ -56,6 +56,7 @@
         if (!valor || valor==0) {
             $('#btnConfirmarVenta').hide();
         }
+        inicializarModal("Confirmacion", "Confirma la venta?", "Aceptar", "Cancelar");
     });
 
    function vehiculoSelected(s, e) {
@@ -91,15 +92,18 @@
 
       $("#btnConfirmarVenta").click(function () {
           var hayPerm = $('#existePermutaCheckBox').prop('checked')
-          //alert(hayPerm);
-          //alert($('#idSession').val());
         if (hayPerm) {
             $('#hayPermuta').val(1);
         } else {
             $('#hayPermuta').val(0);
         }
-        //$("form").attr("action", '@Url.Action("ventaVehiculo", "ventas")');
-          $('form#formPrincipal').submit();
+        $('#myModal').modal('show');
+        //$('form#formPrincipal').submit();
     });
+
+      function callBackAceptar() {
+          //alert("hola");
+        $('form#formPrincipal').submit();
+    }
 
     </script>

@@ -1,0 +1,118 @@
+﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+
+@{ bool cambiarSucursal = ViewBag.Multisucursal;
+   bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+}
+
+<div>
+
+    <div class="display-label-90">
+        @Html.LabelForRequired(model => model.Cliente)
+    </div>
+    <div class="editor-field editor-field-xlarge xxlarge">
+        @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, false, model => model.Cliente.Nombre,
+            new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), "--Seleccionar Cliente--",
+            new { id = "ddlClientes", @class = "xxlarge" })
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="display-label-90">
+        @Html.LabelForRequired(model => model.Vendedor)
+    </div>
+    <div class="editor-field editor-field-xlarge xxlarge">
+        @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, false, model => model.Vendedor.Nombre,
+            new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), "--Seleccionar Vendedor--",
+            new { id = "ddlVendedores", @class = "xxlarge" })
+    </div>
+    <div class="clear-both"></div>
+
+    <div>
+        <!-- Fecha
+        Precio Venta -> combo + texto
+        Observaciones
+        Sucursal -> Combo
+        Estado
+        Check -> No se entrega Vehiculo / Se entrega Vehiculo -> Fecha -->
+    </div>
+
+    <div>
+        <div class="dataLine">
+            <div class="display-label-90 editor-date-field">@Html.LabelForRequired(model => model.Fecha)</div>
+            <div class="editor-field editor-field-small">
+                @Html.TextBoxOrdisplayFor(model => model.Fecha, false, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+                @Html.ValidationMessageFor(model => model.Fecha)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="dataLine">
+            <div class="display-label-90">
+                @Html.LabelForRequired(model => model.Importe)
+            </div>
+            <div class="editor-field editor-field-small">
+                @Html.DdlOrDisplayImporteFor(model => model.Importe, false)
+                @Html.ValidationMessageFor(model => model.Importe.Monto)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="dataLine">
+            <div class="display-label-90">  
+                @Html.LabelForRequired(model => model.Sucursal)
+            </div>
+            <div class="editor-field editor-field-large">
+                @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, !cambiarSucursal || modoConsulta,
+                            model => model.Sucursal.Nombre,
+                            new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
+                @Html.ValidationMessageFor(model => model.Sucursal)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="dataLine">
+            <div class="display-label">
+                @Html.LabelForRequired(model => model.Entregado)
+            </div>
+            <div class="floatLeft">
+                @Html.CheckBoxOrDisplayFor(model => model.Entregado, false, new { id = "checkBoxVentaVehiculoEntregado" })
+                @Html.ValidationMessageFor(model => model.Entregado)
+            </div>
+            <div class="floatLeft">
+                <div style="margin-left:30px" class="display-label-90 editor-date-field">@Html.LabelForRequired(model => model.FechaEntrega)</div>
+                <div class="editor-field editor-field-small">
+                    @Html.TextBoxOrdisplayFor(model => model.FechaEntrega, false, "{0:dd/MM/yyyy}", new { id = "datePikerVentaVehiculoFechaEntrega", @class = "calendarAW" })
+                    @Html.ValidationMessageFor(model => model.FechaEntrega)
+                </div>
+            </div>
+            <div class="clear-both"></div>
+        </div>
+        <div class="dataLine">
+            <div class="display-label-90">
+                @Html.LabelForRequired(model => model.Observaciones)
+            </div>
+            <div class="editor-field editor-field-xxlarge">
+                @Html.TextAreaOrDisplayFor(model => model.Observaciones, false, new { style = "width: 530px; height: 60px" })
+                @Html.ValidationMessageFor(model => model.Observaciones)
+            </div>
+            <div class="clear-both"></div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        $("#checkBoxVentaVehiculoEntregado").change(function () {
+            if ($(this).is(":checked")) {
+                $('#datePikerVentaVehiculoFechaEntrega').val('');
+                $('#datePikerVentaVehiculoFechaEntrega').attr('disabled', 'disabled');
+            }
+            else {
+                $('#datePikerVentaVehiculoFechaEntrega').removeAttr('disabled');
+            }
+        });
+
+    </script>
+
+</div>
+

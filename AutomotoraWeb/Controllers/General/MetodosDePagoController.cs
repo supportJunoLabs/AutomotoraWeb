@@ -26,7 +26,7 @@ namespace AutomotoraWeb.Controllers.General
         }
 
         private void _validarCheque(Cheque cheque){
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(cheque.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
             ModelState.Remove("Importe.Moneda.Codigo");
@@ -144,7 +144,7 @@ namespace AutomotoraWeb.Controllers.General
 
         private void _validarEfectivo(Efectivo efectivo){
 
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(efectivo.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             ModelState.Remove("Importe.ImporteEnMonedaDefault.Monto");
 
@@ -255,7 +255,7 @@ namespace AutomotoraWeb.Controllers.General
 
         private void _validarMovBanco(MovBanco movBanco){
             if (movBanco.Cuenta != null) {
-                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(movBanco.Cuenta));
+                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             }
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente

@@ -60,6 +60,17 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma transferir este vale?", "Aceptar", "Cancelar");
+        $("#btnAceptar").live('click', function () {
+            $('#myModal').modal('show');
+        });
+    });
+ 
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+
     $('#ddlVales').change(function () {
         var selectedVale = $(this).val();
         actualizarVale(selectedVale);

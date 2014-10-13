@@ -62,8 +62,8 @@ namespace AutomotoraWeb.Controllers.Bank {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
                 //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
                 if (ModelState.IsValid) {
                     if (model.Accion == ListadoChequesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportCheques(model);
@@ -243,10 +243,10 @@ namespace AutomotoraWeb.Controllers.Bank {
             tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
             tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
 
-            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Financista", MetadataManager.IgnorablesDDL(tr.Financista));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(new Cheque()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Financista", MetadataManager.IgnorablesDDL(new Financista()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Cheque.Codigo");
@@ -358,12 +358,12 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         private ActionResult DepositarDescontar(TRChequeDepositarDescontar tr) {
 
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
             if (tr.Importe != null && tr.Importe.Moneda != null) {
-                this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
+                this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL( new Moneda()));
             }
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(tr.Cuenta));
-            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
+            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(new Cheque()));
 
 
             //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
@@ -472,8 +472,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         [HttpPost]
         public ActionResult TransfSuc(ChequeTransfSucModel model) {
-            this.eliminarValidacionesIgnorables("SucursalOrigen", MetadataManager.IgnorablesDDL(model.SucursalOrigen));
-            this.eliminarValidacionesIgnorables("SucursalDestino", MetadataManager.IgnorablesDDL(model.SucursalDestino));
+            this.eliminarValidacionesIgnorables("SucursalOrigen", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("SucursalDestino", MetadataManager.IgnorablesDDL(new Sucursal()));
             ViewData["idParametros"] = model.SucursalOrigen.Codigo;
             if (ModelState.IsValid) {
                 try {
@@ -576,8 +576,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         [HttpPost]
         public ActionResult Rechazar(TRChequeRechazar tr) {
-            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(new Cheque()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
             //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Cheque.Codigo");
@@ -667,9 +667,9 @@ namespace AutomotoraWeb.Controllers.Bank {
             tr.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
             tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
 
-            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(tr.Cheque));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(new Cheque()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             //Sacar la validacion del cheque porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Cheque.Codigo");

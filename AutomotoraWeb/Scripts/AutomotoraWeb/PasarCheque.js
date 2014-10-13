@@ -3,7 +3,17 @@
     _opcionFinancista(esFinancista);
 
     $("#codigoCheque").attr("data-val-required", "El cheque es Requerido");
+
+    inicializarModal("Confirmacion", "Confirma pasar estos cheques?", "Aceptar", "Cancelar");
+
+    $("#btnAceptar").live('click', function () {
+        $('#myModal').modal('show');
+    });
 });
+
+function callBackAceptar() {
+    $('form#formPrincipal').submit();
+}
 
 $("input[name='TipoDestino']").on("change", function () {
     var esFinancista = $("#rb_financista").prop('checked');

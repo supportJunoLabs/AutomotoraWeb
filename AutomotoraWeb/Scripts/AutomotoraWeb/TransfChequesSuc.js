@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    inicializarModal("Confirmacion", "Confirma transferir cheques a otra sucursal?", "Aceptar", "Cancelar");
+
     $("#btn_transferir").click(function () {
         gridCheques.GetSelectedFieldValues("Codigo", CodigosSeleccionadosCallBack);
     });
@@ -40,15 +42,17 @@ function cambiarSucursalOrigen() {
 
 function CodigosSeleccionadosCallBack(values) {
     //al presionar el boton transferir
-    //alert("hola");
     var selectedIDs;
     selectedIDs = "";
     for (var index = 0; index < values.length; index++) {
         selectedIDs += values[index] + ",";
     }
-    //alert(selectedIDs);
     $("#chequesIds").val(selectedIDs);
-    //alert($("#chequesIds").val());
+    $('#myModal').modal('show');
+    //$('form#formPrincipal').submit();
+}
+
+function callBackAceptar() {
     $('form#formPrincipal').submit();
 }
 

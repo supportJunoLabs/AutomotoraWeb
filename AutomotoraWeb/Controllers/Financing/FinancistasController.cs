@@ -384,8 +384,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             //model.chequesIds = "";
             //model.efectivosIds = "";
 
-            this.eliminarValidacionesIgnorables("Transaccion.Financista", MetadataManager.IgnorablesDDL(model.Transaccion.Financista));
-            this.eliminarValidacionesIgnorables("Transaccion.Sucursal", MetadataManager.IgnorablesDDL(model.Transaccion.Sucursal));
+            this.eliminarValidacionesIgnorables("Transaccion.Financista", MetadataManager.IgnorablesDDL(new Financista()));
+            this.eliminarValidacionesIgnorables("Transaccion.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
             if (ModelState.IsValid) {
                 try {
