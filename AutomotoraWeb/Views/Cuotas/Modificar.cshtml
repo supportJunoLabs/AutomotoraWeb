@@ -34,10 +34,12 @@
     </div>
     <div>
         <div id="divSeleccionVenta">
-            @Html.Partial("_seleccionVentaModificar", Model);
+            @Html.Partial("_seleccionVentaModificar", Model)
         </div>
         <div class="clear-both"></div>
     </div>
+    
+    
     <div id="divDetalleModificacion">
          @{ if (Model.Venta!=null && Model.Venta.Codigo>0){
                 @Html.Partial("_detalleModifCuotas", Model);

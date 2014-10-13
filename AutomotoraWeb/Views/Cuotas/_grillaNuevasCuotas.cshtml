@@ -10,23 +10,23 @@
     bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
     InfoGrilla ig= new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
-            new ColumnaGrilla {Campo="Numero", Ancho=100, Titulo="Numero", ReadOnly=true},
+            new ColumnaGrilla {Campo="NumeroCuotaSet", Ancho=100, Titulo="Numero", ReadOnly=true},
             new ColumnaGrilla {Campo="Vencimiento", Ancho=100, Titulo="Vencimiento"},
             new ColumnaGrilla {Campo="Importe.Moneda.Codigo", ReadOnly=true, Ancho=100, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
             new ColumnaGrilla {Campo="Importe.Monto", Ancho=100, Titulo="Monto", Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE}      
         
     };
     
-    ig.NameGrid = "grillaPagosCuota";
-    ig.Controller = "Ventas";
-    ig.ActionCallbackRoute = "grillaPagosCuota";
-    ig.KeyFieldName = "Numero";
+    ig.NameGrid = "grillaNuevasCuotas";
+    ig.Controller = "Cuotas";
+    ig.ActionCallbackRoute = "grillaNuevasCuotas";
+    ig.KeyFieldName = "NumeroCuotaSet";
     ig.TypeOfModel = typeof(Cuota.CuotaMD);
     ig.BotonesMtoEstandar = false;
-    ig.OnBeginCallback = "OnBeginCallback";
+    ig.OnBeginCallback = "OnBeginCallbackCuotas";
     //ig.CustomActionRouteValues = "grillaPagosCuota_CustomActionRouteValues";
     if(!modoConsulta){
-        ig.UpdateRowRouteValues = "grillaPagosCuota_Update";
+        ig.UpdateRowRouteValues = "grillaNuevasCuota_Update";
     }
     ig.BotonesMtoEstandar = false;
     ig.Estatica = true;

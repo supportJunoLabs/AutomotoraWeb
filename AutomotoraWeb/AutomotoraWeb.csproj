@@ -2305,6 +2305,7 @@
     <Content Include="Views\Ventas Leandro\ventaVehiculo.cshtml" />
     <Content Include="Views\Ventas\_detallesVenta.cshtml" />
     <Content Include="Views\Cuotas\_pasar.cshtml" />
+    <Content Include="Views\Cuotas\_grillaNuevasCuotas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

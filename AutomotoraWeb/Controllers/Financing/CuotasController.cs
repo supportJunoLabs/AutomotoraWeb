@@ -10,6 +10,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
+using System.Globalization;
 
 namespace AutomotoraWeb.Controllers.Financing {
     public class CuotasController : FinancingController {
@@ -409,13 +410,12 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region RefinanciarCuotas
 
-        public ActionResult Modificar() {
-            //refinanciar
-            TRRefinanciacion tr = new TRRefinanciacion();
+        //Se reusan metodos de cobrar: CuotasVigentesVenta, GrillaVentasCobrarCliente, VentasCobrarCliente    
 
-            string idSession = SessionUtils.generarIdVarSesion("refinanciar", Session[SessionUtils.SESSION_USER].ToString()) + "|";
-            Session[idSession] = tr;
-            ViewData["idSession"] = idSession;
+        private TRRefinanciacion iniRefinanciacion() {
+            TRRefinanciacion tr = new TRRefinanciacion();
+            tr.ViejasCuotas = new List<Cuota>();
+            tr.NuevasCuotas = new List<Cuota>();
 
             tr.ClienteOp = new Cliente();
             tr.ClienteOp.Codigo = 0;
@@ -424,13 +424,26 @@ namespace AutomotoraWeb.Controllers.Financing {
             tr.Fecha = DateTime.Now;
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
             tr.Sucursal = usuario.Sucursal;
+            return tr;
+        }
 
+        public ActionResult Modificar() {
+            //refinanciar
+            TRRefinanciacion tr = iniRefinanciacion();
+            string idSession = SessionUtils.generarIdVarSesion("refinanciar", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            Session[idSession] = tr;
+            ViewData["idSession"] = idSession;
             return View("Modificar", tr);
         }
 
         //cuando se selecciona un cliente de la ddl de clientes
         public ActionResult VentasRefinanciarCliente(int idCliente, string idSession) {
-            TRRefinanciacion tr = (TRRefinanciacion)Session[idSession];
+            TRRefinanciacion tr = iniRefinanciacion();
+            Session[idSession]=tr;
+            ViewData["idSession"] = idSession;
+            tr.ViejasCuotas= new List<Cuota>();
+            tr.NuevasCuotas= new List<Cuota>();
+
             tr.ClienteOp = new Cliente();
             tr.ClienteOp.Codigo = idCliente;
             tr.Venta = new Venta();
@@ -440,16 +453,124 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         //se invoca al seleccionar una venta de la gridlookup, por ajax
         public ActionResult DetallesModificacion(int idVenta, string idSession) {
-            TRRefinanciacion tr = (TRRefinanciacion)Session[idSession];
+            TRRefinanciacion tr = iniRefinanciacion();
+
+            Session[idSession] = tr;
+            ViewData["idSession"] = idSession;
 
             tr.Venta = new Venta();
             tr.Venta.Codigo = idVenta;
             tr.Venta.Consultar();
+            tr.ClienteOp = tr.Venta.Cliente;
+
+            if (tr.Venta.Financiacion != null && tr.Venta.Financiacion.CuotasVigentes != null) {
+                tr.ViejasCuotas= tr.Venta.Financiacion.CuotasVigentes;
+
+                //Uso una replica de las cuotas, para que los cambios no afecten las originales
+                tr.NuevasCuotas =  new List<Cuota>();
+                int i = 0;
+                foreach(Cuota c in tr.ViejasCuotas){
+                    if (!c.Finalizada) {
+                        i++;
+                        Cuota c1 = new Cuota(c);
+                        c1.NumeroCuotaSet = i;
+                        tr.NuevasCuotas.Add(c1);
+                    }
+                }
+                tr.CantNuevasCuotas = tr.NuevasCuotas.Count;
+                if (tr.NuevasCuotas.Count > 0) {
+                    tr.MontoBase = tr.NuevasCuotas[0].Importe.Monto;
+                    tr.FechaBase = DateTime.Now.Date.AddMonths(1);
+                }
+            } 
 
             return PartialView("_detalleModifCuotas", tr);
         }
 
-        //Se reusan metodos de cobrar: CuotasVigentesVenta, GrillaVentasCobrarCliente, VentasCobrarCliente    
+        private List<String> validarCambio(int cant, double importe) {
+            List<String> errors = new List<String>();
+            if (importe <= 0) {
+                errors.Add("El importe base debe ser mayor a 0");
+            }
+
+            if (cant <= 0) {
+                errors.Add("La cantidad de cuotas debe ser mayor a 0");
+            }
+            return errors;
+        }
+
+
+        [HttpPost]
+        public JsonResult generarRefinanciacion(int cantCuotas, double montoBase, string idSession, string fechaBase) {
+
+            try {
+
+                //validacion del controller
+                List<String> errors = this.validarCambio(cantCuotas, montoBase);
+                if (errors.Count > 0) {
+                    return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
+                }
+
+                TRRefinanciacion tr = (TRRefinanciacion)Session[idSession];
+                IFormatProvider formato = new CultureInfo("es-UY").DateTimeFormat;
+                DateTime fecha;
+                if (!DateTime.TryParse(fechaBase, formato, DateTimeStyles.None, out fecha)) {
+                    fecha = DateTime.Now.Date;
+                }
+                Importe importeBase = new Importe(tr.Venta.Financiacion.MontoFinanciado.Moneda, montoBase);
+                tr.NuevasCuotas = tr.Venta.Financiacion.generarRefinanciacion(cantCuotas, importeBase, fecha);
+
+                return Json(new { Result = "OK" });
+            } catch (UsuarioException exc) {
+                List<String> errores1 = new List<string>();
+                errores1.Add(exc.Message);
+                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
+            }
+
+        }
+
+        public ActionResult grillaNuevasCuotas(string idSession) {
+            TRRefinanciacion tr = (TRRefinanciacion)Session[idSession];
+            return PartialView("_grillaNuevasCuotas", tr.NuevasCuotas);
+        }
+
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaNuevasCuota_Update(Cuota cuota, string idSession) {
+         
+            TRRefinanciacion tr = (TRRefinanciacion)Session[idSession];
+         
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            if (cuota.Importe.Monto <= 0) {
+                ModelState.AddModelError("Importe.Monto", "El monto debe ser un valor positivo");
+            }
+
+            if (ModelState.IsValid) {
+                try {
+                    int pos = -1;
+                    for (int i = 0; i < tr.NuevasCuotas.Count; i++) {
+                        if (tr.NuevasCuotas[i].NumeroCuotaSet == cuota.NumeroCuotaSet) {
+                            pos = i;
+                            break;
+                        }
+                    }
+                    if (pos >= 0) {
+                        tr.NuevasCuotas.RemoveAt(pos);
+                        tr.NuevasCuotas.Add(cuota);
+                        tr.NuevasCuotas = tr.NuevasCuotas.OrderBy(x => x.NumeroCuotaSet).ToList<Cuota>();
+                    } else {
+                        ViewData["EditError"] = "ERROR: Cuota no encontrada";
+                    }
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
+            return PartialView("_grillaNuevasCuotas", tr.NuevasCuotas);
+        }
+
+
 
         //Al confirmar la refinanciacion
         [HttpPost]
@@ -457,12 +578,12 @@ namespace AutomotoraWeb.Controllers.Financing {
             ViewData["idSession"] = idSession;
 
             TRRefinanciacion tr0 = (TRRefinanciacion)Session[idSession];
-
-            tr.Venta = tr0.Venta;
-            tr.ClienteOp = tr0.ClienteOp;
-            tr.Fecha = DateTime.Now.Date;
-
-            Session[idSession] = tr;
+            tr0.Sucursal = tr.Sucursal;
+            tr0.Observaciones = tr.Observaciones;
+            tr0.Fecha = DateTime.Now.Date;
+            string usuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+            string IP = HttpContext.Request.UserHostAddress;
+            tr0.setearAuditoria(usuario, IP);
 
             ModelState.Remove("Venta.Sucursal");
             ModelState.Remove("Venta.Importe");
@@ -475,20 +596,15 @@ namespace AutomotoraWeb.Controllers.Financing {
 
             if (ModelState.IsValid) {
                 try {
-
-                    ViewBag.ErrorCode = "999";
-                    ViewBag.ErrorMessage = "REFINANCIACION sin implementar";
-                    return View("Modificar", tr);
-
-                    tr.Ejecutar();
-                    return RedirectToAction("ReciboRefinanc", CuotasController.CONTROLLER, new { id = tr.NroRecibo });
+                    tr0.Ejecutar();
+                    return RedirectToAction("ReciboRefinanc", CuotasController.CONTROLLER, new { id = tr0.NroRecibo });
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
-                    return View("Modificar", tr);
+                    return View("Modificar", tr0);
                 }
             }
-            return View("Modificar", tr);
+            return View("Modificar", tr0);
         }
 
         public ActionResult ReciboRefinanc(int id) {
