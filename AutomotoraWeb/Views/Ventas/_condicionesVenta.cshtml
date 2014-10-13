@@ -3,6 +3,7 @@
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
 @using AutomotoraWeb.Controllers.Sales;
+@using System.Data;
 
 
 @{ bool cambiarSucursal = ViewBag.Multisucursal;
@@ -129,6 +130,31 @@
                 <div class="clear-both"></div>
             </div>
         }}
+
+
+        @{ if (modoConsulta){
+        <div class="dataLine">
+            <div class="display-label">
+                <strong>
+                    Resumen de Pago
+                    </strong>
+            </div>
+        </div>
+        <div class="clear-both"></div>    
+               foreach (DataRow row in Model.ResumenPago().Rows) {
+                   string name = row["Detalle"].ToString();
+                   string importe = row["Importe"].ToString();
+                    <div class="dataLine">
+                        <div class="editor-field-small floatLeft" style="margin-left:80px; width:120px" >
+                            @(name) 
+                        </div>
+                        <div class="editor-field-small floatLeft" >
+                            @(importe)
+                        </div>
+                    </div>
+                    <div class="clear-both"></div>
+               }
+           }}
 
 
         <div class="dataLine">
