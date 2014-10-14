@@ -41,8 +41,17 @@
                     @Html.Bootstrap().ActionLinkButton("Vales", "DocValesVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
 
                 }
-            }
-            @Html.Bootstrap().ActionLinkButton("Consulta Vehiculo", "Details", VehiculosController.CONTROLLER).RouteValues(new { id = Model.Vehiculo.Codigo }).Class("btn btn-info botonDocumento")
+            
+                @Html.Bootstrap().ActionLinkButton("Consulta Vehiculo", "Details", VehiculosController.CONTROLLER).RouteValues(new { id = Model.Vehiculo.Codigo }).Class("btn btn-info botonDocumento")
+
+                if (Model.Anulable()){
+                    @Html.Bootstrap().ActionLinkButton("Anular Venta", "Anular", VentasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary botonDocumento")
+                }
+                if (Model.Entregable()){
+                    @Html.Bootstrap().ActionLinkButton("Entregar Vehiculo", "Entregar", VentasController.CONTROLLER).RouteValues(new { id = Model.Vehiculo.Codigo }).Class("btn btn-primary botonDocumento")
+                }
+
+        }
         </div>
     </div>
     

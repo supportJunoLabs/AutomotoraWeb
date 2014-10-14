@@ -1,0 +1,84 @@
+﻿@model AutomotoraWeb.Models.VentaAnulacionModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+<script src="~/Scripts/AutomotoraWeb/VentaAnulacion.js"></script>
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidad + ": Anular";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Venta.Ventas(Venta.TIPO_LISTADO_VENTAS.ANULABLES) };
+    if (Model.VentaDev != null && Model.VentaDev.Venta != null && Model.VentaDev.Venta.Codigo > 0) {
+        gmodel.GridLookUpCodigo = Model.VentaDev.Venta.Codigo;
+    }
+}
+
+<style type="text/css">
+    .botonDocumento {
+        margin-right:10px;
+    }
+</style>
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:", new {id="txErrores" })
+
+     <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/> 
+
+   <div id="divSeleccion">
+        <div class="display-label">Venta</div>
+        <div class="floatLeft">
+            @Html.Partial("_selectVentaAnular", gmodel)
+        </div>
+        <div class="floatLeft" style="margin-left: 5px">
+            @Html.ValidationMessageFor(model => model.VentaDev.Venta.Codigo)
+        </div>
+        @Html.HiddenFor(model => model.VentaDev.Venta.Codigo, new { id = "codigoVenta" })
+    </div>
+    <div class="clear-both"></div>
+    
+     <div id="divDetalleVenta">
+        @{ if (Model.VentaDev != null && Model.VentaDev.Venta != null && Model.VentaDev.Venta.Codigo != null && Model.VentaDev.Venta.Codigo > 0) {
+            @Html.Partial("_ventaAnulacion", Model);
+       }}
+    </div>
+    
+   
+
+}
+
+<script type="text/javascript">
+    function ventaAnularSelected(s, e) {
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoVenta").val(valor);
+        $('#divDetalleVenta').html('');
+        $('#txErrores').html('');
+        if (!valor) {
+            return;
+        }
+        var destino = '/ventas/VentaAnularSelected/';
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idVenta": valor, "idSession": $('#idSession').val() },
+            success: function (data) {
+                $('#divDetalleVenta').html(data);
+                $('#btnAnularVenta').show();
+                reajustarControles();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+
+ 
+
+</script>

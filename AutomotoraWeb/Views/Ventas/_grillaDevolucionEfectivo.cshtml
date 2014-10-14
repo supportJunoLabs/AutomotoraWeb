@@ -1,0 +1,43 @@
+﻿@model List<Efectivo>
+@using AutomotoraWeb.Helpers;
+@using AutomotoraWeb.Controllers.Bank;
+@using AutomotoraWeb.Models;
+@using System.Web.UI.WebControls;
+@using DLL_Backend;
+
+
+@{
+    bool efectivoReadOnly = ((bool?)ViewBag.DevolucionSoloConsulta) ?? false;
+    
+    InfoGrilla ig= new InfoGrilla();
+    ig.VisibleColumns = new List<ColumnaGrilla>() { 
+            new ColumnaGrilla {Campo="Importe.Moneda.Codigo", Ancho=70, Titulo="Moneda", ColumnType=MVCxGridViewColumnType.ComboBox, ComboBoxPropertiesDataSource = Moneda.Monedas, ComboBoxPropertiesTextField = "Simbolo", ComboBoxPropertiesValueField = "Codigo", ComboBoxPropertiesValueType = typeof(int) },
+            new ColumnaGrilla {Campo="Importe.Monto", Ancho=150, Titulo="Monto", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE},
+            new ColumnaGrilla {Campo="Importe.ImporteEnMonedaDefault.Monto",Formato="#,##0.00", Ancho=150, Titulo="Importe "+ Moneda.MonedaDefault.Simbolo, TotalSuma=true, MostrarSoloGrilla=true, ReadOnly=true}
+    };
+    
+    ig.NameGrid = "gridDevolucionEfectivo";
+    ig.Controller = "Ventas";
+    ig.ActionCallbackRoute = "grillaDevolucionEfectivo";
+    ig.KeyFieldName = "IdLinea";
+    ig.TypeOfModel = typeof(Efectivo.EfectivoMD);
+    ig.OnBeginCallback = "OnBeginCallback";
+    //ig.CustomActionRouteValues = "grillaPagosEfectivo_CustomActionRouteValues";
+    ig.AddNewRowRouteValues = "grillaDevolucionEfectivo_Add";
+    ig.UpdateRowRouteValues = "grillaDevolucionEfectivo_Update";
+    ig.DeleteRowRouteValues = "grillaDevolucionEfectivo_Delete";
+    ig.BotonesMtoEstandar = false;
+    ig.Estatica = true;
+    ig.TipoEdicion = InfoGrilla.TIPO_EDICION.INLINE;
+    ig.Edicion = !efectivoReadOnly;
+    ig.AnchoTotal = 500;
+    ig.Paginado = false;
+
+    ig.FuncionInitNewRow = (s, e) => {
+        e.NewValues["Importe.Moneda.Codigo"] = Moneda.MonedaDefault.Codigo;
+    };
+    
+    ViewBag.InfoGrilla = ig;
+}
+
+@Html.Partial("_generalGrid", Model)

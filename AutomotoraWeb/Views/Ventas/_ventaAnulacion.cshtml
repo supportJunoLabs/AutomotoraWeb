@@ -1,0 +1,36 @@
+﻿@model AutomotoraWeb.Models.VentaAnulacionModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+
+<input type="hidden" name="chequesDevolverIds" id="chequesDevolverIds" value='@ViewData["chequesDevolverIds"]' />
+
+<div class="well" style="margin-top: 10px; width: 1050px;">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#ventaAnular_tab" data-toggle="tab">Venta</a></li>
+        <li><a href="#devolucion_tab" data-toggle="tab">Devolucion</a></li>
+    </ul>
+    <div id="tabContentdev" class="tab-content">
+        <div class="tab-pane active in" id="ventaAnular_tab">
+            @Html.Partial("_detallesVenta", Model.VentaDev.Venta)
+        </div>
+        <div class="tab-pane fade" id="devolucion_tab">
+            @Html.Partial("_detalleAnulacion", Model)
+        </div>
+    </div>
+</div>
+
+  <div class="btn-toolbar floatLeft">    
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text("Anular Venta").Id("btnAnularVenta"))
+    </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('a[data-toggle="tab"]').on('shown', function (e) {
+            ASPxClientControl.AdjustControls();
+        });
+    });
+
+
+</script>
