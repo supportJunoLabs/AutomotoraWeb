@@ -29,7 +29,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
 
         #region Listados
-
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
             ListadoDocumentacionModel model = new ListadoDocumentacionModel();
             try {
@@ -129,6 +129,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
         #endregion
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ComprobanteDocumentacion(int id) {
             ComprobanteDocumentacionModel model = new ComprobanteDocumentacionModel();
             try {

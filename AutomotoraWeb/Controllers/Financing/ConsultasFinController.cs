@@ -136,6 +136,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         #region ConsultaSitCuotas
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ListSitCuotas() {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
             try {
@@ -223,6 +224,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         #region ConsultaCuotasPendientes
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ListCuotasPendientes() {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
             try {
@@ -329,6 +331,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         #region ConsultaValesPendientes
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ListValesPendientes() {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
             try {
@@ -436,6 +439,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         #region ConsultaCuotasValesPendientes
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ListCuotasValesPendientes() {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
             try {

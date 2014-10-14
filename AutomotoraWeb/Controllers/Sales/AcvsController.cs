@@ -60,6 +60,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Listados
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
 
             ListadoAcvsModel model = new ListadoAcvsModel();
@@ -80,25 +81,25 @@ namespace AutomotoraWeb.Controllers.Sales {
             }
         }
 
-        public ActionResult ListActivosVehiculo(int id) {
-            ListadoAcvsModel model = new ListadoAcvsModel();
-            try {
-                string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
-                Session[s] = model;
-                model.idParametros = s;
-                ViewBag.SucursalesListado = Sucursal.Sucursales;
-                ViewBag.ClientesListado = Cliente.Clientes();
-                ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-                ViewData["idParametros"] = model.idParametros;
-                model.AcomodarFiltroActivosVehiculo(id);
-                model.Resultado = _listaElementos(model);
-                return View("List", model);
-            } catch (UsuarioException exc) {
-                ViewBag.ErrorCode = exc.Codigo;
-                ViewBag.ErrorMessage = exc.Message;
-                return View(model);
-            }
-        }
+        //public ActionResult ListActivosVehiculo(int id) {
+        //    ListadoAcvsModel model = new ListadoAcvsModel();
+        //    try {
+        //        string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
+        //        Session[s] = model;
+        //        model.idParametros = s;
+        //        ViewBag.SucursalesListado = Sucursal.Sucursales;
+        //        ViewBag.ClientesListado = Cliente.Clientes();
+        //        ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
+        //        ViewData["idParametros"] = model.idParametros;
+        //        model.AcomodarFiltroActivosVehiculo(id);
+        //        model.Resultado = _listaElementos(model);
+        //        return View("List", model);
+        //    } catch (UsuarioException exc) {
+        //        ViewBag.ErrorCode = exc.Codigo;
+        //        ViewBag.ErrorMessage = exc.Message;
+        //        return View(model);
+        //    }
+        //}
 
 
         [HttpPost]
@@ -201,6 +202,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             return PartialView("_selectVehiculoACV", model);
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ACVenta(int? id) {
             ACuentaVenta tr = new ACuentaVenta();
 

@@ -268,6 +268,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         //--------------------------METODOS PARA LISTADOS DE VEHICULO -----------------------------
 
         #region Listados
+
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
             ListadoVehiculosModel model = new ListadoVehiculosModel();
             try {

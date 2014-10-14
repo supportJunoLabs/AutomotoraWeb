@@ -24,6 +24,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region Mantenimiento
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Show(int? id) {
             MovimientosBancoModel model = new MovimientosBancoModel();
             try {
@@ -235,6 +236,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         #region Listados
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List(int? id) {
             EstadoCuentaModel model = new EstadoCuentaModel();
             try {
@@ -316,6 +318,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region Mantenimiento
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Saldos() {
             BancoSaldoModel model = new BancoSaldoModel();
             try {

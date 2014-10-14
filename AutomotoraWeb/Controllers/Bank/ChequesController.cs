@@ -39,6 +39,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ListCheques() {
             ListadoChequesModel model = new ListadoChequesModel();
             try {
@@ -203,6 +204,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             return RedirectToAction("Pasar");
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Pasar() {
             TRChequePasar model = new TRChequePasar();
             prepararSession(model); 
@@ -643,6 +645,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region CanjearChequeRechazado
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult CanjeRechazado() {
             TRChequeRechazadoCanje model = new TRChequeRechazadoCanje();
             prepararSession(model); 

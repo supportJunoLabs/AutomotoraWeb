@@ -29,6 +29,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region Listados
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
             ListadoCajasModel model = new ListadoCajasModel();
             try {
@@ -149,6 +150,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region EntradaSalida
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Entrada() {
             TRCajaEntrada tr = new TRCajaEntrada();
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
@@ -186,6 +188,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             return View("Entrada", tr);
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Salida() {
             TRCajaSalida tr = new TRCajaSalida();
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);

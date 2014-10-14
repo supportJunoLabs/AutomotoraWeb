@@ -16,7 +16,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
             ViewBag.Perfiles = Perfil.Perfiles();
         }
 
-        [HttpGet]
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Edit(int? id) {
             string s = SessionUtils.generarIdVarSesion("Permisos", Session[SessionUtils.SESSION_USER].ToString());
             PermisosModel model = new PermisosModel();

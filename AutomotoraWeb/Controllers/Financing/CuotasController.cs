@@ -56,6 +56,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             return tr;
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Cobrar() {
             //cobrar una cuota
             TRCuotaCobro tr = iniCobro();
@@ -64,6 +65,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             return View("Cobrar", tr);
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult CobrarAC() {
             //cobrar a cuenta de cuota
             TRCuotaCobro tr = iniCobro();
@@ -72,6 +74,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             return View("Cobrar", tr);
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult CobrarConj() {
             //cobrar a cuenta de cuota
             TRCuotaCobro tr = iniCobro();
@@ -256,7 +259,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region TransferirCuotas
 
-
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Pasar() {
             //pasar cuotas a un financista
             TRCuotaTransferencia tr = new TRCuotaTransferencia();
@@ -427,6 +430,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             return tr;
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Modificar() {
             //refinanciar
             TRRefinanciacion tr = iniRefinanciacion();

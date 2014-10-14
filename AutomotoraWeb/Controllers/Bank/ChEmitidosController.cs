@@ -209,6 +209,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         #region listadoyreporte
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
             try {
                 ListadoChequesEmitidosModel model = new ListadoChequesEmitidosModel();

@@ -271,6 +271,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region PagoFinancista
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Pago() {
             TRFinancistaPago tr = new TRFinancistaPago();
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);

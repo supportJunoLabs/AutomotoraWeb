@@ -66,6 +66,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Listados
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
 
             ListadoSeniasModel model = new ListadoSeniasModel();
@@ -238,6 +239,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             return tr;
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Seniar(int? id) {
             SeniaModel tr = _seniarVehiculo(id);
             return View("Seniar", tr);
@@ -640,6 +642,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Devolver
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Devolver(int? id) {
             string idSession = SessionUtils.generarIdVarSesion("devsenia", Session[SessionUtils.SESSION_USER].ToString()) + "|";
             ViewData["idSession"] = idSession;
@@ -654,6 +657,9 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         private string _sacarComasFinal(string scheques) {
+            if (string.IsNullOrWhiteSpace(scheques)) {
+                return "";
+            }
             bool seguir = true;
             while (seguir) {
                 scheques = scheques.Trim();
@@ -725,14 +731,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             model.SeniaDev.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
             model.SeniaDev.Pago.AgregarChequesEmitidos((IEnumerable<ChequeEmitido>)Session[idSession + SessionUtils.CHEQUES_EMITIDOS]);
 
+            model.ChequesDevolver = _sacarComasFinal(model.ChequesDevolver);
+
             GeneralUtils.ModelStateRemoveAllStarting(ModelState, "Senia");
-
-            if (model.ChequesDevolver != null) {
-                model.ChequesDevolver = _sacarComasFinal(model.ChequesDevolver);
-            } else {
-                model.ChequesDevolver = ""; //para que no se caiga por null reference
-            }
-
             if (ModelState.IsValid) {
                 try {
                     string usuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];

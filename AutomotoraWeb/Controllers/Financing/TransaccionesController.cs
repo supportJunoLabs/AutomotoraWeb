@@ -40,7 +40,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region ListadoTransacciones
 
-
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
         public ActionResult List() {
             ListadoTransaccionesModel model = new ListadoTransaccionesModel();

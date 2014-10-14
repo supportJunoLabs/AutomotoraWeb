@@ -411,6 +411,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ListVales() {
             ListadoValesModel model = new ListadoValesModel();
             try{
@@ -603,7 +604,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
         }
 
-        public TRValeCobro iniCobro() {
+        private TRValeCobro iniCobro() {
             TRValeCobro tr = new TRValeCobro();
             tr.ClienteOp = new Cliente();
             tr.ClienteOp.Codigo = 0;
@@ -615,6 +616,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             return tr;
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Cobrar() {
             //cobrar una cuota
             TRValeCobro tr = iniCobro();
@@ -622,6 +624,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             return View("Cobrar", tr);
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult CobrarAC() {
             //cobrar a cuenta de cuota
             TRValeCobro tr = iniCobro();
@@ -737,6 +740,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region TransferirVale
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Pasar() {
             //pasar vale
             TRValeTransferencia tr = new TRValeTransferencia();

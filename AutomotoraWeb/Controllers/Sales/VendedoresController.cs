@@ -49,6 +49,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         //------------------------------------------------------------------------------------------
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
             try {
@@ -65,6 +66,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             }
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Create() {
             VendedorModel v = new VendedorModel();
             string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
@@ -73,6 +75,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             return View(v);
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Edit(int id) {
             string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
             Session[s + FILE_RANDOM_NAME] = null;
@@ -89,6 +92,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             }
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
             try {

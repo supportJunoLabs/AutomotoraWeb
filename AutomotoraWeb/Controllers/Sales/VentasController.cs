@@ -13,10 +13,8 @@ using DevExpress.Web.ASPxGridView;
 using AutomotoraWeb.Controllers.General;
 using System.Globalization;
 
-namespace AutomotoraWeb.Controllers.Sales
-{
-    public class VentasController : SalesController
-    {
+namespace AutomotoraWeb.Controllers.Sales {
+    public class VentasController : SalesController {
 
         public static string CONTROLLER = "Ventas";
 
@@ -41,11 +39,13 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         #region VentaVehiculo
+
         public ActionResult VehiculosVendiblesGrilla(GridLookUpModel model) {
             model.Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES);
             return PartialView("_selectVehiculoVender", model);
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult VentaVehiculo(int? id) {
             string idSession = SessionUtils.generarIdVarSesion("ventaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
             ViewData["idSession"] = idSession;
@@ -54,17 +54,17 @@ namespace AutomotoraWeb.Controllers.Sales
             return View("VentaVehiculo", v);
         }
 
-        private Venta inicializarVenta(int idVehiculo, string idSession){
+        private Venta inicializarVenta(int idVehiculo, string idSession) {
             Venta venta = new Venta();
             venta.Vehiculo = new Vehiculo();
             venta.Entregado = true;
             venta.FechaEntrega = DateTime.Now.Date;
             Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
             venta.Sucursal = usuario.Sucursal;
-            if (idVehiculo!= 0) {
+            if (idVehiculo != 0) {
                 venta.Vehiculo.Codigo = idVehiculo;
                 venta.Vehiculo.Consultar();
-                PrecondicionesVenta cond =   venta.Vehiculo.ObtenerPrecondicionesVenta(DateTime.Now.Date);
+                PrecondicionesVenta cond = venta.Vehiculo.ObtenerPrecondicionesVenta(DateTime.Now.Date);
                 venta.inicializarSegunPrecondiciones(cond);
             }
             if (venta.Permuta != null) {
@@ -93,7 +93,7 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewData["idSession"] = idSession;
 
             //Asocio los que esta en sesion ahora, por si hay error, que vuelva la venta con los datos
-            venta.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]); 
+            venta.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO]);
             venta.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
             venta.Pago.AgregarMovsBanco((IEnumerable<MovBanco>)Session[idSession + SessionUtils.MOV_BANCARIO]);
             foreach (Vale vale in (IEnumerable<Vale>)Session[idSession + SessionUtils.VALES]) {
@@ -101,12 +101,12 @@ namespace AutomotoraWeb.Controllers.Sales
             }
             var lcuotas = (IEnumerable<Cuota>)Session[idSession + SessionUtils.CUOTAS];
             foreach (Cuota c in lcuotas) {
-                venta.Financiacion.AgregarCuotaVenta(c);    
+                venta.Financiacion.AgregarCuotaVenta(c);
             }
             if (hayPermuta == 0) {
                 venta.Permuta = null;
             }
-            
+
             //Antes de validar nada, asegurarse que vino vehiculo seleccionado:
             if (venta.Vehiculo == null || venta.Vehiculo.Codigo <= 0) {
                 ModelState.Clear();
@@ -126,13 +126,13 @@ namespace AutomotoraWeb.Controllers.Sales
                 GeneralUtils.ModelStateRemoveAllStarting(ModelState, "Permuta");
             } else {
                 ModelState.Remove("Permuta.Codigo");
-                var l = ModelState.Keys.Where(x=>x.StartsWith("Permuta")).ToList();
+                var l = ModelState.Keys.Where(x => x.StartsWith("Permuta")).ToList();
                 foreach (string s in l) {
                     foreach (var err in ModelState[s].Errors) {
                         string snew = "Permuta: " + err.ErrorMessage;
                         ModelState.Remove(s);
                         ModelState.AddModelError(s, snew);
-                    }       
+                    }
                 }
                 this.eliminarValidacionesIgnorables("Permuta.Costo.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
                 this.eliminarValidacionesIgnorables("Permuta.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
@@ -177,12 +177,12 @@ namespace AutomotoraWeb.Controllers.Sales
             }
 
             return View("VentaVehiculo", venta);
-        
+
         }
 
         #endregion
 
-      
+
         #region Vales
 
         public ActionResult grillaPagosVale(string idSession) {
@@ -316,10 +316,10 @@ namespace AutomotoraWeb.Controllers.Sales
                 try {
                     //IEnumerable<Cuota> pagosCuota = (IEnumerable<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
                     //List<Cuota> listPagosCuota = pagosCuota.ToList();
-                    int pos=-1;
-                    for (int i=0; i<listCuota.Count;  i++){
-                        if (listCuota[i].Numero==cuota.Numero){
-                            pos=i;
+                    int pos = -1;
+                    for (int i = 0; i < listCuota.Count; i++) {
+                        if (listCuota[i].Numero == cuota.Numero) {
+                            pos = i;
                             break;
                         }
                     }
@@ -395,7 +395,7 @@ namespace AutomotoraWeb.Controllers.Sales
             return errors;
         }
 
-       #endregion
+        #endregion
 
 
         //===============================================================================================================
@@ -417,7 +417,7 @@ namespace AutomotoraWeb.Controllers.Sales
                 return View();
             }
         }
-      
+
         private Venta _obtenerElemento(int id) {
             Venta td = new Venta();
             td.Codigo = id;
@@ -429,6 +429,7 @@ namespace AutomotoraWeb.Controllers.Sales
 
         #region Listados
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
 
             ListadoVentasModel model = new ListadoVentasModel();
@@ -477,7 +478,7 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         #endregion
-        
+
         #region Reportes
         public ActionResult Report(ListadoVentasModel model) {
             return View("report", model);
@@ -518,10 +519,137 @@ namespace AutomotoraWeb.Controllers.Sales
 
         #region AnulacionVenta
 
-        //----------------- Trasnsaccion Anulacion  FALTA -----------------------
+
+        private string _sacarComasFinal(string scheques) {
+            if (string.IsNullOrWhiteSpace(scheques)){
+                return "";
+            }
+            bool seguir = true;
+            while (seguir) {
+                scheques = scheques.Trim();
+                if (scheques.Length > 0 && scheques[scheques.Length - 1] == ',') {
+                    scheques = scheques.Substring(0, scheques.Length - 1);
+                } else {
+                    seguir = false;
+                }
+            }
+            return scheques;
+        }
+
+        private VentaAnulacionModel _iniDevolucion(int id, string idSession) {
+            VentaAnulacionModel model = new VentaAnulacionModel();
+            TRVentaAnulacion tr = new TRVentaAnulacion();
+            model.VentaDev = tr;
+            tr.Venta = new Venta();
+            tr.Venta.Codigo = id;
+            tr.Fecha = DateTime.Now.Date;
+
+            if (id > 0) {
+                tr.Venta.Consultar();
+                Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION] = tr.Venta.PagoAnulacionSugerida().Efectivos;
+                Session[idSession + SessionUtils.CHEQUES_DEVOLUCION] = tr.Venta.PagoAnulacionSugerida().Cheques;
+                Session[idSession + SessionUtils.CHEQUES_EMITIDOS] = new List<ChequeEmitido>();
+                string s = "";
+                foreach (Cheque ch in (List<Cheque>)Session[idSession + SessionUtils.CHEQUES_DEVOLUCION]) {
+                    s += ch.Codigo.ToString() + ",";
+                }
+                s = _sacarComasFinal(s);
+                ViewData["chequesDevolverIds"] = s;
+
+                tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
+                tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES_DEVOLUCION]);
+                tr.Sucursal = tr.Venta.Sucursal;
+                tr.Importe = tr.Venta.TotalEfectivoMonedaDefault + tr.Venta.TotalChequesMonedaDefault + tr.Venta.TotalBancoMonedaDefault;
+            } else {
+                Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION] = new List<Efectivo>();
+                Session[idSession + SessionUtils.CHEQUES_DEVOLUCION] = new List<Cheque>();
+                Session[idSession + SessionUtils.CHEQUES_EMITIDOS] = new List<ChequeEmitido>();
+                ViewData["chequesDevolverIds"] = "";
+                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                tr.Sucursal = usuario.Sucursal;
+            }
+            return model;
+        }
+
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+        public ActionResult Anular(int? id) {
+            string idSession = SessionUtils.generarIdVarSesion("devsenia", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            ViewData["idSession"] = idSession;
+            ViewBag.SoloLectura = true;
+
+            int idVenta = id ?? 0;
+            VentaAnulacionModel model = _iniDevolucion(idVenta, idSession);
+            return View("Anular", model);
+        }
+
+        public ActionResult VentasAnulablesGrilla(GridLookUpModel model) {
+            model.Opciones = Venta.Ventas(Venta.TIPO_LISTADO_VENTAS.ANULABLES);
+            return PartialView("_selectVentaAnular", model);
+        }
+
+        public ActionResult VentaAnularSelected(int idVenta, string idSession) {
+            ViewData["idSession"] = idSession;
+            ViewBag.SoloLectura = true;
+            VentaAnulacionModel model = _iniDevolucion(idVenta, idSession);
+            return PartialView("_ventaAnulacion", model);
+        }
+
+
+        [HttpPost]
+        public ActionResult Anular(VentaAnulacionModel model, string idSession, string chequesDevolverIds) {
+            ViewData["idSession"]=idSession;
+            ViewData["chequesDevolverIds"] = chequesDevolverIds;
+            ViewBag.SoloLectura = true;
+
+            if (model.VentaDev==null || model.VentaDev.Venta == null || model.VentaDev.Venta.Codigo <= 0) {
+                ViewBag.ErrorCode = "USR";
+                ViewBag.ErrorMessage = "No hay venta seleccionada";
+                return View("VentaVehiculo", model);
+            }
+            try {
+
+                TRVentaAnulacion tr = model.VentaDev;
+                tr.Venta.Consultar();//en caso de error, la venta vuelve con sus datos.
+                tr.Pago.Reset();
+                tr.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
+                tr.Pago.AgregarChequesEmitidos((IEnumerable<ChequeEmitido>)Session[idSession + SessionUtils.CHEQUES_EMITIDOS]);
+
+                chequesDevolverIds = _sacarComasFinal(chequesDevolverIds);
+                ViewData["chequesDevolverIds"] = chequesDevolverIds;
+                //cheques devolver
+                if (!string.IsNullOrWhiteSpace(chequesDevolverIds)) {
+                    string[] ach =chequesDevolverIds.Split(new Char[] { ',' });
+                    List<Cheque> lista = (List<Cheque>)Session[idSession + SessionUtils.CHEQUES_DEVOLUCION];
+                    foreach (string s in ach) {
+                        Cheque ch = new Cheque { Codigo = Int32.Parse(s) };
+                        int i = lista.IndexOf(ch);
+                        tr.Pago.AgregarCheque(lista[i]);
+                    }
+                }
+
+                GeneralUtils.ModelStateRemoveAllStarting(ModelState, "Venta");
+                this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+                this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+
+                string usuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                string IP = HttpContext.Request.UserHostAddress;
+                model.VentaDev.setearAuditoria(usuario, IP);
+
+                if (ModelState.IsValid) {
+                    tr.Ejecutar();
+                    return RedirectToAction("ReciboAnulacion", VentasController.CONTROLLER, new { id = tr.NroRecibo });
+                }
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("Anular", model);
+            }
+            return View("Anular", model);
+
+        }
 
         //----------------- Recibo Anulacion -----------------------
-        
+
         public ActionResult ReciboAnulacion(int id) {
             try {
                 ViewData["idParametros"] = id;
@@ -556,10 +684,110 @@ namespace AutomotoraWeb.Controllers.Sales
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
 
+        #endregion
+
+        #region DevolucionEfectivo
+
+        public ActionResult grillaDevolucionEfectivo(string idSession) {
+            return PartialView("_grillaDevolucionEfectivo", Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
+        }
+
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaDevolucionEfectivo_Add(Efectivo efectivo, string idSession) {
+            var lista = (List<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION];
+            _validarEfectivoGrilla(efectivo);
+            if (ModelState.IsValid) {
+                try {
+                    int maxIdLinea = lista.Count > 0 ? lista.Max(c => c.IdLinea) : 0;
+                    efectivo.IdLinea = maxIdLinea + 1;
+                    lista.Add(efectivo);
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
+
+            return PartialView("_grillaDevolucionEfectivo", lista);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaDevolucionEfectivo_Update(Efectivo efectivo, string idSession) {
+
+            //pruebaError();
+            var lista = (List<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION];
+
+            _validarEfectivoGrilla(efectivo);
+            if (ModelState.IsValid) {
+                try {
+                    Efectivo efectivoEditado =
+                        (from c in lista
+                         where (c.IdLinea == efectivo.IdLinea)
+                         select c).First<Efectivo>();
+                    efectivoEditado.Importe.Monto = efectivo.Importe.Monto;
+                    efectivoEditado.Importe.Moneda = efectivo.Importe.Moneda;
+                    efectivoEditado.Importe.Moneda.Consultar();
+                } catch (Exception e) {
+                    ViewData["EditError"] = e.Message;
+                }
+            } else {
+                ViewData["EditError"] = "Corrija los valores incorrectos";
+            }
+
+            return PartialView("_grillaDevolucionEfectivo", lista);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult grillaDevolucionEfectivo_Delete(int IdLinea, string idSession) {
+
+            var lista = (List<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION];
+            if (IdLinea >= 0) {
+                try {
+                    Efectivo efectivoEliminado =
+                        (from c in lista
+                         where (c.IdLinea == IdLinea)
+                         select c).First<Efectivo>();
+                    lista.Remove(efectivoEliminado);
+                } catch (Exception e) {
+                    ViewData["DeleteError"] = e.Message;
+                }
+            }
+            //ViewData["DeleteError"] = "Testing error message style";
+            return PartialView("_grillaDevolucionEfectivo", lista);
+        }
+
+        private void _validarEfectivoGrilla(Efectivo ef) {
+
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            ModelState.Remove("Importe.ImporteEnMonedaDefault.Monto");
+
+            //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
+            ModelState.Remove("Importe.Moneda.Codigo");
+            if (ef.Importe.Moneda == null || ef.Importe.Moneda.Codigo <= 0) {
+                ModelState.AddModelError("Importe.Moneda.Codigo", "La moneda es requerida");
+            }
+
+            //validar el importe
+            if (ef.Importe.Monto <= 0) {
+                ModelState.AddModelError("Importe.Monto", "El monto debe ser un valor positivo");
+            }
+
+
+        }
 
 
         #endregion
-        
+
+        #region DevolucionCheques
+
+        public ActionResult GrillaChequesDevolucion(string idSession) {
+            return PartialView("_grillaChequesDevolucion", Session[idSession + SessionUtils.CHEQUES_DEVOLUCION]);
+        }
+
+        #endregion
+
+
         #region EntregaVehiculo
 
         //----------------- Trasnsaccion Entrega FALTA  -----------------------

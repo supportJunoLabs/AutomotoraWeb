@@ -285,6 +285,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Listados
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
 
             ListadoPedidosModel model = new ListadoPedidosModel();
