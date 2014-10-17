@@ -6,7 +6,7 @@
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">
-    @(Html.Bootstrap().ActionLinkButton("Volver", AcvsController.DETAILS , AcvsController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
+    @(Html.Bootstrap().ActionLinkButton("Consulta Anticipo", AcvsController.DETAILS , AcvsController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
 </div>
 <div class="clear-both"></div>
 

@@ -11,6 +11,7 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
 using DevExpress.Web.ASPxGridView;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Bank {
     public class ChequesController : BankController {
@@ -37,6 +38,12 @@ namespace AutomotoraWeb.Controllers.Bank {
             return RedirectToAction("ListCheques");
         }
 
+        private void _obtenerListado(ListadoChequesModel model) {
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+            model.obtenerListado(verInfoAntigua);
+        }
+
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
@@ -47,7 +54,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
-                model.obtenerListado();
+                _obtenerListado(model);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -69,7 +76,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                     if (model.Accion == ListadoChequesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportCheques(model);
                     }
-                    model.obtenerListado();
+                    _obtenerListado(model);
                 }
                 return View(model);
             } catch (UsuarioException exc) {
@@ -84,7 +91,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult ListGrillaCheques(string idParametros) {
             ListadoChequesModel model = (ListadoChequesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            _obtenerListado(model);
             return PartialView("_listGrillaCheques", model.Resultado.Cheques);
         }
 
@@ -94,7 +101,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         private XtraReport _generarReporteCheques(string idParametros) {
             ListadoChequesModel model = (ListadoChequesModel)Session[idParametros];
-            model.obtenerListado();
+            _obtenerListado(model);
             List<ListadoCheques> ll = new List<ListadoCheques>();
             ll.Add(model.Resultado);
             XtraReport rep = new DXListadoCheques();
@@ -128,6 +135,15 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region ConsultaCheque
 
+        private bool ChequeConsultable(Cheque ch) {
+            if (ch == null || ch.Codigo == 0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && ch.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
         private Cheque _consultarCheque(int? idCheque) {
             Cheque ch = new Cheque();
             ch.Codigo = idCheque ?? 0;
@@ -140,6 +156,10 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult ConsultaCheque(int? id) {
             try {
                 Cheque ch = _consultarCheque(id);
+                if (!ChequeConsultable(ch)) {
+                    ViewBag.ErrorMessage = "Transaccion antigua ya no se encuentra en linea";
+                    ch = new Cheque();
+                }
                 ViewData["idParametros"] = ch.Codigo;
                 return View("ConsultaCheque", ch);
             } catch (UsuarioException exc) {
@@ -149,7 +169,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             }
         }
 
-        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. 
+        //Se invoca desde paginacion, ordenacion etc, de grilla de movimientos del cheque. 
         public ActionResult GrillaMovsCheques(int idParametros) {
             Cheque ch = _consultarCheque(idParametros);
             ViewData["idParametros"] = ch.Codigo;
@@ -161,10 +181,14 @@ namespace AutomotoraWeb.Controllers.Bank {
                 if (id == null || id == 0) {
                     return RedirectToAction("ConsultaCheque");
                 }
-                Cheque v = new Cheque();
-                v.Codigo = id ?? 0;
+                Cheque ch = new Cheque();
+                ch.Codigo = id ?? 0;
+                ch.Consultar();
+                if (!ChequeConsultable(ch)) {
+                    return View("_transaccionAntigua");
+                }
                 ViewData["idParametros"] = id;
-                return View("ReportCheque", v);
+                return View("ReportCheque", ch);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -185,11 +209,14 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         private XtraReport _generarReporteCheque(int idParametros) {
-            Cheque v = new Cheque();
-            v.Codigo = idParametros;
-            v.Consultar();
+            Cheque ch = new Cheque();
+            ch.Codigo = idParametros;
+            ch.Consultar();
+            if (!ChequeConsultable(ch)) {
+                ch = new Cheque();
+            }
             List<Cheque> ll = new List<Cheque>();
-            ll.Add(v);
+            ll.Add(ch);
             XtraReport rep = new DXReportConsultaCheque();
             rep.DataSource = ll;
             return rep;

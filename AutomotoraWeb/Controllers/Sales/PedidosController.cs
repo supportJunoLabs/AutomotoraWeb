@@ -11,6 +11,7 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
 using AutomotoraWeb.Controllers.Sistema;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Sales {
     public class PedidosController : SalesController {
@@ -41,41 +42,86 @@ namespace AutomotoraWeb.Controllers.Sales {
         //--------------------------METODOS PARA GESTION DE pedidos  -----------------------------
         #region Gestion
 
+        private bool PedidoConsultable(Pedido ped) {
+            if (ped == null || ped.Codigo == 0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && ped.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
         public ActionResult Show() {
-            return View(_listaElementos());
+            return View(Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES));
         }
 
         public ActionResult ListaGrilla() {
-            return PartialView("_listGrilla", _listaElementos());
+            return PartialView("_listGrilla", Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES));
         }
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
-            return VistaElemento(id);
+            try {
+                Pedido td = new Pedido();
+                td.Codigo = id;
+                td.Consultar();
+                if (!PedidoConsultable(td)) {
+                    return View("_transaccionAntigua");
+                }
+                return View(td);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         public ActionResult SubconsultaDetalle(int id) {
             ViewBag.SoloLectura = true;
-            Pedido td = _obtenerElemento(id);
+            Pedido td = new Pedido();
+            td.Codigo = id;
+            td.Consultar();
             return PartialView("_datosDetalle", td);
         }
 
         public ActionResult Create() {
             Pedido ped = new Pedido();
-            //ped.Cliente = new Cliente();
-            //ped.Vendedor = new Vendedor();
             ped.FechaPedido = DateTime.Now.Date;
             ped.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
             return View(ped);
         }
 
         public ActionResult Edit(int id) {
-            return VistaElemento(id);
+            try {
+                Pedido td = new Pedido();
+                td.Codigo = id;
+                td.Consultar();
+                if (!PedidoConsultable(td)) {
+                    return View("_transaccionAntigua");
+                }
+                return View(td);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
-            return VistaElemento(id);
+            try {
+                Pedido td = new Pedido();
+                td.Codigo = id;
+                td.Consultar();
+                if (!PedidoConsultable(td)) {
+                    return View("_transaccionAntigua");
+                }
+                return View(td);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         public ActionResult VerSenia(int id) {
@@ -100,7 +146,12 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult Recibir(int id) {
             try {
-                Pedido ped = _obtenerElemento(id);
+                Pedido ped = new Pedido();
+                ped.Codigo = id;
+                ped.Consultar();
+                if (!PedidoConsultable(ped)) {
+                    return View("_transaccionAntigua");
+                }
                 ped.Vehiculo = new Vehiculo();
                 ped.Vehiculo.Marca = ped.Marca;
                 ped.Vehiculo.Modelo = ped.Modelo;
@@ -166,29 +217,22 @@ namespace AutomotoraWeb.Controllers.Sales {
         //-----------------------------------------------------------------------------------------------------
 
 
-        private ActionResult VistaElemento(int id) {
-            try {
-                Pedido td = _obtenerElemento(id);
-                //if (td.Cliente == null) td.Cliente = new Cliente();
-                //if (td.Vendedor == null) td.Vendedor = new Vendedor();
-                return View(td);
-            } catch (UsuarioException exc) {
-                ViewBag.ErrorCode = exc.Codigo;
-                ViewBag.ErrorMessage = exc.Message;
-                return View();
-            }
-        }
+        //private ActionResult VistaElemento(int id) {
+        //    try {
+        //        Pedido td = new Pedido();
+        //        td.Codigo = id;
+        //        td.Consultar();
+        //        return View(td);
+        //    } catch (UsuarioException exc) {
+        //        ViewBag.ErrorCode = exc.Codigo;
+        //        ViewBag.ErrorMessage = exc.Message;
+        //        return View();
+        //    }
+        //}
 
-        private Pedido _obtenerElemento(int id) {
-            Pedido td = new Pedido();
-            td.Codigo = id;
-            td.Consultar();
-            return td;
-        }
-
-        private List<Pedido> _listaElementos() {
-            return Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES);
-        }
+      //private List<Pedido> _listaElementos() {
+      //      return Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES);
+      //  }
 
         //-----------------------------------------------------------------------------------------------------
 
@@ -340,14 +384,14 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private List<Pedido> _listaElementos(ListadoPedidosModel model) {
             model.AcomodarFiltro();
-            return Pedido.Pedidos(model.Filtro);
+            List<Pedido> lista= Pedido.Pedidos(model.Filtro);
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if(!SecurityService.Instance.verInfoAntigua(usuario)){
+                lista.RemoveAll(ped=>ped.Antiguo);
+           }
+           return lista;
         }
 
-        #endregion
-
-        //---------- METODOS PARA REPORTES DE LISTADOS DE Pedidos  -----------------------------
-
-        #region Reportes
         public ActionResult Report(ListadoPedidosModel model) {
             return View("report", model);
         }

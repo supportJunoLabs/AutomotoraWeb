@@ -12,8 +12,15 @@
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@{ if (Model == null || Model.Codigo == 0) {
+       return;
+}}
 
 @Html.HiddenFor(m => m.Codigo)
+
+@{ if (Model==null || Model.Codigo==0){
+       return;
+}}
 
 <div id="filtros" class="block">
     <div class="btn-toolbar botoneraListado">

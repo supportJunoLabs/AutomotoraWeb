@@ -28,6 +28,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region mantenimiento
 
+        //solo se ven los cheques emitidos pendientes.
         public ActionResult Show(int? id) {
             CuentaBancaria c = new CuentaBancaria();
             try {
@@ -206,7 +207,13 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #endregion
 
-        #region listadoyreporte
+        #region listados
+
+        private void _obtenerListado(ListadoChequesEmitidosModel model) {
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+            model.obtenerListado(verInfoAntigua);
+        }
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
@@ -217,7 +224,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
-                model.obtenerListado();
+                _obtenerListado(model);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -239,7 +246,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                 if (model.Accion == ListadoChequesEmitidosModel.ACCIONES.IMPRIMIR) {
                     return this.Report(model);
                 }
-                model.obtenerListado();
+                _obtenerListado(model);
             }
             return View(model);
             } catch (UsuarioException exc) {
@@ -253,7 +260,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult ListadoGrilla(string idParametros) {
             ListadoChequesEmitidosModel model = (ListadoChequesEmitidosModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            _obtenerListado(model);
             return PartialView("_listCheques", model.Resultado);
         }
 
@@ -263,7 +270,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         private XtraReport _generarReporte(string idParametros) {
             ListadoChequesEmitidosModel model = (ListadoChequesEmitidosModel)Session[idParametros];
-            model.obtenerListado();
+            _obtenerListado(model);
             List<ListadoChequesEmitidosModel> ll = new List<ListadoChequesEmitidosModel>();
             ll.Add(model);
             XtraReport rep = new DXListadoChequesEmitidos();

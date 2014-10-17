@@ -65,10 +65,39 @@ namespace AutomotoraWeb.Controllers.Sales {
             return PartialView("_listGrilla", _listaElementos());
         }
 
+        private bool VehiculoConsultable(Vehiculo v) {
+            if (v == null || v.Codigo == 0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
+        private Vehiculo iniVehiculo(int id) {
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = id;
+            vehiculo.Consultar();
+            _addResumeGastosToViewBag(vehiculo);
+            ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
+            return vehiculo;
+        }
+
+
         public ActionResult Details(int id) {
             ViewData["idParametros"] = id.ToString();
             ViewBag.SoloLectura = true;
-            return VistaElemento(id);
+            try {
+                Vehiculo v = iniVehiculo(id);
+                if (!VehiculoConsultable(v)) {
+                    return View("_transaccionAntigua");
+                } 
+                return View(v);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         public ActionResult Create() {
@@ -86,11 +115,13 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult Edit(int id) {
             try {
-                Vehiculo vehiculo = _obtenerElemento(id);
+                Vehiculo vehiculo=iniVehiculo(id);
+                if (!VehiculoConsultable(vehiculo)) {
+                    return View("_transaccionAntigua");
+                }
 
                 ViewData["idParametros"] = id.ToString();
                 Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-
                 try {
                     vehiculo.Modificable(usuario);
                 } catch (UsuarioException ex) {
@@ -98,9 +129,9 @@ namespace AutomotoraWeb.Controllers.Sales {
                     ViewBag.SoloLectura = true;
                     ViewBag.ErrorCode = ex.Codigo;
                     ViewBag.ErrorMessage = ex.Message + " Se despliega en modo consulta";
-                    return VistaElemento("details", vehiculo);
+                    return View("details", vehiculo);
                 }
-                return VistaElemento("edit", vehiculo);
+                return View("edit", vehiculo);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -109,15 +140,15 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         public ActionResult Delete(int id) {
-
             try {
-
                 ViewData["idParametros"] = id.ToString();
                 ViewBag.SoloLectura = true;
+                Vehiculo vehiculo = iniVehiculo(id);
+                if (!VehiculoConsultable(vehiculo)) {
+                    return View("_transaccionAntigua");
+                }
 
-                Vehiculo vehiculo = _obtenerElemento(id);
                 Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-
                 try {
                     vehiculo.Eliminable(usuario);
                 } catch (UsuarioException ex) {
@@ -125,9 +156,9 @@ namespace AutomotoraWeb.Controllers.Sales {
                     ViewBag.SoloLectura = true;
                     ViewBag.ErrorCode = ex.Codigo;
                     ViewBag.ErrorMessage = ex.Message + " Se despliega en modo consulta";
-                    return VistaElemento("details", vehiculo);
+                    return View("details", vehiculo);
                 }
-                return VistaElemento(id);
+                return View(vehiculo);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -137,37 +168,26 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         //-----------------------------------------------------------------------------------------------------
 
-        private ActionResult VistaElemento(string nomvista, Vehiculo vehiculo) {
-            try {
-                _addResumeGastosToViewBag(vehiculo);
-                ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
-                return View(nomvista, vehiculo);
-            } catch (UsuarioException exc) {
-                ViewBag.ErrorCode = exc.Codigo;
-                ViewBag.ErrorMessage = exc.Message;
-                return View();
-            }
-        }
+        //private ActionResult VistaElemento(string nomvista, Vehiculo vehiculo) {
+        //    try {
+        //        _addResumeGastosToViewBag(vehiculo);
+        //        ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
+        //        return View(nomvista, vehiculo);
+        //    } catch (UsuarioException exc) {
+        //        ViewBag.ErrorCode = exc.Codigo;
+        //        ViewBag.ErrorMessage = exc.Message;
+        //        return View();
+        //    }
+        //}
 
-        private ActionResult VistaElemento(int id) {
-            try {
-                Vehiculo vehiculo = _obtenerElemento(id);
-                _addResumeGastosToViewBag(vehiculo);
-                ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
-                return View(vehiculo);
-            } catch (UsuarioException exc) {
-                ViewBag.ErrorCode = exc.Codigo;
-                ViewBag.ErrorMessage = exc.Message;
-                return View();
-            }
-        }
+        //private ActionResult VistaElemento(int id) {
+           
+        //}
 
-        private Vehiculo _obtenerElemento(int id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
-            Vehiculo vehiculo = new Vehiculo();
-            vehiculo.Codigo = id;
-            vehiculo.Consultar();
-            return vehiculo;
-        }
+        //private Vehiculo _obtenerElemento(int id) { //Trae los datos del elemento de la base de datos y los pone en un objeto.
+           
+        //    return vehiculo;
+        //}
 
         private void _addResumeGastosToViewBag(Vehiculo vehiculo) {
             ViewBag.initialCost = vehiculo.Costo.ImporteEnMonedaDefault;
@@ -322,7 +342,12 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private List<Vehiculo> _listaElementos(ListadoVehiculosModel model) {
             model.AcomodarFiltro();
-            return Vehiculo.Vehiculos(model.Filtro);
+            List<Vehiculo>lista= Vehiculo.Vehiculos(model.Filtro);
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
+                lista.RemoveAll(v => v.Antiguo);
+            }
+            return lista;
         }
 
         #endregion
@@ -382,26 +407,39 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult Report2(int idVehiculo) {
             Vehiculo vhc = new Vehiculo();
             vhc.Codigo = idVehiculo;
+            vhc.Consultar();
+            if (!VehiculoConsultable(vhc)) {
+                return View("_transaccionAntigua");
+            }
             ViewData["idParametros"] = idVehiculo;
             return View(vhc);
         }
 
         public ActionResult ReportPartial2(int idParametros) {
             DXReportFichaVehiculo rep = new DXReportFichaVehiculo();
-            Vehiculo vhc = _obtenerElemento(idParametros);
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = idParametros;
+            vehiculo.Consultar();
+
             List<Vehiculo> lista = new List<Vehiculo>();
-            lista.Add(vhc);
+            if (VehiculoConsultable(vehiculo)) {
+                lista.Add(vehiculo);
+            }
             rep.DataSource = lista;
             ViewData["Report"] = rep;
-            ViewData["idParametros"] = vhc.Codigo;
+            ViewData["idParametros"] = vehiculo.Codigo;
             return PartialView("_reportDetalle");
         }
 
         public ActionResult ReportExport2(int idParametros) {
             DXReportFichaVehiculo rep = new DXReportFichaVehiculo();
-            Vehiculo vhc = _obtenerElemento(idParametros);
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Codigo = idParametros;
+            vehiculo.Consultar();
             List<Vehiculo> lista = new List<Vehiculo>();
-            lista.Add(vhc);
+            if (VehiculoConsultable(vehiculo)) {
+                lista.Add(vehiculo);
+            }
             rep.DataSource = lista;
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }

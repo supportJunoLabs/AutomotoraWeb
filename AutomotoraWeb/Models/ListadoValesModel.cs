@@ -33,10 +33,13 @@ namespace AutomotoraWeb.Models {
             Accion = ACCIONES.ACTUALIZAR;
         }
 
-        public void obtenerListado (){
+        public void obtenerListado (bool infoAntigua){
             AcomodarFiltro();
             Resultado = new ListadoVales();
             Resultado.generarListado(Filtro);
+            if (!infoAntigua) {
+                Resultado.Vales.RemoveAll(v => v.Antiguo);
+            }
         }
 
         private void AcomodarFiltro() {

@@ -10,6 +10,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Sales {
     public class SeniasController : SalesController {
@@ -35,6 +36,15 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Consultar
 
+        private bool SeniaConsultable(Senia s) {
+            if (s == null || s.Codigo == 0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && s.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
             ViewData["idOperacion"] = "consultar";
@@ -42,6 +52,11 @@ namespace AutomotoraWeb.Controllers.Sales {
                 Senia s = new Senia();
                 s.Codigo = id;
                 s.Consultar();
+                if (!SeniaConsultable(s)) {
+                    ViewBag.ErrorMessage = "Transaccion antigua ya no se encuentra en linea";
+                    s = new Senia();
+                }
+
                 SeniaModel model = new SeniaModel();
                 model.Senia = s;
                 if (s.EsSeniaPedido()) {
@@ -121,7 +136,12 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private List<Senia> _listaElementos(ListadoSeniasModel model) {
             model.AcomodarFiltro();
-            return Senia.Senias(model.Filtro);
+            List<Senia> lista= Senia.Senias(model.Filtro);
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
+                lista.RemoveAll(s => s.Antiguo);
+            }
+            return lista;
         }
 
         public ActionResult Report(ListadoSeniasModel model) {

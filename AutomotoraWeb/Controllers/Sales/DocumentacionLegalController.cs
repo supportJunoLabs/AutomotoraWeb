@@ -12,24 +12,25 @@ using DevExpress.XtraPrinting;
 using DevExpress.Web.Mvc;
 using System.IO;
 using System.Text;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Sales {
     public class DocumentacionLegalController : SalesController {
 
-        
-               
-        public static string atilde="\\'e1";
-        public static string etilde="\\'e9";
-        public static string itilde="\\'ed";
-        public static string otilde="\\'f3";
-        public static string utilde="\\'fa";
-        public static string enie="\\'f1";
-        public static string Atilde="\\'c1";
-        public static string Etilde="\\'c9";
-        public static string Itilde="\\'cd";
-        public static string Otilde="\\'d3";
-        public static string Utilde="\\'da";
-        public static string Enie="\\'d1";
+
+
+        public static string atilde = "\\'e1";
+        public static string etilde = "\\'e9";
+        public static string itilde = "\\'ed";
+        public static string otilde = "\\'f3";
+        public static string utilde = "\\'fa";
+        public static string enie = "\\'f1";
+        public static string Atilde = "\\'c1";
+        public static string Etilde = "\\'c9";
+        public static string Itilde = "\\'cd";
+        public static string Otilde = "\\'d3";
+        public static string Utilde = "\\'da";
+        public static string Enie = "\\'d1";
         public static string ordinal = "\\'b0";
 
         public static string CONTROLLER = "DocumentacionLegal";
@@ -40,12 +41,43 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.NombreEntidades = "Documentacion Legal";
         }
 
+        private bool VentaConsultable(Venta v) {
+            if (v == null || v.Codigo == 0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
+        private bool SeniaConsultable(Senia s) {
+            if (s == null || s.Codigo == 0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && s.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValeConsultable(Vale v) {
+            if (v == null || string.IsNullOrWhiteSpace(v.Codigo)) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
 
         #region comprobanteVenta
 
         public ActionResult DocComprobanteVenta(int id) {
             Venta v = new Venta();
             v.Codigo = id;
+            v.Consultar();
+            if (!VentaConsultable(v)) {
+                return View("_transaccionAntigua");
+            }
             ViewData["idParametros"] = id;
             return View("ReportComprobanteVenta", v);
         }
@@ -55,6 +87,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             Venta v = new Venta();
             v.Codigo = idParametros;
             v.Consultar();
+            if (!VentaConsultable(v)) {
+                v = new Venta();
+            }
             XtraReport rep = new DXReciboVenta();
             List<Venta> ll = new List<Venta>();
             ll.Add(v);
@@ -68,6 +103,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             Venta v = new Venta();
             v.Codigo = idParametros;
             v.Consultar();
+            if (!VentaConsultable(v)) {
+                v = new Venta();
+            }
             XtraReport rep = new DXReciboVenta();
             List<Venta> ll = new List<Venta>();
             ll.Add(v);
@@ -83,6 +121,10 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult DocComprobanteSenia(int id) {
             Senia s = new Senia();
             s.Codigo = id;
+            s.Consultar();
+            if (!SeniaConsultable(s)) {
+                return View("_transaccionAntigua");
+            }
             ViewData["idParametros"] = id;
             return View("ReportComprobanteSenia", s);
         }
@@ -92,6 +134,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             Senia s = new Senia();
             s.Codigo = idParametros;
             s.Consultar();
+            if (!SeniaConsultable(s)) {
+                s = new Senia();
+            }
             XtraReport rep = new DXReciboSenia();
             List<Senia> ll = new List<Senia>();
             ll.Add(s);
@@ -105,6 +150,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             Senia s = new Senia();
             s.Codigo = idParametros;
             s.Consultar();
+            if (!SeniaConsultable(s)) {
+                s = new Senia();
+            }
             XtraReport rep = new DXReciboSenia();
             List<Senia> ll = new List<Senia>();
             ll.Add(s);
@@ -128,101 +176,116 @@ namespace AutomotoraWeb.Controllers.Sales {
             return generarDocumento(id, 0, "CV_VENTA", "CVV");
         }
 
-         public FileStreamResult DocConformesVenta(int id) {
+        public FileStreamResult DocConformesVenta(int id) {
             return generarDocumento(id, 0, "CUOTA_VENTA", "CONF");
         }
 
-         public FileStreamResult DocTituloVenta(int id) {
-             return generarDocumento(id, 0, "TITULO_VENTA", "TIT");
+        public FileStreamResult DocTituloVenta(int id) {
+            return generarDocumento(id, 0, "TITULO_VENTA", "TIT");
         }
 
-         public FileStreamResult DocValesVenta(int id) {
-             return generarDocumento(id, 0, "VALE_VENTA", "VAL");
+        public FileStreamResult DocValesVenta(int id) {
+            return generarDocumento(id, 0, "VALE_VENTA", "VAL");
         }
 
-         public ActionResult DocCuponesVenta(int id) {
-             Venta v = new Venta();
-             v.Codigo = id;
-             ViewData["idParametros"] = id;
-             return View("ReportCuponesVenta", v);
+        public ActionResult DocCuponesVenta(int id) {
+            Venta v = new Venta();
+            v.Codigo = id;
+            v.Consultar();
+            if (!VentaConsultable(v)) {
+                return View("_transaccionAntigua");
+            }
+            ViewData["idParametros"] = id;
+            return View("ReportCuponesVenta", v);
         }
 
-         private XtraReport _reporteCupones(int idVenta) {
-             DocumentoLegal doc = new DocumentoLegal();
-             doc.Codigo = "CUPONES_VENTA";
-             doc.Consultar();
+        private XtraReport _reporteCupones(int idVenta) {
+            List<VentaCupones> ll = new List<VentaCupones>();
+            Venta v = new Venta();
+            v.Codigo = idVenta;
+            v.Consultar();
+            if (VentaConsultable(v)) {
+                DocumentoLegal doc = new DocumentoLegal();
+                doc.Codigo = "CUPONES_VENTA";
+                doc.Consultar();
+                VentaCupones vc = doc.ObtenerVentaCupones(v);
+                vc.Cabezal = vc.Cabezal.Replace("[RETURN]", Environment.NewLine);
+                ll.Add(vc);
+            }
+            XtraReport rep = new DXCuponesVenta();
+            rep.DataSource = ll;
+            return rep;
+        }
 
-             Venta v = new Venta();
-             v.Codigo = idVenta;
-             v.Consultar();
+        public ActionResult ReportCuponesVentaPartial(int idParametros) {
+            ViewData["idParametros"] = idParametros;
+            XtraReport rep = _reporteCupones(idParametros);
+            ViewData["Report"] = rep;
+            return PartialView("_reportCuponesVenta");
+        }
 
-             VentaCupones vc = doc.ObtenerVentaCupones(v);
-             vc.Cabezal = vc.Cabezal.Replace("[RETURN]", Environment.NewLine);
-             XtraReport rep = new DXCuponesVenta();
-             List<VentaCupones> ll = new List<VentaCupones>();
-             ll.Add(vc);
-             rep.DataSource = ll;
+        public ActionResult ReportCuponesVentaExport(int idParametros) {
+            ViewData["idParametros"] = idParametros;
+            ViewData["idParametros"] = idParametros;
+            XtraReport rep = _reporteCupones(idParametros);
+            return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
 
-             return rep;
-         }
+        }
 
-         public ActionResult ReportCuponesVentaPartial(int idParametros) {
-             ViewData["idParametros"] = idParametros;
-             XtraReport rep = _reporteCupones(idParametros);
-             ViewData["Report"] = rep;
-             return PartialView("_reportCuponesVenta");
-         }
+        public FileStreamResult Vale(string id) {
+            Vale val = new Vale();
+            val.Codigo = id;
+            val.Consultar();
 
-         public ActionResult ReportCuponesVentaExport(int idParametros) {
-             ViewData["idParametros"] = idParametros;
-             ViewData["idParametros"] = idParametros;
-             XtraReport rep = _reporteCupones(idParametros);
-             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
+            string contenido = "";
+            if (!ValeConsultable(val)) {
+                contenido = "Transaccion antigua ya no se encuentra en linea";
+            } else {
+                DocumentoLegal doc = new DocumentoLegal();
+                doc.Codigo = "VALE_VENTA";
+                doc.Consultar();
+                contenido = generarWord(doc.ObtenerContenido(val));
+            }
 
-         }
+            Response.ContentType = "application/word";
+            Response.AddHeader("Content-disposition", "attachment; filename=" + "VAL" + "_" + val.Codigo + ".rtf");
+            Response.Buffer = true;
+            Response.Clear();
+            Response.Write(contenido);
+            Response.OutputStream.Flush();
+            Response.End();
 
-         public FileStreamResult Vale(string id) {
-             Vale val = new Vale();
-             val.Codigo = id;
-             val.Consultar();
+            return new FileStreamResult(Response.OutputStream, "application/word");
+        }
 
-             DocumentoLegal doc = new DocumentoLegal();
-             doc.Codigo = "VALE_VENTA";
-             doc.Consultar();
-
-             string contenido = generarWord(doc.ObtenerContenido(val));
-
-             Response.ContentType = "application/word";
-             Response.AddHeader("Content-disposition", "attachment; filename=" + "VAL" + "_" + val.Codigo + ".rtf");
-             Response.Buffer = true;
-             Response.Clear();
-             Response.Write(contenido);
-             Response.OutputStream.Flush();
-             Response.End();
-
-             return new FileStreamResult(Response.OutputStream, "application/word");
-         }
-            
 
         private FileStreamResult generarDocumento(int idVenta, int idSenia, string tipoDoc, string nomDoc) {
-             DocumentoLegal doc = new DocumentoLegal();
-             doc.Codigo = tipoDoc;
-             doc.Consultar();
-            
-            string contenido ="";
+            DocumentoLegal doc = new DocumentoLegal();
+            doc.Codigo = tipoDoc;
+            doc.Consultar();
+
+            string contenido = "";
             Vehiculo vhc = null;
             if (idVenta > 0) {
                 Venta v = new Venta();
                 v.Codigo = idVenta;
                 v.Consultar();
-                contenido = generarWord(doc.ObtenerContenido(v));
+                if (VentaConsultable(v)) {
+                    contenido = generarWord(doc.ObtenerContenido(v));
+                } else {
+                    contenido = "Transaccion antigua ya no se encuentra en linea";
+                }
                 vhc = v.Vehiculo;
 
             } else {
                 Senia s = new Senia();
                 s.Codigo = idSenia;
                 s.Consultar();
-                contenido = generarWord(doc.ObtenerContenido(s));
+                if (SeniaConsultable(s)) {
+                    contenido = generarWord(doc.ObtenerContenido(s));
+                } else {
+                    contenido = "Transaccion antigua ya no se encuentra en linea";
+                }
                 vhc = s.Vehiculo;
             }
 
@@ -285,8 +348,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             //                        "<div class=Section1>");
 
 
-            sbase = reemplazoPar(sbase, "[BOLD]", "\\b ",  "\\b0 ");
-            sbase = reemplazoPar(sbase, "[UNDERLINE]", "\\ul ",  "\\ul0 ");
+            sbase = reemplazoPar(sbase, "[BOLD]", "\\b ", "\\b0 ");
+            sbase = reemplazoPar(sbase, "[UNDERLINE]", "\\ul ", "\\ul0 ");
             sbase = sbase.Replace("[RETURN]", "\\line ");
             sbase = sbase.Replace("[JUSTIFY]", "\\par\\qj ");
             sbase = sbase.Replace("[LEFT]", "\\par\\ql ");
@@ -308,7 +371,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             sbase = sbase.Replace("Ñ", Enie);
             sbase = sbase.Replace("º", ordinal);
             sbase = sbase.Replace("°", ordinal);
-            
+
 
             strBody.Append(sbase);
 

@@ -1,18 +1,16 @@
-﻿@model AutomotoraWeb.Models.VentaAnulacionModel
+﻿@model AutomotoraWeb.Models.VentaEntregaModel
 @using AutomotoraWeb.Controllers.General;
 @using DLL_Backend;
 @using AutomotoraWeb.Controllers.Sales;
 @using AutomotoraWeb.Models;
 
-<script src="~/Scripts/AutomotoraWeb/VentaAnulacion.js"></script>
-
 @{
-    ViewBag.Title = ViewBag.NombreEntidad + ": Anular";
+    ViewBag.Title = ViewBag.NombreEntidad + ": Entregar Vehiculo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Venta.Ventas(Venta.TIPO_LISTADO_VENTAS.ANULABLES) };
-    if (Model.VentaDev != null && Model.VentaDev.Venta != null && Model.VentaDev.Venta.Codigo > 0) {
-        gmodel.GridLookUpCodigo = Model.VentaDev.Venta.Codigo;
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Venta.Ventas(Venta.TIPO_LISTADO_VENTAS.ENTREGA_PENDIENTE) };
+    if (Model.Entrega != null && Model.Entrega.Venta != null && Model.Entrega.Venta.Codigo > 0) {
+        gmodel.GridLookUpCodigo = Model.Entrega.Venta.Codigo;
     }
 }
 
@@ -27,48 +25,43 @@
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:", new {id="txErrores" })
 
-     <input type="hidden" name="idSession" id="idSession" value='@ViewData["idSession"]'/> 
-
+    
    <div id="divSeleccion">
         <div class="display-label">Venta</div>
         <div class="floatLeft">
-            @Html.Partial("_selectVentaAnular", gmodel)
+            @Html.Partial("_selectVentaEntregar", gmodel)
         </div>
         <div class="floatLeft" style="margin-left: 5px">
-            @Html.ValidationMessageFor(model => model.VentaDev.Venta.Codigo)
+            @Html.ValidationMessageFor(model => model.Entrega.Venta.Codigo)
         </div>
-        @Html.HiddenFor(model => model.VentaDev.Venta.Codigo, new { id = "codigoVenta" })
+        @Html.HiddenFor(model => model.Entrega.Venta.Codigo, new { id = "codigoVenta" })
     </div>
     <div class="clear-both"></div>
     
-     <div id="divDetalleVenta">
-        @{ if (Model.VentaDev != null && Model.VentaDev.Venta != null && Model.VentaDev.Venta.Codigo != null && Model.VentaDev.Venta.Codigo > 0) {
-            @Html.Partial("_ventaAnulacion", Model);
+     <div id="divDetalleEntrega">
+        @{ if (Model.Entrega != null && Model.Entrega.Venta != null && Model.Entrega.Venta.Codigo != null && Model.Entrega.Venta.Codigo > 0) {
+            @Html.Partial("_ventaEntrega", Model);
        }}
     </div>
-    
-   
-
 }
 
 <script type="text/javascript">
-    function ventaAnularSelected(s, e) {
+    function ventaEntregarSelected(s, e) {
         var valor = s.GetRowKey(e.visibleIndex);
         $("#codigoVenta").val(valor);
-        $('#divDetalleVenta').html('');
+        $('#divDetalleEntrega').html('');
         $('#txErrores').html('');
         if (!valor) {
             return;
         }
-        var destino = '/ventas/VentaAnularSelected/';
+        var destino = '/ventas/VentaEntregarSelected/';
         $.ajax({
             cache: false,
             type: "GET",
             url: destino,
-            data: { "idVenta": valor, "idSession": $('#idSession').val() },
+            data: { "idVenta": valor},
             success: function (data) {
-                $('#divDetalleVenta').html(data);
-                //$('#btnAnularVenta').show();
+                $('#divDetalleEntrega').html(data);
                 reajustarControles();
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -78,7 +71,4 @@
             complete: hideLoading
         });
     }
-
- 
-
 </script>

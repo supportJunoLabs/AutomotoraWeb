@@ -5,7 +5,7 @@
     bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
 }
 
-<div class="display-label">
+<div class="display-label label-large">
     @Html.LabelForRequired(model => model.Usuario.UserName)
 </div>
 <div class="editor-field editor-field-large">
@@ -14,7 +14,7 @@
 </div>
 <div class="clear-both"></div>
 
-<div class="display-label ">
+<div class="display-label label-large">
     @Html.LabelForRequired(model => model.Usuario.Habilitado)
 </div>
 <div>
@@ -23,8 +23,17 @@
 </div>
 <div class="clear-both"></div>
 
+<div class="display-label label-large">
+    @Html.LabelForRequired(model => model.Usuario.InfoAntigua)
+</div>
+<div>
+    @Html.CheckBoxOrDisplayFor(model => model.Usuario.InfoAntigua, modoConsulta)
+    @Html.ValidationMessageFor(model => model.Usuario.InfoAntigua)
+</div>
+<div class="clear-both"></div>
 
-<div class="display-label">
+
+<div class="display-label label-large">
     @Html.LabelForRequired(model => model.Usuario.Sucursal)
 </div>
 <div class="editor-field editor-field-large @(modoConsulta ? "" : "renglon-alto")">
@@ -36,7 +45,7 @@
 <div class="clear-both"></div>
 
 
-<div class="display-label ">
+<div class="display-label label-large ">
     @Html.LabelForRequired(model => model.Usuario.MultiSucursal)
 </div>
 <div>
@@ -47,7 +56,7 @@
 
 
 
-<div class="display-label ">
+<div class="display-label label-large">
     @Html.LabelForRequired(model => model.Usuario.EsDBA)
 </div>
 <div>

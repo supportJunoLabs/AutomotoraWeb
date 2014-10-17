@@ -21,14 +21,14 @@
 
     ig.NameGrid = "gridVentas";
     ig.Controller = VentasController.CONTROLLER;
-    ig.ActionCallbackRoute = "VentasAnulablesGrilla";
+    ig.ActionCallbackRoute = "VentasEntregablesGrilla";
     ig.KeyFieldName = "Codigo";
     ig.TypeOfModel = typeof(DLL_Backend.Venta);
     ig.FormatoSeleccionLookup = "{0}, {1:dd/MM/yyyy}, {3}, {2}";
     ig.registrosPorPagina = 10;
     ig.AnchoSeleccion = 530;
 
-    ig.RowClickAccion = "ventaAnularSelected";
+    ig.RowClickAccion = "ventaEntregarSelected";
 
     ViewBag.InfoGrilla = ig;
 }

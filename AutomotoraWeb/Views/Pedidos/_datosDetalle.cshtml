@@ -117,12 +117,14 @@
     </div>
     <div class="editor-field editor-field-xlarge xxlarge @(modoConsulta ? "" : "renglon-alto")">
         @{ if (modoConsulta) { 
-            @Html.Bootstrap().ActionLink(Model.Cliente.Nombre, "Details", ClientesController.CONTROLLER).RouteValues(new { id = Model.Cliente.Codigo })
+               if (Model.Cliente!=null){
+                    @Html.Bootstrap().ActionLink(Model.Cliente.Nombre, "Details", ClientesController.CONTROLLER).RouteValues(new { id = Model.Cliente.Codigo })
+                }
            } else {
-            @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, modoConsulta || Model.Seniado,
-                    model => model.Cliente.Nombre,
-                    new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null, new { id = "ddlClientes", @class = "xxlarge" })
-            @Html.ValidationMessageFor(model => model.Cliente)
+                @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, modoConsulta || Model.Seniado,
+                        model => model.Cliente.Nombre,
+                        new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null, new { id = "ddlClientes", @class = "xxlarge" })
+                @Html.ValidationMessageFor(model => model.Cliente)
            }}
     </div>
     <div class="clear-both"></div>
@@ -132,7 +134,9 @@
     </div>
     <div class="editor-field editor-field-xxlarge @(modoConsulta ? "" : "renglon-alto")">
         @{ if (modoConsulta) { 
-            @Html.Bootstrap().ActionLink(Model.Vendedor.Nombre, "Details", VendedoresController.CONTROLLER).RouteValues(new { id = Model.Vendedor.Codigo })
+               if (Model.Vendedor!=null){
+                    @Html.Bootstrap().ActionLink(Model.Vendedor.Nombre, "Details", VendedoresController.CONTROLLER).RouteValues(new { id = Model.Vendedor.Codigo })
+                }
            } else {
             @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, modoConsulta || Model.Seniado,
                     model => model.Vendedor.Nombre,

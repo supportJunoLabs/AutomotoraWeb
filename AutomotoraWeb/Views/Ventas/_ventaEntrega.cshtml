@@ -1,0 +1,82 @@
+﻿@model AutomotoraWeb.Models.VentaEntregaModel
+@using AutomotoraWeb.Controllers.General;
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Helpers;
+
+@{ bool cambiarSucursal = ViewBag.Multisucursal;}
+
+
+<div>
+    <div class="dataLine">
+        <div class="display-label">
+            Fecha
+        </div>
+        <div class="editor-field editor-field-medium">
+            @Html.TextBoxFor(model => model.Entrega.Fecha, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+            @Html.ValidationMessageFor(model => model.Entrega.Fecha)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+    
+    <div class="dataLine">
+        <div class="display-label">
+            @Html.LabelForRequired(model => model.Entrega.Sucursal)
+        </div>
+        <div class="editor-field editor-field-medium medium renglon-alto">
+            @Html.DdlOrDisplayFor(model => model.Entrega.Sucursal.Codigo, !cambiarSucursal, model => model.Entrega.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "large" })
+            @Html.ValidationMessageFor(model => model.Entrega.Sucursal)
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label ">
+            @Html.LabelForRequired(model => model.Entrega.Observaciones)
+        </div>
+        <div class="editor-field editor-field-xxlarge">
+            @Html.TextAreaOrDisplayFor(model => model.Entrega.Observaciones, false, new { style = "width: 530px; height: 60px" })
+            @Html.ValidationMessageFor(model => model.Entrega.Observaciones)
+
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
+    <div class="btn-toolbar floatLeft">
+        @Html.Bootstrap().ActionLinkButton("Consulta Vehiculo", "Details", VehiculosController.CONTROLLER).RouteValues(new { id = Model.Entrega.Vehiculo.Codigo }).Class("btn btn-info botonDocumento")
+        @Html.Bootstrap().ActionLinkButton("Consulta Venta", "Details", VentasController.CONTROLLER).RouteValues(new { id = Model.Entrega.Venta.Codigo }).Class("btn btn-info botonDocumento")
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text("Entregar Vehiculo").Id("btnEntregar"))
+    </div>
+    <div class="clear-both"></div>
+</div>
+<div class="clear-both"></div>
+
+<div>
+    @Html.Partial("_detallesVenta", Model.Entrega.Venta)
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('a[data-toggle="tab"]').on('shown', function (e) {
+            ASPxClientControl.AdjustControls();
+        });
+
+        inicializarModal("Confirmacion", "Confirma la ENTREGA de este vehiculo?", "Aceptar", "Cancelar");
+
+        $("#btnEntregar").click(function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        //alert("hola");
+        $('form#formPrincipal').submit();
+    }
+
+
+</script>

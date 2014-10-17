@@ -19,6 +19,10 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@{ if(Model==null  || Model.Senia==null || Model.Senia.Codigo==0){
+       return;
+}}
+
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
     

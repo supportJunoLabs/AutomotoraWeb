@@ -10,6 +10,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Bank {
     public class MovimientosController : BankController {
@@ -23,6 +24,12 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         #region Mantenimiento
+
+        private void _generarListado(MovimientosBancoModel model) {
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+            model.generarListado(verInfoAntigua);
+        }
 
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Show(int? id) {
@@ -38,7 +45,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                 model.idParametros = s;
                 Session[s] = model;
                 ViewData["idParametros"] = model.idParametros;
-                model.generarListado();
+                _generarListado(model);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -55,7 +62,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                 ViewData["idParametros"] = model.idParametros;
                 this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
                 if (ModelState.IsValid) {
-                    model.generarListado();
+                    _generarListado(model);
                 } else {
                     model.Resultado = new List<MovBanco>();
                 }
@@ -73,7 +80,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             ViewData["idParametros"] = model;
             this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             if (ModelState.IsValid) {
-                model.generarListado();
+                _generarListado(model);
             } else {
                 model.Resultado = new List<MovBanco>();
             }
@@ -235,6 +242,21 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region Listados
 
+        private void _generarListado(EstadoCuentaModel model) {
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+            if (!verInfoAntigua) {
+                    DateTime minfecha = DateTime.Now.Date.AddDays(Automotora.DiasInfoAntigua() * (-1));
+                    if (model.EstadoCuenta.Desde < minfecha) {
+                        model.EstadoCuenta.Desde = minfecha;
+                    }
+                    if (model.EstadoCuenta.Hasta < minfecha) {
+                        model.EstadoCuenta.Hasta = minfecha;
+                    }
+            }
+            model.EstadoCuenta.generarListado();
+        }
+
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List(int? id) {
@@ -248,7 +270,6 @@ namespace AutomotoraWeb.Controllers.Bank {
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
-                //model.EstadoCuenta.generarListado();
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -268,7 +289,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                     if (model.Accion == EstadoCuentaModel.ACCIONES.IMPRIMIR) {
                         return this.Report(model);
                     }
-                    model.EstadoCuenta.generarListado();
+                    _generarListado(model);
                 }
                 return View(model);
             } catch (UsuarioException exc) {
@@ -282,7 +303,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult ListGrillaMovimientosRep(string idParametros) {
             EstadoCuentaModel model = (EstadoCuentaModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.EstadoCuenta.generarListado();
+            _generarListado(model);
             return PartialView("_listGrillaMovimientosRep", model);
         }
 
@@ -293,7 +314,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         private XtraReport _generarReporte(string idParametros) {
             EstadoCuentaModel model = (EstadoCuentaModel)Session[idParametros];
-            model.EstadoCuenta.generarListado();
+            _generarListado(model);
             List<EstadoCuenta> ll = new List<EstadoCuenta>();
             ll.Add(model.EstadoCuenta);
             XtraReport rep = new DXEstadoCuenta();

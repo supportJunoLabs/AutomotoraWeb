@@ -19,12 +19,15 @@ namespace AutomotoraWeb.Models {
             Resultado = new List<MovBanco>();
         }
 
-        public void generarListado() {
+        public void generarListado(bool InfoAntigua) {
             if (Cuenta == null || Cuenta.Codigo <= 0) {
                 Resultado = new List<MovBanco>();
                 return;
             }
             Resultado = Cuenta.Movimientos(Desde, Hasta);
+            if (!InfoAntigua) {
+                Resultado.RemoveAll(mov => mov.Antiguo);
+            }
         }
     }
 

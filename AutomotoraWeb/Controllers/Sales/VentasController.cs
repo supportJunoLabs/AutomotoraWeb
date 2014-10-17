@@ -12,6 +12,7 @@ using DevExpress.XtraPrinting;
 using DevExpress.Web.ASPxGridView;
 using AutomotoraWeb.Controllers.General;
 using System.Globalization;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Sales {
     public class VentasController : SalesController {
@@ -402,6 +403,15 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Consulta
 
+        private bool VentaConsultable(Venta v) {
+            if (v == null || v.Codigo == 0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
@@ -410,7 +420,11 @@ namespace AutomotoraWeb.Controllers.Sales {
         private ActionResult VistaElemento(int id) {
             try {
                 Venta td = _obtenerElemento(id);
-                return View(td);
+                if (!VentaConsultable(td)) {
+                    ViewBag.ErrorMessage = "Transaccion antigua ya no se encuentra en linea";
+                    td = new Venta();
+                }
+                return View("Details", td);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -474,7 +488,12 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private List<Venta> _listaElementos(ListadoVentasModel model) {
             model.AcomodarFiltro();
-            return Venta.Ventas(model.Filtro);
+            List<Venta> lista = Venta.Ventas(model.Filtro);
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
+                lista.RemoveAll(v => v.Antiguo);
+            }
+            return lista;
         }
 
         #endregion
@@ -652,8 +671,9 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult ReciboAnulacion(int id) {
             try {
+                TRVentaAnulacion tr = (TRVentaAnulacion)Transaccion.ObtenerTransaccion(id);
                 ViewData["idParametros"] = id;
-                return View("ReciboAnulacion");
+                return View("ReciboAnulacion", tr);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -790,14 +810,93 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region EntregaVehiculo
 
-        //----------------- Trasnsaccion Entrega FALTA  -----------------------
+
+
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+        public ActionResult Entregar(int? id) {
+            ViewBag.SoloLectura = true;
+
+            int idVehiculo = id ?? 0;
+            VentaEntregaModel model = new VentaEntregaModel();
+            model.Entrega = new Entrega();
+            
+            if (idVehiculo > 0) {
+                Venta v = new Venta();
+                v.Vehiculo = new Vehiculo();
+                v.Vehiculo.Codigo = idVehiculo;
+                v.Consultar(Venta.TIPO_CONSULTA_VENTA.VEHICULO);
+                model.Entrega.Venta = v;
+                model.Entrega.Vehiculo = v.Vehiculo;
+                model.Entrega.Sucursal = model.Entrega.Venta.Sucursal;
+                model.Entrega.Fecha = DateTime.Now.Date;
+            }
+
+            return View("Entregar", model);
+        }
+
+        public ActionResult VentasEntregablesGrilla(GridLookUpModel model) {
+            model.Opciones = Venta.Ventas(Venta.TIPO_LISTADO_VENTAS.ENTREGA_PENDIENTE);
+            return PartialView("_selectVentaEntregar", model);
+        }
+
+        public ActionResult VentaEntregarSelected(int idVenta) {
+            ViewBag.SoloLectura = true;
+            VentaEntregaModel model = new VentaEntregaModel();
+            model.Entrega = new Entrega();
+            model.Entrega.Venta = new Venta();
+            model.Entrega.Venta.Codigo = idVenta;
+            model.Entrega.Venta.Consultar(Venta.TIPO_CONSULTA_VENTA.CODIGO);
+            model.Entrega.Vehiculo = model.Entrega.Venta.Vehiculo;
+            model.Entrega.Sucursal = model.Entrega.Venta.Sucursal;
+            model.Entrega.Fecha = DateTime.Now.Date;
+
+            return PartialView("_ventaEntrega", model);
+        }
+
+        [HttpPost]
+        public ActionResult Entregar(VentaEntregaModel model) {
+            ViewBag.SoloLectura = true;
+
+            if (model.Entrega == null || model.Entrega.Venta == null || model.Entrega.Venta.Codigo <= 0) {
+                ViewBag.ErrorCode = "USR";
+                ViewBag.ErrorMessage = "No hay venta seleccionada";
+                return View("Entregar", model);
+            }
+            try {
+
+                model.Entrega.Venta.Consultar();
+                model.Entrega.Vehiculo = model.Entrega.Venta.Vehiculo; //lo hago por si da error y vuelvo a la vista original tener los datos
+                
+                string usuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+                string IP = HttpContext.Request.UserHostAddress;
+                model.Entrega.setearAuditoria(usuario, IP);
+
+                GeneralUtils.ModelStateRemoveAllStarting(ModelState, "Entrega.Venta");
+                GeneralUtils.ModelStateRemoveAllStarting(ModelState, "Entrega.Vehiculo");
+                this.eliminarValidacionesIgnorables("Entrega.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+
+                if (ModelState.IsValid) {
+                    model.Entrega.Ejecutar();
+                    return RedirectToAction("ReciboEntrega", VentasController.CONTROLLER, new { id = model.Entrega.NroRecibo });
+                }
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View("Entregar", model);
+            }
+            return View("Entregar", model);
+
+        }
+
+
 
         //----------------- Recibo Entrega  -----------------------
 
         public ActionResult ReciboEntrega(int id) {
             try {
+                Entrega tr = (Entrega)Transaccion.ObtenerTransaccion(id);
                 ViewData["idParametros"] = id;
-                return View("ReciboEntrega");
+                return View("ReciboEntrega", tr);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;

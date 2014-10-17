@@ -9,6 +9,7 @@ using DevExpress.XtraReports.Parameters;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Utils;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Financing {
     public class ConsultasFinController : FinancingController {
@@ -24,18 +25,44 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region ConsultaFinanciacion
 
+        private List<Venta> _ventasCliente(Cliente c){
+            List<Venta> lista = new List<Venta>();
+            lista = c.VentasCuotas();
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
+                lista.RemoveAll(fin => fin.Antiguo);
+            }
+            return lista;
+        }
+
+        private bool FinanciacionConsultable(Venta v) {
+            if (v == null || v.Codigo==0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
+               return false;
+            }
+            return true;
+        }
+
         public ActionResult ConsultaFinanciacion(int? id) {
             ConsultaVentaModel m = new ConsultaVentaModel();
             try {
                 m.Venta = new Venta();
                 m.Cliente = new Cliente();
+                List<Venta> lista = new List<Venta>();
                 if (id != null && id > 0) {
                     m.Venta.Codigo = id ?? 0;
                     m.Venta.Consultar();
                     m.Cliente = m.Venta.Cliente;
-                }
+                    lista=_ventasCliente(m.Cliente);
+                } 
+                ViewBag.VentasCliente = lista;
                 ViewBag.SoloLectura = true;
                 ViewData["idParametros"] = m.Cliente.Codigo;
+                if (!FinanciacionConsultable(m.Venta)) {
+                    ViewBag.ErrorMessage = "Transaccion antigua ya no se encuentra en linea";
+                    m.Venta = new Venta();
+                }
                 return View("ConsultaFinanciacion", m);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -50,10 +77,13 @@ namespace AutomotoraWeb.Controllers.Financing {
             try {
                 m.Venta = new Venta();
                 m.Cliente = new Cliente();
+                List<Venta> lista = new List<Venta>();
                 if (id != null) {
                     m.Cliente.Codigo = id ?? 0;
                     m.Cliente.Consultar();
+                    lista = _ventasCliente(m.Cliente);
                 }
+                ViewBag.VentasCliente = lista;
                 ViewBag.SoloLectura = true;
                 ViewData["idParametros"] = m.Cliente.Codigo;
                 return View("ConsultaFinanciacion", m);
@@ -70,22 +100,24 @@ namespace AutomotoraWeb.Controllers.Financing {
             m.Cliente = new Cliente();
             m.Venta = new Venta();
             m.Cliente.Codigo = idCliente;
+            ViewBag.VentasCliente = _ventasCliente(m.Cliente);
             ViewBag.SoloLectura = true;
             ViewData["idParametros"] = m.Cliente.Codigo;
             return PartialView("_financiacionesCliente", m);
         }
 
+        //cargar la grilla con las financiaciones del cliente elegido
         public ActionResult GrillaFinanciacionesCliente(int idParametros) {
             Cliente c = new Cliente();
             c.Codigo = idParametros;
             c.Consultar();
             GridLookUpModel model = new GridLookUpModel();
-            model.Opciones = c.VentasCuotas();
+            model.Opciones = _ventasCliente(c);
             ViewData["idParametros"] = idParametros;
             return PartialView("_selectFinanciacionConsultar", model);
         }
 
-        //desde el javascript de cambio en ddl vales
+        //desde el javascript de cambio en ddl financiaciones
         public ActionResult DetallesFinanciacion(int idVenta) {
             ConsultaVentaModel m = new ConsultaVentaModel();
             m.Venta = new Venta();
@@ -93,6 +125,9 @@ namespace AutomotoraWeb.Controllers.Financing {
             m.Venta.Consultar();
             m.Cliente = m.Venta.Cliente;
             ViewBag.SoloLectura = true;
+            if (!FinanciacionConsultable(m.Venta)) {
+                return PartialView("_transaccionAntigua");
+            }
             return PartialView("_datosDetalleFinanciacion", m);
         }
 
@@ -100,6 +135,10 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ReportFinanciacion(int id) {
             Venta model = new Venta();
             model.Codigo = id;
+            model.Consultar();
+            if (!FinanciacionConsultable(model)) {
+                return View("_transaccionAntigua");
+            }
             ViewData["idParametros"] = id;
             return View("ReportFinanciacion", model);
         }
@@ -108,6 +147,9 @@ namespace AutomotoraWeb.Controllers.Financing {
             Venta model = new Venta();
             model.Codigo = idParametros;
             model.Consultar();
+            if (!FinanciacionConsultable(model)) {
+                model = new Venta();
+            }
             XtraReport rep = new DXReportConsultaFinanciacion();
             List<Venta> ll = new List<Venta>();
             ll.Add(model);
@@ -121,6 +163,9 @@ namespace AutomotoraWeb.Controllers.Financing {
             Venta model = new Venta();
             model.Codigo = idParametros;
             model.Consultar();
+            if (!FinanciacionConsultable(model)) {
+                model = new Venta();
+            }
             XtraReport rep = new DXReportConsultaFinanciacion();
             List<Venta> ll = new List<Venta>();
             ll.Add(model);

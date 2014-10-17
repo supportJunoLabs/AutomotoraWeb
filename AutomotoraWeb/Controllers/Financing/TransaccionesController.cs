@@ -40,16 +40,17 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region ListadoTransacciones
 
-         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
-        //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
+            //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
             ListadoTransaccionesModel model = new ListadoTransaccionesModel();
             try {
                 string s = SessionUtils.generarIdVarSesion("ListadoTransacciones", Session[SessionUtils.SESSION_USER].ToString());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
-                model.obtenerListado();
+                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                model.obtenerListado(usuario);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -74,7 +75,8 @@ namespace AutomotoraWeb.Controllers.Financing {
                     if (model.Accion == ListadoTransaccionesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportTransacciones(model);
                     }
-                    model.obtenerListado();
+                    Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                    model.obtenerListado(usuario);
                 }
                 return View(model);
             } catch (UsuarioException exc) {
@@ -88,7 +90,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaTransacciones(string idParametros) {
             ListadoTransaccionesModel model = (ListadoTransaccionesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            model.obtenerListado(usuario);
             return PartialView("_listGrillaTransacciones", model.Resultado);
         }
 
@@ -98,7 +101,8 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         private XtraReport _generarReporteTransacciones(string idParametros) {
             ListadoTransaccionesModel model = (ListadoTransaccionesModel)Session[idParametros];
-            model.obtenerListado();
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            model.obtenerListado(usuario);
             XtraReport rep = new DXListadoTransacciones();
             rep.DataSource = model.Resultado;
             setParamsToReport(rep, model);

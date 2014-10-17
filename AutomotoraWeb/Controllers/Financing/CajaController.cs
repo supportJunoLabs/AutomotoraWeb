@@ -9,6 +9,7 @@ using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.Parameters;
 using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Financing {
     public class CajaController : FinancingController {
@@ -86,13 +87,12 @@ namespace AutomotoraWeb.Controllers.Financing {
 
 
         private ListadoMovimientosCaja _obtenerListado(ListadoCajasModel model) {
-            model.AcomodarFiltro();
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+            model.AcomodarFiltro(verInfoAntigua);
             return ListadoMovimientosCaja.obtenerListado(model.Filtro);
         }
 
-        #endregion
-
-        #region Reportes
         public ActionResult Report(ListadoCajasModel model) {
             return View("report", model);
         }
@@ -249,9 +249,21 @@ namespace AutomotoraWeb.Controllers.Financing {
             return View("Entrada", tr);
         }
 
+        private bool TransaccionConsultable(Transaccion tr) {
+            if (tr == null || tr.NroRecibo == 0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
         public ActionResult ReciboCaja(int id) {
             try {
-                //Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id);
+                Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id);
+                if(!TransaccionConsultable(tr)){
+                    return View("_transaccionAntigua");
+                }
                 ViewData["idParametros"] = id;
                 return View("ReciboCaja");
             } catch (UsuarioException exc) {
@@ -264,7 +276,9 @@ namespace AutomotoraWeb.Controllers.Financing {
         private XtraReport _generarReciboCaja(int id) {
             Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id);
             List<Transaccion> ll = new List<Transaccion>();
-            ll.Add(tr);
+            if (TransaccionConsultable(tr)) {
+                ll.Add(tr);
+            }
             XtraReport rep = new DXReciboEntradaSalidaCaja();
             rep.DataSource = ll;
             return rep;

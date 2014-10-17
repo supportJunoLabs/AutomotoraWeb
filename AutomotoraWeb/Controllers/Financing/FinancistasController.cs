@@ -446,9 +446,21 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         }
 
+        private bool TransaccionConsultable(Transaccion tr) {
+            if (tr == null || tr.NroRecibo == 0) return true;
+            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
+                return false;
+            }
+            return true;
+        }
+
         public ActionResult ReciboPago(int id) {
             try {
                 TRFinancistaPago tr = (TRFinancistaPago)Transaccion.ObtenerTransaccion(id);
+                if (!TransaccionConsultable(tr)) {
+                    return View("_transaccionAntigua");
+                }
                 ViewData["idParametros"] = id;
                 return View("ReciboPago", tr.Financista);
             } catch (UsuarioException exc) {
@@ -461,7 +473,9 @@ namespace AutomotoraWeb.Controllers.Financing {
         private XtraReport _generarReciboPago(int id) {
             TRFinancistaPago tr = (TRFinancistaPago)Transaccion.ObtenerTransaccion(id);
             List<TRFinancistaPago> ll = new List<TRFinancistaPago>();
-            ll.Add(tr);
+            if (TransaccionConsultable(tr)) {
+                ll.Add(tr);
+            }
             XtraReport rep = new DXReciboFinancistaPago();
             rep.DataSource = ll;
             return rep;

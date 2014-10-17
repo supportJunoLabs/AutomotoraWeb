@@ -16,6 +16,10 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@{ if (Model==null || Model.Codigo==0){
+       return;
+}}
+
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
 
     <div class="block">
@@ -56,9 +60,7 @@
     </div>
     
      <div id="divDetalleVenta">
-        @{ if  ( Model.Codigo != null && Model.Codigo > 0)  {
-            @Html.Partial("_detallesVenta", Model);
-       }}
+         @Html.Partial("_detallesVenta", Model);
     </div>
 
 }
