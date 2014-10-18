@@ -12,19 +12,20 @@ using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Financing {
     public class ValesController : FinancingController {
         public static string CONTROLLER = "Vales";
 
         private Usuario _usuario() {
-            return (Usuario)(Session[SessionUtils.SESSION_USER]);
+            return getUsuario();
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
 
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -45,7 +46,8 @@ namespace AutomotoraWeb.Controllers.Financing {
                 RenovarValeModel m = new RenovarValeModel(_usuario());
                 if (!string.IsNullOrWhiteSpace(id)) {
                     m.Transaccion.Vale.Codigo = id;
-                    m.Transaccion.Vale.Consultar();
+                    Usuario u = getUsuario();
+                    m.Transaccion.Vale.Consultar(u);
                     m.Cliente = m.Transaccion.Vale.ClienteOrigen;
                     if (!m.Cliente.ValesPendientesOperables().Contains(m.Transaccion.Vale)) {
                         ViewBag.ErrorCode = "ERR";
@@ -97,7 +99,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             if (!string.IsNullOrWhiteSpace(idVale)) {
                 RenovarValeModel m = new RenovarValeModel(_usuario());
                 m.Transaccion.Vale.Codigo = idVale;
-                m.Transaccion.Vale.Consultar();
+                Usuario u = getUsuario();
+                m.Transaccion.Vale.Consultar(u);
                 m.Sugerido = m.Transaccion.Vale.CobroSugerido();
                 m.Transaccion.Importe = m.Sugerido.CobroSugerido;
                 ViewBag.SoloLectura = true;
@@ -111,7 +114,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public JsonResult FechaRenovacionModif(AuxValeRenovacion datos) {
             Vale v = new Vale();
             v.Codigo = datos.IdVale;
-            v.Consultar();
+            Usuario u = getUsuario();
+            v.Consultar(u);
             DateTime fecha = DateTime.ParseExact(datos.FechaRenov, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             ValeCobroSugerido sug = v.CobroSugerido(fecha);
 
@@ -130,10 +134,10 @@ namespace AutomotoraWeb.Controllers.Financing {
 
             ViewBag.SoloLectura = true;
 
-            this.eliminarValidacionesIgnorables("Transaccion.Vale", MetadataManager.IgnorablesDDL(m.Transaccion.Vale));
-            this.eliminarValidacionesIgnorables("Transaccion.Sucursal", MetadataManager.IgnorablesDDL(m.Transaccion.Sucursal));
-            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(m.Cliente));
-            this.eliminarValidacionesIgnorables("Transaccion.Importe.Moneda", MetadataManager.IgnorablesDDL(m.Transaccion.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Transaccion.Vale", MetadataManager.IgnorablesDDL(new Vale()));
+            this.eliminarValidacionesIgnorables("Transaccion.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Transaccion.Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             //Sacar la validacion del Vale porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Transaccion.Vale.Codigo");
@@ -157,17 +161,29 @@ namespace AutomotoraWeb.Controllers.Financing {
                     return View(m);
                 }
             }
-            m.Transaccion.Vale.Consultar();
+            Usuario u = getUsuario();
+            m.Transaccion.Vale.Consultar(u);
             m.Cliente.Consultar();
             return View(m);
         }
 
+        //private bool TransaccionConsultable(Transaccion tr) {
+        //    if (tr == null || tr.NroRecibo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
+
         public ActionResult ReciboRenovacion(int id) {
             try {
-                TRValeRenovacion tr = (TRValeRenovacion)Transaccion.ObtenerTransaccion(id);
                 ViewData["idParametros"] = id;
+                Usuario u = getUsuario();
+                TRValeRenovacion tr = (TRValeRenovacion)Transaccion.ObtenerTransaccion(id, u);
                 return View("ReciboRenovacion", tr);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -175,7 +191,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         private XtraReport _generarReciboRenovacion(int id) {
-            TRValeRenovacion tr = (TRValeRenovacion)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRValeRenovacion tr = (TRValeRenovacion)Transaccion.ObtenerTransaccion(id, u);
             List<TRValeRenovacion> ll = new List<TRValeRenovacion>();
             ll.Add(tr);
             XtraReport rep = new DXReciboRenovarVale();
@@ -201,17 +218,35 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region ConsultaVales
 
+        private List<Vale> _valesCliente(Cliente c) {
+            Usuario usuario = getUsuario();
+            return c.ValesNoAnulados(usuario);
+        }
+
+        //private bool ValeConsultable(Vale v) {
+        //    if (v == null || string.IsNullOrEmpty(v.Codigo)) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
+
         //El id Corrresonde al numero de vale
         public ActionResult ConsultaVale(string id) {
             ConsultaValeModel m = new ConsultaValeModel();
             try {
+                List<Vale> lista = new List<Vale>();
                 m.Vale = new Vale();
                 m.Cliente = new Cliente();
                 if (!string.IsNullOrWhiteSpace(id)) {
                     m.Vale.Codigo = id;
-                    m.Vale.Consultar();
+                    Usuario u = getUsuario();
+                    m.Vale.Consultar(u);
                     m.Cliente = m.Vale.ClienteOrigen;
+                    lista = _valesCliente(m.Cliente);
                 }
+                ViewBag.ValesCliente = lista;
                 ViewBag.SoloLectura = true;
                 return View("ConsultaVale", m);
             } catch (UsuarioException exc) {
@@ -225,12 +260,15 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ConsultaValesCliente(int? id) {
             ConsultaValeModel m = new ConsultaValeModel();
             try {
+                List<Vale> lista = new List<Vale>();
                 m.Vale = new Vale();
                 m.Cliente = new Cliente();
                 if (id != null) {
                     m.Cliente.Codigo = id ?? 0;
                     m.Cliente.Consultar();
+                    lista = _valesCliente(m.Cliente);
                 }
+                ViewBag.ValesCliente = lista;
                 ViewBag.SoloLectura = true;
                 return View("ConsultaVale", m);
             } catch (UsuarioException exc) {
@@ -246,6 +284,9 @@ namespace AutomotoraWeb.Controllers.Financing {
             if (idCliente != null && idCliente > 0) {
                 m.Cliente = new Cliente();
                 m.Cliente.Codigo = idCliente ?? 0;
+                ViewBag.ValesCliente = _valesCliente(m.Cliente);
+            } else {
+                ViewBag.ValesCliente = new List<Vale>();
             }
             ViewBag.SoloLectura = true;
             return PartialView("_valesCliente", m);
@@ -258,7 +299,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             ViewBag.SoloLectura = true;
             if (!string.IsNullOrWhiteSpace(idVale)) {
                 v.Codigo = idVale;
-                v.Consultar();
+                Usuario u = getUsuario();
+                v.Consultar(u);
             }
             return PartialView("_datosDetalleVale", v);
         }
@@ -281,6 +323,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             }
             Vale v = new Vale();
             v.Codigo = id;
+            Usuario u = getUsuario();
+            v.Consultar(u);
             ViewData["idParametros"] = id;
             return View("ReportVale", v);
         }
@@ -300,7 +344,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         private XtraReport _generarReporteVale(string idParametros) {
             Vale v = new Vale();
             v.Codigo = idParametros;
-            v.Consultar();
+            Usuario u = getUsuario();
+            v.Consultar(u);
             List<Vale> ll = new List<Vale>();
             ll.Add(v);
             XtraReport rep = new DXReportConsultaVale();
@@ -316,7 +361,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             TRValeDescontar model = new TRValeDescontar();
             try {
                 model.Vale = new Vale();
-                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                Usuario usuario = getUsuario();
                 model.Sucursal = usuario.Sucursal;
                 return View(model);
             } catch (UsuarioException exc) {
@@ -335,10 +380,10 @@ namespace AutomotoraWeb.Controllers.Financing {
         [HttpPost]
         public ActionResult Descontar(TRValeDescontar tr) {
 
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(tr.Cuenta));
-            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(new Vale()));
 
 
             //Sacar la validacion del vale porque sale con texto feo y hacerla manualmente
@@ -367,10 +412,12 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult ReciboDescuento(int id) {
             try {
-                TRValeDescontar tr = (TRValeDescontar)Transaccion.ObtenerTransaccion(id);
                 ViewData["idParametros"] = id;
+                Usuario u = getUsuario();
+                TRValeDescontar tr = (TRValeDescontar)Transaccion.ObtenerTransaccion(id, u);
                 return View("ReciboDescuento", tr);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -378,7 +425,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         private XtraReport _generarReciboDescuento(int id) {
-            TRValeDescontar tr = (TRValeDescontar)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRValeDescontar tr = (TRValeDescontar)Transaccion.ObtenerTransaccion(id, u);
             List<TRValeDescontar> ll = new List<TRValeDescontar>();
             ll.Add(tr);
             XtraReport rep = new DXReciboDescontarVale();
@@ -409,17 +457,22 @@ namespace AutomotoraWeb.Controllers.Financing {
             return RedirectToAction("ListVales");
         }
 
+        private void _obtenerListado(ListadoValesModel model) {
+            Usuario usuario = getUsuario();
+            model.obtenerListado(usuario);
+        }
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ListVales() {
             ListadoValesModel model = new ListadoValesModel();
-            try{
-            string s = SessionUtils.generarIdVarSesion("ListadoVales", Session[SessionUtils.SESSION_USER].ToString());
-            Session[s] = model;
-            model.idParametros = s;
-            ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
-            return View(model);
+            try {
+                string s = SessionUtils.generarIdVarSesion("ListadoVales", getUserName());
+                Session[s] = model;
+                model.idParametros = s;
+                ViewData["idParametros"] = model.idParametros;
+                _obtenerListado(model);
+                return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -430,17 +483,17 @@ namespace AutomotoraWeb.Controllers.Financing {
         [HttpPost]
         //Se invoca desde el boton actualizar o imprimir.
         public ActionResult ListVales(ListadoValesModel model) {
-            try{
-            Session[model.idParametros] = model; //filtros actualizados
-            ViewData["idParametros"] = model.idParametros;
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-            if (ModelState.IsValid) {
-                if (model.Accion == ListadoValesModel.ACCIONES.IMPRIMIR) {
-                    return this.ReportVales(model);
+            try {
+                Session[model.idParametros] = model; //filtros actualizados
+                ViewData["idParametros"] = model.idParametros;
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
+                if (ModelState.IsValid) {
+                    if (model.Accion == ListadoValesModel.ACCIONES.IMPRIMIR) {
+                        return this.ReportVales(model);
+                    }
+                    _obtenerListado(model);
                 }
-                model.obtenerListado();
-            }
-            return View(model);
+                return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -452,7 +505,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaVales(string idParametros) {
             ListadoValesModel model = (ListadoValesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            _obtenerListado(model);
             return PartialView("_listGrillaVales", model.Resultado.Vales);
         }
 
@@ -462,7 +515,7 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         private XtraReport _generarReporteVales(string idParametros) {
             ListadoValesModel model = (ListadoValesModel)Session[idParametros];
-            model.obtenerListado();
+            _obtenerListado(model);
             List<ListadoVales> ll = new List<ListadoVales>();
             ll.Add(model.Resultado);
             XtraReport rep = new DXListadoVales();
@@ -508,10 +561,10 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult Rechazar() {
             TRValeRechazar model = new TRValeRechazar();
-            try{
-            model.Vale = new Vale();
-            model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
-            return View(model);
+            try {
+                model.Vale = new Vale();
+                model.Sucursal = (getUsuario()).Sucursal;
+                return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -527,8 +580,8 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         [HttpPost]
         public ActionResult Rechazar(TRValeRechazar tr) {
-            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(new Vale()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
             //Sacar la validacion del Vale porque sale con texto feo y hacerla manualmente
             ModelState.Remove("Vale.Codigo");
@@ -555,19 +608,22 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         public ActionResult ReciboRech(int id) {
-            try{
-            TRValeRechazar tr = (TRValeRechazar)Transaccion.ObtenerTransaccion(id);
-            ViewData["idParametros"] = id;
-            return View("ReciboRech", tr);
+            try {
+                Usuario u = getUsuario();
+                TRValeRechazar tr = (TRValeRechazar)Transaccion.ObtenerTransaccion(id, u);
+                ViewData["idParametros"] = id;
+                return View("ReciboRech", tr);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
+                ViewData["idParametros"] = 0;
                 return View();
             }
         }
 
         private XtraReport _generarReciboRech(int id) {
-            TRValeRechazar tr = (TRValeRechazar)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRValeRechazar tr = (TRValeRechazar)Transaccion.ObtenerTransaccion(id,u);
             List<TRValeRechazar> ll = new List<TRValeRechazar>();
             ll.Add(tr);
             XtraReport rep = new DXReciboRechazarVale();
@@ -595,7 +651,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         #region CobrarVale
 
         private void prepararSessionCobranza(Transaccion tr, string sop) {
-            string idSession = SessionUtils.generarIdVarSesion(sop, Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion(sop, getUserName()) + "|";
             Session[idSession] = tr;
             ViewData["idSession"] = idSession;
             Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
@@ -603,18 +659,19 @@ namespace AutomotoraWeb.Controllers.Financing {
             Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
         }
 
-        public TRValeCobro iniCobro() {
+        private TRValeCobro iniCobro() {
             TRValeCobro tr = new TRValeCobro();
             tr.ClienteOp = new Cliente();
             tr.ClienteOp.Codigo = 0;
             tr.Vale = new Vale();
             tr.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
             prepararSessionCobranza(tr, "CobroVale");
             return tr;
         }
 
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Cobrar() {
             //cobrar una cuota
             TRValeCobro tr = iniCobro();
@@ -622,6 +679,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             return View("Cobrar", tr);
         }
 
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult CobrarAC() {
             //cobrar a cuenta de cuota
             TRValeCobro tr = iniCobro();
@@ -643,7 +701,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             TRValeCobro tr = (TRValeCobro)Session[idSession];
             tr.Vale = new Vale();
             tr.Vale.Codigo = idVale;
-            tr.Vale.Consultar();
+            Usuario u = getUsuario();
+            tr.Vale.Consultar(u);
 
             if (tr.Tipo == TRValeCobro.TIPO.VALE) {
                 ValeCobroSugerido sug = tr.Vale.CobroSugerido();
@@ -670,10 +729,10 @@ namespace AutomotoraWeb.Controllers.Financing {
 
             ModelState.Remove("Importe.Moneda");
 
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
-            this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(tr.ClienteOp));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(new Vale()));
+            this.eliminarValidacionesIgnorables("ClienteOp", MetadataManager.IgnorablesDDL(new Cliente()));
 
             //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
             tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
@@ -700,10 +759,12 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult ReciboVale(int id) {
             try {
-                TRValeCobro tr = (TRValeCobro)Transaccion.ObtenerTransaccion(id);
+                Usuario u = getUsuario();
+                TRValeCobro tr = (TRValeCobro)Transaccion.ObtenerTransaccion(id, u);
                 ViewData["idParametros"] = id;
                 return View("ReciboVale", tr);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -711,7 +772,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         private XtraReport _generarReciboVale(int id) {
-            TRValeCobro tr = (TRValeCobro)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRValeCobro tr = (TRValeCobro)Transaccion.ObtenerTransaccion(id, u);
             List<TRValeCobro> ll = new List<TRValeCobro>();
             ll.Add(tr);
             XtraReport rep = new DXReciboCobroVale();
@@ -737,12 +799,13 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region TransferirVale
 
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Pasar() {
             //pasar vale
             TRValeTransferencia tr = new TRValeTransferencia();
             tr.Vale = new Vale();
             tr.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
             prepararSessionCobranza(tr, "PasarVale");
             return View("Pasar", tr);
@@ -753,7 +816,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             TRValeTransferencia tr = (TRValeTransferencia)Session[idSession];
             tr.Vale = new Vale();
             tr.Vale.Codigo = idVale;
-            tr.Vale.Consultar();
+            Usuario u = getUsuario();
+            tr.Vale.Consultar(u);
             return PartialView("_detalleTransfVale", tr);
         }
 
@@ -769,10 +833,10 @@ namespace AutomotoraWeb.Controllers.Financing {
             tr.Fecha = DateTime.Now.Date;
 
             Session[idSession] = tr;
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(tr.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(tr.Vale));
-            this.eliminarValidacionesIgnorables("Destinatario", MetadataManager.IgnorablesDDL(tr.Destinatario));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Vale", MetadataManager.IgnorablesDDL(new Vale()));
+            this.eliminarValidacionesIgnorables("Destinatario", MetadataManager.IgnorablesDDL(new Financista()));
 
             //Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
             tr.Pago.AgregarCheques((IEnumerable<Cheque>)Session[idSession + SessionUtils.CHEQUES]);
@@ -794,10 +858,12 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult ReciboTransfVale(int id) {
             try {
-                TRValeTransferencia tr = (TRValeTransferencia)Transaccion.ObtenerTransaccion(id);
+                Usuario u = getUsuario();
+                TRValeTransferencia tr = (TRValeTransferencia)Transaccion.ObtenerTransaccion(id, u);
                 ViewData["idParametros"] = id;
                 return View("ReciboTransfVale", tr.Vale);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -805,7 +871,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         private XtraReport _generarReciboTransfVale(int id) {
-            TRValeTransferencia tr = (TRValeTransferencia)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRValeTransferencia tr = (TRValeTransferencia)Transaccion.ObtenerTransaccion(id, u);
             List<TRValeTransferencia> ll = new List<TRValeTransferencia>();
             ll.Add(tr);
             XtraReport rep = new DXReciboTransfVale();

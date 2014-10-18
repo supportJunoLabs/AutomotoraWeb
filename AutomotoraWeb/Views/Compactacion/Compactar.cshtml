@@ -1,0 +1,63 @@
+﻿@using DLL_Backend;
+
+@{
+    ViewBag.Title = "Compactar Informacion Antigua";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors" id="spanError">@ViewBag.ErrorMessage</span>
+
+<div class="renglon-alto"></div>  
+
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")       
+   
+    <div class="btn-toolbar">
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-cogs").Text(" Compactar").Id("btnCompactar"))
+    </div>
+    <div class="clear-both"></div>  
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnCompactar").click(function () {
+            inicializarModal("Confirmacion", "Confirma ejecucion del proceso? El mismo puede demorar algunos minutos", "Aceptar", "Cancelar");
+            $('#myModal').modal('show');
+        });
+    });
+
+
+    function callBackAceptar() {
+        //alert("hola");
+        var destino = '/Compactacion/EjecutarCompactacion/';
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.Result == "OK") {
+                    $("#btnCompactar").hide()
+                    $("#spanError").html(data.Mensaje)
+                    //inicializarModal("Procedimiento exitoso", data.Mensaje, null, "OK");
+                    //$('#myModal').modal('show');
+                }
+                else {
+                    $("#spanError").html(data.Mensaje)
+                    //inicializarModal("Se produjo un Error", data.Mensaje, null, "OK");
+                    //$('#myModal').modal('show');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                general_showErrorAction(containerErrorMessage, textStatus, errorThrown);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+    
+    </script>
+

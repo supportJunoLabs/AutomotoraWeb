@@ -5,6 +5,8 @@ using System.Web;
 using DLL_Backend;
 
 namespace AutomotoraWeb.Models {
+
+    //se usa para listado sin saldos, NO es estado de cuenta, se filtra por infoAntigua solamente
     public class MovimientosBancoModel {
         public DateTime Desde { get; set; }
         public DateTime Hasta { get; set; }
@@ -19,12 +21,12 @@ namespace AutomotoraWeb.Models {
             Resultado = new List<MovBanco>();
         }
 
-        public void generarListado() {
+        public void GenerarListado(Usuario u) {
             if (Cuenta == null || Cuenta.Codigo <= 0) {
                 Resultado = new List<MovBanco>();
                 return;
             }
-            Resultado = Cuenta.Movimientos(Desde, Hasta);
+            Resultado = Cuenta.Movimientos(Desde, Hasta, u);
         }
     }
 

@@ -1,0 +1,74 @@
+﻿@model AutomotoraWeb.Models.VentaEntregaModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Models;
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidad + ": Entregar Vehiculo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = (IEnumerable<Venta>) ViewData["VentasEntregables"] };
+    if (Model.Entrega != null && Model.Entrega.Venta != null && Model.Entrega.Venta.Codigo > 0) {
+        gmodel.GridLookUpCodigo = Model.Entrega.Venta.Codigo;
+    }
+}
+
+<style type="text/css">
+    .botonDocumento {
+        margin-right:10px;
+    }
+</style>
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:", new {id="txErrores" })
+
+    
+   <div id="divSeleccion">
+        <div class="display-label">Venta</div>
+        <div class="floatLeft">
+            @Html.Partial("_selectVentaEntregar", gmodel)
+        </div>
+        <div class="floatLeft" style="margin-left: 5px">
+            @Html.ValidationMessageFor(model => model.Entrega.Venta.Codigo)
+        </div>
+        @Html.HiddenFor(model => model.Entrega.Venta.Codigo, new { id = "codigoVenta" })
+    </div>
+    <div class="clear-both"></div>
+    
+     <div id="divDetalleEntrega">
+        @{ if (Model.Entrega != null && Model.Entrega.Venta != null && Model.Entrega.Venta.Codigo != null && Model.Entrega.Venta.Codigo > 0) {
+            @Html.Partial("_ventaEntrega", Model);
+       }}
+    </div>
+}
+
+<script type="text/javascript">
+    function ventaEntregarSelected(s, e) {
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoVenta").val(valor);
+        $('#divDetalleEntrega').html('');
+        $('#txErrores').html('');
+        if (!valor) {
+            return;
+        }
+        var destino = '/ventas/VentaEntregarSelected/';
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: destino,
+            data: { "idVenta": valor},
+            success: function (data) {
+                $('#divDetalleEntrega').html(data);
+                reajustarControles();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                general_showErrorPopup(xhr, ajaxOptions, thrownError, destino);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+</script>

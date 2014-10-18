@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DLL_Backend;
 using System.ComponentModel.DataAnnotations;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Models {
     public class ListadoTransaccionesModel {
@@ -39,14 +40,15 @@ namespace AutomotoraWeb.Models {
             Accion = ACCIONES.ACTUALIZAR;
         }
 
-        public void obtenerListado (){
+        public void obtenerListado (Usuario usuarioConsulta){
             AcomodarFiltro();
-            Resultado = Recibo.Recibos(Filtro);
+            Resultado = Recibo.Recibos(Filtro, usuarioConsulta);
         }
 
         private void AcomodarFiltro() {
             Filtro.Desde = Desde;
             Filtro.Hasta = Hasta;
+
             if (!FiltrarFinancista) {
                 Filtro.Financista = null;
             } else {

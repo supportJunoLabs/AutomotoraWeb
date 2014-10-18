@@ -5,23 +5,54 @@ function SelectionChequeChanged(s, e) {
     //alert("hola");
 }
 
+function SelectionChangedChequesCallback(values) {
+    SelectedRowsCheques.BeginUpdate();
+    var cant = 0;
+    try {
+        SelectedRowsCheques.ClearItems();
+        for (var i = 0; i < values.length; i++) {
+            SelectedRowsCheques.AddItem(values[i]);
+            cant++;
+        }
+    } finally {
+        SelectedRowsCheques.EndUpdate();
+    }
+    $("#cantCheques").html(cant);
+
+}
+
 function SelectionEfectivoChanged(s, e) {
     //al hacer click en la grilla
     s.GetSelectedFieldValues("ImportePagoActual.ImporteTexto", SelectionChangedEfectivoCallback);
     //alert("hola");
 }
 
+function SelectionChangedEfectivoCallback(values) {
+    SelectedRowsEfectivo.BeginUpdate();
+    var cant = 0;
+    try {
+        SelectedRowsEfectivo.ClearItems();
+        for (var i = 0; i < values.length; i++) {
+            SelectedRowsEfectivo.AddItem(values[i]);
+            cant++;
+        }
+    } finally {
+        SelectedRowsEfectivo.EndUpdate();
+    }
+    $("#cantEfectivo").html(cant);
+
+}
 
 
 function OnBeginCallbackCheques(s, e) {
     //alert($(ddlSucursales).val());
     e.customArgs["idFinancista"] = $(ddlFinancistas).val();
     e.customArgs["idSession"] = $(idSession).val();
-   
 }
 
 
 var efectivoUltimoComando;
+
 function OnBeginCallbackEfectivo(s, e) {
     e.customArgs["idFinancista"] = $(ddlFinancistas).val();
     e.customArgs["idSession"] = $(idSession).val();
@@ -37,9 +68,8 @@ function OnBeginCallbackEfectivo(s, e) {
 
 function OnEndCallbackEfectivo(s, e) {
     //alert(efectivoUltimoComando);
-    //if ($("#ultimoComando").val() == 'UPDATEEDIT') {
     if (efectivoUltimoComando == 'UPDATEEDIT') {
-        s.GetSelectedFieldValues("ImportePagoActual.ImporteTexto", RefrescarListaEfectivoCallback);
+        s.GetSelectedFieldValues("ImportePagoActual.ImporteTexto", SelectionChangedEfectivoCallback);
     }
 }
 
@@ -61,6 +91,8 @@ function ChequesInit() {
 }
 
 $(document).ready(function () {
+
+    inicializarModal("Confirmacion", "Confirma el pago?", "Aceptar", "Cancelar");
 
     $("#btn_confirmar").click(function () {
         gridCheques.GetSelectedFieldValues("Codigo", ObtenerCodigosConfirmarCallBack);
@@ -133,40 +165,11 @@ function ObtenerCodigosConfirmar2CallBack(values) {
         selectedIDs += values[index] + ",";
     }
     $("#efectivosIds").val(selectedIDs);
+    $('#myModal').modal('show');
+    //$('form#formPrincipal').submit();
+}
 
+function callBackAceptar() {
     $('form#formPrincipal').submit();
 }
 
-
-function SelectionChangedChequesCallback(values) {
-    SelectedRowsCheques.BeginUpdate();
-    var cant = 0;
-    try {
-        SelectedRowsCheques.ClearItems();
-        for (var i = 0; i < values.length; i++) {
-            SelectedRowsCheques.AddItem(values[i]);
-            cant++;
-        }
-    } finally {
-        SelectedRowsCheques.EndUpdate();
-    }
-    $("#cantCheques").html(cant);
-
-}
-
-function SelectionChangedEfectivoCallback(values) {
-    //SelectedRowsEfectivo.BeginUpdate();
-    var cant = 0;
-    try {
-        SelectedRowsEfectivo.ClearItems();
-        for (var i = 0; i < values.length; i++) {
-            SelectedRowsEfectivo.AddItem(values[i]);
-            cant++;
-        }
-    } finally {
-        //SelectedRowsEfectivo.EndUpdate();
-    }
-    //$("#cantEfectivo").html(gridEfectivo.GetSelectedRowCount());
-    $("#cantEfectivo").html(cant);
-
-}

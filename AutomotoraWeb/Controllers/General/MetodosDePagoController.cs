@@ -26,7 +26,7 @@ namespace AutomotoraWeb.Controllers.General
         }
 
         private void _validarCheque(Cheque cheque){
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(cheque.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
             ModelState.Remove("Importe.Moneda.Codigo");
@@ -144,7 +144,7 @@ namespace AutomotoraWeb.Controllers.General
 
         private void _validarEfectivo(Efectivo efectivo){
 
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(efectivo.Importe.Moneda));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
 
             ModelState.Remove("Importe.ImporteEnMonedaDefault.Monto");
 
@@ -255,7 +255,7 @@ namespace AutomotoraWeb.Controllers.General
 
         private void _validarMovBanco(MovBanco movBanco){
             if (movBanco.Cuenta != null) {
-                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(movBanco.Cuenta));
+                this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             }
 
             //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
@@ -354,204 +354,7 @@ namespace AutomotoraWeb.Controllers.General
 
         //===============================================================================================================
 
-        #region Vales
-
-        public ActionResult grillaPagosVale(string idSession) {
-            return PartialView("_grillaPagosVale", _listaPagosVale(idSession));
-        }
-
-        private List<Vale> _listaPagosVale(string idSession) {
-            List<Vale> listPagosVale = (List<Vale>)(Session[idSession + SessionUtils.VALES]);
-            return listPagosVale;
-        }
-
-        private void _validarVale(Vale vale) {
-
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(vale.Importe.Moneda));
-
-            //Sacar la validacion de moneda no nula porque da mensaje feo, hacerla manualmente
-            ModelState.Remove("Importe.Moneda.Codigo");
-            if (vale.Importe.Moneda == null || vale.Importe.Moneda.Codigo <= 0) {
-                ModelState.AddModelError("Importe.Moneda.Codigo", "La moneda es requerida");
-            }
-
-            //validar el importe
-            if (vale.Importe.Monto <= 0) {
-                ModelState.AddModelError("Importe.Monto", "El monto debe ser un valor positivo");
-            }
-
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult grillaPagosVale_AddNewRowRouteValues(Vale vale, string idSession) {
-
-            List<Vale> listVale = _listaPagosVale(idSession);
-
-            _validarVale(vale);
-            if (ModelState.IsValid) {
-                try {
-                    int maxIdLinea = listVale.Count > 0 ? listVale.Max(c => c.IdLinea) : 0;
-                    vale.IdLinea = maxIdLinea + 1;
-                    listVale.Add(vale);
-                } catch (Exception e) {
-                    ViewData["EditError"] = e.Message;
-                }
-            } else {
-                ViewData["EditError"] = "Corrija los valores incorrectos";
-            }
-
-            return PartialView("_grillaPagosVale", listVale);
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult grillaPagosVale_UpdateRowRouteValues(Vale vale, string idSession) {
-
-            List<Vale> listVale = _listaPagosVale(idSession);
-
-            _validarVale(vale);
-            if (ModelState.IsValid) {
-                try {
-
-                    Moneda monedaElejida =
-                        (from m in Moneda.Monedas
-                         where (m.Codigo == vale.Importe.Moneda.Codigo)
-                         select m).First<Moneda>();
-
-                    Vale valeEditado =
-                        (from c in listVale
-                         where (c.IdLinea == vale.IdLinea)
-                         select c).First<Vale>();
-
-                    valeEditado.Vencimiento = vale.Vencimiento;
-                    valeEditado.Importe.Monto = vale.Importe.Monto;
-                    valeEditado.Importe.Moneda = monedaElejida;
-                    valeEditado.Observaciones = vale.Observaciones;
-
-                } catch (Exception e) {
-                    ViewData["EditError"] = e.Message;
-                }
-            } else {
-                ViewData["EditError"] = "Corrija los valores incorrectos";
-            }
-
-            return PartialView("_grillaPagosVale", listVale);
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult grillaPagosVale_DeleteRowRouteValues(int IdLinea, string idSession) {
-
-            List<Vale> listVale = _listaPagosVale(idSession);
-
-            if (IdLinea >= 0) {
-                try {
-                    Vale ValeEliminado =
-                        (from c in listVale
-                         where (c.IdLinea == IdLinea)
-                         select c).First<Vale>();
-                    listVale.Remove(ValeEliminado);
-                } catch (Exception e) {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            return PartialView("_grillaPagosVale", listVale);
-        }
-
-        #endregion
-
-        //===============================================================================================================
-
-        #region Cuotas
-
-
-        public ActionResult grillaPagosCuota(string idSession) {
-            return PartialView("_grillaPagosCuota", _listaPagosCuota(idSession));
-        }
-
-        private List<Cuota> _listaPagosCuota(string idSession) {
-            List<Cuota> listPagosCuota = (List<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
-            return listPagosCuota;
-        }
-
-        
-        [HttpPost, ValidateInput(false)]
-        public ActionResult grillaPagosCuota_UpdateRowRouteValues(Cuota cuota, string idSession) {
-
-            List<Cuota> listCuota = new List<Cuota>();
-
-            //_validarCheque(cheque);
-            if (ModelState.IsValid) {
-                try {
-                    IEnumerable<Cuota> pagosCuota = (IEnumerable<Cuota>)(Session[idSession + SessionUtils.CUOTAS]);
-                    List<Cuota> listPagosCuota = pagosCuota.ToList();
-                    listPagosCuota.Remove(listPagosCuota.First(x => x.Codigo == cuota.Codigo));
-                    listPagosCuota.Add(cuota);
-                    var sortedProducts = listPagosCuota.OrderBy(x => x.Codigo);
-
-                    Session[idSession + SessionUtils.CUOTAS] = sortedProducts;
-
-                } catch (Exception e) {
-                    ViewData["EditError"] = e.Message;
-                }
-            } else {
-                ViewData["EditError"] = "Corrija los valores incorrectos";
-            }
-
-            return PartialView("_grillaPagosCheque", listCuota);
-        }
-
-        [HttpPost]
-        public JsonResult cambiarFinanciacion(int cantCuotas, double tasa, int codigoMonedaImporte, double montoImporte, string idSession) {
-
-            Moneda moneda = new Moneda();
-            moneda.Codigo = codigoMonedaImporte;
-            moneda.Consultar();
-
-            Importe importe = new Importe(moneda, montoImporte);
-
-            Financiacion financiacion = new Financiacion(importe, cantCuotas, tasa);
-
-            //validacion del controller
-            List<String> errors = this.validateAtributesFinanciacion(financiacion);
-            if (errors.Count > 0) {
-                return Json(new { Result = "ERROR", ErrorCode = "VALIDATION_ERROR", ErrorMessage = errors.ToArray() });
-            }
-
-            //envio al backend
-            try {
-                financiacion.generarCuotasVenta(DateTime.Now);
-
-                Session[idSession + SessionUtils.CUOTAS] = financiacion.CuotasOriginales;
-
-                return Json(new { Result = "OK" });
-            } catch (UsuarioException exc) {
-                List<String> errores1 = new List<string>();
-                errores1.Add(exc.Message);
-                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = errores1.ToArray() });
-            }
-
-        }
-
-        //-------------------------------
-
-        private List<String> validateAtributesFinanciacion(Financiacion financiacion) {
-
-            List<String> errors = new List<String>();
-
-            if (financiacion.MontoFinanciado.Monto <= 0) {
-                errors.Add("El monto financiado debe ser mayor a 0");
-            }
-
-            if (financiacion.CantCuotas <= 0) {
-                errors.Add("La cantidad de cuotas debe ser mayor a 0");
-            }
-
-            return errors;
-        }
-
-        //-------------------------------
-
-        #endregion
-        //===============================================================================================================
+     
 
 
         #region ChequesEmitidos

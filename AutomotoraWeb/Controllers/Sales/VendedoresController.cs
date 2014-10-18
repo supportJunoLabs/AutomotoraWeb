@@ -49,10 +49,11 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         //------------------------------------------------------------------------------------------
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
             try {
-                string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+                string s = SessionUtils.generarIdVarSesion("MtoVendedores", getUserName()) + "|";
                 Vendedor vend = getVendedor(id, true, s);
                 VendedorModel mvend = new VendedorModel();
                 mvend.Vendedor = vend;
@@ -65,16 +66,18 @@ namespace AutomotoraWeb.Controllers.Sales {
             }
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Create() {
             VendedorModel v = new VendedorModel();
-            string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string s = SessionUtils.generarIdVarSesion("MtoVendedores", getUserName()) + "|";
             v.idsesion = s;
             Session[s + FILE_RANDOM_NAME] = null;
             return View(v);
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Edit(int id) {
-            string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string s = SessionUtils.generarIdVarSesion("MtoVendedores", getUserName()) + "|";
             Session[s + FILE_RANDOM_NAME] = null;
             try {
                 Vendedor vend = getVendedor(id, false, s);
@@ -89,10 +92,11 @@ namespace AutomotoraWeb.Controllers.Sales {
             }
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
             try {
-                string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+                string s = SessionUtils.generarIdVarSesion("MtoVendedores", getUserName()) + "|";
                 Vendedor vend = getVendedor(id, true, s);
                 VendedorModel mvend = new VendedorModel();
                 mvend.idsesion = s;
@@ -266,8 +270,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             if (ModelState.IsValid) {
                 try {
                     string s = mvendedor.idsesion;
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     string photoFileName = mvendedor.Vendedor.Foto;
                     mvendedor.Vendedor.Eliminar(userName, IP);
 
@@ -443,36 +447,30 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         //-----------------------------------------------------------------------------------------------------
 
-        #region SeleccionDeVendedor
+        //#region SeleccionDeVendedor
 
-        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de vendedores
-        public ActionResult VendedoresGrilla(GridLookUpModel model) {
-            model.Opciones = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
-            return PartialView("_selectVendedor", model);
-        }
+        //[HttpPost]
+        //public JsonResult details(int codigo) {
+        //    try {
+        //        Vendedor vendedor = new Vendedor();
+        //        vendedor.Codigo = codigo;
+        //        vendedor.Consultar();
 
-        [HttpPost]
-        public JsonResult details(int codigo) {
-            try {
-                Vendedor vendedor = new Vendedor();
-                vendedor.Codigo = codigo;
-                vendedor.Consultar();
+        //        return Json(new {
+        //            Result = "OK",
+        //            Vendedor = new {
+        //                Nombre = vendedor.Nombre,
+        //                Cedula = vendedor.Mail,
+        //                Telefono = vendedor.Telefono
+        //            }
+        //        }
+        //        );
+        //    } catch (UsuarioException exc) {
+        //        return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+        //    }
+        //}
 
-                return Json(new {
-                    Result = "OK",
-                    Vendedor = new {
-                        Nombre = vendedor.Nombre,
-                        Cedula = vendedor.Mail,
-                        Telefono = vendedor.Telefono
-                    }
-                }
-                );
-            } catch (UsuarioException exc) {
-                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
-            }
-        }
-
-        #endregion
+        //#endregion
 
     }
 }

@@ -107,12 +107,12 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
         [HttpPost]
         public ActionResult Create(UsuarioModel td) {
-            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(td.Usuario.Sucursal));
+            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     Usuario u = new Usuario();
                     u.UserName = userName;
                     td.Usuario.setearAuditoria(userName, IP);
@@ -135,11 +135,11 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
         [HttpPost]
         public ActionResult Edit(UsuarioModel td) {
-            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(td.Usuario.Sucursal));
+            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
 
                     Usuario u = new Usuario();
                     u.UserName = userName;
@@ -171,11 +171,11 @@ namespace AutomotoraWeb.Controllers.Sistema {
         [HttpPost]
         public ActionResult Delete(UsuarioModel td) {
             ViewBag.SoloLectura = true;
-            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(td.Usuario.Sucursal));
+            this.eliminarValidacionesIgnorables("Usuario.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     td.Usuario.setearAuditoria(userName, IP);
                     td.Usuario.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);
@@ -194,13 +194,13 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
         public ActionResult ResetPassword() {
             ResetPasswordModel m = new ResetPasswordModel();
-            m.UsuarioActual=(string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+            m.UsuarioActual = getUserName();
             return View(m);
         }
 
         [HttpPost]
         public ActionResult ResetPassword(ResetPasswordModel model) {
-            string IP = HttpContext.Request.UserHostAddress;
+            string IP = getIP();
 
             if (ModelState.IsValid) {
                 try {

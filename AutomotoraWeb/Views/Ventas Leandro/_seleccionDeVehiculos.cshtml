@@ -9,7 +9,7 @@
     </div>
     <div class="renglon-alto editor-field-xlarge">
         <div class="floatLeft">
-            @{GridLookUpModel gmodelVehiculo = new GridLookUpModel { Opciones = ViewBag.VehiculosVendibles, GridLookUpCodigo = Model.Vehiculo.Codigo };}
+            @{GridLookUpModel gmodelVehiculo = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES), GridLookUpCodigo = Model.Vehiculo.Codigo };}
             @Html.Partial("_selectVehiculo", gmodelVehiculo)
         </div>
         <div class="floatLeft" style="margin-left: 5px">

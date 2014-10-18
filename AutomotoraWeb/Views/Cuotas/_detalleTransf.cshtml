@@ -6,11 +6,10 @@
 
 
 @{ bool cambiarSucursal = ViewBag.Multisucursal;}
-@Html.HiddenFor(model => model.SubFinanciacion.Financista.Interno, new { id = "finInterno" })
+@*@Html.HiddenFor(model => model.SubFinanciacion.Financista.Interno, new { id = "finInterno" })*@
 
 <div id="datosVenta">
-
-    <div>
+      <div>
         <div class="display-label-90">
             Cliente
         </div>
@@ -169,6 +168,7 @@
         </div>
         <div class="clear-both"></div>
     </div>
+  
 </div>
 <div class="clear-both"></div>
 
@@ -316,15 +316,20 @@
 </div>
 <div class="clear-both"></div>
 
+
+ 
+ 
+
 <script type="text/javascript">
-    $(document).ready(function () {
-        var interno = $("#finInterno").val();
-        if (interno == "True") {
-            $("#liPago").show();
-            //$("#pago_tab").show();
-        } else {
-            $("#liPago").hide();
-            //$("#pago_tab").hide();
-        }
-    });
+    //$(document).ready(function () {
+    //    var interno = $("#finInterno").val();
+    //    if (interno == "True") {
+    //        $("#liPago").show();
+    //        //$("#pago_tab").show();
+    //    } else {
+    //        $("#liPago").hide();
+    //        //$("#pago_tab").hide();
+    //    }
+    //});
 </script>
+

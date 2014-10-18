@@ -1,6 +1,8 @@
 ﻿@model DLL_Backend.Pedido
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.Sistema;
 
 @{
     bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
@@ -59,10 +61,14 @@
     @Html.LabelForRequired(model => model.Sucursal)
 </div>
 <div class="editor-field editor-field-large @(modoConsulta ? "" : "renglon-alto")"">
-    @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta || !cambiarSucursal,
-                model => model.Sucursal.Nombre,
-                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
-    @Html.ValidationMessageFor(model => model.Sucursal)
+    @{ if (modoConsulta) {
+        @Html.Bootstrap().ActionLink(Model.Sucursal.Nombre, "Details", SucursalesController.CONTROLLER).RouteValues(new { id = Model.Sucursal.Codigo })
+       } else {
+        @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta || !cambiarSucursal,
+                    model => model.Sucursal.Nombre,
+                    new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
+        @Html.ValidationMessageFor(model => model.Sucursal)
+       }}
 </div>
 <div class="clear-both"></div>
 
@@ -70,23 +76,25 @@
     @Html.DisplayNameFor(model => model.Costo)
 </div>
 <div class="editor-field editor-field-small">
-    @Html.DdlOrDisplayImporteFor(model=>model.Costo, modoConsulta)
+    @Html.DdlOrDisplayImporteFor(model => model.Costo, modoConsulta)
     @Html.ValidationMessageFor(model => model.Costo.Monto)
 </div>
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.LabelForRequired(model => model.DescripcionEstado)
+    Estado
 </div>
-<div  class="@((((bool?)ViewBag.SoloLectura)??false)?"":"renglon-alto") floatLeft" >
-    @Html.EditorOrDisplayFor(model => model.DescripcionEstado, true)
+<div  class="@((((bool?)ViewBag.SoloLectura) ?? false) ? "" : "renglon-alto") floatLeft" >
+    <strong>
+        @Html.EditorOrDisplayFor(model => model.DescripcionEstado, true)
+    </strong>
 </div>
 @{ if (Model != null) {
-       Vehiculo vhc= Model.Vehiculo;
-       if (vhc != null && vhc.Codigo>0) {
-            <div class="floatLeft" style="padding-left: 20px;">
-                    @(Html.Bootstrap().ActionLinkButton("Ver Vehiculo  "+vhc.Ficha, "VerVehiculo").RouteValues(new { id = vhc.Codigo }).Class("btn-info  btn-small"))
-            </div>
+       Vehiculo vhc = Model.Vehiculo;
+       if (vhc != null && vhc.Codigo > 0) {
+    <div class="floatLeft" style="padding-left: 20px;">
+        @(Html.Bootstrap().ActionLinkButton("Ver Vehiculo  " + vhc.Ficha, "VerVehiculo").RouteValues(new { id = vhc.Codigo }).Class("btn-info  btn-small"))
+    </div>
        }
    }
 }
@@ -94,13 +102,13 @@
 
 <div class="clear-both"></div>
 
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Reservado)
-    </div>
-    <div class="@((((bool?)ViewBag.SoloLectura)??false)?"":"renglon-alto")" >
-        @Html.CheckBoxOrDisplayFor(model => model.Reservado, modoConsulta||Model.Seniado, new { id="cb_reservado"})
-    </div>
-    <div class="clear-both"></div>
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Reservado)
+</div>
+<div class="@((((bool?)ViewBag.SoloLectura) ?? false) ? "" : "renglon-alto")" >
+    @Html.CheckBoxOrDisplayFor(model => model.Reservado, modoConsulta || Model.Seniado, new { id = "cb_reservado" })
+</div>
+<div class="clear-both"></div>
 
 <div id="div_reserva">
 
@@ -108,10 +116,16 @@
         @Html.LabelForRequired(model => model.Cliente)
     </div>
     <div class="editor-field editor-field-xlarge xxlarge @(modoConsulta ? "" : "renglon-alto")">
-        @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, modoConsulta||Model.Seniado,
-                model => model.Cliente.Nombre,
-                new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null, new { id = "ddlClientes", @class="xxlarge" })
-        @Html.ValidationMessageFor(model => model.Cliente)
+        @{ if (modoConsulta) { 
+               if (Model.Cliente!=null){
+                    @Html.Bootstrap().ActionLink(Model.Cliente.Nombre, "Details", ClientesController.CONTROLLER).RouteValues(new { id = Model.Cliente.Codigo })
+                }
+           } else {
+                @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, modoConsulta || Model.Seniado,
+                        model => model.Cliente.Nombre,
+                        new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null, new { id = "ddlClientes", @class = "xxlarge" })
+                @Html.ValidationMessageFor(model => model.Cliente)
+           }}
     </div>
     <div class="clear-both"></div>
 
@@ -119,10 +133,16 @@
         @Html.LabelForRequired(model => model.Vendedor)
     </div>
     <div class="editor-field editor-field-xxlarge @(modoConsulta ? "" : "renglon-alto")">
-        @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, modoConsulta||Model.Seniado,
-                model => model.Vendedor.Nombre,
-                new SelectList(ViewBag.Vendedores, "Codigo", "Nombre"), null, new { id = "ddlVendedores", @class="xxlarge" })
-        @Html.ValidationMessageFor(model => model.Vendedor)
+        @{ if (modoConsulta) { 
+               if (Model.Vendedor!=null){
+                    @Html.Bootstrap().ActionLink(Model.Vendedor.Nombre, "Details", VendedoresController.CONTROLLER).RouteValues(new { id = Model.Vendedor.Codigo })
+                }
+           } else {
+            @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, modoConsulta || Model.Seniado,
+                    model => model.Vendedor.Nombre,
+                    new SelectList(ViewBag.Vendedores, "Codigo", "Nombre"), null, new { id = "ddlVendedores", @class = "xxlarge" })
+            @Html.ValidationMessageFor(model => model.Vendedor)
+           }}
     </div>
     <div class="clear-both"></div>
 
@@ -130,7 +150,7 @@
         @Html.LabelForRequired(model => model.FechaReserva)
     </div>
     <div class="editor-field editor-field-small @(modoConsulta ? "" : "renglon-alto")">
-        @Html.TextBoxOrdisplayFor(model => model.FechaReserva, modoConsulta||Model.Seniado, 
+        @Html.TextBoxOrdisplayFor(model => model.FechaReserva, modoConsulta || Model.Seniado,
                                                                 "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
         @Html.ValidationMessageFor(model => model.FechaReserva)
     </div>
@@ -141,9 +161,9 @@
     </div>
     <div  class=" @(modoConsulta ? "" : "renglon-alto") floatLeft">
         @Html.EditorOrDisplayFor(model => model.Seniado, true)
-        
+
     </div>
-    <div class="floatLeft"  style="padding-left:20px; display:@(Model.Seniado?"block":"none")">
+    <div class="floatLeft"  style="padding-left:20px; display:@(Model.Seniado ? "block" : "none")">
         @(Html.Bootstrap().ActionLinkButton("Ver Seña", "VerSenia").RouteValues(new { id = Model.Codigo }).Class("btn-small btn-info"))
     </div>
     <div class="clear-both"></div>

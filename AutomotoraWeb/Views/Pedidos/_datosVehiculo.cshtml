@@ -54,6 +54,29 @@
 </div>
 <div class="clear-both"></div>
 
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Vehiculo.TipoCombustible)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.DdlOrDisplayFor(model => model.Vehiculo.TipoCombustible.Codigo, modoConsulta,
+                model => model.Vehiculo.TipoCombustible.Descripcion,
+                new SelectList(ViewBag.TiposCombustible, "Codigo", "Descripcion"), null, new { id = "ddlTipoCombustible" })
+    @Html.ValidationMessageFor(model => model.Vehiculo.TipoCombustible)
+</div>
+<div class="clear-both"></div>
+
+
+<div class="display-label ">
+    @Html.LabelForRequired(model => model.Vehiculo.Sucursal)
+</div>
+<div class="editor-field editor-field-large">
+    @Html.DdlOrDisplayFor(model => model.Vehiculo.Sucursal.Codigo, modoConsulta||!cambiarSucursal,
+                model => model.Vehiculo.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursales" })
+    @Html.ValidationMessageFor(model => model.Vehiculo.Sucursal)
+</div>
+<div class="clear-both"></div>
+
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Vehiculo.Color)
@@ -100,16 +123,8 @@
 </div>
 <div class="clear-both"></div>
 
-<div class="display-label ">
-    @Html.LabelForRequired(model => model.Vehiculo.TipoCombustible)
-</div>
-<div class="editor-field editor-field-large">
-    @Html.DdlOrDisplayFor(model => model.Vehiculo.TipoCombustible.Codigo, modoConsulta,
-                model => model.Vehiculo.TipoCombustible.Descripcion,
-                new SelectList(ViewBag.TiposCombustible, "Codigo", "Descripcion"), null, new { id = "ddlTipoCombustible" })
-    @Html.ValidationMessageFor(model => model.Vehiculo.TipoCombustible)
-</div>
-<div class="clear-both"></div>
+
+
 
 <div class="display-label">
     @Html.LabelForRequired(model => model.Vehiculo.Costo)

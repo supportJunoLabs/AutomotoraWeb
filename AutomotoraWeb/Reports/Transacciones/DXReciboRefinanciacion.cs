@@ -135,6 +135,7 @@ public class DXReciboRefinanciacion : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel37 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel38 = new DevExpress.XtraReports.UI.XRLabel();
             this.GroupHeader1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
+            this.xrLabel28 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel39 = new DevExpress.XtraReports.UI.XRLabel();
             this.det_cuotas = new DevExpress.XtraReports.UI.DetailReportBand();
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
@@ -162,7 +163,6 @@ public class DXReciboRefinanciacion : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel16 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel15 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel17 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel28 = new DevExpress.XtraReports.UI.XRLabel();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
@@ -490,9 +490,19 @@ public class DXReciboRefinanciacion : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel33,
             this.xrLabel37,
             this.xrLabel38});
-            this.GroupHeader1.HeightF = 138.5416F;
+            this.GroupHeader1.HeightF = 131.2499F;
             this.GroupHeader1.Level = 1;
             this.GroupHeader1.Name = "GroupHeader1";
+            // 
+            // xrLabel28
+            // 
+            this.xrLabel28.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Observaciones")});
+            this.xrLabel28.LocationFloat = new DevExpress.Utils.PointFloat(10.00005F, 105.5416F);
+            this.xrLabel28.Name = "xrLabel28";
+            this.xrLabel28.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel28.SizeF = new System.Drawing.SizeF(629.9991F, 23F);
+            this.xrLabel28.Text = "xrLabel28";
             // 
             // xrLabel39
             // 
@@ -512,7 +522,7 @@ public class DXReciboRefinanciacion : DevExpress.XtraReports.UI.XtraReport {
             this.ReportHeader2});
             this.det_cuotas.DataMember = "ViejasCuotas";
             this.det_cuotas.DataSource = this.bindingSource1;
-            this.det_cuotas.Level = 0;
+            this.det_cuotas.Level = 1;
             this.det_cuotas.Name = "det_cuotas";
             // 
             // Detail
@@ -656,7 +666,7 @@ public class DXReciboRefinanciacion : DevExpress.XtraReports.UI.XtraReport {
             this.GroupHeader3});
             this.DetailReport.DataMember = "NuevasCuotas";
             this.DetailReport.DataSource = this.bindingSource1;
-            this.DetailReport.Level = 1;
+            this.DetailReport.Level = 0;
             this.DetailReport.Name = "DetailReport";
             // 
             // Detail1
@@ -797,16 +807,6 @@ public class DXReciboRefinanciacion : DevExpress.XtraReports.UI.XtraReport {
             this.xrLabel17.StylePriority.UseTextAlignment = false;
             this.xrLabel17.Text = "Vencimiento";
             this.xrLabel17.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
-            // 
-            // xrLabel28
-            // 
-            this.xrLabel28.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Observaciones")});
-            this.xrLabel28.LocationFloat = new DevExpress.Utils.PointFloat(10.00005F, 105.5416F);
-            this.xrLabel28.Name = "xrLabel28";
-            this.xrLabel28.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel28.SizeF = new System.Drawing.SizeF(629.9991F, 23F);
-            this.xrLabel28.Text = "xrLabel28";
             // 
             // DXReciboRefinanciacion
             // 

@@ -9,5 +9,6 @@
 </div>
 <div class="clear-both"></div>
 
+@{ if (ViewData["idParametros"]==null || (int)ViewData["idParametros"]==0) { return; }}
 
 @Html.Partial("_reciboCaja")

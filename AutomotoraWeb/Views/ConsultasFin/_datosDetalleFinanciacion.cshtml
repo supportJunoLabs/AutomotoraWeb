@@ -127,6 +127,8 @@
         <div style="padding-left:15px; padding-bottom:10px">
              @(Html.Bootstrap().ActionLinkButton("Generar Cupones", "DocCuponesVenta",
                     DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Venta.Codigo }).Class("btn-primary"))
+             @(Html.Bootstrap().ActionLinkButton("Generar Conformes", "DocConformesVenta",
+                    DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Venta.Codigo }).Class("btn-primary"))
         </div>
     </div>
     

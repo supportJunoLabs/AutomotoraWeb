@@ -8,18 +8,60 @@
 
 @Html.Partial("_chequesDebitar", ChequeEmitido.ChequesDebitables())
 
-<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+<span class="validation-summary-errors" id="spanError">@ViewBag.ErrorMessage</span>
 
 <div class="renglon-alto"></div>  
 
-@using (Html.BeginForm("EjecutarDebitar", null, FormMethod.Post,new { id="formPrincipal" })) {
     @Html.ValidationSummary(true)
-    @Html.ValidationSummary("Se han producido errores:")    
-    
-    
+    @Html.ValidationSummary("Se han producido errores:")       
+   
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-cogs").Text(" Debitar Cheques Vencidos"))
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-cogs").Text(" Debitar Cheques Vencidos").Id("btnDebitar"))
     </div>
     <div class="clear-both"></div>  
 
-}
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnDebitar").click(function () {
+            inicializarModal("Confirmacion", "Confirma ejecucion del proceso?", "Aceptar", "Cancelar");
+            $('#myModal').modal('show');
+        });
+    });
+
+
+    function callBackAceptar() {
+        //alert("hola");
+        var destino = '/ChEmitidos/EjecutarDebitar/';
+        $.ajax({
+            url: destino,
+            type: 'POST',
+            async: true,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                grilla.Refresh();
+                if (data.Result == "OK") {
+                    $("#btnDebitar").hide()
+                    $("#spanError").html(data.Mensaje)
+                    //inicializarModal("Procedimiento exitoso", data.Mensaje, null, "OK");
+                    //$('#myModal').modal('show');
+                }
+                else {
+                    $("#spanError").html(data.Mensaje)
+                    //inicializarModal("Se produjo un Error", data.Mensaje, null, "OK");
+                    //$('#myModal').modal('show');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                general_showErrorAction(containerErrorMessage, textStatus, errorThrown);
+            },
+            beforeSend: showLoading,
+            complete: hideLoading
+        });
+    }
+    
+    </script>
+

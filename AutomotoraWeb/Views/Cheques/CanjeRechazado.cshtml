@@ -74,17 +74,38 @@
     <div class="clear-both"></div>   
     
     <div>
-           @Html.Partial("_pagoEstandar", Model)
+           @Html.Partial("_pagoEstandar", Model.Pago)
     </div>
     
     <div class="clear-both"></div>   
     
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Canjear Cheque"))
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Canjear Cheque").Id("btnCanjear"))
     </div>     
 
 }
 
-@section Scripts {
-    <script type="text/javascript" src="/scripts/AutomotoraWeb/CanjearCheque.js"></script>
-}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma canje de cheque rechazado?", "Aceptar", "Cancelar");
+        $("#btnCanjear").click(function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+    
+    function chequeSelected(s, e) {
+        //alert("hola");
+        //var g = gridCheques.GetGridView();  //obtener referencia a la grilla
+        //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+        //alert(valor);
+        var valor = s.GetRowKey(e.visibleIndex);
+        $("#codigoCheque").val(valor);
+        $("#abtn_verCheque").prop("href", "/Cheques/ConsultaCheque/" + valor);
+    }
+</script> 
+

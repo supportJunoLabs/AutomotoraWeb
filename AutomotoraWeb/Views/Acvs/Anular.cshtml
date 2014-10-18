@@ -7,7 +7,7 @@
     ViewBag.Title = "Anular Anticipo Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    GridLookUpModel gmodel = new GridLookUpModel { Opciones = ACuentaVenta.ACuentaVentas(ACuentaVenta.ACV_TIPO_LISTADO.ANULABLES) };
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = ACuentaVenta.AnticiposAnulables() };
     if (Model != null && Model.Acv != null && Model.Acv.Codigo > 0) {
         gmodel.GridLookUpCodigo = Model.Acv.Codigo;
     }
@@ -49,7 +49,7 @@
         
         <div class="btn-toolbar">
             <div class="floatRight">
-                @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Anular Anticipo").Id("btnAnular"))
+                @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Anular Anticipo").Id("btnAnular"))
             </div>
         </div>
         <div class="clear-both"></div>         
@@ -68,7 +68,16 @@
         } else {
             $("#divAnulacion").hide()
         }
+
+        inicializarModal("Confirmacion", "Confirma la anulacion del anticipo?", "Aceptar", "Cancelar");
+        $("#btnAnular").click(function () {
+            $('#myModal').modal('show');
+        });
     });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
 
     function acvSelected(s, e) {
         var valor = s.GetRowKey(e.visibleIndex);

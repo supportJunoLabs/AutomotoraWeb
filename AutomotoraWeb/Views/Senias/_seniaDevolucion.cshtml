@@ -24,7 +24,7 @@
 
 <div class="btn-toolbar">
     <div class="floatRight">
-        @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Devolver Seña").Id("btn_confirmar"))
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Devolver la Seña").Id("btn_confirmar"))
     </div>
 </div>
 <div class="clear-both"></div>
@@ -34,12 +34,8 @@
     $(document).ready(function () {
         $('a[data-toggle="tab"]').on('shown', function (e) {
             ASPxClientControl.AdjustControls();
-            //alert(e.target.hash) // active tab
-            //alert(e.relatedTarget.hash) // previous tab
         });
     });
-
-
 
 
 </script>

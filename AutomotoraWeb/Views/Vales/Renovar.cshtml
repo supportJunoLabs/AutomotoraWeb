@@ -52,3 +52,18 @@
 }
 
 <script type="text/javascript" src="/scripts/AutomotoraWeb/RenovarVale1.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma la renovacion del vale?", "Aceptar", "Cancelar");
+        $("#btnConfirmarRenovacion").live("click", function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+ 
+ </script>

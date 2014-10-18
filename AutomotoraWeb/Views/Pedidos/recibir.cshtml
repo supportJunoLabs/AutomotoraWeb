@@ -8,8 +8,7 @@
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-@using (Html.BeginForm()) {
-   
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {   
 
     <fieldset>
         <legend></legend>
@@ -52,18 +51,28 @@
     
     <div class="espacio2"></div>
     
-    
-    
-    
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary").Text("Recibir"))
+        @(Html.Bootstrap().Button().Class("btn btn-primary").Text("Recibir").Id("btnRecibir"))
         @(Html.Bootstrap().ActionLinkButton("Volver", BaseController.SHOW).Class("btn btn-default").Title("Volver a Lista"))
     </div>
 
 }
 
+<script type="text/javascript" src="/scripts/AutomotoraWeb/PedidosGestion.js"></script>
 
-@section Scripts {
-    <script type="text/javascript" src="/scripts/AutomotoraWeb/PedidosGestion.js"></script>
-}
+<script type="text/javascript">
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma la recepcion del pedido?", "Aceptar", "Cancelar");
+
+        $("#btnRecibir").click(function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+
+</script>
+
 

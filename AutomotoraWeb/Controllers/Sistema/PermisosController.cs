@@ -16,9 +16,9 @@ namespace AutomotoraWeb.Controllers.Sistema {
             ViewBag.Perfiles = Perfil.Perfiles();
         }
 
-        [HttpGet]
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Edit(int? id) {
-            string s = SessionUtils.generarIdVarSesion("Permisos", Session[SessionUtils.SESSION_USER].ToString());
+            string s = SessionUtils.generarIdVarSesion("Permisos", getUserName());
             PermisosModel model = new PermisosModel();
             model.Perfil = new Perfil();
             if (id != null) {
@@ -32,15 +32,15 @@ namespace AutomotoraWeb.Controllers.Sistema {
         public ActionResult Edit(PermisosModel model) {
             try {
 
-                model.ListaOpciones = OpcionMenuEstructura.ObtenerEstructura(model.Perfil);
-                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                string IP = HttpContext.Request.UserHostAddress;
-                List<OpcionMenu> todas = OpcionMenu.opcionesHabilitables();
-
+                //por si no vino perfil
                 if (model.Perfil == null || model.Perfil.Codigo <= 0) {
                     model.ListaOpciones = OpcionMenuEstructura.ObtenerEstructura(model.Perfil);
                     return View(model);
                 }
+
+                string userName = getUserName();
+                string IP = getIP();
+                List<OpcionMenu> todas = OpcionMenu.opcionesHabilitables();
 
                 List<OpcionMenu> lom = new List<OpcionMenu>();
                 string[] ach = model.OpcionesHabilitadasTexto.Split(new Char[] { ',' });
@@ -61,6 +61,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
+                model.ListaOpciones = OpcionMenuEstructura.ObtenerEstructura(model.Perfil); //para recuperar los permisos antes del cambio
                 return View(model);
             }
         }

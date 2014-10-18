@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pago_tab">
-                    @Html.Partial("_pagoEstandar", Model);
+                    @Html.Partial("_pagoEstandar", Model.Pago);
                 </div>
             </div>
         </div>
@@ -68,6 +68,17 @@
 }
 
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma el pago?", "Aceptar", "Cancelar");
+        $("#btnConfirmarPago").live("click", function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
 
     $('#ddlClientes').change(function () {
         /* Get the selected value of dropdownlist */

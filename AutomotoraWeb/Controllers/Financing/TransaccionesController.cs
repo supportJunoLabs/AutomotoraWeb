@@ -40,16 +40,17 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region ListadoTransacciones
 
-
-        //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
+            //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
             ListadoTransaccionesModel model = new ListadoTransaccionesModel();
             try {
-                string s = SessionUtils.generarIdVarSesion("ListadoTransacciones", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoTransacciones", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
-                model.obtenerListado();
+                Usuario usuario = getUsuario();
+                model.obtenerListado(usuario);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -65,16 +66,17 @@ namespace AutomotoraWeb.Controllers.Financing {
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
                 //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
-                this.eliminarValidacionesIgnorables("Filtro.Usuario", MetadataManager.IgnorablesDDL(model.Filtro.Usuario));
-                this.eliminarValidacionesIgnorables("Filtro.TipoRecibo", MetadataManager.IgnorablesDDL(model.Filtro.TipoRecibo));
+                this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
+                this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+                this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+                this.eliminarValidacionesIgnorables("Filtro.Usuario", MetadataManager.IgnorablesDDL(new Usuario()));
+                this.eliminarValidacionesIgnorables("Filtro.TipoRecibo", MetadataManager.IgnorablesDDL(new TipoRecibo()));
                 if (ModelState.IsValid) {
                     if (model.Accion == ListadoTransaccionesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportTransacciones(model);
                     }
-                    model.obtenerListado();
+                    Usuario usuario = getUsuario();
+                    model.obtenerListado(usuario);
                 }
                 return View(model);
             } catch (UsuarioException exc) {
@@ -88,7 +90,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaTransacciones(string idParametros) {
             ListadoTransaccionesModel model = (ListadoTransaccionesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario usuario = getUsuario();
+            model.obtenerListado(usuario);
             return PartialView("_listGrillaTransacciones", model.Resultado);
         }
 
@@ -98,7 +101,8 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         private XtraReport _generarReporteTransacciones(string idParametros) {
             ListadoTransaccionesModel model = (ListadoTransaccionesModel)Session[idParametros];
-            model.obtenerListado();
+            Usuario usuario = getUsuario();
+            model.obtenerListado(usuario);
             XtraReport rep = new DXListadoTransacciones();
             rep.DataSource = model.Resultado;
             setParamsToReport(rep, model);

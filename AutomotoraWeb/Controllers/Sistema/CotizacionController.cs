@@ -28,8 +28,8 @@ namespace AutomotoraWeb.Controllers.Sistema
         public ActionResult grillaCotizaciones_UpdateRow(Moneda model) {
             if (ModelState.IsValid) {
                 try {
-                    string nomUsuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string origen = HttpContext.Request.UserHostAddress;
+                    string nomUsuario = getUserName();
+                    string origen = getIP();
                     model.setearAuditoria(nomUsuario, origen);
                     model.ModificarCotizacion();
                 } catch (Exception e) {

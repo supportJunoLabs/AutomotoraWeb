@@ -7,12 +7,12 @@
     ViewBag.Title = "Seña Vehículo / Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.SENIABLES) };
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = (IEnumerable<Vehiculo>)ViewData["VehiculosSeniables"] };
     if (Model.Senia.Vehiculo != null) {
         gmodel.GridLookUpCodigo = Model.Senia.Vehiculo.Codigo;
     }
 
-    GridLookUpModel gmodel1 = new GridLookUpModel { Opciones = Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.SENIABLES) };
+    GridLookUpModel gmodel1 = new GridLookUpModel { Opciones = (IEnumerable<Pedido>)ViewData["PedidosSeniables"] };
     if (Model.Senia.Pedido != null) {
         gmodel1.GridLookUpCodigo = Model.Senia.Pedido.Codigo;
     }

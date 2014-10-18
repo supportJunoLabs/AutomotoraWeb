@@ -202,8 +202,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             if (ModelState.IsValid) {
 
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     cliente.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
@@ -227,38 +227,32 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         //-----------------------------------------------------------------------------------------------------
 
-        #region SeleccionDeCliente
+        //#region SeleccionDeCliente
 
-        //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-        public ActionResult ClientesGrilla(GridLookUpModel model) {
-            model.Opciones = Cliente.Clientes();
-            return PartialView("_selectCliente", model);
-        }
+        //[HttpPost]
+        //public JsonResult details(int codigo) {
+        //    try {
+        //        Cliente cliente = new Cliente();
+        //        cliente.Codigo = codigo;
+        //        cliente.Consultar();
 
-        [HttpPost]
-        public JsonResult details(int codigo) {
-            try {
-                Cliente cliente = new Cliente();
-                cliente.Codigo = codigo;
-                cliente.Consultar();
+        //        return Json(new {
+        //            Result = "OK",
+        //            Cliente = new {
+        //                Cedula = cliente.Cedula,
+        //                Nombre = cliente.Nombre,
+        //                Ciudad = cliente.Ciudad,
+        //                Pais = cliente.Pais,
+        //                Telefono = cliente.Telefono
+        //            }
+        //        }
+        //        );
+        //    } catch (UsuarioException exc) {
+        //        return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
+        //    }
+        //}
 
-                return Json(new {
-                    Result = "OK",
-                    Cliente = new {
-                        Cedula = cliente.Cedula,
-                        Nombre = cliente.Nombre,
-                        Ciudad = cliente.Ciudad,
-                        Pais = cliente.Pais,
-                        Telefono = cliente.Telefono
-                    }
-                }
-                );
-            } catch (UsuarioException exc) {
-                return Json(new { Result = "ERROR", ErrorCode = exc.Codigo, ErrorMessage = exc.Message });
-            }
-        }
-
-        #endregion
+        //#endregion
 
         #region ConsultaSituacionCliente
 

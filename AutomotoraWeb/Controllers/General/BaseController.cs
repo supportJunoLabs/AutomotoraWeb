@@ -83,5 +83,17 @@ namespace AutomotoraWeb.Controllers.General {
             }
         }
 
+        protected Usuario getUsuario() {
+            return (Usuario)(Session[SessionUtils.SESSION_USER]);
+        }
+
+        protected string getUserName() {
+            return (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
+        }
+
+        protected string getIP() {
+            return HttpContext.Request.UserHostAddress;
+        }
+
     }
 }

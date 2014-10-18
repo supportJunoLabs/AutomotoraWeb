@@ -19,6 +19,10 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@{ if(Model==null  || Model.Senia==null || Model.Senia.Codigo==0){
+       return;
+}}
+
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
     
@@ -26,7 +30,7 @@
     
     <div class="block">
         <div >
-           <p class="block-heading"> Documentación</p>
+           <p class="block-heading"> Acciones</p>
         </div>
         <div class="block-body">
             @Html.Bootstrap().ActionLinkButton("Comprobante", "DocComprobanteSenia", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Senia.Codigo }).Class("btn btn-default botonDocumento")
@@ -37,10 +41,20 @@
                 if (Model.Senia.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "PR_SENIA" })) {
                     @Html.Bootstrap().ActionLinkButton("Promesa", "DocPromesaSenia", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Senia.Codigo }).Class("btn btn-default botonDocumento")
                 }
-                
-                if (Model.Senia.Devolvible()){
-                       @(Html.Bootstrap().ActionLinkButton("Devolver", "Devolver", SeniasController.CONTROLLER).RouteValues(new { id = Model.Senia.Codigo }).Class("btn btn-primary"))
-                }                
+                if (Model.PedidoVehiculo == 1) { 
+                    @Html.Bootstrap().ActionLinkButton("Consulta Vehiculo", "Details", VehiculosController.CONTROLLER).RouteValues(new { id = Model.Senia.Vehiculo.Codigo }).Class("btn btn-info botonDocumento")
+                }else{
+                    @Html.Bootstrap().ActionLinkButton("Consulta Pedido", "Details", PedidosController.CONTROLLER).RouteValues(new { id = Model.Senia.Pedido.Codigo }).Class("btn btn-info botonDocumento")
+                }
+                if (Model.Senia.Vendida()) { 
+                    @Html.Bootstrap().ActionLinkButton("Ver Venta", "Details", VentasController.CONTROLLER).RouteValues(new { id = Model.Senia.VentaAsociada().Codigo}).Class("btn btn-info botonDocumento")
+                }  
+                 if (Model.Senia.Devolvible()){
+                       @(Html.Bootstrap().ActionLinkButton("Devolver", "Devolver", SeniasController.CONTROLLER).RouteValues(new { id = Model.Senia.Codigo }).Class("btn btn-primary botonDocumento"))
+                }    
+                if (Model.Senia.Vendible() && Model.Senia.Vehiculo!=null && Model.Senia.Vehiculo.Codigo>0) { 
+                    @Html.Bootstrap().ActionLinkButton("Vender", "VentaVehiculo", VentasController.CONTROLLER).RouteValues(new { id = Model.Senia.Vehiculo.Codigo}).Class("btn btn-primary botonDocumento")
+                }      
             }
         </div>
     </div>

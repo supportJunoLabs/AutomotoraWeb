@@ -38,9 +38,9 @@ namespace AutomotoraWeb.Models {
             Accion = ACCIONES.ACTUALIZAR;
         }
 
-        public void obtenerListado (){
+        public void obtenerListado (Usuario u){
             AcomodarFiltro();
-            Resultado = ListadoChequesEmitidos.obtenerListado(Filtro);
+            Resultado = ListadoChequesEmitidos.obtenerListado(Filtro, u);
         }
 
         private void AcomodarFiltro() {

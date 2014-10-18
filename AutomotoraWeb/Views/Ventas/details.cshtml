@@ -16,13 +16,15 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-CONSULTA VENTA SIN IMPLEMENTAR
+@{ if (Model==null || Model.Codigo==0){
+       return;
+}}
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
 
     <div class="block">
         <div >
-           <p class="block-heading"> Documentación</p>
+           <p class="block-heading"> Acciones</p>
         </div>
         <div class="block-body">
             @Html.Bootstrap().ActionLinkButton("Comprobante", "DocComprobanteVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
@@ -43,8 +45,22 @@ CONSULTA VENTA SIN IMPLEMENTAR
                     @Html.Bootstrap().ActionLinkButton("Vales", "DocValesVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
 
                 }
-            }
+            
+                @Html.Bootstrap().ActionLinkButton("Consulta Vehiculo", "Details", VehiculosController.CONTROLLER).RouteValues(new { id = Model.Vehiculo.Codigo }).Class("btn btn-info botonDocumento")
+
+                if (Model.Anulable()){
+                    @Html.Bootstrap().ActionLinkButton("Anular Venta", "Anular", VentasController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-primary botonDocumento")
+                }
+                if (Model.Entregable()){
+                    @Html.Bootstrap().ActionLinkButton("Entregar Vehiculo", "Entregar", VentasController.CONTROLLER).RouteValues(new { id = Model.Vehiculo.Codigo }).Class("btn btn-primary botonDocumento")
+                }
+
+        }
         </div>
+    </div>
+    
+     <div id="divDetalleVenta">
+         @Html.Partial("_detallesVenta", Model);
     </div>
 
 }

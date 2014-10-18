@@ -1,12 +1,14 @@
-﻿@model DLL_Backend.Senia 
+﻿@model DLL_Backend.TRSeniaDevolucion 
 @using AutomotoraWeb.Controllers.Sales;
 @{ 
     ViewBag.Title = "Recibo Devolucion Seña";
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@{ if (ViewData["idParametros"]==null || (int)ViewData["idParametros"]==0) { return; }}
+
 <div class="btn-toolbar">
-    @(Html.Bootstrap().ActionLinkButton("Consulta Seña", "details", SeniasController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Codigo}))
+    @(Html.Bootstrap().ActionLinkButton("Consulta Seña", "details", SeniasController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Senia.Codigo}))
 </div>
 <div class="clear-both"></div>
 

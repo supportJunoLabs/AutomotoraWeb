@@ -108,8 +108,8 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     td.Perfil.setearAuditoria(userName, IP);
                     td.Perfil.Agregar();
 
@@ -130,8 +130,8 @@ namespace AutomotoraWeb.Controllers.Sistema {
         public ActionResult Edit(PerfilModel td) {
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
 
                     td.Perfil.Usuarios = new List<Usuario>();
                     if (!string.IsNullOrWhiteSpace(td.UsuariosTexto)) {
@@ -162,8 +162,8 @@ namespace AutomotoraWeb.Controllers.Sistema {
             ViewBag.SoloLectura = true;
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     td.Perfil.setearAuditoria(userName, IP);
                     td.Perfil.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);

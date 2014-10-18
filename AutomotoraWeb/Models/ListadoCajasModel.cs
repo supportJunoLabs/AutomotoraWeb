@@ -37,8 +37,8 @@ namespace AutomotoraWeb.Models {
         }
 
         public void AcomodarFiltro() {
-                Filtro.Desde = Desde;
-                Filtro.Hasta = Hasta;
+            Filtro.Desde = Desde;
+            Filtro.Hasta = Hasta;
 
             if (!FiltrarSucursal) {
                 Filtro.Sucursal = null;

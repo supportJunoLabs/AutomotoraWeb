@@ -38,8 +38,8 @@ namespace AutomotoraWeb.Controllers.Sistema
         [HttpPost, ValidateInput(false)]
         public ActionResult grillaParametros_UpdateRow(ParametroModel model) {
             try {
-                string nomUsuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                string origen = HttpContext.Request.UserHostAddress;
+                string nomUsuario = getUserName();
+                string origen = getIP();
                 Parametro par = new Parametro();
                 par.Codigo = model.Codigo;
                 par.Valor = model.Valor;

@@ -11,6 +11,7 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
 using AutomotoraWeb.Controllers.Sistema;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Sales {
     public class PedidosController : SalesController {
@@ -28,7 +29,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.Departamentos = Departamento.Departamentos();
             ViewBag.TiposCombustible = TipoCombustible.TiposCombustible();
 
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -41,41 +42,83 @@ namespace AutomotoraWeb.Controllers.Sales {
         //--------------------------METODOS PARA GESTION DE pedidos  -----------------------------
         #region Gestion
 
+        //private bool PedidoConsultable(Pedido ped) {
+        //    if (ped == null || ped.Codigo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && ped.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
+
         public ActionResult Show() {
-            return View(_listaElementos());
+            Usuario u = getUsuario();
+            return View(Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES, u));
         }
 
         public ActionResult ListaGrilla() {
-            return PartialView("_listGrilla", _listaElementos());
+            Usuario u = getUsuario();
+            return PartialView("_listGrilla", Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES,u));
         }
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
-            return VistaElemento(id);
+            try {
+                Pedido td = new Pedido();
+                td.Codigo = id;
+                Usuario u = getUsuario();
+                td.Consultar(u);
+                return View(td);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         public ActionResult SubconsultaDetalle(int id) {
             ViewBag.SoloLectura = true;
-            Pedido td = _obtenerElemento(id);
+            Pedido td = new Pedido();
+            td.Codigo = id;
+            Usuario u = getUsuario();
+            td.Consultar(u);
             return PartialView("_datosDetalle", td);
         }
 
         public ActionResult Create() {
             Pedido ped = new Pedido();
-            //ped.Cliente = new Cliente();
-            //ped.Vendedor = new Vendedor();
             ped.FechaPedido = DateTime.Now.Date;
-            ped.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+            ped.Sucursal = (getUsuario()).Sucursal;
             return View(ped);
         }
 
         public ActionResult Edit(int id) {
-            return VistaElemento(id);
+            try {
+                Pedido td = new Pedido();
+                td.Codigo = id;
+                Usuario u = getUsuario();
+                td.Consultar(u);
+                return View(td);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
-            return VistaElemento(id);
+            try {
+                Pedido td = new Pedido();
+                td.Codigo = id;
+                Usuario u = getUsuario();
+                td.Consultar(u);
+                return View(td);
+            } catch (UsuarioException exc) {
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
         public ActionResult VerSenia(int id) {
@@ -83,7 +126,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                 ViewBag.SoloLectura = true;
                 Pedido ped = new Pedido();
                 ped.Codigo = id;
-                ped.Consultar();
+                Usuario u = getUsuario();
+                ped.Consultar(u);
                 if (ped.Seniado) {
                     Senia s = ped.ObtenerSenia();
                     if (s != null) {
@@ -100,7 +144,10 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult Recibir(int id) {
             try {
-                Pedido ped = _obtenerElemento(id);
+                Pedido ped = new Pedido();
+                ped.Codigo = id;
+                Usuario u = getUsuario();
+                ped.Consultar(u);
                 ped.Vehiculo = new Vehiculo();
                 ped.Vehiculo.Marca = ped.Marca;
                 ped.Vehiculo.Modelo = ped.Modelo;
@@ -120,19 +167,20 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         [HttpPost]
         public ActionResult Recibir(Pedido ped) {
-            this.eliminarValidacionesIgnorables("Vehiculo.Departamento", MetadataManager.IgnorablesDDL(ped.Vehiculo.Departamento));
-            this.eliminarValidacionesIgnorables("Vehiculo.TipoCombustible", MetadataManager.IgnorablesDDL(ped.Vehiculo.TipoCombustible));
-            this.eliminarValidacionesIgnorables("Vehiculo.Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Vehiculo.Costo.Moneda));
-            this.eliminarValidacionesIgnorables("Vehiculo.PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(ped.Vehiculo.PrecioVenta.Moneda));
+            this.eliminarValidacionesIgnorables("Vehiculo.Departamento", MetadataManager.IgnorablesDDL(new Departamento()));
+            this.eliminarValidacionesIgnorables("Vehiculo.TipoCombustible", MetadataManager.IgnorablesDDL(new TipoCombustible()));
+            this.eliminarValidacionesIgnorables("Vehiculo.Costo.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Vehiculo.PrecioVenta.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Vehiculo.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
-            this.eliminarValidacionesIgnorables("Cliente",  MetadataManager.IgnorablesDDL(ped.Cliente));
-            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(ped.Vendedor));
-            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Costo.Moneda));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(ped.Sucursal));
+            this.eliminarValidacionesIgnorables("Cliente",  MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
+            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
 
 
-            ModelState.Remove("Vehiculo.Sucursal"); //se toma del vehiculo
-            ModelState.Remove("Cliente.Codigo"); //uede no estar reservado, no tiene cliente ni vendedor
+            ModelState.Remove("Sucursal"); //se toma del vehiculo
+            ModelState.Remove("Cliente.Codigo"); //puede no estar reservado, no tiene cliente ni vendedor
             ModelState.Remove("Vendedor.Codigo");
 
             if (ModelState.IsValid) {
@@ -141,8 +189,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                     ped.Vehiculo.FechaAdquirido = ped.FechaRecibido??DateTime.Now.Date;
                     ped.Vehiculo.Sucursal = ped.Sucursal;
                     Usuario u = new Usuario();
-                    u.UserName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    u.UserName = getUserName();
+                    string IP = getIP();
                     ped.RecibirPedido(u, IP);
                     return RedirectToAction(BaseController.DETAILS, VehiculosController.CONTROLLER, new { id = ped.Vehiculo.Codigo });
                 } catch (UsuarioException exc) {
@@ -158,36 +206,30 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private void _completarDatos(Pedido ped){
             Vehiculo v1 = new Vehiculo(ped.Vehiculo); //para no perder lo que ingreso el usuario
-            ped.Consultar();  //para volver a trare los datos de las entidades asociadas (ej: cliente, vendedor, etc)
+            Usuario u = getUsuario();
+            ped.Consultar(u);  //para volver a trare los datos de las entidades asociadas (ej: cliente, vendedor, etc)
             ped.Vehiculo=v1;
         }
 
         //-----------------------------------------------------------------------------------------------------
 
 
-        private ActionResult VistaElemento(int id) {
-            try {
-                Pedido td = _obtenerElemento(id);
-                //if (td.Cliente == null) td.Cliente = new Cliente();
-                //if (td.Vendedor == null) td.Vendedor = new Vendedor();
-                return View(td);
-            } catch (UsuarioException exc) {
-                ViewBag.ErrorCode = exc.Codigo;
-                ViewBag.ErrorMessage = exc.Message;
-                return View();
-            }
-        }
+        //private ActionResult VistaElemento(int id) {
+        //    try {
+        //        Pedido td = new Pedido();
+        //        td.Codigo = id;
+        //        td.Consultar();
+        //        return View(td);
+        //    } catch (UsuarioException exc) {
+        //        ViewBag.ErrorCode = exc.Codigo;
+        //        ViewBag.ErrorMessage = exc.Message;
+        //        return View();
+        //    }
+        //}
 
-        private Pedido _obtenerElemento(int id) {
-            Pedido td = new Pedido();
-            td.Codigo = id;
-            td.Consultar();
-            return td;
-        }
-
-        private List<Pedido> _listaElementos() {
-            return Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES);
-        }
+      //private List<Pedido> _listaElementos() {
+      //      return Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES);
+      //  }
 
         //-----------------------------------------------------------------------------------------------------
 
@@ -219,8 +261,8 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     Usuario u = new Usuario();
                     u.UserName = userName;
                     td.ModificarDatos(u, IP);
@@ -240,29 +282,32 @@ namespace AutomotoraWeb.Controllers.Sales {
         [HttpPost]
         public ActionResult Delete(Pedido td) {
 
-            this.eliminarValidacionesIgnorables(td);
+            //this.eliminarValidacionesIgnorables(td);
             ViewBag.SoloLectura = true;
-            if (ModelState.IsValid) {
+            //if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     td.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
+                    Usuario u = getUsuario();
+                    td.Consultar(u); //para traer lo datos a mostrar
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
+                    ModelState.Clear();
                     return View(td);
                 }
-            }
+            //}
 
-            return View(td);
+            //return View(td);
         }
 
         private void eliminarValidacionesIgnorables(Pedido ped) {
-            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(ped.Costo.Moneda));
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(ped.Sucursal));
-            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(ped.Cliente));
-            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(ped.Vendedor));
+            this.eliminarValidacionesIgnorables("Costo.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
 
             if (!ped.Reservado) {
                 //Lo tengo que sacar porque las ddls siempre el ponen un valor aunque no corresponda
@@ -282,11 +327,12 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Listados
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
 
             ListadoPedidosModel model = new ListadoPedidosModel();
             try{
-            string s = SessionUtils.generarIdVarSesion("ListadoPedidos", Session[SessionUtils.SESSION_USER].ToString());
+            string s = SessionUtils.generarIdVarSesion("ListadoPedidos", getUserName());
             Session[s] = model;
             model.idParametros = s;
             ViewBag.SucursalesListado = Sucursal.Sucursales;
@@ -310,9 +356,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.SucursalesListado = Sucursal.Sucursales;
             ViewBag.ClientesListado = Cliente.Clientes();
             ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-            this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(model.Filtro.Cliente));
-            this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(model.Filtro.Vendedor));
+            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Filtro.Cliente", MetadataManager.IgnorablesDDL(new Cliente()));
+            this.eliminarValidacionesIgnorables("Filtro.Vendedor", MetadataManager.IgnorablesDDL(new Vendedor()));
             if (ModelState.IsValid) {
                 if (btnSubmit == "Imprimir") {
                     return this.Report(model);
@@ -336,14 +382,11 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private List<Pedido> _listaElementos(ListadoPedidosModel model) {
             model.AcomodarFiltro();
-            return Pedido.Pedidos(model.Filtro);
+            Usuario u = getUsuario();
+            List<Pedido> lista= Pedido.Pedidos(model.Filtro, u);
+            return lista;
         }
 
-        #endregion
-
-        //---------- METODOS PARA REPORTES DE LISTADOS DE Pedidos  -----------------------------
-
-        #region Reportes
         public ActionResult Report(ListadoPedidosModel model) {
             return View("report", model);
         }

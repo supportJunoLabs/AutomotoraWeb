@@ -5,10 +5,11 @@
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@{ if (ViewData["idParametros"]==null || (int)ViewData["idParametros"]==0) { return; }}
+
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Consulta Financiacion", "ConsultaFinanciacion", ConsultasFinController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model}))
 </div>
 <div class="clear-both"></div>
-
 
 @Html.Partial("_reciboTransfCuotas")

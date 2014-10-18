@@ -8,6 +8,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{ if (Model == null || Model.Codigo == 0) {
+       return;
+}}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm()) {

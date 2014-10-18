@@ -1,0 +1,22 @@
+﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+
+@{
+    bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+    ViewBag.PagosSoloConsulta = modoConsulta;
+}
+
+<div id="contenedorSeleccionMPCheque">
+    <div>
+        @Html.Partial("_grillaPagosCheque", Model.Pago.Cheques)
+    </div>
+
+    <script type="text/javascript">
+        function OnBeginCallback(s, e) {
+            e.customArgs["idSession"] = '@ViewData["idSession"]';
+            e.customArgs["idParametros"] = '@ViewData["idParametros"]';
+        } 
+    </script>
+</div>

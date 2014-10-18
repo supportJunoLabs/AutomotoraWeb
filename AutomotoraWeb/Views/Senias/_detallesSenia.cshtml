@@ -5,6 +5,7 @@
 
 @{ 
     bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+   
 }
 
 
@@ -43,14 +44,14 @@
                   }}
             </div>
           }}
-        <div class="tab-pane fade" id="senia_tab">
+        <div class="tab-pane fade" id="senia_tab" style="height:600px">
             @Html.Partial("_condicionesSenia", Model)
         </div>
         <div class="tab-pane fade" id="pago_tab">
             @{ if (!modoConsulta) {
-                @Html.Partial("_pagoEstandar", Model.Senia)
+                @Html.Partial("_pagoEstandar", Model.Senia.Pago)
                } else {
-                @Html.Partial("_pagoEstandarConsulta", Model.Senia)
+                @Html.Partial("_pagoEstandarConsulta", Model.Senia.Pago)
                }}
         </div>
         @{if (Automotora.GestionarPromesas()) {
@@ -65,8 +66,23 @@
 <div class="btn-toolbar">
     <div class="floatRight">
         @{ if (ViewData["idOperacion"].Equals("seniar")) {
-            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Registrar Seña"))
+            @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Registrar Seña").Id("btnConfirmarSenia"))
            }}
     </div>
 </div>
 <div class="clear-both"></div>
+        
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma la seña?", "Aceptar", "Cancelar");
+
+        $("#btnConfirmarSenia").click(function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+ </script>

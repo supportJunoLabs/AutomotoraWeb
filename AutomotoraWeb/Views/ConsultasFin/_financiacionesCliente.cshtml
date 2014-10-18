@@ -7,7 +7,8 @@
     Financiacion
 </div>
 <div class="editor-field editor-field-xlarge xxlarge floatLeft">
-     @{GridLookUpModel gmodel = new GridLookUpModel { Opciones = Model.Cliente.VentasCuotas(), 
+
+     @{GridLookUpModel gmodel = new GridLookUpModel {Opciones = (IEnumerable<Venta>) ViewBag.VentasCliente, 
                             GridLookUpCodigo=Model.Venta.Codigo};}
      @Html.Partial("_selectFinanciacionConsultar", gmodel )
 

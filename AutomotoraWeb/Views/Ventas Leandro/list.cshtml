@@ -1,0 +1,232 @@
+﻿@model AutomotoraWeb.Models.ListadoVentasModel
+@using AutomotoraWeb.Controllers.Sales;
+@using DLL_Backend;
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidades + ": Listado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<style type="text/css">
+    select {
+        width: 130px;
+    }
+
+    .labelAjustable {
+        margin-right: 5px;
+    }
+
+    .separacion {
+        margin-right: 25px;
+    }
+
+    .labelWidth {
+        width: 80px !important;
+    }
+
+    .inputTextWidth {
+        width: 120px;
+    }
+
+    .selectWidth {
+        width: 100px !important;
+    }
+
+    fieldset {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    legend {
+        margin-bottom: 10px;
+    }
+
+        body {
+        line-height:20px;
+    }
+</style>
+
+
+@using (Html.BeginForm()) {
+    @Html.HiddenFor(model => model.idParametros)
+    
+    @Html.ValidationSummary(true)
+    @Html.ValidationSummary("Se han producido errores:")      
+    
+    <div id="filtros" class="block" style="margin-right: 5px">
+        <div class="btn-toolbar botoneraListado">
+            <div class="btn-group">
+                <input type="submit" id="Submit1" title="Listar" class="btn btn-primary" name="btnSubmit" value="Actualizar" />
+            </div>
+            <div class="btn-group" style="margin-left: 10px">
+                <input type="submit" id="Submit2" class="btn btn-primary2-mf" name="btnSubmit" value="Imprimir" />
+            </div>
+        </div>
+        <div id="containerLinea1">
+
+            <div id="filtro_fechas" class="floatLeft">
+                <fieldset id="fieldsetFecha">
+                    <legend>Fecha</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.FiltrarFechas, new { id = "cb_filtrarPeriodo" }) Filtrar Periodo
+                    </div>
+                    <div id="periodo" style="margin-top: 10px;">
+                        <div id="containerDesde">
+                            <div class="floatLeft labelWidth" style="text-align: right; padding-right: 5px;">
+                                <label>Desde</label>
+                            </div>
+                            <div class="floatRight editor-field editor-field-small ">
+                                @Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new { id = "fdesde", @class = "calendarAW floatRight" })
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                        <div id="containerHasta">
+                            <div class="floatLeft labelWidth" style="text-align: right; padding-right: 5px;">
+                                <label>Hasta</label>
+                            </div>
+                            <div class="floatRight editor-field editor-field-small">
+                                @Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new { id = "fhasta", @class = "calendarAW floatRight" })
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtro_estado" class="floatLeft">
+                <fieldset id="fieldsetEstado">
+                    <legend>Estado</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.Filtro.VendidoEntregado) Finalizadas
+                    </div>
+                    <div>
+                        @Html.CheckBoxFor(model => model.Filtro.VendidoPendienteEntrega) Pendiente Entrega
+                    </div>
+                    <div>
+                        @Html.CheckBoxFor(model => model.Filtro.Anulada) Anuladas
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtro_sucursal" class="floatLeft">
+                <fieldset id="fieldsetSucursal">
+                    <legend>Sucursal</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.FiltrarSucursal, new { id = "cb_filtrarSucursal" }) Filtrar Sucursal
+                    </div>
+                    <div style="margin-top: 10px;" id="sucursales">
+                        @Html.DropDownListFor(model => model.Filtro.Sucursal.Codigo, new SelectList(ViewBag.SucursalesListado, "Codigo", "Nombre"))
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtro_cliente" class="floatLeft">
+                <fieldset id="fieldsetcliente">
+                    <legend>Cliente</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.FiltrarCliente, new { id = "cb_filtrarCliente" }) Filtrar Cliente
+                    </div>
+                    <div style="margin-top: 10px;" id="clientes">
+                        @Html.DropDownListFor(model => model.Filtro.Cliente.Codigo, new SelectList(ViewBag.ClientesListado, "Codigo", "Nombre"))
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtro_vendedor" class="floatLeft">
+                <fieldset id="fieldsetVendedor">
+                    <legend>Vendedor</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.FiltrarVendedor, new { id = "cb_filtrarVendedores" }) Filtrar Vendedor
+                    </div>
+                    <div style="margin-top: 10px;" id="vendedores">
+                        @Html.DropDownListFor(model => model.Filtro.Vendedor.Codigo, new SelectList(ViewBag.VendedoresListado, "Codigo", "Nombre"))
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <div class="clear-both"></div>
+
+        </div>
+
+        <div id="containerLinea2">
+
+            <div id="filtro_categoria" class="floatLeft">
+                <fieldset id="fieldsetCategoria">
+                    <legend>Categoria</legend>
+                    <div>
+                        @Html.RadioButtonFor(model => model.Filtro.VehiculoFiltro.Categoria, VehiculoFiltro.VHC_CATEGORIA_LISTADO.TODOS)  Todos
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => model.Filtro.VehiculoFiltro.Categoria, VehiculoFiltro.VHC_CATEGORIA_LISTADO.NUEVOS)  Nuevos
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => model.Filtro.VehiculoFiltro.Categoria, VehiculoFiltro.VHC_CATEGORIA_LISTADO.USADOS)  Usados
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtro_combustible" class="floatLeft">
+                <fieldset id="fieldsetCombustible">
+                    <legend>Combustible</legend>
+                    <div>
+                        @Html.CheckBoxFor(model => model.FiltrarCombustible, new { id = "cb_filtrarCombustible" }) Filtrar Tipo Combustible
+                    </div>
+                    <div class="editor-field" style="margin-top: 10px;" id="combustibles">
+                        @Html.DropDownListFor(model => model.Filtro.VehiculoFiltro.TipoCombustible.Codigo, new SelectList(ViewBag.TiposComubstiblesListado, "Codigo", "Descripcion"))
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="filtros_otros" class="floatLeft">
+                <fieldset id="fieldsetotros">
+                    <legend>Otros Filtros</legend>
+                    <div id="containerMarca" class=" floatLeft separacion">
+                        <div class="floatLeft labelAjustable">
+                            <label>Marca</label>
+                        </div>
+                        <div class="editor-field floatRight">
+                            @Html.TextBoxFor(model => model.Filtro.VehiculoFiltro.Marca, new { @class = "inputTextWidth" })
+                        </div>
+                    </div>
+
+                    <div id="containerModelo" class="floatLeft separacion">
+                        <div class="floatLeft labelAjustable">
+                            <label>Modelo</label>
+                        </div>
+                        <div class="editor-field floatRight">
+                            @Html.TextBoxFor(model => model.Filtro.VehiculoFiltro.Modelo, new { @class = "inputTextWidth" })
+                        </div>
+                    </div>
+
+                    <div id="containerAnio" class="floatLeft separacion">
+                        <div class="floatLeft labelAjustable">
+                            <label>Año</label>
+                        </div>
+                        <div class="editor-field  floatRight ">
+                            @Html.TextBoxFor(model => model.Filtro.VehiculoFiltro.Anio, new { @class = " input-mini alinearDerecha" })
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="clear-both"></div>
+
+        </div>
+
+    </div>
+}
+
+<div id="divGrilla">
+    @Html.Partial("_reportGrilla", Model)
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="/scripts/AutomotoraWeb/VentasListado.js"></script>
+}
+
+

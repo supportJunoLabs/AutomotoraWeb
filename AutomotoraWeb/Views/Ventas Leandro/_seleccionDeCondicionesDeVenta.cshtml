@@ -4,6 +4,10 @@
 @using AutomotoraWeb.Models;
 
 
+@{ bool cambiarSucursal = ViewBag.Multisucursal;
+   bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+}
+
 <div>
 
     <div class="display-label-90">
@@ -59,7 +63,7 @@
                 @Html.LabelForRequired(model => model.Sucursal)
             </div>
             <div class="editor-field editor-field-large">
-                @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, false,
+                @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, !cambiarSucursal || modoConsulta,
                             model => model.Sucursal.Nombre,
                             new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null, new { id = "ddlSucursal" })
                 @Html.ValidationMessageFor(model => model.Sucursal)

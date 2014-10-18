@@ -6,6 +6,8 @@
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@{ if (ViewData["idParametros"]==null || (int)ViewData["idParametros"]==0) { return; }}
+
 <div class="btn-toolbar">
     @(Html.Bootstrap().ActionLinkButton("Consulta Vale", "ConsultaVale", ValesController.CONTROLLER).Class("btn btn-default").RouteValues(new{id=Model.Vale.Codigo}))
 </div>

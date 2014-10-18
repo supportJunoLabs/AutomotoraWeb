@@ -1,0 +1,90 @@
+﻿@model AutomotoraWeb.Models.VentaAnulacionModel
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Helpers;
+
+@{ bool cambiarSucursal = ViewBag.Multisucursal;}
+
+<div class="dataLine">
+    <div class="display-label">
+        Fecha
+    </div>
+    <div class="editor-field editor-field-medium">
+        @{ if (Automotora.AdmiteOtrasFechas()) {
+            @Html.TextBoxFor(model => model.VentaDev.Fecha, "{0:dd/MM/yyyy}", new { @class = "calendarAW" })
+            @Html.ValidationMessageFor(model => model.VentaDev.Fecha)
+           } else {
+            @Html.TextBoxFor(model => model.VentaDev.Fecha, "{0:dd/MM/yyyy}", new { disabled = "disabled" })    
+           }}
+    </div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label">
+        Importe Devolucion
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.DdlOrDisplayImporteFor(model => model.VentaDev.Importe, "VentaDev.Importe", false)
+        @Html.ValidationMessageFor(model => model.VentaDev.Importe.Monto)
+    </div>
+    <div class="clear-both"></div>
+</div>
+<div class="clear-both"></div>
+
+<div class="dataLine">
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.VentaDev.Sucursal)
+    </div>
+    <div class="editor-field editor-field-medium medium renglon-alto">
+        @Html.DdlOrDisplayFor(model => model.VentaDev.Sucursal.Codigo, !cambiarSucursal, model => model.VentaDev.Sucursal.Nombre,
+                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                new { id = "ddlSucursales", @class = "large" })        
+        @Html.ValidationMessageFor(model => model.VentaDev.Sucursal)
+    </div>
+</div>
+<div class="clear-both"></div>
+
+
+<div class="dataLine">
+    <div class="display-label ">
+        @Html.LabelForRequired(model => model.VentaDev.Observaciones)
+    </div>
+    <div class="editor-field editor-field-xxlarge">
+        @Html.TextAreaOrDisplayFor(model => model.VentaDev.Observaciones, false, new { style = "width: 530px; height: 60px" })
+        @Html.ValidationMessageFor(model => model.VentaDev.Observaciones)
+
+    </div>
+</div>
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Devolucion en Efectivo</div>
+<div class="clear-both"></div>
+ @Html.Partial("_grillaDevolucionEfectivo", Model.VentaDev.Pago.Efectivos)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Devolucion Cheques Recibidos</div>
+<div class="clear-both"></div>
+@Html.Partial("_devolucionCheques", Model)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Devolucion mediante Cheques Emitidos</div>
+<div class="clear-both"></div>
+    @*La de shared*@
+    @Html.Partial("_grillaPagosChequesEmitidos", Model.VentaDev.Pago.ChequesEmitidos)
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+
+<div class="clear-both"></div>

@@ -9,6 +9,7 @@ using AutomotoraWeb.Utils;
 using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.Parameters;
 using AutomotoraWeb.Controllers.General;
+using AutomotoraWeb.Services;
 
 namespace AutomotoraWeb.Controllers.Financing {
     public class CajaController : FinancingController {
@@ -19,7 +20,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Monedas = Moneda.Monedas;
             ViewBag.Financistas = Financista.FinancistasTodos;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -29,10 +30,11 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region Listados
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
             ListadoCajasModel model = new ListadoCajasModel();
             try {
-                string s = SessionUtils.generarIdVarSesion("ListadoCaja", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoCaja", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
@@ -51,9 +53,9 @@ namespace AutomotoraWeb.Controllers.Financing {
             try{
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
-            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(model.Filtro.Sucursal));
-            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(model.Filtro.Financista));
-            this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(model.Filtro.Moneda));
+            this.eliminarValidacionesIgnorables("Filtro.Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            this.eliminarValidacionesIgnorables("Filtro.Financista", MetadataManager.IgnorablesDDL(new Financista()));
+            this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             if (ModelState.IsValid) {
                 if (model.Accion == ListadoCajasModel.ACCION.IMPRIMIR) {
                     return this.Report(model);
@@ -85,13 +87,16 @@ namespace AutomotoraWeb.Controllers.Financing {
 
 
         private ListadoMovimientosCaja _obtenerListado(ListadoCajasModel model) {
+            Usuario usuario = getUsuario();
+            //bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
             model.AcomodarFiltro();
-            return ListadoMovimientosCaja.obtenerListado(model.Filtro);
+            ListadoMovimientosCaja listado = ListadoMovimientosCaja.obtenerListado(model.Filtro, usuario);
+            //para reflejar el periodo por si hubo restriccion por infoantigua
+            model.Desde = model.Filtro.Desde;
+            model.Hasta = model.Filtro.Hasta;
+            return listado;
         }
 
-        #endregion
-
-        #region Reportes
         public ActionResult Report(ListadoCajasModel model) {
             return View("report", model);
         }
@@ -149,13 +154,14 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         #region EntradaSalida
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Entrada() {
             TRCajaEntrada tr = new TRCajaEntrada();
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
             tr.Fecha = DateTime.Now.Date;
 
-            string idSession = SessionUtils.generarIdVarSesion("EntradaCaja", Session[SessionUtils.SESSION_USER].ToString())+"|";
+            string idSession = SessionUtils.generarIdVarSesion("EntradaCaja", getUserName())+"|";
             ViewData["idSession"] = idSession;
             Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
             Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
@@ -167,7 +173,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         [HttpPost]
         public ActionResult Entrada(TRCajaEntrada tr, string idSession) {
             ViewData["idSession"] = idSession;
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL( new Sucursal()));
             
             if (ModelState.IsValid) {
                 try {
@@ -186,13 +192,14 @@ namespace AutomotoraWeb.Controllers.Financing {
             return View("Entrada", tr);
         }
 
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Salida() {
             TRCajaSalida tr = new TRCajaSalida();
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
             tr.Fecha = DateTime.Now.Date;
 
-            string idSession = SessionUtils.generarIdVarSesion("SalidaCaja", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("SalidaCaja", getUserName()) + "|";
             ViewData["idSession"] = idSession;
             Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
 
@@ -218,7 +225,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         [HttpPost]
         public ActionResult Salida(TRCajaSalida tr, string idSession, string chequesIds) {
             ViewData["idSession"] = idSession;
-            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(tr.Sucursal));
+            this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
+            Usuario u = getUsuario();
 
             if (ModelState.IsValid) {
                 try {
@@ -230,7 +238,7 @@ namespace AutomotoraWeb.Controllers.Financing {
                         if (!string.IsNullOrWhiteSpace(s)) {
                             Cheque och = new Cheque();
                             och.Codigo = Int32.Parse(s);
-                            och.Consultar();
+                            och.Consultar(u);
                             tr.Pago.AgregarCheque(och);
                         }
                     }
@@ -246,12 +254,23 @@ namespace AutomotoraWeb.Controllers.Financing {
             return View("Entrada", tr);
         }
 
+        //private bool TransaccionConsultable(Transaccion tr) {
+        //    if (tr == null || tr.NroRecibo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
+
         public ActionResult ReciboCaja(int id) {
             try {
-                //Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id);
                 ViewData["idParametros"] = id;
+                Usuario u = getUsuario();
+                Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id, u);
                 return View("ReciboCaja");
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -259,7 +278,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         private XtraReport _generarReciboCaja(int id) {
-            Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id,u);
             List<Transaccion> ll = new List<Transaccion>();
             ll.Add(tr);
             XtraReport rep = new DXReciboEntradaSalidaCaja();

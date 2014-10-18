@@ -1,0 +1,50 @@
+﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Controllers.General;
+@using DLL_Backend;
+@using AutomotoraWeb.Controllers.Sales;
+
+@{
+    ViewBag.Title = ViewBag.NombreEntidad + ": Consulta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .botonDocumento {
+        margin-right:10px;
+    }
+</style>
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+CONSULTA VENTA SIN IMPLEMENTAR
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+
+    <div class="block">
+        <div >
+           <p class="block-heading"> Documentación</p>
+        </div>
+        <div class="block-body">
+            @Html.Bootstrap().ActionLinkButton("Comprobante", "DocComprobanteVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+            @{
+                if (Model.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "CV_VENTA" })) {
+                    @Html.Bootstrap().ActionLinkButton("Compromiso Compraventa", "DocCompromisoVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+                }
+                if (Model.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "CUOTA_VENTA" })) {
+                    @Html.Bootstrap().ActionLinkButton("Conformes", "DocConformesVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+                }
+                 if (Model.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "CUPONES_VENTA" })) { 
+                    @Html.Bootstrap().ActionLinkButton("Cupones", "DocCuponesVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+                }
+                if (Model.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "TITULO_VENTA" })) {
+                    @Html.Bootstrap().ActionLinkButton("Titulo", "DocTituloVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+                 }
+                 if (Model.DocumentosLegalesGenerables().Contains(new DocumentoLegal { Codigo = "VALE_VENTA" })) {
+                    @Html.Bootstrap().ActionLinkButton("Vales", "DocValesVenta", DocumentacionLegalController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-default botonDocumento")
+
+                }
+            }
+        </div>
+    </div>
+
+}

@@ -2,6 +2,8 @@
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Sales;
+@using AutomotoraWeb.Controllers.Sistema;
 
 @{ bool cambiarSucursal = ViewBag.Multisucursal;
    PrecondicionesOperacion cond = Model.Vehiculo.ObtenerPrecondicionesACV();
@@ -23,6 +25,11 @@
             <div class="editor-field editor-field-medium ">
                 @Model.Vehiculo.Ficha
             </div>
+            @{if (modoConsulta) {
+                <div style="margin-left: 30px" class="floatLeft">
+                    @Html.Bootstrap().ActionLinkButton("Consulta Vehiculo", "Details", VehiculosController.CONTROLLER).RouteValues(new { id = Model.Vehiculo.Codigo }).Class("btn btn-info btn-small")
+                </div>
+              }}
         </div>
         <div class="clear-both"></div>
 
@@ -84,13 +91,21 @@
                 @Html.LabelFor(model => model.Vehiculo.Status)
             </div>
             <div class="editor-field editor-field-medium">
+                <strong>
                 @Model.Vehiculo.DescripcionEstado
+                </strong>
             </div>
             @{ if (Model.Vehiculo != null && Model.Vehiculo.Codigo > 0 && Model.Vehiculo.TieneSeniaActiva()) {
                 <div class="floatLeft " style="padding-left: 20px;">
                     @(Html.Bootstrap().ActionLinkButton("Ver Seña", "Details", "Senias").RouteValues(new { id = Model.Vehiculo.ObtenerSenia().Codigo }).Class("btn-info  btn-small"))
                 </div>
-               }}
+                }
+                if (Model.Vehiculo!=null && Model.Vehiculo.Codigo>0 && Model.Vehiculo.TieneVentaActiva()){
+                        <div class="floatLeft " style="padding-left: 20px;">
+                    @(Html.Bootstrap().ActionLinkButton("Ver Venta", "Details", "Ventas").RouteValues(new { id = Model.Vehiculo.ObtenerVenta().Codigo }).Class("btn-info  btn-small"))
+                </div>
+                }
+            }
         </div>
         <div class="clear-both"></div>
 
@@ -128,11 +143,15 @@
         <div class="display-label">
             @Html.LabelForRequired(model => model.Cliente)
         </div>
-        <div class="editor-field editor-field-medium medium renglon-alto">
-            @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, cond.ClienteObligatorio || modoConsulta, model => model.Cliente.Nombre,
+        <div class="editor-field editor-field-medium medium">
+            @{ if (!modoConsulta) {
+                @Html.DdlOrDisplayFor(model => model.Cliente.Codigo, cond.ClienteObligatorio || modoConsulta, model => model.Cliente.Nombre,
                 new SelectList(ViewBag.Clientes, "Codigo", "Nombre"), null,
                 new { id = "ddlClientes", @class = "large" })
-            @Html.ValidationMessageFor(model => model.Cliente)
+                @Html.ValidationMessageFor(model => model.Cliente)
+               } else {
+                @Html.Bootstrap().ActionLink(Model.Cliente.Nombre, "Details", ClientesController.CONTROLLER).RouteValues(new { id = Model.Cliente.Codigo })
+               }}
         </div>
     </div>
     <div class="clear-both"></div>
@@ -141,11 +160,15 @@
         <div class="display-label">
             @Html.LabelForRequired(model => model.Vendedor)
         </div>
-        <div class="editor-field editor-field-medium medium renglon-alto">
-            @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, cond.VendedorObligatorio || modoConsulta, model => model.Vendedor.Nombre,
-                new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
-                new { id = "ddlVendedores", @class = "large" })
-            @Html.ValidationMessageFor(model => model.Vendedor)
+        <div class="editor-field editor-field-medium medium">
+            @{ if (!modoConsulta) {
+                    @Html.DdlOrDisplayFor(model => model.Vendedor.Codigo, cond.VendedorObligatorio || modoConsulta, model => model.Vendedor.Nombre,
+                            new SelectList(ViewBag.VendedoresHabilitados, "Codigo", "Nombre"), null,
+                            new { id = "ddlVendedores", @class = "large" })
+                    @Html.ValidationMessageFor(model => model.Vendedor)
+               } else {
+                     @Html.Bootstrap().ActionLink(Model.Vendedor.Nombre, "Details", VendedoresController.CONTROLLER).RouteValues(new { id = Model.Vendedor.Codigo })
+               }}
         </div>
     </div>
     <div class="clear-both"></div>
@@ -166,14 +189,31 @@
         <div class="display-label">
             @Html.LabelForRequired(model => model.Sucursal)
         </div>
-        <div class="editor-field editor-field-medium medium renglon-alto">
-            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, !cambiarSucursal || modoConsulta, model => model.Sucursal.Nombre,
-                new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
-                new { id = "ddlSucursales", @class = "large" })
-            @Html.ValidationMessageFor(model => model.Sucursal)
+        <div class="editor-field editor-field-medium medium">
+            @{ if (modoConsulta) {
+                     @Html.Bootstrap().ActionLink(Model.Sucursal.Nombre, "Details", SucursalesController.CONTROLLER).RouteValues(new { id = Model.Sucursal.Codigo })
+            }else{
+                @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, !cambiarSucursal || modoConsulta, model => model.Sucursal.Nombre,
+                    new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
+                    new { id = "ddlSucursales", @class = "large" })
+                @Html.ValidationMessageFor(model => model.Sucursal)
+            }}
         </div>
     </div>
     <div class="clear-both"></div>
+
+    <div class="dataLine">
+        <div class="display-label">
+             Estado
+        </div>
+        <div class="editor-field editor-field-medium medium">
+            <strong>
+            @(Model.DescripcionEstado)
+           </strong>
+        </div>
+    </div>
+    <div class="clear-both"></div>
+
 
     <div class="dataLine">
         <div class="display-label ">
@@ -192,8 +232,9 @@
 @{ if (!modoConsulta) {
     <div class="btn-toolbar">
         <div class="floatRight">
-            @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Registrar Anticipo"))
+            @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Registrar Anticipo").Id("btnConfirmarAnticipo"))
         </div>
     </div>
     <div class="clear-both"></div>
    }}
+

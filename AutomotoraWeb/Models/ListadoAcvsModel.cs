@@ -14,6 +14,7 @@ namespace AutomotoraWeb.Models {
         public bool FiltrarSucursal { get; set; }
         public bool FiltrarCliente { get; set; }
         public bool FiltrarVendedor { get; set; }
+        public Usuario Usuario { get; set; }
 
         [Display(Name = "Codigo")]
         public string CodigoVhc { get; set; }
@@ -65,21 +66,21 @@ namespace AutomotoraWeb.Models {
                 this.Filtro.Cliente.Consultar(); //para completar el nombre 
             }
             if (this.Filtro.Vehiculo != null) {
-                this.Filtro.Vehiculo.Consultar(); //para terminar de  completar la ficha
+                this.Filtro.Vehiculo.Consultar(Usuario); //para terminar de  completar la ficha
             }
         }
 
-        public void AcomodarFiltroActivosVehiculo(int idvehiculo) {
-            FiltrarCliente = false;
-            FiltrarVendedor = false;
-            FiltrarFechas = false;
-            FiltrarSucursal = false;
-            Filtro.Vehiculo = new Vehiculo();
-            Filtro.Vehiculo.Codigo = idvehiculo;
-            CodigoVhc = idvehiculo.ToString();
-            Filtro.TipoEstado = AcuentaVentaFiltro.ACV_ESTADO.VIGENTE;
-            AcomodarFiltro();
-        }
+        //public void AcomodarFiltroActivosVehiculo(int idvehiculo) {
+        //    FiltrarCliente = false;
+        //    FiltrarVendedor = false;
+        //    FiltrarFechas = false;
+        //    FiltrarSucursal = false;
+        //    Filtro.Vehiculo = new Vehiculo();
+        //    Filtro.Vehiculo.Codigo = idvehiculo;
+        //    CodigoVhc = idvehiculo.ToString();
+        //    Filtro.TipoEstado = AcuentaVentaFiltro.ACV_ESTADO.VIGENTE;
+        //    AcomodarFiltro();
+        //}
 
 
         public string detallesFiltro() {
@@ -108,9 +109,10 @@ namespace AutomotoraWeb.Models {
             return s;
         }
 
-        public void obtenerListado() {
+
+        public void GenerarListado(Usuario usuario) {
             AcomodarFiltro();
-            Resultado = ACuentaVenta.ACuentaVentas(this.Filtro);
+            Resultado = ACuentaVenta.AnticiposListado(this.Filtro, usuario);
         }
     }
 }

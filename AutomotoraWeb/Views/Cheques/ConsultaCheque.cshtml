@@ -12,8 +12,15 @@
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@{ if (Model == null || Model.Codigo == 0) {
+       return;
+}}
 
 @Html.HiddenFor(m => m.Codigo)
+
+@{ if (Model==null || Model.Codigo==0){
+       return;
+}}
 
 <div id="filtros" class="block">
     <div class="btn-toolbar botoneraListado">
@@ -84,12 +91,14 @@
 <div class="clear-both"></div>
 
 <div class="display-label">
-    @Html.LabelForRequired(model => model.DescripcionEstado)
+   Estado
 </div>
 <div class="editor-field ">
+    <div>
     <strong>
-        <div>@Html.DisplayFor(model => model.DescripcionEstado)</div>
+        @Html.DisplayFor(model => model.DescripcionEstado)
     </strong>
+        </div>
     <div>@Html.DisplayFor(model => model.DescripcionAdicionalDestino)</div>
 </div>
 <div class="clear-both"></div>

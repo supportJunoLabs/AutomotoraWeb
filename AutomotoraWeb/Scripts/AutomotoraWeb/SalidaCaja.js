@@ -13,6 +13,8 @@ function OnBeginCallbackCheques(s, e) {
 
 
 $(document).ready(function () {
+    inicializarModal("Confirmacion", "Confirma salida de caja?", "Aceptar", "Cancelar");
+
     $("#btn_confirmar").click(function () {
         gridCheques.GetSelectedFieldValues("Codigo", CodigosSeleccionadosCallBack);
     });
@@ -54,18 +56,19 @@ function cambiarSucursal() {
 
 function CodigosSeleccionadosCallBack(values) {
     //al presionar el boton transferir
-    //alert("hola");
     var selectedIDs;
     selectedIDs = "";
     for (var index = 0; index < values.length; index++) {
         selectedIDs += values[index] + ",";
     }
-    //alert(selectedIDs);
     $("#chequesIds").val(selectedIDs);
-    //alert($("#chequesIds").val());
-    $('form#formPrincipal').submit();
+    $('#myModal').modal('show');
+    //$('form#formPrincipal').submit();
 }
 
+function callBackAceptar() {
+    $('form#formPrincipal').submit();
+}
 
 function GetSelectedFieldValuesCallback(values) {
     SelectedRows.BeginUpdate();

@@ -34,10 +34,10 @@ namespace AutomotoraWeb.Models {
             Accion = ACCIONES.ACTUALIZAR;
         }
 
-        public void obtenerListado (){
+        public void obtenerListado (Usuario u){
             AcomodarFiltro();
             Resultado = new ListadoCheques();
-            Resultado.generarListado(Filtro);
+            Resultado.obtenerListado(Filtro, u);
         }
 
         private void AcomodarFiltro() {

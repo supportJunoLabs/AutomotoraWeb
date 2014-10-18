@@ -31,7 +31,7 @@
         </div>
         <div class="floatLeft" style="padding-left: 20px;">
             <a href="#" id="abtn_verCheque">
-                  @Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Consulta Cheque").Id("btn_verCheque")
+                @Html.Bootstrap().Button().Class("btn btn-info btn-small").Text("Consulta Cheque").Id("btn_verCheque")
             </a>
         </div>
         @Html.HiddenFor(model => model.Cheque.Codigo, new { id = "codigoCheque" })
@@ -50,8 +50,8 @@
         <div class="display-label">
             @Html.LabelForRequired(model => model.Sucursal)
         </div>
-        <div class="editor-field editor-field-xlarge xxlarge  @(modoConsulta?"":"renglon-alto")">
-            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta||!cambiarSucursal, model => model.Sucursal.Nombre,
+        <div class="editor-field editor-field-xlarge xxlarge  @(modoConsulta ? "" : "renglon-alto")">
+            @Html.DdlOrDisplayFor(model => model.Sucursal.Codigo, modoConsulta || !cambiarSucursal, model => model.Sucursal.Nombre,
                 new SelectList(ViewBag.Sucursales, "Codigo", "Nombre"), null,
                 new { id = "ddlSucursales", @class = "large" })
             @Html.ValidationMessageFor(model => model.Sucursal)
@@ -71,9 +71,39 @@
     
     <div class="espacio2"></div>
     <div class="btn-toolbar">
-        @(Html.Bootstrap().SubmitButton().Class("btn btn-primary icon-save").Text(" Cheque Rechazado"))
+        @(Html.Bootstrap().Button().Class("btn btn-primary icon-save").Text(" Cheque Rechazado").Id("btnRechazar"))
     </div>     
 
 }
 
-<script src="~/Scripts/AutomotoraWeb/RechazarCheque.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        inicializarModal("Confirmacion", "Confirma marcar cheque como rechazado por el banco?", "Aceptar", "Cancelar");
+        $("#btnRechazar").click( function () {
+            $('#myModal').modal('show');
+        });
+    });
+
+    function callBackAceptar() {
+        $('form#formPrincipal').submit();
+    }
+
+    function chequeSelected(s, e) {
+        //alert("hola");
+        var g = gridCheques.GetGridView();  //obtener referencia a la grilla
+        //var valor = g.GetRowKey(g.GetFocusedRowIndex()); //obtener el valor elegido
+        var valor = s.GetRowKey(e.visibleIndex);
+        //alert(valor);
+        $("#codigoCheque").val(valor);
+        $("#abtn_verCheque").prop("href", "/Cheques/ConsultaCheque/" + valor);
+        //g.GetRowValues(g.GetFocusedRowIndex(), 'DescripcionAdicionalDestino', MostrarDestinoAnt);
+        g.GetRowValues(e.visibleIndex, 'DescripcionAdicionalDestino', MostrarDestinoAnt);
+    }
+
+    function MostrarDestinoAnt(value) {
+        //alert(value);
+        $("#destinoAnt").html(value);
+    }
+
+</script>

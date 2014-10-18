@@ -1,0 +1,31 @@
+﻿@model DLL_Backend.Venta
+@using DLL_Backend;
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Seña</div>
+<div class="clear-both"></div>
+<div id="containerSenias">
+</div>
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+<div class="cabezalBloque" style="margin-bottom: 8px">Anticipos</div>
+<div class="clear-both"></div>
+<div id="containerACVs"></div>
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>
+
+@*<div class="cabezalBloque" style="margin-bottom: 8px">Pago</div>
+<div class="clear-both"></div>
+<div id="pagosSeniaACVs">
+    @if (Model.Vehiculo!=null && Model.Vehiculo.Codigo != 0) {
+        @Html.Partial("_pagoEstandarConsulta", Model.Vehiculo.pagosTransaccionesPreventa() )
+    } else { 
+        @Html.Partial("_pagoEstandarConsulta", new PagoTransaccion())
+    }
+</div>
+<div class="clear-both"></div>
+<div class="espacio2"></div>
+<div class="clear-both"></div>*@
+

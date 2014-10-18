@@ -8,6 +8,10 @@
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@{ if (Model == null || Model.Codigo == 0) {
+       return;
+}}
+
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")

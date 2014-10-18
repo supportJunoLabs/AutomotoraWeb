@@ -28,6 +28,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region mantenimiento
 
+        //solo se ven los cheques emitidos pendientes.
         public ActionResult Show(int? id) {
             CuentaBancaria c = new CuentaBancaria();
             try {
@@ -150,8 +151,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         [HttpPost]
         public ActionResult Create(ChequeEmitido ch) {
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(ch.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(ch.Cuenta));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             if (ModelState.IsValid) {
                 try {
                     ch.Agregar();
@@ -167,8 +168,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         [HttpPost]
         public ActionResult Edit(ChequeEmitido ch) {
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(ch.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(ch.Cuenta));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
 
             if (ModelState.IsValid) {
                 try {
@@ -186,13 +187,13 @@ namespace AutomotoraWeb.Controllers.Bank {
         [HttpPost]
         public ActionResult Delete(ChequeEmitido ch) {
             ViewBag.SoloLectura = true;
-            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(ch.Importe.Moneda));
-            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(ch.Cuenta));
+            this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
+            this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
 
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     ch.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW, new { id = ch.Cuenta.Codigo });
                 } catch (UsuarioException exc) {
@@ -206,17 +207,24 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #endregion
 
-        #region listadoyreporte
+        #region listados
+
+        private void _obtenerListado(ListadoChequesEmitidosModel model) {
+            Usuario usuario = getUsuario();
+            //bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+            model.obtenerListado(usuario);
+        }
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
+         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult List() {
             try {
                 ListadoChequesEmitidosModel model = new ListadoChequesEmitidosModel();
-                string s = SessionUtils.generarIdVarSesion("ListadoChequesEmitidos", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoChequesEmitidos", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
-                model.obtenerListado();
+                _obtenerListado(model);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -232,13 +240,13 @@ namespace AutomotoraWeb.Controllers.Bank {
             Session[model.idParametros] = model; //filtros actualizados
             ViewData["idParametros"] = model.idParametros;
             //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
-            this.eliminarValidacionesIgnorables("Filtro.Cuenta", MetadataManager.IgnorablesDDL(model.Filtro.Cuenta));
-            this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(model.Filtro.Moneda));
+            this.eliminarValidacionesIgnorables("Filtro.Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
+            this.eliminarValidacionesIgnorables("Filtro.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             if (ModelState.IsValid) {
                 if (model.Accion == ListadoChequesEmitidosModel.ACCIONES.IMPRIMIR) {
                     return this.Report(model);
                 }
-                model.obtenerListado();
+                _obtenerListado(model);
             }
             return View(model);
             } catch (UsuarioException exc) {
@@ -252,7 +260,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult ListadoGrilla(string idParametros) {
             ListadoChequesEmitidosModel model = (ListadoChequesEmitidosModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            _obtenerListado(model);
             return PartialView("_listCheques", model.Resultado);
         }
 
@@ -262,7 +270,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         private XtraReport _generarReporte(string idParametros) {
             ListadoChequesEmitidosModel model = (ListadoChequesEmitidosModel)Session[idParametros];
-            model.obtenerListado();
+            _obtenerListado(model);
             List<ListadoChequesEmitidosModel> ll = new List<ListadoChequesEmitidosModel>();
             ll.Add(model);
             XtraReport rep = new DXListadoChequesEmitidos();
@@ -304,24 +312,21 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         [HttpPost]
-        public ActionResult EjecutarDebitar() {
+        public JsonResult EjecutarDebitar() {
             try {
-                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                string IP = HttpContext.Request.UserHostAddress;
+                string userName = getUserName();
+                string IP = getIP();
                 int cant = ChequeEmitido.DebitarVencidos(userName, IP);
-                ViewBag.ErrorCode = "0";
-                if (cant == 0) {
-                    ViewBag.ErrorMessage = "No se encontraron cheques emitidos pendientes vencidos.";
-                } else if (cant == 1) {
-                    ViewBag.ErrorMessage = "Ejecución exitosa. Se generó 1 débito.";
+                
+                string s = "No se encontraron cheques emitidos pendientes vencidos";
+                if (cant == 1) {
+                    s = "Ejecución exitosa. Se generó 1 débito";
                 } else {
-                    ViewBag.ErrorMessage = "Ejecución exitosa. Se generaron " + cant + " débitos.";
+                    s = "Ejecución exitosa. Se generaron " + cant + " débitos";
                 }
-                return View("debitar");
+                return Json(new { Result = "OK", Mensaje = s });
             } catch (UsuarioException exc) {
-                ViewBag.ErrorCode = exc.Codigo;
-                ViewBag.ErrorMessage = exc.Message;
-                return View("debitar");
+                return Json(new { Result = "ERROR", Mensaje = exc.Message });
             }
         }
 

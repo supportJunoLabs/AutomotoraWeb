@@ -1,0 +1,143 @@
+﻿@model DLL_Backend.Venta
+@using AutomotoraWeb.Helpers;
+@using DLL_Backend;
+@using AutomotoraWeb.Models;
+@using AutomotoraWeb.Controllers.Financing;
+
+@{ 
+    bool modoConsulta = ((bool?)ViewBag.SoloLectura) ?? false;
+}
+
+<div id="contenedorSeleccionMPFinanciacion">
+    <div class="display-label">
+        Importe Financiado
+    </div>
+    <div class="editor-field editor-field-small" style="margin-right: 30px">
+        @Html.DdlOrDisplayImporteFor(model => model.Financiacion.MontoFinanciado, "Financiacion.MontoFinanciado", modoConsulta)
+        @Html.ValidationMessageFor(model => model.Financiacion.MontoFinanciado.Monto)
+    </div>
+
+    <div class="display-label-small">
+        @Html.LabelForRequired(model => model.Financiacion.EntidadFinanciera)
+    </div>
+    <div class="editor-field editor-field-small">
+        @Html.EditorOrDisplayFor(model => model.Financiacion.EntidadFinanciera, modoConsulta)
+        @Html.ValidationMessageFor(model => model.Financiacion.EntidadFinanciera)
+    </div>
+
+    <div class="clear-both"></div>
+
+    <div class="display-label">
+        @Html.LabelForRequired(model => model.Financiacion.CantCuotas)
+    </div>
+    <div class="editor-field editor-field-small" style="margin-right: 30px">
+        @Html.EditorOrDisplayFor(model => model.Financiacion.CantCuotas, modoConsulta)
+        @Html.ValidationMessageFor(model => model.Financiacion.CantCuotas)
+    </div>
+    <div class="display-label-mini">
+        @Html.LabelForRequired(model => model.Financiacion.Tasa)
+    </div>
+    <div class="editor-field editor-field-small" style="margin-right: 30px">
+        @Html.EditorOrDisplayFor(model => model.Financiacion.Tasa, modoConsulta)
+        @Html.ValidationMessageFor(model => model.Financiacion.Tasa)
+    </div>
+    
+
+
+    @{ if (!modoConsulta){
+        @(Html.Bootstrap().Button().Text("Cambiar Financiación").Id("cambiarFinanciacion").Style(TwitterBootstrap2.ButtonStyle.Primary))
+        <div id="messageErrorCambiarFinanciacion" style="margin-left: 15px; color: red;"></div>
+    }else{
+       @Html.Bootstrap().ActionLinkButton("Consulta Financiacion", "ConsultaFinanciacion", ConsultasFinController.CONTROLLER).RouteValues(new { id = Model.Codigo }).Class("btn btn-info btn-small")
+    }}
+    <div class="clear-both"></div>
+    <div>
+        @{ if(!modoConsulta){
+                if (Model.Financiacion != null && Model.Financiacion.CuotasOriginales!=null ) {
+                @Html.Partial("_grillaPagosCuota", Model.Financiacion.CuotasOriginales)
+               }else{
+                   @Html.Partial("_grillaPagosCuota", new List<Cuota>())
+               }
+           }else{
+               if (Model.Financiacion != null && Model.Financiacion.CuotasOriginales!=null && Model.Financiacion.CuotasOriginales.Count>0) {
+                   @Html.Partial("_grillaPagosCuota", Model.Financiacion.CuotasOriginales)
+               }
+           }}
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function OnBeginCallback(s, e) {
+        e.customArgs["idSession"] = '@ViewData["idSession"]';
+            e.customArgs["idParametros"] = '@ViewData["idParametros"]';
+        }
+
+        $("#cambiarFinanciacion").click(function () {
+            //alert(1);
+
+            if (_validateImporteCambiarFinanciacion()) {
+                //alert(2);
+                $("#messageErrorCambiarFinanciacion").html("");
+
+                var destino = '/Ventas/cambiarFinanciacion/';
+                //alert(getJsonPagoFinanciacion());
+
+                $.ajax({
+                    url: destino,
+                    type: 'POST',
+                    async: true,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: getJsonPagoFinanciacion(),
+                    success: function (data) {
+                        if (data.Result == "OK") {
+                            grillaPagosCuota.Refresh(); // Se actualiza la grilla
+                        }
+                        else {
+                            var htmlError = "";
+                            for (var i = 0; i < data.ErrorMessage.length; i++) {
+                                htmlError = htmlError + "<div>" + data.ErrorMessage[i] + "</div>";
+                            }
+                            $("#messageErrorCambiarFinanciacion").html(htmlError);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        general_showErrorAction("messageErrorCambiarFinanciacion", textStatus, errorThrown);
+                    }
+                });
+            }
+            else {
+                $("#messageErrorCambiarFinanciacion").html("El monto debe de ser un valor numérico");
+            }
+
+        });
+
+        function _validateImporteCambiarFinanciacion() {
+            var monto = $("#txFinanciacionMontoFinanciadoMonto").val()
+
+            var isDecimal_re = /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;
+            return String(monto).search(isDecimal_re) != -1
+        }
+
+        function getJsonPagoFinanciacion() {
+
+            //alert(3);
+            var idSession = $("#idSession").val();
+            //alert(4);
+            var financiacion = {
+                cantCuotas: parseInt($("#Financiacion_CantCuotas").val()),
+                tasa: parseFloat($("#Financiacion_Tasa").val()),
+                codigoMonedaImporte: parseInt($("#ddlFinanciacionMontoFinanciadoMoneda").val()),
+                montoImporte: parseFloat($("#txFinanciacionMontoFinanciadoMonto").val()),
+                idSession: idSession,
+                fechaVenta: $("#txFechaVenta").val()
+            };
+            //alert(5);
+
+            return JSON.stringify(financiacion);
+        }
+
+</script>
+

@@ -1,27 +1,34 @@
-﻿@model DLL_Backend.Transaccion
+﻿@model DLL_Backend.PagoTransaccion
 
+@{ bool modoConsulta = ViewBag.PagosSoloConsulta ?? false; 
+   }
 
+@{ if (!modoConsulta || Model.Efectivos.Count()>0){
 <div class="cabezalBloque" style="margin-bottom: 8px">Efectivo</div>
 <div class="clear-both"></div>
- @Html.Partial("_grillaPagosEfectivo", Model.Pago.Efectivos)
+ @Html.Partial("_grillaPagosEfectivo", Model.Efectivos)
 <div class="clear-both"></div>
 <div class="espacio2"></div>
 <div class="clear-both"></div>
+}}
 
+@{ if (!modoConsulta || Model.Cheques.Count() > 0) {
 <div class="cabezalBloque" style="margin-bottom: 8px">Cheques</div>
 <div class="clear-both"></div>
- @Html.Partial("_grillaPagosCheque", Model.Pago.Cheques)
+ @Html.Partial("_grillaPagosCheque", Model.Cheques)
 <div class="clear-both"></div>
 <div class="espacio2"></div>
 <div class="clear-both"></div>
-
+}}
+    
+@{ if (!modoConsulta || Model.PagosBanco.Count() > 0) {    
 <div class="cabezalBloque" style="margin-bottom: 8px">Deposito Bancario</div>
 <div class="clear-both"></div>
- @Html.Partial("_grillaPagosMovBanco", Model.Pago.PagosBanco)
+ @Html.Partial("_grillaPagosMovBanco", Model.PagosBanco)
 <div class="clear-both"></div>
 <div class="espacio2"></div>
 <div class="clear-both"></div>
-
+}}
    
 <script type="text/javascript">
     function OnBeginCallback(s, e) {
