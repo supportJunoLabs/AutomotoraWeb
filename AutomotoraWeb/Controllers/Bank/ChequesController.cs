@@ -20,7 +20,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext) {
             base.OnActionExecuting(filterContext);
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -39,18 +39,18 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         private void _obtenerListado(ListadoChequesModel model) {
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
-            model.obtenerListado(verInfoAntigua);
+            Usuario u = getUsuario();
+            //bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+            model.obtenerListado(u);
         }
 
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
-         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ListCheques() {
             ListadoChequesModel model = new ListadoChequesModel();
             try {
-                string s = SessionUtils.generarIdVarSesion("ListadoCheques", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoCheques", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
@@ -135,20 +135,21 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region ConsultaCheque
 
-        private bool ChequeConsultable(Cheque ch) {
-            if (ch == null || ch.Codigo == 0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && ch.Antiguo) {
-                return false;
-            }
-            return true;
-        }
+        //private bool ChequeConsultable(Cheque ch) {
+        //    if (ch == null || ch.Codigo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && ch.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         private Cheque _consultarCheque(int? idCheque) {
             Cheque ch = new Cheque();
             ch.Codigo = idCheque ?? 0;
             if (idCheque != null && idCheque != 0) {
-                ch.Consultar();
+                Usuario u = getUsuario();
+                ch.Consultar(u);
             }
             return ch;
         }
@@ -156,11 +157,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult ConsultaCheque(int? id) {
             try {
                 Cheque ch = _consultarCheque(id);
-                if (!ChequeConsultable(ch)) {
-                    ViewBag.ErrorMessage = "Transaccion antigua ya no se encuentra en linea";
-                    ch = new Cheque();
-                }
-                ViewData["idParametros"] = ch.Codigo;
+               ViewData["idParametros"] = ch.Codigo;
                 return View("ConsultaCheque", ch);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -183,13 +180,12 @@ namespace AutomotoraWeb.Controllers.Bank {
                 }
                 Cheque ch = new Cheque();
                 ch.Codigo = id ?? 0;
-                ch.Consultar();
-                if (!ChequeConsultable(ch)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                ch.Consultar(u);
                 ViewData["idParametros"] = id;
                 return View("ReportCheque", ch);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View("ReportCheque");
@@ -211,10 +207,8 @@ namespace AutomotoraWeb.Controllers.Bank {
         private XtraReport _generarReporteCheque(int idParametros) {
             Cheque ch = new Cheque();
             ch.Codigo = idParametros;
-            ch.Consultar();
-            if (!ChequeConsultable(ch)) {
-                ch = new Cheque();
-            }
+            Usuario u = getUsuario();
+            ch.Consultar(u);
             List<Cheque> ll = new List<Cheque>();
             ll.Add(ch);
             XtraReport rep = new DXReportConsultaCheque();
@@ -231,14 +225,14 @@ namespace AutomotoraWeb.Controllers.Bank {
             return RedirectToAction("Pasar");
         }
 
-         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Pasar() {
             TRChequePasar model = new TRChequePasar();
-            prepararSession(model); 
+            prepararSession(model);
             try {
                 model.TipoDestino = TRChequePasar.TIPO_DESTINO.FINANCISTA;
                 model.Cheque = new Cheque();
-                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                model.Sucursal = (getUsuario()).Sucursal;
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -248,7 +242,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         private void prepararSession(Transaccion tr) {
-            string idSession = SessionUtils.generarIdVarSesion("ChequeEmitido", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("ChequeEmitido", getUserName()) + "|";
             Session[idSession] = tr;
             ViewData["idSession"] = idSession;
             Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
@@ -307,10 +301,11 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult ReciboTransf(int id) {
             try {
-                ViewData["idParametros"] = id;
-                TRChequePasar tr = (TRChequePasar)Transaccion.ObtenerTransaccion(id);
+                Usuario u = getUsuario();
+                TRChequePasar tr = (TRChequePasar)Transaccion.ObtenerTransaccion(id, u);
                 return View("ReciboTransf", tr);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = id;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -318,7 +313,8 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         private XtraReport _generarReciboTransf(int id) {
-            TRChequePasar tr = (TRChequePasar)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRChequePasar tr = (TRChequePasar)Transaccion.ObtenerTransaccion(id, u);
             List<TRChequePasar> ll = new List<TRChequePasar>();
             ll.Add(tr);
             XtraReport rep = new DXReciboTransfCheque();
@@ -350,7 +346,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             try {
                 model.Cheque = new Cheque();
                 model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DEPOSITAR;
-                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                model.Sucursal = (getUsuario()).Sucursal;
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -364,7 +360,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             try {
                 model.Cheque = new Cheque();
                 model.TipoDestino = TRChequeDepositarDescontar.TIPO_DESTINO.DESCONTAR;
-                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                model.Sucursal = (getUsuario()).Sucursal;
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -389,7 +385,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal()));
             if (tr.Importe != null && tr.Importe.Moneda != null) {
-                this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL( new Moneda()));
+                this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda()));
             }
             this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             this.eliminarValidacionesIgnorables("Cheque", MetadataManager.IgnorablesDDL(new Cheque()));
@@ -432,10 +428,12 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         public ActionResult ReciboDeposito(int id) {
             try {
-                TRChequeDepositarDescontar tr = (TRChequeDepositarDescontar)Transaccion.ObtenerTransaccion(id);
+                Usuario u = getUsuario();
+                TRChequeDepositarDescontar tr = (TRChequeDepositarDescontar)Transaccion.ObtenerTransaccion(id, u);
                 ViewData["idParametros"] = id;
                 return View("ReciboDeposito", tr);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -443,7 +441,8 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         private XtraReport _generarReciboDeposito(int id) {
-            TRChequeDepositarDescontar tr = (TRChequeDepositarDescontar)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRChequeDepositarDescontar tr = (TRChequeDepositarDescontar)Transaccion.ObtenerTransaccion(id, u);
             List<TRChequeDepositarDescontar> ll = new List<TRChequeDepositarDescontar>();
             ll.Add(tr);
             XtraReport rep = new DXReciboDepositarCheque();
@@ -472,7 +471,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult TransfSuc() {
             ChequeTransfSucModel model = new ChequeTransfSucModel();
             try {
-                Sucursal suc = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                Sucursal suc = (getUsuario()).Sucursal;
                 model.SucursalOrigen = suc;
                 ViewData["idParametros"] = suc.Codigo;
                 return View(model);
@@ -534,8 +533,8 @@ namespace AutomotoraWeb.Controllers.Bank {
                     }
 
                     //Como no estoy usando una Transaccion del backend (que lo setea el filter) sino del modelo tengo que setear estos dos atributos a mano:
-                    string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
-                    string origen = HttpContext.Request.UserHostAddress;
+                    string nomUsuario = getUserName();
+                    string origen = getIP();
                     tr.setearAuditoria(nomUsuario, origen);
 
                     tr.Ejecutar();
@@ -552,13 +551,23 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         public ActionResult ReciboTransfSuc(int id) {
-            ViewData["idParametros"] = id;
-            return View("ReciboTransfSuc");
+            try {
+                Usuario u = getUsuario();
+                Transaccion tr = (Transaccion)Transaccion.ObtenerTransaccion(id, u);
+                ViewData["idParametros"] = id;
+                return View("ReciboTransfSuc");
+            } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
+                ViewBag.ErrorCode = exc.Codigo;
+                ViewBag.ErrorMessage = exc.Message;
+                return View();
+            }
         }
 
 
         private XtraReport _generarReciboTransfSuc(int id) {
-            TRChequeTransfSucursal tr = (TRChequeTransfSucursal)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRChequeTransfSucursal tr = (TRChequeTransfSucursal)Transaccion.ObtenerTransaccion(id,u);
             List<TRChequeTransfSucursal> ll = new List<TRChequeTransfSucursal>();
             ll.Add(tr);
             XtraReport rep = new DXReciboTransfSucCheque();
@@ -588,7 +597,7 @@ namespace AutomotoraWeb.Controllers.Bank {
             TRChequeRechazar model = new TRChequeRechazar();
             try {
                 model.Cheque = new Cheque();
-                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                model.Sucursal = (getUsuario()).Sucursal;
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -635,9 +644,11 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult ReciboRech(int id) {
             try {
                 ViewData["idParametros"] = id;
-                TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id);
+                Usuario u = getUsuario();
+                TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id,u);
                 return View("ReciboRech", tr);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -645,7 +656,8 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         private XtraReport _generarReciboRech(int id) {
-            TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRChequeRechazar tr = (TRChequeRechazar)Transaccion.ObtenerTransaccion(id,u);
             List<TRChequeRechazar> ll = new List<TRChequeRechazar>();
             ll.Add(tr);
             XtraReport rep = new DXReciboRechazarCheque();
@@ -672,13 +684,13 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region CanjearChequeRechazado
 
-         [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult CanjeRechazado() {
             TRChequeRechazadoCanje model = new TRChequeRechazadoCanje();
-            prepararSession(model); 
+            prepararSession(model);
             try {
                 model.Cheque = new Cheque();
-                model.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+                model.Sucursal = (getUsuario()).Sucursal;
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -730,9 +742,11 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult ReciboCanje(int id) {
             try {
                 ViewData["idParametros"] = id;
-                TRChequeRechazadoCanje tr = (TRChequeRechazadoCanje)Transaccion.ObtenerTransaccion(id);
+                Usuario u = getUsuario();
+                TRChequeRechazadoCanje tr = (TRChequeRechazadoCanje)Transaccion.ObtenerTransaccion(id,u);
                 return View("ReciboCanje", tr);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = id;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -740,7 +754,8 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         private XtraReport _generarReciboCanje(int id) {
-            TRChequeRechazadoCanje tr = (TRChequeRechazadoCanje)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRChequeRechazadoCanje tr = (TRChequeRechazadoCanje)Transaccion.ObtenerTransaccion(id,u);
             List<TRChequeRechazadoCanje> ll = new List<TRChequeRechazadoCanje>();
             ll.Add(tr);
             XtraReport rep = new DXReciboCanjeCheque();
@@ -764,7 +779,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #endregion
 
-       
+
 
     }
 }

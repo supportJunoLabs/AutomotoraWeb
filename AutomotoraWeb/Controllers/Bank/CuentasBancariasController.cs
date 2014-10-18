@@ -152,8 +152,8 @@ namespace AutomotoraWeb.Controllers.Bank
 
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     td.Moneda.Consultar();
                     td.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);

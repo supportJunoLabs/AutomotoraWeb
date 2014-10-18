@@ -38,12 +38,9 @@ namespace AutomotoraWeb.Models {
             Accion = ACCIONES.ACTUALIZAR;
         }
 
-        public void obtenerListado (bool verInfoAntigua){
+        public void obtenerListado (Usuario u){
             AcomodarFiltro();
-            Resultado = ListadoChequesEmitidos.obtenerListado(Filtro);
-            if (!verInfoAntigua) {
-                Resultado.Cheques.RemoveAll(ch => ch.Antiguo);
-            }
+            Resultado = ListadoChequesEmitidos.obtenerListado(Filtro, u);
         }
 
         private void AcomodarFiltro() {

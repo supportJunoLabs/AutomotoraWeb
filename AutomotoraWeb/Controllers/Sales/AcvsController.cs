@@ -24,7 +24,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Clientes = Cliente.Clientes();
             ViewBag.VendedoresHabilitados = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -34,25 +34,22 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Consulta
 
-        private bool AnticipoConsultable(ACuentaVenta acv) {
-            if (acv == null || acv.Codigo == 0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && acv.Antiguo) {
-                return false;
-            }
-            return true;
-        }
+        //private bool AnticipoConsultable(ACuentaVenta acv) {
+        //    if (acv == null || acv.Codigo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && acv.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
             try {
                 ACuentaVenta td = new ACuentaVenta();
                 td.Codigo = id;
-                td.Consultar();
-                if (!AnticipoConsultable(td)) {
-                    ViewBag.ErrorMessage = "Transaccion antigua ya no se encuentra en linea";
-                    td = new ACuentaVenta();
-                }
+                Usuario u = getUsuario();
+                td.Consultar(u);
                 return View(td);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -87,15 +84,16 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult List() {
 
             ListadoAcvsModel model = new ListadoAcvsModel();
+            model.Usuario = getUsuario();
             try {
-                string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoACVs", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewBag.SucursalesListado = Sucursal.Sucursales;
                 ViewBag.ClientesListado = Cliente.Clientes();
                 ViewBag.VendedoresListado = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.TODOS);
                 ViewData["idParametros"] = model.idParametros;
-                model.Resultado = _listaElementos(model);
+                _generarListado(model);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -107,7 +105,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         //public ActionResult ListActivosVehiculo(int id) {
         //    ListadoAcvsModel model = new ListadoAcvsModel();
         //    try {
-        //        string s = SessionUtils.generarIdVarSesion("ListadoACVs", Session[SessionUtils.SESSION_USER].ToString());
+        //        string s = SessionUtils.generarIdVarSesion("ListadoACVs", getUserName());
         //        Session[s] = model;
         //        model.idParametros = s;
         //        ViewBag.SucursalesListado = Sucursal.Sucursales;
@@ -128,6 +126,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         [HttpPost]
         public ActionResult List(ListadoAcvsModel model, string btnSubmit) {
             try {
+                model.Usuario = getUsuario();
                 Session[model.idParametros] = model; //filtros actualizados
                 ViewData["idParametros"] = model.idParametros;
                 ViewBag.SucursalesListado = Sucursal.Sucursales;
@@ -156,7 +155,7 @@ namespace AutomotoraWeb.Controllers.Sales {
                     if (btnSubmit == "Imprimir") {
                         return this.Report(model);
                     }
-                    model.Resultado = _listaElementos(model);
+                    _generarListado(model);
                 }
                 return View(model);
             } catch (UsuarioException exc) {
@@ -168,32 +167,25 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult ReportGrilla(string idParametros) {
             ListadoAcvsModel model = (ListadoAcvsModel)Session[idParametros];
-            model.Resultado = _listaElementos(model);
+            _generarListado(model);
+            //model.Resultado = _listaElementos(model);
             ViewData["idParametros"] = model.idParametros;
             return PartialView("_reportGrilla", model);
         }
 
-        private List<ACuentaVenta> _listaElementos(ListadoAcvsModel model) {
-            model.AcomodarFiltro();
-            List<ACuentaVenta> lista = ACuentaVenta.ACuentaVentas(model.Filtro);
-
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
-                lista.RemoveAll(v => v.Antiguo);
-            }
-            return lista;
+        private void _generarListado(ListadoAcvsModel model) {
+            Usuario usuario = getUsuario();
+            model.GenerarListado(usuario);
         }
 
-        #endregion
-
-        #region Reportes
         public ActionResult Report(ListadoAcvsModel model) {
             return View("report", model);
         }
 
         private XtraReport _generarReporte(string idParametros) {
             ListadoAcvsModel model = (ListadoAcvsModel)Session[idParametros];
-            model.obtenerListado();
+            Usuario usuario = getUsuario();
+            _generarListado(model);
             XtraReport rep = new DXListadoAcvs();
             rep.DataSource = model.Resultado;
             setParamsToReport(rep, model);
@@ -227,7 +219,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         #region Crear
 
         public ActionResult VehiculosAnticipablesGrilla(GridLookUpModel model) {
-            model.Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES);
+            Usuario u = getUsuario();
+            model.Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES, u);
             return PartialView("_selectVehiculoACV", model);
         }
 
@@ -235,21 +228,24 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult ACVenta(int? id) {
             ACuentaVenta tr = new ACuentaVenta();
 
-            string idSession = SessionUtils.generarIdVarSesion("acv", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("acv", getUserName()) + "|";
             //Session[idSession] = tr;
             ViewData["idSession"] = idSession;
+            Usuario usuario = getUsuario();
+            ViewData["Vehiculos"] = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES, usuario);
             Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
             Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
             Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
 
             tr.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+           
             tr.Sucursal = usuario.Sucursal;
 
             if (id != null && id > 0) {
                 tr.Vehiculo = new Vehiculo();
                 tr.Vehiculo.Codigo = id ?? 0;
-                tr.Vehiculo.Consultar();
+                Usuario u = getUsuario();
+                tr.Vehiculo.Consultar(u);
 
                 PrecondicionesOperacion cond = tr.Vehiculo.ObtenerPrecondicionesACV();
                 tr.Cliente = cond.Cliente;
@@ -265,10 +261,10 @@ namespace AutomotoraWeb.Controllers.Sales {
             ACuentaVenta tr = new ACuentaVenta();
             tr.Vehiculo = new Vehiculo();
             tr.Vehiculo.Codigo = idVehiculo;
-            tr.Vehiculo.Consultar();
+            Usuario usuario = getUsuario();
+            tr.Vehiculo.Consultar(usuario);
 
             tr.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
             tr.Sucursal = usuario.Sucursal;
 
             PrecondicionesOperacion cond = tr.Vehiculo.ObtenerPrecondicionesACV();
@@ -319,10 +315,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult Recibo(int id) {
             ACuentaVenta acv = new ACuentaVenta();
             acv.Codigo = id;
-            acv.Consultar();
-            if (!AnticipoConsultable(acv)) {
-                return View("_transaccionAntigua");
-            }
+            Usuario u = getUsuario();
+            acv.Consultar(u);
             ViewData["idParametros"] = id;
             return View("Recibo", acv);
         }
@@ -330,11 +324,10 @@ namespace AutomotoraWeb.Controllers.Sales {
         private XtraReport _generarRecibo(int id) {
             ACuentaVenta acv = new ACuentaVenta();
             acv.Codigo = id;
-            acv.Consultar();
+            Usuario u = getUsuario();
+            acv.Consultar(u);
             List<ACuentaVenta> ll = new List<ACuentaVenta>();
-            if (AnticipoConsultable(acv)) {
-                ll.Add(acv);
-            }
+            ll.Add(acv);
             XtraReport rep = new DXReciboACV();
             rep.DataSource = ll;
             return rep;
@@ -364,11 +357,12 @@ namespace AutomotoraWeb.Controllers.Sales {
             TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();
             tr.Acv = new ACuentaVenta();
             if (id != null) {
+                Usuario u = getUsuario();
                 tr.Acv.Codigo = id ?? 0;
-                tr.Acv.Consultar();
+                tr.Acv.Consultar(u);
             }
             tr.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
 
             return View("Anular", tr);
@@ -376,7 +370,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult GrillaAcvsAnulables() {
             GridLookUpModel gm = new GridLookUpModel();
-            gm.Opciones = ACuentaVenta.ACuentaVentas(ACuentaVenta.ACV_TIPO_LISTADO.ANULABLES);
+            gm.Opciones = ACuentaVenta.AnticiposAnulables();
             return PartialView("_seleccionAcvAnularGridLookup", gm);
         }
 
@@ -385,9 +379,10 @@ namespace AutomotoraWeb.Controllers.Sales {
             TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();
             tr.Acv = new ACuentaVenta();
             tr.Acv.Codigo = idAcv;
-            tr.Acv.Consultar();
+            Usuario u = getUsuario();
+            tr.Acv.Consultar(u);
             tr.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
             return PartialView("_consultaAcv", tr.Acv);
         }
@@ -408,7 +403,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             if (model.Acv != null && model.Acv.Codigo > 0) {
                 try {
                     model.Ejecutar();
-                    return RedirectToAction("ReciboAnulacion", AcvsController.CONTROLLER, new { id = model.Acv.Codigo });
+                    return RedirectToAction("ReciboAnulacion", AcvsController.CONTROLLER, new { id = model.NroRecibo });
+                    //return RedirectToAction("ReciboAnulacion", AcvsController.CONTROLLER, new { id = model.Acv.Codigo });
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
@@ -421,27 +417,23 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         }
 
-        private bool TransaccionConsultable(Transaccion tr) {
-            if (tr == null || tr.NroRecibo == 0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
-                return false;
-            }
-            return true;
-        }
+        //private bool TransaccionConsultable(Transaccion tr) {
+        //    if (tr == null || tr.NroRecibo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         public ActionResult ReciboAnulacion(int id) {
             try {
-                TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();
-                tr.Acv = new ACuentaVenta();
-                tr.Acv.Codigo = id;
-                tr.Consultar();
-                if (!TransaccionConsultable(tr)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                TRACuentaVentaAnulacion tr = (TRACuentaVentaAnulacion)Transaccion.ObtenerTransaccion(id, u);
                 ViewData["idParametros"] = id;
                 return View("ReciboAnulacion", tr.Acv);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -449,14 +441,10 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         private XtraReport _generarReciboAnulacion(int id) {
-            TRACuentaVentaAnulacion tr = new TRACuentaVentaAnulacion();
-            tr.Acv = new ACuentaVenta();
-            tr.Acv.Codigo = id;
-            tr.Consultar();
+            Usuario u = getUsuario();
+            TRACuentaVentaAnulacion tr = (TRACuentaVentaAnulacion)Transaccion.ObtenerTransaccion(id, u);
             List<TRACuentaVentaAnulacion> ll = new List<TRACuentaVentaAnulacion>();
-            if (TransaccionConsultable(tr)) {
-                ll.Add(tr);
-            }
+            ll.Add(tr);
             XtraReport rep = new DXReciboACVAnulacion();
             rep.DataSource = ll;
             return rep;

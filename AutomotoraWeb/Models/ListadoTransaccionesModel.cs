@@ -40,12 +40,9 @@ namespace AutomotoraWeb.Models {
             Accion = ACCIONES.ACTUALIZAR;
         }
 
-        public void obtenerListado (Usuario usuario){
+        public void obtenerListado (Usuario usuarioConsulta){
             AcomodarFiltro();
-            Resultado = Recibo.Recibos(Filtro);
-            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
-                Resultado.RemoveAll(v => v.Antiguo);
-            }
+            Resultado = Recibo.Recibos(Filtro, usuarioConsulta);
         }
 
         private void AcomodarFiltro() {

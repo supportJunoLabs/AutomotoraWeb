@@ -7,7 +7,7 @@
     ViewBag.Title = "Anticipo de Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.VENDIBLES) };
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = (IEnumerable<Vehiculo>)ViewData["Vehiculos"]  };
     if (Model.Vehiculo != null) {
         gmodel.GridLookUpCodigo = Model.Vehiculo.Codigo;
     }

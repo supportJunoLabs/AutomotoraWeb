@@ -80,7 +80,7 @@ namespace AutomotoraWeb.Controllers.General {
         public ActionResult ChangePassword(ChangePasswordModel model) {
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
+                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
                     SecurityService.Instance.changePassword(userName, model.ActualPassword, model.NewPassword, model.RepeatNewPassword, Request.UserHostAddress);
                     Mensaje msj = new Mensaje { Titulo = "Cambio de clave", Contenido=  "Se ha cambiado su clave en forma exitosa" };
                     return RedirectToAction("Mensaje", SistemaController.CONTROLLER, new {id=SistemaController.MSJ_CAMBIO_CLAVE_OK});
@@ -99,7 +99,7 @@ namespace AutomotoraWeb.Controllers.General {
 
         [HttpGet]
         public ActionResult Logout() {
-            string userName = (string)(Session[SessionUtils.SESSION_USER_NAME]);
+            string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
             Usuario u = new Usuario();
             u.UserName = userName;
             try {
@@ -137,7 +137,7 @@ namespace AutomotoraWeb.Controllers.General {
         }
 
         //public ActionResult PerfilesUsuario() {
-        //    Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+        //    Usuario usuario = getUsuario();
         //    if (usuario == null) {
         //        return RedirectToAction(AuthenticationController.CONTROLLER, AuthenticationController.LOGIN);
         //    }

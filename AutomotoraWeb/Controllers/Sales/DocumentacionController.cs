@@ -34,7 +34,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult List() {
             ListadoDocumentacionModel model = new ListadoDocumentacionModel();
             try {
-                string s = SessionUtils.generarIdVarSesion("ListadoDocumentacion", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoDocumentacion", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
@@ -87,11 +87,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                     ll.Add(aux);
                 }
             }
-            List<DocAuto> lista=  DocAuto.DocsAutos(ll);
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
-                lista.RemoveAll(d => d.Antiguo);
-            }
+            Usuario usuario = getUsuario();
+            List<DocAuto> lista=  DocAuto.DocsAutosListado(ll, usuario);
             return lista;
         }
 
@@ -135,28 +132,26 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
         #endregion
 
-        private bool VehiculoConsultable(Vehiculo v) {
-            if (v == null || v.Codigo == 0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
-                return false;
-            }
-            return true;
-        }
+        //private bool VehiculoConsultable(Vehiculo v) {
+        //    if (v == null || v.Codigo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ComprobanteDocumentacion(int id) {
             ComprobanteDocumentacionModel model = new ComprobanteDocumentacionModel();
             try {
-                string s = SessionUtils.generarIdVarSesion("ComprobanteDocumentacion", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ComprobanteDocumentacion", getUserName());
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
                 Vehiculo v = new Vehiculo();
                 v.Codigo = id;
-                v.Consultar();
-                if (!VehiculoConsultable(v)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                v.Consultar(u);
                 Session[s] = model;
                 model.Comprobante.Vehiculo = v;
                 return View(model);
@@ -170,7 +165,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult GrillaDocsVehiculo(string idParametros) {
             ComprobanteDocumentacionModel model = (ComprobanteDocumentacionModel)Session[idParametros];
             ViewData["idParametros"] = idParametros;
-            model.Comprobante.Vehiculo.Consultar();
+            Usuario u = getUsuario();
+            model.Comprobante.Vehiculo.Consultar(u);
             return PartialView("_selectDocumentacion", model.Comprobante.Vehiculo.Documentacion);
         }
 
@@ -201,7 +197,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                             x.Consultar();
                         }
                     }
-                    model.Comprobante.Vehiculo.Consultar();
+                    Usuario u = getUsuario();
+                    model.Comprobante.Vehiculo.Consultar(u);
                     return this.ReportComprobante(model);
 
                 } catch (UsuarioException exc) {
@@ -214,10 +211,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         public ActionResult ReportComprobante(ComprobanteDocumentacionModel model) {
-            model.Comprobante.Vehiculo.Consultar();
-            if (!VehiculoConsultable(model.Comprobante.Vehiculo)) {
-                return View("_transaccionAntigua");
-            }
+            Usuario u = getUsuario();
+            model.Comprobante.Vehiculo.Consultar(u);
             return View("ReportComprobante", model);
         }
 
@@ -225,11 +220,10 @@ namespace AutomotoraWeb.Controllers.Sales {
             ComprobanteDocumentacionModel model = null;
             XtraReport rep = new DXComprobanteDocumentacion();
             model = (ComprobanteDocumentacionModel)Session[idParametros];
-            model.Comprobante.Vehiculo.Consultar();
+            Usuario u = getUsuario();
+            model.Comprobante.Vehiculo.Consultar(u);
             List<ComprobanteDocumentacion> ll = new List<DLL_Backend.ComprobanteDocumentacion>();
-            if (VehiculoConsultable(model.Comprobante.Vehiculo)) {
-                ll.Add(model.Comprobante);
-            }
+            ll.Add(model.Comprobante);
             rep.DataSource = ll;
             Session[idParametros] = model;
             ViewData["idParametros"] = idParametros;
@@ -241,11 +235,10 @@ namespace AutomotoraWeb.Controllers.Sales {
             ComprobanteDocumentacionModel model = null;
             XtraReport rep = new DXComprobanteDocumentacion();
             model = (ComprobanteDocumentacionModel)Session[idParametros];
-            model.Comprobante.Vehiculo.Consultar();
+            Usuario u = getUsuario();
+            model.Comprobante.Vehiculo.Consultar(u);
             List<ComprobanteDocumentacion> ll = new List<DLL_Backend.ComprobanteDocumentacion>();
-            if (VehiculoConsultable(model.Comprobante.Vehiculo)) {
-                ll.Add(model.Comprobante);
-            }
+            ll.Add(model.Comprobante);
             rep.DataSource = ll;
             ViewData["idParametros"] = idParametros;
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);

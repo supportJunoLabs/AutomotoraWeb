@@ -36,17 +36,7 @@ namespace AutomotoraWeb.Models {
             TabActual = TABS.EFECTIVO;
         }
 
-        public void AcomodarFiltro(bool verInfoAntigua) {
-
-            if (!verInfoAntigua) {
-                DateTime minfecha = DateTime.Now.Date.AddDays(Automotora.DiasInfoAntigua() * (-1));
-                if (Desde < minfecha) {
-                    Desde = minfecha;
-                }
-                if (Hasta < minfecha) {
-                    Hasta = minfecha;
-                }
-            }
+        public void AcomodarFiltro() {
             Filtro.Desde = Desde;
             Filtro.Hasta = Hasta;
 

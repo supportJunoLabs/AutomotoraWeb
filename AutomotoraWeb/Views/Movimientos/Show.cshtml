@@ -67,8 +67,7 @@
 <div id="divListado">
     @{
         if (Model.Cuenta!=null && Model.Cuenta.Codigo>0){
-            Model.generarListado();
-            @Html.Partial("_listMovimientos", Model)
+            @Html.Partial("_listMovimientos", (IEnumerable<MovBanco>) ViewData["Movimientos"])
         }
     }
 

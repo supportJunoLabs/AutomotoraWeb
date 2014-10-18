@@ -7,7 +7,7 @@
     ViewBag.Title = "Anular Anticipo Venta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    GridLookUpModel gmodel = new GridLookUpModel { Opciones = ACuentaVenta.ACuentaVentas(ACuentaVenta.ACV_TIPO_LISTADO.ANULABLES) };
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = ACuentaVenta.AnticiposAnulables() };
     if (Model != null && Model.Acv != null && Model.Acv.Codigo > 0) {
         gmodel.GridLookUpCodigo = Model.Acv.Codigo;
     }

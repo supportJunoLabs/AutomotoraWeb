@@ -24,7 +24,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.Sucursales = Sucursal.Sucursales;
             ViewBag.Clientes = Cliente.Clientes();
             ViewBag.VendedoresHabilitados = Vendedor.Vendedores(Vendedor.VEND_TIPO_LISTADO.HABILITADOS);
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -36,14 +36,14 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         #region Consultar
 
-        private bool SeniaConsultable(Senia s) {
-            if (s == null || s.Codigo == 0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && s.Antiguo) {
-                return false;
-            }
-            return true;
-        }
+        //private bool SeniaConsultable(Senia s) {
+        //    if (s == null || s.Codigo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && s.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
@@ -51,12 +51,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             try {
                 Senia s = new Senia();
                 s.Codigo = id;
-                s.Consultar();
-                if (!SeniaConsultable(s)) {
-                    ViewBag.ErrorMessage = "Transaccion antigua ya no se encuentra en linea";
-                    s = new Senia();
-                }
-
+                Usuario u = getUsuario();
+                s.Consultar(u);
                 SeniaModel model = new SeniaModel();
                 model.Senia = s;
                 if (s.EsSeniaPedido()) {
@@ -86,7 +82,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             ListadoSeniasModel model = new ListadoSeniasModel();
             try {
-                string s = SessionUtils.generarIdVarSesion("ListadoSenias", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoSenias", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewBag.SucursalesListado = Sucursal.Sucursales;
@@ -136,12 +132,8 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private List<Senia> _listaElementos(ListadoSeniasModel model) {
             model.AcomodarFiltro();
-            List<Senia> lista= Senia.Senias(model.Filtro);
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
-                lista.RemoveAll(s => s.Antiguo);
-            }
-            return lista;
+            Usuario u = getUsuario();
+            return Senia.Senias(model.Filtro, u);
         }
 
         public ActionResult Report(ListadoSeniasModel model) {
@@ -193,22 +185,24 @@ namespace AutomotoraWeb.Controllers.Sales {
             Session[idSession + SessionUtils.VALES_PROMESA] = new List<SeniaPromesa_ChequeVale>();
             tr.Precondicion = new PrecondicionesOperacion();
 
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Senia.Sucursal = usuario.Sucursal;
         }
 
         private void iniSeniado(SeniaModel tr, string idSession, bool esPostback) {
             if (tr.PedidoVehiculo == 1) {
                 tr.Senia.Pedido = null;
-                tr.Senia.Vehiculo.Consultar();
+                Usuario u = getUsuario();
+                tr.Senia.Vehiculo.Consultar(u);
             } else {
                 tr.Senia.Vehiculo = null;
-                tr.Senia.Pedido.Consultar();
+                Usuario u = getUsuario();
+                tr.Senia.Pedido.Consultar(u);
             }
             tr.asignarPrecondicion(esPostback);
             tr.Senia.Fecha = DateTime.Now;
             if (!esPostback) {
-                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                Usuario usuario = getUsuario();
                 tr.Senia.Sucursal = usuario.Sucursal;
             }
 
@@ -232,21 +226,26 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult PedidosSeniablesGrilla() {
             //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-            GridLookUpModel gmodel = new GridLookUpModel { Opciones = Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.SENIABLES) };
+            Usuario u = getUsuario();
+            GridLookUpModel gmodel = new GridLookUpModel { Opciones = Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.SENIABLES, u) };
             return PartialView("_selectPedido", gmodel);
         }
 
         public ActionResult VehiculosSeniablesGrilla() {
             //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-            GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.SENIABLES) };
+            Usuario u = getUsuario();
+            GridLookUpModel gmodel = new GridLookUpModel { Opciones = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.SENIABLES, u) };
             return PartialView("_selectVehiculoSeniar", gmodel);
         }
 
         private SeniaModel _seniarVehiculo(int? id) {
             SeniaModel tr = new SeniaModel();
-            string idSession = SessionUtils.generarIdVarSesion("seniar", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("seniar", getUserName()) + "|";
             ViewData["idSession"] = idSession;
             ViewData["idOperacion"] = "seniar";
+            Usuario u = getUsuario();
+            ViewData["PedidosSeniables"]=  Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.SENIABLES, u);
+            ViewData["VehiculosSeniables"] = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.SENIABLES,u);
             iniSenia(tr, idSession);
 
             if (id != null && id > 0) {
@@ -272,7 +271,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult SeniarPedido(int? id) {
             SeniaModel tr = new SeniaModel();
-            string idSession = SessionUtils.generarIdVarSesion("acv", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("acv", getUserName()) + "|";
             ViewData["idSession"] = idSession;
             ViewData["idOperacion"] = "seniar";
             iniSenia(tr, idSession);
@@ -380,8 +379,8 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             if (ModelState.IsValid) {
                 try {
-                    string usuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string usuario = getUserName();
+                    string IP = getIP();
                     model.Senia.setearAuditoria(usuario, IP);
                     if (Automotora.GestionarPromesas() && !model.TienePermuta) {
                         model.Senia.Promesa.Permuta = null;
@@ -664,7 +663,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Devolver(int? id) {
-            string idSession = SessionUtils.generarIdVarSesion("devsenia", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("devsenia", getUserName()) + "|";
             ViewData["idSession"] = idSession;
             ViewData["idOperacion"] = "devolver";
             ViewBag.SoloLectura = true;
@@ -696,7 +695,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             SeniaModel tr = new SeniaModel();
             tr.Senia = new Senia();
             tr.Senia.Codigo = id;
-            tr.Senia.Consultar();
+            Usuario u = getUsuario();
+            tr.Senia.Consultar(u);
             if (tr.Senia.EsSeniaPedido()) {
                 tr.PedidoVehiculo = 2;
             } else {
@@ -727,7 +727,8 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult SeniasDevolviblesGrilla() {
             //Se invoca desde paginacion, ordenacion etc, de grilla de cuotas. Devuelve la partial del tab de cuotas
-            GridLookUpModel gmodel = new GridLookUpModel { Opciones = Senia.Senias(Senia.TIPO_LISTADO_SENIA.DEVOLVIBLES) };
+            Usuario u = getUsuario();
+            GridLookUpModel gmodel = new GridLookUpModel { Opciones = Senia.Senias(Senia.TIPO_LISTADO_SENIA.DEVOLVIBLES, u) };
             return PartialView("_selectSeniaAnular", gmodel);
         }
 
@@ -746,7 +747,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewData["idOperacion"] = "devolver";
             ViewBag.SoloLectura = true;
 
-            model.Senia.Consultar();//por si hubo error mostrar los datos correctamente al volver. si no hay codigo de senia, dara error y no se sigue.
+            Usuario u = getUsuario();
+            model.Senia.Consultar(u);//por si hubo error en el modelState mostrar los datos correctamente al volver. si no hay codigo de senia, dara error y no se sigue.
             model.SeniaDev.Pago.Reset();
             model.SeniaDev.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
             model.SeniaDev.Pago.AgregarChequesEmitidos((IEnumerable<ChequeEmitido>)Session[idSession + SessionUtils.CHEQUES_EMITIDOS]);
@@ -756,8 +758,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             GeneralUtils.ModelStateRemoveAllStarting(ModelState, "Senia");
             if (ModelState.IsValid) {
                 try {
-                    string usuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string usuario = getUserName();
+                    string IP = getIP();
                     model.SeniaDev.setearAuditoria(usuario, IP);
                     model.SeniaDev.Senia = model.Senia;
 
@@ -772,7 +774,7 @@ namespace AutomotoraWeb.Controllers.Sales {
                         }
                     }
                     model.SeniaDev.Ejecutar();
-                    return RedirectToAction("ReciboDev", SeniasController.CONTROLLER, new { id = model.SeniaDev.Senia.Codigo });
+                    return RedirectToAction("ReciboDev", SeniasController.CONTROLLER, new { id = model.SeniaDev.NroRecibo });
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
@@ -785,12 +787,14 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         public ActionResult ReciboDev(int id) {
             try {
-                TRSeniaDevolucion tr = new TRSeniaDevolucion();
-                tr.Senia = new Senia();
-                tr.Senia.Codigo = id;
+                Usuario u = getUsuario();
+                TRSeniaDevolucion tr = (TRSeniaDevolucion)Transaccion.ObtenerTransaccion(id, u);
+                //TRSeniaDevolucion tr = new TRSeniaDevolucion();
+                //tr.Senia = new Senia();
+                //tr.Senia.Codigo = id;
                 //tr.Consultar();  solo usa elcodigo en la vista
                 ViewData["idParametros"] = id;
-                return View("ReciboDev", tr.Senia);
+                return View("ReciboDev", tr);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
@@ -799,10 +803,12 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         private XtraReport _generarReciboDev(int id) {
-            TRSeniaDevolucion tr = new TRSeniaDevolucion();
-            tr.Senia = new Senia();
-            tr.Senia.Codigo = id;
-            tr.Consultar();
+            Usuario u = getUsuario();
+            TRSeniaDevolucion tr = (TRSeniaDevolucion)Transaccion.ObtenerTransaccion(id, u);
+            //TRSeniaDevolucion tr = new TRSeniaDevolucion();
+            //tr.Senia = new Senia();
+            //tr.Senia.Codigo = id;
+            //tr.Consultar();
             List<TRSeniaDevolucion> ll = new List<TRSeniaDevolucion>();
             ll.Add(tr);
             XtraReport rep = new DXReciboSeniaDevolucion();

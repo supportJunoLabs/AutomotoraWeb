@@ -26,23 +26,18 @@ namespace AutomotoraWeb.Controllers.Financing {
         #region ConsultaFinanciacion
 
         private List<Venta> _ventasCliente(Cliente c){
-            List<Venta> lista = new List<Venta>();
-            lista = c.VentasCuotas();
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
-                lista.RemoveAll(fin => fin.Antiguo);
-            }
-            return lista;
+            Usuario usuario = getUsuario();
+            return c.VentasCuotas(usuario);
         }
 
-        private bool FinanciacionConsultable(Venta v) {
-            if (v == null || v.Codigo==0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
-               return false;
-            }
-            return true;
-        }
+        //private bool FinanciacionConsultable(Venta v) {
+        //    if (v == null || v.Codigo==0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
+        //       return false;
+        //    }
+        //    return true;
+        //}
 
         public ActionResult ConsultaFinanciacion(int? id) {
             ConsultaVentaModel m = new ConsultaVentaModel();
@@ -52,17 +47,14 @@ namespace AutomotoraWeb.Controllers.Financing {
                 List<Venta> lista = new List<Venta>();
                 if (id != null && id > 0) {
                     m.Venta.Codigo = id ?? 0;
-                    m.Venta.Consultar();
+                    Usuario u = getUsuario();
+                    m.Venta.Consultar(u);
                     m.Cliente = m.Venta.Cliente;
                     lista=_ventasCliente(m.Cliente);
                 } 
                 ViewBag.VentasCliente = lista;
                 ViewBag.SoloLectura = true;
                 ViewData["idParametros"] = m.Cliente.Codigo;
-                if (!FinanciacionConsultable(m.Venta)) {
-                    ViewBag.ErrorMessage = "Transaccion antigua ya no se encuentra en linea";
-                    m.Venta = new Venta();
-                }
                 return View("ConsultaFinanciacion", m);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -122,12 +114,10 @@ namespace AutomotoraWeb.Controllers.Financing {
             ConsultaVentaModel m = new ConsultaVentaModel();
             m.Venta = new Venta();
             m.Venta.Codigo = idVenta;
-            m.Venta.Consultar();
+            Usuario u = getUsuario();
+            m.Venta.Consultar(u);
             m.Cliente = m.Venta.Cliente;
             ViewBag.SoloLectura = true;
-            if (!FinanciacionConsultable(m.Venta)) {
-                return PartialView("_transaccionAntigua");
-            }
             return PartialView("_datosDetalleFinanciacion", m);
         }
 
@@ -135,10 +125,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ReportFinanciacion(int id) {
             Venta model = new Venta();
             model.Codigo = id;
-            model.Consultar();
-            if (!FinanciacionConsultable(model)) {
-                return View("_transaccionAntigua");
-            }
+            Usuario u = getUsuario();
+            model.Consultar(u);
             ViewData["idParametros"] = id;
             return View("ReportFinanciacion", model);
         }
@@ -146,10 +134,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ReportFinanciacionPartial(int idParametros) {
             Venta model = new Venta();
             model.Codigo = idParametros;
-            model.Consultar();
-            if (!FinanciacionConsultable(model)) {
-                model = new Venta();
-            }
+            Usuario u = getUsuario();
+            model.Consultar(u);
             XtraReport rep = new DXReportConsultaFinanciacion();
             List<Venta> ll = new List<Venta>();
             ll.Add(model);
@@ -162,10 +148,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ReportFinanciacionExport(int idParametros) {
             Venta model = new Venta();
             model.Codigo = idParametros;
-            model.Consultar();
-            if (!FinanciacionConsultable(model)) {
-                model = new Venta();
-            }
+            Usuario u = getUsuario();
+            model.Consultar(u);
             XtraReport rep = new DXReportConsultaFinanciacion();
             List<Venta> ll = new List<Venta>();
             ll.Add(model);
@@ -179,18 +163,20 @@ namespace AutomotoraWeb.Controllers.Financing {
 
 
         #region ConsultaSitCuotas
+        //cuotas que vencen en un periodo, independientemente de su estado.
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult ListSitCuotas() {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
             try {
-                string s = SessionUtils.generarIdVarSesion("ListadoCaja", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoCaja", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
                 model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.SITUACION_CUOTAS;
-                model.obtenerListado();
+                Usuario u = getUsuario();
+                model.obtenerListado(u);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -212,7 +198,8 @@ namespace AutomotoraWeb.Controllers.Financing {
                     if (btnSubmit == "Imprimir") {
                         return this.ReportSitCuotas(model);
                     }
-                    model.obtenerListado();
+                    Usuario u = getUsuario();
+                    model.obtenerListado(u);
                 }
                 return View(model);
             } catch (UsuarioException exc) {
@@ -225,7 +212,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         //Se invoca desde la propia grilla al paginar, filtrar etc. Devuelve solamente la grilla
         public ActionResult ListGrillaSitCuotas(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             ViewData["idParametros"] = model.idParametros;
             return PartialView("_listGrillaSitCuotas", model.Resultado.Cuotas);
         }
@@ -239,7 +227,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             ListadoCuotasValesModel model = null;
             model = (ListadoCuotasValesModel)Session[idParametros];
             XtraReport rep = new DXListadoCuotas();
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             List<ListadoCuotasVales> ll = new List<ListadoCuotasVales>();
             ll.Add(model.Resultado);
             rep.DataSource = ll;
@@ -274,11 +263,12 @@ namespace AutomotoraWeb.Controllers.Financing {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
             try {
                 model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_PENDIENTES;
-                string s = SessionUtils.generarIdVarSesion("ListadoCuotasPend", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoCuotasPend", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
-                model.obtenerListado();
+                Usuario u = getUsuario();
+                model.obtenerListado(u);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -298,7 +288,8 @@ namespace AutomotoraWeb.Controllers.Financing {
                     if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportCuotasPendientes(model);
                     }
-                    model.obtenerListado();
+                    Usuario u = getUsuario();
+                    model.obtenerListado(u);
                     model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
                 }
                 return View(model);
@@ -313,7 +304,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaCuotasPendientesDet(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             return PartialView("_listGrillaCuotasPendientesDet", model.Resultado.Cuotas);
         }
 
@@ -321,7 +313,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaCuotasPendientesCli(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             return PartialView("_listGrillaCuotasPendientesCli", model.Resultado.AgrupCliente);
         }
 
@@ -329,7 +322,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaCuotasPendientesMes(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             return PartialView("_listGrillaCuotasPendientesMes", model.Resultado.AgrupMes);
         }
 
@@ -339,7 +333,8 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         private XtraReport _generarReporteCuotasPendientes(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             List<ListadoCuotasVales> ll = new List<ListadoCuotasVales>();
             ll.Add(model.Resultado);
             XtraReport rep = null;
@@ -381,12 +376,13 @@ namespace AutomotoraWeb.Controllers.Financing {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
             try {
                 model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.VALES_PENDIENTES;
-                string s = SessionUtils.generarIdVarSesion("ListadoValesPend", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoValesPend", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
                 ViewData["idParametros"] = model.idParametros;
-                model.obtenerListado();
+                Usuario u = getUsuario();
+                model.obtenerListado(u);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -406,7 +402,8 @@ namespace AutomotoraWeb.Controllers.Financing {
                     if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportValesPendientes(model);
                     }
-                    model.obtenerListado();
+                    Usuario u = getUsuario();
+                    model.obtenerListado(u);
                     model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
                 }
                 return View(model);
@@ -421,7 +418,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaValesPendientesDet(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             return PartialView("_listGrillaValesPendientesDet", model.Resultado.Vales);
         }
 
@@ -429,7 +427,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaValesPendientesCli(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             return PartialView("_listGrillaValesPendientesCli", model.Resultado.AgrupCliente);
         }
 
@@ -437,7 +436,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaValesPendientesMes(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             return PartialView("_listGrillaValesPendientesMes", model.Resultado.AgrupMes);
         }
 
@@ -447,7 +447,8 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         private XtraReport _generarReporteValesPendientes(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             List<ListadoCuotasVales> ll = new List<ListadoCuotasVales>();
             ll.Add(model.Resultado);
             XtraReport rep = null;
@@ -489,12 +490,13 @@ namespace AutomotoraWeb.Controllers.Financing {
             ListadoCuotasValesModel model = new ListadoCuotasValesModel();
             try {
                 model.TipoListado = ListadoCuotasValesModel.TIPO_LISTADO.CUOTAS_VALES_PENDIENTES;
-                string s = SessionUtils.generarIdVarSesion("ListadoCuotasValesPend", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoCuotasValesPend", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 //ViewBag.Financistas = Financista.Financistas(Financista.FIN_TIPO_LISTADO.TODOS);
                 ViewData["idParametros"] = model.idParametros;
-                model.obtenerListado();
+                Usuario u = getUsuario();
+                model.obtenerListado(u);
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -514,7 +516,8 @@ namespace AutomotoraWeb.Controllers.Financing {
                     if (model.Accion == ListadoCuotasValesModel.ACCIONES.IMPRIMIR) {
                         return this.ReportCuotasValesPendientes(model);
                     }
-                    model.obtenerListado();
+                    Usuario u = getUsuario();
+                    model.obtenerListado(u);
                     model.TabActual = ListadoCuotasValesModel.TABS.TAB1;
                 }
                 return View(model);
@@ -529,7 +532,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaCuotasValesPendientesCli(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             return PartialView("_listGrillaCuotasValesPendientesCli", model.Resultado.AgrupCliente);
         }
 
@@ -537,7 +541,8 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult ListGrillaCuotasValesPendientesMes(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             return PartialView("_listGrillaCuotasValesPendientesMes", model.Resultado.AgrupMes);
         }
 
@@ -547,7 +552,8 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         private XtraReport _generarReporteCuotasValesPendientes(string idParametros) {
             ListadoCuotasValesModel model = (ListadoCuotasValesModel)Session[idParametros];
-            model.obtenerListado();
+            Usuario u = getUsuario();
+            model.obtenerListado(u);
             List<ListadoCuotasVales> ll = new List<ListadoCuotasVales>();
             ll.Add(model.Resultado);
             XtraReport rep = null;

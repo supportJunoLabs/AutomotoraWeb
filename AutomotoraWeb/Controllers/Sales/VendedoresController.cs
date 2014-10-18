@@ -53,7 +53,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult Details(int id) {
             ViewBag.SoloLectura = true;
             try {
-                string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+                string s = SessionUtils.generarIdVarSesion("MtoVendedores", getUserName()) + "|";
                 Vendedor vend = getVendedor(id, true, s);
                 VendedorModel mvend = new VendedorModel();
                 mvend.Vendedor = vend;
@@ -69,7 +69,7 @@ namespace AutomotoraWeb.Controllers.Sales {
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Create() {
             VendedorModel v = new VendedorModel();
-            string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string s = SessionUtils.generarIdVarSesion("MtoVendedores", getUserName()) + "|";
             v.idsesion = s;
             Session[s + FILE_RANDOM_NAME] = null;
             return View(v);
@@ -77,7 +77,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Edit(int id) {
-            string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string s = SessionUtils.generarIdVarSesion("MtoVendedores", getUserName()) + "|";
             Session[s + FILE_RANDOM_NAME] = null;
             try {
                 Vendedor vend = getVendedor(id, false, s);
@@ -96,7 +96,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
             try {
-                string s = SessionUtils.generarIdVarSesion("MtoVendedores", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+                string s = SessionUtils.generarIdVarSesion("MtoVendedores", getUserName()) + "|";
                 Vendedor vend = getVendedor(id, true, s);
                 VendedorModel mvend = new VendedorModel();
                 mvend.idsesion = s;
@@ -270,8 +270,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             if (ModelState.IsValid) {
                 try {
                     string s = mvendedor.idsesion;
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     string photoFileName = mvendedor.Vendedor.Foto;
                     mvendedor.Vendedor.Eliminar(userName, IP);
 

@@ -30,7 +30,7 @@ namespace AutomotoraWeb.Controllers.Sales
             ViewBag.Departamentos = Departamento.Departamentos();
             ViewBag.TiposCombustible = TipoCombustible.TiposCombustible();
 
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -44,7 +44,8 @@ namespace AutomotoraWeb.Controllers.Sales
             venta.Vehiculo = new Vehiculo();
             if (id != null && id!=0) {
                 venta.Vehiculo.Codigo = id ?? 0;
-                venta.Vehiculo.Consultar();
+                Usuario u = getUsuario();
+                venta.Vehiculo.Consultar(u);
             }
             //venta.Cliente = new Cliente();
             //venta.Vendedor = new Vendedor();
@@ -141,8 +142,8 @@ namespace AutomotoraWeb.Controllers.Sales
                 venta.Vendedor = new Vendedor();
                 venta.Vendedor.Codigo = condVentaCodigoVendedor;
 
-                string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
-                string origen = HttpContext.Request.UserHostAddress;
+                string nomUsuario = getUserName();
+                string origen = getIP();
                 venta.setearAuditoria(nomUsuario, origen);
 
                 venta.Fecha = condVentaFecha;
@@ -197,7 +198,7 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         private void prepararSession(Venta venta) {
-            string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("VentaVehiculo", getUserName()) + "|";
             prepararSession(venta, idSession);
         }
 
@@ -261,7 +262,8 @@ namespace AutomotoraWeb.Controllers.Sales
         public ActionResult VehiculoElegido(int id) {
             Vehiculo v = new Vehiculo();
             v.Codigo = id;
-            v.Consultar();
+            Usuario u = getUsuario();
+            v.Consultar(u);
 
             ViewBag.VehiculoSeniado = v.TieneSeniaActiva().ToString();
             
@@ -272,7 +274,8 @@ namespace AutomotoraWeb.Controllers.Sales
 
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = id;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
 
             PrecondicionesVenta cond = vehiculo.ObtenerPrecondicionesVenta();
 
@@ -336,7 +339,10 @@ namespace AutomotoraWeb.Controllers.Sales
 
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = id;
-            vehiculo.Consultar();
+
+
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
 
             List<ACuentaVenta> listACuentaVenta = vehiculo.obtenerACVsNoanulados();
 
@@ -354,7 +360,8 @@ namespace AutomotoraWeb.Controllers.Sales
 
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = id;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             PagoTransaccion pago = vehiculo.pagosTransaccionesPreventa();
 
             return PartialView("_pagosSeniaACVs", pago);
@@ -377,7 +384,8 @@ namespace AutomotoraWeb.Controllers.Sales
             Venta venta = new Venta();
             venta.Vehiculo = new Vehiculo();
             venta.Vehiculo.Codigo = id;
-            venta.Vehiculo.Consultar();
+            Usuario u = getUsuario();
+            venta.Vehiculo.Consultar(u);
             prepararSession(venta, idSession);
 
             return PartialView("_seleccionDeMetodosDePago", venta);
@@ -389,7 +397,8 @@ namespace AutomotoraWeb.Controllers.Sales
             Venta venta = new Venta();
             venta.Vehiculo = new Vehiculo();
             venta.Vehiculo.Codigo = 0;
-            venta.Vehiculo.Consultar();
+            Usuario u = getUsuario();
+            venta.Vehiculo.Consultar(u);
             prepararSession(venta, idSession);
 
             return PartialView("_seleccionDeMetodosDePago", venta);
@@ -616,7 +625,8 @@ namespace AutomotoraWeb.Controllers.Sales
         private Venta _obtenerElemento(int id) {
             Venta td = new Venta();
             td.Codigo = id;
-            td.Consultar();
+            Usuario u = getUsuario();
+            td.Consultar(u);
             return td;
         }
 
@@ -684,7 +694,7 @@ namespace AutomotoraWeb.Controllers.Sales
         public ActionResult List() {
 
             ListadoVentasModel model = new ListadoVentasModel();
-            string s = SessionUtils.generarIdVarSesion("ListadoVentas", Session[SessionUtils.SESSION_USER].ToString());
+            string s = SessionUtils.generarIdVarSesion("ListadoVentas", getUserName());
             Session[s] = model;
             model.idParametros = s;
             ViewBag.SucursalesListado = Sucursal.Sucursales;
@@ -725,7 +735,8 @@ namespace AutomotoraWeb.Controllers.Sales
 
         private List<Venta> _listaElementos(ListadoVentasModel model) {
             model.AcomodarFiltro();
-            return Venta.Ventas(model.Filtro);
+            Usuario u = getUsuario();
+            return Venta.Ventas(model.Filtro, u);
         }
 
         #endregion
@@ -777,9 +788,12 @@ namespace AutomotoraWeb.Controllers.Sales
         
         public ActionResult ReciboAnulacion(int id) {
             try {
+                Usuario u = getUsuario();
+                TRVentaAnulacion tr = (TRVentaAnulacion)Transaccion.ObtenerTransaccion(id, u);
                 ViewData["idParametros"] = id;
                 return View("ReciboAnulacion");
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -787,7 +801,8 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         private XtraReport _generarReciboAnulacion(int id) {
-            TRVentaAnulacion tr = (TRVentaAnulacion)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRVentaAnulacion tr = (TRVentaAnulacion)Transaccion.ObtenerTransaccion(id,u);
             List<TRVentaAnulacion> ll = new List<TRVentaAnulacion>();
             ll.Add(tr);
             XtraReport rep = new DXReciboVentaAnulacion();
@@ -822,9 +837,12 @@ namespace AutomotoraWeb.Controllers.Sales
 
         public ActionResult ReciboEntrega(int id) {
             try {
+                Usuario u = getUsuario();
+                Entrega tr = (Entrega)Transaccion.ObtenerTransaccion(id, u);
                 ViewData["idParametros"] = id;
                 return View("ReciboEntrega");
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -832,7 +850,9 @@ namespace AutomotoraWeb.Controllers.Sales
         }
 
         private XtraReport _generarReciboEntrega(int id) {
-            Entrega tr = (Entrega)Transaccion.ObtenerTransaccion(id);
+
+            Usuario u = getUsuario();
+            Entrega tr = (Entrega)Transaccion.ObtenerTransaccion(id,u);
             List<Entrega> ll = new List<Entrega>();
             ll.Add(tr);
             XtraReport rep = new DXReciboVentaEntrega();

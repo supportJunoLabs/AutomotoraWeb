@@ -192,8 +192,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     ch.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW, new { id = ch.Cuenta.Codigo });
                 } catch (UsuarioException exc) {
@@ -210,9 +210,9 @@ namespace AutomotoraWeb.Controllers.Bank {
         #region listados
 
         private void _obtenerListado(ListadoChequesEmitidosModel model) {
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
-            model.obtenerListado(verInfoAntigua);
+            Usuario usuario = getUsuario();
+            //bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+            model.obtenerListado(usuario);
         }
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
@@ -220,7 +220,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult List() {
             try {
                 ListadoChequesEmitidosModel model = new ListadoChequesEmitidosModel();
-                string s = SessionUtils.generarIdVarSesion("ListadoChequesEmitidos", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoChequesEmitidos", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
@@ -312,24 +312,21 @@ namespace AutomotoraWeb.Controllers.Bank {
         }
 
         [HttpPost]
-        public ActionResult EjecutarDebitar() {
+        public JsonResult EjecutarDebitar() {
             try {
-                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                string IP = HttpContext.Request.UserHostAddress;
+                string userName = getUserName();
+                string IP = getIP();
                 int cant = ChequeEmitido.DebitarVencidos(userName, IP);
-                ViewBag.ErrorCode = "0";
-                if (cant == 0) {
-                    ViewBag.ErrorMessage = "No se encontraron cheques emitidos pendientes vencidos.";
-                } else if (cant == 1) {
-                    ViewBag.ErrorMessage = "Ejecución exitosa. Se generó 1 débito.";
+                
+                string s = "No se encontraron cheques emitidos pendientes vencidos";
+                if (cant == 1) {
+                    s = "Ejecución exitosa. Se generó 1 débito";
                 } else {
-                    ViewBag.ErrorMessage = "Ejecución exitosa. Se generaron " + cant + " débitos.";
+                    s = "Ejecución exitosa. Se generaron " + cant + " débitos";
                 }
-                return View("debitar");
+                return Json(new { Result = "OK", Mensaje = s });
             } catch (UsuarioException exc) {
-                ViewBag.ErrorCode = exc.Codigo;
-                ViewBag.ErrorMessage = exc.Message;
-                return View("debitar");
+                return Json(new { Result = "ERROR", Mensaje = exc.Message });
             }
         }
 

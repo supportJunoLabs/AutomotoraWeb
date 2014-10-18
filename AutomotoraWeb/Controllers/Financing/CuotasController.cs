@@ -22,7 +22,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             base.OnActionExecuting(filterContext);
             ViewBag.NombreEntidad = "Cuota";
             ViewBag.NombreEntidades = "Cuotas";
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -35,7 +35,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         #region CobrarCuota
 
         private void prepararSessionCobranza(Transaccion tr, string sop) {
-            string idSession = SessionUtils.generarIdVarSesion(sop, Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion(sop, getUserName()) + "|";
             Session[idSession] = tr;
             ViewData["idSession"] = idSession;
             Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
@@ -50,7 +50,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             tr.Venta = new Venta();
             tr.Venta.Codigo = 0; //aca deberia cargar el codigo la gridlookup
             tr.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
 
             prepararSessionCobranza(tr, "CobroCuota");
@@ -122,7 +122,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             TRCuotaCobro tr = (TRCuotaCobro)Session[idSession];
             tr.Venta = new Venta();
             tr.Venta.Codigo = idVenta;
-            tr.Venta.Consultar();
+            Usuario u = getUsuario();
+            tr.Venta.Consultar(u);
 
             if (tr.Tipo == TRCuotaCobro.TIPO.CUOTA) {
                 CuotaCobroSugerido sug = tr.Venta.Financiacion.ProximaCuota().CobroSugerido();
@@ -221,24 +222,23 @@ namespace AutomotoraWeb.Controllers.Financing {
             return Cobrar(tr, idSession);
         }
 
-        private bool TransaccionConsultable(Transaccion tr) {
-            if (tr == null || tr.NroRecibo == 0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
-                return false;
-            }
-            return true;
-        }
+        //private bool TransaccionConsultable(Transaccion tr) {
+        //    if (tr == null || tr.NroRecibo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         public ActionResult ReciboCuota(int id) {
             try {
-                TRCuotaCobro tr = (TRCuotaCobro)Transaccion.ObtenerTransaccion(id);
-                if(!TransaccionConsultable(tr)){
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                TRCuotaCobro tr = (TRCuotaCobro)Transaccion.ObtenerTransaccion(id,u);
                 ViewData["idParametros"] = id;
                 return View("ReciboCuota", tr);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -246,11 +246,10 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         private XtraReport _generarReciboCuota(int id) {
-            TRCuotaCobro tr = (TRCuotaCobro)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRCuotaCobro tr = (TRCuotaCobro)Transaccion.ObtenerTransaccion(id,u);
             List<TRCuotaCobro> ll = new List<TRCuotaCobro>();
-            if (TransaccionConsultable(tr)) {
-                ll.Add(tr);
-            }
+            ll.Add(tr);
             XtraReport rep = new DXReciboCobroCuotas();
             rep.DataSource = ll;
             return rep;
@@ -279,7 +278,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             //pasar cuotas a un financista
             TRCuotaTransferencia tr = new TRCuotaTransferencia();
 
-            string idSession = SessionUtils.generarIdVarSesion("pasarCuotas", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("pasarCuotas", getUserName()) + "|";
             Session[idSession] = tr;
             ViewData["idSession"] = idSession;
             Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
@@ -287,7 +286,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             Session[idSession + SessionUtils.MOV_BANCARIO] = tr.Pago.PagosBanco;
 
             tr.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
 
             return View("Pasar", tr);
@@ -315,7 +314,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             tr.SubFinanciacion.Financista = new Financista();
             tr.SubFinanciacion.Financista.Codigo = Int32.Parse(datos[1]);
 
-            tr.SubFinanciacion.Consultar();
+            Usuario u = getUsuario();
+            tr.SubFinanciacion.Consultar(u);
 
             Session[idSession + SessionUtils.CHEQUES] = tr.Pago.Cheques;
             Session[idSession + SessionUtils.EFECTIVO] = tr.Pago.Efectivos;
@@ -391,13 +391,12 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult ReciboTransfCuotas(int id) {
             try {
-                TRCuotaTransferencia tr = (TRCuotaTransferencia)Transaccion.ObtenerTransaccion(id);
-                if (!TransaccionConsultable(tr)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                TRCuotaTransferencia tr = (TRCuotaTransferencia)Transaccion.ObtenerTransaccion(id,u);
                 ViewData["idParametros"] = id;
                 return View("ReciboTransfCuotas", tr.NroOperacion);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -405,11 +404,10 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         private XtraReport _generarReciboTransfCuotas(int id) {
-            TRCuotaTransferencia tr = (TRCuotaTransferencia)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRCuotaTransferencia tr = (TRCuotaTransferencia)Transaccion.ObtenerTransaccion(id,u);
             List<TRCuotaTransferencia> ll = new List<TRCuotaTransferencia>();
-            if (TransaccionConsultable(tr)) {
-                ll.Add(tr);
-            }
+            ll.Add(tr);
             XtraReport rep = new DXReciboTransfCuotas();
             rep.DataSource = ll;
             return rep;
@@ -445,7 +443,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             tr.Venta = new Venta();
             tr.Venta.Codigo = 0; //aca deberia cargar el codigo la gridlookup
             tr.Fecha = DateTime.Now;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
             return tr;
         }
@@ -454,7 +452,7 @@ namespace AutomotoraWeb.Controllers.Financing {
         public ActionResult Modificar() {
             //refinanciar
             TRRefinanciacion tr = iniRefinanciacion();
-            string idSession = SessionUtils.generarIdVarSesion("refinanciar", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("refinanciar", getUserName()) + "|";
             Session[idSession] = tr;
             ViewData["idSession"] = idSession;
             return View("Modificar", tr);
@@ -484,7 +482,8 @@ namespace AutomotoraWeb.Controllers.Financing {
 
             tr.Venta = new Venta();
             tr.Venta.Codigo = idVenta;
-            tr.Venta.Consultar();
+            Usuario u = getUsuario();
+            tr.Venta.Consultar(u);
             tr.ClienteOp = tr.Venta.Cliente;
 
             if (tr.Venta.Financiacion != null && tr.Venta.Financiacion.CuotasVigentes != null) {
@@ -605,8 +604,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             tr0.Sucursal = tr.Sucursal;
             tr0.Observaciones = tr.Observaciones;
             tr0.Fecha = DateTime.Now.Date;
-            string usuario = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-            string IP = HttpContext.Request.UserHostAddress;
+            string usuario = getUserName();
+            string IP = getIP();
             tr0.setearAuditoria(usuario, IP);
 
             ModelState.Remove("Venta.Sucursal");
@@ -633,13 +632,12 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         public ActionResult ReciboRefinanc(int id) {
             try {
-                TRRefinanciacion tr = (TRRefinanciacion)Transaccion.ObtenerTransaccion(id);
-                if (!TransaccionConsultable(tr)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                TRRefinanciacion tr = (TRRefinanciacion)Transaccion.ObtenerTransaccion(id,u);
                 ViewData["idParametros"] = id;
                 return View("ReciboRefinanc", tr.Venta);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -647,11 +645,10 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         private XtraReport _generarReciboRefinanc(int id) {
-            TRRefinanciacion tr = (TRRefinanciacion)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRRefinanciacion tr = (TRRefinanciacion)Transaccion.ObtenerTransaccion(id,u);
             List<TRRefinanciacion> ll = new List<TRRefinanciacion>();
-            if (TransaccionConsultable(tr)) {
-                ll.Add(tr);
-            }
+            ll.Add(tr);
             XtraReport rep = new DXReciboRefinanciacion();
             rep.DataSource = ll;
             return rep;

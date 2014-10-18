@@ -254,6 +254,7 @@
     <Compile Include="Controllers\Financing\ValesController.cs" />
     <Compile Include="Controllers\General\MetodosDePagoController.cs" />
     <Compile Include="Controllers\Sales\VentasControllerLeandro.cs" />
+    <Compile Include="Controllers\Sistema\CompactacionController.cs" />
     <Compile Include="Controllers\Sistema\ParametrosController.cs" />
     <Compile Include="Controllers\Sistema\CotizacionController.cs" />
     <Compile Include="Controllers\Sistema\PefilesController.cs" />
@@ -2319,7 +2320,7 @@
     <Content Include="Views\Ventas\Entregar.cshtml" />
     <Content Include="Views\Ventas\_selectVentaEntregar.cshtml" />
     <Content Include="Views\Ventas\_ventaEntrega.cshtml" />
-    <Content Include="Views\Shared\_transaccionAntigua.cshtml" />
+    <Content Include="Views\Compactacion\Compactar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

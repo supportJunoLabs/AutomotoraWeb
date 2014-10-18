@@ -25,11 +25,11 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #region Mantenimiento
 
-        private void _generarListado(MovimientosBancoModel model) {
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
-            model.generarListado(verInfoAntigua);
-        }
+        //private void _generarListado(MovimientosBancoModel model) {
+        //    Usuario usuario = getUsuario();
+        //    bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+        //    model.generarListado(verInfoAntigua);
+        //}
 
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Show(int? id) {
@@ -41,11 +41,14 @@ namespace AutomotoraWeb.Controllers.Bank {
                     model.Cuenta.Moneda = new Moneda();
                     model.Cuenta.Moneda.Codigo = 0;
                 }
-                string s = SessionUtils.generarIdVarSesion("MovimientosBanco", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("MovimientosBanco", getUserName());
                 model.idParametros = s;
                 Session[s] = model;
                 ViewData["idParametros"] = model.idParametros;
-                _generarListado(model);
+                Usuario u = getUsuario();
+                model.GenerarListado(u);
+                ViewData["Movimientos"] = model.Resultado;
+
                 return View(model);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -62,7 +65,8 @@ namespace AutomotoraWeb.Controllers.Bank {
                 ViewData["idParametros"] = model.idParametros;
                 this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
                 if (ModelState.IsValid) {
-                    _generarListado(model);
+                    Usuario u = getUsuario();
+                    model.GenerarListado(u);
                 } else {
                     model.Resultado = new List<MovBanco>();
                 }
@@ -80,7 +84,8 @@ namespace AutomotoraWeb.Controllers.Bank {
             ViewData["idParametros"] = model;
             this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             if (ModelState.IsValid) {
-                _generarListado(model);
+                Usuario u = getUsuario();
+                model.GenerarListado(u);
             } else {
                 model.Resultado = new List<MovBanco>();
             }
@@ -133,8 +138,7 @@ namespace AutomotoraWeb.Controllers.Bank {
 
             return View(td);
         }
-
-
+        
         public ActionResult Delete(int id) {
             ViewBag.SoloLectura = true;
             return VistaElemento(id);
@@ -145,8 +149,8 @@ namespace AutomotoraWeb.Controllers.Bank {
             ViewBag.SoloLectura = true;
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     //td.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
@@ -163,7 +167,8 @@ namespace AutomotoraWeb.Controllers.Bank {
             try {
                 MovBanco td = new MovBanco();
                 td.Codigo = id;
-                td.Consultar();
+                Usuario u = getUsuario();
+                td.Consultar(u);
                 return View(td);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -171,7 +176,6 @@ namespace AutomotoraWeb.Controllers.Bank {
                 return View();
             }
         }
-
 
         //Se invoca desde crear y extornar
         private ActionResult agregarMovimiento(MovBanco mov) {
@@ -190,14 +194,13 @@ namespace AutomotoraWeb.Controllers.Bank {
             return View(mov);
         }
 
-
-
         [HttpPost]
         public JsonResult Conciliar(int id) {
             try {
                 MovBanco mov = new MovBanco();
                 mov.Codigo = id;
-                mov.Consultar();
+                Usuario u = getUsuario();
+                mov.Consultar(u);
                 mov.Conciliar(DateTime.Now.Date);
                 return Json(new { Result = "OK" });
             } catch (UsuarioException ex) {
@@ -210,7 +213,8 @@ namespace AutomotoraWeb.Controllers.Bank {
             try {
                 MovBanco mov = new MovBanco();
                 mov.Codigo = id;
-                mov.Consultar();
+                Usuario u = getUsuario();
+                mov.Consultar(u);
                 mov.DesConciliar();
                 return Json(new { Result = "OK" });
             } catch (UsuarioException ex) {
@@ -223,7 +227,8 @@ namespace AutomotoraWeb.Controllers.Bank {
             MovBanco mov = new MovBanco();
             try {
                 mov.Codigo = id;
-                mov.Consultar();
+                Usuario u = getUsuario();
+                mov.Consultar(u);
                 MovBanco mov1 = mov.MovimientoInverso(DateTime.Now.Date, "Extorno: " + mov.ConceptoMov);
                 return View("Create", mov1);
             } catch (UsuarioException exc) {
@@ -240,22 +245,24 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         #endregion
 
-        #region Listados
 
-        private void _generarListado(EstadoCuentaModel model) {
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
-            if (!verInfoAntigua) {
-                    DateTime minfecha = DateTime.Now.Date.AddDays(Automotora.DiasInfoAntigua() * (-1));
-                    if (model.EstadoCuenta.Desde < minfecha) {
-                        model.EstadoCuenta.Desde = minfecha;
-                    }
-                    if (model.EstadoCuenta.Hasta < minfecha) {
-                        model.EstadoCuenta.Hasta = minfecha;
-                    }
-            }
-            model.EstadoCuenta.generarListado();
-        }
+
+        #region Listados-EstadoDeCuenta
+
+        //private void _generarListado(EstadoCuentaModel model) {
+        //    Usuario usuario = getUsuario();
+        //    bool verInfoAntigua = SecurityService.Instance.verInfoAntigua(usuario);
+        //    if (!verInfoAntigua) {
+        //        DateTime minfecha = DateTime.Now.Date.AddDays(Automotora.DiasInfoAntigua() * (-1));
+        //        if (model.EstadoCuenta.Desde < minfecha) {
+        //            model.EstadoCuenta.Desde = minfecha;
+        //        }
+        //        if (model.EstadoCuenta.Hasta < minfecha) {
+        //            model.EstadoCuenta.Hasta = minfecha;
+        //        }
+        //    }
+        //    model.EstadoCuenta.generarListado();
+        //}
 
         //Se invoca desde la url del browser o desde el menu principal, o referencias externas. Devuelve la pagina completa
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
@@ -266,7 +273,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                     model.EstadoCuenta.Cuenta = new CuentaBancaria();
                     model.EstadoCuenta.Cuenta.Codigo = (id ?? 0);
                 }
-                string s = SessionUtils.generarIdVarSesion("ListadoMovsBanco", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoMovsBanco", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 ViewData["idParametros"] = model.idParametros;
@@ -289,7 +296,8 @@ namespace AutomotoraWeb.Controllers.Bank {
                     if (model.Accion == EstadoCuentaModel.ACCIONES.IMPRIMIR) {
                         return this.Report(model);
                     }
-                    _generarListado(model);
+                    Usuario u = getUsuario();
+                    model.EstadoCuenta.generarListado(u);
                 }
                 return View(model);
             } catch (UsuarioException exc) {
@@ -303,7 +311,8 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult ListGrillaMovimientosRep(string idParametros) {
             EstadoCuentaModel model = (EstadoCuentaModel)Session[idParametros];
             ViewData["idParametros"] = model.idParametros;
-            _generarListado(model);
+            Usuario u = getUsuario();
+            model.EstadoCuenta.generarListado(u);
             return PartialView("_listGrillaMovimientosRep", model);
         }
 
@@ -314,7 +323,8 @@ namespace AutomotoraWeb.Controllers.Bank {
 
         private XtraReport _generarReporte(string idParametros) {
             EstadoCuentaModel model = (EstadoCuentaModel)Session[idParametros];
-            _generarListado(model);
+            Usuario u = getUsuario();
+            model.EstadoCuenta.generarListado(u);
             List<EstadoCuenta> ll = new List<EstadoCuenta>();
             ll.Add(model.EstadoCuenta);
             XtraReport rep = new DXEstadoCuenta();
@@ -343,7 +353,7 @@ namespace AutomotoraWeb.Controllers.Bank {
         public ActionResult Saldos() {
             BancoSaldoModel model = new BancoSaldoModel();
             try {
-                string s = SessionUtils.generarIdVarSesion("SaldosBanco", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("SaldosBanco", getUserName());
                 model.idParametros = s;
                 Session[s] = model;
                 ViewData["idParametros"] = model.idParametros;

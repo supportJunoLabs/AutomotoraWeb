@@ -147,12 +147,12 @@ namespace AutomotoraWeb.Services {
 
         #endregion
 
-        public bool verInfoAntigua(Usuario u) {
-            //Usuario u = new Usuario();
-            //u.UserName = username;
-            //u.Consultar(Usuario.MODO_CONSULTA.BASICO);
-            return u.InfoAntigua;
-        }
+        //public bool verInfoAntigua(Usuario u) {
+        //    //Usuario u = new Usuario();
+        //    //u.UserName = username;
+        //    //u.Consultar(Usuario.MODO_CONSULTA.BASICO);
+        //    return u.InfoAntigua;
+        //}
 
     }
 }

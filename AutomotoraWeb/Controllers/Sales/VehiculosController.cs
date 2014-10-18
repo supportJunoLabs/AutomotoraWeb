@@ -43,7 +43,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             base.OnActionExecuting(filterContext); //esto tiene que ser lo primero, si no, falla si se llama directamente la consulta del usuario si nadie esta logueado
             ViewBag.NombreEntidades = "Vehiculos";
             ViewBag.NombreEntidad = "Vehiculo";
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -65,19 +65,20 @@ namespace AutomotoraWeb.Controllers.Sales {
             return PartialView("_listGrilla", _listaElementos());
         }
 
-        private bool VehiculoConsultable(Vehiculo v) {
-            if (v == null || v.Codigo == 0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
-                return false;
-            }
-            return true;
-        }
+        //private bool VehiculoConsultable(Vehiculo v) {
+        //    if (v == null || v.Codigo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && v.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         private Vehiculo iniVehiculo(int id) {
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = id;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             _addResumeGastosToViewBag(vehiculo);
             ViewBag.ShortedListFotoAuto = shortListFotoAuto(vehiculo.Fotos);
             return vehiculo;
@@ -89,9 +90,6 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.SoloLectura = true;
             try {
                 Vehiculo v = iniVehiculo(id);
-                if (!VehiculoConsultable(v)) {
-                    return View("_transaccionAntigua");
-                } 
                 return View(v);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -103,7 +101,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult Create() {
             Vehiculo v = new Vehiculo();
             try {
-                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                Usuario usuario = getUsuario();
                 v.Sucursal = usuario.Sucursal;
                 return View(v);
             } catch (UsuarioException exc) {
@@ -116,12 +114,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult Edit(int id) {
             try {
                 Vehiculo vehiculo=iniVehiculo(id);
-                if (!VehiculoConsultable(vehiculo)) {
-                    return View("_transaccionAntigua");
-                }
-
                 ViewData["idParametros"] = id.ToString();
-                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                Usuario usuario = getUsuario();
                 try {
                     vehiculo.Modificable(usuario);
                 } catch (UsuarioException ex) {
@@ -144,11 +138,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                 ViewData["idParametros"] = id.ToString();
                 ViewBag.SoloLectura = true;
                 Vehiculo vehiculo = iniVehiculo(id);
-                if (!VehiculoConsultable(vehiculo)) {
-                    return View("_transaccionAntigua");
-                }
 
-                Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+                Usuario usuario = getUsuario();
                 try {
                     vehiculo.Eliminable(usuario);
                 } catch (UsuarioException ex) {
@@ -198,7 +189,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         private List<Vehiculo> _listaElementos() {
-            List<Vehiculo> list = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.EN_STOCK);
+            Usuario u = getUsuario();
+            List<Vehiculo> list = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.EN_STOCK, u);
             list.Reverse();
             return list;
         }
@@ -245,7 +237,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                     vehiculo.ModificarDatos();
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
-                    vehiculo.Consultar(); //para completar datos asociados
+                    Usuario u = getUsuario();
+                    vehiculo.Consultar(u); //para completar datos asociados
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     _addResumeGastosToViewBag(vehiculo);
@@ -268,12 +261,13 @@ namespace AutomotoraWeb.Controllers.Sales {
             //if (ModelState.IsValid) {
 
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     vehiculo.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
-                    vehiculo.Consultar(); //para completar datos asociados
+                    Usuario u = getUsuario();
+                    vehiculo.Consultar(u); //para completar datos asociados
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     _addResumeGastosToViewBag(vehiculo);
@@ -293,7 +287,7 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult List() {
             ListadoVehiculosModel model = new ListadoVehiculosModel();
             try {
-                string s = SessionUtils.generarIdVarSesion("ListadoVehiculos", Session[SessionUtils.SESSION_USER].ToString());
+                string s = SessionUtils.generarIdVarSesion("ListadoVehiculos", getUserName());
                 Session[s] = model;
                 model.idParametros = s;
                 model.Formato = ListadoVehiculosModel.FORMATO_LISTADO.ABREVIADO;
@@ -342,11 +336,8 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private List<Vehiculo> _listaElementos(ListadoVehiculosModel model) {
             model.AcomodarFiltro();
-            List<Vehiculo>lista= Vehiculo.Vehiculos(model.Filtro);
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario)) {
-                lista.RemoveAll(v => v.Antiguo);
-            }
+            Usuario u = getUsuario();
+            List<Vehiculo>lista= Vehiculo.Vehiculos(model.Filtro, u);
             return lista;
         }
 
@@ -407,10 +398,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult Report2(int idVehiculo) {
             Vehiculo vhc = new Vehiculo();
             vhc.Codigo = idVehiculo;
-            vhc.Consultar();
-            if (!VehiculoConsultable(vhc)) {
-                return View("_transaccionAntigua");
-            }
+            Usuario u = getUsuario();
+            vhc.Consultar(u);
             ViewData["idParametros"] = idVehiculo;
             return View(vhc);
         }
@@ -419,12 +408,11 @@ namespace AutomotoraWeb.Controllers.Sales {
             DXReportFichaVehiculo rep = new DXReportFichaVehiculo();
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = idParametros;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
 
             List<Vehiculo> lista = new List<Vehiculo>();
-            if (VehiculoConsultable(vehiculo)) {
-                lista.Add(vehiculo);
-            }
+            lista.Add(vehiculo);
             rep.DataSource = lista;
             ViewData["Report"] = rep;
             ViewData["idParametros"] = vehiculo.Codigo;
@@ -435,11 +423,10 @@ namespace AutomotoraWeb.Controllers.Sales {
             DXReportFichaVehiculo rep = new DXReportFichaVehiculo();
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = idParametros;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             List<Vehiculo> lista = new List<Vehiculo>();
-            if (VehiculoConsultable(vehiculo)) {
-                lista.Add(vehiculo);
-            }
+            lista.Add(vehiculo);
             rep.DataSource = lista;
             return DevExpress.Web.Mvc.DocumentViewerExtension.ExportTo(rep);
         }
@@ -467,7 +454,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult createGasto(int idVehiculo) {
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = idVehiculo;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             Gasto gasto = new Gasto();
             gasto.Fecha = DateTime.Now;
             gasto.Vehiculo = vehiculo;
@@ -492,7 +480,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public JsonResult createGasto(Gasto gasto) {
 
             Vehiculo vehiculo = gasto.Vehiculo;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             gasto.Vehiculo = vehiculo;
 
             //no es necesario este paso, porque lo hace el backend
@@ -508,7 +497,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             //envio al backend
             try {
                 gasto.Agregar();
-                vehiculo.Consultar();
+                vehiculo.Consultar(u);
                 return createJsonResultGastosOK(vehiculo);
             } catch (UsuarioException exc) {
                 List<String> errores1 = new List<string>();
@@ -522,7 +511,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult editGasto(Gasto gasto) {
 
             Vehiculo vehiculo = gasto.Vehiculo;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             gasto.Vehiculo = vehiculo;
 
             //En la modificacion la cotizacion la ingresa el usuario, no se sobreescribe
@@ -538,7 +528,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             //envio al backend
             try {
                 gasto.ModificarDatos();
-                vehiculo.Consultar();
+                vehiculo.Consultar(u);
                 return createJsonResultGastosOK(vehiculo);
             } catch (UsuarioException exc) {
                 List<String> errores1 = new List<string>();
@@ -550,12 +540,13 @@ namespace AutomotoraWeb.Controllers.Sales {
         [HttpPost]
         public ActionResult deleteGasto(Gasto gasto) {
             try {
-                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                string IP = HttpContext.Request.UserHostAddress;
+                string userName = getUserName();
+                string IP = getIP();
                 gasto.Eliminar(userName, IP);
 
                 Vehiculo vehiculo = gasto.Vehiculo;
-                vehiculo.Consultar();
+                Usuario u = getUsuario();
+                vehiculo.Consultar(u);
 
                 return createJsonResultGastosOK(vehiculo);
             } catch (UsuarioException exc) {
@@ -625,7 +616,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         private List<Gasto> _listaGastos(int id) {
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = id;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             return vehiculo.DetalleGastos;
         }
 
@@ -639,7 +631,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult createDoc(int idVehiculo) {
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = idVehiculo;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             DocAuto docAuto = new DocAuto();
             docAuto.Fecha = DateTime.Now;
             docAuto.Vehiculo = vehiculo;
@@ -674,7 +667,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public JsonResult createDoc(DocAuto docAuto) {
 
             Vehiculo vehiculo = docAuto.Vehiculo;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             docAuto.Vehiculo = vehiculo;
 
             //validacion del controller
@@ -685,7 +679,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             //envio al backend
             try {
                 docAuto.Agregar();
-                vehiculo.Consultar();
+                vehiculo.Consultar(u);
                 return Json(new { Result = "OK" });
             } catch (UsuarioException exc) {
                 List<String> errores1 = new List<string>();
@@ -698,7 +692,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult editDoc(DocAuto docAuto) {
 
             Vehiculo vehiculo = docAuto.Vehiculo;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             docAuto.Vehiculo = vehiculo;
 
             //validacion del controller
@@ -721,12 +716,13 @@ namespace AutomotoraWeb.Controllers.Sales {
         [HttpPost]
         public ActionResult deleteDoc(DocAuto docAuto) {
             try {
-                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                string IP = HttpContext.Request.UserHostAddress;
+                string userName = getUserName();
+                string IP = getIP();
                 docAuto.Eliminar(userName, IP);
 
                 Vehiculo vehiculo = docAuto.Vehiculo;
-                vehiculo.Consultar();
+                Usuario u = getUsuario();
+                vehiculo.Consultar(u);
 
                 return Json(new { Result = "OK" });
             } catch (UsuarioException exc) {
@@ -746,7 +742,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         private List<DocAuto> _listaDocumentos(int id) {
             Vehiculo vehiculo = new Vehiculo();
             vehiculo.Codigo = id;
-            vehiculo.Consultar();
+            Usuario u = getUsuario();
+            vehiculo.Consultar(u);
             return vehiculo.Documentacion;
         }
 
@@ -797,7 +794,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             try {
                 Vehiculo vehiculoOriginal = new Vehiculo();
                 vehiculoOriginal.Codigo = vehiculo.Codigo;
-                vehiculoOriginal.Consultar();
+                Usuario u = getUsuario();
+                vehiculoOriginal.Consultar(u);
                 foreach (FotoAuto fotoAuto in vehiculo.Fotos) {
                     var foto = from f in vehiculoOriginal.Fotos where (fotoAuto.Codigo == f.Codigo) select f;
                     if (foto != null) {
@@ -817,8 +815,8 @@ namespace AutomotoraWeb.Controllers.Sales {
         [HttpPost]
         public JsonResult removePhoto(int codePhoto) {
             try {
-                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                string IP = HttpContext.Request.UserHostAddress;
+                string userName = getUserName();
+                string IP = getIP();
                 FotoAuto fotoAuto = new FotoAuto();
                 fotoAuto.Codigo = codePhoto;
                 fotoAuto.Eliminar(userName, IP);
@@ -902,7 +900,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                 int idVehiculo = int.Parse(col["idVehiculo"]);
                 Vehiculo vehiculo = new Vehiculo();
                 vehiculo.Codigo = idVehiculo;
-                vehiculo.Consultar();
+                Usuario u = getUsuario();
+                vehiculo.Consultar(u);
                 int order = vehiculo.Fotos.Count;
 
                 HttpPostedFileBase file = Request.Files[0]; //Uploaded file
@@ -928,8 +927,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                 fotoAuto.Vehiculo = vehiculo;
                 fotoAuto.Orden = order;
                 fotoAuto.Archivo = fileName;
-                string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
-                string origen = HttpContext.Request.UserHostAddress;
+                string nomUsuario = getUserName();
+                string origen = getIP();
                 fotoAuto.setearAuditoria(nomUsuario, origen);
                 fotoAuto.Agregar();
 

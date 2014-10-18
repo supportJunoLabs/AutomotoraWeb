@@ -24,7 +24,7 @@ namespace AutomotoraWeb.Controllers.Financing {
             ViewBag.NombreEntidades = "Financistas";
             ViewBag.Financistas = Financista.FinancistasTodos;
             ViewBag.FinancistasPago = Financista.FinancistasActivosSinDefault;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -153,8 +153,8 @@ namespace AutomotoraWeb.Controllers.Financing {
             ViewBag.SoloLectura = true;
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     fin.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
@@ -274,14 +274,14 @@ namespace AutomotoraWeb.Controllers.Financing {
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Pago() {
             TRFinancistaPago tr = new TRFinancistaPago();
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
             tr.Fecha = DateTime.Now.Date;
             if (Financista.FinancistasActivosSinDefault != null && Financista.FinancistasActivosSinDefault.Count > 0) {
                 tr.Financista = Financista.FinancistasActivosSinDefault.First();
             }
 
-            string idSession = SessionUtils.generarIdVarSesion("PagoFin", Session[SessionUtils.SESSION_USER].ToString()) + "|";
+            string idSession = SessionUtils.generarIdVarSesion("PagoFin", getUserName()) + "|";
             ViewData["idSession"] = idSession;
             PagoFinancistaModel model = new PagoFinancistaModel();
             model.Transaccion = tr;
@@ -392,8 +392,8 @@ namespace AutomotoraWeb.Controllers.Financing {
                 try {
 
                     //Como no estoy usando una Transaccion del backend (que lo setea el filter) sino del modelo tengo que setear estos dos atributos a mano:
-                    string nomUsuario = Session[SessionUtils.SESSION_USER_NAME].ToString();
-                    string origen = HttpContext.Request.UserHostAddress;
+                    string nomUsuario = getUserName();
+                    string origen = getIP();
                     model.Transaccion.setearAuditoria(nomUsuario, origen);
 
                     List<FinancistaPagoEfectivo> lef = (List<FinancistaPagoEfectivo>) Session[idSession + SessionUtils.EFECTIVO];
@@ -446,24 +446,23 @@ namespace AutomotoraWeb.Controllers.Financing {
 
         }
 
-        private bool TransaccionConsultable(Transaccion tr) {
-            if (tr == null || tr.NroRecibo == 0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
-                return false;
-            }
-            return true;
-        }
+        //private bool TransaccionConsultable(Transaccion tr) {
+        //    if (tr == null || tr.NroRecibo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && tr.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         public ActionResult ReciboPago(int id) {
             try {
-                TRFinancistaPago tr = (TRFinancistaPago)Transaccion.ObtenerTransaccion(id);
-                if (!TransaccionConsultable(tr)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                TRFinancistaPago tr = (TRFinancistaPago)Transaccion.ObtenerTransaccion(id,u);
                 ViewData["idParametros"] = id;
                 return View("ReciboPago", tr.Financista);
             } catch (UsuarioException exc) {
+                ViewData["idParametros"] = 0;
                 ViewBag.ErrorCode = exc.Codigo;
                 ViewBag.ErrorMessage = exc.Message;
                 return View();
@@ -471,11 +470,10 @@ namespace AutomotoraWeb.Controllers.Financing {
         }
 
         private XtraReport _generarReciboPago(int id) {
-            TRFinancistaPago tr = (TRFinancistaPago)Transaccion.ObtenerTransaccion(id);
+            Usuario u = getUsuario();
+            TRFinancistaPago tr = (TRFinancistaPago)Transaccion.ObtenerTransaccion(id,u);
             List<TRFinancistaPago> ll = new List<TRFinancistaPago>();
-            if (TransaccionConsultable(tr)) {
-                ll.Add(tr);
-            }
+            ll.Add(tr);
             XtraReport rep = new DXReciboFinancistaPago();
             rep.DataSource = ll;
             return rep;

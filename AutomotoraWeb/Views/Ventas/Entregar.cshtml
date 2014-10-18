@@ -8,7 +8,7 @@
     ViewBag.Title = ViewBag.NombreEntidad + ": Entregar Vehiculo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Venta.Ventas(Venta.TIPO_LISTADO_VENTAS.ENTREGA_PENDIENTE) };
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = (IEnumerable<Venta>) ViewData["VentasEntregables"] };
     if (Model.Entrega != null && Model.Entrega.Venta != null && Model.Entrega.Venta.Codigo > 0) {
         gmodel.GridLookUpCodigo = Model.Entrega.Venta.Codigo;
     }

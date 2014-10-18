@@ -10,7 +10,7 @@
     ViewBag.Title = ViewBag.NombreEntidad + ": Anular";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Venta.Ventas(Venta.TIPO_LISTADO_VENTAS.ANULABLES) };
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = (IEnumerable<Venta>)ViewData["VentasAnulables"] };
     if (Model.VentaDev != null && Model.VentaDev.Venta != null && Model.VentaDev.Venta.Codigo > 0) {
         gmodel.GridLookUpCodigo = Model.VentaDev.Venta.Codigo;
     }

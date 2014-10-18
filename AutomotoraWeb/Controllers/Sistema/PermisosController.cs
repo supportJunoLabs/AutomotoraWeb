@@ -18,7 +18,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
 
          [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Edit(int? id) {
-            string s = SessionUtils.generarIdVarSesion("Permisos", Session[SessionUtils.SESSION_USER].ToString());
+            string s = SessionUtils.generarIdVarSesion("Permisos", getUserName());
             PermisosModel model = new PermisosModel();
             model.Perfil = new Perfil();
             if (id != null) {
@@ -38,8 +38,8 @@ namespace AutomotoraWeb.Controllers.Sistema {
                     return View(model);
                 }
 
-                string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                string IP = HttpContext.Request.UserHostAddress;
+                string userName = getUserName();
+                string IP = getIP();
                 List<OpcionMenu> todas = OpcionMenu.opcionesHabilitables();
 
                 List<OpcionMenu> lom = new List<OpcionMenu>();

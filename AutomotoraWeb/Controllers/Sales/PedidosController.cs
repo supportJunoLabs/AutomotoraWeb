@@ -29,7 +29,7 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.Departamentos = Departamento.Departamentos();
             ViewBag.TiposCombustible = TipoCombustible.TiposCombustible();
 
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
+            Usuario usuario = getUsuario();
             if (usuario == null) {
                 filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                 return;
@@ -42,21 +42,23 @@ namespace AutomotoraWeb.Controllers.Sales {
         //--------------------------METODOS PARA GESTION DE pedidos  -----------------------------
         #region Gestion
 
-        private bool PedidoConsultable(Pedido ped) {
-            if (ped == null || ped.Codigo == 0) return true;
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if (!SecurityService.Instance.verInfoAntigua(usuario) && ped.Antiguo) {
-                return false;
-            }
-            return true;
-        }
+        //private bool PedidoConsultable(Pedido ped) {
+        //    if (ped == null || ped.Codigo == 0) return true;
+        //    Usuario usuario = getUsuario();
+        //    if (!SecurityService.Instance.verInfoAntigua(usuario) && ped.Antiguo) {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         public ActionResult Show() {
-            return View(Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES));
+            Usuario u = getUsuario();
+            return View(Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES, u));
         }
 
         public ActionResult ListaGrilla() {
-            return PartialView("_listGrilla", Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES));
+            Usuario u = getUsuario();
+            return PartialView("_listGrilla", Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.MODIFICABLES,u));
         }
 
         public ActionResult Details(int id) {
@@ -64,10 +66,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             try {
                 Pedido td = new Pedido();
                 td.Codigo = id;
-                td.Consultar();
-                if (!PedidoConsultable(td)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                td.Consultar(u);
                 return View(td);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -80,14 +80,15 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.SoloLectura = true;
             Pedido td = new Pedido();
             td.Codigo = id;
-            td.Consultar();
+            Usuario u = getUsuario();
+            td.Consultar(u);
             return PartialView("_datosDetalle", td);
         }
 
         public ActionResult Create() {
             Pedido ped = new Pedido();
             ped.FechaPedido = DateTime.Now.Date;
-            ped.Sucursal = ((Usuario)(Session[SessionUtils.SESSION_USER])).Sucursal;
+            ped.Sucursal = (getUsuario()).Sucursal;
             return View(ped);
         }
 
@@ -95,10 +96,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             try {
                 Pedido td = new Pedido();
                 td.Codigo = id;
-                td.Consultar();
-                if (!PedidoConsultable(td)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                td.Consultar(u);
                 return View(td);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -112,10 +111,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             try {
                 Pedido td = new Pedido();
                 td.Codigo = id;
-                td.Consultar();
-                if (!PedidoConsultable(td)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                td.Consultar(u);
                 return View(td);
             } catch (UsuarioException exc) {
                 ViewBag.ErrorCode = exc.Codigo;
@@ -129,7 +126,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                 ViewBag.SoloLectura = true;
                 Pedido ped = new Pedido();
                 ped.Codigo = id;
-                ped.Consultar();
+                Usuario u = getUsuario();
+                ped.Consultar(u);
                 if (ped.Seniado) {
                     Senia s = ped.ObtenerSenia();
                     if (s != null) {
@@ -148,10 +146,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             try {
                 Pedido ped = new Pedido();
                 ped.Codigo = id;
-                ped.Consultar();
-                if (!PedidoConsultable(ped)) {
-                    return View("_transaccionAntigua");
-                }
+                Usuario u = getUsuario();
+                ped.Consultar(u);
                 ped.Vehiculo = new Vehiculo();
                 ped.Vehiculo.Marca = ped.Marca;
                 ped.Vehiculo.Modelo = ped.Modelo;
@@ -193,8 +189,8 @@ namespace AutomotoraWeb.Controllers.Sales {
                     ped.Vehiculo.FechaAdquirido = ped.FechaRecibido??DateTime.Now.Date;
                     ped.Vehiculo.Sucursal = ped.Sucursal;
                     Usuario u = new Usuario();
-                    u.UserName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    u.UserName = getUserName();
+                    string IP = getIP();
                     ped.RecibirPedido(u, IP);
                     return RedirectToAction(BaseController.DETAILS, VehiculosController.CONTROLLER, new { id = ped.Vehiculo.Codigo });
                 } catch (UsuarioException exc) {
@@ -210,7 +206,8 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private void _completarDatos(Pedido ped){
             Vehiculo v1 = new Vehiculo(ped.Vehiculo); //para no perder lo que ingreso el usuario
-            ped.Consultar();  //para volver a trare los datos de las entidades asociadas (ej: cliente, vendedor, etc)
+            Usuario u = getUsuario();
+            ped.Consultar(u);  //para volver a trare los datos de las entidades asociadas (ej: cliente, vendedor, etc)
             ped.Vehiculo=v1;
         }
 
@@ -264,8 +261,8 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     Usuario u = new Usuario();
                     u.UserName = userName;
                     td.ModificarDatos(u, IP);
@@ -289,12 +286,13 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewBag.SoloLectura = true;
             //if (ModelState.IsValid) {
                 try {
-                    string userName = (string)HttpContext.Session.Contents[SessionUtils.SESSION_USER_NAME];
-                    string IP = HttpContext.Request.UserHostAddress;
+                    string userName = getUserName();
+                    string IP = getIP();
                     td.Eliminar(userName, IP);
                     return RedirectToAction(BaseController.SHOW);
                 } catch (UsuarioException exc) {
-                    td.Consultar(); //para traer lo datos a mostrar
+                    Usuario u = getUsuario();
+                    td.Consultar(u); //para traer lo datos a mostrar
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
                     ModelState.Clear();
@@ -334,7 +332,7 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             ListadoPedidosModel model = new ListadoPedidosModel();
             try{
-            string s = SessionUtils.generarIdVarSesion("ListadoPedidos", Session[SessionUtils.SESSION_USER].ToString());
+            string s = SessionUtils.generarIdVarSesion("ListadoPedidos", getUserName());
             Session[s] = model;
             model.idParametros = s;
             ViewBag.SucursalesListado = Sucursal.Sucursales;
@@ -384,12 +382,9 @@ namespace AutomotoraWeb.Controllers.Sales {
 
         private List<Pedido> _listaElementos(ListadoPedidosModel model) {
             model.AcomodarFiltro();
-            List<Pedido> lista= Pedido.Pedidos(model.Filtro);
-            Usuario usuario = (Usuario)(Session[SessionUtils.SESSION_USER]);
-            if(!SecurityService.Instance.verInfoAntigua(usuario)){
-                lista.RemoveAll(ped=>ped.Antiguo);
-           }
-           return lista;
+            Usuario u = getUsuario();
+            List<Pedido> lista= Pedido.Pedidos(model.Filtro, u);
+            return lista;
         }
 
         public ActionResult Report(ListadoPedidosModel model) {
