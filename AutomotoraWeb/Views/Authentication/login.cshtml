@@ -7,7 +7,7 @@
 }
 
 <section id="loginForm">
-    <p class="block-heading">@Resources.Global.LOGIN_TITLE_HEADING</p>
+    <p class="block-heading">Inicio de sesión</p>
     <div class="block-body">
         @using (Html.BeginForm(AuthenticationController.LOGIN, AuthenticationController.CONTROLLER )) {
             @Html.AntiForgeryToken()
@@ -21,7 +21,7 @@
             @Html.PasswordFor(m => m.Password, new { @class = "span12" })
             @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-error" })
 
-            <input type="submit" value="@Resources.Global.LOGIN_LOGIN" class="btn btn-primary pull-right" />
+            <input type="submit" value="Iniciar sesión" class="btn btn-primary pull-right" />
             <div class="clearfix"></div>
             
             if ((Model != null) && (Model.ErrorCode != null)) {
@@ -29,19 +29,6 @@
             <div class="text-error">@Model.ErrorMessage</div>
             }
             
-            @*
-            if ((Model != null) && (Model.ErrorCode != null)){
-                if (Model.ErrorCode.Equals("U001")) 
-                { 
-                    <div class="text-error">@Model.ErrorMessage</div>
-                } 
-                else if (Model.ErrorCode.Equals("U002")) 
-                {
-                    <div class="text-error">@Resources.Global.GLOBAL_ERROR_SERVER</div>
-                    <div>@Model.ErrorMessage</div>
-                }
-            }*@
-
         }
     </div>
 </section>
