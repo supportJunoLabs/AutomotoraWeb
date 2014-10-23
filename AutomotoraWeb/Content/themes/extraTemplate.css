@@ -67,7 +67,7 @@ textarea {
 }
 
 .field-validation-error {
-    background-image: url('/content/images/error.png');
+    background-image: url('../images/error.png');
     background-repeat: no-repeat;
     color: transparent;
     background-size: 16px 16px;
@@ -116,7 +116,7 @@ textarea {
 
 
 .boton-crear-mf {
-    background-image: url(/Content/Images/agregar.png);
+    background-image: url(../Images/agregar.png);
     background-repeat: no-repeat;
     width: 48px;
     height: 48px;
@@ -127,7 +127,7 @@ textarea {
 }
 
 .boton-imprimir-mf {
-    background-image: url(/Content/Images/imprimir.png);
+    background-image: url(../Images/imprimir.png);
     background-repeat: no-repeat;
     width: 48px;
     height: 48px;
@@ -138,7 +138,7 @@ textarea {
 }
 
 .boton-excel-mf {
-    background-image: url(/Content/Images/excel.png);
+    background-image: url(../Images/excel.png);
     background-repeat: no-repeat;
     width: 48px;
     height: 48px;
@@ -149,7 +149,7 @@ textarea {
 }
 
 .boton-editar-mf {
-    background-image: url(/Content/Images/edit.png);
+    background-image: url(../Images/edit.png);
     background-repeat: no-repeat;
     width: 18px;
     height: 18px;
@@ -159,7 +159,7 @@ textarea {
 }
 
 .boton-consultar-mf {
-    background-image: url(/Content/Images/consultar.png);
+    background-image: url(../Images/consultar.png);
     background-repeat: no-repeat;
     width: 18px;
     height: 18px;
@@ -169,7 +169,7 @@ textarea {
 }
 
 .boton-eliminar-mf {
-    background-image: url(/Content/Images/delete.png);
+    background-image: url(../Images/delete.png);
     background-repeat: no-repeat;
     width: 18px;
     height: 18px;
@@ -235,7 +235,7 @@ textarea {
 /*Standard Elements*/
 body {
     /*background: #eee;
-    background-image: url(/Content/Images/fondo.png);*/
+    background-image: url(../Images/fondo.png);*/
     background: white !important;
     background-image: none !important;
     background-position: initial initial;
@@ -545,7 +545,7 @@ footer {
     border-left: none;
     margin: 0em;
 
-    background-image:url(/Content/Images/fondo.png); 
+    background-image:url(../Images/fondo.png); 
     height:3000px; 
     border-right:3px solid #999999;
 }

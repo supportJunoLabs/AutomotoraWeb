@@ -233,11 +233,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Global.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Global.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -563,8 +558,6 @@
     <Content Include="Content\Images\imprimir.png" />
     <Content Include="Content\Images\loading_blue_lg.gif" />
     <Content Include="Content\Images\ppal1.jpg" />
-    <Content Include="Content\Images\ppal2.jpg" />
-    <Content Include="Content\Images\ppal3.jpg" />
     <Content Include="Content\Images\vendedores\_sinFoto.png" />
     <Content Include="Content\Images\refresh.png" />
     <Content Include="Content\Images\_sinFoto.png" />
@@ -1780,7 +1773,6 @@
     <Content Include="Content\themes\WintertideAdmin\build\lib\jqplot\examples\syntaxhighlighter\MIT-LICENSE" />
     <Content Include="Content\themes\WintertideAdmin\Readme" />
     <Content Include="Content\Images\vssver2.scc" />
-    <Content Include="Controllers\Sistema\ResetPassword.cshtml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\AutomotoraWeb\ayudaFechas.js" />
@@ -2282,7 +2274,6 @@
     <Content Include="Views\Senias\_devolucionCheques.cshtml" />
     <Content Include="Views\Senias\_grillaChequesDevolucion.cshtml" />
     <Content Include="Views\Ventas\_pagosSeniaACVs.cshtml" />
-    <Content Include="Views\Shared\index.cshtml" />
     <Content Include="Views\Ventas Leandro\_grillaPagosCuota.cshtml" />
     <Content Include="Views\Ventas Leandro\_grillaPagosVale.cshtml" />
     <Content Include="Views\Ventas Leandro\_pagosSeniaACVs.cshtml" />
@@ -2324,18 +2315,10 @@
     <Content Include="Views\Compactacion\Compactar.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\Images\tmp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Global.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Global.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
