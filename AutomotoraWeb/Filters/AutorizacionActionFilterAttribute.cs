@@ -39,14 +39,14 @@ namespace AutomotoraWeb {
                         } else {
                             filterContext.HttpContext.Session[SessionUtils.PAGINA_ORIGINAL_SOLICITADA] = null;
                         }
-                        filterContext.Result = new RedirectResult("/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
+                        filterContext.Result = new RedirectResult("~/" + AuthenticationController.CONTROLLER + "/" + AuthenticationController.LOGIN);
                     }
                 } else {
                     Dictionary<string, Dictionary<string, bool>> dictionaryOptions = (Dictionary<string, Dictionary<string, bool>>)(filterContext.HttpContext.Application.Contents[SessionUtils.APPLICATION_PERMISSIBLES_CONTROLLERS_ACTIONS]);
                     string userName = (string)(filterContext.HttpContext.Session[SessionUtils.SESSION_USER_NAME]);
                     if (!SecurityService.Instance.hasAccess(actionName, controllerName, userName, dictionaryOptions)) {
                         string spermiso = controllerName.ToLower() + "|" + actionName.ToLower();
-                        filterContext.Result = new RedirectResult("/Error/Error403/"+spermiso);
+                        filterContext.Result = new RedirectResult("~/Error/Error403/" + spermiso);
                     }
                 }
             }
