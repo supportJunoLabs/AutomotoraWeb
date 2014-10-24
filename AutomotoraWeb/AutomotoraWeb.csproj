@@ -2273,7 +2273,6 @@
     <Content Include="Views\Shared\_grillaPagosChequesEmitidos.cshtml" />
     <Content Include="Views\Senias\_devolucionCheques.cshtml" />
     <Content Include="Views\Senias\_grillaChequesDevolucion.cshtml" />
-    <Content Include="Views\Ventas\_pagosSeniaACVs.cshtml" />
     <Content Include="Views\Ventas Leandro\_grillaPagosCuota.cshtml" />
     <Content Include="Views\Ventas Leandro\_grillaPagosVale.cshtml" />
     <Content Include="Views\Ventas Leandro\_pagosSeniaACVs.cshtml" />
