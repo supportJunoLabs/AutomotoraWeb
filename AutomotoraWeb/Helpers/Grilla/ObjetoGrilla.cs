@@ -18,7 +18,7 @@ using DevExpress.Web.ASPxEditors;
 
 
 
-namespace AutomotoraWeb.Models {
+namespace AutomotoraWeb.Helpers.Grilla {
     public class ObjetoGrilla {
         public List<MVCxGridViewColumn> listGridViewsColumn = new List<MVCxGridViewColumn>();
         public MVCxGridViewColumn listGridViewsBotones = null;

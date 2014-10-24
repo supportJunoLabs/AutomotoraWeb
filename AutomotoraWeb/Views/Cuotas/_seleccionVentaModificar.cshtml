@@ -2,7 +2,7 @@
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
-
+@using AutomotoraWeb.Helpers.Grilla;
 
  @{  Cliente cl = Model.ClienteOp;
          GridLookUpModel gmodel = new GridLookUpModel { Opciones = cl.VentasCuotasPendientes(), 

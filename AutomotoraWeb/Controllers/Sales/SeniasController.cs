@@ -11,6 +11,7 @@ using DevExpress.XtraReports.UI;
 using DevExpress.XtraPrinting;
 using AutomotoraWeb.Controllers.General;
 using AutomotoraWeb.Services;
+using AutomotoraWeb.Helpers.Grilla;
 
 namespace AutomotoraWeb.Controllers.Sales {
     public class SeniasController : SalesController {
