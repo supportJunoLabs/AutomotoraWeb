@@ -19,16 +19,16 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:43:47</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>10/22/2014 23:17:38</publishTime>
+      <publishTime>10/25/2014 23:51:33</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>10/22/2014 23:17:37</publishTime>
+      <publishTime>10/25/2014 23:51:33</publishTime>
     </File>
     <File Include="bin/AutomotoraWeb.dll">
-      <publishTime>10/22/2014 23:17:19</publishTime>
+      <publishTime>10/25/2014 15:21:23</publishTime>
     </File>
     <File Include="bin/AutomotoraWeb.pdb">
-      <publishTime>10/22/2014 23:17:19</publishTime>
+      <publishTime>10/25/2014 15:21:23</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Data.v13.2.resources.dll">
       <publishTime>05/06/2014 23:26:16</publishTime>
@@ -181,7 +181,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>05/06/2014 23:27:19</publishTime>
     </File>
     <File Include="bin/DLL_Backend.dll">
-      <publishTime>10/18/2014 13:55:06</publishTime>
+      <publishTime>10/25/2014 02:34:48</publishTime>
     </File>
     <File Include="bin/Elmah.dll">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4210,7 +4210,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>10/22/2014 23:17:28</publishTime>
+      <publishTime>10/25/2014 23:50:55</publishTime>
     </File>
     <File Include="Scripts/AutomotoraWeb/AcvsListado.js">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4273,7 +4273,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Scripts/AutomotoraWeb/PagoFinancista.js">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/25/2014 00:49:14</publishTime>
     </File>
     <File Include="Scripts/AutomotoraWeb/PasarCheque.js">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4381,10 +4381,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:43:46</publishTime>
     </File>
     <File Include="Views/Acvs/ACVenta.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Acvs/Anular.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/25/2014 01:49:02</publishTime>
     </File>
     <File Include="Views/Acvs/details.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4408,10 +4408,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Acvs/_grillaAcvNoAnulados.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Acvs/_grillaAcvVigentes.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Acvs/_recibo.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4420,16 +4420,16 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Acvs/_reportGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Acvs/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Acvs/_seleccionAcvAnularGridLookup.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Acvs/_selectVehiculoACV.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Authentication/changePassword.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4444,7 +4444,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Authentication/_perfilesUsuario.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Bank/Index.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4474,10 +4474,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Caja/_listGrillaCheques.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Caja/_listGrillaEfectivo.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Caja/_reciboCaja.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4486,7 +4486,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Caja/_selectChequeSalida.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/ChEmitidos/create.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4513,22 +4513,22 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/ChEmitidos/_chequesDebitar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/ChEmitidos/_datosDetalle.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/ChEmitidos/_listCheques.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/ChEmitidos/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/ChEmitidos/_report.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Cheques/CanjeRechazado.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Cheques/ConsultaCheque.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4543,10 +4543,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Cheques/Pasar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Cheques/Rechazar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Cheques/ReciboCanje.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4573,16 +4573,16 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Cheques/_depositarDescontar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Cheques/_listCheques.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Cheques/_listGrillaCheques.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Cheques/_movimientosCheque.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Cheques/_reciboCanje.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4606,19 +4606,19 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Cheques/_selectCheque.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Cheques/_selectChequeDesc.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Cheques/_selectChequePasar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Cheques/_selectChequeRechazar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Cheques/_selectChequeTransfSuc.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Clientes/create.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4651,16 +4651,16 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Clientes/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Clientes/_listGrillaSitClienteCheques.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Clientes/_listGrillaSitClienteCuotas.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Clientes/_listGrillaSitClienteVales.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Clientes/_reportDetalle.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4684,7 +4684,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Clientes/_ventasCliente.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/Compactacion/Compactar.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4720,7 +4720,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_cuotasHistoricoFinanciacion.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_cuotasVigentesFinanciacion.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4729,7 +4729,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_financiacionesCliente.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listCuotasPendientes.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4753,31 +4753,31 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listGrillaCuotasPendientesCli.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listGrillaCuotasPendientesDet.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listGrillaCuotasPendientesMes.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:35</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listGrillaCuotasValesPendientesCli.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listGrillaCuotasValesPendientesMes.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listGrillaSitCuotas.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listGrillaValesPendientesCli.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listGrillaValesPendientesDet.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listGrillaValesPendientesMes.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_listSitCuotas.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4810,13 +4810,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/ConsultasFin/_selectFinanciacionConsultar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Cotizacion/edit.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/23/2014 23:03:24</publishTime>
     </File>
     <File Include="Views/Cotizacion/_grillaCotizaciones.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/CuentasBancarias/create.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4840,7 +4840,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/CuentasBancarias/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/CuentasBancarias/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4852,7 +4852,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Cuotas/Pasar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Cuotas/ReciboCuota.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4873,13 +4873,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Cuotas/_grillacuotasTransf.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Cuotas/_grillacuotasVigentes.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Cuotas/_grillaNuevasCuotas.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Cuotas/_pasar.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4894,16 +4894,16 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Cuotas/_seleccionVentaCobrar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Cuotas/_seleccionVentaGridLookup.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Cuotas/_seleccionVentaModificar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Cuotas/_seleccionVentaPasarGridLookup.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Customers/create.cshtml">
       <publishTime>04/14/2014 00:14:18</publishTime>
@@ -4939,13 +4939,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Documentacion/_reportGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Documentacion/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Documentacion/_selectDocumentacion.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/DocumentacionLegal/ReportComprobanteSenia.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5002,7 +5002,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Financistas/Pago.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/25/2014 00:50:48</publishTime>
     </File>
     <File Include="Views/Financistas/ReciboPago.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5023,7 +5023,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Financistas/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Financistas/_reciboPago.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5035,22 +5035,22 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Financistas/_selectChequePago.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Financistas/_selectEfectivoPago.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/25/2014 02:40:38</publishTime>
     </File>
     <File Include="Views/Financistas/_sitFinancistaCheques.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Financistas/_sitFinancistaChequesGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Financistas/_sitFinancistaEfectivo.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Financistas/_sitFinancistaEfectivoGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Financistas/_situacionFinancista.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5086,10 +5086,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Movimientos/_listGrillaMovimientos.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Movimientos/_listGrillaMovimientosRep.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Movimientos/_listMovimientos.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5104,13 +5104,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Movimientos/_saldosGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Parametros/edit.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Parametros/_grillaParametros.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Pedidos/create.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5143,10 +5143,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Pedidos/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Pedidos/_reportGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Pedidos/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5173,10 +5173,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Perfiles/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Perfiles/_perfilesUsuario.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Perfiles/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5212,7 +5212,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Senias/Devolver.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/25/2014 02:27:26</publishTime>
     </File>
     <File Include="Views/Senias/list.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5224,7 +5224,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Senias/Seniar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/25/2014 02:19:30</publishTime>
     </File>
     <File Include="Views/Senias/_condicionesSenia.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5239,19 +5239,19 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Senias/_grillaChequesDevolucion.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Senias/_grillaDevolucionEfectivo.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Senias/_grillaPromesaCheques.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Senias/_grillaPromesaEfectivo.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Senias/_grillaPromesaVales.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Senias/_promesaFinanciacion.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5266,7 +5266,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Senias/_reportGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Senias/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5275,13 +5275,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Senias/_selectPedido.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Senias/_selectSeniaAnular.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Senias/_selectVehiculoSeniar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Senias/_seniaDevolucion.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5302,22 +5302,22 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Shared/_generalGrid.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Shared/_generalReport.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Shared/_grillaPagosCheque.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Shared/_grillaPagosChequesEmitidos.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Shared/_grillaPagosEfectivo.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Shared/_grillaPagosMovBanco.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5389,7 +5389,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Sucursales/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Sucursales/_listSucursales.cshtml">
       <publishTime>04/15/2014 00:39:24</publishTime>
@@ -5419,7 +5419,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/TiposDocumento/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/TiposDocumento/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5431,7 +5431,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Transacciones/_listGrillaTransacciones.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Transacciones/_listTransacciones.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5464,10 +5464,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Usuarios/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Usuarios/_perfilesUsuario.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Usuarios/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5479,7 +5479,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Vales/Descontar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Vales/ListVales.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5488,7 +5488,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Vales/Rechazar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Vales/ReciboDescuento.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5524,7 +5524,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Vales/_listGrillaVales.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vales/_listVales.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5554,16 +5554,16 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Vales/_selectValeDesc.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vales/_selectValeRechazar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vales/_valePagos.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Vales/_valePagosGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vales/_valeRenovacion.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5572,7 +5572,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Vales/_valesAnterioresGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vales/_valesCliente.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5620,13 +5620,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Vehiculos/_listDocumentos.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vehiculos/_listGastos.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vehiculos/_listGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vehiculos/_popupDocumentacion.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5638,7 +5638,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Vehiculos/_reportGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vehiculos/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5665,7 +5665,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Vendedores/_listVendedores.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Vendedores/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5746,13 +5746,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Ventas/Anular.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Ventas/details.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Ventas/Entregar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:34</publishTime>
     </File>
     <File Include="Views/Ventas/list.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5767,7 +5767,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Ventas/ventaVehiculo.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:28:24</publishTime>
     </File>
     <File Include="Views/Ventas/_condicionesVenta.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5782,16 +5782,16 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Ventas/_grillaChequesDevolucion.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Ventas/_grillaDevolucionEfectivo.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Ventas/_grillaPagosCuota.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Ventas/_grillaPagosVale.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Ventas/_reciboAnulacion.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5800,19 +5800,19 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Ventas/_reportGrilla.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Ventas/_reportList.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Ventas/_selectVehiculoVender.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Ventas/_selectVentaAnular.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Ventas/_selectVentaEntregar.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>10/24/2014 01:14:33</publishTime>
     </File>
     <File Include="Views/Ventas/_ventaAnulacion.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>

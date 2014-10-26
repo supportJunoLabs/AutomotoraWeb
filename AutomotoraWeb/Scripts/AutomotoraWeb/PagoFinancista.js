@@ -130,6 +130,7 @@ function cambiarFinancista() {
     var selectedID = $(ddlFinancistas).val();
     var idSession = $('#idSession').val();
     var destino = '/Financistas/FinancistaPagoChanged/';
+    $('#spanError').html('');
     $.ajax({
         cache: false,
         type: "GET",

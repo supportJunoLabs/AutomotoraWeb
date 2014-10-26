@@ -10,7 +10,7 @@
     ViewBag.Title = "Devolucion Seña Vehículo / Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    GridLookUpModel gmodel = new GridLookUpModel { Opciones = Senia.Senias(Senia.TIPO_LISTADO_SENIA.DEVOLVIBLES) };
+    GridLookUpModel gmodel = new GridLookUpModel { Opciones = (IEnumerable<Senia>)ViewData["SeniasDevolvibles"] };
     if (Model.Senia != null && Model.Senia.Codigo > 0) {
         gmodel.GridLookUpCodigo = Model.Senia.Codigo;
     }

@@ -7,6 +7,17 @@
     ViewBag.Title = "Autorizaciones";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.TreeList }
+    )
+
+@Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList }
+    )
+
+
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {

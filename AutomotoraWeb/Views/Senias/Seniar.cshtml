@@ -21,7 +21,7 @@
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
+@using (Html.BeginForm("seniar", null, FormMethod.Post, new { id = "formPrincipal" })) {
    
     @Html.ValidationSummary(true)
     @Html.ValidationSummary("Se han producido errores:")

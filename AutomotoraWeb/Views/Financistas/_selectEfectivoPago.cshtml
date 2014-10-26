@@ -11,10 +11,10 @@
     InfoGrilla ig = new InfoGrilla();
     ig.VisibleColumns = new List<ColumnaGrilla>() { 
         //new ColumnaGrilla {Campo="Codigo"},
-        new ColumnaGrilla {Campo="FechaMov", Titulo="Vencimiento", Formato="dd/MM/yyyy", MostrarSoloGrilla=true, ReadOnly=true},
+        new ColumnaGrilla {Campo="FechaMov", Titulo="Fecha Ingreso", Formato="dd/MM/yyyy", MostrarSoloGrilla=true, ReadOnly=true},
         new ColumnaGrilla {Campo="ImporteOrig.ImporteTexto", Titulo="Importe Orig", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, ReadOnly=true},
         new ColumnaGrilla {Campo="ImportePagoAnt.ImporteTexto", Titulo="Pago Ant", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, ReadOnly=true},
-        new ColumnaGrilla {Campo="ImporteSaldo.ImporteTexto",  Titulo="Pago Ant", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, MostrarSoloEdicion=true, ReadOnly=true},
+        new ColumnaGrilla {Campo="ImporteSaldo.ImporteTexto",  Titulo="Saldo", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, MostrarSoloEdicion=true, ReadOnly=true},
         new ColumnaGrilla {Campo="ImportePagoActual.ImporteTexto",  Titulo="Pago Actual", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, MostrarSoloGrilla=true, ReadOnly=true},
         new ColumnaGrilla {Campo="ImportePagoActual.Monto",  Titulo="Pago Actual", Alineacion=ColumnaGrilla.ALINEACIONES.DERECHA, Validacion=ColumnaGrilla.VALIDACIONES.IMPORTE, MostrarSoloEdicion=true, ReadOnly=false},
         new ColumnaGrilla {Campo="Detalle",  Titulo="Detalle", LargoMax=25, MostrarSoloGrilla=true, ReadOnly=true},

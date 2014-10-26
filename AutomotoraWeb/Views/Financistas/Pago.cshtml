@@ -12,7 +12,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     bool cambiarSucursal = ViewBag.Multisucursal;
 }
-<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+<span class="validation-summary-errors" id="spanError">@ViewBag.ErrorMessage</span>
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {
    
     @Html.ValidationSummary(true)

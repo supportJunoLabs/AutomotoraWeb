@@ -185,6 +185,7 @@ namespace AutomotoraWeb.Helpers.Grilla {
 
                 if (cg.ReadOnly) {
                     gridViewColumn.ReadOnly = true;
+                    gridViewColumn.EditCellStyle.BackColor = System.Drawing.Color.WhiteSmoke;
                 }
 
                 // si es fecha

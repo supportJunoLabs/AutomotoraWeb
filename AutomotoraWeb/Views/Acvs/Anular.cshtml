@@ -1,4 +1,4 @@
-﻿@model DLL_Backend.TRACuentaVentaAnulacion
+﻿@model AutomotoraWeb.Models.AnticipoAnulacionModel
 @using AutomotoraWeb.Helpers;
 @using DLL_Backend;
 @using AutomotoraWeb.Models;
@@ -9,8 +9,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     GridLookUpModel gmodel = new GridLookUpModel { Opciones = ACuentaVenta.AnticiposAnulables() };
-    if (Model != null && Model.Acv != null && Model.Acv.Codigo > 0) {
-        gmodel.GridLookUpCodigo = Model.Acv.Codigo;
+    if (Model != null && Model.TrAnulacion!=null && Model.TrAnulacion.Acv != null && Model.TrAnulacion.Acv.Codigo > 0) {
+        gmodel.GridLookUpCodigo = Model.TrAnulacion.Acv.Codigo;
     }
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
@@ -29,13 +29,13 @@
                 @Html.Partial("_seleccionAcvAnularGridLookup", gmodel)
             </div>
         </div>
-        @Html.HiddenFor(model => model.Acv.Codigo, new { id = "idAcv" })
+        @Html.HiddenFor(model => model.TrAnulacion.Acv.Codigo, new { id = "idAcv" })
     </div>
     <div class="clear-both"></div>
     
     <div id="divDetalleAcv">
-        @{if (Model != null && Model.Acv != null && Model.Acv.Codigo > 0) {
-            @Html.Partial("_consultaAcv", Model.Acv)
+        @{if (Model != null && Model.TrAnulacion != null && Model.TrAnulacion.Acv != null && Model.TrAnulacion.Acv.Codigo > 0) {
+            @Html.Partial("_consultaAcv", Model.TrAnulacion.Acv)
           }}
     </div>
     
@@ -44,7 +44,7 @@
            Observaciones Anulacion
         </div>
         <div class="editor-field editor-field-xxlarge">
-           @Html.TextBoxFor(model => model.Observaciones)
+           @Html.TextBoxFor(model => model.TrAnulacion.Observaciones)
         </div>
         <div class="clear-both"></div>
         

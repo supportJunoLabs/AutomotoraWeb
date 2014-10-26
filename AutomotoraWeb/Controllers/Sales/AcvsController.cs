@@ -366,7 +366,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             Usuario usuario = getUsuario();
             tr.Sucursal = usuario.Sucursal;
 
-            return View("Anular", tr);
+            AnticipoAnulacionModel model = new AnticipoAnulacionModel();
+            model.TrAnulacion = tr;
+            return View("Anular", model);
         }
 
         public ActionResult GrillaAcvsAnulables() {
@@ -389,22 +391,19 @@ namespace AutomotoraWeb.Controllers.Sales {
         }
 
         [HttpPost]
-        public ActionResult Anular(TRACuentaVentaAnulacion model) {
+        public ActionResult Anular(AnticipoAnulacionModel model) {
             ViewBag.SoloLectura = true;
-            model.Fecha = DateTime.Now.Date;
+            model.TrAnulacion.Fecha = DateTime.Now.Date;
 
-            //this.eliminarValidacionesIgnorables("Cliente", MetadataManager.IgnorablesDDL(new Cliente));
-            //this.eliminarValidacionesIgnorables("Sucursal", MetadataManager.IgnorablesDDL(new Sucursal));
-            //this.eliminarValidacionesIgnorables("Vendedor", MetadataManager.IgnorablesDDL(new Vendedor));
-            //this.eliminarValidacionesIgnorables("Vehiculo", MetadataManager.IgnorablesDDL(new Vehiculo));
-            //this.eliminarValidacionesIgnorables("Importe.Moneda", MetadataManager.IgnorablesDDL(new Moneda));
-
-            //if (ModelState.IsValid) { -- solo necesito el codigo
+            // -- solo necesito el codigo
             ModelState.Clear();
-            if (model.Acv != null && model.Acv.Codigo > 0) {
+            if (model.TrAnulacion.Acv != null && model.TrAnulacion.Acv.Codigo > 0) {
                 try {
-                    model.Ejecutar();
-                    return RedirectToAction("ReciboAnulacion", AcvsController.CONTROLLER, new { id = model.NroRecibo });
+                    string usuario = getUserName();
+                    string IP = getIP();
+                    model.TrAnulacion.setearAuditoria(usuario, IP);
+                    model.TrAnulacion.Ejecutar();
+                    return RedirectToAction("ReciboAnulacion", AcvsController.CONTROLLER, new { id = model.TrAnulacion.NroRecibo });
                     //return RedirectToAction("ReciboAnulacion", AcvsController.CONTROLLER, new { id = model.Acv.Codigo });
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
@@ -412,7 +411,7 @@ namespace AutomotoraWeb.Controllers.Sales {
                     return View("Anular", model);
                 }
             } else {
-                ModelState.AddModelError("Acv.Codigo", "Debe especificar la operacion a anular");
+                ModelState.AddModelError("TrAnulacion.Acv.Codigo", "Debe especificar la operacion a anular");
             }
             return View("Anular", model);
 

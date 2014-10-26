@@ -245,8 +245,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             ViewData["idSession"] = idSession;
             ViewData["idOperacion"] = "seniar";
             Usuario u = getUsuario();
-            ViewData["PedidosSeniables"]=  Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.SENIABLES, u);
-            ViewData["VehiculosSeniables"] = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.SENIABLES,u);
+            ViewData["PedidosSeniables"] = Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.SENIABLES, u);
+            ViewData["VehiculosSeniables"] = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.SENIABLES, u);
             iniSenia(tr, idSession);
 
             if (id != null && id > 0) {
@@ -275,6 +275,9 @@ namespace AutomotoraWeb.Controllers.Sales {
             string idSession = SessionUtils.generarIdVarSesion("acv", getUserName()) + "|";
             ViewData["idSession"] = idSession;
             ViewData["idOperacion"] = "seniar";
+            Usuario u = getUsuario();
+            ViewData["PedidosSeniables"] = Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.SENIABLES, u);
+            ViewData["VehiculosSeniables"] = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.SENIABLES, u);
             iniSenia(tr, idSession);
 
             if (id != null && id > 0) {
@@ -316,6 +319,9 @@ namespace AutomotoraWeb.Controllers.Sales {
 
             ViewData["idSession"] = idSession;
             ViewData["idOperacion"] = "seniar";
+            Usuario u = getUsuario();
+            ViewData["PedidosSeniables"] = Pedido.Pedidos(Pedido.PED_TIPO_LISTADO.SENIABLES, u);
+            ViewData["VehiculosSeniables"] = Vehiculo.Vehiculos(Vehiculo.VHC_TIPO_LISTADO.SENIABLES, u);
 
             iniSeniado(model, idSession, true);//Lo hago aca al principio para que si hay error la tr vuelva con medios de pago con los valores anteriores.
 
@@ -667,6 +673,8 @@ namespace AutomotoraWeb.Controllers.Sales {
             string idSession = SessionUtils.generarIdVarSesion("devsenia", getUserName()) + "|";
             ViewData["idSession"] = idSession;
             ViewData["idOperacion"] = "devolver";
+            Usuario u = getUsuario();
+            ViewData["SeniasDevolvibles"] = Senia.Senias(Senia.TIPO_LISTADO_SENIA.DEVOLVIBLES, u);
             ViewBag.SoloLectura = true;
 
             if (id == null) {
@@ -746,9 +754,10 @@ namespace AutomotoraWeb.Controllers.Sales {
         public ActionResult Devolver(SeniaModel model, string idSession) {
             ViewData["idSession"] = idSession;
             ViewData["idOperacion"] = "devolver";
+            Usuario u = getUsuario();
+            ViewData["SeniasDevolvibles"] = Senia.Senias(Senia.TIPO_LISTADO_SENIA.DEVOLVIBLES, u);
             ViewBag.SoloLectura = true;
 
-            Usuario u = getUsuario();
             model.Senia.Consultar(u);//por si hubo error en el modelState mostrar los datos correctamente al volver. si no hay codigo de senia, dara error y no se sigue.
             model.SeniaDev.Pago.Reset();
             model.SeniaDev.Pago.AgregarEfectivos((IEnumerable<Efectivo>)Session[idSession + SessionUtils.EFECTIVO_DEVOLUCION]);
