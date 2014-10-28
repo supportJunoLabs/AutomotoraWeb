@@ -248,10 +248,10 @@ namespace AutomotoraWeb.Controllers.Financing {
                 } catch (UsuarioException exc) {
                     ViewBag.ErrorCode = exc.Codigo;
                     ViewBag.ErrorMessage = exc.Message;
-                    return View("Entrada", tr);
+                    return View("Salida", tr);
                 }
             }
-            return View("Entrada", tr);
+            return View("Salida", tr);
         }
 
         //private bool TransaccionConsultable(Transaccion tr) {
