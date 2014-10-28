@@ -280,7 +280,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\GridViewHelper.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AbstractModel.cs" />
     <Compile Include="Models\AlertaModel.cs" />
