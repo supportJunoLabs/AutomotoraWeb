@@ -6,8 +6,12 @@
     ViewBag.Title = ViewBag.NombreEntidades + ": Listado";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <style type="text/css">
     select {

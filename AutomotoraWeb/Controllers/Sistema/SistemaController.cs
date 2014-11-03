@@ -28,6 +28,7 @@ namespace AutomotoraWeb.Controllers.Sistema {
         public const int MSJ_CAMBIO_CLAVE_OK = 1;
         public const int MSJ_ERROR = 2;
         public const int MSJ_RESET_CLAVE_OK = 3;
+        public const int MSJ_DESBLOQUEAR_USUARIO_OK = 4;
 
         public ActionResult Mensaje(int id) {
             Mensaje msj = new Mensaje{Titulo="", Contenido=""};
@@ -44,6 +45,10 @@ namespace AutomotoraWeb.Controllers.Sistema {
                 case MSJ_RESET_CLAVE_OK:
                     msj.Titulo = "Reset Clave Usuario";
                     msj.Contenido = "Se ha reseteado la clave de este usuario exitosamente";
+                    break;
+                case MSJ_DESBLOQUEAR_USUARIO_OK:
+                    msj.Titulo = "Desbloquear Usuario";
+                    msj.Contenido = "Se ha desbloqueado este usuario exitosamente";
                     break;
             }
 

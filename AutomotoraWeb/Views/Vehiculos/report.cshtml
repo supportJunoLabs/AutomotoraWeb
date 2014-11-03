@@ -1,9 +1,14 @@
 ﻿@model AutomotoraWeb.Models.ListadoVehiculosModel
 @using AutomotoraWeb.Controllers.General;
 
-@{ 
+@{  Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ViewBag.NombreEntidades + ": Listado";
 }
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">

@@ -1,9 +1,13 @@
 ﻿@model AutomotoraWeb.Models.ComprobanteDocumentacionModel
 @using AutomotoraWeb.Controllers.General;
 
-@{ 
+@{  Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Comprobante Documentación";
 }
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 

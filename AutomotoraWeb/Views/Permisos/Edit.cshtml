@@ -8,13 +8,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.DevExpress().GetScripts(
+@section HeadResources{
+    @Html.Partial("_devExpressTreeList")
+}
+
+@*@Html.DevExpress().GetScripts(
     new Script { ExtensionSuite = ExtensionSuite.TreeList }
     )
 
 @Html.DevExpress().GetStyleSheets(
     new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList }
-    )
+    )*@
 
 
 

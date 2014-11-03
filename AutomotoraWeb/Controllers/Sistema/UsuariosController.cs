@@ -227,5 +227,44 @@ namespace AutomotoraWeb.Controllers.Sistema {
         }
 
         #endregion
+
+
+        #region desbloquearUsuario
+
+        public ActionResult Desbloquear() {
+            DesbloquearUsuarioModel m = new DesbloquearUsuarioModel();
+            m.UsuarioActual = getUserName();
+            return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult Desbloquear(DesbloquearUsuarioModel model) {
+            string IP = getIP();
+
+            if (ModelState.IsValid) {
+                try {
+                    Usuario u = new Usuario();
+                    u.UserName = model.UsuarioReset;
+                    u.Consultar(Usuario.MODO_CONSULTA.BASICO);
+
+                    Usuario a = new Usuario();
+                    a.UserName = model.UsuarioActual;
+                    a.Consultar(Usuario.MODO_CONSULTA.BASICO);
+                    a.Clave = model.ClaveUsuarioActual;
+
+                    u.Desbloquear(IP, a);
+
+                    return RedirectToAction("Mensaje", SistemaController.CONTROLLER, new { id = SistemaController.MSJ_DESBLOQUEAR_USUARIO_OK });
+
+                } catch (UsuarioException exc) {
+                    ViewBag.ErrorCode = exc.Codigo;
+                    ViewBag.ErrorMessage = exc.Message;
+                    return View(model);
+                }
+            }
+            return View(model);
+        }
+
+        #endregion
     }
 }

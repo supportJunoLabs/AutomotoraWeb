@@ -5,6 +5,11 @@
 @*Tiene que estar arriba o no funciona la grilla devexpress*@
 <script src="~/Scripts/AutomotoraWeb/TransfChequesSuc.js"></script>
 
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
+
+
 
 @{
     ViewBag.Title = "Transferir Cheques entre Sucursales";

@@ -2,9 +2,13 @@
 @using DLL_Backend;
 @using AutomotoraWeb.Controllers.General;
 
-@{ 
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Situacion Financista";
 }
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">

@@ -3,9 +3,14 @@
 @using AutomotoraWeb.Controllers.General;
 @using AutomotoraWeb.Controllers.Financing;
 
-@{ 
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Cupones de Financiación de Venta";
 }
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">

@@ -8,6 +8,11 @@
     ViewBag.Title = "Consulta Situación Financista";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm()) {

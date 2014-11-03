@@ -2,7 +2,11 @@
 @using AutomotoraWeb.Controllers.Bank;
 
 @{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Cheque Rechazado";
+}
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 

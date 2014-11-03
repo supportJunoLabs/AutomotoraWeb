@@ -3,6 +3,11 @@
 @{ 
     ViewBag.Title = "Recibo de Anticipo de Venta";
 }
+
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">

@@ -7,6 +7,11 @@
 @*Tiene que estar arriba o no funciona la grilla devexpress*@
 <script src="~/Scripts/AutomotoraWeb/CuotasPasar.js"></script>
 
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
+
+
 @{
     ViewBag.Title = "Transferir Financiacion";
     Layout = "~/Views/Shared/_Layout.cshtml";

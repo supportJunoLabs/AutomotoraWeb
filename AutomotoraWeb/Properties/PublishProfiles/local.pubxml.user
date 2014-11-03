@@ -19,16 +19,16 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:43:47</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>10/28/2014 01:40:15</publishTime>
+      <publishTime>11/02/2014 03:28:08</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>10/28/2014 01:40:15</publishTime>
+      <publishTime>11/02/2014 03:28:08</publishTime>
     </File>
     <File Include="bin/AutomotoraWeb.dll">
-      <publishTime>10/28/2014 01:40:07</publishTime>
+      <publishTime>11/02/2014 03:23:30</publishTime>
     </File>
     <File Include="bin/AutomotoraWeb.pdb">
-      <publishTime>10/28/2014 01:40:07</publishTime>
+      <publishTime>11/02/2014 03:23:29</publishTime>
     </File>
     <File Include="bin/de/DevExpress.Data.v13.2.resources.dll">
       <publishTime>05/06/2014 23:26:16</publishTime>
@@ -181,7 +181,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>05/06/2014 23:27:19</publishTime>
     </File>
     <File Include="bin/DLL_Backend.dll">
-      <publishTime>10/25/2014 02:34:48</publishTime>
+      <publishTime>11/02/2014 03:17:29</publishTime>
     </File>
     <File Include="bin/Elmah.dll">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4210,7 +4210,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>10/28/2014 01:40:10</publishTime>
+      <publishTime>11/02/2014 03:28:01</publishTime>
     </File>
     <File Include="Scripts/AutomotoraWeb/AcvsListado.js">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -4468,10 +4468,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:47:38</publishTime>
     </File>
     <File Include="Views/Caja/_listCheques.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>11/01/2014 06:34:25</publishTime>
     </File>
     <File Include="Views/Caja/_listEfectivo.cshtml">
-      <publishTime>10/22/2014 22:47:38</publishTime>
+      <publishTime>11/01/2014 06:33:43</publishTime>
     </File>
     <File Include="Views/Caja/_listGrillaCheques.cshtml">
       <publishTime>10/24/2014 01:14:35</publishTime>
@@ -5320,7 +5320,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/24/2014 01:14:34</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>10/27/2014 19:05:23</publishTime>
+      <publishTime>11/01/2014 03:11:10</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutAuthorization.cshtml">
       <publishTime>10/26/2014 02:11:34</publishTime>
@@ -5444,6 +5444,9 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
     </File>
     <File Include="Views/Usuarios/delete.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
+    </File>
+    <File Include="Views/Usuarios/desbloquear.cshtml">
+      <publishTime>11/02/2014 01:34:17</publishTime>
     </File>
     <File Include="Views/Usuarios/details.cshtml">
       <publishTime>10/22/2014 22:47:38</publishTime>
@@ -5851,7 +5854,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/22/2014 22:43:46</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/27/2014 19:53:55</publishTime>
+      <publishTime>11/02/2014 02:42:18</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -1,8 +1,12 @@
 ﻿@model DLL_Backend.Financista
 @using AutomotoraWeb.Controllers.Financing;
-@{ 
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Recibo Pago Financista";
 }
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @{ if (ViewData["idParametros"]==null || (int)ViewData["idParametros"]==0) { return; }}

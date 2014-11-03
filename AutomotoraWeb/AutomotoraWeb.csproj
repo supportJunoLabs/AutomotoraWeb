@@ -288,6 +288,7 @@
     <Compile Include="Models\ComprobanteDocumentacionModel.cs" />
     <Compile Include="Models\ConsultaValeModel.cs" />
     <Compile Include="Models\ConsultaVentaModel.cs" />
+    <Compile Include="Models\DesbloquearUsuarioModel.cs" />
     <Compile Include="Models\PagoFinancistaModel.cs" />
     <Compile Include="Models\ParametroModel.cs" />
     <Compile Include="Models\PerfilModel.cs" />
@@ -1433,6 +1434,10 @@
     <Content Include="Views\Ventas\_selectVentaEntregar.cshtml" />
     <Content Include="Views\Ventas\_ventaEntrega.cshtml" />
     <Content Include="Views\Compactacion\Compactar.cshtml" />
+    <Content Include="Views\Usuarios\desbloquear.cshtml" />
+    <Content Include="Views\Shared\_devExpressGrilla.cshtml" />
+    <Content Include="Views\Shared\_devExpressReporte.cshtml" />
+    <Content Include="Views\Shared\_devExpressTreeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\tmp\" />
