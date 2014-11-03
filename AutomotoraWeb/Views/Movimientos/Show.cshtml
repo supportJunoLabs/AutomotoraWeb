@@ -72,7 +72,7 @@
 <div id="divListado">
     @{
         if (Model.Cuenta!=null && Model.Cuenta.Codigo>0){
-            @Html.Partial("_listMovimientos", (IEnumerable<MovBanco>) ViewData["Movimientos"])
+            @Html.Partial("_listMovimientos", Model)
         }
     }
 
