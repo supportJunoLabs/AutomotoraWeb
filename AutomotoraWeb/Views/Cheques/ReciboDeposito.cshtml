@@ -1,8 +1,11 @@
 ﻿@model DLL_Backend.TRChequeDepositarDescontar
 @using AutomotoraWeb.Controllers.Bank;
 
-@{ 
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Deposito/Descuento Cheque";
+}
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
 }
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 

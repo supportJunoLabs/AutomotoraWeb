@@ -4,7 +4,7 @@
 
 
 <div style="padding-bottom: 30px">
-    <div class="floatLeft label-large" style="padding-left: 180px;">
+    <div class="floatLeft label-xlarge" >
         <div class="display-label-small">Saldo Inicial: </div>
         @Html.DisplayFor(m => m.Resultado.SaldoInicialEfectivo.ImporteTexto)
     </div>
@@ -16,11 +16,11 @@
 @Html.Partial("_listGrillaEfectivo", Model)
 
 <div style="padding-top: 20px; padding-bottom: 30px">
-    <div class="floatLeft label-large">
+    <div class="floatLeft label-xlarge">
         <div class="display-label-small">Total Movimientos: </div>
         @Html.DisplayFor(m => m.Resultado.TotalMovsEfectivo.ImporteTexto)
     </div>
-    <div class="floatLeft label-large">
+    <div class="floatLeft label-xlarge">
         <div class="display-label-small">Saldo Final: </div>
         @Html.DisplayFor(m => m.Resultado.SaldoFinalEfectivo.ImporteTexto)
     </div>

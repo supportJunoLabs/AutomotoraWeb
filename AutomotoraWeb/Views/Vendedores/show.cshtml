@@ -6,6 +6,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="row-fluid">
@@ -18,7 +22,7 @@
             <a class="btn btn-primary2-mf" title="Imprimir" href='@Url.Action(BaseController.REPORT)'>Imprimir</a>
         </div>
     </div>
-       
+   
     <div id="vendedoressGrid">
         @Html.Partial("_listVendedores", Model)
     </div>

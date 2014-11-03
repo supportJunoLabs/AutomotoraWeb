@@ -2,7 +2,12 @@
 @using AutomotoraWeb.Controllers.Financing;
 @{ 
     ViewBag.Title = "Recibo Refinanciacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @{ if (ViewData["idParametros"]==null || (int)ViewData["idParametros"]==0) { return; }}

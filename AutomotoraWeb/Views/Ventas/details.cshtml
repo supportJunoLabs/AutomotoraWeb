@@ -7,6 +7,9 @@
     ViewBag.Title = ViewBag.NombreEntidad + ": Consulta";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
 
 <style type="text/css">
     .botonDocumento {

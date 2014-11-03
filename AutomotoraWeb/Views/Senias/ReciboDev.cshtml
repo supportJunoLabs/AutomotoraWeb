@@ -1,8 +1,14 @@
 ﻿@model DLL_Backend.TRSeniaDevolucion 
 @using AutomotoraWeb.Controllers.Sales;
-@{ 
+
+@{  Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Recibo Devolucion Seña";
 }
+
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @{ if (ViewData["idParametros"]==null || (int)ViewData["idParametros"]==0) { return; }}

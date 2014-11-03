@@ -6,6 +6,11 @@
     ViewBag.Title = "Pasar Vale";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {

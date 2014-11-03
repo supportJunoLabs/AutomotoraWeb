@@ -2,9 +2,13 @@
 @using DLL_Backend;
 @using AutomotoraWeb.Controllers.General;
 
-@{ 
+@{  Layout = "~/Views/Shared/_Layout.cshtml"; 
     ViewBag.Title = "Consulta Cheque";
 }
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @{ if (ViewData["idParametros"]==null || (int)ViewData["idParametros"]==0) { return; }}

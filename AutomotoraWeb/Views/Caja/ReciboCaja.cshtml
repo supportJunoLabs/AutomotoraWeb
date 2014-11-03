@@ -1,7 +1,12 @@
 ﻿@using AutomotoraWeb.Controllers.Financing;
 @{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Recibo Entrada / Salida Caja";
 }
+@section HeadResources{
+    @Html.Partial("_devExpressReporte")
+}
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 <div class="btn-toolbar">

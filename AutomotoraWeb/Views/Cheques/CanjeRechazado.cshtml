@@ -12,6 +12,11 @@
     bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
 }
 
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
+
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formPrincipal" })) {

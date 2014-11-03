@@ -12,6 +12,11 @@
        return;
 }}
 
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
+
+
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 
 @using (Html.BeginForm()) {

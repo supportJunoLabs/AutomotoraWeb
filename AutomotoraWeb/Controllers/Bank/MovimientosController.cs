@@ -38,8 +38,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                 if (id != null && id > 0) {
                     model.Cuenta = new CuentaBancaria();
                     model.Cuenta.Codigo = (id ?? 0);
-                    model.Cuenta.Moneda = new Moneda();
-                    model.Cuenta.Moneda.Codigo = 0;
+                    model.Cuenta.Consultar();
                 }
                 string s = SessionUtils.generarIdVarSesion("MovimientosBanco", getUserName());
                 model.idParametros = s;
@@ -47,7 +46,7 @@ namespace AutomotoraWeb.Controllers.Bank {
                 ViewData["idParametros"] = model.idParametros;
                 Usuario u = getUsuario();
                 model.GenerarListado(u);
-                ViewData["Movimientos"] = model.Resultado;
+                //ViewData["Movimientos"] = model.Resultado;
 
                 return View(model);
             } catch (UsuarioException exc) {
@@ -183,6 +182,8 @@ namespace AutomotoraWeb.Controllers.Bank {
             this.eliminarValidacionesIgnorables("Cuenta", MetadataManager.IgnorablesDDL(new CuentaBancaria()));
             if (ModelState.IsValid) {
                 try {
+                    mov.Cuenta.Consultar(); //lo necesito para mostrar los datos de la cuenta si vuelvo porque hubo error
+                    mov.ImporteMov.Moneda = mov.Cuenta.Moneda;
                     mov.Agregar();
                     return RedirectToAction("Show", new { id = mov.Cuenta.Codigo });
                 } catch (UsuarioException exc) {
@@ -272,6 +273,8 @@ namespace AutomotoraWeb.Controllers.Bank {
                 if (id != null && id > 0) {
                     model.EstadoCuenta.Cuenta = new CuentaBancaria();
                     model.EstadoCuenta.Cuenta.Codigo = (id ?? 0);
+                    Usuario u = getUsuario();
+                    model.EstadoCuenta.generarListado(u);
                 }
                 string s = SessionUtils.generarIdVarSesion("ListadoMovsBanco", getUserName());
                 Session[s] = model;

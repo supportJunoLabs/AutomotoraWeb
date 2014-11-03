@@ -6,6 +6,10 @@
 
 <script src="~/Scripts/AutomotoraWeb/SeniaDevolucion.js"></script>
 
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
+
 @{
     ViewBag.Title = "Devolucion Seña Vehículo / Pedido";
     Layout = "~/Views/Shared/_Layout.cshtml";

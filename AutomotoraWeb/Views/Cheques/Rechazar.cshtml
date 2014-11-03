@@ -11,6 +11,9 @@
     bool cambiarSucursal = ViewBag.Multisucursal;
     bool modoConsulta = (((bool?)(ViewBag.SoloLectura)) ?? false);
 }
+@section HeadResources{
+    @Html.Partial("_devExpressGrilla")
+}
 
 <span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
 

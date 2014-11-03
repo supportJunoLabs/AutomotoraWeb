@@ -1,0 +1,46 @@
+﻿@model AutomotoraWeb.Models.DesbloquearUsuarioModel
+@using AutomotoraWeb.Controllers.Sistema;
+
+@{
+    ViewBag.Title = "Desbloquear Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<span class="validation-summary-errors">@ViewBag.ErrorMessage</span>
+
+<section id="resetPwdForm">
+       <div class="block-body">
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.ValidationSummary("Se han producido errores:")
+
+    
+            @Html.LabelFor(m => m.UsuarioActual)
+            @Html.TextBoxFor(m => m.UsuarioActual, new {disabled="disabled" })
+            @Html.HiddenFor(m => m.UsuarioActual)
+
+            
+            @Html.LabelFor(m => m.ClaveUsuarioActual)
+            @Html.PasswordFor(m => m.ClaveUsuarioActual, new { @class = "span3" })
+            @Html.ValidationMessageFor(m => m.ClaveUsuarioActual)
+                
+            @Html.LabelFor(m => m.UsuarioReset)
+            @Html.TextBoxFor(m => m.UsuarioReset, new { @class = "span3" })
+            @Html.ValidationMessageFor(m => m.UsuarioReset)
+
+            <div class="espacio2"></div>
+            
+            <div class="btn-toolbar">
+                 @(Html.Bootstrap().SubmitButton().Text("Desbloquer usuario").Class("btn btn-primary"))
+                 @(Html.Bootstrap().ActionLinkButton("Cancelar", SistemaController.INDEX, SistemaController.BCONTROLLER).Class("btn btn-default")) 
+
+            </div>
+            <div class="clearfix"></div>
+         
+        }
+    </div>
+</section>
+
+
+
